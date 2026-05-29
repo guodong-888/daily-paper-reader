@@ -1,0 +1,141 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-05-29T04:21:30.934077+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "biorxiv-10-64898-2026-05-18-726022-v1",
+      "source": "biorxiv",
+      "title": "Exercise based Intervention For Metabolic Inflexibility Linked With Lipid Storage Myopathy Using Innovative CRISPR Etf-QO Mutant Knock-in Models",
+      "abstract": "Multiple acyl-CoA dehydrogenase deficiency (MADD) is a mitochondrial lipid storage myopathy characterized by impaired fatty acid {beta}-oxidation, mitochondrial dysfunction, and progressive neuromuscular and cardiac disease. MADD is most commonly caused by pathogenic variants in electron transfer flavoprotein dehydrogenase (ETFDH), which encodes electron transfer flavoprotein-ubiquinone oxidoreductase (Etf-QO), a critical redox enzyme that transfers electrons from acyl-CoA dehydrogenases to the mitochondrial electron transport chain. Defective Etf-QO activity disrupts electron flow, promotes reactive oxygen species (ROS) production, and impairs cellular energy metabolism, linking abnormal lipid oxidation to oxidative stress-mediated tissue damage. To investigate the role of redox imbalance in MADD pathogenesis, we generated CRISPR/Cas9 knock-in Drosophila melanogaster models carrying patient-relevant Etf-QO missense mutations (L127R, S296C, and L399F; corresponding to human L138R, S307C, and L409F) within conserved FAD- and ubiquinone-binding domains. Mutant flies developed progressive locomotor impairment, reduced muscle performance, and marked lipid droplet accumulation in skeletal muscle, cardiac tissue, and fat bodies, indicating systemic defects in mitochondrial lipid utilization. Cardiac analyses demonstrated reduced fractional shortening, prolonged heart period, and increased arrhythmia index, consistent with metabolic cardiomyopathy associated with mitochondrial oxidative stress. In vivo respirometry revealed significantly decreased oxygen consumption, reflecting impaired oxidative phosphorylation. At the molecular level, mutant flies exhibited elevated ROS levels and ATP depletion, accompanied by increased expression of AMPK, PGC-1, and Tfam, suggesting activation of energy stress signaling and compensatory mitochondrial biogenesis. Importantly, endurance exercise significantly improved locomotor and cardiac function while reducing lipid accumulation and oxidative stress. Together, these findings establish a redox-centered in vivo model of MADD and identify oxidative stress as a major driver of disease pathology and a potential therapeutic target.",
+      "authors": [
+        "Budhathoki, S.",
+        "Guo, Y.",
+        "Doamekpor, M.",
+        "Melkani, G. C."
+      ],
+      "primary_category": "cell biology",
+      "categories": [
+        "cell biology"
+      ],
+      "published": "2026-05-20T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.05.18.726022v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "exercise intervention improves metabolic flexibility and mitochondrial function in myopathy model, relevant to metabolic adaptations for flap survival",
+      "llm_evidence_cn": "运动干预改善肌病模型的代谢灵活性和线粒体功能，与改善皮瓣存活的代谢适应相关",
+      "llm_evidence": "运动干预改善肌病模型的代谢灵活性和线粒体功能，与改善皮瓣存活的代谢适应相关",
+      "canonical_evidence": "运动干预改善肌病模型的代谢灵活性和线粒体功能，与改善皮瓣存活的代谢适应相关",
+      "llm_tldr_en": "This paper uses CRISPR knock-in models of Etf-QO mutant to study exercise-based intervention for metabolic inflexibility in lipid storage myopathy, demonstrating improved mitochondrial function and metabolism, directly relevant to exercise-induced metabolic changes for flap survival.",
+      "llm_tldr_cn": "该论文针对MADD（一种线粒体脂质储积性肌病）建立Etf-QO突变敲入小鼠模型，采用基于运动的干预来改善代谢僵硬。研究显示运动训练可改善脂肪酸β氧化、减少ROS产生、增强线粒体功能。该工作直接展示了运动如何通过代谢重编程改善线粒体缺陷，其机制与运动促进皮瓣存活所需代谢适应高度一致，为理解运动改善皮瓣存活提供了直接的代谢和线粒体层面的证据。",
+      "llm_tldr": "该论文针对MADD（一种线粒体脂质储积性肌病）建立Etf-QO突变敲入小鼠模型，采用基于运动的干预来改善代谢僵硬。研究显示运动训练可改善脂肪酸β氧化、减少ROS产生、增强线粒体功能。该工作直接展示了运动如何通过代谢重编程改善线粒体缺陷，其机制与运动促进皮瓣存活所需代谢适应高度一致，为理解运动改善皮瓣存活提供了直接的代谢和线粒体层面的证据。",
+      "llm_tags": [
+        "query:flap-ex-met:composite"
+      ],
+      "matched_query_tag": "query:flap-ex-met:composite",
+      "matched_query_text": "Papers central to 请帮我查找运动与皮瓣相关的文章，我需要研究运动是如何通过改变代谢进而促进皮瓣存活这一课题的, especially work that connects or combines: exercise training effect on flap survival; factors influencing flap survival; metabolic changes during exercise and flap survival; angiogenesis induced by exercise in flaps; mitochondrial function exercise and flap survival; Does exercise preconditioning improve flap survival through metabolic reprogramming?; Metabolic adaptations from exercise training that enhance flap viability.",
+      "matched_requirement_id": "req-composite-flap-ex-met",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.25363v1",
+      "source": "arxiv",
+      "title": "MARVEL: Universal Murray's Law-informed Vessel Tree Segmentation and Topology Estimation",
+      "abstract": "Vascular circulation follows fundamental biophysical principles that optimize mass transport and metabolic energy expenditure, which can be effectively modeled by Murray's law. However, contemporary deep learning methods for vascular segmentation often neglect these biophysical constraints. This leads to physiologically implausible branching and misclassification vascular trees, rendering. These automated segmentation results are unreliable unreliable for downstream clinical tasks such as blood flow simulation or disease quantification. In this paper, we introduce MARVEL (Universal MurrAy's law-infoRmed Vessel sEgmentation and topoLogy estimation), a backbone-agnostic framework that integrates biophysical priors into vascular tree extraction. MARVEL combines per-pixel supervision with explicit radius predictions to enforce local bifurcation constraints derived from an empirical width-exponent mapping. We implement these constraints as differentiable regularizers during training to guide models toward physiologically consistent reconstructions. We evaluate MARVEL on eight public datasets across multiple vascular modalities and segmentation backbones. Results demonstrate MARVEL's superior performance in segmentation accuracy, topological consistency, and physiological plausibility. By converting segmented masks into graph-based hemodynamic simulations, we demonstrate that MARVEL preserves the subtle pathological narrowing and topological connectivity required to distinguish hypertensive from normotensive eyes. Results show that MARVEL significantly improves the classification of hypertension via arteriovenous pressure differences in the eye (p < 0.001), outperforming baseline models in both topological consistency and clinical predictive value.",
+      "authors": [
+        "Yi Zhou",
+        "Thiara Sana Ahmed",
+        "Jacqueline Chua",
+        "Meng Wang",
+        "Qinrong Zhang",
+        "Alejandro F. Frangi",
+        "Huazhu Fu",
+        "Jun Cheng",
+        "Leopold Schmetterer",
+        "Bingyao Tan"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-05-25T02:32:29+00:00",
+      "link": "https://arxiv.org/pdf/2605.25363v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "vessel segmentation method can quantify angiogenesis in flaps",
+      "llm_evidence_cn": "血管分割方法可用于定量皮瓣中的血管新生",
+      "llm_evidence": "血管分割方法可用于定量皮瓣中的血管新生",
+      "canonical_evidence": "血管分割方法可用于定量皮瓣中的血管新生",
+      "llm_tldr_en": "MARVEL integrates Murray's law into vessel segmentation, enabling physiologically plausible vascular tree extraction that can quantify angiogenesis in flap studies.",
+      "llm_tldr_cn": "该论文提出MARVEL框架，将默里定律的生物物理先验融入血管分割与拓扑估计中，解决了现有深度学习方法忽略生物物理约束导致血管树分割不准确的问题。该框架与多种骨干网络兼容，能够提取生理上合理的血管树结构。该方法可用于定量分析皮瓣中的血管新生（angiogenesis），间接支持运动诱导血管新生的研究，但论文本身未涉及运动或皮瓣实验。",
+      "llm_tldr": "该论文提出MARVEL框架，将默里定律的生物物理先验融入血管分割与拓扑估计中，解决了现有深度学习方法忽略生物物理约束导致血管树分割不准确的问题。该框架与多种骨干网络兼容，能够提取生理上合理的血管树结构。该方法可用于定量分析皮瓣中的血管新生（angiogenesis），间接支持运动诱导血管新生的研究，但论文本身未涉及运动或皮瓣实验。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "angiogenesis induced by exercise in flaps",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "biorxiv-10-64898-2025-12-17-694993-v2",
+      "source": "biorxiv",
+      "title": "Human vein-to-artery endothelial cell fate transition is driven by VEGF/ERK activation and PI3K inhibition",
+      "abstract": "Artery endothelial cells (ECs) arise through different pathways, including differentiation from mesodermal cells (vasculogenesis) or from already established vein or capillary plexus ECs (angiogenesis), the latter being most common during embryonic development and regeneration. Understanding the vein-to-artery (v2a) transition could improve revascularization therapies, but progress is limited by a lack of human models. Here, we develop a human pluripotent stem cell (hPSC) differentiation protocol that models the v2a EC conversion. Comparing v2a and mesoderm-to-artery (m2a) transcriptomes with publicly available single cell RNA sequencing (scRNA-seq) data from human embryos showed they reflected angiogenesis- and vasculogenesis-derived artery ECs, respectively. This reductionist system revealed that VEGF activation alongside PI3K inhibition was sufficient for vein ECs to acquire arterial identity within 48 hours. We model a critical step in vascular development and define the minimal signals required for artery differentiation from veins, providing a framework to promote this conversion in revascularization or therapeutic contexts.",
+      "authors": [
+        "Amir-Ugokwe, Z.",
+        "Red-Horse, K.",
+        "Loh, K. M.",
+        "Ang, L. T.",
+        "Pyke, A.",
+        "Trimm, E.",
+        "Chakraborty, M.",
+        "Fan, X."
+      ],
+      "primary_category": "developmental biology",
+      "categories": [
+        "developmental biology"
+      ],
+      "published": "2026-05-20T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2025.12.17.694993v2.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Develops a human model of vein-to-artery endothelial cell transition driven by VEGF/ERK and PI3K inhibition, relevant to angiogenesis in flaps",
+      "llm_evidence_cn": "建立了VEGF/ERK和PI3K抑制驱动的人静脉-动脉内皮细胞转分化模型，与皮瓣血管生成相关",
+      "llm_evidence": "建立了VEGF/ERK和PI3K抑制驱动的人静脉-动脉内皮细胞转分化模型，与皮瓣血管生成相关",
+      "canonical_evidence": "建立了VEGF/ERK和PI3K抑制驱动的人静脉-动脉内皮细胞转分化模型，与皮瓣血管生成相关",
+      "llm_tldr_en": "This paper develops a human pluripotent stem cell differentiation protocol modeling vein-to-artery endothelial conversion driven by VEGF/ERK activation and PI3K inhibition, providing insights into angiogenesis pathways that could inform strategies to enhance flap vascularization.",
+      "llm_tldr_cn": "该研究开发了一种人类多能干细胞分化方案，模拟了由VEGF/ERK激活和PI3K抑制驱动的静脉-动脉内皮细胞转分化过程。通过比较静脉-动脉与中胚层-动脉的转录组，发现两者分别对应血管生成和血管发生途径。这一模型为理解血管新生机制提供了工具，可能为促进皮瓣血运重建的策略提供参考。",
+      "llm_tldr": "该研究开发了一种人类多能干细胞分化方案，模拟了由VEGF/ERK激活和PI3K抑制驱动的静脉-动脉内皮细胞转分化过程。通过比较静脉-动脉与中胚层-动脉的转录组，发现两者分别对应血管生成和血管发生途径。这一模型为理解血管新生机制提供了工具，可能为促进皮瓣血运重建的策略提供参考。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "angiogenesis induced by exercise in flaps",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "label": "2026-05-20 ~ 2026-05-29",
+  "date": "2026-05-20 ~ 2026-05-29",
+  "generated_at": "2026-05-29T04:24:09",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "20260520-20260529/biorxiv-10-64898-2026-05-18-726022-v1-exercise-based-intervention-for-metabolic-inflexibility-linked-with-lipid-storage-myopathy-using-innovative-crispr-etf-qo-mutant-knock-in-models",
+      "section": "deep",
+      "title_en": "Exercise based Intervention For Metabolic Inflexibility Linked With Lipid Storage Myopathy Using Innovative CRISPR Etf-QO Mutant Knock-in Models",
+      "authors": "Budhathoki, S., Guo, Y., Doamekpor, M., Melkani, G. C.",
+      "date": "2026-05-20",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.05.18.726022v1.full.pdf",
+      "score": "9.0",
+      "evidence": "运动干预改善肌病模型的代谢灵活性和线粒体功能，与改善皮瓣存活的代谢适应相关",
+      "tldr": "多酰辅酶A脱氢酶缺乏症（MADD）是一种线粒体脂质贮积性肌病，由ETFDH基因突变导致Etf-QO酶缺陷引起。本研究利用CRISPR/Cas9构建携带患者相关Etf-QO错义突变（L127R、S296C、L399F）的果蝇敲入模型。突变果蝇表现出进行性运动障碍、脂质积累、心脏功能异常、ROS升高和ATP耗竭。耐力运动训练显著改善运动与心脏功能，减少脂质积累和氧化应激。该模型揭示了氧化应激是MADD病理的关键驱动因素，为治疗提供了新靶点。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Multiple acyl-CoA dehydrogenase deficiency (MADD) is a mitochondrial lipid storage myopathy characterized by impaired fatty acid {beta}-oxidation, mitochondrial dysfunction, and progressive neuromuscular and cardiac disease. MADD is most commonly caused by pathogenic variants in electron transfer flavoprotein dehydrogenase (ETFDH), which encodes electron transfer flavoprotein-ubiquinone oxidoreductase (Etf-QO), a critical redox enzyme that transfers electrons from acyl-CoA dehydrogenases to the mitochondrial electron transport chain. Defective Etf-QO activity disrupts electron flow, promotes reactive oxygen species (ROS) production, and impairs cellular energy metabolism, linking abnormal lipid oxidation to oxidative stress-mediated tissue damage. To investigate the role of redox imbalance in MADD pathogenesis, we generated CRISPR/Cas9 knock-in Drosophila melanogaster models carrying patient-relevant Etf-QO missense mutations (L127R, S296C, and L399F; corresponding to human L138R, S307C, and L409F) within conserved FAD- and ubiquinone-binding domains. Mutant flies developed progressive locomotor impairment, reduced muscle performance, and marked lipid droplet accumulation in skeletal muscle, cardiac tissue, and fat bodies, indicating systemic defects in mitochondrial lipid utilization. Cardiac analyses demonstrated reduced fractional shortening, prolonged heart period, and increased arrhythmia index, consistent with metabolic cardiomyopathy associated with mitochondrial oxidative stress. In vivo respirometry revealed significantly decreased oxygen consumption, reflecting impaired oxidative phosphorylation. At the molecular level, mutant flies exhibited elevated ROS levels and ATP depletion, accompanied by increased expression of AMPK, PGC-1, and Tfam, suggesting activation of energy stress signaling and compensatory mitochondrial biogenesis. Importantly, endurance exercise significantly improved locomotor and cardiac function while reducing lipid accumulation and oxidative stress. Together, these findings establish a redox-centered in vivo model of MADD and identify oxidative stress as a major driver of disease pathology and a potential therapeutic target.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "20260520-20260529/2605.25363v1-marvel-universal-murrays-law-informed-vessel-tree-segmentation-and-topology-estimation",
+      "section": "quick",
+      "title_en": "MARVEL: Universal Murray's Law-informed Vessel Tree Segmentation and Topology Estimation",
+      "authors": "Yi Zhou, Thiara Sana Ahmed, Jacqueline Chua, Meng Wang, Qinrong Zhang, Alejandro F. Frangi, Huazhu Fu, Jun Cheng, Leopold Schmetterer, Bingyao Tan",
+      "date": "2026-05-25",
+      "pdf": "https://arxiv.org/pdf/2605.25363v1",
+      "score": "6.0",
+      "evidence": "血管分割方法可用于定量皮瓣中的血管新生",
+      "tldr": "现有深度学习血管分割方法忽略生物物理约束，导致分支不合理。本文提出MARVEL框架，集成Murray定律先验，通过可微正则化项强制局部分叉约束，在8个公开数据集上提升分割精度、拓扑一致性和生理合理性。在高血压分类任务中，MARVEL基于动静脉压力差显著优于基线，证明其临床价值。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Vascular circulation follows fundamental biophysical principles that optimize mass transport and metabolic energy expenditure, which can be effectively modeled by Murray's law. However, contemporary deep learning methods for vascular segmentation often neglect these biophysical constraints. This leads to physiologically implausible branching and misclassification vascular trees, rendering. These automated segmentation results are unreliable unreliable for downstream clinical tasks such as blood flow simulation or disease quantification. In this paper, we introduce MARVEL (Universal MurrAy's law-infoRmed Vessel sEgmentation and topoLogy estimation), a backbone-agnostic framework that integrates biophysical priors into vascular tree extraction. MARVEL combines per-pixel supervision with explicit radius predictions to enforce local bifurcation constraints derived from an empirical width-exponent mapping. We implement these constraints as differentiable regularizers during training to guide models toward physiologically consistent reconstructions. We evaluate MARVEL on eight public datasets across multiple vascular modalities and segmentation backbones. Results demonstrate MARVEL's superior performance in segmentation accuracy, topological consistency, and physiological plausibility. By converting segmented masks into graph-based hemodynamic simulations, we demonstrate that MARVEL preserves the subtle pathological narrowing and topological connectivity required to distinguish hypertensive from normotensive eyes. Results show that MARVEL significantly improves the classification of hypertension via arteriovenous pressure differences in the eye (p < 0.001), outperforming baseline models in both topological consistency and clinical predictive value.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "20260520-20260529/biorxiv-10-64898-2025-12-17-694993-v2-human-vein-to-artery-endothelial-cell-fate-transition-is-driven-by-vegferk-activation-and-pi3k-inhibition",
+      "section": "quick",
+      "title_en": "Human vein-to-artery endothelial cell fate transition is driven by VEGF/ERK activation and PI3K inhibition",
+      "authors": "Amir-Ugokwe, Z., Red-Horse, K., Loh, K. M., Ang, L. T., Pyke, A., Trimm, E., Chakraborty, M., Fan, X.",
+      "date": "2026-05-20",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2025.12.17.694993v2.full.pdf",
+      "score": "6.0",
+      "evidence": "建立了VEGF/ERK和PI3K抑制驱动的人静脉-动脉内皮细胞转分化模型，与皮瓣血管生成相关",
+      "tldr": "理解静脉到动脉（v2a）转化对血运重建疗法至关重要，但缺少人类模型。本研究开发了人诱导多能干细胞（hPSC）分化方案模拟v2a过程，转录组分析确认其对应血管新生来源的动脉EC。发现VEGF/ERK激活联合PI3K抑制可在48小时内驱动静脉EC获得动脉身份。该工作定义了动脉分化的最小信号，为治疗性血管生成提供新策略。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Artery endothelial cells (ECs) arise through different pathways, including differentiation from mesodermal cells (vasculogenesis) or from already established vein or capillary plexus ECs (angiogenesis), the latter being most common during embryonic development and regeneration. Understanding the vein-to-artery (v2a) transition could improve revascularization therapies, but progress is limited by a lack of human models. Here, we develop a human pluripotent stem cell (hPSC) differentiation protocol that models the v2a EC conversion. Comparing v2a and mesoderm-to-artery (m2a) transcriptomes with publicly available single cell RNA sequencing (scRNA-seq) data from human embryos showed they reflected angiogenesis- and vasculogenesis-derived artery ECs, respectively. This reductionist system revealed that VEGF activation alongside PI3K inhibition was sufficient for vein ECs to acquire arterial identity within 48 hours. We model a critical step in vascular development and define the minimal signals required for artery differentiation from veins, providing a framework to promote this conversion in revascularization or therapeutic contexts.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
