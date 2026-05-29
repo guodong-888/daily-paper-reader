@@ -1,0 +1,39 @@
+{
+  "label": "2026-04-30 ~ 2026-05-29",
+  "date": "2026-04-30 ~ 2026-05-29",
+  "generated_at": "2026-05-29T04:29:59",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "20260430-20260529/biorxiv-10-1101-2025-06-27-661962-v3-mechanical-loading-induces-distinct-and-shared-responses-in-endothelial-and-muscle-cells-and-reveals-exercise-like-molecular-profiles",
+      "section": "quick",
+      "title_en": "Mechanical loading induces distinct and shared responses in endothelial and muscle cells and reveals exercise-like molecular profiles",
+      "authors": "Mäntyselkä, S., Niemi, E., Ylä-Outinen, L., Kolari, K., Uusitalo-Kylmälä, L., Ortega-Alonso, A., Liimatainen, R.-M., Fachada, V., Permi, P., Kalenius, E., Hulmi, J., Kivelä, R.",
+      "date": "2026-05-05",
+      "pdf": "https://www.biorxiv.org/content/10.1101/2025.06.27.661962v3.full.pdf",
+      "score": "8.0",
+      "evidence": "模拟运动力学加载引起内皮和肌肉细胞代谢变化",
+      "tldr": "机械加载模拟运动刺激，诱导内皮和骨骼肌细胞产生共享及细胞类型特异的转录组和代谢组变化。两种细胞均通过活性氧依赖机制释放乙酸，而电子传递链基因在内皮细胞中被抑制、在肌肉细胞中上调。内皮细胞表现更显著的代谢改变，如丝氨酸生物合成增强，该通路通过PHGDH影响细胞合成代谢和静止。这些发现揭示了机械刺激与运动效应的分子关联。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Skeletal muscles and blood vessels are continuously exposed to mechanical forces, particularly during exercise. We subjected human endothelial and skeletal muscle cells to cyclic mechanical stretch to mimic exercise and investigated acute molecular responses. Mechanical loading elicited both shared and cell type-specific alterations in transcriptomic and metabolomic profiles, several of which mirrored changes observed in vivo following exercise. Both cell types released acetate in response to mechanical loading, at least partly via reactive oxygen species -dependent mechanism. Interestingly, transcriptomic changes occurred in opposite directions in endothelial and muscle cells. For example, genes associated with the electron transport chain were repressed in endothelial cells but upregulated in skeletal muscle cells. In endothelial cells mechanical loading remodelled intercellular junctions, promoted a transcriptomic shift indicative of increased barrier integrity and attenuated proliferation. Metabolic changes were more pronounced in endothelial cells, which exhibited increased serine biosynthesis from glucose, as demonstrated by 13C-(U)-glucose tracing. Targeting phosphoglycerate dehydrogenase (PHGDH), a key enzyme in the serine synthesis pathway, underscored the role of serine biosynthesis in endothelial cell anabolism. These findings suggest that mechanical loading recapitulates several exercise-induced effects in endothelial and muscle cells, and highlights a potential link between mechanical stimuli, serine synthesis, and endothelial cell quiescence.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "20260430-20260529/biorxiv-10-1101-2025-06-27-661962-v4-mechanical-loading-induces-distinct-and-shared-responses-in-endothelial-and-muscle-cells-and-reveals-exercise-like-molecular-profiles",
+      "section": "quick",
+      "title_en": "Mechanical loading induces distinct and shared responses in endothelial and muscle cells and reveals exercise-like molecular profiles",
+      "authors": "Mäntyselkä, S., Niemi, E., Ylä-Outinen, L., Kolari, K., Uusitalo-Kylmälä, L., Ortega-Alonso, A., Liimatainen, R.-M., Fachada, V., Permi, P., Kalenius, E., Hulmi, J., Kivelä, R.",
+      "date": "2026-05-06",
+      "pdf": "https://www.biorxiv.org/content/10.1101/2025.06.27.661962v4.full.pdf",
+      "score": "8.0",
+      "evidence": "模拟运动力学加载引起内皮和肌肉细胞代谢变化",
+      "tldr": "运动和机械力影响血管与肌肉。本研究对人内皮和骨骼肌细胞施加循环拉伸模拟运动，发现两种细胞均释放乙酸，但转录组变化方向相反：内皮细胞电子传递链受抑而肌肉细胞上调。内皮细胞代谢变化更显著，丝氨酸生物合成增强，且靶向PHGDH证实其在内皮合成代谢中的关键作用。这些结果揭示了机械加载模拟运动效应的共享与特异性分子机制，强调了机械刺激、丝氨酸合成与内皮细胞静止之间的联系。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Skeletal muscles and blood vessels are continuously exposed to mechanical forces, particularly during exercise. We subjected human endothelial and skeletal muscle cells to cyclic mechanical stretch to mimic exercise and investigated acute molecular responses. Mechanical loading elicited both shared and cell type-specific alterations in transcriptomic and metabolomic profiles, several of which mirrored changes observed in vivo following exercise. Both cell types released acetate in response to mechanical loading, at least partly via reactive oxygen species -dependent mechanism. Interestingly, transcriptomic changes occurred in opposite directions in endothelial and muscle cells. For example, genes associated with the electron transport chain were repressed in endothelial cells but upregulated in skeletal muscle cells. In endothelial cells mechanical loading remodelled intercellular junctions, promoted a transcriptomic shift indicative of increased barrier integrity and attenuated proliferation. Metabolic changes were more pronounced in endothelial cells, which exhibited increased serine biosynthesis from glucose, as demonstrated by 13C-(U)-glucose tracing. Targeting phosphoglycerate dehydrogenase (PHGDH), a key enzyme in the serine synthesis pathway, underscored the role of serine biosynthesis in endothelial cell anabolism. These findings suggest that mechanical loading recapitulates several exercise-induced effects in endothelial and muscle cells, and highlights a potential link between mechanical stimuli, serine synthesis, and endothelial cell quiescence.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

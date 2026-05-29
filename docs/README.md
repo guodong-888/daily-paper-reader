@@ -6,16 +6,16 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-20 ~ 2026-05-29
-- 运行时间：2026-05-29 04:24:02 UTC
+- 最新运行日期：2026-04-30 ~ 2026-05-29
+- 运行时间：2026-05-29 04:29:53 UTC
 - 运行状态：成功
-- 本次总论文数：3
-- 精读区：1
+- 本次总论文数：2
+- 精读区：0
 - 速读区：2
 
 ### 今日简报（AI）
-今日聚焦CRISPR模型下的代谢疾病与血管重建，精读运动干预脂质储积肌病研究。最值得关注：运动干预代谢不灵活性的基因模型机制，以及静脉-动脉内皮细胞转化的VEGF/ERK信号驱动。建议普通读者关注运动对代谢疾病的改善作用，以及血管重建技术的新突破。
-- 详情：[/20260520-20260529/README](/20260520-20260529/README)
+今日速读2篇论文，聚焦机械加载对内皮和肌肉细胞的差异化与共同响应，揭示类运动分子谱。最值得关注的是：机械力能激活类似运动的基因表达模式，为理解运动益处提供细胞层面线索。建议可进一步探索如何通过物理刺激模拟运动效果。
+- 详情：[/20260430-20260529/README](/20260430-20260529/README)
 
 ### 精读区论文标签
 1. [Exercise based Intervention For Metabolic Inflexibility Linked With Lipid Storage Myopathy Using Innovative CRISPR Etf-QO Mutant Knock-in Models](/20260520-20260529/biorxiv-10-64898-2026-05-18-726022-v1-exercise-based-intervention-for-metabolic-inflexibility-linked-with-lipid-storage-myopathy-using-innovative-crispr-etf-qo-mutant-knock-in-models)  
@@ -23,12 +23,12 @@
    evidence：运动干预改善肌病模型的代谢灵活性和线粒体功能，与改善皮瓣存活的代谢适应相关
 
 ### 速读区论文标签
-1. [MARVEL: Universal Murray's Law-informed Vessel Tree Segmentation and Topology Estimation](/20260520-20260529/2605.25363v1-marvel-universal-murrays-law-informed-vessel-tree-segmentation-and-topology-estimation)  
-   标签：评分：6.0/10、query:flap-ex-met
-   evidence：血管分割方法可用于定量皮瓣中的血管新生
-2. [Human vein-to-artery endothelial cell fate transition is driven by VEGF/ERK activation and PI3K inhibition](/20260520-20260529/biorxiv-10-64898-2025-12-17-694993-v2-human-vein-to-artery-endothelial-cell-fate-transition-is-driven-by-vegferk-activation-and-pi3k-inhibition)  
-   标签：评分：6.0/10、query:flap-ex-met
-   evidence：建立了VEGF/ERK和PI3K抑制驱动的人静脉-动脉内皮细胞转分化模型，与皮瓣血管生成相关
+1. [Mechanical loading induces distinct and shared responses in endothelial and muscle cells and reveals exercise-like molecular profiles](/20260430-20260529/biorxiv-10-1101-2025-06-27-661962-v3-mechanical-loading-induces-distinct-and-shared-responses-in-endothelial-and-muscle-cells-and-reveals-exercise-like-molecular-profiles)  
+   标签：评分：8.0/10、query:flap-ex-met
+   evidence：模拟运动力学加载引起内皮和肌肉细胞代谢变化
+2. [Mechanical loading induces distinct and shared responses in endothelial and muscle cells and reveals exercise-like molecular profiles](/20260430-20260529/biorxiv-10-1101-2025-06-27-661962-v4-mechanical-loading-induces-distinct-and-shared-responses-in-endothelial-and-muscle-cells-and-reveals-exercise-like-molecular-profiles)  
+   标签：评分：8.0/10、query:flap-ex-met
+   evidence：模拟运动力学加载引起内皮和肌肉细胞代谢变化
 
 
 <div class="dpr-home-promo-card">
