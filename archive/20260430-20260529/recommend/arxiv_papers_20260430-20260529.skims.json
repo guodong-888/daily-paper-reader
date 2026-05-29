@@ -1,16 +1,16 @@
 {
   "mode": "skims",
-  "generated_at": "2026-05-29T04:29:39.309370+00:00",
+  "generated_at": "2026-05-29T04:42:58.263817+00:00",
   "stats": {
     "mode": "skims",
     "forced_all_quick": true,
     "min_score": 8.0,
-    "deep_divecandidates": 2,
+    "deep_divecandidates": 1,
     "deep_cap": null,
     "deep_selected": 0,
-    "quick_candidates": 2,
+    "quick_candidates": 1,
     "quick_skim_target": null,
-    "quick_selected": 2
+    "quick_selected": 1
   },
   "deep_dive": [],
   "quick_skim": [
@@ -44,58 +44,13 @@
         "query:flap-ex-met"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "exercise-mimicking mechanical loading alters metabolism in endothelial and muscle cells",
-      "llm_evidence_cn": "模拟运动力学加载引起内皮和肌肉细胞代谢变化",
-      "llm_evidence": "模拟运动力学加载引起内皮和肌肉细胞代谢变化",
-      "canonical_evidence": "模拟运动力学加载引起内皮和肌肉细胞代谢变化",
-      "llm_tldr_en": "This study shows that cyclic mechanical stretch mimicking exercise induces shared and distinct transcriptomic and metabolomic changes in endothelial and muscle cells, including acetate release, which may underlie exercise-induced metabolic adaptations.",
-      "llm_tldr_cn": "运动时骨骼肌和血管持续承受机械力。本文对人内皮细胞和骨骼肌细胞施加循环机械拉伸模拟运动，发现机械加载引起细胞特异性的转录组和代谢组变化，包括两种细胞均释放乙酸盐。该结果揭示了运动诱导代谢适应的分子机制，为理解运动如何通过代谢途径影响组织存活提供了线索。",
-      "llm_tldr": "运动时骨骼肌和血管持续承受机械力。本文对人内皮细胞和骨骼肌细胞施加循环机械拉伸模拟运动，发现机械加载引起细胞特异性的转录组和代谢组变化，包括两种细胞均释放乙酸盐。该结果揭示了运动诱导代谢适应的分子机制，为理解运动如何通过代谢途径影响组织存活提供了线索。",
-      "llm_tags": [
-        "query:flap-ex-met"
-      ],
-      "matched_query_tag": "query:flap-ex-met",
-      "matched_query_text": "metabolic changes during exercise and flap survival",
-      "matched_requirement_id": "req-3",
-      "selection_source": "fresh_fetch"
-    },
-    {
-      "id": "biorxiv-10-1101-2025-06-27-661962-v4",
-      "source": "biorxiv",
-      "title": "Mechanical loading induces distinct and shared responses in endothelial and muscle cells and reveals exercise-like molecular profiles",
-      "abstract": "Skeletal muscles and blood vessels are continuously exposed to mechanical forces, particularly during exercise. We subjected human endothelial and skeletal muscle cells to cyclic mechanical stretch to mimic exercise and investigated acute molecular responses. Mechanical loading elicited both shared and cell type-specific alterations in transcriptomic and metabolomic profiles, several of which mirrored changes observed in vivo following exercise. Both cell types released acetate in response to mechanical loading, at least partly via reactive oxygen species -dependent mechanism. Interestingly, transcriptomic changes occurred in opposite directions in endothelial and muscle cells. For example, genes associated with the electron transport chain were repressed in endothelial cells but upregulated in skeletal muscle cells. In endothelial cells mechanical loading remodelled intercellular junctions, promoted a transcriptomic shift indicative of increased barrier integrity and attenuated proliferation. Metabolic changes were more pronounced in endothelial cells, which exhibited increased serine biosynthesis from glucose, as demonstrated by 13C-(U)-glucose tracing. Targeting phosphoglycerate dehydrogenase (PHGDH), a key enzyme in the serine synthesis pathway, underscored the role of serine biosynthesis in endothelial cell anabolism. These findings suggest that mechanical loading recapitulates several exercise-induced effects in endothelial and muscle cells, and highlights a potential link between mechanical stimuli, serine synthesis, and endothelial cell quiescence.",
-      "authors": [
-        "Mäntyselkä, S.",
-        "Niemi, E.",
-        "Ylä-Outinen, L.",
-        "Kolari, K.",
-        "Uusitalo-Kylmälä, L.",
-        "Ortega-Alonso, A.",
-        "Liimatainen, R.-M.",
-        "Fachada, V.",
-        "Permi, P.",
-        "Kalenius, E.",
-        "Hulmi, J.",
-        "Kivelä, R."
-      ],
-      "primary_category": "physiology",
-      "categories": [
-        "physiology"
-      ],
-      "published": "2026-05-06T00:00:00+00:00",
-      "link": "https://www.biorxiv.org/content/10.1101/2025.06.27.661962v4.full.pdf",
-      "tags": [
-        "keyword:flap-ex-met",
-        "query:flap-ex-met"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "exercise-mimicking mechanical loading alters metabolism in endothelial and muscle cells",
-      "llm_evidence_cn": "模拟运动力学加载引起内皮和肌肉细胞代谢变化",
-      "llm_evidence": "模拟运动力学加载引起内皮和肌肉细胞代谢变化",
-      "canonical_evidence": "模拟运动力学加载引起内皮和肌肉细胞代谢变化",
-      "llm_tldr_en": "This study shows that cyclic mechanical stretch mimicking exercise induces shared and distinct transcriptomic and metabolomic changes in endothelial and muscle cells, including acetate release, which may underlie exercise-induced metabolic adaptations.",
-      "llm_tldr_cn": "运动时骨骼肌和血管持续承受机械力。本文对人内皮细胞和骨骼肌细胞施加循环机械拉伸模拟运动，发现机械加载引起细胞特异性的转录组和代谢组变化，包括两种细胞均释放乙酸盐。该结果揭示了运动诱导代谢适应的分子机制，为理解运动如何通过代谢途径影响组织存活提供了线索。",
-      "llm_tldr": "运动时骨骼肌和血管持续承受机械力。本文对人内皮细胞和骨骼肌细胞施加循环机械拉伸模拟运动，发现机械加载引起细胞特异性的转录组和代谢组变化，包括两种细胞均释放乙酸盐。该结果揭示了运动诱导代谢适应的分子机制，为理解运动如何通过代谢途径影响组织存活提供了线索。",
+      "llm_evidence_en": "mechanical loading mimicking exercise induces metabolomic changes in endothelial and muscle cells",
+      "llm_evidence_cn": "机械负荷模拟运动诱导内皮和肌肉细胞的代谢组变化",
+      "llm_evidence": "机械负荷模拟运动诱导内皮和肌肉细胞的代谢组变化",
+      "canonical_evidence": "机械负荷模拟运动诱导内皮和肌肉细胞的代谢组变化",
+      "llm_tldr_en": "Cyclic mechanical stretch of human endothelial and muscle cells mimics exercise, causing shared and cell-specific transcriptomic and metabolomic changes, including acetate release via ROS, relevant to exercise-induced metabolic adaptations for flap survival.",
+      "llm_tldr_cn": "为探究运动如何通过代谢变化影响组织存活，该研究对人类内皮和肌肉细胞施加循环机械拉伸以模拟运动。结果显示，机械负荷引发了共享和细胞特异的转录组与代谢组改变，其中两种细胞均释放乙酸，部分依赖于活性氧。这些变化模拟了体内运动后的分子谱，提示机械力可直接诱导代谢重构，为理解运动预适应改善皮瓣存活提供了细胞层面的代谢机制线索。",
+      "llm_tldr": "为探究运动如何通过代谢变化影响组织存活，该研究对人类内皮和肌肉细胞施加循环机械拉伸以模拟运动。结果显示，机械负荷引发了共享和细胞特异的转录组与代谢组改变，其中两种细胞均释放乙酸，部分依赖于活性氧。这些变化模拟了体内运动后的分子谱，提示机械力可直接诱导代谢重构，为理解运动预适应改善皮瓣存活提供了细胞层面的代谢机制线索。",
       "llm_tags": [
         "query:flap-ex-met"
       ],
