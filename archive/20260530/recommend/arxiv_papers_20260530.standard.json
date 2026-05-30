@@ -1,0 +1,58 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-05-30T22:02:21.997230+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-05-21-727012-v1",
+      "source": "biorxiv",
+      "title": "MetaboRamics: Highly multiplexed metabolic imaging by stimulated Raman for spatial metabolomics in live cells",
+      "abstract": "Cellular metabolism is highly dynamic, intertwined and spatially heterogenous, yet methods that can simultaneously visualize multiple metabolic pathways in living systems remain largely limited. Here, we present MetaboRamics: highly multiplexed metabolic imaging by stimulated Raman for spatial metabolomics in live cells. Through rational probe selection and careful optimization, isotope editing, and robust spectral unmixing, we establish a metabolic palette of 16-colors spanning glucose uptake and utilization, lipid uptake and synthesis, choline metabolism, DNA synthesis, and amino acid incorporation in addition to endogenous proteins, lipids and redox signals. Incorporation of organelle-targeted Raman probes further enables spatial interactomics and assessment of organelle activities. Applying MetaboRamics to epithelial-mesenchymal transition (EMT), we observe metabolic rewiring in mesenchymal cells, reflected by reduced glucose-derived biomass, lipid turnover, protein synthesis, and altered redox balance. Finally, we perform optical phenotyping of cellular states under metabolic stress of serum deprivation, nutrient overload (fructose, and saturated fatty acid), inflammation, and pharmacological perturbations to reveal subcellular metabolic changes. This work fully realizes the potential of stimulated Raman scattering (SRS) microscopy for super-multiplexed metabolic imaging by establishing, for the first time, a 16-plex platform for live-cell spatial metabolomics.",
+      "authors": [
+        "Chadha, R. S.",
+        "Colazo, A.",
+        "Ambarian, J. A.",
+        "Yang, Z.",
+        "Kocheril, P. A.",
+        "Yang, B. Y.",
+        "Wei, L."
+      ],
+      "primary_category": "cell biology",
+      "categories": [
+        "cell biology"
+      ],
+      "published": "2026-05-26T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.05.21.727012v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "method enables imaging of multiple metabolic pathways in live cells, applicable to study exercise-induced metabolic changes in skin flaps",
+      "llm_evidence_cn": "该方法可成像活细胞中多个代谢通路，适用于研究运动诱导的皮瓣代谢变化",
+      "llm_evidence": "该方法可成像活细胞中多个代谢通路，适用于研究运动诱导的皮瓣代谢变化",
+      "canonical_evidence": "该方法可成像活细胞中多个代谢通路，适用于研究运动诱导的皮瓣代谢变化",
+      "llm_tldr_en": "MetaboRamics uses stimulated Raman scattering to simultaneously image 16 metabolic pathways in live cells, enabling spatial metabolomics for studying dynamic metabolism in tissues like skin flaps under exercise.",
+      "llm_tldr_cn": "细胞代谢高度动态且空间异质，现有方法难以同时可视化多条代谢通路。本文提出MetaboRamics，基于受激拉曼散射与同位素编辑，实现活细胞中16色代谢成像，涵盖葡萄糖、脂质、DNA合成等通路。该方法可应用于研究运动引起的皮瓣代谢变化，为理解代谢重编程提供了强大工具。",
+      "llm_tldr": "细胞代谢高度动态且空间异质，现有方法难以同时可视化多条代谢通路。本文提出MetaboRamics，基于受激拉曼散射与同位素编辑，实现活细胞中16色代谢成像，涵盖葡萄糖、脂质、DNA合成等通路。该方法可应用于研究运动引起的皮瓣代谢变化，为理解代谢重编程提供了强大工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "exercise induced metabolic changes in skin flap",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
