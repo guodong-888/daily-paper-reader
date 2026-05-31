@@ -6,26 +6,22 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-30
-- 运行时间：2026-05-30 22:02:35 UTC
+- 最新运行日期：2026-05-22 ~ 2026-05-31
+- 运行时间：2026-05-31 15:21:27 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：0
 - 精读区：0
-- 速读区：1
+- 速读区：0
 
 ### 今日简报（AI）
-今日关注活细胞空间代谢组学成像新方法，速读一篇相关论文。  
-该研究利用受激拉曼散射实现高度多重代谢成像，为活细胞原位代谢分析提供新工具。  
-建议普通读者留意该技术在动态代谢通路研究中的潜在应用。
-- 详情：[/202605/30/README](/202605/30/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/20260522-20260531/README](/20260522-20260531/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [MetaboRamics: Highly multiplexed metabolic imaging by stimulated Raman for spatial metabolomics in live cells](/202605/30/biorxiv-10-64898-2026-05-21-727012-v1-metaboramics-highly-multiplexed-metabolic-imaging-by-stimulated-raman-for-spatial-metabolomics-in-live-cells)  
-   标签：评分：6.0/10、query:flap-ex-met
-   evidence：该方法可成像活细胞中多个代谢通路，适用于研究运动诱导的皮瓣代谢变化
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
