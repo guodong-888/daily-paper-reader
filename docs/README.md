@@ -7,26 +7,29 @@
 
 ## 每次日报
 - 最新运行日期：2026-06-04
-- 运行时间：2026-06-04 01:10:20 UTC
+- 运行时间：2026-06-04 23:45:34 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：3
 - 精读区：0
-- 速读区：2
+- 速读区：3
 
 ### 今日简报（AI）
-今日精读0篇，速读2篇，分别聚焦罕见事件反事实风险估计（7.0分）与活体小鼠成像方法（6.0分）。建议重点关注《Scalable Counterfactual Risk Estimation for Rare Events in Longitudinal Data》，其评分较高且对纵向数据中罕见事件的因果推断有实用价值。若想深入，可速读这篇论文的方法细节，另一篇成像技术更适合生物医学领域参考。
+今日速读3篇，聚焦细胞表面蛋白质组标记、红细胞低氧记忆与高原适应、以及运动对心脏保护的性别差异。最值得关注的是MARBL方法（7.0分）用于活细胞能量代谢异质性分析，以及糖皮质激素编程的红细胞低氧记忆促进快速高原适应（6.0分）。建议进一步了解这些机制在疾病治疗和运动医学中的潜在应用。
 - 详情：[/202606/04/README](/202606/04/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Scalable Counterfactual Risk Estimation for Rare Events in Longitudinal Data](/202606/04/2606.01539v1-scalable-counterfactual-risk-estimation-for-rare-events-in-longitudinal-data)  
+1. [MARBL: A Live-Cell Method for Profiling Bioenergetic Heterogeneity by Noncanonical Methionine Labeling of the Cell Surface Proteome](/202606/04/biorxiv-10-64898-2026-06-01-729353-v1-marbl-a-live-cell-method-for-profiling-bioenergetic-heterogeneity-by-noncanonical-methionine-labeling-of-the-cell-surface-proteome)  
    标签：评分：7.0/10、query:flap-ex-met
-   evidence：提供了适用于皮瓣存活研究的生存结果因果推断方法
-2. [Wide-Field Calcium and Flavoprotein Autofluorescence Imaging in Living Mice](/202606/04/biorxiv-10-64898-2026-05-14-725112-v2-wide-field-calcium-and-flavoprotein-autofluorescence-imaging-in-living-mice)  
+   evidence：活细胞代谢应激检测方法
+2. [Glucocorticoid Programming of Erythrocyte Hypoxic Memory Enables Rapid High-Altitude Acclimatization](/202606/04/biorxiv-10-64898-2026-05-26-728051-v1-glucocorticoid-programming-of-erythrocyte-hypoxic-memory-enables-rapid-high-altitude-acclimatization)  
    标签：评分：6.0/10、query:flap-ex-met
-   evidence：宽场黄素蛋白自发荧光成像可反映线粒体氧化还原动态，可用于研究运动诱导的皮瓣代谢变化
+   evidence：间歇性缺氧训练诱导代谢记忆促进高原适应
+3. [Exercise prevents cardiac electrical remodeling in doxorubicin-treated female mice but does not provide cardioprotection in males.](/202606/04/biorxiv-10-64898-2026-05-28-728478-v1-exercise-prevents-cardiac-electrical-remodeling-in-doxorubicin-treated-female-mice-but-does-not-provide-cardioprotection-in-males)  
+   标签：评分：6.0/10、query:flap-ex-met
+   evidence：运动训练对心脏组织的影响与皮瓣预处理类似
 
 
 <div class="dpr-home-promo-card">

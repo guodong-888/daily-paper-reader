@@ -1,90 +1,142 @@
 {
   "mode": "standard",
-  "generated_at": "2026-06-04T01:09:22.578235+00:00",
+  "generated_at": "2026-06-04T23:45:09.540371+00:00",
   "stats": {
     "mode": "standard",
     "tag_count": 1,
     "deep_divecandidates": 0,
     "deep_cap": 6,
     "deep_selected": 0,
-    "quick_candidates": 2,
+    "quick_candidates": 3,
     "quick_skim_target": 11,
-    "quick_selected": 2
+    "quick_selected": 3
   },
   "deep_dive": [],
   "quick_skim": [
     {
-      "id": "2606.01539v1",
-      "source": "arxiv",
-      "title": "Scalable Counterfactual Risk Estimation for Rare Events in Longitudinal Data",
-      "abstract": "Estimating the causal effect of time-varying treatments on survival outcomes in large observational studies is computationally demanding, particularly when outcomes are rare. While g-formula-based methods such as the iterative conditional expectation (ICE) estimator provide a principled framework for longitudinal causal inference, they become computationally expensive, especially when bootstrap-based variance estimation is required. In addition, outcome rarity at each time point induces severe class imbalance, leading to instability and convergence issues in logistic regression and related models. To address these challenges, we propose a principled subsampling and reweighting strategy for longitudinal survival data that can be applied to a range of existing causal effect estimators in this setting, including the ICE estimator. The proposed method substantially reduces computational burden while preserving consistency and improving estimation stability in rare-outcome settings. We evaluate the method through simulations and validate it using a large-scale EHR cohort study on social and behavioral determinants of health (SBDH) and suicide risk, demonstrating its effectiveness for modeling rare outcomes in longitudinal data.",
+      "id": "biorxiv-10-64898-2026-06-01-729353-v1",
+      "source": "biorxiv",
+      "title": "MARBL: A Live-Cell Method for Profiling Bioenergetic Heterogeneity by Noncanonical Methionine Labeling of the Cell Surface Proteome",
+      "abstract": "Heterogeneity is a hallmark of biological systems, where cell-to-cell variability supports adaptation to changing environments, but also enables maladaptive states such as drug resistance. Many sources of non-genetic variation, particularly bioenergetics and metabolism, remain difficult to measure in living cells and connect to functional outcomes. Here, we introduce MARBL (Methionine Analogues for Ratiometric Bioenergetics in Live cells), a method that encodes translationally-coupled energetic responses to metabolic stress as an internally normalized signal within the surface proteome of living cells. Applying MARBL to primary immune cells reveals that differences in baseline translational activity can underlie apparent metabolic vulnerabilities, underscoring the importance of ratiometric measurements. We demonstrate that MARBL can enrich pathogenic from non-pathogenic TH17 cells based on resilience to bioenergetic stress, which functionally distinguishes cells that produce IFN{gamma} upon restimulation. Overall, MARBL offers a versatile platform to profile metabolic resilience in living cells and link bioenergetic state to cellular function.",
       "authors": [
-        "Xiaohui Yin",
-        "Avijit Mitra",
-        "Ying Zhou",
-        "Kun Chen",
-        "Hong Yu"
+        "Delacruz, L. R.",
+        "Ye, M.",
+        "Libby, K. A.",
+        "Han, K.",
+        "Munger, C. J.",
+        "Qiu, Y.",
+        "Kurland, I. J.",
+        "Ringel, A. E."
       ],
-      "primary_category": "stat.ME",
+      "primary_category": "cell biology",
       "categories": [
-        "stat.ME",
-        "cs.LG"
+        "cell biology"
       ],
-      "published": "2026-06-01T01:41:16+00:00",
-      "link": "https://arxiv.org/pdf/2606.01539v1",
+      "published": "2026-06-02T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.01.729353v1.full.pdf",
       "tags": [
         "keyword:flap-ex-met",
         "query:flap-ex-met"
       ],
       "llm_score": 7.0,
-      "llm_evidence_en": "provides causal inference method for survival outcomes applicable to flap survival studies",
-      "llm_evidence_cn": "提供了适用于皮瓣存活研究的生存结果因果推断方法",
-      "llm_evidence": "提供了适用于皮瓣存活研究的生存结果因果推断方法",
-      "canonical_evidence": "提供了适用于皮瓣存活研究的生存结果因果推断方法",
-      "llm_tldr_en": "Proposes a subsampling and reweighting strategy for longitudinal survival data to enable scalable counterfactual risk estimation, applicable to studying factors influencing flap survival.",
-      "llm_tldr_cn": "本研究提出一种针对纵向生存数据的子采样与重新加权策略，实现了可扩展的反事实风险估计。该方法通过处理罕见事件中的类别不平衡问题，为评估皮瓣存活影响因素提供了高效的计算工具，尤其适用于运动干预等时间变化处理的效果分析。",
-      "llm_tldr": "本研究提出一种针对纵向生存数据的子采样与重新加权策略，实现了可扩展的反事实风险估计。该方法通过处理罕见事件中的类别不平衡问题，为评估皮瓣存活影响因素提供了高效的计算工具，尤其适用于运动干预等时间变化处理的效果分析。",
+      "llm_evidence_en": "live-cell method for metabolic stress profiling",
+      "llm_evidence_cn": "活细胞代谢应激检测方法",
+      "llm_evidence": "活细胞代谢应激检测方法",
+      "canonical_evidence": "活细胞代谢应激检测方法",
+      "llm_tldr_en": "MARBL enables profiling of bioenergetic heterogeneity in living cells by measuring translationally-coupled responses to metabolic stress via surface proteome labeling.",
+      "llm_tldr_cn": "当前检测活细胞代谢异质性的方法有限。本文提出MARBL方法，通过非经典蛋氨酸标记细胞表面蛋白质组，编码翻译耦合的代谢应激反应。将该方法应用于原代免疫细胞，揭示了基线翻译活性的差异。该方法为研究细胞代谢异质性提供了有力工具。",
+      "llm_tldr": "当前检测活细胞代谢异质性的方法有限。本文提出MARBL方法，通过非经典蛋氨酸标记细胞表面蛋白质组，编码翻译耦合的代谢应激反应。将该方法应用于原代免疫细胞，揭示了基线翻译活性的差异。该方法为研究细胞代谢异质性提供了有力工具。",
       "llm_tags": [
         "query:flap-ex-met"
       ],
       "matched_query_tag": "query:flap-ex-met",
-      "matched_query_text": "factors influencing flap survival",
-      "matched_requirement_id": "req-2",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
       "selection_source": "fresh_fetch",
       "quick_tier": "7"
     },
     {
-      "id": "biorxiv-10-64898-2026-05-14-725112-v2",
+      "id": "biorxiv-10-64898-2026-05-26-728051-v1",
       "source": "biorxiv",
-      "title": "Wide-Field Calcium and Flavoprotein Autofluorescence Imaging in Living Mice",
-      "abstract": "Wide-field imaging (WFI) is a mesoscopic approach for monitoring cortex-wide activity with high temporal resolution and a broad field of view. Owing to its simple optical configuration and compatibility with chronic preparations, WFI has become an important tool in systems neuroscience and disease-model research. In this chapter, we describe practical protocols for chronic transcranial WFI in mice using two complementary optical signals: genetically encoded calcium indicators (GCaMP) and endogenous flavoprotein autofluorescence. Calcium imaging provides a robust readout of neuronal population activity, whereas flavoprotein imaging reflects mitochondrial redox dynamics and cellular metabolic demand. We detail procedures for animal preparation, skull clearing, headplate implantation, macroscope assembly, synchronized sensory stimulation, triggered image acquisition, and MATLAB-based data analysis. The analysis workflow includes {Delta}F/F normalization, reference-based signal correction, and artifact reduction, followed by trial averaging, atlas registration, and region-of-interest analysis. Because imaging is performed through the intact skull, the protocol enables repeated longitudinal measurements in the same animal over extended periods. This approach is reproducible, cost-effective, and adaptable to studies of cortical physiology and neurological disorders.",
+      "title": "Glucocorticoid Programming of Erythrocyte Hypoxic Memory Enables Rapid High-Altitude Acclimatization",
+      "abstract": "BackgroundRapid ascent to high altitude causes acute mountain sickness (AMS) and life-threatening pulmonary/cerebral edema, yet no prophylaxis enables immediate acclimatization. Intermittent hypoxia training (IHT) establishes a \"hypoxic memory\" that accelerates adaptation, to high altitude, but its cellular and molecular basis remains undefined, precluding effective pharmacological strategies.\n\nMethodsA human cohort of 18 sea-level inhibitants was equally divided into two groups, one group received IHT prior to ascent to 3,500 meters, the other group did not. Multi-omics profiling of erythrocytes and plasma, along with isotopic glucose tracing, was employed to examine the metabolic effects of IHT upon high altitude acclimatization. Preclinical studies with genetically engineered mice were used to further define the molecular and metabolic basis of IHT-induced hypoxic memory allowing rapid acclimatization to high altitude.\n\nResultsMetabolomics revealed glucocorticoids as previously unrecognized endogenous erythroid hypoxic memory orchestrators induced by IHT that negatively correlated with AMS severity. Lipidomics and isotopic glucose tracing demonstrated that glucocorticoid signaling via the glucocorticoid receptor (GR) coordinately enhanced glucose metabolism and activated sphingosine kinase-1 (SPHK1)-driven sphingosine-1-phosphate (S1P) synthesis, pre-conditioning erythrocyte oxygen unloading and antioxidant capacity. Glucocorticoid supplementation enhanced erythrocyte SPHK1 activation and oxygen delivery, counteracting multi-tissue hypoxia and pulmonary and renal neutrophil infiltration. Conversely, erythrocyte-specific Sphk1 ablation abolished glucocorticoid-induced S1P production causing severe tissue hypoxia and exaggerated pulmonary neutrophil infiltration.\n\nConclusionsWe establish a new function of glucocorticoids in erythrocyte metabolic plasticity to enhance oxygen delivery as a hypoxic memory mechanism for rapid adaptation to high altitude. This previously unrecognized GR-mediated reprograming of glucose and sphingolipid metabolism offers a transformative precision pharmacologic strategy for high altitude preconditioning, high altitude emergencies and hypoxia-driven diseases.",
       "authors": [
-        "Yoshida, T."
+        "Chou, T.",
+        "Zhang, Y.",
+        "Yu, X.",
+        "Gao, J.",
+        "Chen, C.",
+        "Liu, W.",
+        "Liu, J.",
+        "Yang, Z.",
+        "Kellems, R. E.",
+        "Zhu, L.",
+        "Yang, X."
       ],
-      "primary_category": "neuroscience",
+      "primary_category": "cell biology",
       "categories": [
-        "neuroscience"
+        "cell biology"
       ],
-      "published": "2026-05-27T00:00:00+00:00",
-      "link": "https://www.biorxiv.org/content/10.64898/2026.05.14.725112v2.full.pdf",
+      "published": "2026-05-30T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.05.26.728051v1.full.pdf",
       "tags": [
         "keyword:flap-ex-met",
         "query:flap-ex-met"
       ],
       "llm_score": 6.0,
-      "llm_evidence_en": "wide-field flavoprotein autofluorescence imaging reflects mitochondrial redox dynamics, applicable to study exercise-induced metabolic changes in flap",
-      "llm_evidence_cn": "宽场黄素蛋白自发荧光成像可反映线粒体氧化还原动态，可用于研究运动诱导的皮瓣代谢变化",
-      "llm_evidence": "宽场黄素蛋白自发荧光成像可反映线粒体氧化还原动态，可用于研究运动诱导的皮瓣代谢变化",
-      "canonical_evidence": "宽场黄素蛋白自发荧光成像可反映线粒体氧化还原动态，可用于研究运动诱导的皮瓣代谢变化",
-      "llm_tldr_en": "This protocol describes wide-field calcium and flavoprotein autofluorescence imaging in living mice, providing a tool to monitor mitochondrial metabolism and neuronal activity, relevant for studying exercise effects on flap survival.",
-      "llm_tldr_cn": "本论文描述了小鼠慢性经颅宽场成像的实用方案，利用基因编码钙指示剂和黄素蛋白自发荧光两种互补信号，分别监测神经元群体活动和线粒体氧化还原动态；该方法具有高时间分辨率和宽视野，可用于研究运动训练引起的皮瓣代谢变化及其对存活的影响。",
-      "llm_tldr": "本论文描述了小鼠慢性经颅宽场成像的实用方案，利用基因编码钙指示剂和黄素蛋白自发荧光两种互补信号，分别监测神经元群体活动和线粒体氧化还原动态；该方法具有高时间分辨率和宽视野，可用于研究运动训练引起的皮瓣代谢变化及其对存活的影响。",
+      "llm_evidence_en": "intermittent hypoxia training induces metabolic memory and enhances altitude acclimatization",
+      "llm_evidence_cn": "间歇性缺氧训练诱导代谢记忆促进高原适应",
+      "llm_evidence": "间歇性缺氧训练诱导代谢记忆促进高原适应",
+      "canonical_evidence": "间歇性缺氧训练诱导代谢记忆促进高原适应",
+      "llm_tldr_en": "IHT establishes hypoxic memory via metabolic reprogramming of erythrocytes, enabling rapid high-altitude acclimatization, demonstrated by multi-omics and isotopic tracing.",
+      "llm_tldr_cn": "快速登高导致急性高山病，现有预防手段不足。本文发现间歇性缺氧训练（IHT）可建立缺氧记忆，加速高原适应。通过人体队列和多组学分析，结合同位素葡萄糖示踪，揭示了红细胞代谢重编程的分子机制。该研究为开发模拟IHT的药物治疗提供了新靶点。",
+      "llm_tldr": "快速登高导致急性高山病，现有预防手段不足。本文发现间歇性缺氧训练（IHT）可建立缺氧记忆，加速高原适应。通过人体队列和多组学分析，结合同位素葡萄糖示踪，揭示了红细胞代谢重编程的分子机制。该研究为开发模拟IHT的药物治疗提供了新靶点。",
       "llm_tags": [
         "query:flap-ex-met"
       ],
       "matched_query_tag": "query:flap-ex-met",
-      "matched_query_text": "mitochondrial function exercise and flap survival",
-      "matched_requirement_id": "req-4",
+      "matched_query_text": "exercise preconditioning improves flap survival via metabolism",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-05-28-728478-v1",
+      "source": "biorxiv",
+      "title": "Exercise prevents cardiac electrical remodeling in doxorubicin-treated female mice but does not provide cardioprotection in males.",
+      "abstract": "BackgroundDoxorubicin (DOX) causes sex-specific cardiotoxicity. Metabolic impairment is a well-established cardiotoxic effect of DOX treatment that can contribute to other detrimental effects such as increased reactive oxygen species, reduced ATP, inflammation etc. We hypothesized that preserving cardiac metabolism by exercise can attenuate DOX cardiotoxicity.\n\nMethodsMale and female C57BL/6J mice at 15 weeks of age were randomly assigned to one of four groups, 1) Control (sedentary), 2) EX (exercised, treadmill running), 3) DOX (doxorubicin at 5 mg/kg/week for 6 weeks), and 4) EXDOX (exercise + doxorubicin). Echocardiography was performed every other week during the 6-week protocol to measure cardiac mechanical function. At the end of the protocol, optical mapping and seahorse analysis were performed to measure electrophysiology and metabolism, respectively. RNA sequencing, cytokine array assay and transmission electron microscopy were also performed to determine sex-specific mechanisms of DOX cardiotoxicity.\n\nResultsDOX reduced stroke volume and left ventricular diameter in males only and exercise did not prevent these effects of DOX. In female mice, DOX prolonged action potential duration (APD) and slowed conduction velocity (CV), and importantly, exercise prevented DOX-induced CV slowing. Exercise-induced cardioprotection against DOX in female mice was associated with preservation of aerobic metabolism and attenuation of inflammation which modulated ion channel gene expression. Specifically, Cacna1c was increased in both DOX and EXDOX females, but not in males and correlated with APD prolongation. Interestingly, despite CV slowing, Gja1 and Scn5a were increased. However, increased Kcnj8 along with metabolic impairment could cause membrane hyperpolarization and underlie CV slowing.\n\nConclusionsDOX cardiotoxicity is sex specific. Mechanical dysfunction is more prevalent in DOX-treated males while arrhythmogenic electrical remodeling is more prevalent in DOX-treated females. Exercise therapy during DOX did not prevent DOX induced mechanical dysfunction in male hearts but attenuated electrical remodeling in females by preserving metabolism and attenuating inflammation.",
+      "authors": [
+        "Melcher, A. V.",
+        "Haflett, L.",
+        "Tang, L.",
+        "Trampel, K.",
+        "Bodapotula, M.",
+        "George, S. A."
+      ],
+      "primary_category": "physiology",
+      "categories": [
+        "physiology"
+      ],
+      "published": "2026-05-29T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.05.28.728478v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "exercise training effect on cardiac tissue similar to flap preconditioning",
+      "llm_evidence_cn": "运动训练对心脏组织的影响与皮瓣预处理类似",
+      "llm_evidence": "运动训练对心脏组织的影响与皮瓣预处理类似",
+      "canonical_evidence": "运动训练对心脏组织的影响与皮瓣预处理类似",
+      "llm_tldr_en": "This paper investigates exercise preconditioning to preserve cardiac metabolism and prevent electrical remodeling in doxorubicin-treated female mice, demonstrating a sex-specific cardioprotective effect via metabolic maintenance.",
+      "llm_tldr_cn": "本文研究运动预处理能否通过维持心脏代谢来预防阿霉素引起的心脏电重构，发现运动仅对雌性小鼠有保护作用，提示代谢保护机制存在性别差异。该研究为运动改善组织存活提供了代谢层面的证据。",
+      "llm_tldr": "本文研究运动预处理能否通过维持心脏代谢来预防阿霉素引起的心脏电重构，发现运动仅对雌性小鼠有保护作用，提示代谢保护机制存在性别差异。该研究为运动改善组织存活提供了代谢层面的证据。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "exercise training effect on flap survival",
+      "matched_requirement_id": "req-1",
       "selection_source": "fresh_fetch",
       "quick_tier": "6"
     }
