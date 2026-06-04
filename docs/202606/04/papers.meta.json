@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-04",
+  "date": "2026-06-04",
+  "generated_at": "2026-06-04T01:10:25",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/04/2606.01539v1-scalable-counterfactual-risk-estimation-for-rare-events-in-longitudinal-data",
+      "section": "quick",
+      "title_en": "Scalable Counterfactual Risk Estimation for Rare Events in Longitudinal Data",
+      "authors": "Xiaohui Yin, Avijit Mitra, Ying Zhou, Kun Chen, Hong Yu",
+      "date": "2026-06-01",
+      "pdf": "https://arxiv.org/pdf/2606.01539v1",
+      "score": "7.0",
+      "evidence": "提供了适用于皮瓣存活研究的生存结果因果推断方法",
+      "tldr": "纵向数据中估计罕见结局的因果效应面临计算负担大和类别不平衡问题。本文提出一种子采样与重加权策略，可应用于ICE等现有估计器。此方法大幅降低计算成本，同时保持估计一致性并提升稳定性。通过模拟和真实EHR自杀风险研究验证了有效性。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Estimating the causal effect of time-varying treatments on survival outcomes in large observational studies is computationally demanding, particularly when outcomes are rare. While g-formula-based methods such as the iterative conditional expectation (ICE) estimator provide a principled framework for longitudinal causal inference, they become computationally expensive, especially when bootstrap-based variance estimation is required. In addition, outcome rarity at each time point induces severe class imbalance, leading to instability and convergence issues in logistic regression and related models. To address these challenges, we propose a principled subsampling and reweighting strategy for longitudinal survival data that can be applied to a range of existing causal effect estimators in this setting, including the ICE estimator. The proposed method substantially reduces computational burden while preserving consistency and improving estimation stability in rare-outcome settings. We evaluate the method through simulations and validate it using a large-scale EHR cohort study on social and behavioral determinants of health (SBDH) and suicide risk, demonstrating its effectiveness for modeling rare outcomes in longitudinal data.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/04/biorxiv-10-64898-2026-05-14-725112-v2-wide-field-calcium-and-flavoprotein-autofluorescence-imaging-in-living-mice",
+      "section": "quick",
+      "title_en": "Wide-Field Calcium and Flavoprotein Autofluorescence Imaging in Living Mice",
+      "authors": "Yoshida, T.",
+      "date": "2026-05-27",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.05.14.725112v2.full.pdf",
+      "score": "6.0",
+      "evidence": "宽场黄素蛋白自发荧光成像可反映线粒体氧化还原动态，可用于研究运动诱导的皮瓣代谢变化",
+      "tldr": "宽场成像技术通过完整颅骨同时采集GCaMP钙信号和黄素蛋白自发荧光，实现小鼠皮层活动的长期纵向监测。该方法包含系统的动物准备、设备组装与MATLAB数据分析流程，采用ΔF/F校正、参考信号校正和伪影去除，结合图谱配准与ROI分析。实验证明该方案能够稳定获取神经元群体活动和代谢动态，成本低、可重复性强，为皮层生理与神经疾病研究提供了实用工具。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Wide-field imaging (WFI) is a mesoscopic approach for monitoring cortex-wide activity with high temporal resolution and a broad field of view. Owing to its simple optical configuration and compatibility with chronic preparations, WFI has become an important tool in systems neuroscience and disease-model research. In this chapter, we describe practical protocols for chronic transcranial WFI in mice using two complementary optical signals: genetically encoded calcium indicators (GCaMP) and endogenous flavoprotein autofluorescence. Calcium imaging provides a robust readout of neuronal population activity, whereas flavoprotein imaging reflects mitochondrial redox dynamics and cellular metabolic demand. We detail procedures for animal preparation, skull clearing, headplate implantation, macroscope assembly, synchronized sensory stimulation, triggered image acquisition, and MATLAB-based data analysis. The analysis workflow includes {Delta}F/F normalization, reference-based signal correction, and artifact reduction, followed by trial averaging, atlas registration, and region-of-interest analysis. Because imaging is performed through the intact skull, the protocol enables repeated longitudinal measurements in the same animal over extended periods. This approach is reproducible, cost-effective, and adaptable to studies of cortical physiology and neurological disorders.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

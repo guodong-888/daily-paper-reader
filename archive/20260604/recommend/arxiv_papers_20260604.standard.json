@@ -1,0 +1,92 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-04T01:09:22.578235+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.01539v1",
+      "source": "arxiv",
+      "title": "Scalable Counterfactual Risk Estimation for Rare Events in Longitudinal Data",
+      "abstract": "Estimating the causal effect of time-varying treatments on survival outcomes in large observational studies is computationally demanding, particularly when outcomes are rare. While g-formula-based methods such as the iterative conditional expectation (ICE) estimator provide a principled framework for longitudinal causal inference, they become computationally expensive, especially when bootstrap-based variance estimation is required. In addition, outcome rarity at each time point induces severe class imbalance, leading to instability and convergence issues in logistic regression and related models. To address these challenges, we propose a principled subsampling and reweighting strategy for longitudinal survival data that can be applied to a range of existing causal effect estimators in this setting, including the ICE estimator. The proposed method substantially reduces computational burden while preserving consistency and improving estimation stability in rare-outcome settings. We evaluate the method through simulations and validate it using a large-scale EHR cohort study on social and behavioral determinants of health (SBDH) and suicide risk, demonstrating its effectiveness for modeling rare outcomes in longitudinal data.",
+      "authors": [
+        "Xiaohui Yin",
+        "Avijit Mitra",
+        "Ying Zhou",
+        "Kun Chen",
+        "Hong Yu"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "cs.LG"
+      ],
+      "published": "2026-06-01T01:41:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.01539v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "provides causal inference method for survival outcomes applicable to flap survival studies",
+      "llm_evidence_cn": "提供了适用于皮瓣存活研究的生存结果因果推断方法",
+      "llm_evidence": "提供了适用于皮瓣存活研究的生存结果因果推断方法",
+      "canonical_evidence": "提供了适用于皮瓣存活研究的生存结果因果推断方法",
+      "llm_tldr_en": "Proposes a subsampling and reweighting strategy for longitudinal survival data to enable scalable counterfactual risk estimation, applicable to studying factors influencing flap survival.",
+      "llm_tldr_cn": "本研究提出一种针对纵向生存数据的子采样与重新加权策略，实现了可扩展的反事实风险估计。该方法通过处理罕见事件中的类别不平衡问题，为评估皮瓣存活影响因素提供了高效的计算工具，尤其适用于运动干预等时间变化处理的效果分析。",
+      "llm_tldr": "本研究提出一种针对纵向生存数据的子采样与重新加权策略，实现了可扩展的反事实风险估计。该方法通过处理罕见事件中的类别不平衡问题，为评估皮瓣存活影响因素提供了高效的计算工具，尤其适用于运动干预等时间变化处理的效果分析。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-05-14-725112-v2",
+      "source": "biorxiv",
+      "title": "Wide-Field Calcium and Flavoprotein Autofluorescence Imaging in Living Mice",
+      "abstract": "Wide-field imaging (WFI) is a mesoscopic approach for monitoring cortex-wide activity with high temporal resolution and a broad field of view. Owing to its simple optical configuration and compatibility with chronic preparations, WFI has become an important tool in systems neuroscience and disease-model research. In this chapter, we describe practical protocols for chronic transcranial WFI in mice using two complementary optical signals: genetically encoded calcium indicators (GCaMP) and endogenous flavoprotein autofluorescence. Calcium imaging provides a robust readout of neuronal population activity, whereas flavoprotein imaging reflects mitochondrial redox dynamics and cellular metabolic demand. We detail procedures for animal preparation, skull clearing, headplate implantation, macroscope assembly, synchronized sensory stimulation, triggered image acquisition, and MATLAB-based data analysis. The analysis workflow includes {Delta}F/F normalization, reference-based signal correction, and artifact reduction, followed by trial averaging, atlas registration, and region-of-interest analysis. Because imaging is performed through the intact skull, the protocol enables repeated longitudinal measurements in the same animal over extended periods. This approach is reproducible, cost-effective, and adaptable to studies of cortical physiology and neurological disorders.",
+      "authors": [
+        "Yoshida, T."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-05-27T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.05.14.725112v2.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "wide-field flavoprotein autofluorescence imaging reflects mitochondrial redox dynamics, applicable to study exercise-induced metabolic changes in flap",
+      "llm_evidence_cn": "宽场黄素蛋白自发荧光成像可反映线粒体氧化还原动态，可用于研究运动诱导的皮瓣代谢变化",
+      "llm_evidence": "宽场黄素蛋白自发荧光成像可反映线粒体氧化还原动态，可用于研究运动诱导的皮瓣代谢变化",
+      "canonical_evidence": "宽场黄素蛋白自发荧光成像可反映线粒体氧化还原动态，可用于研究运动诱导的皮瓣代谢变化",
+      "llm_tldr_en": "This protocol describes wide-field calcium and flavoprotein autofluorescence imaging in living mice, providing a tool to monitor mitochondrial metabolism and neuronal activity, relevant for studying exercise effects on flap survival.",
+      "llm_tldr_cn": "本论文描述了小鼠慢性经颅宽场成像的实用方案，利用基因编码钙指示剂和黄素蛋白自发荧光两种互补信号，分别监测神经元群体活动和线粒体氧化还原动态；该方法具有高时间分辨率和宽视野，可用于研究运动训练引起的皮瓣代谢变化及其对存活的影响。",
+      "llm_tldr": "本论文描述了小鼠慢性经颅宽场成像的实用方案，利用基因编码钙指示剂和黄素蛋白自发荧光两种互补信号，分别监测神经元群体活动和线粒体氧化还原动态；该方法具有高时间分辨率和宽视野，可用于研究运动训练引起的皮瓣代谢变化及其对存活的影响。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "mitochondrial function exercise and flap survival",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

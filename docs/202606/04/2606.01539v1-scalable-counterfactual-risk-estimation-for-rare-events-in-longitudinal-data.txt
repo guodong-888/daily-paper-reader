@@ -1,0 +1,1224 @@
+Title: Scalable Counterfactual Risk Estimation for Rare Events in Longitudinal Data
+
+URL Source: https://arxiv.org/pdf/2606.01539v1
+
+Published Time: Tue, 02 Jun 2026 01:53:19 GMT
+
+Number of Pages: 12
+
+Markdown Content:
+# Scalable Counterfactual Risk Estimation for Rare Events in Longitudinal Data 
+
+# Xiaohui Yin ∗
+
+University of Connecticut Storrs, Connecticut, USA 
+
+# Avijit Mitra ∗
+
+University of Massachusetts Amherst Amherst, Massachusetts, USA 
+
+# Ying Zhou †
+
+University of Connecticut Storrs, Connecticut, USA yzhou@uconn.edu 
+
+# Kun Chen 
+
+University of Connecticut Storrs, Connecticut, USA 
+
+# Hong Yu 
+
+University of Massachusetts Lowell Lowell, Massachusetts, USA 
+
+## Abstract 
+
+Estimating the causal effect of time-varying treatments on survival outcomes in large observational studies is computationally demand-ing, particularly when outcomes are rare. While g-formula–based methods such as the iterative conditional expectation (ICE) estima-tor provide a principled framework for longitudinal causal inference, they become computationally expensive, especially when bootstrap-based variance estimation is required. In addition, outcome rarity at each time point induces severe class imbalance, leading to instabil-ity and convergence issues in logistic regression and related models. To address these challenges, we propose a principled subsampling and reweighting strategy for longitudinal survival data that can be applied to a range of existing causal effect estimators in this setting, including the ICE estimator. The proposed method substan-tially reduces computational burden while preserving consistency and improving estimation stability in rare-outcome settings. We evaluate the method through simulations and validate it using a large-scale EHR cohort study on social and behavioral determinants of health (SBDH) and suicide risk, demonstrating its effectiveness for modeling rare outcomes in longitudinal data. 
+
+## CCS Concepts 
+
+• Information systems → Data mining ; • Computing method-ologies → Machine learning ; • Applied computing → Health informatics. 
+
+## Keywords 
+
+causal inference, counterfactual learning, rare event, longitudinal data, scalable algorithms 
+
+ACM Reference Format: 
+
+Xiaohui Yin, Avijit Mitra, Ying Zhou, Kun Chen, and Hong Yu. 2026. Scalable Counterfactual Risk Estimation for Rare Events in Longitudinal Data. In 
+
+Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and  
+
+> ∗These authors contributed equally to this work.
+> †Corresponding author.
+> This work is licensed under a Creative Commons Attribution 4.0 International License.
+> KDD ’26, Jeju Island, Republic of Korea
+> ©2026 Copyright held by the owner/author(s). ACM ISBN 979-8-4007-2259-2/2026/08 https://doi.org/10.1145/3770855.3817759
+
+Data Mining V.2 (KDD ’26), August 09–13, 2026, Jeju Island, Republic of Korea. 
+
+ACM, New York, NY, USA, 12 pages. https://doi.org/10.1145/3770855.3817759 
+
+## 1 Introduction 
+
+Many observational studies in causal inference aim to estimate the causal effect of a time-varying treatment on a survival outcome. Examples include evaluating the impact of a long-term medication regimen on the survival of patients with chronic diseases [ 6], as-sessing the effect of smoking cessation over time on lung cancer incidence [ 9], and studying the influence of lifestyle interventions on cardiovascular event-free survival [11]. Under the standard causal assumptions of consistency, positivity, and exchangeability given measured confounders, the counterfac-tual probabilities of the time-to-event outcomes can be identified using the g-formula [ 16 ]. Two widely-used forms of the g-formula are: (1) an expectation weighted by the joint distribution of co-variates, treatments, and outcomes, and (2) an iterative conditional expectation over time. A straightforward approach to construct-ing estimators based on the g-formula is to first estimate each component and then plug these estimates into the g-formula. The estimator based on the first form of the g-formula is known as the 
+
+Non-Iterative Conditional Expectation (NICE) estimator, which typi-cally requires modeling the joint distribution of the confounders, treatments, and outcomes over time. The estimator based on the second representation is the Iterative Conditional Expectation (ICE) 
+
+estimator, which relies on a sequence of conditional expectation models at each time point but avoids specifying the full joint distri-bution of confounders. A major challenge in applying both the NICE and ICE estima-tors in large observational studies is the substantial computational burden, particularly when the outcome of interest is rare [ 10 ]. For example, in our analysis of a large-scale cohort study examining the effect of social and behavioral determinants of health (SBDH) on suicide with around 130,000 individuals, fitting logistic regres-sion models at each time point is computationally intensive. This difficulty arises primarily from the rarity of suicide and the large sample size, both of which contribute to slow convergence when estimating models for binary outcomes. In addition, because closed-form expressions for standard errors are difficult to derive in this setting, inference typically relies on bootstrap procedures, further increasing the computational burden through repeated resampling and model fitting. These challenges are especially pronounced in longitudinal settings, where models must be estimated repeatedly  
+
+> arXiv:2606.01539v1 [stat.ME] 1 Jun 2026 KDD ’26, August 09–13, 2026, Jeju Island, Republic of Korea Xiaohui Yin, Avijit Mitra, Ying Zhou, Kun Chen, & Hong Yu
+
+across time. In some applied environments, such as secure data platforms with limited storage or memory, repeatedly operating on full longitudinal cohorts may also be infeasible, further motivating the need for scalable alternatives. To address these challenges, we adopt a subsampling perspec-tive for rare-event modeling, a well-established and cost-effective strategy for reducing computational burden while preserving sta-tistical efficiency [ 4, 18 , 22 ]. In particular, case–control designs can be viewed as a principled form of outcome-dependent subsampling that is especially effective when events are rare. However, existing case–control approaches are typically defined locally at individual event times or risk sets, and are not designed to construct a co-herent sampled dataset that respects the repeated, time-indexed structure of longitudinal data with time-varying treatments and covariates. In such settings, sampling decisions at one time point impose structural constraints on subsequent time points through survival, temporal ordering, and within-subject dependence. We therefore propose longitudinal case–control sampling and reweighting strategies that explicitly account for these cross-time dependencies. Our approach constructs time-specific samples while respecting risk-set structure and longitudinal constraints, enabling computationally efficient learning under rare outcomes without compromising validity. While we illustrate the method through its integration with g-formula–based estimators for time-varying treat-ment effects, the proposed sampling framework is more general and can be applied to a broad class of longitudinal causal and pre-dictive methods. We demonstrate the effectiveness of the proposed approach through extensive simulation studies and a real-world application involving suicide as a rare outcome, showing substan-tial reductions in computational cost while maintaining estimation accuracy and stability. 
+
+## 2 Related Work 
+
+A range of methodological frameworks have been developed to estimate causal effects in longitudinal settings where treatments, covariates, and outcomes evolve over time. These include the g-formula, marginal structural models (MSMs), and structural nested models (SNMs), which are designed to address challenges such as time-varying confounding and to evaluate causal effects under history-dependent treatment strategies [ 7, 17 , 20 , 24 ]. All three ap-proaches aim to correct for time-dependent confounding that arises when past exposures influence subsequent covariates, but they dif-fer in how they achieve this goal. MSMs rely on inverse-probability weighting to construct a pseudo-population in which treatment assignment is independent of past confounders. These models are relatively straightforward to implement using standard regression tools and yield marginal causal effects. However, their performance can be compromised by highly variable or extreme weights, espe-cially in settings with limited overlap, leading to unstable or biased estimates. SNMs estimate causal effects via g-estimation of blip func-tions, which quantify the change in the counterfactual outcome induced by deviating from a reference treatment path at each time point, conditional on the observed history. With correctly specified treatment and outcome models, g-estimation attains the semipara-metric efficiency bound and yields history-specific causal contrasts. In practice, however, SNMs rely on computationally demanding, sometimes unstable iterative equations, are highly sensitive to mis-specification of either model, and yield blip parameters that have limited direct clinical interpretability. The parametric g-formula models each component of the data-generating process and can be implemented through two alge-braically equivalent forms which will be discussed in Section 3. Although it requires correct specification of all sub-models, the g-formula avoids the weight instability inherent to MSMs and the iterative g-estimation burden of SNMs, accommodates both contin-uous and time-to-event outcomes, and provides clear population-level contrasts for complex static or dynamic treatment strategies. Because of this finite-sample stability, modelling flexibility, and transparent counterfactual interpretation, we use the g-formula to examine how evolving SBDH influence suicide-related outcomes over time. In addition to these well-established frameworks, subsampling has emerged as an important strategy for improving the compu-tational efficiency of estimation in large-scale data. Rather than analyzing the entire cohort, one can draw informative subsets of the data to substantially reduce computational burden while still enabling valid inference. In rare-event settings, theoretical and empirical results show that retaining all cases while subsampling a sufficiently large number of controls, together with appropri-ate reweighting, yields estimators that are consistent and, under suitable asymptotic regimes, can achieve the same asymptotic vari-ance as the corresponding full-sample maximum likelihood esti-mator [ 22 ]. This indicates that, when outcomes are highly imbal-anced, most of the statistical information is concentrated in the rare cases, and additional controls contribute diminishing marginal information beyond a certain point. Consequently, subsampling provides a principled, efficiency-preserving approach for scaling g-formula–based methods and related longitudinal estimators to massive datasets where full-sample estimation is computationally prohibitive. 
+
+## 3 Methodology 
+
+Study Design. We consider a longitudinal study with discrete time points 𝑗 = 0, . . . ,𝑇 , where individuals are followed over time. At each time 𝑗 , covariates 𝐿 𝑗 and treatment 𝐴 𝑗 are observed, fol-lowed by the binary censoring indicator 𝐶 𝑗 +1 and binary event indi-cator 𝑌 𝑗 +1. Censoring ( 𝐶 𝑗 +1 = 1) indicates that the individual is no longer observed from time 𝑗 + 1 onward. This may occur in practice due to loss to follow-up, withdrawal, or administrative censoring at the end of the study period. We define 𝑌 𝑗 as the event-at-time indicator: 𝑌 𝑗 = 1 if the event occurs exactly at time 𝑗 . Thus, if an individual experiences the event at time 𝑘 , then 𝑌 𝑘 = 1 and 𝑌 𝑗 = 0
+
+for all 𝑗 < 𝑘 . The data are temporally ordered as (𝐿 𝑗 , 𝐴 𝑗 , 𝐶 𝑗 +1, 𝑌 𝑗 +1),with 𝑌 0 = 𝐶 0 = 0 and ¯𝐿 −1 = ¯𝐴 −1 = ∅ by convention. As an illustra-tion, an individual who experiences the event at time 2 would have the observed data sequence (𝐿 −1 = ∅, 𝐴 −1 = ∅, 𝐶 0 = 0, 𝑌 0 = 0, 𝐿 0 =
+
+𝑙 0, 𝐴 0 = 𝑎 0, 𝐶 1 = 0, 𝑌 1 = 0, 𝐿 1 = 𝑙 1, 𝐴 1 = 𝑎 1, 𝐶 2 = 0, 𝑌 2 = 1).
+
+We use 𝑌 𝑔 𝑡 to denote the potential outcome at time 𝑡 had an individual followed a deterministic treatment strategy 𝑔 . A deter-ministic strategy 𝑔 specifies the treatment 𝐴 𝑗 to be assigned at each time 𝑗 based on the observed history up to that point, ( ¯𝐿 𝑗 , ¯𝐴 𝑗 −1).Scalable Counterfactual Risk Estimation for Rare Events in Longitudinal Data KDD ’26, August 09–13, 2026, Jeju Island, Republic of Korea 
+
+Our goal is to identify and estimate 𝐸 (𝑌 𝑔 𝑡 ), the mortality risk by time 𝑡 if all individuals in the population were to follow strategy 𝑔 .
+
+G-formula. Identification of 𝐸 (𝑌 𝑔 𝑡 ) using the g-formula [ 16 ] re-lies on three key assumptions: 1. Consistency: If an individual’s observed treatment history matches the strategy 𝑔 up to time 𝑗 , i.e., ¯𝐴 𝑗 = ¯𝐴 𝑔 𝑗 , then their observed co-variates and outcomes also equal the counterfactuals: ¯𝐿 𝑗 = ¯𝐿 𝑔 𝑗 and 
+
+¯𝑌 𝑗 +1 = ¯𝑌 𝑔 𝑗 +1.2. Exchangeability: At each time 𝑗 , future counterfactual outcomes are independent of treatment and censoring decisions, conditional on past covariate and treatment history and being uncensored and event-free: 
+
+(𝑌 𝑔 𝑗 +1, . . . , 𝑌 𝑔 𝑇 ) ⊥ ( 𝐴 𝑗 , 𝐶 𝑗 +1) | ¯𝐿 𝑗 = ¯𝑙 𝑗 , ¯𝐴 𝑗 −1 = ¯𝑎 𝑔 𝑗 −1, 𝐶 𝑗 = 𝑌 𝑗 = 0.
+
+3. Positivity: If a covariate and treatment history occurs with pos-itive probability under the observed data, then the probability of receiving the treatment assigned by strategy 𝑔 and remaining un-censored at the next time must also be positive: 
+
+𝑓 ¯𝐿 𝑗 , ¯𝐴 𝑗 −1,𝐶 𝑗 ,𝑌 𝑗 (¯𝑙 𝑗 , ¯𝑎 𝑔 𝑗 −1, 0, 0) > 0
+
+⇒ 𝑓 𝐴 𝑗 ,𝐶 𝑗 +1 | ¯𝐿 𝑗 , ¯𝐴 𝑗 −1,𝐶 𝑗 ,𝑌 𝑗 (𝑎 𝑔 𝑗 , 0 | ¯𝑙 𝑗 , ¯𝑎 𝑔 𝑗 −1, 0, 0) > 0.
+
+Under these assumptions, the counterfactual risk 𝐸 (𝑌 𝑔 𝑇 ) can be identified via the g-formula: 
+
+𝐸 (𝑌 𝑔 𝑇 ) =∑︁  
+
+> ¯𝑙 𝑇 −1
+> 𝑇
+
+∑︁ 
+
+> 𝑡 =1
+
+𝑃 (𝑌 𝑡 = 1 | 𝑌 𝑡 −1 = 𝐶 𝑡 = 0, ¯𝐿 𝑡 −1 = ¯𝑙 𝑡 −1, ¯𝐴 𝑡 −1 = ¯𝑎 𝑔 𝑡 −1) 
+
+> 𝑡 −1
+
+Ö
+
+> 𝑠 =0
+
+𝑃 (𝑌 𝑠 = 0 | 𝑌 𝑠 −1 = 𝐶 𝑠 = 0, ¯𝐿 𝑠 −1 = ¯𝑙 𝑠 −1, ¯𝐴 𝑠 −1 = ¯𝑎 𝑔 𝑠 −1) (1) 
+
+𝑓 (𝑙 𝑠 | 𝑌 𝑠 = 𝐶 𝑠 = 0, ¯𝐿 𝑠 −1 = ¯𝑙 𝑠 −1, ¯𝐴 𝑠 −1 = ¯𝑎 𝑔 𝑠 −1).
+
+Equation (1) is known as the non-iterative conditional expectations (NICE) representation. Alternatively, using iterated conditional expectations (ICE), 𝐸 (𝑌 𝑔 𝑇 ) can be identified as: 
+
+𝐸 (𝑌 𝑔 𝑇 ) = 𝐸 𝑓 𝐿 0
+
+
+
+𝐸 𝑓 𝑌 1
+
+h
+
+𝑌 1 + · · · 𝐸 𝑓 𝑌 𝑇 −1
+
+𝑌 𝑇 −1 (1 − 𝑌 𝑇 −2) + 𝐸 𝑓 𝐿 𝑇 −1
+
+
+
+𝐸 𝑓 𝑌 𝑇 {𝑌 𝑇 (1 − 𝑌 𝑇 −1) | ¯𝑌 𝑇 −1, 𝐶 𝑇 = 0, ¯𝐿 𝑇 −1, ¯𝐴 𝑇 −1 = ¯𝐴 𝑔 𝑇 −1 } | 
+
+¯𝑌 𝑇 −1, 𝐶 𝑇 −1 = 0, ¯𝐿 𝑇 −2, ¯𝐴 𝑇 −2 = ¯𝐴 𝑔 𝑇 −2
+
+ | ¯𝑌 𝑇 −2, 𝐶 𝑇 −1 = 0, ¯𝐿 𝑇 −2,
+
+¯𝐴 𝑇 −2 = ¯𝐴 𝑔 𝑇 −2 ... | 𝐶 1 = 0, 𝐴 0 = 𝐴 𝑔 
+
+> 0
+
+, 𝐿 0
+
+i  
+
+.
+
+(2) In this paper, we focus on the ICE formula (2). However, our methods are also applicable to the NICE estimator, as demonstrated in our simulation studies. Based on (2), an algorithm for estimating 
+
+𝐸 (𝑌 𝑔 𝑇 ) is presented in Algorithm 1. If the parametric models in lines 1 and 6 in Algorithm 1 are correctly specified, this estimator will be consistent. 
+
+An Illustrative Example. In Algorithm 1, models are estimated at each time point using all available samples. In large cohorts with rare outcomes, the resulting excess of controls leads to substantial computational cost, particularly when models must be fit repeatedly across multiple time points and within bootstrap procedures. To improve computational efficiency, we propose to apply Algorithm 1 to a longitudinal case–control subsample that retains all cases while subsampling controls at each time point, reducing computational burden without sacrificing estimation reliability. 
+
+Algorithm 1 ICE Estimator for Estimating 𝐸 (𝑌 𝑔 𝑇 ) 
+
+> 1:
+
+Regress 𝑌 𝑇 on ¯𝐿 𝑇 −1 and ¯𝐴 𝑇 −1 among individuals with 𝑌 𝑇 −1 =
+
+𝐶 𝑇 = 0, and estimate parameter 𝜃 𝑇 ,𝑇 −1. 
+
+> 2:
+
+Obtain predicted values ˆℎ𝑔 𝑇 ,𝑇 −1 from 𝐸 (𝑌 𝑇 | 𝑌 𝑇 −1 = 𝐶 𝑇 =
+
+0, ¯𝐿 𝑇 −1, ¯𝐴 𝑇 −1 = ¯𝐴 𝑔 𝑇 −1; ˆ𝜃 𝑇 ,𝑇 −1) by fixing ¯𝐴 𝑇 −1 = ¯𝐴 𝑔 𝑇 −1 for all individuals with 𝑌 𝑇 −1 = 𝐶 𝑇 −1 = 0. Set 𝑞 = 2. 
+
+> 3:
+
+while 𝑞 ≤ 𝑇 do  
+
+> 4:
+
+Let 𝑘 = 𝑇 − 𝑞 . 
+
+> 5:
+
+Define 
+
+ˆ𝑄 𝑔 𝑇 ,𝑘 +1 =
+
+( ˆℎ𝑔 𝑇 ,𝑘 +1 if 𝑌 𝑘 +1 = 0,
+
+1 if 𝑌 𝑘 +1 = 1. 
+
+> 6:
+
+Regress ˆ𝑄 𝑔 𝑇 ,𝑘 +1 on ¯𝐿 𝑘 and ¯𝐴 𝑘 among individuals with 𝑌 𝑘 =
+
+𝐶 𝑘 +1 = 0, and estimate parameter 𝜃 𝑇 ,𝑘 . 
+
+> 7:
+
+Obtain predicted values ˆℎ𝑔 𝑇 ,𝑘 from 𝐸 ( ˆ𝑄 𝑔 𝑇 ,𝑘 +1 | 𝑌 𝑘 = 𝐶 𝑘 +1 =
+
+0, ¯𝐿 𝑘 , ¯𝐴 𝑘 = ¯𝐴 𝑔 𝑘 ; ˆ𝜃 𝑇 ,𝑘 ) by fixing ¯𝐴 𝑘 = ¯𝐴 𝑔 𝑘 among individuals with 
+
+𝑌 𝑘 = 𝐶 𝑘 = 0. 
+
+> 8:
+
+Set 𝑞 = 𝑞 + 1. 
+
+> 9:
+
+end while  
+
+> 10:
+
+Average ˆℎ𝑔 𝑇 , 0 over all individuals to estimate 𝐸 (𝑌 𝑔 𝑇 ).To illustrate the key ideas, we consider a simplified setting with two time points, 𝑡 = 0, 1, in the absence of censoring. Suppose the total number of individuals is 𝑁 , among whom 𝐶 experience the event. Let 𝑐 𝑡 denote the number of individuals who experience the event at time 𝑡 , so that 𝐶 = 𝑐 0 + 𝑐 1. At each time point 𝑡 , we include all cases occurring at 𝑡 and randomly sample 𝐽𝑐 𝑡 controls with replacement from individuals who remain event-free through time 𝑡 , where 𝐽 denotes a fixed sampling ratio. The resulting case– control subsample therefore contains (𝐽 + 1)( 𝑐 0 + 𝑐 1) observations. If an individual is sampled at both time points, each appearance is treated as a distinct observation. Suppose our goal is to estimate the expectation of a covariate 𝑋 .Using the full sample, a natural estimator is ˆ𝐸 (𝑋 ) = 𝑁 −1 Í𝑁 𝑖 =1 𝑋 𝑖 .We now show how a longitudinal case–control subsample with appropriate reweighting can be constructed to recover this quan-tity in expectation. The original sample is partitioned into three mutually exclusive groups: 𝐺 0 = {𝑖 : 𝑌 0 = 1} (those who die at 𝑡 = 0); 𝐺 1 = {𝑖 : 𝑌 1 = 1, 𝑌 0 = 0} (those who die at 𝑡 = 1); and 𝐺 2 = {𝑖 : 𝑌 1 = 0} (those alive at 𝑡 = 1). Each individual be-longs to exactly one group. Table 1 summarizes the structure of the case–control subsample. The column “weight” gives the weight associated with each category, the column “group” lists the groups included in the category, and the column “count” indicates the number of times a person in this category is counted. Using time 0 control as an example, the probability that an individual who has not experienced the event at time 0 is selected into the subsample is (𝐽𝑐 0)/( 𝑁 − 𝑐 0). Therefore, the count is the product of the weight and this selection probability. Because individuals may be sampled at multiple time points, un-biased estimation requires balancing their expected total weighted contribution across groups. An individual in 𝐺 0 is always included and thus contributes 𝑤 0 · 1. An individual in 𝐺 1 may appear as a time 0 control with probability 𝐽𝑐 0/( 𝑁 − 𝑐 0) and as a time 1 case KDD ’26, August 09–13, 2026, Jeju Island, Republic of Korea Xiaohui Yin, Avijit Mitra, Ying Zhou, Kun Chen, & Hong Yu 
+
+Table 1: Subsample breakdown with two time points and no censoring 
+
+size weight group count time 0 case 𝑐 0 𝑤 0 𝐺 0 𝑤 0 · 1
+
+time 0 control 𝐽𝑐 0 𝑚 0 𝐺 1, 𝐺 2 𝑚 0 · 𝐽 𝑐 0 
+
+> 𝑁 −𝑐 0
+
+time 1 case 𝑐 1 𝑤 1 𝐺 1 𝑤 1 · 1
+
+time 1 control 𝐽𝑐 1 𝑚 1 𝐺 2 𝑚 1 · 𝐽 𝑐 1  
+
+> 𝑁 −𝑐 0−𝑐 1
+
+with probability 1, so its expected contribution is 𝑤 1 · 1 + 𝑚 0 ·
+
+𝐽𝑐 0/( 𝑁 − 𝑐 0). An individual in 𝐺 2 may appear as a time 0 con-trol with probability 𝐽𝑐 0/( 𝑁 − 𝑐 0) and as a time 1 control with probability 𝐽𝑐 1/( 𝑁 − 𝑐 0 − 𝑐 1), giving an expected contribution of 
+
+𝑚 1 · 𝐽𝑐 1/( 𝑁 − 𝑐 0 − 𝑐 1) + 𝑚 0 · 𝐽𝑐 0/( 𝑁 − 𝑐 0). In the full sample, each individual is counted exactly once. To ensure that the case–control subsample is representative of the full sample, we require that the expected contribution per individual be equal across groups. This balancing condition leads to 
+
+𝑤 0 = 𝑤 1 + 𝑚 0
+
+𝐽𝑐 0
+
+𝑁 − 𝑐 0
+
+= 𝑚 1
+
+𝐽𝑐 1
+
+𝑁 − 𝑐 0 − 𝑐 1
+
++ 𝑚 0
+
+𝐽𝑐 0
+
+𝑁 − 𝑐 0
+
+,
+
+which can be rewritten as 
+
+𝑤 1 = 𝑚 1
+
+𝐽𝑐 1
+
+𝑁 − 𝑐 0 − 𝑐 1
+
+, 𝑤 0 − 𝑤 1 = 𝑚 0
+
+𝐽𝑐 0
+
+𝑁 − 𝑐 0
+
+.
+
+Since there are 2 equations with 4 parameters (𝑤 0, 𝑤 1, 𝑚 0, 𝑚 1), we have 2 degrees of freedom. One convenient normalization is to set 
+
+𝑤 0 = 1/𝑁 , which ensures that the total weight across the subsample equals one: 𝑐 0𝑤 0 + 𝑐 1𝑤 1 + 𝐽𝑐 1𝑚 1 + 𝐽𝑐 0𝑚 0 = 1. If we further let 
+
+𝑤 1 = 1/𝑁 , then 𝑚 0 = 0 and 𝑚 1 = (𝑁 − 𝑐 0 − 𝑐 1)/( 𝐽 𝑁𝑐 1). It is also possible to set 𝑤 1 to other values and obtain corresponding values of 𝑚 0 and 𝑚 1. Additional examples of weight combinations are provided in the Appendix A. When estimating a statistical model, such as a logistic regres-sion, parameter estimation is typically carried out by solving an estimating equation. In many cases, the estimating equation is from the maximum likelihood estimation process by setting the gradient of the log-likelihood to zero. We now show that the weight-ing strategy introduced above naturally extends to such estimat-ing equations. We denote 𝑂 ∗ as the whole population, and 𝑂 =
+
+(𝑂 0𝑐 , 𝑂 0𝑚 , 𝑂 1𝑐 , 𝑂 1𝑚 ) as the longitudinal case–control sample, where subscripts indicate time point (0, 1) and case/control status (𝑐, 𝑚 ).Suppose the target parameter is defined by the population-level estimating equation 𝐸 ∗ 
+
+> 0
+
+{𝑆 0 (𝑂 ∗)} = 0, where 𝐸 ∗ 
+
+> 0
+
+denotes expecta-tion with respect to the true distribution of the whole population, and 𝑆 0 is the original estimating equation. We define the weighted estimating equation based on the case–control sample as 
+
+𝑆 (𝑂 ) = 𝑐 1𝑤 1𝑆 0 (𝑂 1𝑐 )+ 𝐽𝑐 1𝑚 1𝑆 0 (𝑂 1𝑚 )+ 𝑐 0𝑤 0𝑆 0 (𝑂 0𝑐 )+ 𝐽𝑐 0𝑚 0𝑆 0 (𝑂 0𝑚 ).
+
+Then, under the proposed sampling and weighting scheme, it holds that 
+
+𝐸 {𝑆 (𝑂 )} = 𝑤 0𝑁 𝐸 ∗ 
+
+> 0
+
+{𝑆 0 (𝑂 ∗)} = 0, (3) where the expectation 𝐸 is taken with respect to the sampling distribution induced by the longitudinal case–control design. The proof of (3) is relegated to the Appendix B. Equation (3) implies that, with appropriate weighting, the population estimating equation 
+
+𝐸 ∗ 
+
+> 0
+
+{𝑆 0 (𝑂 ∗)} = 0 if and only if the weighted estimating equation satisfies 𝐸 {𝑆 (𝑂 )} = 0. Consequently, the target model parameters can be consistently estimated by solving the empirical estimating equation ˆ𝐸 {𝑆 (𝑂 )} = 0 using the case–control subsample. 
+
+General Results with Censoring. Now we extend the setting to 𝑘 
+
+time points, 𝑡 = 0, 1, ..., 𝑘 − 1, and allow for censoring. Let 𝑐 𝑡 denote the number of individuals who experience the event at time 𝑡 , and let 𝑠 𝑡 denote the number of individuals who are censored at time 𝑡 .We allow the sampling ratios for controls and censored individuals, denoted by 𝐽 𝑡 and 𝐾 𝑡 respectively, to vary across time points. At each time point 𝑡 , we include all cases occurring at 𝑡 . In addition, we sample 𝐾 𝑡 𝑐 𝑡 from those who are censored at time 𝑡 except for the last time point, and sample 𝐽 𝑡 𝑐 𝑡 controls from individuals who have not experienced the event prior to or at time 𝑡 . Censored individuals are not sampled at the last time point 𝑡 = 𝑘 − 1, because their outcome 𝑌 𝑘 −1 is unobserved, which prevents their use in fitting logistic or other classification models in the first step of Algorithm 1. At earlier time points, however, censored individuals can still contribute to estimating counterfactual risks and may therefore be included. Under this design, the case–control subsample has a size of Í𝑘 −1  
+
+> 𝑡 =0
+
+𝑐 𝑡 + Í𝑘 −1  
+
+> 𝑡 =0
+
+𝐽 𝑡 𝑐 𝑡 + Í𝑘 −2 
+
+> 𝑡 =0
+
+𝐾 𝑡 𝑐 𝑡 .The population can be partitioned into 2𝑘 + 1 mutually exclusive groups: 𝐺 0, 𝐺 1, . . . , 𝐺 2𝑘 −1, 𝐺 2𝑘 , where 𝐺 2𝑖 is the group of people who are censored at time 𝑖 for 𝑖 = 0, . . . , 𝑘 − 1, 𝐺 2𝑖 +1 is the group of people who experience the event at time 𝑖 for 𝑖 = 0, . . . , 𝑘 − 1, and 
+
+𝐺 2𝑘 is the group of people who remain event-free and uncensored through time 𝑘 −1. A detailed description of the resulting subsample for 𝑘 time points is provided in Table 2, with the “count” column constructed in the same manner as in Table 1. We use 𝑤 𝑡 to denote the weights for cases at time 𝑡 , 𝑚 𝑡 for sampled controls, and ℓ𝑡 for sampled censored individuals. Requiring that each individual in groups 𝐺 0 through 𝐺 2𝑘 have the same expected total weighted contribution leads to the following system of equations: 
+
+𝑤 𝑡 = ℓ𝑡 
+
+𝐾 𝑡 𝑐 𝑡 
+
+𝑠 𝑡 
+
+, 𝑡 = 0, . . . , 𝑘 − 1,𝑤 𝑘 −1 = 𝑚 𝑘 −1
+
+𝐽 𝑘 −1𝑐 𝑘 −1
+
+𝑁 − Í𝑘 −1 
+
+> 𝑗 =0
+
+𝑐 𝑗 − Í𝑘 −1 
+
+> 𝑗 =0
+
+𝑠 𝑗 
+
+,𝑤 𝑡 − 𝑤 𝑡 +1 = 𝑚 𝑡 
+
+𝐽 𝑡 𝑐 𝑡 
+
+𝑁 − Í𝑡 𝑗 =0 𝑐 𝑗 − Í𝑡 𝑗 =0 𝑠 𝑗 
+
+, 𝑡 = 0, . . . , 𝑘 − 2.
+
+(4) Since there are 2𝑘 equations with 3𝑘 parameters (𝑤 0, . . . , 𝑤 𝑘 −1,𝑚 0, . . . , 𝑚 𝑘 −1, ℓ 0, . . . , ℓ 𝑘 −1), we have 𝑘 degrees of freedom. If we let 
+
+𝑤 0 = 1/𝑁 , then the total weight across the subsample equals one:  
+
+> 𝑘 −1
+
+∑︁ 
+
+> 𝑡 =0
+
+𝑐 𝑡 𝑤 𝑡 + 
+
+> 𝑘 −1
+
+∑︁  
+
+> 𝑡 =0
+
+𝐽 𝑡 𝑐 𝑡 𝑚 𝑡 + 
+
+> 𝑘 −1
+
+∑︁  
+
+> 𝑡 =0
+
+𝐾 𝑡 𝑐 𝑡 ℓ𝑡 = 𝑤 0𝑁 = 1.
+
+Letting 𝐾 𝑡 𝑐 𝑡 = 𝑠 𝑡 for 𝑡 = 0, . . . , 𝑘 − 1, we have ℓ𝑡 = 𝑤 𝑡 . This implies that, at each time point 𝑡 , if all censored individuals are included, they should be assigned the same weights as the cases at time 𝑡 .We adopt this design in our paper. Under this choice, the system reduces to 𝑘 equations in 2𝑘 unknowns, yielding infinitely many valid weighting schemes. In this paper, we focus on one particular Scalable Counterfactual Risk Estimation for Rare Events in Longitudinal Data KDD ’26, August 09–13, 2026, Jeju Island, Republic of Korea 
+
+Table 2: Subsample breakdown with 𝑘 time points and censoring 
+
+size weight group count time 0 censored 𝐾 0𝑐 0 ℓ0 𝐺 0 ℓ0 · 𝐾 0𝑐 0
+
+> 𝑠 0
+
+time 0 case 𝑐 0 𝑤 0 𝐺 1 𝑤 0 · 1
+
+time 0 control 𝐽 0𝑐 0 𝑚 0 𝐺 2, . . . , 𝐺 2𝑘 𝑚 0 · 𝐽 0𝑐 0  
+
+> 𝑁 −𝑐 0−𝑠 0
+
+time 1 censored 𝐾 1𝑐 1 ℓ1 𝐺 2 ℓ1 · 𝐾 1𝑐 1
+
+> 𝑠 1
+
+time 1 case 𝑐 1 𝑤 1 𝐺 3 𝑤 1 · 1
+
+time 1 control 𝐽 1𝑐 1 𝑚 1 𝐺 4, . . . , 𝐺 2𝑘 𝑚 1 · 𝐽 1𝑐 1    
+
+> 𝑁 −𝑐 0−𝑠 0−𝑐 1−𝑠 1
+
+... ... ... ... ...
+
+time 𝑘 −1 censored 𝐾 𝑘 −1𝑐 𝑘 −1 ℓ𝑘 −1 𝐺 2𝑘 −2 ℓ𝑘 −1 · 𝐾 𝑘 −1𝑐 𝑘 −1 
+
+> 𝑠 𝑘 −1
+
+time 𝑘 −1 case 𝑐 𝑘 −1 𝑤 𝑘 −1 𝐺 2𝑘 −1 𝑤 𝑘 −1 · 1
+
+time 𝑘 −1 control 𝐽 𝑘 −1𝑐 𝑘 −1 𝑚 𝑘 −1 𝐺 2𝑘 𝑚 𝑘 −1 · 𝐽 𝑘 −1𝑐 𝑘 −1         
+
+> 𝑁 −Í𝑘 −1
+> 𝑗 =0𝑐 𝑗 −Í𝑘 −1
+> 𝑗 =0𝑠 𝑗
+
+choice: 
+
+ℓ0 = 𝑤 0 = 𝑐 0
+
+𝑁 − 𝑠 0
+
+, 𝑚 0 = 1
+
+𝐽 𝑁 − 𝑐 0 − 𝑠 0
+
+𝑁 − 𝑠 0
+
+, ℓ 𝑡 = 𝑤 𝑡 = 𝑚 𝑡 = 0,
+
+for 𝑡 = 1, . . . , 𝑘 − 1. It is straightforward to verify that this set of weights satisfies (4). This choice corresponds to a simple weighting scheme that includes only individuals from time 𝑡 = 0. Here, 𝑡 = 0
+
+is a local index used in the complete-data subproblem and should not be confused with the first time point of the original longitudinal study. When applying Algorithm 1 within the longitudinal case– control framework, each global time point at which a model is fitted is relabeled as the local baseline 𝑡 = 0 through a purely notational reindexing of time. In addition, because an individual who experi-ences the event at a later time point may be sampled as a control at earlier time points, the same individual may contribute multi-ple observations with different roles and receive different weights across time. The resulting ICE estimator based on the constructed case–control subsample is summarized in Algorithm 2. To connect the local weighting derivation with Algorithm 2, note that Algorithm 2 iterates backward over the global time points 
+
+𝑘 = 𝑇 − 1, . . . , 0. At each step, the current global time point 𝑘 is relabeled as the local baseline time 𝑡 = 0. Under the simple choice 
+
+ℓ𝑡 = 𝑤 𝑡 = 𝑚 𝑡 = 0 for 𝑡 ≥ 1, only the cases, censored individuals, and sampled controls at the current global time point 𝑘 contribute to the estimating equation. The weights 𝑤 𝑘 , ℓ 𝑘 , 𝑚 𝑘 in Algorithm 2 are therefore the local weights 𝑤 0, ℓ 0, 𝑚 0 recomputed at each step. 
+
+Theorem 1. The estimator from Algorithm 2 is consistent for 
+
+𝐸 (𝑌 𝑔 𝑇 ) under the same assumptions that ensure the consistency of the ICE estimator in Algorithm 1. 
+
+The proof of Theorem 1 is in Appendix C. 
+
+Practical Guidance on Weighting and Sampling Ratios. Our frame-work admits a family of valid weighting schemes that yield con-sistent estimation as long as the weights satisfy the balance equa-tions (4); however, different choices of weights and sampling ratios can influence efficiency. Because closed-form variance formulas for either the NICE or ICE g-formula implementation are prohibi-tively complex, analytic efficiency comparisons across weighting choices are difficult, so we follow the standard practice in applied g-formula work and obtain standard errors via nonparametric boot-strap resampling [ 8, 24 , 25 ]. For the sampling ratios, we recommend a pragmatic procedure. One may begin with a moderate ratio, such as five controls per case, and then increase the time-specific ratio 
+
+𝐽 𝑡 adaptively when events become sparse in later periods, so that each regression is fitted with a reasonable effective sample size. In applications, we recommend running a short pilot bootstrap over two or three candidate ratios to assess the marginal reduction in standard error relative to the added computational cost. This empirical tuning provides a practical way to balance statistical pre-cision and computational efficiency, and in our numerical studies it preserves much of the precision of the full-data estimator while delivering substantial speed-ups. 
+
+## 4 Numerical Examples 4.1 Simulated Longitudinal Data 
+
+We conducted simulation studies to compare the computational cost and estimation efficiency of the proposed subsampling estimator with its complete-data counterpart. The control-to-case sampling ratios were set at 1 : 5 , 1 : 10 , and 1 : 20 . Each dataset contained 
+
+𝑁 = 30 , 000 individuals followed over six time points. Baseline covariates 𝐿 𝑏 included four categorical variables, and at each time point 𝑡 , the data consisted of ten binary time-varying covariates 
+
+𝐿 𝑡 ∈ R10 , a binary treatment indicator 𝐴 𝑡 , a binary censoring in-dicator 𝐶 𝑡 , and a death indicator 𝑌 𝑡 . The observed data for each individual were (𝐿 𝑏 , 𝐿 0, 𝐴 0, 𝐶 1, 𝑌 1, . . . , 𝐿 5, 𝐴 5, 𝐶 6, 𝑌 6). A first-order (lag-1) dependence structure was assumed for covariates, censor-ing, and outcomes, and all variables were generated at the individual level using logistic regression models, following the design of Wen et al. [24]. The details of data generation are as follows. Baseline covari-ates 𝐿 𝑏 were generated from multinomial distributions with the probability vectors (1, 2), (1, 1, 1, 1, 1, 1), (5, 2, 1, 1, 4), and (2, 3, 1, 4),respectively; 𝐿 0 ∼ Ber (0.5), and 𝐴 0 ∼ Ber  expit (𝐿 ⊤ 
+
+> 0
+
+𝜂 ). Moreover, KDD ’26, August 09–13, 2026, Jeju Island, Republic of Korea Xiaohui Yin, Avijit Mitra, Ying Zhou, Kun Chen, & Hong Yu 
+
+Algorithm 2 Case–Control Sampling and Estimation Procedure with Censoring  
+
+> 1:
+
+Generate a case–control sample:  
+
+> 2:
+
+for each time point 𝑡 do  
+
+> 3:
+
+Keep all 𝑐 𝑡 cases at time 𝑡 (i.e., those who die at time 𝑡 ).  
+
+> 4:
+
+if 𝑡 < 𝑘 − 1 then  
+
+> 5:
+
+Randomly draw 𝐽 𝑡 𝑐 𝑡 controls from those alive at time 𝑡 
+
+with replacement.  
+
+> 6:
+
+Assign weight 𝑤 𝑡 to each case at time 𝑡 . 
+
+> 7:
+
+Assign weight 𝑤 𝑡 to each censored individual at time 𝑡 . 
+
+> 8:
+
+Assign weight 𝑚 𝑡 to controls sampled at time 𝑡 . 
+
+> 9:
+
+else if 𝑡 = 𝑘 − 1 then  
+
+> 10:
+
+Randomly draw 𝐽 𝑘 −1𝑐 𝑘 −1 controls from those alive (ex-cluding censored individuals) at time 𝑘 − 1 with replacement.  
+
+> 11:
+
+Assign weight 𝑤 𝑘 −1 to each case at time 𝑘 − 1. 
+
+> 12:
+
+Assign weight 𝑚 𝑘 −1 to controls sampled at time 𝑘 − 1. 
+
+> 13:
+
+end if  
+
+> 14:
+
+end for  
+
+> 15:
+
+Fit a weighted regression of 𝑌 𝑇 on ¯𝐿 𝑇 −1 and ¯𝐴 𝑇 −1 among indi-viduals with 𝑌 𝑇 −1 = 𝐶 𝑇 = 0 using the associated weights, and estimate parameter 𝜃 𝑇 ,𝑇 −1. 
+
+> 16:
+
+Obtain predicted values ˆℎ𝑔 𝑇 ,𝑇 −1 from 
+
+𝐸 (𝑌 𝑇 | 𝑌 𝑇 −1 = 𝐶 𝑇 = 0, ¯𝐿 𝑇 −1, ¯𝐴 𝑇 −1 = ¯𝐴 𝑔 𝑇 −1; ˆ𝜃 𝑇 ,𝑇 −1)
+
+by fixing ¯𝐴 𝑇 −1 = ¯𝐴 𝑔 𝑇 −1 among individuals with 𝑌 𝑇 −1 = 𝐶 𝑇 −1 =
+
+0. Set 𝑞 = 2. 
+
+> 17:
+
+while 𝑞 ≤ 𝑇 do  
+
+> 18:
+
+Let 𝑘 = 𝑇 − 𝑞 . 
+
+> 19:
+
+Define 
+
+ˆ𝑄 𝑔 𝑇 ,𝑘 +1 =
+
+( ˆℎ𝑔 𝑇 ,𝑘 +1 if 𝑌 𝑘 +1 = 0,
+
+1 if 𝑌 𝑘 +1 = 1. 
+
+> 20:
+
+Fit a weighted regression of ˆ𝑄 𝑔 𝑇 ,𝑘 +1 on ¯𝐿 𝑘 and ¯𝐴 𝑘 among individuals with 𝑌 𝑘 = 𝐶 𝑘 +1 = 0 using the associated weights, and estimate parameter 𝜃 𝑇 ,𝑘 . 
+
+> 21:
+
+Obtain predicted values ˆℎ𝑔 𝑇 ,𝑘 from 
+
+𝐸 ( ˆ𝑄 𝑔 𝑇 ,𝑘 +1 | 𝑌 𝑘 = 𝐶 𝑘 +1 = 0, ¯𝐿 𝑘 , ¯𝐴 𝑘 = ¯𝐴 𝑔 𝑘 ; ˆ𝜃 𝑇 ,𝑘 )
+
+by fixing ¯𝐴 𝑘 = ¯𝐴 𝑔 𝑘 among individuals with 𝑌 𝑘 = 𝐶 𝑘 = 0. 
+
+> 22:
+
+Set 𝑞 = 𝑞 + 1. 
+
+> 23:
+
+end while  
+
+> 24:
+
+Compute the weighted average of ˆℎ𝑔 𝑇 , 0 using the generated weights to estimate 𝐸 (𝑌 𝑔 𝑇 ).for 𝑡 ≥ 1,
+
+𝐶 𝑡 ∼ Ber  expit (− 6 + 𝐴 𝑡 −1 + 𝛾 ⊤𝐿 𝑡 −1),𝑌 𝑡 ∼ Ber  expit (− 6 + 2𝐴 𝑡 −1 + 𝛽 ⊤𝐿 𝑡 −1),𝐿 𝑡 ∼ Ber  expit (𝜂𝐴 𝑡 −1 + 𝑀𝐿 𝑡 −1),𝐴 𝑡 ∼ Ber  expit (𝐴 𝑡 −1 + 𝛼 ⊤𝐿 𝑡 ),
+
+where the entries of the coefficient vectors 𝛼 , 𝛽 , 𝛾 , 𝜂 , and the matrix 
+
+𝑀 were independently generated from a standard normal distribu-tion and then fixed throughout the simulations. This setting yields a prevalence rate of about 1% . We were interested in estimating the counterfactual risks under two deterministic treatment strate-gies: always treated and never treated, i.e., ¯𝐴 5 = (1, 1, 1, 1, 1, 1) and 
+
+¯𝐴 5 = (0, 0, 0, 0, 0, 0).We simulated 100 independent datasets under the same param-eter configuration. For each dataset, we performed patient-level bootstrap resampling with 𝐵 = 100 replicates and applied both Com-plete and Case–control versions of the NICE and ICE estimators with logistic regression. We also explored more computationally intensive machine learning approaches with superlearner, an en-semble framework that combines multiple candidate algorithms to optimize predictive performance. For each estimator, we computed the bootstrap mean and standard deviation of the estimated target quantity. For the ICE method with logistic regression, we followed the R package gfoRmula [ 12 ] and implemented our case–control version. Superlearner models were implemented using the R pack-age SuperLearner [ 14 ] with base learners supporting weighted samples and probabilistic outcomes, including logistic regression and XGBoost. 
+
+Computation Time. Computation times for logistic regression and superlearner were summarized in Table 3 and Table 4. Each entry is the average of 10,000 analyses, that is, 100 bootstrap resam-ples applied to each of 100 independently simulated data sets. For the case–control version we report both (i) the total runtime, which includes construction of the subsample plus model fitting, and (ii) the model-fitting time alone, allowing the additional cost of the sampling step to be isolated. Each bootstrap resample and model fitting was conducted on a Linux HPC using a single node, equipped with either an Intel Skylake or AMD Epyc processor (Epyc64 or Epyc128 architecture). Each task was allocated 8 CPU cores and 4 GB of memory. The analyses were performed using R version 4.4.1, loaded via the module environment. 
+
+Table 3: Simulation: Summary of the computation time (in secs) with logistic regression; standard deviations in paren-theses                                                        
+
+> NICE ( ¯𝐴 =¯0)ICE ( ¯𝐴 =¯0)NICE ( ¯𝐴 =¯1)ICE ( ¯𝐴 =¯1)Complete 11.79 (2.27) 4.56 (0.95) 11.83 (2.32) 4.26 (0.84) (model-fitting time )Case–control ( 𝐽 =20 )6.61 (1.90) 1.78 (0.57) 6.64 (2.00) 1.72 (0.73) Case–control ( 𝐽 =10 )5.83 (1.74) 1.17 (0.60) 5.83 (2.17) 1.14 (0.73) Case–control ( 𝐽 =5)5.89 (1.34) 0.83 (0.49) 5.90 (1.54) 0.80 (0.54) (total runtime )Case–control ( 𝐽 =20 )8.09 (2.66) 2.60 (1.20) 8.11 (2.76) 2.55 (1.46) Case–control ( 𝐽 =10 )6.91 (2.34) 1.94 (1.22) 6.94 (2.99) 1.94 (1.47) Case–control ( 𝐽 =5)6.77 (1.75) 1.54 (1.01) 6.79 (1.95) 1.50 (1.01)
+
+The computation time in Table 3 and Table 4 referred to the aver-age runtime for a single subsample run. However, because we used the bootstrap to estimate standard errors, the total computation time for one Monte Carlo run scaled linearly with the number of bootstrap replications. As expected, the overall computation time increased considerably when using superlearner compared to the logistic regression results, due to the added complexity of ensemble learning. Our subsampling approach achieved a dramatic reduction in computation time relative to the complete-data implementation. These results highlighted the practical efficiency and scalability Scalable Counterfactual Risk Estimation for Rare Events in Longitudinal Data KDD ’26, August 09–13, 2026, Jeju Island, Republic of Korea 
+
+Table 4: Simulation: Summary of the computation time (in mins) with superlearner; standard deviations in parentheses 
+
+ICE ( ¯𝐴 = ¯0) ICE ( ¯𝐴 = ¯1)Complete 63.32 (6.19) 62.97 (6.32) (model-fitting time )Case–control ( 𝐽 = 20 ) 5.42 (0.75) 5.58 (0.79) Case–control ( 𝐽 = 10 ) 3.12 (0.51) 3.21 (0.52) (total runtime )Case–control ( 𝐽 = 20 ) 5.44 (0.76) 5.60 (0.80) Case–control ( 𝐽 = 10 ) 3.14 (0.52) 3.23 (0.53) of our method, particularly in scenarios involving complex mod-els or large-scale datasets where full-sample estimation becomes computationally demanding. 
+
+Risk Estimates. Table 5 presents the estimates of the ICE and NICE estimators along with their bootstrap standard errors. The results indicate that increasing 𝐽 from 5 to 20 reduces the standard errors, bringing them closer to those from the complete-data sce-nario. The boxplots for the bootstrap mean across the 100 simulated datasets were given in Figure 1. For both the ICE and NICE esti-mators, the subsampling versions yield results comparable to their complete-data counterparts. 
+
+Higher Prevalence Scenarios. The results above focus on the low-prevalence setting, where the event prevalence is approximately 1%. To assess robustness across rarity levels, we also considered two ad-ditional scenarios that differ from the low-prevalence configuration only in the intercept of the 𝑌 𝑡 model: a medium-prevalence setting with prevalence approximately 2.5% (intercept = −5) and a high-prevalence setting with prevalence approximately 6% (intercept 
+
+= −4). The medium-prevalence results lead to conclusions qualita-tively similar to those in the low-prevalence setting. In particular, the subsampling-based estimators remain substantially faster than the complete-data estimator, as shown in Table 6, and the risk-estimate boxplots closely track those from the complete-data anal-ysis, as shown in Figure 2. The high-prevalence results, where the computational advantage of subsampling diminishes as expected, are reported in Appendix D. 
+
+## 4.2 Real-World Longitudinal Data 
+
+We applied the proposed subsampling ICE estimators to a real-world cohort of 127,399 U.S. veterans who were discharged from short-term psychiatric hospital admissions at Veterans Health Ad-ministration (VHA) hospitals between January 1, 2016, and Decem-ber 31, 2017. Patients were followed until December 31, 2018 or the event of interest, whichever occurred first. Death by suicide was the event of interest, and presence of any SBDH [ 3 ] was treated as the treatment 𝐴 . Time-fixed baseline covariates ( 𝐿 𝑏 ) include race, gender, age groups 1 and marital status; baseline summary statistics for the full cohort are provided in Table 11 in Appendix E. Time-varying covariates (𝐿 𝑡 ) included 17 clinical comorbidities and 7                  
+
+> 1Although age changes over time, this is deterministic and hence we consider this as a time-fixed covariate. A=0A=1
+> 123456123456
+> 0.000 0.025 0.050 0.075
+> Time
+> Risks
+> Matching scheme (Complete)
+> (Case−control, J=20)
+> (Case−control, J=10)
+> (Case−control, J=5)
+
+(a) ICE A = 0 A = 1            
+
+> 123456123456
+> 0.000 0.025 0.050 0.075
+> Time
+> Risks
+> Matching scheme (Complete)
+> (Case−control, J=20)
+> (Case−control, J=10)
+> (Case−control, J=5)
+
+(b) NICE 
+
+Figure 1: Simulation: Risk estimates for always or never ex-posed to treatment (low-prevalence scenario). 
+
+mental health disorders. For model fitting, we excluded the initial 6-month window, during which no suicide deaths occurred, and analyzed the subsequent five consecutive 6-month windows. The resulting restricted analysis cohort contained 125,928 individuals with 331 suicide cases. Interval-specific counts are reported in Ta-ble 7. Following [ 13 ], we extracted SBDH information from both structured data (International Classification of Diseases (ICD) codes, stop codes) and unstructured data (clinical notes, using a fine-tuned transformer-based deep-learning model [ 21 ]). More about SBDH, clinical, and mental health disorders are available in Appendix E. Given the low incidence rate of suicide in the restricted analysis cohort, we adopted an adaptive sampling ratio across different time points. For each case at time point from 1 to 5, we sampled 30 , 30 ,
+
+50 , 80 , and 80 control patients, respectively. KDD ’26, August 09–13, 2026, Jeju Island, Republic of Korea Xiaohui Yin, Avijit Mitra, Ying Zhou, Kun Chen, & Hong Yu 
+
+Table 5: Simulation: Summary of the average of the ICE and NICE estimates based on bootstrap mean (multiplied by 100), with average of bootstrap SE in parentheses 
+
+ICE NICE 
+
+Case–control Complete Case–control Complete Time (𝐽 = 5) (𝐽 = 10 ) (𝐽 = 20 ) (𝐽 = 5) (𝐽 = 10 ) (𝐽 = 20 )
+
+¯𝐴 = ¯1
+
+1 2.15 (0.19) 2.11 (0.17) 2.09 (0.15) 2.08 (0.14) 2.22 (0.10) 2.21 (0.09) 2.21 (0.08) 2.15 (0.08) 2 3.97 (0.21) 3.94 (0.19) 3.93 (0.18) 3.91 (0.17) 3.69 (0.13) 3.68 (0.12) 3.67 (0.12) 3.57 (0.11) 3 5.44 (0.22) 5.40 (0.21) 5.38 (0.20) 5.36 (0.19) 4.96 (0.16) 4.95 (0.15) 4.94 (0.15) 4.80 (0.14) 4 6.55 (0.24) 6.49 (0.22) 6.46 (0.21) 6.43 (0.20) 6.17 (0.20) 6.16 (0.19) 6.15 (0.18) 5.97 (0.17) 5 7.69 (0.26) 7.62 (0.24) 7.59 (0.23) 7.55 (0.22) 7.39 (0.23) 7.38 (0.22) 7.37 (0.22) 7.15 (0.20) 6 8.82 (0.27) 8.74 (0.25) 8.70 (0.24) 8.66 (0.23) 8.61 (0.27) 8.59 (0.26) 8.58 (0.25) 8.33 (0.23) 
+
+¯𝐴 = ¯0
+
+1 0.29 (0.05) 0.29 (0.05) 0.30 (0.05) 0.30 (0.04) 0.31 (0.03) 0.31 (0.03) 0.31 (0.03) 0.30 (0.03) 2 0.58 (0.08) 0.59 (0.08) 0.59 (0.07) 0.59 (0.07) 0.56 (0.05) 0.56 (0.05) 0.56 (0.05) 0.55 (0.05) 3 0.87 (0.11) 0.87 (0.10) 0.87 (0.10) 0.87 (0.10) 0.80 (0.07) 0.80 (0.07) 0.80 (0.07) 0.78 (0.07) 4 1.13 (0.14) 1.13 (0.13) 1.13 (0.12) 1.13 (0.12) 1.02 (0.09) 1.02 (0.09) 1.02 (0.09) 0.99 (0.09) 5 1.47 (0.17) 1.46 (0.16) 1.46 (0.15) 1.45 (0.14) 1.24 (0.11) 1.24 (0.11) 1.24 (0.11) 1.20 (0.10) 6 1.82 (0.19) 1.80 (0.18) 1.79 (0.17) 1.78 (0.16) 1.45 (0.13) 1.45 (0.13) 1.45 (0.13) 1.41 (0.12) 
+
+Table 6: Simulation: Summary of the computation time for the medium-prevalence scenario (in secs); standard devia-tions in parentheses                                                        
+
+> NICE, ¯𝐴 =¯0ICE, ¯𝐴 =¯0NICE, ¯𝐴 =¯1ICE, ¯𝐴 =¯1
+> Complete 11.26 (1.80) 4.22 (1.03) 11.28 (1.97) 3.91 (1.00) (model-fitting time )Case–control ( 𝐽 =20 )8.27 (2.23) 3.02 (0.90) 8.30 (2.32) 2.85 (0.89) Case–control ( 𝐽 =10 )6.92 (1.96) 2.04 (0.86) 6.89 (1.97) 1.95 (1.01) Case–control ( 𝐽 =5)6.16 (1.59) 1.40 (0.47) 6.15 (1.33) 1.35 (0.47) (total runtime )Case–control ( 𝐽 =20 )9.92 (2.78) 3.89 (1.26) 9.91 (2.75) 3.74 (1.28) Case–control ( 𝐽 =10 )8.48 (2.62) 2.94 (1.53) 8.50 (2.93) 2.86 (1.75) Case–control ( 𝐽 =5)7.35 (2.08) 2.04 (0.91) 7.33 (1.79) 1.98 (0.86)
+
+Table 7: Application: Interval-specific summary of the re-stricted analysis cohort ( 𝑁 = 125 ,928 veterans, 331 suicide cases across the five analyzed 6-month intervals) 
+
+Time Total # # (%) of Cases # of Controls # (%) of Censored 1 125,928 104 (0.08% ) 124,351 1,473 (1.17% )
+
+2 124,351 87 (0.07% ) 122,673 1,591 (1.28% )
+
+3 122,673 76 (0.06% ) 102,047 20 ,550 (16 .75% )
+
+4 102,047 44 (0.04% ) 76,537 25 ,466 (24 .96% )
+
+5 76,537 20 (0.03% ) 48,008 28 ,509 (37 .25% )
+
+Table 8 reports computation times, showing that the subsampling ICE estimator runs in roughly one-quarter of the time needed for the complete-data version. Table 9 shows the estimated risks. The point estimates are similar for both methods, but the subsampling approach has a larger standard error at the last time point. 
+
+## 5 Discussion 
+
+In this paper, we develop an outcome-dependent subsampling framework for longitudinal counterfactual risk estimation under 
+
+Table 8: Application: Computation time of ICE method with complete or case–control data (in secs); standard deviations in parentheses 
+
+¯𝐴 = ¯0 ¯𝐴 = ¯1
+
+Complete 24 .66 (11 .98 ) 21 .25 (13 .35 )
+
+Case–control ( total runtime ) 5.73 (1.77 ) 5.70 (1.83 )
+
+Case–control ( model-fitting time ) 3.64 (1.63 ) 3.58 (1.77 )
+
+Table 9: Application: Risk estimates from 100 bootstrap sam-ples (standard deviations in parentheses); all values multi-plied by 100 
+
+¯𝐴 = ¯0 ¯𝐴 = ¯1
+
+Time Complete Case–control Complete Case–control 1 0.12 (0.02 ) 0.12 (0.02 ) 0.07 (0.01 ) 0.07 (0.01 )
+
+2 0.19 (0.02 ) 0.20 (0.03 ) 0.14 (0.01 ) 0.15 (0.02 )
+
+3 0.24 (0.03 ) 0.25 (0.03 ) 0.23 (0.02 ) 0.24 (0.02 )
+
+4 0.27 (0.03 ) 0.28 (0.03 ) 0.31 (0.02 ) 0.33 (0.02 )
+
+5 0.29 (0.03 ) 0.31 (0.05 ) 0.36 (0.02 ) 0.40 (0.06 )
+
+time-varying treatments in rare-event settings. When outcomes are rare and datasets are large, longitudinal causal estimators require repeated model fitting on highly imbalanced risk sets across multi-ple time points, rendering full-cohort estimation computationally prohibitive. By retaining all events and strategically subsampling non-events at each time point, the proposed approach directly alle-viates this computational bottleneck. The proposed method relies on the same identification assump-tions as the underlying longitudinal g-formula estimator. Therefore, unmeasured confounding or outcome-model misspecification may Scalable Counterfactual Risk Estimation for Rare Events in Longitudinal Data KDD ’26, August 09–13, 2026, Jeju Island, Republic of Korea A = 0 A = 1            
+
+> 123456123456
+> 0.00 0.05 0.10 0.15 0.20
+> Time
+> Risks
+> Matching scheme (Complete)
+> (Case−control, J=20)
+> (Case−control, J=10)
+> (Case−control, J=5)
+
+(a) ICE A = 0 A = 1            
+
+> 123456123456
+> 0.00 0.05 0.10 0.15 0.20
+> Time
+> Risks
+> Matching scheme (Complete)
+> (Case−control, J=20)
+> (Case−control, J=10)
+> (Case−control, J=5)
+
+(b) NICE 
+
+Figure 2: Simulation: Risk estimates for always or never ex-posed to treatment (medium-prevalence scenario). 
+
+still bias the resulting estimates. The subsampling step, however, is designed to reduce computational cost and, with appropriate weighting, does not change the target estimand. Our theoretical analysis shows that, under the stated assump-tions and balance conditions on the weights, the proposed longitudi-nal subsampling estimator is consistent for the target counterfactual risks. While we do not derive closed-form variance expressions or formally characterize efficiency relative to full-cohort estimators, existing theory for rare-event subsampling suggests that much of the statistical information is concentrated in the cases, with addi-tional controls providing diminishing marginal contributions [ 22 ]. Consistent with this intuition, our numerical experiments show that the proposed subsampling strategy achieves substantial com-putational gains without a commensurate increase in empirical standard errors across a range of sampling ratios. In practice, bootstrap resampling is widely used to estimate standard errors, often with 𝐵 = 1000 or more replications. In this regime, even a modest reduction in the runtime of a single analysis can translate into substantial cumulative savings. For example, in our VHA application, the runtime of one ICE fit decreased from 24.66 seconds under the complete-data analysis to 5.73 seconds under the case–control subsampling design for ¯𝐴 = ¯0. Thus, 𝐵 =
+
+1000 bootstrap replications would take approximately 6.9 hours under the complete-data analysis, compared with approximately 1.6 hours under the case–control design. Comparable savings were observed for ¯𝐴 = ¯1. This advantage becomes even more significant in online or routinely updated analyses, where models must be refitted repeatedly as new data arrive. By substantially reducing the cost of each iteration while preserving consistency, the proposed framework offers a scalable alternative to full-cohort estimation in such settings. The framework is also flexible: the subsample construction and weighting scheme are not unique, allowing different designs to be tailored to specific analytic objectives. For instance, one may choose whether to include censored individuals in the subsample, or whether to sample cases and controls from future time points. As long as the resulting weights satisfy the balance equations (4), the estimator remains consistent under the stated assumptions; choices such as sampling with or without replacement, including or excluding censored individuals, and varying the sampling ratio primarily affect finite-sample variance, stability, and computation. This flexibility naturally raises an important direction for future research: how to select weighting and subsampling strategies to improve efficiency. Prior work on optimal sampling strategies in logistic regression models (e.g., 5, 23 ) provides useful theoretical guidance. From a practical standpoint, the iterative fitting required in lon-gitudinal estimators can propagate estimation error across time, particularly in later periods. This issue can be amplified under se-vere outcome imbalance, where logistic or related classification models may become unstable or affected by separation. Penalized methods, such as Firth’s logistic regression, can be used at each step to stabilize the nuisance-model fits. More generally, the subsampling framework is compatible with flexible machine learning nuisance estimators, which may improve predictive and reduce sensitivity to simple parametric model specifications in high-dimensional or complex settings. These considerations also motivate doubly robust extensions, such as longitudinal TMLE [ 19 ] or AIPTW [ 1]. In prin-ciple, the same subsampling weights could be incorporated into the corresponding influence-function-based estimating equations, although a formal study of such extensions is left for future work. 
+
+## Acknowledgments 
+
+Research reported in this study was in part supported by the Na-tional Institutes of Health under award numbers R01MH125027, R01AG080670, and R01DA056470, and by the VA Health Systems Research under award number I01HX003711. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health and the US Department of Veterans Affair. KDD ’26, August 09–13, 2026, Jeju Island, Republic of Korea Xiaohui Yin, Avijit Mitra, Ying Zhou, Kun Chen, & Hong Yu 
+
+## References 
+
+[1] Heejung Bang and James M. Robins. 2005. Doubly robust estimation in missing data and causal inference models. Biometrics 61, 4 (2005), 962–973. [2] John R Blosnich, Ann Elizabeth Montgomery, Melissa E Dichter, Adam J Gordon, Dio Kavalieratos, Laura Taylor, Bryan Ketterer, and Robert M Bossarte. 2020. Social determinants and military veterans’ suicide ideation and attempt: a cross-sectional analysis of electronic health record data. Journal of General Internal Medicine 35 (2020), 1759–1767. [3] Anusha Bompelli, Yanshan Wang, Ruyuan Wan, Esha Singh, Yuqi Zhou, Lin Xu, David Oniani, Bhavani Singh Agnikula Kshatriya, Joyce Joy E Balls-Berry, and Rui Zhang. 2021. Social and Behavioral Determinants of Health in the Era of Artificial Intelligence with Electronic Health Records: A Scoping Review. Health Data Science (2021). doi:10.34133/2021/9759016 eCollection 2021. [4] Norman E Breslow. 1996. Statistics in epidemiology: the case-control study. 
+
+Journal of the American Statistical Association 91, 433 (1996), 14–28. [5] William Fithian and Trevor Hastie. 2014. Local case–control sampling: Efficient subsampling in imbalanced data sets. The Annals of Statistics 42, 5 (2014), 1693– 1724. [6] Miguel A. Hernán and James M. Robins. 2006. Estimating causal effects from epidemiological data. Journal of Epidemiology and Community Health 60, 7 (2006), 578–586. [7] Miguel A. Hernán and James M. Robins. 2020. Causal Inference: What If . CRC Press, Boca Raton. [8] Alexander P. Keil, Jessie K. Edwards, David B. Richardson, Ashley I. Naimi, and Stephen R. Cole. 2014. The Parametric g-Formula for Time-to-Event Data: Intuition and a Worked Example. Epidemiology 25, 6 (2014), 889–897. [9] Stacey A. Kenfield, Esther K. Wei, Meir J. Stampfer, Bernard A. Rosner, and Graham A. Colditz. 2008. Comparison of aspects of smoking among the four histological types of lung cancer. Tobacco Control 17, 3 (2008), 198–204. [10] Gary King and Langche Zeng. 2001. Logistic regression in rare events data. 
+
+Political Analysis 9, 2 (2001), 137–163. [11] William C. Knowler, Elizabeth Barrett-Connor, Sarah E. Fowler, Richard F. Ham-man, John M. Lachin, Elizabeth A. Walker, and David M. Nathan. 2002. Reduction in the incidence of type 2 diabetes with lifestyle intervention or metformin. The New England Journal of Medicine 346, 6 (2002), 393–403. [12] Sean McGrath, Victoria Lin, Zilu Zhang, Lucia C Petito, Roger W Logan, Miguel A Hernán, and Jessica G Young. 2020. gfoRmula: an R package for estimating the effects of sustained treatment strategies via the parametric g-formula. Patterns 1, 3 (2020). [13] Avijit Mitra, Richeek Pradhan, Rachel D Melamed, Kun Chen, David C Hoaglin, Katherine L Tucker, Joel I Reisman, Zhichao Yang, Weisong Liu, Jack Tsai, et al .2023. Associations between natural language processing–enriched social deter-minants of health and suicide death among US veterans. JAMA Network Open 6, 3 (2023), e233079. [14] Eric Polley, Erin LeDell, Chris Kennedy, Sam Lendle, and Mark van der Laan. 2019. SuperLearner: Super Learner Prediction . R package. [15] Hude Quan, Bing Li, Chantal M Couris, Kiyohide Fushimi, Patrick Graham, Phil Hider, Jean-Marie Januel, and Vijaya Sundararajan. 2011. Updating and validating the Charlson comorbidity index and score for risk adjustment in hospital discharge abstracts using data from 6 countries. American Journal of Epidemiology 173, 6 (2011), 676–682. [16] James Robins. 1986. A new approach to causal inference in mortality studies with a sustained exposure period—application to control of the healthy worker survivor effect. Mathematical Modelling 7, 9-12 (1986), 1393–1512. [17] James M. Robins, Miguel A. Hernán, and Babette Brumback. 2000. Marginal structural models and causal inference in epidemiology. Epidemiology 11, 5 (2000), 550–560. doi:10.1097/00001648-200009000-00011 [18] Mark J van der Laan. 2008. Estimation based on case-control designs with known prevalence probability. The International Journal of Biostatistics 4, 1 (2008). [19] Mark J. van der Laan and Susan Gruber. 2012. Targeted maximum likelihood estimation of causal effects of multiple time point interventions. The International Journal of Biostatistics 8, 1 (2012), 1–40. [20] Stijn Vansteelandt and Marshall Joffe. 2014. Structural Nested Models and G-estimation: The Partially Realized Promise. Statistical Science 29, 4 (2014), 707–731. doi:10.1214/14-STS486 [21] Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need. Advances in Neural Information Processing Systems 30 (2017). [22] HaiYing Wang. 2020. Logistic regression for massive data with rare events. In 
+
+Proceedings of the 37th International Conference on Machine Learning (ICML’20) .JMLR.org, Article 911, 8 pages. [23] HaiYing Wang, Aonan Zhang, and Chong Wang. 2021. Nonuniform negative sampling and log odds correction with rare events data. Advances in Neural Information Processing Systems 34 (2021), 19847–19859. [24] Lan Wen, Jessica G. Young, James M. Robins, and Miguel A. Hernán. 2021. Para-metric g-formula implementations for causal survival analyses. Biometrics 77, 2 (2021), 740–753. doi:10.1111/biom.13278 [25] Jessica G. Young, Lauren E. Cain, James M. Robins, Eilis J. O’Reilly, and Miguel A. Hernán. 2011. Comparative effectiveness of dynamic treatment regimes: an application of the parametric g-formula. Statistics in Biosciences 3, 1 (2011), 119–143. 
+
+## A Additional Weight Combinations 
+
+Below we give 4 sets of possible weights for the illustrative example with 2 time points without censoring: (1) Let 𝑤 0 = 𝑤 1 = 1, we have 
+
+𝑆 (𝑂 ) = 𝑐 0𝑤 0𝑆 (𝑂 0𝑐 ) + 𝑐 1𝑤 0𝑆 (𝑂 1𝑐 ) + ( 𝑁 − 𝑐 0 − 𝑐 1)𝑤 0𝑆 (𝑂 1𝑚 ),
+
+and 𝑚 0 = 0, 𝑚 1 = 𝑁 −𝑐 0 −𝑐 1
+
+𝐽 𝑐 1 .(2) Let 𝑤 1 = 𝑚 1 = 0, we have 
+
+𝑆 (𝑂 ) = 𝑐 0𝑤 0𝑆 (𝑂 0𝑐 ) + ( 𝑁 − 𝑐 0)𝑤 0𝑆 (𝑂 0𝑚 ),
+
+and 𝑤 0 = 1, 𝑚 0 = 𝑁 −𝑐 0
+
+𝐽 𝑐 0 .(3) Let 𝑚 0 = 𝑚 1 = 1/𝐽 , we have 
+
+𝑆 (𝑂 ) = 𝑐 1𝑤 1𝑆 (𝑂 1𝑐 ) + 𝑐 1𝑆 (𝑂 1𝑚 ) + 𝑐 0𝑤 0𝑆 (𝑂 0𝑐 ) + 𝑐 0𝑆 (𝑂 0𝑚 ),
+
+where 𝑤 1 = 𝑐 1
+
+𝑁 −𝑐 0 −𝑐 1 , 𝑤 0 = 𝑐 1
+
+𝑁 −𝑐 0 −𝑐 1 + 𝑐 0
+
+𝑁 −𝑐 0 .(4) Let 𝑚 0 = 𝑁 −𝑐 0
+
+𝐽 𝑁 , 𝑚 1 = 𝑁 −𝑐 0 −𝑐 1
+
+𝐽 (𝑁 −𝑐 0 ) , then 𝑤 0 = 𝑐 0
+
+𝑁 + 𝑐 1
+
+𝑁 −𝑐 0 , 𝑤 1 =
+
+𝑐 1
+
+𝑁 −𝑐 0 ,
+
+## B Proof of Equation (3) 
+
+Proof. Let 
+
+𝑆 (𝑂 ) = 𝑐 1𝑤 1𝑆 (𝑂 1𝑐 ) + 𝐽𝑐 1𝑚 1𝑆 (𝑂 1𝑚 ) + 𝑐 0𝑤 0𝑆 (𝑂 0𝑐 ) + 𝐽𝑐 0𝑚 0𝑆 (𝑂 0𝑚 )
+
+= 𝑐 1𝑤 1𝑆 (𝑂 1𝑐 ) + ( 𝑁 − 𝑐 0 − 𝑐 1)𝑤 1𝑆 (𝑂 1𝑚 ) + 𝑐 0𝑤 0𝑆 (𝑂 0𝑐 )+ ( 𝑤 0 − 𝑤 1)( 𝑁 − 𝑐 0)𝑆 (𝑂 0𝑚 ),
+
+then 
+
+𝐸 {𝑆 (𝑂 ) } 
+
+= 𝑐 1𝑤 1
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗ | die at 𝑡 = 1)𝑑𝑂 ∗
+
++ 𝐽 𝑐 1𝑚 1
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗ | alive at 𝑡 = 1)𝑑𝑂 ∗
+
++ 𝑐 0𝑤 0
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗ | die at 𝑡 = 0)𝑑𝑂 ∗
+
++ 𝐽 𝑐 0𝑚 0
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗ | alive at 𝑡 = 0)𝑑𝑂 ∗
+
+= 𝑐 1𝑤 1
+
+Pr (die at 𝑡 = 1)
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, die at 𝑡 = 1)𝑑𝑂 ∗
+
++ 𝐽 𝑐 1𝑚 1
+
+Pr (alive at 𝑡 = 1)
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 1)𝑑𝑂 ∗
+
++ 𝑐 0𝑤 0
+
+Pr (die at 𝑡 = 0)
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, die at 𝑡 = 0)𝑑𝑂 ∗
+
++ 𝐽 𝑐 0𝑚 0
+
+Pr (alive at 𝑡 = 0)
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 0)𝑑𝑂 ∗
+
+= 𝑐 1𝑤 1
+
+𝑁 𝑐 1
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, die at 𝑡 = 1)𝑑𝑂 ∗
+
++ 𝐽 𝑐 1𝑚 1
+
+𝑁 𝑁 − 𝑐 0 − 𝑐 1
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 1)𝑑𝑂 ∗
+
++ 𝑐 0𝑤 0
+
+𝑁 𝑐 0
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, die at 𝑡 = 0)𝑑𝑂 ∗
+
++ 𝐽 𝑐 0𝑚 0
+
+𝑁 𝑁 − 𝑐 0
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 0)𝑑𝑂 ∗
+
+= 𝑤 1𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 0)𝑑𝑂 ∗Scalable Counterfactual Risk Estimation for Rare Events in Longitudinal Data KDD ’26, August 09–13, 2026, Jeju Island, Republic of Korea 
+
++ 𝑐 0𝑤 0
+
+𝑁 𝑐 0
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, die at 𝑡 = 0)𝑑𝑂 ∗
+
++ 𝐽 𝑐 0𝑚 0
+
+𝑁 𝑁 − 𝑐 0
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 0)𝑑𝑂 ∗
+
+= 𝑤 0𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗ )𝑑𝑂 ∗
+
+= 𝑤 0𝑁 𝐸 ∗ 
+
+> 0
+
+{𝑆 0 (𝑂 ∗ ) } .
+
+If we let 𝑤 0 = 𝑁 −1, then 𝐸 {𝑆 (𝑂 )} = 𝐸 ∗ 
+
+> 0
+
+{𝑆 0 (𝑂 ∗)} . But if we only need 𝐸 {𝑆 (𝑂 )} = 𝑤 0𝑁 𝐸 ∗ 
+
+> 0
+
+{𝑆 0 (𝑂 ∗)} = 0, then it is not necessary to set 𝑤 0 = 𝑁 −1. □
+
+## C Proof of Theorem 1 
+
+We have already known that the ICE estimator in Algorithm 1 is consistent given that the models are correctly specified. To show that the estimator in Algorithm 2 to be consistent, we only need to prove that at each step, the expectation of the new estimating equation based on the case–control sample is zero if and only if the expectation of the original estimating equation is zero. 
+
+Proof. Let 
+
+𝑆 (𝑂 ) = 𝑐 𝑘 −1𝑤 𝑘 −1𝑆 (𝑂 𝑘 −1,𝑐 ) + 𝐾 𝑘 −1𝑐 𝑘 −1ℓ𝑘 −1𝑆 (𝑂 𝑘 −1,𝑠 )+ 𝐽 𝑘 −1𝑐 𝑘 −1𝑚 𝑘 −1𝑆 (𝑂 𝑘 −1,𝑚 ) + · · · + 𝑐 0𝑤 0𝑆 (𝑂 0𝑐 ) + 𝐾 0𝑐 0ℓ0𝑆 (𝑂 0𝑠 ) + 𝐽 0𝑐 0𝑚 0𝑆 (𝑂 0𝑚 ),
+
+then 
+
+𝐸 {𝑆 (𝑂 ) } 
+
+= 𝑐 𝑘 −1𝑤 𝑘 −1
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗ | die at 𝑡 = 𝑘 − 1)𝑑𝑂 ∗
+
++ 𝐾 𝑘 −1𝑐 𝑘 −1ℓ𝑘 −1
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗ | censored at 𝑡 = 𝑘 − 1)𝑑𝑂 ∗
+
++ 𝐽 𝑘 −1𝑐 𝑘 −1𝑚 𝑘 −1
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗ | alive at 𝑡 = 𝑘 − 1)𝑑𝑂 ∗ + · · · + 𝑐 0𝑤 0
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗ | die at 𝑡 = 0)𝑑𝑂 ∗
+
++ 𝐾 0𝑐 0ℓ0
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗ | censored at 𝑡 = 0)𝑑𝑂 ∗
+
++ 𝐽 0𝑐 0𝑚 0
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗ | alive at 𝑡 = 0)𝑑𝑂 ∗
+
+= 𝑐 𝑘 −1𝑤 𝑘 −1
+
+Pr (die at 𝑡 = 𝑘 − 1)
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, die at 𝑡 = 𝑘 − 1)𝑑𝑂 ∗
+
++ 𝐾 𝑘 −1𝑐 𝑘 −1ℓ𝑘 −1
+
+Pr (censored at 𝑡 = 𝑘 − 1)
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, censored at 𝑡 = 𝑘 − 1)𝑑𝑂 ∗
+
++ 𝐽 𝑘 −1𝑐 𝑘 −1𝑚 𝑘 −1
+
+Pr (alive at 𝑡 = 𝑘 − 1)
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 𝑘 − 1)𝑑𝑂 ∗ + · · · + 𝑐 0𝑤 0
+
+Pr (die at 𝑡 = 0)
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, die at 𝑡 = 0)𝑑𝑂 ∗
+
++ 𝐾 0𝑐 0ℓ0
+
+Pr (censored at 𝑡 = 0)
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, censored at 𝑡 = 0)𝑑𝑂 ∗
+
++ 𝐽 𝑐 0𝑚 0
+
+Pr (alive at 𝑡 = 0)
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 0)𝑑𝑂 ∗
+
+= 𝑐 𝑘 −1𝑤 𝑘 −1
+
+𝑁 𝑐 𝑘 −1
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, die at 𝑡 = 𝑘 − 1)𝑑𝑂 ∗
+
++ 𝐾 𝑘 −1𝑐 𝑘 −1ℓ𝑘 −1
+
+𝑁 𝑠 𝑘 −1
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, censored at 𝑡 = 𝑘 − 1)𝑑𝑂 ∗
+
++ 𝐽 𝑘 −1𝑐 𝑘 −1𝑚 𝑘 −1
+
+𝑁 𝑁 − Í𝑘 −1  
+
+> 𝑗 =0
+
+𝑐 𝑗 − Í𝑘 −1  
+
+> 𝑗 =0
+
+𝑠 𝑗 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 𝑘 − 1)𝑑𝑂 ∗
+
++ · · · + 𝑐 0𝑤 0
+
+𝑁 𝑐 0
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, die at 𝑡 = 0)𝑑𝑂 ∗
+
++ 𝐾 0𝑐 0ℓ0
+
+𝑁 𝑠 0
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, censored at 𝑡 = 0)𝑑𝑂 ∗
+
++ 𝐽 0𝑐 0𝑚 0
+
+𝑁 𝑁 − 𝑐 0 − 𝑠 0
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 0)𝑑𝑂 ∗
+
+= 𝑤 𝑘 −1𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, die at 𝑡 = 𝑘 − 1)𝑑𝑂 ∗
+
++ 𝑤 𝑘 −1𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, censored at 𝑡 = 𝑘 − 1)𝑑𝑂 ∗
+
++ 𝑤 𝑘 −1𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 𝑘 − 1)𝑑𝑂 ∗ + · · · + 𝑤 0𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, die at 𝑡 = 0)𝑑𝑂 ∗
+
++ 𝑤 0𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, censored at 𝑡 = 0)𝑑𝑂 ∗
+
++ 𝐽 𝑐 0𝑚 0
+
+𝑁 𝑁 − 𝑐 0
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 0)𝑑𝑂 ∗
+
+= 𝑤 𝑘 −1𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 𝑘 − 2)𝑑𝑂 ∗
+
++ 𝑤 𝑘 −2𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, die at 𝑡 = 𝑘 − 2)𝑑𝑂 ∗
+
++ 𝑤 𝑘 −2𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, censored at 𝑡 = 𝑘 − 2)𝑑𝑂 ∗
+
++ ( 𝑤 𝑘 −2 − 𝑤 𝑘 −1 )𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 𝑘 − 2)𝑑𝑂 ∗
+
++ · · · + 𝑤 0𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, die at 𝑡 = 0)𝑑𝑂 ∗
+
++ 𝑤 0𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, censored at 𝑡 = 0)𝑑𝑂 ∗
+
++ ( 𝑤 0 − 𝑤 1 )𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗, alive at 𝑡 = 0)𝑑𝑂 ∗
+
+= 𝑤 0𝑁 
+
+∫
+
+𝑆 0 (𝑂 ∗ ) 𝑓 (𝑂 ∗ )𝑑𝑂 ∗
+
+= 𝑤 0𝑁 𝐸 ∗ 
+
+> 0
+
+{𝑆 0 (𝑂 ∗ ) } 
+
+Therefore, 𝐸 {𝑆 (𝑂 )} = 0 if and only if 𝐸 ∗ 
+
+> 0
+
+{𝑆 0 (𝑂 ∗)} = 0. □
+
+## D More Numerical Examples 
+
+Here we report the high-prevalence scenario. 
+
+𝑌 𝑡 ∼ Ber  expit (− 4 + 2𝐴 𝑡 + 𝛽 ⊤𝐿 𝑡 −1),
+
+yielding a prevalence rate of about 6% . Results are shown in Table 10 and Figure 3. Reference R code that reproduces the simulation results is publicly available at https://github.com/XiaohuiYin1998/ MatchedGFormula. 
+
+## E SBDH, Clinical Comorbidities, and Mental Health Disorders 
+
+Structured SBDH categories . We used ICD-10-CM Z codes 2 to extract information about 10 structured SBDH categories -(1) Problems related to education and literacy ( Z55 ), (2) Problems related to employment and unemployment ( Z56 ), (3) Occupational exposure to risk factors ( Z57 ), (4) Problems related to housing and economic circumstances (Z59 ), (5) Problems related to social environment ( Z60 ), 
+
+> 2https://www.bcbsnm.com/docs/provider/nm/icd-10-z-codes.pdf
+
+KDD ’26, August 09–13, 2026, Jeju Island, Republic of Korea Xiaohui Yin, Avijit Mitra, Ying Zhou, Kun Chen, & Hong Yu 
+
+Table 10: Simulation: Summary of the computation time for high prevalence scenario (in secs); standard deviations in parentheses                                            
+
+> NICE, ¯𝐴 =¯0ICE, ¯𝐴 =¯0NICE, ¯𝐴 =¯1ICE, ¯𝐴 =¯1
+> Complete 11.06 (2.33) 4.44 (2.44) 11.22 (2.60) 4.01 (2.26) (model-fitting time )Case–control (J=20) 12.38 (2.35) 5.21 (1.94) 12.41 (2.54) 4.79 (1.88) Case–control (J=10) 8.30 (1.99) 3.26 (1.63) 8.27 (1.83) 3.02 (1.59) Case–control (J=5) 7.31 (1.76) 2.44 (1.30) 7.30 (1.70) 2.33 (1.40) (total runtime )Case–control (J=20) 14.20 (2.94) 6.49 (2.72) 14.25 (3.09) 6.08 (2.64) Case–control (J=10) 9.96 (2.60) 4.31 (2.27) 9.93 (2.48) 4.06 (2.23) Case–control (J=5) 8.94 (2.42) 3.36 (1.98) 8.91 (2.28) 3.25 (2.24)
+
+Remark: Since the prevalence is approximately 5–8%, when 𝐽 = 20 the sample size exceeded the original sample sizes, and consequently the time also exceeded that of the complete-data version. A = 0 A = 1            
+
+> 123456123456
+> 0.0 0.1 0.2 0.3 0.4
+> Time
+> Risks
+> Matching scheme (Complete)
+> (Case−control, J=20)
+> (Case−control, J=10)
+> (Case−control, J=5)
+
+(a) ICE A = 0 A = 1            
+
+> 123456123456
+> 0.0 0.1 0.2 0.3 0.4
+> Time
+> Risks
+> Matching scheme (Complete)
+> (Case−control, J=20)
+> (Case−control, J=10)
+> (Case−control, J=5)
+
+(b) NICE 
+
+Figure 3: Simulation: Risk estimates for always or never ex-posed to treatment for high prevalence scenario. 
+
+(6) Problems related to upbringing ( Z62 ), (7) Other problems related to primary support group, including family circumstances ( Z63 ), (8) Problems related to certain psychosocial circumstances ( Z64 ), (9) Problems related to other psychosocial circumstances ( Z65 ), and (10) Problems related to medical facilities and other health care (Z75 )
+
+NLP-extracted SBDH categories . We considered 12 NLP-extracted SBDH categories - Social isolation, job or financial insecurity, hous-ing instability, legal problems, violence, barriers to care, transition of care, food insecurity, psychiatric symptoms, substance abuse, pain, and patient disability. Definitions and sample examples of all SBDH categories as well as the deep-learning model used to extract this SBDH information are available in the appendix section of the study by Mitra et al. [13]. 
+
+Clinical comorbidities and mental health disorders . From the Charlson Comorbidity Index [ 15 ], we included 17 clinical comor-bidities: acute myocardial infarction, congestive heart failure, pe-ripheral vascular disease, cerebrovascular disease, dementia, chronic obstructive pulmonary disease, rheumatoid disease, peptic ulcer disease, mild liver disease, diabetes without complications, diabetes with complications, hemiplegia or paraplegia, kidney disease, can-cer, moderate or severe liver disease, metastatic solid tumor, and AIDS/HIV. We considered 7 mental health disorders [2]: major de-pressive disorder, alcohol use disorder, drug use disorder, anxiety disorder, posttraumatic stress disorder, schizophrenia, and bipolar disorder. 
+
+Table 11: Application: Baseline summary statistics of the full VHA cohort ( 𝑁 = 127 ,399 veterans, 440 suicide cases). The restricted analysis cohort in Table 7 is obtained from this full cohort by excluding the initial 6-month windows with no suicide deaths and analyzing the subsequent five 6-month follow-up intervals 
+
+Variables Case (n=440), % Control (n=126,959), % Race White 369 (83.86) 81,443 (64.15) Black 43 (9.77) 34,536 (27.20) Others 28 (6.36) 10,980 (8.65) Sex Male 403 (91.59) 113,690 (89.55) Female 37 (8.41) 13,269 (10.45) Age 18-29 74 (16.82) 11,956 (9.42) 30-39 97 (22.05) 23,731 (18.69) 40-49 78 (17.73) 18,918 (14.90) 50-59 94 (21.36) 34,597 (27.25) 60-69 73 (16.59) 29,067 (22.89) 70-79 22 (5.00) 6,625 (5.22) 79 < 2 (0.45) 2,065 (1.63) Marital Status Married 71 (16.14) 11,722 (9.23) Not married 163 (37.05) 25,031 (19.72) Unknown 206 (46.82) 90,206 (71.05)
