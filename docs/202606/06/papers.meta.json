@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-06",
+  "date": "2026-06-06",
+  "generated_at": "2026-06-06T23:22:15",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/06/biorxiv-10-64898-2026-06-01-729220-v1-model-based-inference-of-enzyme-inhibitions-from-perturbation-induced-metabolic-dynamics",
+      "section": "quick",
+      "title_en": "Model-based inference of enzyme inhibitions from perturbation-induced metabolic dynamics",
+      "authors": "Liebermeister, W., Pauletti, M., dorcakova, T., Rahm, C., Zampieri, M.",
+      "date": "2026-06-03",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.01.729220v1.full.pdf",
+      "score": "7.0",
+      "evidence": "提供了一个从动态代谢组学数据推断代谢酶抑制的计算框架，可应用于研究运动诱导的皮瓣代谢变化",
+      "tldr": "代谢在微生物快速适应环境挑战中起关键作用，但代谢组学数据缺乏计算方法解释扰动传播机制。本文提出IMF框架，通过线性化非线性动力学并利用集合采样绕过未知参数，在E. coli中心代谢模型上成功推断扰动靶点。该方法为时域代谢组学数据的设计、分析和解释提供了有效途径。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "In microbes, metabolism plays a key role in the first rapid adaptation to sudden challenges such as nutrient limitations or toxic compounds. While metabolomics enables the profiling of stimuli-induced metabolic changes, computational approaches that can interpret these data to mechanistically explain how perturbations propagate through metabolism to produce the observed changes are lagging behind. Here, we developed a computational framework, called Inference from Metabolic Fingerprints (IMF), to model the immediate dynamic response to a metabolic perturbation and systematically infer its entry point (i.e. enzymatic target). IMF assumes small perturbations and linearizes the nonlinear dynamics around a reference steady state. This allows IMF to scale with large metabolic networks and bypass missing kinetic parameters by allowing for fast and efficient ensemble sampling. We apply IMF to a model of central metabolism in Escherichia coli. Using in-silico and experimental data, we demonstrate the ability to infer the target of metabolic perturbations in spite of unknown kinetic parameters and incomplete metabolic data. Hence, we show that IMF is an effective approach for designing, analyzing and interpreting time-resolved metabolomics.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

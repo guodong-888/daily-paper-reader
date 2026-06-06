@@ -1,0 +1,55 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-06T23:21:57.400546+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-06-01-729220-v1",
+      "source": "biorxiv",
+      "title": "Model-based inference of enzyme inhibitions from perturbation-induced metabolic dynamics",
+      "abstract": "In microbes, metabolism plays a key role in the first rapid adaptation to sudden challenges such as nutrient limitations or toxic compounds. While metabolomics enables the profiling of stimuli-induced metabolic changes, computational approaches that can interpret these data to mechanistically explain how perturbations propagate through metabolism to produce the observed changes are lagging behind. Here, we developed a computational framework, called Inference from Metabolic Fingerprints (IMF), to model the immediate dynamic response to a metabolic perturbation and systematically infer its entry point (i.e. enzymatic target). IMF assumes small perturbations and linearizes the nonlinear dynamics around a reference steady state. This allows IMF to scale with large metabolic networks and bypass missing kinetic parameters by allowing for fast and efficient ensemble sampling. We apply IMF to a model of central metabolism in Escherichia coli. Using in-silico and experimental data, we demonstrate the ability to infer the target of metabolic perturbations in spite of unknown kinetic parameters and incomplete metabolic data. Hence, we show that IMF is an effective approach for designing, analyzing and interpreting time-resolved metabolomics.",
+      "authors": [
+        "Liebermeister, W.",
+        "Pauletti, M.",
+        "dorcakova, T.",
+        "Rahm, C.",
+        "Zampieri, M."
+      ],
+      "primary_category": "systems biology",
+      "categories": [
+        "systems biology"
+      ],
+      "published": "2026-06-03T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.01.729220v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "provides a computational framework to infer metabolic enzyme inhibitions from dynamic metabolomics data, applicable to studying exercise-induced metabolic changes in flaps",
+      "llm_evidence_cn": "提供了一个从动态代谢组学数据推断代谢酶抑制的计算框架，可应用于研究运动诱导的皮瓣代谢变化",
+      "llm_evidence": "提供了一个从动态代谢组学数据推断代谢酶抑制的计算框架，可应用于研究运动诱导的皮瓣代谢变化",
+      "canonical_evidence": "提供了一个从动态代谢组学数据推断代谢酶抑制的计算框架，可应用于研究运动诱导的皮瓣代谢变化",
+      "llm_tldr_en": "This paper introduces IMF, a method to infer enzyme inhibition targets from perturbation-induced metabolic dynamics using linearization of nonlinear steady-state, enabling mechanistic interpretation of metabolic changes, which can be applied to study exercise-induced metabolic adaptations in flap survival.",
+      "llm_tldr_cn": "该研究针对代谢扰动后酶抑制靶点推断这一难题，提出了基于线性化非线性动力学的计算框架IMF。IMF通过代谢指纹建模，从动态代谢组学数据中系统推断扰动的酶入口点。虽然应用于微生物，但其方法可迁移至研究运动训练引起的皮瓣代谢重编程，从而为理解运动改善皮瓣存活的代谢机制提供分析工具。",
+      "llm_tldr": "该研究针对代谢扰动后酶抑制靶点推断这一难题，提出了基于线性化非线性动力学的计算框架IMF。IMF通过代谢指纹建模，从动态代谢组学数据中系统推断扰动的酶入口点。虽然应用于微生物，但其方法可迁移至研究运动训练引起的皮瓣代谢重编程，从而为理解运动改善皮瓣存活的代谢机制提供分析工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
