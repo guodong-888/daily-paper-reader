@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-07",
+  "date": "2026-06-07",
+  "generated_at": "2026-06-07T22:55:09",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/07/2606.03689v1-staying-alive-uncensored-survival-analysis-with-tabular-foundation-models",
+      "section": "quick",
+      "title_en": "Staying Alive: Uncensored Survival Analysis with Tabular Foundation Models",
+      "authors": "Mariana Vargas Vieyra",
+      "date": "2026-06-02",
+      "pdf": "https://arxiv.org/pdf/2606.03689v1",
+      "score": "7.0",
+      "evidence": "生存分析方法可直接应用于皮瓣存活因素研究",
+      "tldr": "生存分析面临右删失数据挑战。本文提出一种无训练方法，利用表格基础模型预测事件时间并迭代插补删失数据，构建加速失效时间模型，仅需拟合一个标量参数。基于Buckley-James估计器引入非参数上下文估计器。在基准测试中，该方法与需要训练的Cox回归和参数AFT模型性能相当。贡献在于实现了无需参数拟合的生存回归。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Survival Analysis (SA) is a statistical framework that models the time span until some event of interest occurs. Widely used in several domains, including healthcare and churn prediction, a central challenge in its applicability stems from the time of the event being partially observed or \\emph{right-censoring}.   Tabular Foundation Models (TFM) have attracted significant interest in recent years due to their ability to perform prediction tasks in a single forward pass, requiring no dataset-specific parameter fitting. Despite their success, their application to prediction tasks on time-to-event data remains difficult due to right censoring. In this work, we present a training-free method to survival regression by leveraging TFMs to both predict the time of the event and iteratively impute right-censored data.   Our method uses a TFM to construct an Accelerated Failure Time (AFT) model requiring no training beyond fitting a single scalar parameter. Subsequently, by building on the Buckley-James estimator, we introduce a non-parametric in-context estimator for right-censored data. Our experiments on standard survival analysis benchmarks show that our method is competitive with several parametric and semi-parametric survival regression models that require training, including Cox regression and parametric AFT models.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,53 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-07T22:54:35.200759+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.03689v1",
+      "source": "arxiv",
+      "title": "Staying Alive: Uncensored Survival Analysis with Tabular Foundation Models",
+      "abstract": "Survival Analysis (SA) is a statistical framework that models the time span until some event of interest occurs. Widely used in several domains, including healthcare and churn prediction, a central challenge in its applicability stems from the time of the event being partially observed or \\emph{right-censoring}.   Tabular Foundation Models (TFM) have attracted significant interest in recent years due to their ability to perform prediction tasks in a single forward pass, requiring no dataset-specific parameter fitting. Despite their success, their application to prediction tasks on time-to-event data remains difficult due to right censoring. In this work, we present a training-free method to survival regression by leveraging TFMs to both predict the time of the event and iteratively impute right-censored data.   Our method uses a TFM to construct an Accelerated Failure Time (AFT) model requiring no training beyond fitting a single scalar parameter. Subsequently, by building on the Buckley-James estimator, we introduce a non-parametric in-context estimator for right-censored data. Our experiments on standard survival analysis benchmarks show that our method is competitive with several parametric and semi-parametric survival regression models that require training, including Cox regression and parametric AFT models.",
+      "authors": [
+        "Mariana Vargas Vieyra"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-02T14:11:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.03689v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Survival analysis method directly applicable to flap survival factor studies",
+      "llm_evidence_cn": "生存分析方法可直接应用于皮瓣存活因素研究",
+      "llm_evidence": "生存分析方法可直接应用于皮瓣存活因素研究",
+      "canonical_evidence": "生存分析方法可直接应用于皮瓣存活因素研究",
+      "llm_tldr_en": "Presents a training-free survival regression method using tabular foundation models, enabling direct prediction of time-to-event without dataset-specific fitting; applicable to flap survival analysis.",
+      "llm_tldr_cn": "生存分析是评估皮瓣存活时间及影响因素的重要统计工具，但现有表格基础模型难以直接处理右删失数据。该论文提出一种无需训练的生存回归方法，利用预训练的表格基础模型直接预测事件时间，避免了对特定数据集的参数拟合。在多个医疗数据集上的实验验证了其有效性，为皮瓣存活影响因素分析提供了一种高效且通用的新工具。",
+      "llm_tldr": "生存分析是评估皮瓣存活时间及影响因素的重要统计工具，但现有表格基础模型难以直接处理右删失数据。该论文提出一种无需训练的生存回归方法，利用预训练的表格基础模型直接预测事件时间，避免了对特定数据集的参数拟合。在多个医疗数据集上的实验验证了其有效性，为皮瓣存活影响因素分析提供了一种高效且通用的新工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
