@@ -1,0 +1,439 @@
+Title: MetaboliSim: a Python implementation of the Mader model for dynamic and steady-state simulation of muscular energy metabolism
+
+URL Source: https://arxiv.org/pdf/2606.08366v1
+
+Published Time: Tue, 09 Jun 2026 01:08:20 GMT
+
+Number of Pages: 17
+
+Markdown Content:
+# MetaboliSim : a Python implementation of the Mader model for dynamic and steady-state simulation of muscular energy metabolism 
+
+Katharina Dunst ∗
+
+German Rowing Federation (DRV) Hannover, Germany 
+
+katharina.dunst@rudern.de 
+
+Vincent Scharf 
+
+Hochschule Bonn-Rhein-Sieg Sankt Augustin, Germany 
+
+vincent.scharf@h-brs.de 
+
+Clemens Hesse 
+
+German Cycling Frankfurt, Germany 
+
+clemens.hesse@germancycling.com 
+
+Alexander Asteroth 
+
+Hochschule Bonn-Rhein-Sieg Sankt Augustin, Germany 
+
+alexander.asteroth@h-brs.de 
+
+## Abstract 
+
+The Mader model is the most widely used mathematical framework for muscular energy metabolism in German-language sport science, underpinning lactate diag-nostics, maximal lactate steady state (MLSS) estimation and training prescription. Despite decades of use, neither its dynamic ODE formulation nor its steady-state equations have been available as open code, leaving results based on the model impossible to reproduce independently. We close this gap with MetaboliSim , an open-source Python implementation of both formulations: a dynamic model that integrates the five-variable ODE system (phosphate potential, ˙V O2, muscle and blood lactate, and glycogen) with a fourth-order Runge–Kutta scheme, and a steady-state model that computes MLSS power and the lactate–power relationship in one-and two-compartment variants. We verified implementation correctness against published reference values and assessed physiological plausibility across constant-load, step-test, sprint and running protocols. The implementation reproduces the published reference output within stated tolerances and remains numerically stable throughout (halving the time step changes blood lactate by less than 0.01 mmol L −1 ), with both formulations yielding congruent MLSS estimates. Key physiological behaviour ( ˙V O2 on-kinetics, lactate accumulation, PCr dynamics and the sub/supra-MLSS separation) emerges directly from the model equations without protocol-specific tuning, and a sensitivity analysis shows MLSS power varying approxi-mately linearly with ˙V O2max and nonlinearly with VLa max . As the first openly available implementation of the complete Mader model (AGPL-3.0), MetaboliSim 
+
+lets independent groups reproduce, verify and build on published model-based results. Source code: https://codeberg.org/3phos/metabolisim ; Platform: 
+
+https://metabolisim.org 
+
+## 1 Introduction 
+
+Quantitative modelling of muscular energy metabolism has a long tradition in exercise physiology. Since the foundational work of Hill and colleagues on oxygen debt and lactate kinetics, mathematical descriptions of the interplay between oxidative phosphorylation, glycolysis and the phosphocreatine shuttle have evolved from simple compartment models to systems of coupled differential equations that capture the regulatory logic of cellular bioenergetics (Mader 2003; Mader and Heck 1986). Among these, the model developed by Alois Mader and Hermann Heck, referred to here as the Mader model, occupies a central position in German-language sport science and has been applied to lactate 
+
+> ∗Corresponding author.
+> arXiv:2606.08366v1 [q-bio.QM] 6 Jun 2026
+
+diagnostics, performance prediction and training control for several decades (Heck, Bartmus, and Grabow 2022). The Mader model describes muscular energy metabolism as the interaction of three ATP-supplying pathways—the creatine-kinase equilibrium, anaerobic glycolysis and oxidative phosphorylation— regulated by the concentrations of adenosine diphosphate (ADP), inorganic phosphate and hydrogen ions. The model exists in two complementary formulations. The dynamic formulation expresses the time evolution of phosphocreatine, oxygen uptake, muscle and blood lactate, and glycogen as a system of coupled ordinary differential equations (ODEs). The steady-state formulation sets all time derivatives to zero and solves the resulting algebraic equations, yielding the relationship between exercise intensity, steady-state lactate concentration and the maximal lactate steady state (MLSS). Together, the two formulations cover the full range of applications from diagnostics of aerobic and anaerobic capacity to time-course simulation of complex exercise protocols. Despite its conceptual elegance, no open computational implementation of the Mader model has been available to date. Mader and Heck computed individual scenarios numerically in the 1980s and 1990s and published the results as figures, but the underlying code was never released (Mader and Heck 1986; Mader 2003). A commercial software tool (INSCYD, Kempten, Germany) implements a variant of the steady-state formulation for applied diagnostics, but its source code is proprietary and the numerical methods are not disclosed. Consequently, the full model, and in particular the dynamic ODE formulation, has not been available as inspectable, testable or extensible software. Published results based on the Mader model remain difficult to reproduce, and the model itself has been less accessible to the international research community than its scientific merit would warrant. The present work provides the first open-source Python implementation of both Mader model for-mulations. It documents the integration scheme and the iterative resolution of the creatine-kinase equilibrium, verifies numerical correctness against published reference values from Heck, Bartmus, and Grabow (2022), and demonstrates qualitative physiological plausibility through representative simulations for cycling and running. The contribution is not a new model but a transparent compu-tational realisation of an established physiological framework, supporting independent verification, systematic testing and extension. 
+
+## 2 Methods 
+
+The methods are organised in two layers. The first layer— Conceptual model , State-space formulation ,and Maximum sustainable lactate ( maxLa ss )—describes the physiological model and is written for readers primarily interested in the sport-science content. The second layer— Software architecture ,
+
+Numerical implementation , and Parameter handling —documents the computational realisation and is written for readers primarily interested in the implementation. The two layers are independent: the physiological description does not require the numerical detail, and the implementation description points back to the relevant equations rather than restating them. Full rate equations and the default parameter set are given in Appendix A and Appendix B; for the derivation of the physiological equations the reader is referred to Mader (2003) and Heck, Bartmus, and Grabow (2022). 
+
+2.1 Notation 
+
+Concentrations and per-mass quantities in this paper use two conventions that are easy to confuse. To avoid ambiguity, Table 1 collects the symbols used throughout. “Active muscle mass” denotes the fraction of body mass that is mechanically active during the exercise modelled (AMM; typically 30 % of body mass for cycling). The unit kg m always refers to one kilogram of active muscle wet mass. Default values of the kinetic and structural parameters are given in Appendix B (Table 3). Subscript conventions: “ss” denotes steady state, “ox” oxidation, “res” resynthesis (gluconeogenesis), “m” muscle compartment, “b” blood compartment. 
+
+2.2 Conceptual model 
+
+The Mader model describes the ATP turnover of a working skeletal muscle as the balance of three supply pathways and a mechanical demand. The pathways are: (i) the creatine kinase (CK) equi-librium, which buffers ATP concentration through the phosphocreatine (PCr) shuttle; (ii) anaerobic glycolysis, which produces ATP and lactate from glycogen; and (iii) oxidative phosphorylation, which re-synthesises ATP in the mitochondria using oxygen. A fourth process, gluconeogenesis, resynthesises glycogen from lactate at an energetic cost. Lactate is distributed between the muscle and blood compartments by concentration-dependent diffusion and is removed by oxidation in both 2Table 1: Notation used throughout the paper. 
+
+Symbol Unit Meaning Notes 
+
+kg m kg Active muscle mass (wet) Mass unit, not kg · m torque 
+
+[X] m mmol L −1 Intramuscular concentration of X Per L muscle intracellular water 
+
+[X] b mmol L −1 Blood concentration of X Per L blood 
+
+[X] kgm mmol kg m−1 Per active muscle mass amount of X = [X] m · Vrel , with Vrel ≈
+
+0.75 L kg m−1
+
+˙V O2 mL s −1 kg m−1 Oxygen uptake of active muscle Converted to mL min −1 kg m−1 or mL min −1 W−1 where stated 
+
+GP mmol kg m−1 Global phosphate potential ATP+PCr Integrated state variable, see Methods 
+
+P W External mechanical power Cycling load on ergometer; running uses m s −1 
+
+MLSS — Maximal lactate steady state Highest power with finite steady-state 
+
+[La] b
+
+maxLa ss mmol L −1 [La] b, ss at MLSS in two-compartment model See Methods: Maximum sustainable lactate AMM % Active muscle mass as fraction of body mass Athlete-specific, default 30 % for cy-cling 
+
+Vrel L kg m−1 Intracellular water volume per kg m Converts [X] m ↔ [X] kgm 
+
+Table 2: State variables of the dynamic model. 
+
+Variable Symbol Unit Description 
+
+Global phosphate potential GP mmol kg m−1 ATP + PCr 
+
+Oxygen uptake ˙V O2 mL s −1 kg m−1 Active muscle O2 consumption Muscle lactate [La] m mmol L −1 Intracellular water Blood lactate [La] b mmol L −1 Blood concentration Glycogen Gly g kg m−1 Muscle glycogen 
+
+compartments (Mader 2003; Heck, Bartmus, and Grabow 2022). Figure 1 summarises the state and flux structure. The regulatory structure rests on three central metabolite signals. First, adenosine diphosphate (ADP) concentration, derived from the coupled CK and adenylate kinase (AK) equilibria, activates both oxidative phosphorylation and glycolysis via Michaelis–Menten kinetics with Hill-type cooperativity. Second, intracellular pH, which decreases with lactate accumulation and phosphate release, inhibits glycolysis through allosteric regulation of phosphofructokinase (PFK). Third, glycogen availability modulates both glycolytic capacity and, to a lesser extent, oxidative capacity. These regulatory loops create the characteristic nonlinear behaviour of the system: at low intensities, oxidative phosphorylation meets the ATP demand with minimal lactate accumulation; at higher intensities, glycolytic flux increases, lactate accumulates and pH falls, partially inhibiting further glycolysis; above the MLSS, lactate production exceeds the maximal elimination capacity and no steady state exists. The dynamic and steady-state formulations describe the same physiology at different levels of temporal resolution. The steady-state solution represents the fixed point of the dynamic system, and the two-compartment steady-state model uses the identical rate equations as the ODE system. 
+
+2.3 State-space formulation 
+
+The dynamic model integrates five state variables (Table 2): the global phosphate potential GP = ATP + PCr , oxygen uptake, muscle and blood lactate concentrations, and muscle glycogen. The choice of global phosphate potential (GP) rather than PCr as the integrated variable follows Heck, Bartmus, and Grabow (2022) and avoids an implicit algebraic constraint between ATP and PCr at each step; PCr is recovered iteratively from GP after each integration step via the CK / AK equilibrium (Appendix A, Eqs. A1–A4). In compact form, the dynamic model is a non-autonomous ODE system 
+
+dx
+
+dt = f  x(t), P (t); θ, x(0) = x0, (M1) with state vector x = (GP , ˙V O2, [La] m, [La] b, Gly) T, time-varying mechanical load P (t), and parameter vector θ (Appendix B). The right-hand side f couples the three ATP supply pathways and 3Figure 1: Mader model—state and flux structure. Mechanical demand drives ATP consumption, which is met by three parallel supply pathways. The ADP , AMP and Pi pool functions as the central regulator that couples demand to supply; pH provides negative feedback on glycolysis. Lactate is produced by glycolysis, diffuses between muscle and blood compartments, and is removed by oxidation in both compartments. Five state variables (yellow) are integrated in the dynamic formulation: PCr (via the global phosphate potential GP = ATP + PCr ), ˙V O2, [La] m, [La] b, and glycogen. the lactate compartments shown in Fig. 1; its components are derived from Michaelis–Menten kinetics with Hill cooperativity for the ADP-dependent activation of glycolysis and oxidative phosphorylation, pH-dependent inhibition of glycolysis, and concentration-driven diffusion between muscle and blood. The full functional form is given in Appendix A (Eqs. A5–A16); the original derivation is in Mader (2003), with the formulation used here following Heck, Bartmus, and Grabow (2022). 
+
+2.4 Maximum sustainable lactate ( maxLa ss )
+
+A specific use of the steady-state formulation is the identification of the maximal lactate steady state (MLSS)—the highest exercise intensity at which a stable blood-lactate equilibrium exists—and the corresponding blood-lactate concentration, here denoted maxLa ss . This section makes the underlying aggregated balance explicit, because both the conceptual interpretation of MLSS and the practical algorithm hinge on it. 
+
+Aggregated balance. At any constant load P , the dynamic system reaches a steady state when the gross lactate production from glycolysis equals the maximum lactate elimination via oxidation: 
+
+νLa ,prod (P ) = νLa ,ox ,max (P ). (M2) Both sides depend on P through the steady-state oxygen uptake ˙V O2(P ) and the resulting ADP, pH and [La] m levels. The production deficit 
+
+PD( P ) = νLa ,ox ,max (P ) − νLa ,prod (P ) (M3) is positive below the MLSS, zero at the MLSS, and negative above. Substituting into the one-compartment lactate balance (Appendix A, Eq. A17) yields the steady-state blood lactate 
+
+[La] b, ss (P ) = 
+
+s
+
+Kel νLa ,prod (P )PD( P ) . (M4) In the one-compartment formulation, [La] b, ss diverges as PD → 0; the MLSS power is therefore defined as the unique root of PD( P ) = 0 and found by bisection on Eq. (M3) . The two-compartment 4Figure 2: Maximum sustainable lactate. (A) Aggregated balance: gross glycolytic lactate production (red) and maximal lactate oxidation capacity (blue) as functions of power. Their intersection defines the MLSS power; below the MLSS the production deficit PD is positive (shaded). (B) Steady-state blood lactate. The one-compartment solution diverges at the MLSS; the two-compartment formulation produces a finite maxLa ss at the bifurcation. (C) Bisection algorithm finding the MLSS power: successive brackets (blue) narrow around the crossing-point midpoint (red). Curves illustrative; numerical values from the default parameter set of Appendix B. formulation (Appendix A, Eq. A18) does not exhibit divergence: the muscle and blood lactate equations form a 2 × 2 nonlinear system whose Jacobian becomes singular at the bifurcation, giving a finite maxLa ss . This bifurcation is detected by tracking the largest real part of the Jacobian eigenvalues; the power at which it crosses zero defines the bifurcation point (and therefore the two-compartment MLSS), and the lactate concentration at that point is maxLa ss . Figure 2 visualises the aggregated balance, the steady-state lactate curve, and the bisection algorithm. 
+
+Why this matters. Eqs. (M2) – (M4) make explicit that the MLSS power and maxLa ss are not measured quantities in the model but emergent properties of the balance between glycolytic production and oxidative elimination. Their values are therefore directly traceable to the underlying kinetic constants (Appendix B)—and any uncertainty in those constants propagates into the predicted MLSS. The bisection step is fast and deterministic; in MetaboliSim it forms the core of the steady-state solver and is reused by the parameter-estimation workflow. 
+
+2.5 Software architecture 
+
+MetaboliSim is structured around three principles: separation of physiological logic from numerical implementation and from user interface; immutability of parameter sets for reproducibility; and testability of each component in isolation (Fig. 3). The model layer contains all physiological equations and numerical methods with no UI dependencies. It consists of six modules: constants (immutable parameter dataclasses), core model (stateless rate equations), simulator (ODE integration), steady-state solver, state vector definition and load profiles. The server layer orchestrates reactive computations for the Shiny web framework. The UI layer defines the interface as declarative Shiny modules with Plotly visualisations. The model layer depends only on NumPy, SciPy and Pandas. 
+
+2.6 Numerical implementation Integration scheme. The ODE system (Eq. (M1) ; full form in Appendix A, Eqs. A12–A16) is inte-grated with a classical fourth-order Runge–Kutta (RK4) method. At each time step, the computation proceeds as follows: pH is estimated from the previous step’s phosphate and lactate concentrations; PCr is recovered from GP by Newton iteration on the CK / AK equilibrium, yielding ADP; the metabolic rates (glycolysis, oxidation, lactate exchange, gluconeogenesis) are then computed from the current ADP, pH and lactate. Following the strategy described by Mader (2003), all these rates are evaluated once per step and held constant across the four RK4 stages ( frozen metabolic coefficients ). This ensures numerical determinism and avoids oscillatory coupling between fast (CK / AK equilibra-tion on the millisecond scale) and slow (lactate diffusion on the minute scale) subsystems. The time step is adapted to the simulation duration ( ∆t = 0 .05 –1.0 s ). An adaptive Runge–Kutta–Fehlberg (4,5) (RKF45) method with embedded error estimation is available as an alternative (default tolerance: 10 −6 ). 5Figure 3: Modular software architecture of MetaboliSim . The model layer (green) contains all physiological equations and numerical methods. The server layer (amber) orchestrates reactive computations. The UI layer (blue) provides the interactive web interface. Dependencies flow downward only; the model layer has no UI dependencies. 
+
+Recovery of PCr from GP. Because the integrated variable is GP = ATP + PCr , PCr must be recovered at each time step by solving the nonlinear equation 
+
+f (PCr) = ATP(PCr , pH) + PCr − GP = 0 , (M5) where ATP(PCr , pH) is determined by the CK / AK equilibrium (Appendix A, Eqs. A1–A4). Newton iteration with the analytical derivative f ′(PCr) = dATP /d PCr + 1 converges to machine precision in 4–6 iterations. A bisection fallback guarantees convergence when the Newton step would exceed the feasible interval. 
+
+Steady-state solver. The one-compartment steady-state model evaluates Eq. (M4) directly over a power grid and locates the MLSS by bisection on Eq. (M3) . When pH feedback is enabled, VLa max 
+
+is reduced by the pH inhibition factor and the system is solved by fixed-point iteration. The two-compartment model uses three nested numerical procedures: a bisection–Newton hybrid for PCr (dGP /dt = 0 ), a fixed-point loop for muscle lactate, and a bisection for blood lactate. MLSS stability is assessed by the eigenvalues of the 2 × 2 Jacobian of the lactate subsystem as described in the previous section. 
+
+Numerical safeguards. All state variables are bounded to physiologically meaningful ranges after each step. Logarithmic arguments are guarded against non-positive values, and the ATP/ADP ratio Q
+
+is clamped to prevent overflow in recovery. The convergence of Newton, the boundedness of state variables and the residual of the steady-state fixed-point iteration are all monitored as part of the automated test suite (see Verification). 
+
+2.7 Parameter handling 
+
+All parameters are defined in a single location with explicit default values, physical units and references to the corresponding equations. The MaderConstants dataclass serves as the single source of truth. Athlete-specific parameters (body mass, active muscle mass, ˙V O2max , VLa max )are collected in the AthleteProfile dataclass. The default parameter set is given in Appendix B (Table 3). With the exception of the cytosolic CK equilibrium constant M2 (Veech et al. 1979), all default parameters are taken from Mader (2003), Mader and Heck (1994) or Heck, Bartmus, and Grabow (2022); none has been independently re-fitted in the present work. 62.8 Numerical properties and plausibility assessment 
+
+Following the verification and validation (V&V) terminology of Roache (1998), the present work establishes numerical properties of the implementation—that the equations are solved correctly and reproducibly—rather than validation against experimental data. Five procedures are applied: (i) convergence to resting equilibrium at zero load; (ii) reproduction of the published reference values from Heck, Bartmus, and Grabow (2022) under standardised conditions ( 50 W , 600 s ; PCr: 
+
+16 .459 ±0.2 mmol kg m−1, [La] b: 1.096 ±0.05 mmol L −1); (iii) exercise-mode equivalence ( 3.0 m s −1 
+
+vs 10.8 km h −1 ); (iv) Newton convergence of the CK / AK equilibrium at every time step; and (v) dynamic–steady-state congruence below the MLSS. Detailed pass/fail criteria for each procedure are implemented as automated test scripts. Physiological plausibility is assessed against established qualitative behaviour: mono-exponential 
+
+˙V O2 on-kinetics, intensity-dependent lactate accumulation, PCr depletion and recovery dynamics, MLSS within plausible ranges, and the fat-oxidation crossover. These assessments confirm that the model output is consistent with known exercise physiology but do not constitute a formal validation against experimental data; we return to this distinction in the Limitations section. 
+
+## 3 Results 
+
+3.1 Numerical properties 
+
+The RK4 integrator with frozen coefficients produces stable, non-oscillatory solutions for all tested protocols, including supramaximal sprints, abrupt load transitions and prolonged recovery phases. The Newton solver converges within 4–6 iterations to residuals below 10 −12 mmol kg m−1 at every time step without requiring the bisection fallback. Halving the time step from 0.1 s to 0.05 s changes 5-minute blood lactate by less than 0.01 mmol L −1 , indicating low sensitivity to time-step variation in the tested range. Under the reference parameter set from Heck, Bartmus, and Grabow (2022), a 50 W constant load for 600 s ( 75 kg , 30 % AMM, ˙V O2max = 50 mL min −1 kg −1, VLa max = 0 .5 mmol L −1 s−1)produces PCr = 16 .46 mmol kg m−1 and [La] b = 1 .09 mmol L −1, matching the published reference values within specified tolerances. Exercise-mode equivalence ( 3.0 m s −1 vs 10.8 km h −1 ) is confirmed with PCr differences below 0.001 mmol kg m−1 .A 300 s constant-load simulation at ∆t = 0 .5 s completes in approximately 50 ms on a standard desktop CPU (single core, Intel-class x86-64, Python 3.11). The steady-state model computes the full intensity range ( N = 900 power points from 50–500 W in 0.5 W steps) in approximately 15 ms without pH feedback and 80 ms with pH feedback. A parameter sweep across nine ˙V O2max values ( 40–80 mL min −1 kg −1 in 5 mL min −1 kg −1 steps) requires less than 150 ms . These execution times place the model well within the range required for iterative optimisation, batch parameter fitting and interactive use. 
+
+3.2 Physiological plausibility 
+
+At constant-load exercise onset, ˙V O2 rises mono-exponentially toward the Michaelis–Menten steady-state target (Fig. 4A). PCr drops rapidly, buffering ATP demand before oxidative phosphorylation reaches steady state (Fig. 4B). Muscle and blood lactate rise transiently and stabilise at the sub-MLSS steady-state level (Fig. 4C; the chosen 200 W are sub-MLSS for the athlete parameters used). pH falls with lactate accumulation, partially inhibiting glycolysis (Fig. 4D). Supra-MLSS behaviour (continuous lactate accumulation without steady state) is shown in Figs. 7 and 9. 
+
+3.3 MLSS identification 
+
+The one-compartment steady-state model identifies the MLSS as the crossing point of gross lactate production and maximal oxidation capacity (Fig. 5A; cf. Fig. 2). Below the MLSS, blood lactate rises steeply with intensity (Fig. 5B). The two-compartment model yields MLSS estimates within 5–10 W of the one-compartment value, confirming congruence between the formulations. 
+
+3.4 Dynamic vs steady-state comparison 
+
+Below the MLSS, the dynamic simulation converges to the blood lactate predicted by the algebraic model within 3–10 min of simulated time. Above the MLSS, the steady-state model predicts no 7Figure 4: Dynamic simulation of constant-load exercise ( 200 W , 10 min ). For the athlete parameters used here ( 75 kg , 30 % AMM, ˙V O2max = 60 mL min −1 kg −1, VLa max = 0 .7 mmol L −1 s−1), 200 W is sub-MLSS, so all four traces converge to a steady state. (A) Oxygen uptake with mono-exponential on-kinetics. (B) Phosphocreatine buffering the initial ATP deficit. (C) Muscle (red) and blood (orange) lactate reaching steady state. (D) Intracellular pH response. Supra-MLSS behaviour (continuous lactate accumulation) is shown separately in Figs. 7 and 8. stable equilibrium, consistent with the continuous lactate rise in the dynamic simulation. The steady-state model is approximately 5–10 × faster than the dynamic model and is therefore preferable for diagnostic applications where transient behaviour is not of interest. 
+
+3.5 Parameter sensitivity 
+
+Increasing ˙V O2max (40–80 mL min −1 kg −1 in 5 mL min −1 kg −1 steps) at fixed VLa max =0.5 mmol L −1 s−1 shifts the MLSS power rightward approximately linearly (Fig. 6A). Increasing 
+
+VLa max (0.3–0.9 mmol L −1 s−1 in 0.1 mmol L −1 s−1 steps) at fixed ˙V O2max = 60 mL min −1 kg −1
+
+shifts the MLSS leftward and raises steady-state lactate (Fig. 6B), demonstrating the antagonistic influence of the two capacity parameters. 
+
+3.6 Example simulations: step test 
+
+A simulated step test ( 50 W start, +25 W /step, 180 s /step, 10 steps) demonstrates progressive lactate accumulation and the transition from submaximal steady states to supra-MLSS non-equilibrium (Fig. 7). 8Figure 5: Steady-state model output. (A) Gross lactate production (red) and maximal oxidation capacity (blue) as functions of power; their intersection defines the MLSS (dashed). (B) Steady-state blood lactate concentration diverging as power approaches the MLSS in the one-compartment formulation. 
+
+Figure 6: Parameter sensitivity of MLSS power. (A) Effect of ˙V O2max at fixed VLa max =0.5 mmol L −1 s−1. (B) Effect of VLa max at fixed ˙V O2max = 60 mL min −1 kg −1. Body mass 
+
+= 75 kg , 30 % AMM. 
+
+3.7 Example simulations: sprint and recovery 
+
+A 500 W sprint until exhaustion followed by passive recovery shows PCr depletion to the exhaustion threshold, peak blood lactate of ∼ 12 –18 mmol L −1 at 2–4 min post-cessation, and the subsequent exponential recovery of PCr and decline of lactate (Fig. 8). 
+
+3.8 Plausibility across modes: running lactate dynamics 
+
+To assess plausibility beyond cycling, the dynamic model was applied to running at five constant velocities ( 3.0–3.8 m s −1 , 25 min each) using the running-specific ˙V O2–velocity relationship of 9Figure 7: Simulated step test. (A) Power protocol. (B) Blood (orange) and muscle (red) lactate accumulation with the characteristic exponential lactate–power response. (C) Phosphocreatine (teal, left axis) and ˙V O2 (blue, right axis) across steps. Mader and Heck (1994). Below approximately 3.2 m s −1 , blood lactate stabilises after a transient rise, consistent with a sustainable steady state. Above this velocity, blood lactate increases continuously throughout the exercise bout, indicating supra-MLSS conditions (Fig. 9). This qualitative separation of sub- and supra-MLSS responses reproduces the classical observation of Heck, Mader, et al. (1985) in running and demonstrates that the model generates physiologically consistent output across exercise modes without re-parametrisation of the core metabolic equations. 
+
+3.9 Self-consistency check: parameter recovery from synthetic step-test data 
+
+As an internal consistency check on the steady-state solver, end-of-step blood lactate values were extracted from a graded exercise test ( 50–325 W , 25 W increments, 300 s per step) generated by the dynamic model itself with known parameters ( ˙V O2max = 60 mL min −1 kg −1, VLa max =0.7 mmol L −1 s−1, body mass 75 kg , 30 % active muscle mass; protocol scenario also used by Mader et al., in preparation). ˙V O2max was then fitted to these synthetic data by minimising the sum of squared residuals against the two-compartment steady-state model, with VLa max fixed at the known value. The fit recovered ˙V O2max = 58 .4 mL min −1 kg −1 (true: 60.0 ; RMSE = 0 .11 mmol L −1;Fig. 10A). The systematic underestimation reflects the fact that 5-minute stages do not fully reach equilibrium at higher intensities. From the fitted parameters, the full steady-state lactate–power curve and the model-derived MLSS power (282 W) are obtained directly (Fig. 10B). This procedure demonstrates internal consistency between the dynamic and steady-state solvers and confirms that the parameter-estimation machinery operates as intended. It does not demonstrate accuracy against experimental data: both the input data and the model are produced from the same equations. The same workflow—sprint test for VLa max , step test for ˙V O2max , model-derived MLSS—is, however, the standard diagnostic application of the Mader model in applied sport science (Heck, Bartmus, and Grabow 2022), and its implementation in MetaboliSim is a transparent and reproducible alternative to manual calculation. 10 Figure 8: Sprint ( 500 W ) with passive recovery. (A) PCr depletion and exponential recovery. (B) Blood lactate with post-exercise overshoot. (C) pH nadir at peak lactate. (D) Power proto-col. 
+
+## 4 Discussion 
+
+4.1 Computational implementation and reproducibility 
+
+Although Mader and Heck computed individual model scenarios numerically from the 1980s onward, the underlying code was never released, and a commercial tool (INSCYD) covers only the steady-state formulation without disclosing its numerical methods. MetaboliSim is the first open implementation encompassing both formulations. Python was chosen for its wide adoption in scientific computing, its numerical ecosystem (NumPy, SciPy, Pandas) and its accessibility to researchers without a computer-science background. The frozen-coefficient RK4 follows the computational strategy described by Mader (2003), in which all enzymatic rates are evaluated once per time step. The system contains processes on disparate time scales (milliseconds for CK / AK equilibration vs. minutes for lactate diffusion) and may therefore exhibit stiffness; an empirical stiffness analysis (e.g. via the spectral radius of the Jacobian over the operating range) has not been performed in this work. The frozen-coefficient strategy mitigates fast–slow coupling pragmatically; a future extension to a fully implicit stiff solver (BDF, Radau) is straightforward through SciPy and would be the cleaner numerical treatment. The adaptive RKF45 method is already included for users requiring guaranteed error control. Immutable parameter dataclasses, deterministic integration and automated test suites ensure that any simulation is exactly reproducible from its inputs. The modular architecture (Fig. 3) means that the rate equations can be verified against published formulae without running the integrator, that the integrator can be tested independently, and that the user interface can be replaced without touching the model code. Note that the per-simulation execution times reported in Results ( 50–150 ms ) refer to the core model evaluation only; end-to-end latency in the interactive web interface is dominated by 11 Figure 9: Running lactate dynamics at five constant velocities ( 3.0–3.8 m s −1 , 25 min ). (A) Blood lactate: sub-MLSS velocities reach a steady state; supra-MLSS velocities show continuous accumula-tion. (B) Muscle lactate. ˙V O2(v) = −1.1 + 12 .4 v mL min −1 kg −1 (Mader and Heck 1994). Athlete: 75 kg, ˙V O2max = 50 mL min −1 kg −1, VLa max = 0 .7 mmol L −1 s−1.Plotly rendering, reactive re-computation in the Shiny framework, and network round-trip rather than by the model itself, and is therefore noticeably higher. 
+
+4.2 Physiological interpretation 
+
+The model reproduces the core regulatory dynamics described by Mader (2003) and Heck, Bartmus, and Grabow (2022). The ADP-mediated coupling between demand and supply gives rise to ˙V O2
+
+on-kinetics, intensity-dependent lactate accumulation, MLSS emergence and glycogen-dependent threshold shifts. The pH feedback on glycolysis limits the maximal glycolytic rate under acidosis, creating the self-limiting character of supra-MLSS exercise. Whether the specific Hill exponents and half-inhibition constants accurately represent in vivo PFK regulation remains open; these are effective parameters tuned to system-level behaviour rather than direct enzyme measurements. The two formulations complement each other: the steady-state model is efficient for diagnostics and parameter fitting, and its closed-form structure makes the dependence on the underlying kinetic parameters transparent (cf. the maxLa ss section). The dynamic model captures transient phenomena inaccessible to the algebraic formulation. 
+
+4.3 Scope and limitations 
+
+The Mader model treats the working muscle as a single homogeneous compartment and does not account for fibre-type heterogeneity, regional perfusion differences, or contributions of non-exercising tissues to whole-body lactate metabolism. The power–ATP coupling assumes constant mechanical efficiency, which is an approximation at extreme power outputs. Many kinetic constants are effective values derived from model fitting rather than independent measurements. Changes in these parameters can substantially alter predictions near the MLSS. The two-parameter characterisation ( ˙V O2max , VLa max ) achieves practical utility but can yield non-unique solutions when fitting both simultaneously to sparse data. The present work establishes numerical correctness and qualitative physiological plausibility. It does 
+
+not establish quantitative validity. The parameter-recovery example (Fig. 10) is an internal consistency check on the solver, not a validation against measured athletes: both the input data and the model that generated them rest on the same equations. A formal comparison against experimental data— measured ˙V O2 kinetics, invasively determined muscle metabolites, or direct MLSS determination in athletes—has not been performed in this work and remains a primary objective for future use of 12 Figure 10: Self-consistency check: parameter recovery from synthetic step-test data. (A) End-of-step blood lactate from the dynamic simulation (circles) and steady-state model fit (squares); dotted line: predicted MLSS. (B) Fitted steady-state lactate production (red) and oxidation capacity (blue); their intersection defines the MLSS ( 282 W ). Known input parameters: ˙V O2max = 60 mL min −1 kg −1,
+
+VLa max = 0.7 mmol L −1 s−1 (fixed). Fitted ˙V O2max = 58 .4 mL min −1 kg −1, RMSE =0.11 mmol L −1.the open implementation. Without such external validation, the quantitative accuracy of specific simulation outputs should be interpreted with appropriate caution. The model was developed primarily for cycling. Extension to other modes (running, rowing, swim-ming) requires mode-specific efficiency relationships and potentially additional physiological mecha-nisms; the running example in Fig. 9 uses the ˙V O2–velocity relationship of Mader and Heck (1994) and demonstrates that the core metabolic equations do not require re-parametrisation. 
+
+4.4 What MetaboliSim enables 
+
+The principal contribution of this work is not a new model but a transparent computational infrastruc-ture for an established one. By making the complete Mader model available as documented, tested and openly licensed code, MetaboliSim removes the principal obstacle to external validation studies: independent groups can now compare model predictions to their own experimental data without re-implementing the model from primary literature. The same infrastructure supports systematic parameter sensitivity analysis (Fig. 6), prospective simulation of complex exercise protocols (intervals, pacing strategies, repeated sprints), and use as a teaching tool through the interactive web interface. 
+
+## 5 Conclusions 
+
+MetaboliSim provides a transparent, reproducible and extensible Python implementation of the Mader model of muscular energy metabolism, encompassing both the dynamic ODE formulation and the algebraic steady-state formulation. The software is numerically verified against published reference values and produces output consistent with qualitative exercise physiology. It supports step-test analysis, MLSS estimation, parameter fitting, individualised simulation and scenario-based performance modelling. By making the complete implementation available as documented, tested and openly licensed code, MetaboliSim enables—for the first time—external experimental validation of the Mader framework by independent groups, and extension of the model by the sport science and computational physiology communities. 13 Declarations 
+
+Funding. No external funding was received for this work. 
+
+Conflicts of interest. The authors declare no conflicts of interest. 
+
+Data availability. The source code, default parameter sets, test suite and documentation are publicly available under the GNU Affero General Public License (AGPL) (AGPL-3.0-or-later) licence at 
+
+https://codeberg.org/3phos/metabolisim .
+
+## References 
+
+American College of Sports Medicine (2018). ACSM’s Guidelines for Exercise Testing and Prescrip-tion . 10th ed. Philadelphia: Wolters Kluwer. Castellini, Michael A. and George N. Somero (1981). “Buffering capacity of vertebrate muscle: correlations with potentials for anaerobic function”. In: Journal of Comparative Physiology B 143, pp. 191–198. DOI : 10.1007/BF00689439 .Drescher, Uwe et al. (2012). “Oxygen uptake kinetics following six weeks of interval and continuous endurance exercise training: an explorative pilot study”. In: Respiratory Physiology & Neurobiology 
+
+180, pp. 191–199. DOI : 10.1016/j.resp.2011.10.011 .Heck, Hermann, Ulrich Bartmus, and Verena Grabow (2022). Laktat: Stoffwechselgrundlagen, Leis-tungsdiagnostik, Trainingssteuerung . Berlin: Springer. Heck, Hermann, Alois Mader, et al. (1985). “Justification of the 4-mmol/l lactate threshold”. In: 
+
+International Journal of Sports Medicine 6, pp. 117–130. Hinkle, Peter C. (2005). “P/O ratios of mitochondrial oxidative phosphorylation”. In: Biochimica et Biophysica Acta (BBA) - Bioenergetics 1706, pp. 1–11. DOI : 10.1016/j.bbabio.2004.09.004 .Lazzer, Stefano, Luca Plaino, and Guglielmo Antonutto (2011). “The energetics of cycling on Earth, Moon and Mars”. In: European Journal of Applied Physiology 111, pp. 357–366. DOI :
+
+10.1007/s00421-010-1410-1 .Mader, Alois (2003). “Glycolysis and oxidative phosphorylation as a function of cytosolic phospho-rylation state and power output of the muscle cell”. In: European Journal of Applied Physiology 
+
+88, pp. 317–338. DOI : 10.1007/s00421-002-0676-3 .Mader, Alois and Hermann Heck (1986). “A theory of the metabolic origin of “anaerobic threshold””. In: International Journal of Sports Medicine 7.Suppl 1, pp. 45–65. – (1994). “Energiestoffwechselregulation, Erweiterungen des theoretischen Konzepts und seiner Begründungen”. In: Brennpunkte der Sportwissenschaft . Ed. by Alois Mader and Henning Allmer. Aachen: Academia. McCarthy, Cassidy et al. (2022). “D3-creatine dilution for skeletal muscle mass measurement: historical development and current status”. In: Journal of Cachexia, Sarcopenia and Muscle 13, pp. 2616–2631. DOI : 10.1002/jcsm.13083 .Miller, Spencer G., Paul S. Hafen, and Jeffrey J. Brault (2019). “Increased adenine nucleotide degradation in skeletal muscle atrophy”. In: International Journal of Molecular Sciences 21, p. 88. 
+
+> DOI
+
+: 10.3390/ijms21010088 .Roache, Patrick J. (1998). Verification and Validation in Computational Science and Engineering .Albuquerque: Hermosa. Sjøgaard, Gisela and Bengt Saltin (1982). “Extra- and intracellular water spaces in muscles of man at rest and with dynamic exercise”. In: American Journal of Physiology 243, R271–R280. DOI :
+
+10.1152/ajpregu.1982.243.3.R271 .Tonkonogi, Michail and Kent Sahlin (1997). “Rate of oxidative phosphorylation in isolated mitochon-dria from human skeletal muscle: effect of training status”. In: Acta Physiologica Scandinavica 
+
+161, pp. 345–353. DOI : 10.1046/j.1365-201X.1997.00222.x .Veech, Richard L. et al. (1979). “Cytosolic phosphorylation potential”. In: Journal of Biological Chemistry 254, pp. 6538–6547. Whipp, Brian J. and Karlman Wasserman (1972). “Oxygen uptake kinetics for various intensities of constant-load work”. In: Journal of Applied Physiology 33, pp. 351–356. DOI : 10.1152/jappl. 1972.33.3.351 .14 A Detailed rate equations 
+
+This appendix lists the equations underlying the right-hand side f in Eq. (M1) . The derivation of each equation is given in Mader (2003) and Heck, Bartmus, and Grabow (2022); the form below follows Heck, Bartmus, and Grabow (2022) (Eqs. 4.1–4.16). All concentrations are per kg active muscle mass ( kg m) unless stated otherwise. 
+
+A.1 Creatine-kinase and adenylate-kinase equilibria 
+
+At each instant, ATP, ADP, AMP and inorganic phosphate ( Pi) are determined by two coupled equilibria subject to conservation constraints. The CK equilibrium relates the ATP/ADP ratio to the 
+
+PCr /Pi ratio through the Lohmann constant M1 (Veech et al. 1979): 
+
+[ATP] [ADP] = Q = M1 · [PCr] [P i] , (A1) where M1 = [H +] · M2, M2 = 1 .66 × 10 9, [P i] = SC − [PCr] (creatine conservation, SC =23 .0 mmol kg m−1), and Q is the auxiliary ATP/ADP ratio. Combined with the adenylate-kinase equilibrium ( M3 = [ATP][AMP] /[ADP] 2 = 0 .96 ) and the adenine nucleotide conservation [ATP]+ [ADP] + [AMP] = SA = 6 .0 mmol kg m−1:
+
+[ADP] = SA · QM3 + Q + Q2 , (A2) 
+
+[ATP] = Q · [ADP] , [AMP] = M3
+
+Q · [ADP] . (A3) The free enthalpy of ATP hydrolysis is 
+
+∆GATP = ∆ G◦ + R T ln 
+
+
+
+10 3 · M1 · [PCr] [P i]2
+
+
+
+, (A4) with ∆G◦ = 30 500 J mol −1, R = 8 .314 J mol −1 K−1, T = 310 K .
+
+A.2 Rate equations Oxidative ATP supply. Michaelis–Menten kinetics with Hill exponent 2 (Heck, Bartmus, and Grabow 2022, Eq. 4.12): 
+
+˙V O2,ss = ˙V O2max 1 + Ks1/[ADP] 2 , (A5) with Ks1 = 1 .225 × 10 −3 (mmol kg m−1)2. Actual ˙V O2 approaches ˙V O2,ss with first-order kinetics (default k ˙V O2 = 0 .2 s −1, τ = 5 s ). An optional intensity-dependent time constant (Drescher et al. 2012) is 
+
+τ = 0 .0023 (% ˙V O2max) 2 − 0.6352 (% ˙V O2max) + 51 .196 . (A5a) 
+
+Glycolytic ATP supply. Heck, Bartmus, and Grabow (2022, Eq. 4.16): 
+
+νLa = VLa max · fgly 
+
+ 1 + [H +]3/K s3
+
+  1 + Ks2/[ADP] 3 . (A6) ADP activation and pH inhibition both follow Hill kinetics with exponent 3. The glycogen modulation factor reduces VLa max sigmoidally as glycogen is depleted: fgly = 1 / 1 + ( Kgly · Gly full /Gly) 3,where Kgly is the activation constant indicating the relative storage level at which glycolysis is inhibited at half maximum, Gly full is the glycogen storage capacity ( 83.3 mmol kg m−1 , equivalent to 15 g kg m−1 , and Gly is the current muscle glycogen concentration in mmol kg m−1 ) Glycogen also modulates ˙V O2max through a fourth-root function bounded at ∼ 20 % reduction at full depletion. 
+
+Intracellular pH. Non-bicarbonate buffer equilibrium (Mader and Heck 1994): 
+
+pH = pH base + 0.8 [P i] − [La] kgm 
+
+βNB 
+
+− 0.55 log 10 (PCO 2 ), (A7) with pH base = 7 .85 (dimensionless), βNB = 54 .0 mmol H +/(pH · kg m), [La] kgm = [La] m · Vrel ,and PCO 2 = min(40 + 55 ˙V O2/ ˙V O2max , 150) mmHg .15 Lactate oxidation. Saturating pyruvate dehydrogenase (PDH) kinetics: 
+
+νLa ,ox = KLaO 2 · ˙V O2,ml /min 
+
+1 + Kel ,ox /[La] 2
+
+> m
+
+, (A8) where ˙V O2,ml /min is the current oxygen uptake converted from ATP equivalents via the P/O quotient, 
+
+KLaO 2 = 0 .014 75 mmol /ml O 2 and Kel ,ox = 2 .0 (mmol L −1)2. The total oxidation is split into a muscle fraction ( 2/3) and a blood fraction ( 1/3). 
+
+Gluconeogenesis. Inhibited by ADP, activated by lactate: 
+
+νLa ,res = vmax 
+
+ 1 + [ADP] 2/K ADP1 
+
+  1 + KVLares /[La] 2kgm 
+
+ . (A9) Each mmol of resynthesised lactate costs 3.0 mmol ATP. 
+
+A.3 Power-to-ATP-demand coupling 
+
+ATP demand is derived from a polynomial ˙V O2–power relationship. For cycling: 
+
+˙V O2,load = c0 + c1 · Pmbody 
+
+, (A10) with c0 = 250 mL min −1 (baseline) and c1 = Ks4 = 11 .7 mL O 2/(min · W) . Conversion to ATP demand per unit active muscle mass: b ˙V O2 = P /O · 2/22 .4 = 0 .2321 mmol ATP /ml O 2. For running, c1 represents the O2 cost per unit velocity. 
+
+A.4 ODE system 
+
+The five differential equations governing the dynamic model are: 
+
+dGP 
+
+dt = ˙V O2 · b ˙V O2 + νLa · bV La − max( ˙ ndemand − Prest ,body , 0) − Prest ,muscle − 3 νLa ,res ,
+
+(A11) 
+
+d ˙V O2
+
+dt = k ˙V O2 ( ˙V O2,ss − ˙V O2), (A12) 
+
+d[La] m
+
+dt = νLa − νLa ,ox ,m − 0.6 νLa ,res 
+
+Vrel 
+
+− K1 ([La] m · Vrel − [La] b), (A13) 
+
+d[La] b
+
+dt = V ∗ 
+
+> rel
+
+K1 ([La] m · Vrel − [La] b) − νLa ,ox ,b − 0.4 νLa ,res /V rel , (A14) 
+
+dGly 
+
+dt = −νLa /(2 bV La ) + 0 .5 νLa ,res 
+
+5.555 . (A15) Diffusion: K1 = Kdif · [La] −1.4 
+
+> b
+
+(Mader 2003). V ∗ 
+
+> rel
+
+= AMM% /(lactate space % − AMM%) . The factor 5.555 converts mmol glycosyl units to grams. The two resting metabolic terms Prest ,body and 
+
+Prest ,muscle separate whole-body and active-muscle baseline turnover; the demand term is clamped to zero to prevent negative demand during recovery. 
+
+A.5 Steady-state equations 
+
+Setting all time derivatives in Eqs. (A11) – (A15) to zero and solving the resulting algebraic system in the one-compartment limit yields 
+
+νLa ,ss = VLa max 
+
+1 + Ks2
+
+ ( ˙V O2max − ˙V O2)/(Ks1 ˙V O2)1.5 , (A16) 
+
+[La] b, ss =
+
+r Kel νLa ,ss 
+
+PD (A17) (both equivalent to Eqs. (12) and (13) in earlier presentations of the Mader model). The two-compartment formulation retains the full rate equations (A6) – (A9) and solves the four-variable algebraic system obtained from dGP /dt = d[La] m/dt = d[La] b/dt = d ˙V O2/dt = 0 by nested bisection and fixed-point iteration: 
+
+0 = νLa ,ss (P ) − νLa ,ox ,m,ss (P ) − 0.6 νLa ,res ,ss (P ) − K1 ([La] m, ss · Vrel − [La] b, ss ) · Vrel . (A18) 16 Table 3: Default parameters of MetaboliSim with independent literature ranges where available. References are given in short form; full citations in the reference list. 
+
+Parameter Default Unit 
+
+SA (adenine pool) 6.0 mmol kg m−1 
+
+SC (creatine pool) 23.0 mmol kg m−1 
+
+M2 (CK equil.) 1.66 × 10 9 —
+
+M3 (AK equil.) 0.96 —
+
+Ks1 ( ˙V O2 half-sat.) 1.225 × 10 −3 (mmol kg m−1)2
+
+Ks2 (glycolysis) 3.375 × 10 −3 (mmol kg m−1)3
+
+Ks3 (pH inhib.) 6.31 × 10 −21 (mol L −1)3
+
+P/O quotient 2.6 —
+
+bV La (ATP/La) 1.4 —
+
+k ˙V O2 0.2 s−1 
+
+Kdif (diffusion base) 0.065 s−1 
+
+KLaO 2 0.014 75 mmol /ml O 2
+
+Kel ,ox (PDH) 2.0 (mmol L −1)2
+
+βNB (buffer) 54.0 mmol /(pH · kg m)
+
+Vrel (muscle water) 0.75 L kg m−1 
+
+Ks4 (O2/watt) 11.7 mL min −1 W−1 
+
+bV Lares (gluc.) 3.0 —
+
+## B Default parameter set 
+
+Default values of the kinetic and structural parameters used in the MaderConstants dataclass. Athlete-specific parameters (body mass, active muscle mass percentage, ˙V O2max , VLa max ) are held in the AthleteProfile dataclass and are not listed here. The “Literature range” column lists independent measurements where available; parameters marked “effective; no independent measurement” are fitting parameters of the Mader formulation and have no direct experimental correlate. Five of the seventeen parameters ( Ks1, Ks2, Ks3, Kdif , KLaO 2 , Kel ,ox ) are effective fitting parame-ters of the Mader formulation with no direct experimental correlate; sensitivity to these parameters is addressed in the Limitations section. The remaining parameters all fall within their respective independent literature ranges, with two exceptions: the default SC is at the lower end of the published range (23 vs. 30–40 mmol /kg wet muscle), and the default k ˙V O2 corresponds to a faster muscle-level kinetics than the pulmonary phase-II values typically reported ( 5 s vs. 20–50 s )—consistent with the model describing intramuscular ATP demand rather than pulmonary gas exchange. 17

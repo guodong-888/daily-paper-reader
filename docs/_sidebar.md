@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-06-11 <!--dpr-date:20260611-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/11/2606.08366v1-metabolisim-a-python-implementation-of-the-mader-model-for-dynamic-and-steady-state-simulation-of-muscular-energy-metabolism" data-sidebar-item="{&quot;title&quot;: &quot;MetaboliSim: a Python implementation of the Mader model for dynamic and steady-state simulation of muscular energy metabolism&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.08366v1-metabolisim-a-python-implementation-of-the-mader-model-for-dynamic-and-steady-state-simulation-of-muscular-energy-metabolism&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;提供肌肉能量代谢的开源模拟，直接与运动诱导的代谢变化相关&quot;}">MetaboliSim: a Python implementation of the Mader model for dynamic and steady-state simulation of muscular energy metabolism</a>
   * 2026-06-07 <!--dpr-date:20260607-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/07/2606.03689v1-staying-alive-uncensored-survival-analysis-with-tabular-foundation-models" data-sidebar-item="{&quot;title&quot;: &quot;Staying Alive: Uncensored Survival Analysis with Tabular Foundation Models&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.03689v1-staying-alive-uncensored-survival-analysis-with-tabular-foundation-models&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;生存分析方法可直接应用于皮瓣存活因素研究&quot;}">Staying Alive: Uncensored Survival Analysis with Tabular Foundation Models</a>
