@@ -6,26 +6,22 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-11
-- 运行时间：2026-06-11 00:17:13 UTC
+- 最新运行日期：2026-06-12
+- 运行时间：2026-06-12 00:27:26 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：0
 - 精读区：0
-- 速读区：1
+- 速读区：0
 
 ### 今日简报（AI）
-今日速读1篇关于肌肉能量代谢动态模拟的Python工具。
-该文实现的Mader模型可同时进行动态与稳态的肌肉能量代谢模拟，值得关注。
-建议对代谢建模感兴趣的读者尝试使用该开源Python实现进行案例测试。
-- 详情：[/202606/11/README](/202606/11/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/202606/12/README](/202606/12/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [MetaboliSim: a Python implementation of the Mader model for dynamic and steady-state simulation of muscular energy metabolism](/202606/11/2606.08366v1-metabolisim-a-python-implementation-of-the-mader-model-for-dynamic-and-steady-state-simulation-of-muscular-energy-metabolism)  
-   标签：评分：7.0/10、query:flap-ex-met
-   evidence：提供肌肉能量代谢的开源模拟，直接与运动诱导的代谢变化相关
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
