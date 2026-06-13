@@ -1,0 +1,53 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-13T23:16:11.883811+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.10873v1",
+      "source": "arxiv",
+      "title": "Spatial Model Selection and Uncertainty Quantification: Comparing Continuous and Discrete Wound Healing Models",
+      "abstract": "All data-driven modeling tasks (e.g., parameter estimation, uncertainty quantification, and data forecasting) require the selection of a mathematical model. An overlooked aspect of model selection is modality; for example, there are no guidelines on when to use a partial differential equation (PDE) model or an agent-based model (ABM) for spatial processes. To address this, we created a model selection pipeline that uses approximate Bayesian computations to perform parameter estimation, uncertainty quantification, and model selection (using both information criteria and out-of-sample forecasting). Applying the pipeline to artificial datasets (generated from ABMs) reveals that while both modalities yield comparable parameter estimation performance, the ABM estimates exhibit higher uncertainty, and the PDE models compute more than 1,000$\\times$ faster. Surprisingly, the mean-field PDE is often selected over the true generative ABM model using both information criteria and data forecasting. Applying the pipeline to public wound healing data indicates that a PDE model with cell pulling and a time delay is the most appropriate model for this data, however, this model has high levels of parametric uncertainty. This methodology establishes a preliminary framework for selecting the appropriate modeling modality for spatial biological data.",
+      "authors": [
+        "John T. Nardini",
+        "Jana L. Gevertz"
+      ],
+      "primary_category": "q-bio.QM",
+      "categories": [
+        "q-bio.QM"
+      ],
+      "published": "2026-06-09T13:50:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.10873v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Spatial wound healing model selection, applicable to studying factors influencing flap survival",
+      "llm_evidence_cn": "空间伤口愈合模型选择方法，可用于研究影响皮瓣存活的因素",
+      "llm_evidence": "空间伤口愈合模型选择方法，可用于研究影响皮瓣存活的因素",
+      "canonical_evidence": "空间伤口愈合模型选择方法，可用于研究影响皮瓣存活的因素",
+      "llm_tldr_en": "Compares PDE and agent-based models for wound healing using ABC for parameter estimation and model selection; shows both modalities yield comparable results.",
+      "llm_tldr_cn": "该研究针对空间伤口愈合过程，对比偏微分方程模型和基于智能体模型的建模与不确定性量化方法。提出基于近似贝叶斯计算的模型选择流程，应用于人工数据集发现两种模态均可获得相近结果。该工作为选择合适模型研究影响皮瓣存活的因素提供了方法论支持。",
+      "llm_tldr": "该研究针对空间伤口愈合过程，对比偏微分方程模型和基于智能体模型的建模与不确定性量化方法。提出基于近似贝叶斯计算的模型选择流程，应用于人工数据集发现两种模态均可获得相近结果。该工作为选择合适模型研究影响皮瓣存活的因素提供了方法论支持。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

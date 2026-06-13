@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-13",
+  "date": "2026-06-13",
+  "generated_at": "2026-06-13T23:17:49",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/13/2606.10873v1-spatial-model-selection-and-uncertainty-quantification-comparing-continuous-and-discrete-wound-healing-models",
+      "section": "quick",
+      "title_en": "Spatial Model Selection and Uncertainty Quantification: Comparing Continuous and Discrete Wound Healing Models",
+      "authors": "John T. Nardini, Jana L. Gevertz",
+      "date": "2026-06-09",
+      "pdf": "https://arxiv.org/pdf/2606.10873v1",
+      "score": "6.0",
+      "evidence": "空间伤口愈合模型选择方法，可用于研究影响皮瓣存活的因素",
+      "tldr": "空间生物学建模中连续偏微分方程(PDE)和离散基于智能体模型(ABM)的选择缺乏指导。本研究构建基于近似贝叶斯计算的模型选择流程，应用于人工和真实伤口愈合数据。结果显示两种模态参数估计性能相当，但PDE快1000倍且不确定性更低，平均场PDE常优于真实ABM。对真实数据，带细胞拉动和时间延迟的PDE模型最合适但参数不确定性高。该框架为空间模型模态选择提供了初步方法论。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "All data-driven modeling tasks (e.g., parameter estimation, uncertainty quantification, and data forecasting) require the selection of a mathematical model. An overlooked aspect of model selection is modality; for example, there are no guidelines on when to use a partial differential equation (PDE) model or an agent-based model (ABM) for spatial processes. To address this, we created a model selection pipeline that uses approximate Bayesian computations to perform parameter estimation, uncertainty quantification, and model selection (using both information criteria and out-of-sample forecasting). Applying the pipeline to artificial datasets (generated from ABMs) reveals that while both modalities yield comparable parameter estimation performance, the ABM estimates exhibit higher uncertainty, and the PDE models compute more than 1,000$\\times$ faster. Surprisingly, the mean-field PDE is often selected over the true generative ABM model using both information criteria and data forecasting. Applying the pipeline to public wound healing data indicates that a PDE model with cell pulling and a time delay is the most appropriate model for this data, however, this model has high levels of parametric uncertainty. This methodology establishes a preliminary framework for selecting the appropriate modeling modality for spatial biological data.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
