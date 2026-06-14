@@ -6,24 +6,22 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-13
-- 运行时间：2026-06-13 23:17:44 UTC
+- 最新运行日期：2026-06-14
+- 运行时间：2026-06-14 23:47:43 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：0
 - 精读区：0
-- 速读区：1
+- 速读区：0
 
 ### 今日简报（AI）
-今日速读1篇关于伤口愈合空间模型比较的论文。值得关注模型选择中的不确定性量化方法。建议后续精读原文，理解连续与离散模型的适用场景差异。
-- 详情：[/202606/13/README](/202606/13/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/202606/14/README](/202606/14/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Spatial Model Selection and Uncertainty Quantification: Comparing Continuous and Discrete Wound Healing Models](/202606/13/2606.10873v1-spatial-model-selection-and-uncertainty-quantification-comparing-continuous-and-discrete-wound-healing-models)  
-   标签：评分：6.0/10、query:flap-ex-met
-   evidence：空间伤口愈合模型选择方法，可用于研究影响皮瓣存活的因素
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
