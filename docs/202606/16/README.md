@@ -1,19 +1,18 @@
 # 日报 · 2026-06-16
 
-- 生成时间：2026-06-16 00:33:56 UTC
-- 当次推荐总数：2
+- 生成时间：2026-06-16 22:09:08 UTC
+- 当次推荐总数：1
 - 精读区：0
-- 速读区：2
+- 速读区：1
 
 ## 今日简报（AI）
-今日速读两篇论文，聚焦线粒体适应机制与心脏缺血成像新方法。值得关注线粒体衍生区室如何缓冲外膜蛋白负荷，以及全息断层成像揭示心脏球体蛋白质浓度变化。建议读者进一步了解线粒体动态保护在细胞应激中的作用。
+今日速读一篇关于半合成颗粒水凝胶移植物快速血运重建的研究。值得关注的结论是：通过血管生成组装可有效填充组织缺损中的血管空洞。建议进一步了解该水凝胶在再生医学中的适用场景与临床转化前景。
 
 ## 精读区
 - 本次无精读推荐。
 
 ## 速读区
-1. [Mitochondrial-derived compartments buffer outer membrane protein load during acute mitochondrial adaptation](/202606/16/biorxiv-10-64898-2026-06-09-731211-v1-mitochondrial-derived-compartments-buffer-outer-membrane-protein-load-during-acute-mitochondrial-adaptation) （7.0/10）
-2. [Holotomography Reveals Protein Concentration Changes in Cardiac Spheroids under Ischemic Stress](/202606/16/biorxiv-10-64898-2026-06-09-731124-v1-holotomography-reveals-protein-concentration-changes-in-cardiac-spheroids-under-ischemic-stress) （6.0/10）
+1. [Filling the Void: Rapid Revascularization via Vasculogenic Assembly in Semi-synthetic Granular Hydrogel Grafts](/202606/16/biorxiv-10-64898-2026-06-15-732497-v1-filling-the-void-rapid-revascularization-via-vasculogenic-assembly-in-semi-synthetic-granular-hydrogel-grafts) （7.0/10）
 
 ---
 使用键盘方向键可在日报/论文之间快速切换。

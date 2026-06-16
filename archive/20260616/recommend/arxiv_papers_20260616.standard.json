@@ -1,90 +1,61 @@
 {
   "mode": "standard",
-  "generated_at": "2026-06-16T00:33:28.527069+00:00",
+  "generated_at": "2026-06-16T22:08:33.924414+00:00",
   "stats": {
     "mode": "standard",
     "tag_count": 1,
     "deep_divecandidates": 0,
     "deep_cap": 6,
     "deep_selected": 0,
-    "quick_candidates": 2,
+    "quick_candidates": 1,
     "quick_skim_target": 11,
-    "quick_selected": 2
+    "quick_selected": 1
   },
   "deep_dive": [],
   "quick_skim": [
     {
-      "id": "biorxiv-10-64898-2026-06-09-731211-v1",
+      "id": "biorxiv-10-64898-2026-06-15-732497-v1",
       "source": "biorxiv",
-      "title": "Mitochondrial-derived compartments buffer outer membrane protein load during acute mitochondrial adaptation",
-      "abstract": "Cells undergoing metabolic transitions rapidly remodel mitochondria through coordinated expansion and reorganization of the mitochondrial proteome. How the outer mitochondrial membrane (OMM) accommodates acute increases in newly synthesized proteins before organelle adaptation is complete remains poorly understood. Here we show that mitochondrial-derived compartments (MDCs), multilamellar domains that form from the OMM and selectively sequester OMM-associated cargo, arise during metabolic perturbations associated with acute mitochondrial biogenesis, including glucose restriction, carbon-source switching, and salt stress. In these situations, MDC formation requires the energy-sensing kinase Snf1 and derepression of the transcriptional repressor Mig1, linking MDC induction to transcriptional programs that increase mitochondrial protein expression. Activation of mitochondrial biogenesis in the absence of metabolic changes is sufficient to trigger MDCs, whereas disruption of mitochondrial protein targeting and import prevents MDC formation and causes mislocalization of outer membrane cargos. Together, these findings, combined with previous observations that MDCs are induced by hydrophobic protein overexpression, mistargeting, and metabolic perturbations, support an emerging model in which MDCs function as adaptive outer-membrane remodeling domains that buffer outer membrane protein load during mitochondrial adaptation.",
+      "title": "Filling the Void: Rapid Revascularization via Vasculogenic Assembly in Semi-synthetic Granular Hydrogel Grafts",
+      "abstract": "Rapid revascularization is critical to tissue graft survival, as delayed reperfusion drives tissue ischemia and compromises cell viability and graft function. Although bulk hydrogels have been explored for promoting vessel formation, vascularization remains too slow to prevent ischemic injury to grafted tissues, highlighting the need for biomaterial platforms that accelerate graft revascularization and reperfusion. In this study, we present granular hydrogel composites (GHCs), where interstitial space is filled with fibrin and collagen to provide a vasculogenic matrix environment. GHCs supported the assembly of embedded endothelial cells into interconnected, lumenized networks in vitro which anastomosed with host vasculature and were systemically perfused 7 days after implantation. Careful optimization studies revealed that GHCs formed from covalently interlinked, RGD-functionalized microgels of 115 m diameter best supported vascular network formation in vitro and intravascular blood perfusion in vivo. To test the utility of GHCs for the vascular integration of a demanding and therapeutically relevant parenchymal tissue, GHC-based ovarian tissue grafts were implanted in a murine xenograft model and successfully connected to host vasculature, restoring blood flow to embedded human ovarian tissues within 10 days post-implantation. Notably, endothelial cells seeded within GHCs formed viable vasculature without pre-culture. This work establishes GHCs as a biomaterial platform to rapidly connect parenchymal tissues to host vasculature, with broad translational potential across engineered tissue grafting applications.",
       "authors": [
-        "Price, B. J.",
-        "Balasubramaniam, S. S.",
-        "Hughes, A. L."
+        "Hu, M. M.",
+        "Pavlidis, D. I.",
+        "Lestock, C.",
+        "Anyosa-Galvez, G.",
+        "Lollis, K.",
+        "Zhao, Y.",
+        "Midekssa, F. S.",
+        "Kent, R. N.",
+        "Shikanov, A.",
+        "Baker, B."
       ],
-      "primary_category": "cell biology",
+      "primary_category": "bioengineering",
       "categories": [
-        "cell biology"
+        "bioengineering"
       ],
-      "published": "2026-06-10T00:00:00+00:00",
-      "link": "https://www.biorxiv.org/content/10.64898/2026.06.09.731211v1.full.pdf",
-      "tags": [
-        "keyword:flap-ex-met"
-      ],
-      "llm_score": 7.0,
-      "llm_evidence_en": "mitochondrial adaptation under metabolic perturbations",
-      "llm_evidence_cn": "线粒体在代谢扰动下的适应机制",
-      "llm_evidence": "线粒体在代谢扰动下的适应机制",
-      "canonical_evidence": "线粒体在代谢扰动下的适应机制",
-      "llm_tldr_en": "This paper reveals that mitochondrial-derived compartments (MDCs) form during acute metabolic transitions to buffer outer membrane protein load, offering mechanistic insight into mitochondrial adaptation relevant to exercise preconditioning.",
-      "llm_tldr_cn": "细胞在代谢转变期间需要快速重塑线粒体，然而外膜如何应对新蛋白的急增尚不清楚。本研究发现线粒体衍生区室（MDCs）在葡萄糖限制、碳源转换等代谢扰动下形成，通过选择性隔离外膜相关货物来缓解蛋白负荷。MDC的形成依赖于能量感受激酶Snf1和去抑制机制。这一发现揭示了线粒体在代谢应激下的适应性缓冲机制，为理解运动预处理如何通过线粒体适应改善皮瓣存活提供了潜在机制基础。",
-      "llm_tldr": "细胞在代谢转变期间需要快速重塑线粒体，然而外膜如何应对新蛋白的急增尚不清楚。本研究发现线粒体衍生区室（MDCs）在葡萄糖限制、碳源转换等代谢扰动下形成，通过选择性隔离外膜相关货物来缓解蛋白负荷。MDC的形成依赖于能量感受激酶Snf1和去抑制机制。这一发现揭示了线粒体在代谢应激下的适应性缓冲机制，为理解运动预处理如何通过线粒体适应改善皮瓣存活提供了潜在机制基础。",
-      "llm_tags": [
-        "query:flap-ex-met"
-      ],
-      "matched_query_tag": "query:flap-ex-met",
-      "matched_query_text": "mitochondrial function exercise and flap survival",
-      "matched_requirement_id": "req-4",
-      "selection_source": "fresh_fetch",
-      "quick_tier": "7"
-    },
-    {
-      "id": "biorxiv-10-64898-2026-06-09-731124-v1",
-      "source": "biorxiv",
-      "title": "Holotomography Reveals Protein Concentration Changes in Cardiac Spheroids under Ischemic Stress",
-      "abstract": "Multicellular spheroids better recapitulate native cardiac tissue than two-dimensional systems, preserving cell-cell and cell-matrix interactions and relevant signalling. However, analytical tools for extracting quantitative data from these complex models remain limited. Here, we present an optimised holotomography (HT) workflow for fixed spheroids, enabling label-free quantification of protein concentration and dry mass across conditions. Using a hypoxia-reperfusion injury model to mimic myocardial infarction, HT measurements reveal a statistically significant reduction in the protein concentration of cardioids, reflecting impaired structural integrity and declining viability, subtle changes often missed by conventional approaches. These findings establish HT as a robust, scalable method for quantitative analysis of 3D cardiac models, with direct relevance for disease modelling and preclinical research.",
-      "authors": [
-        "Sackho, K.",
-        "Campagnolo, P.",
-        "Kim, Y."
-      ],
-      "primary_category": "biophysics",
-      "categories": [
-        "biophysics"
-      ],
-      "published": "2026-06-10T00:00:00+00:00",
-      "link": "https://www.biorxiv.org/content/10.64898/2026.06.09.731124v1.full.pdf",
+      "published": "2026-06-16T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.15.732497v1.full.pdf",
       "tags": [
         "keyword:flap-ex-met",
         "query:flap-ex-met"
       ],
-      "llm_score": 6.0,
-      "llm_evidence_en": "label-free quantification of protein concentration in spheroids under ischemic stress, applicable to exercise-induced metabolic changes in skin flap",
-      "llm_evidence_cn": "无标记定量缺血应激下球体的蛋白质浓度，可应用于运动诱导的皮瓣代谢变化研究",
-      "llm_evidence": "无标记定量缺血应激下球体的蛋白质浓度，可应用于运动诱导的皮瓣代谢变化研究",
-      "canonical_evidence": "无标记定量缺血应激下球体的蛋白质浓度，可应用于运动诱导的皮瓣代谢变化研究",
-      "llm_tldr_en": "This paper presents an optimized holotomography workflow for fixed cardiac spheroids, enabling label-free quantification of protein concentration and dry mass. Using a hypoxia-reperfusion injury model, it reveals significant protein concentration reductions, indicating impaired structural integrity and viability. This method could be transferred to assess metabolic changes in skin flaps under exercise preconditioning.",
-      "llm_tldr_cn": "该研究提出了一种优化的全息断层扫描（HT）工作流，用于固定心脏球体，实现无标记的蛋白质浓度和干质量定量。通过缺氧-再灌注损伤模型模拟心肌梗死，HT测量显示心球体蛋白质浓度显著下降，反映了结构完整性和活力的损伤。该方法可转移至运动预适应皮瓣模型，用于定量评估运动诱导的代谢变化和皮瓣活力，为运动改善皮瓣存活提供了一种新的分析工具。",
-      "llm_tldr": "该研究提出了一种优化的全息断层扫描（HT）工作流，用于固定心脏球体，实现无标记的蛋白质浓度和干质量定量。通过缺氧-再灌注损伤模型模拟心肌梗死，HT测量显示心球体蛋白质浓度显著下降，反映了结构完整性和活力的损伤。该方法可转移至运动预适应皮瓣模型，用于定量评估运动诱导的代谢变化和皮瓣活力，为运动改善皮瓣存活提供了一种新的分析工具。",
+      "llm_score": 7.0,
+      "llm_evidence_en": "revascularization for tissue graft survival",
+      "llm_evidence_cn": "组织移植物存活的血管重建",
+      "llm_evidence": "组织移植物存活的血管重建",
+      "canonical_evidence": "组织移植物存活的血管重建",
+      "llm_tldr_en": "This paper presents granular hydrogel composites that accelerate revascularization and anastomosis with host vasculature, addressing the critical need for rapid graft survival.",
+      "llm_tldr_cn": "该研究针对组织移植物存活中延迟再灌注导致缺血的问题，提出了半合成颗粒水凝胶复合材料，通过填充纤维蛋白和胶原提供血管生成基质环境。体外实验显示，该材料支持内皮细胞组装成连通管腔网络，并与宿主血管吻合。这一方法有望加速移植物血管重建，提高存活率，对皮瓣存活研究具有借鉴意义。",
+      "llm_tldr": "该研究针对组织移植物存活中延迟再灌注导致缺血的问题，提出了半合成颗粒水凝胶复合材料，通过填充纤维蛋白和胶原提供血管生成基质环境。体外实验显示，该材料支持内皮细胞组装成连通管腔网络，并与宿主血管吻合。这一方法有望加速移植物血管重建，提高存活率，对皮瓣存活研究具有借鉴意义。",
       "llm_tags": [
         "query:flap-ex-met"
       ],
       "matched_query_tag": "query:flap-ex-met",
-      "matched_query_text": "exercise induced metabolic changes in skin flap",
-      "matched_requirement_id": "req-5",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
       "selection_source": "fresh_fetch",
-      "quick_tier": "6"
+      "quick_tier": "7"
     }
   ]
 }
