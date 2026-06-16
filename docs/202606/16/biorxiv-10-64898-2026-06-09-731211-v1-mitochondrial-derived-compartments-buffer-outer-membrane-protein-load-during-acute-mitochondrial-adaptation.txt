@@ -1,0 +1,2901 @@
+Title: Mitochondrial-derived compartments buffer outer membrane protein load during acute mitochondrial adaptation
+
+URL Source: https://www.biorxiv.org/content/10.64898/2026.06.09.731211v1.full.pdf
+
+Number of Pages: 69
+
+Markdown Content:
+1
+
+Mitochondrial-derived compartments buffer outer membrane protein load during 1
+
+acute mitochondrial adaptation 2
+
+3
+
+Bo J. Price 1, Sai Sangeetha Balasubramaniam 1, and Adam L. Hughes 1,2* 
+
+4
+
+5
+
+> 1
+
+Department of Biochemistry, University of Utah School of Medicine, Salt Lake City, UT 6
+
+84112, USA 7
+
+8
+
+> 2
+
+Lead contact 9
+
+10 
+
+*Correspondence: 11 
+
+Department of Biochemistry 12 
+
+University of Utah School of Medicine 13 
+
+15 N. Medical Drive East 14 
+
+RM 4100 15 
+
+Salt Lake City, UT, 84112 16 
+
+Phone: 801-581-2481 17 
+
+Fax: 801-581-7959 18 
+
+Email: hughes@biochem.utah.edu 19 
+
+20 
+
+21 
+
+22 
+
+23 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+2
+
+Abstract 24 
+
+Cells undergoing metabolic transitions rapidly remodel mitochondria through coordinated 25 
+
+expansion and reorganization of the mitochondrial proteome. How the outer mitochondrial 26 
+
+membrane (OMM) accommodates acute increases in newly synthesized proteins before 27 
+
+organelle adaptation is complete remains poorly understood. Here we show that 28 
+
+mitochondrial-derived compartments (MDCs), multilamellar domains that form from the 29 
+
+OMM and selectively sequester OMM-associated cargo, arise during metabolic 30 
+
+perturbations associated with acute mitochondrial biogenesis, including glucose 31 
+
+restriction, carbon-source switching, and salt stress. In these situations, MDC formation 32 
+
+requires the energy-sensing kinase Snf1 and derepression of the transcriptional repressor 33 
+
+Mig1, linking MDC induction to transcriptional programs that increase mitochondrial 34 
+
+protein expression. Activation of mitochondrial biogenesis in the absence of metabolic 35 
+
+changes is sufficient to trigger MDCs, whereas disruption of mitochondrial protein 36 
+
+targeting and import prevents MDC formation and causes mislocalization of outer 37 
+
+membrane cargos. Together, these findings, combined with previous observations that 38 
+
+MDCs are induced by hydrophobic protein overexpression, mistargeting, and metabolic 39 
+
+perturbations, support an emerging model in which MDCs function as adaptive outer-40 
+
+membrane remodeling domains that buffer outer membrane protein load during 41 
+
+mitochondrial adaptation. 42 
+
+43 
+
+44 
+
+45 
+
+46 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+3
+
+Introduction 47 
+
+Cells frequently undergo metabolic transitions that require mitochondria to rapidly 48 
+
+remodel their composition and function to meet new energetic demands (Nunnari & 49 
+
+Suomalainen, 2012; Friedman & Nunnari, 2014; Wai, 2024). During these adaptations, 50 
+
+mitochondria adjust their proteome, membrane composition, and metabolic capacity to 51 
+
+support new functional states. Multiple mechanisms have been discovered that 52 
+
+coordinate these changes. For example, mitochondrial dynamics reshape the network to 53 
+
+match metabolic conditions (Westermann, 2012; Youle & Van Der Bliek, 2012; Wai, 54 
+
+2024), mitophagy and vesicular trafficking pathways remove damaged or superfluous 55 
+
+components (Palikaras et al , 2015; Pickles et al , 2018; Poillet-Perez & White, 2021), and 56 
+
+transcriptional programs stimulate mitochondrial biogenesis to expand respiratory 57 
+
+capacity (Kayikci & Nielsen, 2015; Piantadosi & Suliman, 2012; Martinez-Ortiz et al , 2019; 58 
+
+Wang et al , 2024). In parallel, mitochondrial protein import and quality-control systems— 59 
+
+including membrane potential–dependent import pathways and surveillance mechanisms 60 
+
+that monitor mislocalized or unimported precursors—help maintain mitochondrial 61 
+
+proteostasis during these transitions (Gebert et al , 2011; Kim et al , 2024; Wiedemann & 62 
+
+Pfanner, 2017; Weidberg & Amon, 2018). Together, these processes remodel 63 
+
+mitochondrial structure and composition as cells adapt to changing metabolic 64 
+
+environments. 65 
+
+66 
+
+Despite these advances, acute metabolic transitions that are associated with increased 67 
+
+mitochondrial biogenesis likely pose a fundamental challenge for mitochondria (Boos et 68 
+
+al , 2019; Kim et al , 2024). These transitions often occur while mitochondrial function is 69 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+4
+
+compromised due to changes in metabolite availability. As mitochondrial biogenesis is 70 
+
+rapidly induced, newly synthesized mitochondrial proteins are delivered to an organelle 71 
+
+that is still adapting (Pfanner et al , 2019; Pastor et al , 2009; Lackner, 2014). This influx 72 
+
+may transiently exceed the capacity of membrane organization, targeting, or assembly 73 
+
+pathways needed to accommodate it. Such transitional states may place unique demands 74 
+
+on the outer mitochondrial membrane (OMM), the first landing site for many newly 75 
+
+synthesized mitochondrial proteins during biogenesis. How mitochondria manage this 76 
+
+transient protein surge before the organelle is fully adapted remains poorly understood. 77 
+
+78 
+
+The mitochondrial-derived compartment (MDC) pathway is a recently described 79 
+
+remodeling response of the mitochondrial outer membrane that may be uniquely 80 
+
+positioned to buffer acute increases in OMM protein load. MDCs are multilamellar 81 
+
+membrane domains derived from the OMM that selectively capture and sequester 82 
+
+hydrophobic outer-membrane proteins away from the organelle (Hughes et al , 2016; 83 
+
+Wilson et al , 2024b). Previous work has shown that MDC formation can be triggered by 84 
+
+diverse metabolic perturbations that alter mitochondrial homeostasis, including changes 85 
+
+in cellular amino acids, mitochondrial metabolites, and lipids (Schuler et al , 2021; 86 
+
+Raghuram & Hughes, 2024; Xiao et al , 2024; Wong et al , 2025). MDCs can also form 87 
+
+when hydrophobic proteins accumulate at mitochondria due to overexpression or 88 
+
+mistargeting following failed insertion at another organelle (Wilson et al , 2024a). Recent 89 
+
+work has further implicated Yme1-dependent proteolytic remodeling of mitochondrial 90 
+
+lipid-transfer and membrane-architecture factors in enabling MDC biogenesis, supporting 91 
+
+the idea that MDC formation requires coordinated remodeling of mitochondrial membrane 92 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+5
+
+state as well as cargo load (Balasubramaniam et al , 2026). Together, these observations 93 
+
+suggest that MDC formation is associated both with mitochondrial metabolic perturbation 94 
+
+and with increased hydrophobic membrane protein burden, although whether MDCs 95 
+
+normally function during physiological mitochondrial adaptations remains unknown. 96 
+
+97 
+
+Here, while working to identify physiological metabolic alterations that induce MDC 98 
+
+formation and thereby better define the role of these structures in cellular physiology, we 99 
+
+found that conditions that stimulate acute mitochondrial biogenesis—including glucose 100 
+
+restriction, carbon-source switching, and salt stress—robustly induce MDC formation in 101 
+
+Saccharomyces cerevisiae . MDC induction in these contexts requires Snf1, which 102 
+
+promotes MDC formation by relieving Mig1-mediated repression of mitochondrial 103 
+
+biogenesis programs. Consistent with these data, we show that increased mitochondrial 104 
+
+protein expression also occurs in previously identified metabolic MDC-inducing 105 
+
+conditions, albeit in a Snf1-independent manner. Moreover, inducible activation of 106 
+
+mitochondrial biogenesis through the transcriptional regulator Hap4, even in the absence 107 
+
+of acute metabolic alterations, is sufficient to trigger MDC formation, whereas blocking 108 
+
+delivery of hydrophobic proteins to mitochondria prevents MDC formation. Together with 109 
+
+previous observations, these findings support a unifying model in which MDCs function 110 
+
+as adaptive outer-membrane remodeling domains that are engaged when the OMM 111 
+
+experiences elevated or perturbed protein load—a situation that arises in a variety of 112 
+
+contexts, including protein mistargeting (Wilson et al , 2024a), changes in membrane lipids 113 
+
+(Wong et al , 2025; Xiao et al , 2024), or during acute metabolic transitions that increase 114 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+6
+
+mitochondrial protein load while mitochondria are in a vulnerable metabolic state (current 115 
+
+study; Hughes et al , 2016; Schuler et al , 2021). 116 
+
+117 
+
+Results 118 
+
+Physiological stresses that stimulate acute mitochondrial biogenesis induce MDC 119 
+
+formation 120 
+
+Previous work from our laboratory showed that MDC formation can be triggered by 121 
+
+metabolic stresses that perturb mitochondrial homeostasis, including changes in amino-122 
+
+acid availability or mitochondrial lipid balance, as well as by conditions that increase 123 
+
+mitochondrial membrane protein load, such as forced overexpression or mistargeting of 124 
+
+hydrophobic outer-membrane proteins (Hughes et al , 2016; Wilson et al , 2024a; Schuler 125 
+
+et al , 2021; Raghuram & Hughes, 2024; Xiao et al , 2024; Wong et al , 2025). These 126 
+
+observations suggested that MDCs arise when mitochondrial metabolic perturbation 127 
+
+coincides with increased membrane protein burden. We therefore reasoned that acute 128 
+
+metabolic transitions that alter mitochondrial metabolic state while also activating 129 
+
+mitochondrial biogenesis might naturally generate these conditions. To test this idea, we 130 
+
+examined metabolic stresses and transitions known to stimulate mitochondrial biogenesis 131 
+
+and alter mitochondrial metabolism, including glucose restriction, abrupt carbon-source 132 
+
+switching from fermentable to non-fermentable sugars, glycolytic inhibition, and salt 133 
+
+stress (Coccetti et al, 2018 ; Martinez-Ortiz et al , 2019; Pastor et al , 2009; Posas et al ,134 
+
+2000; Kayikci & Nielsen, 2015). 135 
+
+136 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+7
+
+We first tested whether glucose restriction, a physiological inducer of mitochondrial 137 
+
+biogenesis, triggers MDC formation. MDCs were monitored by fluorescence microscopy 138 
+
+as previously described (Schuler et al , 2021) using the outer-membrane marker Tom70-139 
+
+GFP together with the inner-membrane marker Tim50-mCherry, where MDCs appear as 140 
+
+Tom70-positive domains that exclude Tim50 signal. Consistent with activation of 141 
+
+mitochondrial biogenesis, several mitochondrial proteins—including the outer-membrane 142 
+
+markers Om45 and Por1 as well as the matrix enzyme Cit1—displayed increased 143 
+
+expression within one to two hours after glucose restriction (Fig. 1A, Fig. S1A). Strikingly, 144 
+
+shifting cells from rich medium containing 2% glucose to rich medium without added 145 
+
+glucose induced robust MDC formation, with 70–80% of cells forming Tom70-enriched 146 
+
+MDCs within 2 hours (Fig. 1B-C). 147 
+
+148 
+
+Glucose restriction–induced MDCs appeared rapidly and excluded the inner-membrane 149 
+
+marker Tim50-mCherry. Time-lapse imaging revealed that MDC biogenesis began with 150 
+
+the formation of Tom70-GFP foci at mitochondria, which subsequently elongated and 151 
+
+matured into multilamellar spherical structures within 0.5-1 h of treatment (Movie S1). 152 
+
+Mature MDCs generated during glucose restriction reached approximately 0.70 microns 153 
+
+in diameter on average, similar to previously reported MDCs induced by the mTOR 154 
+
+inhibitor rapamycin (Fig. S1B). The cargo profile of glucose-restriction induced MDCs also 155 
+
+resembled that of previously characterized MDCs triggered by treatment with rapamycin 156 
+
+(Fig. S1C-D). In addition, glucose restriction–induced MDC cargos were delivered to the 157 
+
+vacuole and degraded through the same autophagy- and vacuolar protease-dependent 158 
+
+pathway used by MDCs formed under other stresses. GFP-processing assays showed 159 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+8
+
+that Tom70 and other established MDC cargos underwent degradation in a manner 160 
+
+dependent on Dnm1-mediated fission, Atg5-dependent autophagy, and the vacuolar 161 
+
+protease Pep4, whereas the inner-membrane protein Tim50 was not degraded (Fig. 1D, 162 
+
+Fig. S1E) (Hughes et al , 2016; Schuler et al , 2021). Together, these observations indicate 163 
+
+that glucose restriction is a physiological trigger for MDC-dependent OMM remodeling 164 
+
+and removal of outer-membrane content. 165 
+
+166 
+
+We next asked whether other perturbations of glycolytic metabolism similarly induce MDC 167 
+
+formation. Shifting cells from glucose to alternative carbon sources produced variable 168 
+
+levels of MDC induction (Fig. 1E). These differences largely correlated with the degree of 169 
+
+metabolic reprogramming required: switching to carbon sources that remain primarily 170 
+
+fermentative, such as fructose, failed to induce MDCs, whereas carbon sources that are 171 
+
+non-fermentable or require transcriptional activation of alternative metabolic programs, 172 
+
+such as galactose through the GAL network, produced strong MDC responses (Nehlin et 173 
+
+al , 1991; Platt & Reece, 1998). Inhibition of glycolysis with the starvation mimic 2-deoxy-174 
+
+D-glucose (2-DG) also induced MDC formation at intermediate concentrations, while 175 
+
+higher concentrations failed to induce MDCs (Fig. S1F). These findings suggest that MDC 176 
+
+biogenesis is activated when glycolytic metabolism is altered. 177 
+
+178 
+
+Because glucose restriction and carbon switching from fermentable to non-fermentable 179 
+
+sugars stimulate mitochondrial biogenesis, we next tested whether another stress that 180 
+
+triggers mitochondrial metabolic remodeling could also induce MDC formation. Salt and 181 
+
+osmotic stress impair central carbon metabolism and are well known to activate Sucrose 182 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+9
+
+Non-Fermenting 1 (Snf1) kinase, a central regulator of mitochondrial biogenesis (Pastor 183 
+
+et al , 2009; Posas et al , 2000). Consistent with this known stimulatory effect on 184 
+
+mitochondrial biogenesis, exposure to 0.8 M NaCl increased mitochondrial protein 185 
+
+expression with kinetics similar to glucose restriction, carbon switching, and 2-DG 186 
+
+treatments (Fig. 1F). Both NaCl and KCl induced MDC formation, with approximately 35% 187 
+
+of cells having MDCs after 3 hours (Fig. 1G). Taken together, these results indicate that 188 
+
+MDCs are induced by metabolic stresses that stimulate acute mitochondrial biogenesis 189 
+
+while altering mitochondrial metabolism. Glucose restriction, carbon-source transitions, 190 
+
+glycolytic inhibition, and salt stress each perturb metabolism and increase mitochondrial 191 
+
+protein expression, suggesting that MDC formation accompanies specific metabolic 192 
+
+transitions that drive mitochondrial remodeling. 193 
+
+194 
+
+MDC formation during glucose restriction requires trace glucose but is 195 
+
+independent of amino-acid availability 196 
+
+To better understand how glucose restriction induces MDC formation, we next 197 
+
+investigated the metabolic requirements underlying this response. Our previous work 198 
+
+showed that several MDC-inducing stresses—including mTOR inhibition, impaired 199 
+
+vacuolar function, and translation perturbation—stimulated MDC formation by elevating 200 
+
+intracellular amino acid pools that led to downstream amino-acid–dependent alterations 201 
+
+in mitochondrial metabolism (Schuler et al , 2021; Raghuram & Hughes, 2024). Because 202 
+
+glucose restriction slows translation and increases intracellular amino-acid pools, we 203 
+
+initially hypothesized that MDC formation during glucose restriction might similarly arise 204 
+
+from changes in amino-acid levels (Ashe et al , 2000; Schuler et al , 2021). 205 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+10 
+
+206 
+
+Consistent with this possibility, glucose restriction or carbon switching in synthetic 207 
+
+medium, which contains substantially lower amino-acid concentrations than rich YPAD 208 
+
+medium, failed to induce MDCs (Fig. 2A and Fig. S2A). Instead, mitochondria became 209 
+
+highly fragmented (Fig. 2B). These observations initially suggested that amino-acid 210 
+
+limitation might suppress MDC formation under these conditions. If this were the case, 211 
+
+restoring amino-acid availability should rescue MDC formation. However, unlike 212 
+
+previously reported MDC-inducing stresses such as rapamycin, concanamycin A213 
+
+(ConcA), and cycloheximide (CHX), addition of purified amino-acid sources such as 214 
+
+casein or peptone failed to restore MDC formation. Only addition of yeast extract—which 215 
+
+contains lipids, peptides, and metabolizable carbohydrates in addition to amino acids— 216 
+
+readily restored MDC formation (Fig. 2C). 217 
+
+218 
+
+Because purified amino-acid sources failed to rescue this response, but yeast extract did, 219 
+
+we considered whether a non-amino-acid component of yeast extract, such as residual 220 
+
+metabolizable carbon, was important. Previous studies have shown that synthetic 221 
+
+medium with added glucose contains little to no residual glucose, whereas rich medium 222 
+
+retains small amounts of metabolizable carbon after glucose removal due to components 223 
+
+of yeast extract (Adachi et al , 2017; Ashe et al , 2000; Weber et al , 2020). We therefore 224 
+
+asked whether it was the complete absence of glucose that was suppressing MDC 225 
+
+formation in synthetic media. Consistent with this idea, adding trace amounts of glucose 226 
+
+(0.02%) into glucose-free synthetic medium was sufficient to restore MDC formation and 227 
+
+mitochondrial structure in this media type, producing MDC levels comparable to those 228 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+11 
+
+observed during glucose restriction in rich medium (Fig. 2B–C). At glucose concentrations 229 
+
+lower than 0.02%, mitochondria were fragmented and MDCs failed to form, indicating that 230 
+
+MDC induction requires a minimal level of residual glucose present in the cell (Fig. 2D 231 
+
+and Fig. S2B). 232 
+
+233 
+
+Consistent with the requirement for the presence of trace glucose for MDCs to form, MDC 234 
+
+induction by other stimuli was likewise blocked under glucose-free conditions. For 235 
+
+example, CHX-induced MDC formation was completely suppressed in glucose-free 236 
+
+medium (Fig. S2C), suggesting that a minimal level of glucose is broadly required for 237 
+
+MDC induction. This requirement does not appear to arise from the severe changes in 238 
+
+mitochondrial morphology, as preventing mitochondrial fragmentation during complete 239 
+
+glucose starvation by deleting the conserved mitochondrial fission GTPase Dnm1 failed 240 
+
+to restore MDC formation under glucose-free conditions even though it prevented 241 
+
+fragmentation (Fig. S2D-E). Although the basis for this glucose requirement remains 242 
+
+unclear, similar observations have been reported for autophagy induction in yeast, where 243 
+
+complete glucose starvation can prevent activation of the pathway in the presence of 244 
+
+other starvation cues (Adachi et al , 2017). Together, these results indicate that MDC 245 
+
+formation requires the presence of trace glucose across multiple induction conditions and 246 
+
+suggest that MDC-permissive and MDC-nonpermissive glucose starvation conditions 247 
+
+may represent fundamentally distinct metabolic states. 248 
+
+249 
+
+To better define how these carbon conditions differ metabolically, we performed 250 
+
+untargeted GC-MS metabolomics on wild-type yeast cells grown overnight in YPAD and 251 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+12 
+
+shifted for 2 h to control (YPAD), glucose restriction (YPA), carbon switch (YPAG), or 252 
+
+synthetic glucose starvation (S). Global metabolomic responses were poorly correlated 253 
+
+when comparing changes that occur upon a shift from YPAD to either YPA or S (R² ≈ 254 
+
+0.09), indicating that glucose restriction and complete glucose starvation produce distinct 255 
+
+metabolic states (Fig. 2E). In contrast, shifting to YPA or YPAG showed moderate overall 256 
+
+similarity in terms of metabolite changes (R 2 ≈ 0.35), with substantially stronger 257 
+
+concordance among amino acid and TCA cycle metabolites, indicating that these two 258 
+
+MDC-permissive conditions share a common metabolic remodeling program (Fig. 2E). 259 
+
+260 
+
+At the pathway level, glycolytic and TCA cycle metabolites were broadly depleted in S 261 
+
+relative to YPA or YPAG, whereas the MDC-permissive conditions maintained these 262 
+
+pathways to a greater extent (Fig. 2F). Amino acid levels increased across multiple 263 
+
+treatments, consistent with altered amino acid utilization and/or reduced anabolic 264 
+
+demand, but this response alone was not sufficient to explain MDC formation (Fig. S2F). 265 
+
+Instead, MDC-permissive conditions were associated with preservation of a partially 266 
+
+active TCA-linked metabolic state, whereas complete glucose starvation produced 267 
+
+broader suppression of biosynthetic metabolism (Fig. 2G). 268 
+
+269 
+
+Finally, we systematically examined the influence of amino-acid availability on glucose-270 
+
+restriction MDCs. MDCs were readily induced across rich (YPAD), synthetic, and minimal 271 
+
+media conditions when 0.02% glucose was provided, and supplementation of casamino 272 
+
+acids to match amino-acid levels found in rich medium did not enhance MDC formation 273 
+
+(Fig. S2G). Moreover, MDCs were induced even during nitrogen starvation when trace 274 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+13 
+
+glucose was present (Fig. S2H), demonstrating that amino-acid and nitrogen availability 275 
+
+are not required for MDC formation under glucose restriction. 276 
+
+277 
+
+Together, these results show that glucose-restriction MDC formation requires reduced, 278 
+
+but not absent, glucose availability and occurs under metabolic states that preserve 279 
+
+aspects of central carbon metabolism. Unlike previously characterized MDC-inducing 280 
+
+conditions such as concanamycin A, rapamycin, and cycloheximide, this response is 281 
+
+independent of amino-acid availability, indicating that glucose restriction induces MDCs 282 
+
+through a metabolically distinct remodeling state rather than through amino-acid 283 
+
+accumulation alone. 284 
+
+285 
+
+Snf1 is required for glucose restriction- and salt stress-induced MDCs 286 
+
+To understand what drives MDC formation during glucose-dependent metabolic 287 
+
+transitions, we next examined signaling pathways that couple changes in carbon 288 
+
+availability to MDC induction. Because glucose restriction and carbon-source switching 289 
+
+engage well-defined glucose-responsive regulatory networks, we focused on major 290 
+
+carbon-responsive pathways (Kunkel et al , 2019; Kayikci & Nielsen, 2015). Among the 291 
+
+major glucose-sensing pathways, deletion of SNF1 , a central energy-stress kinase that 292 
+
+promotes respiratory metabolism, completely blocked MDC formation induced by glucose 293 
+
+restriction and carbon-source switching, whereas deletion of the PKA-pathway regulators 294 
+
+IRA2 , GPA2 , or GPR1 had no effect (Fig. 3A-B; Fig. S3A). Because Snf1 activates 295 
+
+mitochondrial biogenesis through transcriptional derepression, we next tested additional 296 
+
+regulators of this pathway (Kayikci & Nielsen, 2015; Coccetti et al , 2018; Martinez-Ortiz 297 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+14 
+
+et al , 2019; Fig. 3C). Deletion of HXK2 , a repressor of glucose derepressed transcription, 298 
+
+reduced MDC induction, whereas deletion of REG1 or REG2 , phosphatases that inhibit 299 
+
+Snf1, had a negligible impact on MDC formation, possibly due to redundancy (Fig. S3B). 300 
+
+We also tested whether Snf1 is required for MDC formation under other biogenesis-301 
+
+inducing conditions. Loss of SNF1 blocked MDC induction during both NaCl and KCl 302 
+
+stress (Fig. 3D), indicating that Snf1 broadly regulates MDC formation in response to 303 
+
+metabolic stresses that promote mitochondrial biogenesis. 304 
+
+305 
+
+Because MDCs form rapidly following glucose restriction, we asked whether Snf1 activity 306 
+
+is acutely required for their induction. To test this, we used an auxin-inducible degron 307 
+
+(AID) system to rapidly deplete Snf1 (Phanindhar & Mishra, 2023; Zahm et al , 2021). 308 
+
+Auxin treatment for 30 minutes reduced Snf1-AID levels (Fig. 3E; Fig. S3C). Acute Snf1 309 
+
+depletion prior to treatment markedly impaired MDC induction during glucose restriction, 310 
+
+salt stress, carbon switching, and 2-DG treatments whereas untreated Snf1-AID cells 311 
+
+showed normal responses (Fig. 3F-G; Fig. S3D–F). These results demonstrate that Snf1 312 
+
+activity is acutely required for MDC formation under biogenesis-inducing conditions. 313 
+
+314 
+
+We next tested whether Snf1 dependence is specific to carbon and salt-stressed MDC 315 
+
+induction. Neither deletion nor acute depletion of Snf1 affected MDC formation induced 316 
+
+by rapamycin (Fig. 3H-I). Similarly, MDCs induced by concA or by constitutive 317 
+
+overexpression of outer-membrane proteins ( SCM4 overexpression) were unaffected by 318 
+
+Snf1 loss (Fig. S3G-H). Consistent with this, although snf1Δ did not impair SCM4 -induced 319 
+
+MDCs, it still blocked the additional increase in MDC formation triggered by glucose 320 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+15 
+
+restriction in this scenario (Fig. S3I). Together, these findings indicate that Snf1 321 
+
+specifically regulates MDC formation driven by carbon and salt stress but is dispensable 322 
+
+for MDCs induced by alterations in mTOR signaling, V-ATPase impairment, or direct 323 
+
+increases in OMM protein load. These results identify Snf1 as a key regulator of carbon 324 
+
+and salt stress-induced MDC formation and distinguish this pathway from Snf1-325 
+
+independent modes of MDC induction. 326 
+
+327 
+
+Transcriptional derepression via Mig1 is required downstream of Snf1 in MDC 328 
+
+induction 329 
+
+To identify the downstream effector(s) of Snf1 that drive MDC formation during glucose-330 
+
+dependent metabolic transitions, we examined Snf1-regulated pathways known to 331 
+
+influence mitochondrial metabolism and remodeling. Snf1 has established roles in the 332 
+
+regulation of autophagy, mitophagy, β-oxidation, lipid metabolism, and transcriptional 333 
+
+control of glucose derepression (Usaite et al , 2009; Kayikci & Nielsen, 2015; Wei et al ,334 
+
+2016; Yao et al , 2020). Among these, only perturbation of the glucose derepression 335 
+
+program consistently altered MDC induction during glucose restriction (Fig. 4A–C; Fig. 336 
+
+S4A-B). Specifically, disruption of pathways downstream of Snf1 involved in β-oxidation 337 
+
+(FOX2 ), stress and nutrient signaling (RIM15 ), autophagy (ATG11 ), or mitophagy 338 
+
+(ATG32 ) had no detectable effect on glucose restriction–induced MDC formation (Fig. 339 
+
+S4A). Likewise, perturbation of Snf1-regulated lipid metabolism did not phenocopy the 340 
+
+specific requirement for Snf1 in glucose-responsive MDC induction. Acute repression of 341 
+
+ACC1 , a rate-limiting enzyme in de novo fatty acid synthesis and a well-established Snf1 342 
+
+target during glucose restriction (Wei et al , 2016), did not stimulate MDC formation and 343 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+16 
+
+instead broadly inhibited MDC induction across multiple conditions (Fig. S4B-C, E). 344 
+
+Similarly, treatment with cerulenin to impair de novo lipid synthesis reduced MDC 345 
+
+formation across multiple inducers (Fig. S4D), indicating that lipid biosynthesis is 346 
+
+generally required for MDC biogenesis but unlikely to represent the specific downstream 347 
+
+pathway linking Snf1 signaling to glucose-responsive MDC induction. Together, these 348 
+
+results identify transcriptional derepression as the primary downstream pathway coupling 349 
+
+Snf1 activity to MDC formation. 350 
+
+351 
+
+Under glucose-rich conditions, the transcriptional repressor Mig1 contributes to 352 
+
+repression of glucose-derepressed genes, including genes involved in alternative carbon 353 
+
+metabolism and respiratory growth. Upon glucose limitation, Snf1 phosphorylates Mig1, 354 
+
+promoting transcriptional derepression (Fig. 4A) (Treitel et al , 1998; Kayikci & Nielsen, 355 
+
+2015). Consistent with this model, deletion of MIG1 fully restored MDC formation in snf1Δ 356 
+
+cells under both glucose restriction and salt stress (Fig. 4B–D), demonstrating that relief 357 
+
+of Mig1-mediated repression is sufficient to bypass the requirement for Snf1. Additionally, 358 
+
+Snf1-dependent phosphorylation sites on Mig1 have been shown to be required for proper 359 
+
+transcriptional derepression (Treitel et al , 1998). Consistent with this, CRISPR-generated 360 
+
+Mig1 phospho-null mutants reduced glucose restriction-induced MDC formation, albeit to 361 
+
+varying degrees (Fig. S4F). 362 
+
+To test whether active transcription is required for MDC formation, we inhibited 363 
+
+transcription initiation using thiolutin (Pelechano & Pérez -Ortín, 2008). Thiolutin treatment 364 
+
+prevented increased expression of mitochondrial proteins during glucose restriction and 365 
+
+salt stress, and abolished MDC formation under both conditions (Fig. 4E; Fig. S4G). 366 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+17 
+
+Because transcriptional inhibition has broad effects, we interpret this experiment 367 
+
+conservatively. Nevertheless, acute thiolutin treatment during glucose restriction inhibited 368 
+
+MDC formation within the same treatment window in which the Snf1–Mig1 axis is 369 
+
+required, consistent with an acute requirement for ongoing transcription during MDC 370 
+
+biogenesis (Pelechano & Pérez -Ortín, 2008; Mołoń et al , 2026). 371 
+
+Because MDC induction occurs rapidly following metabolic stress, we next asked whether 372 
+
+Mig1 derepression is acutely required for MDC formation. To address this, we generated 373 
+
+a Mig1-AID strain in a snf1Δ background and selectively degraded Mig1 using auxin (Fig. 374 
+
+S4E). Acute Mig1 depletion alone was insufficient to induce MDCs; however, under 375 
+
+glucose restriction, Mig1-AID degradation partially restored MDC formation in snf1Δ cells 376 
+
+(Fig. 4F). We next performed the reciprocal experiment by degrading Snf1 in a mig1Δ 377 
+
+background using a Snf1-AID allele (Fig. S4E). As expected, mig1Δ cells displayed MDC 378 
+
+induction comparable to wild type under glucose restriction. Importantly, acute 379 
+
+degradation of Snf1 in this background did not reduce MDC formation (Fig. 4G), 380 
+
+phenocopying the snf1Δ mig1Δ double mutant. Together, these findings establish that 381 
+
+MDC formation during glycolytic stress requires acute relief of Mig1-mediated 382 
+
+transcriptional repression downstream of Snf1 signaling, identifying transcriptional 383 
+
+derepression as the primary pathway coupling glucose-responsive metabolic remodeling 384 
+
+to MDC formation. 385 
+
+Transient induction of mitochondrial-targeted protein expression is a common 386 
+
+theme among MDC inducers and sufficient to stimulate MDC formation 387 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+18 
+
+Because transcriptional derepression is required for MDC induction, and we have 388 
+
+previously found that elevated expression of OMM proteins drives MDC formation, we 389 
+
+next asked whether increased mitochondrial protein expression is a driver of MDC 390 
+
+formation during metabolic transitions that stimulate MDCs. Acute upregulation of 391 
+
+mitochondrial proteins occurs during both glucose restriction and salt stress (Fig. 1A, F), 392 
+
+and this response is dependent on the Snf1–Mig1 regulatory axis (Fig. 5A). Importantly, 393 
+
+we found that multiple previously characterized MDC-inducing conditions also triggered 394 
+
+increased mitochondrial protein expression. Treatment with rapamycin or concA led to 395 
+
+elevated levels of the outer-membrane proteins Om45 and Por1 with kinetics similar to 396 
+
+MDC induction (Fig. S5A). In contrast to glucose restriction, rapamycin-induced 397 
+
+mitochondrial protein expression was largely independent of Snf1, as protein levels were 398 
+
+not substantially reduced in snf1Δ or Snf1-AID strains (Fig. S5B), consistent with the 399 
+
+observation that rapamycin-induced MDC formation also does not require Snf1 signaling 400 
+
+(Fig. 3H-I). Together, these results indicate that transient induction of mitochondrial-401 
+
+targeted protein expression is a shared feature of multiple MDC-inducing conditions, 402 
+
+supporting a broader model in which elevated mitochondrial membrane protein load may 403 
+
+represent a common factor in MDC formation. 404 
+
+405 
+
+Because transcriptional derepression is required for MDC induction, and because multiple 406 
+
+MDC-inducing conditions increase mitochondrial protein expression, we next asked 407 
+
+whether acute activation of mitochondrial biogenesis is sufficient to trigger MDC formation 408 
+
+in the absence of metabolic stress. Hap4 is a central activator of mitochondrial biogenesis 409 
+
+and is sufficient to drive increased mitochondrial protein expression (Raghuram & 410 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+19 
+
+Hughes, 2024; Lascaris et al , 2004). Indeed, proteomic analysis of isolated mitochondria 411 
+
+from cells constitutively overexpressing HAP4 revealed broad increases in mitochondrial 412 
+
+proteins (Fig. 5B). To directly test acute sufficiency, we established a β-estradiol– 413 
+
+inducible HAP4 expression system (Costa et al , 2018) (Fig. 5C). Acute induction of HAP4 414 
+
+increased levels of mitochondrial proteins, including Cit1, Aco1, Om45, and Por1 (Fig. 415 
+
+5D). Although modest increases were observed in untreated controls, induction upon 416 
+
+HAP4 activation was robust. Importantly, transient HAP4 induction was sufficient to 417 
+
+stimulate MDC formation, reaching ~25% of cells after 3.5 hours (Fig. 5E). Although this 418 
+
+response was lower than MDC induction during glucose restriction in rich medium, it was 419 
+
+comparable to MDC levels observed under trace-glucose conditions in the same synthetic 420 
+
+medium background (Fig. 5F). Moreover, glucose restriction enhanced MDC formation in 421 
+
+combination with transient HAP4 induction (Fig. 5F), suggesting that elevated 422 
+
+mitochondrial protein expression cooperates with transient alterations in mitochondrial 423 
+
+metabolic state to promote robust MDC biogenesis. In contrast, prolonged HAP4 424 
+
+induction via overnight β-estradiol treatment suppressed MDC formation, phenocopying 425 
+
+previously observed effects of chronic mitochondrial biogenesis and blocking MDC 426 
+
+induction during rapamycin treatment (Fig. S5C; Raghuram & Hughes, 2024). Together, 427 
+
+these results indicate that acute increases in mitochondrial protein synthesis are sufficient 428 
+
+to stimulate MDC formation, that this response is enhanced when mitochondrial function 429 
+
+is simultaneously perturbed, and that sustained or chronic biogenesis uncouples protein 430 
+
+load from MDC induction. These findings support a model in which mitochondrial protein 431 
+
+load and the metabolic adaptation state of the organelle together determine MDC 432 
+
+sensitivity. 433 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+20 
+
+434 
+
+MDC formation requires proper mitochondrial protein targeting 435 
+
+Having shown that acute mitochondrial protein synthesis can drive MDC formation, 436 
+
+particularly when combined with metabolic perturbation, we next asked whether delivery 437 
+
+of these proteins to mitochondria is required for MDC induction. Our previous 438 
+
+observations indicated that disruption of mitochondrial import causes mislocalization of 439 
+
+outer-membrane proteins such as Om45 to the endoplasmic reticulum, providing a 440 
+
+context to test whether proper delivery of proteins to the OMM is critical for MDC formation 441 
+
+(Shakya et al , 2021; Xiao et al , 2021). We therefore tested whether impairing the TOM 442 
+
+complex receptors Tom70 and Tom71, which mediate targeting of hydrophobic 443 
+
+mitochondrial proteins and are required for proper localization of multiple MDC cargoes, 444 
+
+affects MDC induction during glucose restriction (Wiedemann & Pfanner, 2017; Schuler 445 
+
+et al , 2021; Xiao et al , 2021). Deletion of both TOM70 and TOM71 abolished MDC 446 
+
+formation observed with known MDC substrates Tcd2–GFP and Cox7–GFP under 447 
+
+glucose restriction (Fig. 6A-B). In contrast, deletion of TOM70 alone produced an 448 
+
+intermediate phenotype, consistent with functional redundancy between Tom70 and 449 
+
+Tom71. Correspondingly, mitochondrial proteins including Oac1-GFP and Om45-GFP 450 
+
+were mislocalized in tom70Δ tom71Δ cells (Fig. 6C-F). Importantly, mitochondrial 451 
+
+biogenesis-associated protein induction remained intact in tom70Δ tom71Δ strains during 452 
+
+glucose restriction (Fig. 6G), indicating that loss of MDC formation does not arise from 453 
+
+failure to activate the upstream glucose-responsive biogenic program. Together, these 454 
+
+observations suggest that proper targeting of mitochondrial proteins to mitochondria is 455 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+21 
+
+required for MDC formation, consistent with a model in which acute outer-membrane 456 
+
+protein delivery drives MDC biogenesis during mitochondrial adaptation. 457 
+
+458 
+
+Discussion 459 
+
+Metabolic transitions require cells to rapidly increase mitochondrial protein synthesis and 460 
+
+remodel organelle composition to meet changing energetic demands (Pfanner et al , 2019; 461 
+
+Palikaras et al , 2015). While the transcriptional programs that drive mitochondrial 462 
+
+biogenesis are well established, how cells maintain mitochondrial proteostasis during 463 
+
+these acute transitions has remained unclear (Kayikci & Nielsen, 2015; Posas et al , 2000; 464 
+
+Boos et al , 2019; Kim et al , 2024). Here, we show that mitochondrial-derived 465 
+
+compartments (MDCs), previously identified multilamellar structures derived from the 466 
+
+outer mitochondrial membrane, are engaged during acute mitochondrial adaptation. 467 
+
+Glucose restriction, carbon-source switching, and osmotic stress each induce a Snf1-468 
+
+dependent transcriptional program that increases mitochondrial protein expression, and 469 
+
+under these conditions MDCs form robustly. MDC formation requires ongoing 470 
+
+transcription and Tom70/Tom71-dependent mitochondrial protein targeting but remains 471 
+
+modest when mitochondrial biogenesis is induced in the absence of metabolic 472 
+
+perturbation and is suppressed after prolonged adaptation. Together, these findings 473 
+
+support a model in which MDCs are most strongly engaged when increased mitochondrial 474 
+
+protein influx converges with a mitochondrial state undergoing acute metabolic 475 
+
+remodeling. 476 
+
+477 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+22 
+
+Based on these findings, we propose that MDCs may function as transient outer-478 
+
+membrane buffering domains that sequester membrane proteins delivered during periods 479 
+
+when protein influx may exceed the immediate capacity of mitochondrial membrane 480 
+
+organization and assembly pathways . Consistent with this model, disruption of 481 
+
+mitochondrial protein targeting causes mitochondrial proteins to mislocalize and prevents 482 
+
+MDC formation despite continued induction of mitochondrial protein expression. Thus, 483 
+
+MDCs are not simply a consequence of increased protein synthesis, but require delivery 484 
+
+and engagement of newly synthesized proteins with the mitochondrial outer membrane 485 
+
+(Xiao et al , 2024, 2021). By concentrating these proteins within a discrete OMM-derived 486 
+
+domain, MDCs may temporarily limit their accumulation across the broader mitochondrial 487 
+
+network until the organelle adapts or the cargos are delivered to the vacuole for 488 
+
+degradation (Wilson et al , 2024a). 489 
+
+490 
+
+This framework provides a possible unifying interpretation for prior MDC-inducing 491 
+
+conditions (Fig. 6H). Many previously described triggers—including pharmacological 492 
+
+inhibition of mTOR, V-ATPase disruption, translational stress, direct mitochondrial 493 
+
+membrane protein overexpression, alterations in membrane lipid composition, and 494 
+
+protein mistargeting—either increase hydrophobic membrane protein burden at the 495 
+
+organelle, alter mitochondrial metabolic state, or both (Schuler et al , 2021; Raghuram & 496 
+
+Hughes, 2024; Xiao et al , 2024; Wong et al , 2025; Wilson et al , 2024a). Thus, MDC 497 
+
+formation appears to be favored when two conditions converge: elevated hydrophobic 498 
+
+protein burden at the OMM and a mitochondrial state undergoing acute remodeling or 499 
+
+adaptation. Consistent with this model, acute induction of mitochondrial biogenesis was 500 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+23 
+
+sufficient to stimulate MDC formation, but the response was less robust than during 501 
+
+metabolic perturbation and was further enhanced by glucose restriction. In contrast, 502 
+
+chronic mitochondrial biogenesis suppressed MDC induction, suggesting that once fully 503 
+
+adapted, mitochondria can accommodate increased protein expression without engaging 504 
+
+MDC formation. MDC sensitivity therefore appears to reflect the relationship between 505 
+
+protein load and the capacity of the organelle to accommodate that load, rather than either 506 
+
+factor alone. 507 
+
+508 
+
+This interpretation is further supported by prior rapamycin-based genetic screening, which 509 
+
+identified translation, transcriptional regulation, and chromatin/histone modification as 510 
+
+modifiers of MDC induction, consistent with gene-expression programs contributing to 511 
+
+outer-membrane remodeling (Xiao et al , 2024). MDCs therefore emerge not as the output 512 
+
+of a single signaling pathway or metabolite, but as a broader OMM proteostasis response 513 
+
+engaged when acute protein influx outpaces or is mismatched with mitochondrial 514 
+
+adaptation. 515 
+
+516 
+
+Importantly, our study establishes MDCs as a physiologically relevant response 517 
+
+associated with acute mitochondrial biogenesis rather than a phenomenon restricted to 518 
+
+pharmacological perturbations. Under glucose restriction and related metabolic 519 
+
+transitions, MDCs form during endogenous carbon-responsive remodeling programs. 520 
+
+This places MDC formation early in the adaptive response, before cells resort to broader 521 
+
+mitochondrial turnover pathways such as mitophagy (Palikaras et al , 2015; Kayikci & 522 
+
+Nielsen, 2015). MDCs may therefore provide an intermediate layer of quality control that 523 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+24 
+
+remodels selected regions of the OMM without requiring elimination of the entire 524 
+
+organelle. 525 
+
+526 
+
+Several key questions remain. First, the molecular trigger for MDC formation is unknown. 527 
+
+Although our data support a role for increased outer-membrane protein load, how this 528 
+
+state is sensed and converted into membrane remodeling remains unclear. Second, the 529 
+
+machinery that drives MDC formation has not been fully elucidated. Whether MDCs arise 530 
+
+through regulated membrane deformation, lipid redistribution, or dedicated scission 531 
+
+mechanisms remains an important question. Third, the functional consequences of MDC 532 
+
+formation during mitochondrial biogenesis remain difficult to assess. Current approaches 533 
+
+to block MDC formation disrupt upstream processes such as protein import or membrane 534 
+
+organization, making it challenging to isolate the specific contribution of MDCs to 535 
+
+mitochondrial homeostasis or directly test whether they buffer acute protein load. 536 
+
+537 
+
+In summary, we propose that MDCs are adaptive outer-membrane remodeling domains 538 
+
+that respond to hydrophobic membrane protein load during acute mitochondrial 539 
+
+adaptation. Rather than being triggered by protein load or metabolic stress alone, MDC 540 
+
+formation is most strongly engaged when elevated outer-membrane protein burden 541 
+
+coincides with a mitochondrial state undergoing active remodeling. By linking 542 
+
+mitochondrial protein influx to membrane remodeling, this work positions MDCs as a 543 
+
+physiologically relevant proteostasis pathway that may sequester and manage excess 544 
+
+outer-membrane proteins while mitochondrial adaptation is underway. 545 
+
+546 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+25 
+
+Materials and Methods 547 
+
+548 
+
+Yeast strains 549 
+
+All yeast strains are derivatives of S. cerevisiae S288C (BY) (Baker Brachmann et al ,550 
+
+1998) and are listed in Table S1. Deletion strains were generated by one-step PCR-551 
+
+mediated gene replacement using pRS series vectors (Baker Brachmann et al , 1998; 552 
+
+Sikorski & Hieter, 1989) and oligonucleotide pairs listed in Table S2. Correct gene 553 
+
+deletions were confirmed by colony PCR across the chromosomal insertion site. Strains 554 
+
+expressing proteins with C-terminal fluorescent tags were generated by one-step PCR-555 
+
+mediated endogenous tagging using standard techniques and oligo pairs listed in Table 556 
+
+S2. Plasmid templates for fluorescent tagging were from the pKT series of vectors (Sheff 557 
+
+& Thorn, 2004). Correct integrations were confirmed by colony PCR and by verifying 558 
+
+proper localization of the fluorophore by microscopy. For diploid mutant strains, haploid 559 
+
+parent strains were transformed with the desired constructs and mated on YPAD plates 560 
+
+overnight. Colonies were subsequently selected on SD–Met–Lys plates. 561 
+
+562 
+
+For auxin-inducible degradation, proteins were tagged using one-step PCR-mediated C-563 
+
+terminal tagging with pHyg-AID*-6FLAG and corresponding oligo pairs listed in Table S2. 564 
+
+Following tagging, His3-GPD-OsTIR1 (PM76) was integrated at the HIS3 locus to 565 
+
+complete the degradation system (Zahm et al , 2021). The His3-GPD-OsTIR1 fragment 566 
+
+was prepared by PmeI digestion and transformed into yeast. 567 
+
+568 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+26 
+
+Mig1 phospho-null mutants were generated using a CRISPR/Cas9-mediated genome 569 
+
+editing approach in Saccharomyces cerevisiae as previously described (DiCarlo et al ,570 
+
+2013; Ryan et al , 2014). Guide RNAs targeting MIG1 were designed proximal to the 571 
+
+desired phosphorylation sites, and donor DNA templates containing serine-to-alanine 572 
+
+substitutions (S→A) with ~50–70 bp homology arms were synthesized to enable 573 
+
+homology-directed repair (Table S2). Guide RNA target sites and associated PAM 574 
+
+sequences were selected and cloned into pM696 by annealing and ligating double-575 
+
+stranded oligonucleotides containing the desired guide sequences. Functional guide 576 
+
+RNAs were identified based on growth sensitivity on SD–URA following transformation. 577 
+
+To prevent repeated Cas9 cleavage, silent mutations were introduced within the PAM or 578 
+
+guide RNA recognition sequence where necessary. Guide RNA and donor sequences 579 
+
+(Twist Biosciences) were cloned into plasmid pM1525 using Golden Gate assembly, and 580 
+
+yeast strains expressing integrated Cas9 from pM693 digested with StuI and PmeI were 581 
+
+transformed with these constructs. Following selection, clonal isolates were screened by 582 
+
+PCR and confirmed by Sanger sequencing. The following Mig1 phospho-null mutants 583 
+
+were generated: S1A (S381A), S2A (S222A, S278A), S3A (S222A, S278A, S381A), and 584 
+
+S4A (S222A, S278A, S311A, S381A). Validated haploid Mig1 phospho-null strains were 585 
+
+then mated to a mig1Δ strain to generate diploid strains for MDC assays. 586 
+
+587 
+
+The β-estradiol–inducible HAP4 expression system was generated by integrating the 588 
+
+GEM expression cassette into a chromosome I integration site (nt: 199456-199457) 589 
+
+(Hughes & Gottschling, 2012). The Gal1–β-estradiol–Msn4 fragment was amplified using 590 
+
+primers 5221/5222 from PJW-1663 (Addgene #112037) and transformed into BY4741 591 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+27 
+
+(Costa et al , 2018). This strain was subsequently transformed with PJW-HAP4-FLAG-592 
+
+1666 and maintained on SD–URA medium prior to treatment. 593 
+
+594 
+
+Plasmids 595 
+
+The plasmids generated and used in this study are listed in Table S3. Most plasmids used 596 
+
+in this study were generated by inserting PCR-amplified genes of interest into pRS series 597 
+
+vectors (Baker Brachmann et al , 1998; Sikorski & Hieter, 1989) using Gibson assembly 598 
+
+(Gibson et al , 2009). Expression was driven either by endogenous promoters or by the 599 
+
+GPD promoter. The β-estradiol–inducible HAP4 expression plasmid (PJW-HAP4-FLAG-600 
+
+1666) was constructed by Gibson assembly. A synthetic HAP4-FLAG fragment (Twist 601 
+
+Bioscience), containing flanking homology to PJW-1666 and a C-terminal FLAG tag, was 602 
+
+inserted into PJW-1666 linearized with EcoRI and AscI. The assembled plasmid was 603 
+
+transformed into competent E. coli , isolated via miniprep, and validated by restriction 604 
+
+digestion and sequencing. 605 
+
+606 
+
+Yeast cell culture and growth assays 607 
+
+Yeast cells were grown at 30°C for 15-16 h to mid-log phase (OD600 = 0.2–0.8) prior to 608 
+
+all experiments. Unless otherwise indicated, cells were cultured in YPAD medium (1% 609 
+
+yeast extract, 2% peptone, 0.005% adenine, and 2% glucose). Alternatively, cells were 610 
+
+cultured in synthetic defined (SD) medium containing 0.67% yeast nitrogen base without 611 
+
+amino acids, 2% glucose, and supplemented nutrients (0.072 g/L each adenine, alanine, 612 
+
+arginine, asparagine, aspartic acid, cysteine, glutamic acid, glutamine, glycine, histidine, 613 
+
+myo-inositol, isoleucine, lysine, methionine, phenylalanine, proline, serine, threonine, 614 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+28 
+
+tryptophan, tyrosine, uracil, and valine; 0.369 g/L leucine; 0.007 g/L para-aminobenzoic 615 
+
+acid). For amino acid–free conditions (MinD), cells were grown in medium containing 616 
+
+0.67% yeast nitrogen base without amino acids and 2% glucose. Where indicated, 617 
+
+casamino acids were added at the time of treatment to a final concentration of 2%. Drugs 618 
+
+and chemicals were used at the following concentrations unless otherwise indicated: 619 
+
+rapamycin (200 nM), concanamycin A (500 nM), cycloheximide (500 nM), cerulenin (10 620 
+
+μM), thiolutin (10 μg/mL), sodium chloride (0.8 M), potassium chloride (1 M), and indole-621 
+
+3-acetic acid (1 mM) (Table S3). 2-deoxyglucose and β-estradiol were added at the 622 
+
+indicated concentrations for each assay. 623 
+
+624 
+
+MDC assays 625 
+
+For glucose restriction or media-switch assays, overnight log-phase cultures were 626 
+
+centrifuged, washed 2–3 times with sterile ddH 2O, and resuspended in the indicated 627 
+
+media (YPAD, SD, MinD, or YPA [YPAD lacking 2% glucose]) or media containing 628 
+
+specified metabolites for 2–3 h unless otherwise indicated. Carbon sources included trace 629 
+
+glucose (0.02%), fructose (2%), glycerol (3%), galactose (2%), sucrose (2%), and 630 
+
+raffinose (2%). For drug-based assays, cultures were incubated with DMSO or the 631 
+
+indicated drug for 2 h. For plasmid-containing strains, overnight cultures grown in 632 
+
+selective SD medium were diluted to OD600 = 0.1–0.2 in YPAD and allowed to grow for 633 
+
+at least 1 h prior to induction. For combined treatments, pretreatment drugs were added 634 
+
+prior to media switching, and drugs were re-added immediately following the switch. Prior 635 
+
+to imaging, cells were harvested by centrifugation, washed once, and resuspended in 100 636 
+
+mM HEPES containing 5% glucose. Cells were plated onto slides at low volume to form 637 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+29 
+
+a monolayer. Optical z-sections of live cells were acquired using a Zeiss Axio Imager M2 638 
+
+or Zeiss LSM800 Airyscan microscope. MDCs were quantified at 2–3 h after treatment. 639 
+
+Data represent mean ± SEM from three biological replicates (n = 100 cells per replicate). 640 
+
+MDCs were defined as Tom70-positive, Tim50-negative structures enriched relative to 641 
+
+the mitochondrial network. In colocalization assays, MDCs were identified as large 642 
+
+Tom70-enriched spherical structures prior to assessing protein colocalization. 643 
+
+644 
+
+Fluorescence microscopy 645 
+
+Fluorescence microscopy was performed as described (English et al , 2020). Optical z-646 
+
+sections were acquired using a Zeiss Axio Imager M2 with a Zeiss Axiocam 506 camera 647 
+
+and 100X or 63X oil-immersion objectives (NA 1.4), or a Zeiss LSM800 Airyscan 648 
+
+microscope. Images were acquired using ZEN software and processed in Fiji (Schindelin 649 
+
+et al , 2012). Airyscan images were processed using the automated Airyscan algorithm in 650 
+
+ZEN and further analyzed in Fiji. Fluorophores are indicated in figure legends. Channels 651 
+
+were minimally adjusted for visualization, and line-scan analyses were performed on 652 
+
+unadjusted images. MDC diameters were measured from fields of cells imaged on the 653 
+
+Zeiss Axio Imager M2 with a 63X oil-immersion objective. Images were processed by 654 
+
+maximum-intensity projection, and diameters were measured using the line measurement 655 
+
+tool in Fiji. 656 
+
+657 
+
+Time-lapse imaging 658 
+
+For time-lapse imaging, overnight cultures were harvested, resuspended in SD medium, 659 
+
+and loaded into flow chambers as described (Fees et al , 2017). After 15 min of incubation, 660 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+30 
+
+chambers were washed and medium was exchanged to trace-glucose medium (S + 661 
+
+0.02% glucose). Flow chambers were constructed using microscope slides and coverslips 662 
+
+coated with concanavalin A (Sigma-Aldrich; L7647) and sealed with Parafilm. Chambers 663 
+
+were further sealed with melted Vaseline. Imaging was performed on a Zeiss LSM880 664 
+
+Airyscan microscope equipped with a temperature-controlled chamber set to 30°C. 665 
+
+Images were processed using ZEN and Fiji as described above. 666 
+
+667 
+
+Whole-cell lysate preparation and immunoblotting 668 
+
+Cell lysates and immunoblotting methods were adapted from (Wong et al , 2025). Two 669 
+
+OD600 units of cells were lysed in 1 mL ice-cold 0.2 M NaOH for 10 min on ice. 670 
+
+Trichloroacetic acid (100 μL) was added, and samples were incubated on ice for 5 min. 671 
+
+Proteins were pelleted by centrifugation (13,000 rpm, 5 min) and resuspended in 2X SDS 672 
+
+sample buffer (0.12M Tris-HCl, pH 6.8, 19% Glycerol, 0.15mM Bromophenol Blue, 3.8% 673 
+
+SDS, and 0.05% β-mercaptoethanol). Samples were neutralized with 1 M Tris base (pH 674 
+
+11) and heated at 50°C for 30 min. Proteins were resolved by SDS–PAGE (4–12% gels, 675 
+
+Bio-Rad) and transferred to nitrocellulose membranes. Membranes were blocked in TBST 676 
+
++ 5% milk and incubated with primary antibodies (Table S3), followed by HRP-conjugated 677 
+
+secondary antibodies (1:5000). Signals were detected using enhanced 678 
+
+chemiluminescence and imaged with a Bio-Rad ChemiDoc MP system. 679 
+
+680 
+
+Extraction of whole-cell metabolites from yeast 681 
+
+Whole-cell metabolite extraction was done as previously noted (Raghuram & Hughes, 682 
+
+2024) with specific alterations. Wild-type yeast cells were grown overnight in YPAD to a 683 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+31 
+
+density of 0.3–0.5 × 10⁷ cells/mL, collected by centrifugation, and washed once with 684 
+
+water. Cell pellets were resuspended in YPAD, YPA, YPAG, or S medium to represent 685 
+
+control, glucose restriction, glycerol carbon switch, or glucose starvation conditions, 686 
+
+respectively. Cells were cultured in the indicated media for 2 h, collected by centrifugation 687 
+
+for 3 min at 5,000 × g, washed once with water, and flash frozen in liquid nitrogen. 688 
+
+689 
+
+Whole cell metabolites were extracted from yeast cell pellets as previously described, 690 
+
+with slight modifications (Canelas et al , 2009). Briefly, 0.4 μg of the internal standard 691 
+
+succinic-d4 acid was added to each sample. Next, 1 mL of boiling 75% EtOH was added 692 
+
+to each pellet, followed by vortex mixing and incubation at 90°C for 3 min with intermittent 693 
+
+vortexing. Cell debris was removed by centrifugation at 7,000 × g for 5 min at −10°C. 694 
+
+Supernatants were transferred to new tubes and dried en vacuo. Process blank samples 695 
+
+were prepared using extraction solvent without a cell pellet. 696 
+
+697 
+
+GC-MS analysis 698 
+
+Non-targeted metabolomics GC-MS analysis was done as previously described in 699 
+
+(Raghuram & Hughes, 2024). GC-MS analysis was performed using an Agilent 5977B 700 
+
+GC-MS MSD-HES equipped with an Agilent 7693A automatic liquid sampler. Dried 701 
+
+samples were suspended in 40 μL of 40 mg/mL O-methoxylamine hydrochloride (MOX; 702 
+
+MP Bio #155405) in dry pyridine (EMD Millipore #PX2012-7) and incubated for 1 h at 703 
+
+37°C in a sand bath. 25 μL of this solution was added to autosampler vials. For pooled 704 
+
+quality-control (QC) samples, 10 μL of the remaining solution from each sample was 705 
+
+combined, and 25 μL of the pooled QC was added to autosampler vials. Sixty microliters 706 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+32 
+
+of N-methyl-N-trimethylsilyltrifluoracetamide (MSTFA with 1% TMCS; Thermo #TS48913) 707 
+
+was added automatically via the autosampler and incubated for 30 min at 37°C. After 708 
+
+incubation, samples were vortexed, and 1 μL of the prepared sample was injected into 709 
+
+the gas chromatograph inlet in split mode with the inlet temperature held at 250°C. A 5:1 710 
+
+split ratio was used for analysis of the majority of metabolites. Metabolites that saturated 711 
+
+the instrument at the 5:1 split ratio were analyzed at a 50:1 split ratio. The gas 712 
+
+chromatograph had an initial temperature of 60°C for 1 min, followed by a 10°C/min ramp 713 
+
+to 325°C and a 10 min hold. A 30 m Agilent Zorbax DB-5MS column with a 10 m 714 
+
+Duraguard capillary column was used for chromatographic separation. Helium was used 715 
+
+as the carrier gas at a flow rate of 1 mL/min. 716 
+
+717 
+
+Data were collected using MassHunter software (Agilent). Metabolites were identified, 718 
+
+and peak areas were recorded using MassHunter Quant. These data were transferred to 719 
+
+an Excel spreadsheet (Microsoft, Redmond, WA). Metabolite identity was established 720 
+
+using a combination of an in-house metabolite library developed from purchased 721 
+
+standards, the NIST library, and the Fiehn library. Values for each metabolite were 722 
+
+normalized to the internal standard in each sample, normalized to total signal, and 723 
+
+displayed as fold change relative to the control sample. Data were analyzed using the 724 
+
+MetaboAnalyst software tool (Pang et al , 2021). Log ₂ fold-change values from 725 
+
+MetaboAnalyst were used for correlation analyses. Statistical analysis across metabolites 726 
+
+was performed using two-way ANOVA with Holm–Šídák multiple-comparisons testing 727 
+
+and verified using the two-stage linear step-up procedure of Benjamini, Krieger, and 728 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+33 
+
+Yekutieli for FDR correction. All steady-state metabolite data and MetaboAnalyst input 729 
+
+files are provided in Table S4. 730 
+
+731 
+
+Isolation of yeast mitochondria 732 
+
+Isolation of yeast mitochondria was done as described in (Balasubramaniam et al , 2026). 733 
+
+Yeast were grown overnight to log-phase (OD ₆₀₀ = 0.4–0.8). Cells were collected by 734 
+
+centrifugation, washed with distilled water, and weighed. Cell pellets were resuspended 735 
+
+in dithiothreitol (DTT) buffer (0.1 M Tris, 10 mM DTT, pH 9.4) at 2 mL per gram of pellet 736 
+
+and incubated for 20 min at 30°C under constant rotation. After centrifugation, DTT-737 
+
+treated cells were washed once in 1.2 M sorbitol and resuspended in sorbitol phosphate 738 
+
+buffer (6.7 mL per gram of pellet) containing 2 mg lyticase per gram of pellet. Cells were 739 
+
+incubated for 30–45 min at 30°C with constant rotation to digest the cell wall and generate 740 
+
+spheroplasts. Following lyticase treatment, spheroplasts were isolated by centrifugation 741 
+
+and lysed by mechanical disruption in homogenization buffer (0.6 M sorbitol, 10 mM Tris, 742 
+
+pH 7.4, 1 mM EDTA, pH 8.0 adjusted with KOH, 0.2% BSA, and 1 mM PMSF) at 13.3 mL 743 
+
+per gram of pellet at 4°C. Cell debris was removed from the homogenate twice by 744 
+
+centrifugation at 2,000 × g for 5 min at 4°C, and mitochondria were pelleted at 17,500 × 745 
+
+g for 12 min at 4°C. The mitochondrial pellet was resuspended in SEM buffer (250 mM 746 
+
+sucrose, 1 mM EDTA, pH 8.0 adjusted with KOH, and 10 mM 3-(N-morpholino) 747 
+
+propanesulfonic acid [MOPS], pH 7.2), reisolated by differential centrifugation as 748 
+
+described above, and subsequently resuspended in SEM buffer. Mitochondrial protein 749 
+
+concentration was determined by bicinchoninic acid (BCA) assay. For proteomics 750 
+
+analysis, 100 μg of mitochondria by protein mass was pelleted, flash frozen in liquid 751 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+34 
+
+nitrogen, and stored at −80°C. Four biological replicates were analyzed per condition, and 752 
+
+all samples were processed and acquired within the same LC-MS run. 753 
+
+754 
+
+Mass spectrometry sample preparation 755 
+
+Samples for protein analysis were prepared as previously described (Navarrete-Perea et 756 
+
+al , 2018; Li et al , 2021). Proteomes were extracted using a buffer containing 200 mM 757 
+
+EPPS, pH 8.5, 8 M urea, 0.1% SDS, and protease inhibitors. Following lysis, 25 μg of 758 
+
+each proteome was reduced with 5 mM TCEP. Cysteine residues were alkylated using 759 
+
+10 mM iodoacetamide for 20 min at room temperature in the dark. Excess iodoacetamide 760 
+
+was quenched with 10 mM DTT. Buffer exchange was performed using a modified SP3 761 
+
+protocol (Hughes et al, 2019). Briefly, ~250 μg of Cytiva SpeedBead Magnetic 762 
+
+Carboxylate Modified Particles (65152105050250 and 4515210505250), mixed at a 1:1 763 
+
+ratio, was added to each sample. Ethanol was added to each sample to achieve a final 764 
+
+concentration of at least 50%. Samples were incubated with gentle shaking for 15 min 765 
+
+and washed three times with 80% ethanol. Protein was eluted from SP3 beads using 200 766 
+
+mM EPPS, pH 8.5, containing Lys-C (Wako, 129-02541). Samples were digested 767 
+
+overnight at room temperature with vigorous shaking. The next morning, trypsin was 768 
+
+added to each sample, and samples were incubated for an additional 6 h at 37°C. 769 
+
+Acetonitrile was added to each sample to achieve a final concentration of ~33%. Each 770 
+
+sample was labeled in the presence of SP3 beads with ~62.5 μg of TMTPro reagents 771 
+
+(Thermo Fisher Scientific). Following confirmation of satisfactory labeling (>97%), excess 772 
+
+TMT was quenched by addition of hydroxylamine to a final concentration of 0.3%. The 773 
+
+full volume from each sample was pooled, and acetonitrile was removed by vacuum 774 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+35 
+
+centrifugation for 1 h. The pooled sample was acidified, and peptides were desalted using 775 
+
+a Sep-Pak 50 mg tC18 cartridge (Waters). Peptides were eluted in 70% acetonitrile, 1% 776 
+
+formic acid, and dried by vacuum centrifugation. 777 
+
+778 
+
+Basic pH reversed-phase separation (BPRP) 779 
+
+TMT-labeled peptides were solubilized in 5% acetonitrile/10 mM ammonium bicarbonate, 780 
+
+pH 8.0, and ~300 μg of TMT-labeled peptides was separated using an Agilent 300Extend-781 
+
+C18 column (3.5 μm particle size, 4.6 mm inner diameter, 250 mm length). An Agilent 782 
+
+1260 binary pump coupled with a photodiode array (PDA) detector (Thermo Scientific) 783 
+
+was used to separate the peptides. A 45 min linear gradient from 10% to 40% acetonitrile 784 
+
+in 10 mM ammonium bicarbonate, pH 8.0, at a flow rate of 0.6 mL/min separated the 785 
+
+peptide mixture into 96 fractions collected every 36 s. The 96 fractions were consolidated 786 
+
+into 24 samples in a checkerboard fashion and dried to completion by vacuum 787 
+
+centrifugation. Each sample was desalted using StageTips and redissolved in 5% formic 788 
+
+acid/5% acetonitrile for LC-MS3 analysis. 789 
+
+790 
+
+Liquid chromatography and tandem mass spectrometry 791 
+
+Mass spectrometric data were collected on an Orbitrap Eclipse mass spectrometer 792 
+
+coupled to a Proxeon NanoLC-1000 UHPLC (Thermo Fisher Scientific). The 100 μm 793 
+
+capillary column was packed in-house with 35 cm of Accucore 150 resin (2.6 μm, 150Å; 794 
+
+ThermoFisher Scientific). Data were acquired for 120 min per run. A FAIMS device was 795 
+
+enabled during data collection and compensation voltages were set at -40V, -60V, and -796 
+
+80V (Schweppe et al, 2019). MS1 scans were collected in the Orbitrap (resolution – 797 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+36 
+
+60,000; scan range – 400-1600 Th; automatic gain control (AGC) – 4x105, maximum ion 798 
+
+injection time – automatic). MS2 scans were collected in the Orbitrap following higher-799 
+
+energy collision dissociation (HCD; resolution – 50,000; AGC – 1.25x105; normalized 800 
+
+collision energy – 36; isolation window – 0.5 Th; maximum ion injection time – 86 ms. 801 
+
+802 
+
+Mass spectrometry data analysis 803 
+
+Database searching included all entries from the Saccharomyces cerevisiae UniProt 804 
+
+Database (downloaded in June 2023). The database was concatenated with one 805 
+
+composed of all protein sequences for that database in the reversed order (Elias & Gygi, 806 
+
+2007). Raw files were converted to mzXML, and monoisotopic peaks were re-assigned 807 
+
+using Monocle (Rad et al , 2021). Searches were performed with Comet (Eng et al , 2013) 808 
+
+using a 50-ppm precursor ion tolerance and fragment bin tolerance of 0.02. TMTpro labels 809 
+
+on lysine residues and peptide N-termini (+304.207 Da), as well as carbamidomethylation 810 
+
+of cysteine residues (+57.021 Da) were set as static modifications, while oxidation of 811 
+
+methionine residues (+15.995 Da) was set as a variable modification. Peptide-spectrum 812 
+
+matches (PSMs) were adjusted to a 1% false discovery rate (FDR) using a linear 813 
+
+discriminant, after which proteins were assembled further to a final protein-level FDR of 814 
+
+1% analysis (Huttlin et al , 2010). TMT reporter ion intensities were measured using a 815 
+
+0.003 Da window around the theoretical m/z for each reporter ion. Proteins were 816 
+
+quantified by summing reporter ion counts across all matching PSMs. More specifically, 817 
+
+reporter ion intensities were adjusted to correct for the isotopic impurities of the different 818 
+
+TMTpro reagents according to manufacturer specifications. Peptides were filtered to 819 
+
+exclude those with a summed signal-to-noise (SN) < 180 across all TMT channels and < 820 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+37 
+
+0.5 precursor isolation specificity. The signal-to-noise (S/N) measurements of peptides 821 
+
+assigned to each protein were summed (for a given protein). The mass spectrometry 822 
+
+proteomics data have been deposited to the ProteomeXchange Consortium via the 823 
+
+PRIDE (Perez-Riverol et al , 2025) partner repository with the dataset identifier 824 
+
+PXD078768. Table S5 provides a summary of peptide counts and signal-to-noise (S/N) 825 
+
+ratios across all identified proteins in all samples. 826 
+
+827 
+
+Data visualization of mitochondrial proteomics 828 
+
+The EV and HAP4OE datasets were included for downstream analysis. Raw proteomics 829 
+
+peak intensity data were analyzed using MetaboAnalyst. Initial data integrity checks 830 
+
+revealed no errors, and data filtering was performed using default settings. Statistical 831 
+
+preprocessing was conducted using the Statistical Analysis (one factor) module with no 832 
+
+sample normalization, square root transformation, and Pareto scaling. Normalization 833 
+
+quality was assessed by visual inspection of the resulting distribution plots, which 834 
+
+demonstrated an approximately Gaussian distribution. Differential protein abundance 835 
+
+between conditions was assessed using volcano plot analysis. Significance thresholds 836 
+
+were set at ≥1.5-fold change and an adjusted p-value (FDR) ≤ 0.01. The resulting table 837 
+
+of significantly altered proteins was exported from MetaboAnalyst and used for 838 
+
+downstream visualization in GraphPad Prism. GO category analysis of HAP4OE versus 839 
+
+EV mitochondrial proteomics data was performed using TMT Mosaic. Upregulated and 840 
+
+downregulated protein sets were defined using cutoffs of ≥1.5-fold change and FDR-841 
+
+adjusted p ≤ 0.01, yielding 279 upregulated and 446 downregulated proteins. GO analysis 842 
+
+of upregulated HAP4OE proteins was performed using the PANTHER Classification 843 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+38 
+
+System statistical overrepresentation test (Mi et al , 2019). Upregulated and 844 
+
+downregulated protein lists and GO-analysis outputs are provided in Table S6. 845 
+
+846 
+
+Quantification and statistical analysis 847 
+
+The number of replicates, definition of n, and statistical tests are indicated in figure 848 
+
+legends. Most experiments represent mean ± SEM from three biological replicates (n = 849 
+
+100 cells per replicate). Statistical analyses were performed using GraphPad Prism. All 850 
+
+other statistical analyses are provided in the individual method sections above. 851 
+
+852 
+
+Data availability 853 
+
+All reagents used in this study are available upon request. All other data reported in this 854 
+
+paper will be shared by the lead contact upon request. This paper does not report original 855 
+
+code. Any additional information required to reanalyze the data reported in this paper is 856 
+
+available from the lead contact upon request. 857 
+
+858 
+
+Acknowledgments 859 
+
+We thank members of the A.L. Hughes group for discussion and manuscript comments. 860 
+
+We thank members of the Matthew P. Miller laboratory for providing reagents and support 861 
+
+for the development of auxin-inducible degradation systems and CRISPR/Cas9 editing. 862 
+
+Research was supported by NIH grant F31GM153135 to B.J.P., NIH grants GM119694 863 
+
+and AG061376 to A.L.H., and a Utah Graduate Research Fellowship to S.S.B. 864 
+
+Metabolomics analysis was performed at the Metabolomics Core Facility at the University 865 
+
+of Utah. Mass spectrometry equipment was obtained through NCRR Shared 866 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+39 
+
+Instrumentation Grants 1S10OD016232-01, 1S10OD018210-01A1, and 867 
+
+1S10OD021505-01. We thank Quentin Pearce and James Cox for assistance with GC-868 
+
+MS instrument operation and metabolomics analysis. Proteomics analysis was conducted 869 
+
+at the Thermo Fisher Scientific Center for Multiplexed Proteomics at Harvard Medical 870 
+
+School. We thank Jonathan Van Vranken for performing the TMT-based proteomics 871 
+
+experiments and Paul Stewart for assistance with subsequent data analysis and 872 
+
+visualization. The content is solely the responsibility of the authors and does not 873 
+
+necessarily represent the official views of the National Institutes of Health. 874 
+
+875 
+
+Author Contributions 876 
+
+Conceptualization, B.J.P. and A.L.H.; methodology, B.J.P.; formal analysis, B.J.P.; 877 
+
+investigation, B.J.P. and S.S.B.; writing – original draft, B.J.P.; writing – review and 878 
+
+editing, B.J.P. and A.L.H.; visualization, B.J.P. S.S.B. and A.L.H.; supervision, A.L.H.; 879 
+
+funding acquisition, B.J.P., S.S.B., and A.L.H. 880 
+
+881 
+
+Declaration of Interest 882 
+
+The authors declare no competing financial interests. 883 
+
+884 
+
+Online Supplemental Material 885 
+
+Movie S1 shows a 1 h time-lapse of wild-type cells during glucose restriction in YPA. 886 
+
+Tom70–GFP is shown in green and Tim50–mCherry is shown in magenta. Table S2 lists 887 
+
+the oligonucleotide sequences used in this study. Table S3 lists the plasmids, reagents, 888 
+
+supplies, and software used in this study. Table S4 contains the raw metabolomics data 889 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+40 
+
+and MetaboAnalyst input files. Table S5 contains the TMT-based quantitative proteomics 890 
+
+dataset, including peptide counts and scaled signal-to-noise values for all identified 891 
+
+proteins across all samples. Table S6 contains the GO analysis of proteins upregulated 892 
+
+and downregulated in HAP4-overexpressing cells compared with empty-vector controls. 893 
+
+894 
+
+Main Figure Legends 895 
+
+896 
+
+Figure 1: Metabolic stresses that stimulate acute mitochondrial biogenesis 897 
+
+induce MDC formation 898 
+
+A. Time-course immunoblot of mitochondrial protein levels in wild-type yeast during 899 
+
+glucose restriction (0-6 h). Por1, Om45, Aco1, and Cit1 were detected with the indicated 900 
+
+antibodies; Vph1 and Ponceau staining serve as loading controls. 901 
+
+B. Super-resolution images of wild-type cells grown in glucose-replete (YPAD) or 902 
+
+glucose-restricted (YPA) media for 3 h. Cells express Tom70-GFP and Tim50-mCherry. 903 
+
+Line-scan intensity profiles are shown below and correspond to the yellow dashed lines. 904 
+
+The white arrow indicates an MDC. Scale bar, 2 μm. 905 
+
+C. Quantification of the percentage of cells containing MDCs following 3 h glucose 906 
+
+restriction. 907 
+
+D. Immunoblot analysis of GFP processing after 6 h of the indicated treatments in wild-908 
+
+type , pep4Δ , dnm1Δ , and atg5Δ strains expressing Tom70-GFP, or wild-type cells 909 
+
+expressing Tim50-GFP. Free GFP indicates proteolytic cleavage. Ponceau staining 910 
+
+serves as a loading control. 911 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+41 
+
+E. Quantification of MDC formation following a 3 h carbon-source shift. Cells were 912 
+
+grown overnight in glucose (YPAD) and shifted to media containing the indicated carbon 913 
+
+sources: glucose (Glc), no added carbon source (-), glycerol (Glyc), galactose (Gal), 914 
+
+sucrose (Suc), raffinose (Raf), or fructose (Fru). 915 
+
+F. Immunoblot analysis of mitochondrial protein levels following glucose restriction, 916 
+
+carbon-source switching, glycolytic inhibition, or salt stress (0.8 M NaCl or 1 M KCl). 917 
+
+Om45 and Por1 are shown; Vph1 and Ponceau staining serve as loading controls. 918 
+
+G. Quantification of MDC formation after 3 h of salt stress (0.8 M NaCl or 1 M KCl). 919 
+
+Quantification and statistics. For all MDC measurements, n = 3 independent 920 
+
+experiments with 100 cells scored per replicate; bars show mean ± SEM. 921 
+
+922 
+
+Figure 2: MDC formation during glucose restriction requires trace glucose but is 923 
+
+independent of amino-acid availability 924 
+
+A. Quantification of the percentage of cells containing MDCs following glucose withdrawal 925 
+
+in different media conditions. Cells were grown overnight in YPAD or synthetic (SD) media 926 
+
+and shifted to the indicated media with or without glucose for 2 h. 927 
+
+B. Super-resolution images of cells following glucose starvation (0% glucose, S) or 928 
+
+glucose restriction (0.02% glucose, S + 0.02% glucose) for 2 h in synthetic media. Cells 929 
+
+express Tom70-GFP and Tim50-mCherry. White arrows indicate MDCs. Scale bar, 5 μm. 930 
+
+C. Quantification of MDC formation following 2 h add-back treatments. Cells were grown 931 
+
+overnight in YPAD and shifted to the indicated conditions: YPAD (control), YPA (glucose 932 
+
+restriction), S (no glucose), S + casamino acids (CasAA), S + peptone, S + yeast extract, 933 
+
+or S + 0.02% glucose. 934 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+42 
+
+D. Quantification of MDC formation across a glucose gradient. Cells were grown overnight 935 
+
+in YPAD and shifted for 2 h to synthetic media containing the indicated glucose 936 
+
+concentrations; YPAD and YPA serve as controls. 937 
+
+E. Correlation analysis of metabolite log ₂-fold changes following 2 h treatments. Left: 938 
+
+glucose restriction (YPAD→YPA) versus glucose starvation (YPAD→S). Right: glucose 939 
+
+restriction (YPAD→YPA) versus glycerol shift (YPAD→YPAG). Red points represent TCA 940 
+
+cycle metabolites; blue, amino acid–related metabolites; dark blue, branched-chain 941 
+
+amino acid–related metabolites; and black, other metabolites. Correlation coefficients 942 
+
+(R 2) are indicated. 943 
+
+F. Analysis of central carbon metabolism metabolites following 2 h treatments (YPAD, 944 
+
+YPA, YPAG, S). Values are shown as linear fold change relative to YPAD. n = 4; error 945 
+
+bars represent mean ± SEM. 946 
+
+G. Analysis of methionine and polyamine pathway metabolites under the same conditions 947 
+
+as in (F). n = 4; error bars represent mean ± SEM. 948 
+
+Quantification and statistics. Microscopy-based assays were performed with n = 3 949 
+
+independent experiments and 100 cells scored per replicate; error bars represent mean 950 
+
+± SEM. Statistical analysis for (F) and (G) was performed using two-way ANOVA with 951 
+
+Holm–Šídák multiple-comparisons testing. False discovery rate (FDR) correction (q = 952 
+
+0.05) was applied. 953 
+
+954 
+
+Figure 3: Snf1 is required for glucose restriction- and salt stress-induced MDCs 955 
+
+A. Widefield images of wild-type and snf1Δ cells following 2 h glucose restriction. Cells 956 
+
+express Tom70-GFP and Tim50-mCherry. White arrows indicate MDCs. Scale bar, 5 μm. 957 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+43 
+
+B. Quantification of MDC formation in wild-type and snf1Δ cells following 3 h carbon-958 
+
+source shifts. Cells were grown overnight in glucose (YPAD) and shifted to media 959 
+
+containing glucose (Glc), no added carbon source (-), galactose (Gal), or glycerol (Glyc). 960 
+
+C. Schematic of glucose sensing and repression through the Snf1 pathway. 961 
+
+D. Quantification of MDC formation in wild-type and snf1Δ cells following 3 h salt stress 962 
+
+(0.8 M NaCl or 1 M KCl). Wild-type and snf1Δ cells were analyzed in parallel. Wild-type 963 
+
+data are reproduced from Figure 1G to facilitate direct comparison with the mutant. 964 
+
+E. Immunoblot analysis of Snf1-AID-FLAG degradation following auxin treatment. Control 965 
+
+(Snf1-AID-FLAG) and test (Snf1-AID-FLAG + His3-OsTIR1) strains were treated with 966 
+
+DMSO or auxin for the indicated times. FLAG was detected by immunoblot; Ponceau 967 
+
+staining serves as a loading control. 968 
+
+F. Quantification of MDC formation following auxin-mediated Snf1 depletion. Cells were 969 
+
+grown overnight in YPAD, pretreated with DMSO or auxin for 30 min, and subjected to 970 
+
+glucose restriction for 2 h. 971 
+
+G. Quantification of MDC formation in Snf1-AID strains following auxin-mediated Snf1 972 
+
+depletion. Cells were grown overnight in YPAD, pretreated with DMSO or auxin for 30 973 
+
+min, and subjected to salt stress for 3 h. 974 
+
+H. Quantification of MDC formation in wild-type and snf1Δ cells following 2 h rapamycin 975 
+
+treatment. 976 
+
+I. Quantification of MDC formation in Snf1-AID strains following auxin-mediated Snf1 977 
+
+depletion. Cells were grown overnight in YPAD, pretreated with DMSO or auxin for 30 978 
+
+min, and subjected to rapamycin treatment for 2 h. 979 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+44 
+
+Quantification and statistics. All MDC measurements (B, D, F-I) were performed with n = 980 
+
+3 independent experiments and 100 cells scored per replicate. Error bars represent mean 981 
+
+± SEM. Statistical significance was assessed using Welch’s two-tailed t-test. 982 
+
+983 
+
+Figure 4: Mig1 derepression is required downstream of Snf1 for MDC induction 984 
+
+A. Schematic of the glucose repression pathway in yeast. 985 
+
+B. Widefield images of wild-type, snf1Δ , mig1Δ , and snf1Δ mig1Δ cells following 2 h 986 
+
+glucose restriction. Cells express Tom70-GFP and Tim50-mCherry. White arrows indicate 987 
+
+MDCs. Scale bar, 5 μm. 988 
+
+C. Quantification of MDC formation in wild-type, snf1Δ , and snf1Δ mig1Δ cells following 989 
+
+2 h glucose restriction. 990 
+
+D. Quantification of MDC formation in wild-type, snf1Δ , and snf1Δ mig1Δ cells following 991 
+
+3 h salt stress (0.8 M NaCl or 1 M KCl). Wild-type and snf1Δ cells were analyzed in parallel 992 
+
+with snf1Δ mig1Δ cells. The wild-type and snf1Δ data are reproduced from Figures 1G 993 
+
+and 3D, respectively, to facilitate direct comparison. 994 
+
+E. Quantification of MDC formation in wild-type cells following glucose restriction or NaCl 995 
+
+stress in the presence or absence of thiolutin. Cells were treated for 2 h under glucose 996 
+
+restriction conditions or for 3 h under NaCl stress. 997 
+
+F. Quantification of MDC formation in snf1Δ MIG1-AID-FLAG cells with or without 998 
+
+integrated HIS3::GPD-OsTIR1. Cells were grown overnight in YPAD, pretreated with 999 
+
+DMSO or auxin for 30 min, and subjected to glucose restriction for 2 h. 1000 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+45 
+
+G. Quantification of MDC formation in mig1Δ SNF1-AID-FLAG cells with or without 1001 
+
+integrated HIS3::GPD-OsTIR1. Cells were grown overnight in YPAD, pretreated with 1002 
+
+DMSO or auxin for 30 min, and subjected to glucose restriction for 2 h. 1003 
+
+Quantification and statistics. All MDC measurements were performed with n = 31004 
+
+independent experiments and 100 cells scored per replicate. Error bars represent mean 1005 
+
+± SEM. Statistical significance was assessed using Welch’s two-tailed t-test. 1006 
+
+1007 
+
+Figure 5: Transient induction of mitochondrial-targeted protein expression is a 1008 
+
+common theme among MDC inducers and sufficient to stimulate MDC formation 1009 
+
+A. Immunoblot analysis of mitochondrial protein levels in wild-type, snf1Δ , mig1Δ , and 1010 
+
+snf1Δ mig1Δ cells following glucose restriction (3 h) or salt stress (0.8 M NaCl or 1 M KCl, 1011 
+
+4 h). Om45 and Por1 are shown; Vph1 and Ponceau staining serve as loading controls. 1012 
+
+B. Mitochondrial proteomics analysis of Hap4 overexpression (OE) versus empty vector 1013 
+
+(EV). Top: volcano plot showing differentially regulated proteins using cutoffs of ≥1.5-fold 1014 
+
+change and FDR-adjusted p ≤ 0.01. Bottom: Gene Ontology (GO) enrichment analysis of 1015 
+
+upregulated proteins. 1016 
+
+C. Schematic of the β-estradiol–inducible Hap4 expression system. 1017 
+
+D. Immunoblot analysis of Hap4 induction following β-estradiol treatment. Strains 1018 
+
+expressing GAL1-HAP4-FLAG or GAL1-HAP4-FLAG + GAL4-ERT2 were treated with 1019 
+
+DMSO or β-estradiol as indicated. FLAG, Cit1, Om45, Por1, and Aco1 were detected; 1020 
+
+Pgk1, Vph1, and Ponceau staining serve as loading controls. The asterisk indicates a 1021 
+
+nonspecific band. 1022 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+46 
+
+E. Quantification of MDC formation in Hap4 expression strains following 3.5 h β-estradiol 1023 
+
+treatment at the indicated concentrations. Cells were maintained in SD-URA 1024 
+
+supplemented with casamino acids. 1025 
+
+F. Quantification of MDC formation in Hap4 expression strains under glucose-replete and 1026 
+
+glucose-restricted conditions with β-estradiol treatment. Cells were grown overnight in 1027 
+
+SD-URA and shifted to SD-URA, S-URA + 0.02% glucose, YPAD, or YPA as indicated 1028 
+
+for 3.5 h. 1029 
+
+Quantification and statistics. All MDC measurements were performed with n = 31030 
+
+independent experiments and 100 cells scored per replicate. Error bars represent mean 1031 
+
+± SEM. Statistical significance was assessed using Welch’s two-tailed t-test. 1032 
+
+1033 
+
+Figure 6: MDC formation requires Tom70/Tom71-dependent mitochondrial protein 1034 
+
+targeting 1035 
+
+A. Quantification of MDC formation in wild-type, tom70Δ , and tom70Δ tom71Δ cells 1036 
+
+following 2 h glucose restriction. Cells express Tcd2-GFP and Tim50-mCherry. 1037 
+
+B. Quantification of MDC formation in wild-type and tom70Δ tom71Δ cells following 2 h 1038 
+
+glucose restriction or rapamycin treatment. Cells express Cox7-GFP and Tim50-mCherry. 1039 
+
+C. Quantification of the percentage of cells exhibiting ER-localized Oac1-GFP, as shown 1040 
+
+in (D), determined by colocalization with Sec61-mCherry. Cells were treated for 3 h in 1041 
+
+YPAD (control) or YPA (glucose restriction). 1042 
+
+D. Widefield images of Oac1-GFP localization in wild-type and tom70Δ tom71Δ cells 1043 
+
+following 3 h glucose restriction. Cells express Oac1-GFP and Sec61-mCherry. Line-scan 1044 
+
+intensity profiles corresponding to the yellow dashed lines are shown. Scale bar, 5 μm. 1045 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+47 
+
+E. Quantification of the percentage of cells exhibiting cytosolic Om45–GFP, as shown in 1046 
+
+(F), defined by diffuse cytosolic GFP signal. Cells were treated for 3 h in YPAD (control) 1047 
+
+or YPA (glucose restriction). 1048 
+
+F. Widefield images of Om45-GFP localization in wild-type and tom70Δ tom71Δ cells 1049 
+
+following 3 h glucose restriction. Cells express Om45–GFP with Tom70-mCherry or 1050 
+
+Tim50-mCherry. Line-scan intensity profiles corresponding to the yellow dashed lines are 1051 
+
+shown. Scale bar, 5 μm. 1052 
+
+G. Immunoblot analysis of mitochondrial protein levels in wild-type and tom70Δ tom71Δ 1053 
+
+cells following 3 h growth in YPAD or YPA. Om45 and Por1 are shown; Vph1 and Ponceau 1054 
+
+staining serve as loading controls. 1055 
+
+H. Proposed unified model for MDC formation. Snf1-dependent metabolic remodeling 1056 
+
+stresses, Snf1-independent nutrient/vacuolar stresses, and direct protein-load inputs 1057 
+
+converge on increased hydrophobic membrane-protein load at the OMM during acute 1058 
+
+mitochondrial remodeling. Tom70/Tom71-dependent targeting promotes engagement of 1059 
+
+these cargos with mitochondria, triggering MDC formation and cargo sequestration when 1060 
+
+protein load exceeds the adaptive capacity of the organelle. MDC cargos are 1061 
+
+subsequently delivered to the vacuole for degradation. 1062 
+
+Quantification and statistics. All microscopy-based assays were performed with n = 3 1063 
+
+independent experiments and 100 cells scored per replicate. Error bars represent mean 1064 
+
+± SEM. Statistical significance was assessed using Welch’s two-tailed t-test. 1065 
+
+1066 
+
+1067 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+48 
+
+Supplemental Figure Legends 1068 
+
+1069 
+
+Figure S1: Characterization of MDCs induced by mitochondrial biogenesis– 1070 
+
+activating conditions (related to Figure 1) 1071 
+
+A. Immunoblot time course of mitochondrial protein levels in wild-type cells grown in 1072 
+
+glucose-replete conditions (YPAD) over 0-6 h. Por1, Om45, Aco1, and Cit1 are shown; 1073 
+
+Vph1 and Ponceau staining serve as loading controls. 1074 
+
+B. Quantification of MDC diameter under different induction conditions. Wild-type diploid 1075 
+
+cells were treated with glucose restriction (YPA), rapamycin (RAP), or concanamycin A 1076 
+
+(ConcA). 1077 
+
+C. Widefield images of MDC cargo colocalization following 2 h glucose restriction. Cells 1078 
+
+express Tom70–mCherry to label MDCs and the indicated GFP-tagged proteins (Tim50, 1079 
+
+Tcd2, Mcp1, Cox7, Oac1, or Dic1). White arrows indicate MDCs. Scale bar, 5 μm. 1080 
+
+D. Quantification of MDC cargo colocalization, as shown in (C). Colocalization was scored 1081 
+
+when MDCs overlapped with the indicated GFP signal. 1082 
+
+E. Immunoblot analysis of GFP processing for MDC cargo proteins following glucose 1083 
+
+restriction for the indicated times. Strains expressing Mir1-GFP, Tcd2-GFP, or Dic1-GFP 1084 
+
+were analyzed. Free GFP indicates proteolytic cleavage; GFP was detected by 1085 
+
+immunoblot, and Vph1 and Ponceau staining serve as loading controls. 1086 
+
+F. Quantification of MDC formation following 2 h treatment with 2-deoxy-D-glucose (2-1087 
+
+DG) at the indicated concentrations. 1088 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+49 
+
+Quantification and statistics. For MDC frequency measurements, n = 3 independent 1089 
+
+experiments with 100 cells scored per replicate; for diameter measurements (B), n = 100 1090 
+
+MDCs per condition. Error bars represent mean ± SEM. 1091 
+
+1092 
+
+Figure S2: Further characterization of the trace-glucose requirement and amino 1093 
+
+acid independence of MDC formation (related to Figure 2) 1094 
+
+A. Quantification of MDC formation following 3 h carbon-source shifts in synthetic media. 1095 
+
+Cells were grown overnight in synthetic media with 2% glucose and shifted to media 1096 
+
+containing glucose (Glc), no added carbon source (-), glycerol (Glyc), galactose (Gal), 1097 
+
+sucrose (Suc), raffinose (Raf), or fructose (Fru). 1098 
+
+B. Quantification of the percentage of cells exhibiting fragmented mitochondria (see 2B 1099 
+
+and 2D). 1100 
+
+C. Quantification of MDC formation following 2 h cycloheximide (CHX) treatment under 1101 
+
+varying glucose and amino acid conditions. Cells were grown overnight in synthetic media 1102 
+
+and shifted to the indicated conditions. 1103 
+
+D. Quantification of mitochondrial fragmentation in wild-type and dnm1Δ cells under 1104 
+
+different media conditions. Cells were grown overnight in YPAD and shifted for 2 h to 1105 
+
+YPAD, synthetic media with 0.02% glucose (S + 0.02% glucose), synthetic media without 1106 
+
+carbon (S), or synthetic media with glycerol (S + glycerol). 1107 
+
+E. Quantification of MDC formation in wild-type and dnm1Δ cells under the conditions 1108 
+
+described in (D). 1109 
+
+F. Analysis of whole-cell amino acid metabolites following 2 h treatments (YPAD, YPA, 1110 
+
+YPAG, S), shown as linear fold change relative to YPAD. 1111 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+50 
+
+G. Quantification of MDC formation under trace-glucose conditions with or without amino 1112 
+
+acid supplementation. Prototrophic cells were grown overnight in YPAD, synthetic (SD), 1113 
+
+or minimal media and shifted for 2 h to the indicated conditions, including glucose 1114 
+
+restriction (0.02% glucose) and casamino acid supplementation. 1115 
+
+H. Quantification of MDC formation under trace-glucose conditions in minimal or nitrogen-1116 
+
+starvation media. Cells were grown overnight in minimal media with 2% glucose and 1117 
+
+shifted for 2 h to the indicated conditions. 1118 
+
+Quantification and statistics. Microscopy-based assays (A–E, G–H) were performed with 1119 
+
+n = 3 independent experiments and 100 cells scored per replicate. Error bars represent 1120 
+
+mean ± SEM. Statistical analysis for (F) was performed using two-way ANOVA with Holm– 1121 
+
+Šídák multiple-comparisons testing; false discovery rate (FDR) correction (q = 0.05) was 1122 
+
+applied. 1123 
+
+1124 
+
+Figure S3: Snf1 is specifically and acutely required for MDC formation induced by 1125 
+
+mitochondrial biogenesis–activating conditions (related to Figure 3) 1126 
+
+A. Quantification of MDC formation in PKA-pathway mutants following 2 h glucose 1127 
+
+restriction. 1128 
+
+B. Quantification of MDC formation in Snf1-associated mutants following 2 h glucose 1129 
+
+restriction. 1130 
+
+C. Immunoblot analysis of Snf1-AID-FLAG strains and controls following auxin treatment. 1131 
+
+Haploid parent strains, an untagged OsTIR1 control, and diploid Snf1-AID-FLAG strains 1132 
+
+were treated with DMSO or auxin for the indicated times. FLAG was detected by 1133 
+
+immunoblot; Ponceau staining serves as a loading control. 1134 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+51 
+
+D. Quantification of MDC formation in Snf1-AID strains following auxin-induced 1135 
+
+degradation and 2 h carbon-source switching to galactose. Cells were pretreated with 1136 
+
+DMSO or auxin for 30 min before the media shift. 1137 
+
+E. Quantification of MDC formation in Snf1-AID strains following auxin treatment and 2 h 1138 
+
+under trace-glucose conditions. Cells were pretreated with DMSO or auxin for 30 min 1139 
+
+before the media shift. 1140 
+
+F. Quantification of MDC formation in Snf1-AID strains following auxin treatment and 2 h 1141 
+
+exposure to 2-deoxy-D-glucose (2-DG). Cells were pretreated with DMSO or auxin for 30 1142 
+
+min before 2-DG treatment. 1143 
+
+G. Quantification of MDC formation in Snf1-AID strains following auxin treatment and 2 h 1144 
+
+concanamycin A (ConcA) exposure. Cells were pretreated with DMSO or auxin for 30 min 1145 
+
+before ConcA treatment. 1146 
+
+H. Quantification of MDC formation following auxin pretreatment and glucose restriction. 1147 
+
+Control (Snf1-AID-FLAG + EV) and test (Snf1-AID-FLAG + His3-OsTIR1 + SCM4 OE) 1148 
+
+strains were grown overnight in YPAD, pretreated with DMSO or auxin for 30 min, and 1149 
+
+subjected to 2 h glucose restriction. 1150 
+
+I. Quantification of MDC formation in EV control, SCM4 OE, snf1Δ , and snf1Δ + SCM4 1151 
+
+OE strains following 2 h glucose restriction. 1152 
+
+Quantification and statistics. All MDC measurements were performed with n = 31153 
+
+independent experiments and 100 cells scored per replicate. Error bars represent mean 1154 
+
+± SEM. Statistical significance was assessed using Welch’s two-tailed t-test. 1155 
+
+1156 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+52 
+
+Figure S4: Analysis of Snf1-dependent pathways involved in MDC induction 1157 
+
+(related to Figure 4) 1158 
+
+A. Quantification of MDC formation in mutants affecting Snf1-regulated and mitochondrial 1159 
+
+remodeling pathways following 2 h glucose restriction. 1160 
+
+B. Quantification of MDC formation following auxin pretreatment and glucose restriction. 1161 
+
+Control (Acc1-AID–FLAG) and test (Acc1-AID–FLAG + His3-OsTIR1) strains were grown 1162 
+
+overnight in YPAD, pretreated with DMSO or auxin for 30 min, and subjected to 2 h 1163 
+
+glucose restriction. 1164 
+
+C. Quantification of MDC formation in Acc1-AID strains following auxin treatment and 2 h 1165 
+
+rapamycin exposure. Cells were pretreated with DMSO or auxin for 30 min before 1166 
+
+rapamycin treatment. 1167 
+
+D. Quantification of MDC formation under combined treatments with DMSO, rapamycin 1168 
+
+(RAP), concanamycin A (ConcA), YPAD (control), or YPA (glucose restriction), with or 1169 
+
+without cerulenin pretreatment. Cells were pretreated with DMSO or cerulenin for 30 min 1170 
+
+followed by 2 h treatment. 1171 
+
+E. Immunoblot analysis of AID strains used in Figure 4F and G and Figure S4B-C 1172 
+
+following auxin-induced degradation. FLAG was detected by immunoblot; Ponceau 1173 
+
+staining serves as a loading control. The asterisk indicates a nonspecific band. 1174 
+
+F. Quantification of MDC formation in CRISPR-generated Mig1 phospho-null mutants 1175 
+
+following 2 h glucose restriction. Haploid mutants were mated with mig1Δ strains prior to 1176 
+
+analysis. 1177 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+53 
+
+G. Immunoblot analysis of mitochondrial protein levels in wild-type cells following glucose 1178 
+
+restriction or NaCl stress in the presence of DMSO or thiolutin. Om45 and Por1 are 1179 
+
+shown; Vph1 and Ponceau staining serve as loading controls. 1180 
+
+Quantification and statistics. All MDC measurements were performed with n = 31181 
+
+independent experiments and 100 cells scored per replicate. Error bars represent mean 1182 
+
+± SEM. Statistical significance was assessed using Welch’s two-tailed t-test. 1183 
+
+1184 
+
+Figure S5: Mitochondrial protein expression and MDC regulation during distinct 1185 
+
+induction conditions (related to Figure 5) 1186 
+
+A. Immunoblot analysis of mitochondrial protein levels in wild-type cells following 6 h 1187 
+
+treatment with rapamycin, ConcA, CHX, YPA, or S. Om45 and Por1 are shown; Vph1 and 1188 
+
+Ponceau staining serve as loading controls. 1189 
+
+B. Immunoblot analysis of mitochondrial protein levels in Snf1-AID–FLAG strains 1190 
+
+following glucose restriction or rapamycin treatment with or without auxin-induced 1191 
+
+degradation. Om45 and Por1 are shown; Vph1 and Ponceau staining serve as loading 1192 
+
+controls. 1193 
+
+C. Quantification of MDC formation in Hap4 expression strains following rapamycin 1194 
+
+treatment. Cells were grown overnight in SD-URA with or without β-estradiol to induce 1195 
+
+sustained Hap4-FLAG expression and then treated with rapamycin for 2 h. 1196 
+
+Quantification and statistics. MDC measurements in (C) were performed with n = 3 1197 
+
+independent experiments and 100 cells scored per replicate. Error bars represent mean 1198 
+
+± SEM. Statistical significance was assessed using Welch’s two-tailed t-test. 1199 
+
+1200 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+54 
+
+References 1201 
+
+Adachi A, Koizumi M & Ohsumi Y (2017) Autophagy induction under carbon starvation 1202 conditions is negatively regulated by carbon catabolite repression. Journal of Biological 1203 Chemistry 292: 19905–19918 1204 Ashe MP, De Long SK & Sachs AB (2000) Glucose Depletion Rapidly Inhibits Translation 1205 Initiation in Yeast. MBoC 11: 833–848 1206 Baker Brachmann C, Davies A, Cost GJ, Caputo E, Li J, Hieter P & Boeke JD (1998) Designer 1207 deletion strains derived from Saccharomyces cerevisiae S288C: A useful set of strains and 1208 plasmids for PCR-mediated gene disruption and other applications. Yeast 14: 115–132 1209 Balasubramaniam SS, Curtis AE, Friedman JR & Hughes AL (2026) Proteolytic remodeling by 1210 Yme1 enables mitochondrial-derived compartment formation. doi:10.64898/2026.04.03.716366 1211 [PREPRINT] 1212 Boos F, Krämer L, Groh C, Jung F, Haberkant P, Stein F, Wollweber F, Gackstatter A, Zöller E, 1213 Van Der Laan M, et al (2019) Mitochondrial protein-induced stress triggers a global adaptive 1214 transcriptional programme. Nat Cell Biol 21: 442–451 1215 Canelas AB, Ten Pierick A, Ras C, Seifar RM, Van Dam JC, Van Gulik WM & Heijnen JJ 1216 (2009) Quantitative Evaluation of Intracellular Metabolite Extraction Techniques for Yeast 1217 Metabolomics. Anal Chem 81: 7379–7389 1218 Coccetti P, Nicastro R & Tripodi F (2018) Conventional and emerging roles of the energy sensor 1219 Snf1/AMPK in Saccharomyces cerevisiae . Microb Cell 5: 482–494. 1220 Costa EA, Subramanian K, Nunnari J & Weissman JS (2018) Defining the physiological role of 1221 SRP in protein-targeting efficiency and specificity. Science 359: 689–692 1222 DiCarlo JE, Norville JE, Mali P, Rios X, Aach J & Church GM (2013) Genome engineering in 1223 Saccharomyces cerevisiae using CRISPR-Cas systems. Nucleic Acids Research 41: 4336–4343 1224 Elias JE & Gygi SP (2007) Target-decoy search strategy for increased confidence in large-scale 1225 protein identifications by mass spectrometry. Nat Methods 4: 207–214 1226 Eng JK, Jahan TA & Hoopmann MR (2013) Comet: An open‐source MS / MS sequence 1227 database search tool. Proteomics 13: 22–24 1228 English AM, Schuler M-H, Xiao T, Kornmann B, Shaw JM & Hughes AL (2020) ER– 1229 mitochondria contacts promote mitochondrial-derived compartment biogenesis. J Cell Biol 219: 1230 e202002144. 1231 Fees CP, Estrem C & Moore JK (2017) High-resolution Imaging and Analysis of Individual 1232 Astral Microtubule Dynamics in Budding Yeast. JoVE: 55610 1233 Friedman JR & Nunnari J (2014) Mitochondrial form and function. Nature 505: 335–343 1234 Gebert N, Ryan MT, Pfanner N, Wiedemann N & Stojanovski D (2011) Mitochondrial protein 1235 import machineries and lipids: A functional connection. Biochimica et Biophysica Acta (BBA) -1236 Biomembranes 1808: 1002–1011 1237 Gibson DG, Young L, Chuang R-Y, Venter JC, Hutchison CA & Smith HO (2009) Enzymatic 1238 assembly of DNA molecules up to several hundred kilobases. Nat Methods 6: 343–345 1239 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+55 Gutin J, Sadeh A, Rahat A, Aharoni A & Friedman N (2015) Condition‐specific genetic 1240 interaction maps reveal crosstalk between the CAMP PKA and the HOG MAPK pathways in the 1241 activation of the general stress response. Molecular Systems Biology 11: 829 1242 Hughes AL & Gottschling DE (2012) An early age increase in vacuolar pH limits mitochondrial 1243 function and lifespan in yeast. Nature 492: 261–265 1244 Hughes AL, Hughes CE, Henderson KA, Yazvenko N & Gottschling DE (2016) Selective 1245 sorting and destruction of mitochondrial membrane proteins in aged yeast. eLife 5: e13943 1246 Hughes CS, Moggridge S, Müller T, Sorensen PH, Morin GB & Krijgsveld J (2019) Single-pot, 1247 solid-phase-enhanced sample preparation for proteomics experiments. Nat Protoc 14: 68–85 1248 Huttlin EL, Jedrychowski MP, Elias JE, Goswami T, Rad R, Beausoleil SA, Villén J, Haas W, 1249 Sowa ME & Gygi SP (2010) A Tissue-Specific Atlas of Mouse Protein Phosphorylation and 1250 Expression. Cell 143: 1174–1189 1251 Kayikci Ö & Nielsen J (2015) Glucose repression in Saccharomyces cerevisiae. FEMS Yeast 1252 Research 15: fov068 1253 Kim J, Goldstein M, Zecchel L, Ghorayeb R, Maxwell CA & Weidberg H (2024) ATAD1 1254 prevents clogging of TOM and damage caused by un-imported mitochondrial proteins. Cell 1255 Reports 43: 114473 1256 Kunkel J, Luo X & Capaldi AP (2019) Integrated TORC1 and PKA signaling control the 1257 temporal activation of glucose-induced gene expression in yeast. Nat Commun 10: 3558 1258 Lackner LL (2014) Shaping the dynamic mitochondrial network. BMC Biol 12: 35 1259 Lascaris R, Bussemaker HJ, Boorsma A, Piper M, van der Spek H, Grivell L & Blom J (2004) 1260 Overexpression of HAP4 in glucose-derepressed yeast cells reveals respiratory control of 1261 glucose-regulated genes. Microbiology 150: 929–934. 1262 Li J, Cai Z, Bomgarden RD, Pike I, Kuhn K, Rogers JC, Roberts TM, Gygi SP & Paulo JA 1263 (2021) TMTpro-18plex: The Expanded and Complete Set of TMTpro Reagents for Sample 1264 Multiplexing. J Proteome Res 20: 2964–2972 1265 Martinez-Ortiz C, Carrillo-Garmendia A, Correa-Romero BF, Canizal-García M, González-1266 Hernández JC, Regalado-Gonzalez C, Olivares-Marin IK & Madrigal-Perez LA (2019) SNF1 1267 controls the glycolytic flux and mitochondrial respiration. Yeast 36: 487–494 1268 Mi H, Muruganujan A, Ebert D, Huang X & Thomas PD (2019) PANTHER version 14: more 1269 genomes, a new PANTHER GO-slim and improvements in enrichment analysis tools. Nucleic 1270 
+
+Acids Res 47: D419–D426 1271 Mołoń M, Kielar P, Kobylińska Z, Mołoń A, Winiarski J, Kula-Maximenko M & Galiniak S 1272 (2026) Thiolutin extends replicative lifespan by rewiring yeast transcription and metabolism. Sci 1273 Rep 16: 11498 1274 Navarrete-Perea J, Yu Q, Gygi SP & Paulo JA (2018) Streamlined Tandem Mass Tag (SL-TMT) 1275 Protocol: An Efficient Strategy for Quantitative (Phospho)proteome Profiling Using Tandem 1276 Mass Tag-Synchronous Precursor Selection-MS3. J Proteome Res 17: 2226–2236 1277 Nehlin JO, Carlberg M & Ronne H (1991) Control of yeast GAL genes by MIG1 repressor: a 1278 transcriptional cascade in the glucose response. The EMBO Journal 10: 3373–3377 1279 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+56 Nunnari J & Suomalainen A (2012) Mitochondria: In Sickness and in Health. Cell 148: 1145– 1280 1159 1281 Palikaras K, Lionaki E & Tavernarakis N (2015) Balancing mitochondrial biogenesis and 1282 mitophagy to maintain energy metabolism homeostasis. Cell Death Differ 22: 1399–1401 1283 Pang Z, Chong J, Zhou G, de Lima Morais DA, Chang L, Barrette M, Gauthier C, Jacques P-E, 1284 Li S & Xia J (2021) MetaboAnalyst 5.0: narrowing the gap between raw spectra and functional 1285 insights. Nucleic Acids Res 49: W388–W396 1286 Pastor MM, Proft M & Pascual-Ahuir A (2009) Mitochondrial Function Is an Inducible 1287 Determinant of Osmotic Stress Adaptation in Yeast. Journal of Biological Chemistry 284: 1288 30307–30317 1289 Pelechano V & Pérez‐Ortín JE (2008) The transcriptional inhibitor thiolutin blocks mRNA 1290 degradation in yeast. Yeast 25: 85–92 1291 Perez-Riverol Y, Bandla C, Kundu DJ, Kamatchinathan S, Bai J, Hewapathirana S, John NS, 1292 Prakash A, Walzer M, Wang S, et al (2025) The PRIDE database at 20 years: 2025 update. 1293 Nucleic Acids Research 53: D543–D553 1294 Pfanner N, Warscheid B & Wiedemann N (2019) Mitochondrial proteins: from biogenesis to 1295 functional networks. Nat Rev Mol Cell Biol 20: 267–284 1296 Phanindhar K & Mishra RK (2023) Auxin-inducible degron system: an efficient protein 1297 degradation tool to study protein function. BioTechniques 74: 186–198 1298 Piantadosi CA & Suliman HB (2012) Transcriptional control of mitochondrial biogenesis and its 1299 interface with inflammatory processes. Biochimica et Biophysica Acta (BBA) - General Subjects 1300 1820: 532–541 1301 Pickles S, Vigié P & Youle RJ (2018) Mitophagy and Quality Control Mechanisms in 1302 Mitochondrial Maintenance. Current Biology 28: R170–R185 1303 Platt A & Reece RJ (1998) The yeast galactose genetic switch is mediated by the formation of a 1304 Gal4p–Gal80p–Gal3p complex. EMBO J 17: 4086–4091 1305 Poillet-Perez L & White E (2021) MDVs to the rescue: How autophagy-deficient cancer cells 1306 adapt to defective mitophagy. Developmental Cell 56: 2010–2012 1307 Posas F, Chambers JR, Heyman JA, Hoeffler JP, De Nadal E & Ariño J (2000) The 1308 Transcriptional Response of Yeast to Saline Stress. Journal of Biological Chemistry 275: 17249– 1309 17255 1310 Rad R, Li J, Mintseris J, O’Connell J, Gygi SP & Schweppe DK (2021) Improved Monoisotopic 1311 Mass Estimation for Deeper Proteome Coverage. J Proteome Res 20: 591–598 1312 Raghuram N & Hughes A (2024) Amino acids trigger MDC-dependent mitochondrial 1313 remodeling by altering mitochondrial function. doi:10.1101/2024.07.09.602707 [PREPRINT] 1314 Ryan OW, Skerker JM, Maurer MJ, Li X, Tsai JC, Poddar S, Lee ME, DeLoache W, Dueber JE, 1315 Arkin AP, et al (2014) Selection of chromosomal DNA libraries using a multiplex CRISPR 1316 system. eLife 3: e03703 1317 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+57 Schindelin J, Arganda-Carreras I, Frise E, Kaynig V, Longair M, Pietzsch T, Preibisch S, 1318 Rueden C, Saalfeld S, Schmid B, et al (2012) Fiji: an open-source platform for biological-image 1319 analysis. Nat Methods 9: 676–682. 1320 Schuler M-H, English AM, Xiao T, Campbell TJ, Shaw JM & Hughes AL (2021) Mitochondrial-1321 derived compartments facilitate cellular adaptation to amino acid stress. Molecular Cell 81: 1322 3786-3802.e13 1323 Schweppe DK, Prasad S, Belford MW, Navarrete-Perea J, Bailey DJ, Huguet R, Jedrychowski 1324 MP, Rad R, McAlister GC, Abbatiello SE, et al (2019) Characterization and optimization of 1325 multiplexed quantitative analyses using high-field asymmetric-waveform ion mobility mass 1326 spectrometry. Anal Chem 91: 4010–4016. 1327 Shakya VP, Barbeau WA, Xiao T, Knutson CS, Schuler MH & Hughes AL (2021) A nuclear-1328 based quality control pathway for non-imported mitochondrial proteins. eLife 10: e61230 1329 Sheff MA & Thorn KS (2004) Optimized cassettes for fluorescent protein tagging in 1330 Saccharomyces cerevisiae. Yeast 21: 661–670 1331 Sikorski RS & Hieter P (1989) A system of shuttle vectors and yeast host strains designed for 1332 efficient manipulation of DNA in Saccharomyces cerevisiae. Genetics 122: 19–27 1333 Treitel MA, Kuchin S & Carlson M (1998) Snf1 Protein Kinase Regulates Phosphorylation of 1334 the Mig1 Repressor in Saccharomyces cerevisiae. Molecular and Cellular Biology 18: 6273– 1335 6280 1336 Usaite R, Jewett MC, Oliveira AP, Yates JR, Olsson L & Nielsen J (2009) Reconstruction of the 1337 yeast Snf1 kinase regulatory network reveals its role as a global energy regulator. Molecular 1338 Systems Biology 5: 319 1339 Wai T (2024) Is mitochondrial morphology important for cellular physiology? Trends in 1340 Endocrinology & Metabolism 35: 854–871 1341 Wang Y, Ruan L, Zhu J, Zhang X, Chang AC-C, Tomaszewski A & Li R (2024) Metabolic 1342 regulation of misfolded protein import into mitochondria. eLife 12: RP87518 1343 Weber CA, Sekar K, Tang JH, Warmer P, Sauer U & Weis K (2020) β-Oxidation and autophagy 1344 are critical energy providers during acute glucose depletion in Saccharomyces cerevisiae. Proc 1345 Natl Acad Sci USA 117: 12239–12248 1346 Wei J, Zhang Y, Yu T-Y, Sadre-Bazzaz K, Rudolph MJ, Amodeo GA, Symington LS, Walz T & 1347 Tong L (2016) A unified molecular mechanism for the regulation of acetyl-CoA carboxylase by 1348 phosphorylation. Cell Discov 2: 16044 1349 Weidberg H & Amon A (2018) MitoCPR-A surveillance pathway that protects mitochondria in 1350 response to protein import stress. Science 360: eaan4146 1351 Westermann B (2012) Bioenergetic role of mitochondrial fusion and fission. Biochimica et 1352 Biophysica Acta (BBA) - Bioenergetics 1817: 1833–1838 1353 Wiedemann N & Pfanner N (2017) Mitochondrial Machineries for Protein Import and Assembly. 1354 Annu Rev Biochem 86: 685–714 1355 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+58 Wilson ZN, Balasubramaniam SS, Wong S, Schuler M-H, Wopat MJ & Hughes AL (2024a) 1356 Mitochondrial-derived compartments remove surplus proteins from the outer mitochondrial 1357 membrane. Journal of Cell Biology 223: e202307036 1358 Wilson ZN, West M, English AM, Odorizzi G & Hughes AL (2024b) Mitochondrial-derived 1359 compartments are multilamellar domains that encase membrane cargo and cytosol. Journal of 1360 Cell Biology 223: e202307035 1361 Wong S, Bertram KR, Balasubramaniam SS, Raghuram N, Knight T, Maschek JA, Cox JE & 1362 Hughes AL (2025) Alterations in lipid saturation trigger remodeling of the outer mitochondrial 1363 membrane. MBoC 36: ar129 1364 Xiao T, English AM, Wilson ZN, Maschek JA, Cox JE & Hughes AL (2024) The phospholipids 1365 cardiolipin and phosphatidylethanolamine differentially regulate MDC biogenesis. Journal of 1366 Cell Biology 223: e202302069 1367 Xiao T, Shakya VP & Hughes AL (2021) ER targeting of non-imported mitochondrial carrier 1368 proteins is dependent on the GET pathway. Life Sci Alliance 4: e202000918 1369 Yao W, Li Y, Wu L, Wu C, Zhang Y, Liu J, He Z, Wu X, Lu C, Wang L, et al (2020) Atg11 is 1370 required for initiation of glucose starvation-induced autophagy. Autophagy 16: 2206–2218 1371 Youle RJ & Van Der Bliek AM (2012) Mitochondrial Fission, Fusion, and Stress. Science 337: 1372 1062–1065 1373 Zahm JA, Stewart MG, Carrier JS, Harrison SC & Miller MP (2021) Structural basis of Stu2 1374 recruitment to yeast kinetochores. eLife 10: e65389 1375 
+
+1376 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
+
+Vph1 Por1 Om45 Ponceau Ponceau Glucose Restriction (Yeast Extract + Peptone) Time 0H 0.5H 1H 1.5H 2H 3H 4H 5H 6H Cit1 Aco1 Ponceau 
+
+A B0 2 4 6050 100 150 200 250 
+
+Distance ( μm) Intensity (AU)  +Glucose 0 2 4050 100 150 200 250 
+
+Distance ( μm) Intensity (AU)  -Glucose 
+
++Glucose Tom70-GFP Tim50-mCh Merge 
+
+-Glucose Tom70-GFP Tim50-mCh Merge 
+
+CEGFP Free GFP Ponceau 0H DMSO RAP YPAD YPA 6H Wild Type dnm1 Δ atg5 Δ
+
+Tom70-GFP Tim50-GFP 0H DMSO RAP YPAD YPA 6H 
+
+pep4 Δ
+
+0H DMSO RAP YPAD YPA 6H 0H DMSO RAP YPAD YPA 6H 0H DMSO RAP YPAD YPA 6H Wild Type D2% -020 40 60 80 100 Percent of Cells W/ MDCs Glucose Yeast Extract + Peptone EGlc - Glyc Gal Suc Raf Fru 020 40 60 80 100 Percent of Cells W/ MDCs Yeast Extract + Peptone Glc F- NaCl KCl 020 40 60 80 100 Percent of Cells W/ MDCs salts Yeast Extract + peptone + 2% glucose G0H NaCl KCl Wild Type Vph1 Por1 Om45 Ponceau 0H YPAD YPA Gal 2-DG 4H 4H 
+
+Figure 1 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint A2% - 2% -020 40 60 80 100 Percent of Cells W/ MDCs Synthetic Glucose Yeast Extract + Peptone BC2% - 2% 1% 0.5% 0.2% 0.02% 0.002%0.0002% -020 40 60 80 100 Percent of Cells W/ MDCs Yeast Extract + Peptone Synthetic Glucose DE2% - - - - - .02% 020 40 60 80 100 Percent of Cells W/ MDCs Glucose Add Backs Yeast Extract + Peptone Synthetic Complete AA Mixture - - - CasAA Pep. Yeast Ex. -FG
+
+Tom70-GFP Tim50-mCh Merge Tom70-GFP Tim50-mCh Merge 0% Glucose 0.02% Glucose Synthetic Media F-6 -4 -2 0 2 4 6-6 -4 -2 0246YPAD YPA log 2FC YPAD  S Log 2FC 
+
+R2=0.09512 R2=0.1733 R2=0.3299 
+
+-6 -4 -2 0 2 4 6-6 -4 -2 0246YPAD YPA log 2FC YPAD  YPAG Log 2FC 
+
+R2=0.35 R2=0.8875 R2=0.8861 
+
+TCA Amino Acids BCAA Other Metabolites          
+
+> D-Glucose D-Fructose 3-Phosphoglyceric acid Phosphoenolpyruvate Pyruvate L-Lactic acid Citric acid cis-Aconitic acid Isocitric acid Succinic acid Fumaric acid D-Malic acid 0246Fold Change vs YPAD control  YPAD
+> YPA
+> YPAG
+> S
+> **** **** *** ** **** ***
+> L-Tyrosine L-Threonine Ornithine L-Methionine Putrescine Spermidine Urea 012345Fold Change vs YPAD control YPAD
+> YPA
+> YPAG
+> S
+> **** **** *** ** **** **** ** *
+
+Figure 2 
+
+Corrolation of YPA vs S treatments Corrolation of YPA vs YPAG treatments 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint AGlc - Gal Glyc Glc - Gal Glyc 020 40 60 80 100 Percent of Cells W/ MDCs WT snf1 
+
+Glc Yeast Extract + Peptone BC D- NaCl KCl - NaCl KCl 020 40 60 80 100 Percent of Cells W/ MDCs Wild Type snf1 
+
+salts *** E+ + - - + + - -020 40 60 80 100 Percent of Cells W/ MDCs Glucose Yeast Extract + Peptone Auxin ns **** - + - +Snf1-AID Snf1-AID + OSTIR - + - +FSnf1-AID-FLAG +OSTIR Snf1-AID-FLAG DMSO 0H .5H 1H Auxin 0H .5H 1H DMSO 0H .5H 1H Auxin 0H .5H 1H FLAG Ponceau 
+
+G H
+
+Tom70-GFP Tim50-mCh Merge DIC Tom70-GFP Tim50-mCh Merge DIC Wild Type snf1 
+
+Glucose Restriction (Yeast Extract + Peptone) - - + + - - + +020 40 60 80 100 Percent of Cells W/ MDCs RAP Auxin Yeast Extract + Peptone +2% Glucose - + - +Snf1-AID Snf1-AID + OSTIR - + - +- - + + - - + +020 40 60 80 100 Percent of Cells W/ MDCs NaCl Auxin Yeast Extract + Peptone +2% Glucose - + - +Snf1-AID Snf1-AID + OSTIR - + - +*Figure 3 
+
+- + - +020 40 60 80 100 Percent of Cells W/ MDCs Rapamycin Yeast Extract + Peptone + 2% Glucose WT snf1 
+
+I
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint A BC+ - + - + - + -020 40 60 80 100 Percent of Cells W/ MDCs Wild Type mig1 snf1 
+
+Glucose 
+
+snf1 mig1 
+
+*** ns D- NaCl KCl - NaCl KCl - NaCl KCl 020 40 60 80 100 Percent of Cells W/ MDCs Wild Type snf1 
+
+salts 
+
+snf1 mig1 
+
+*** ** *E
+
++ - + - + + +020 40 60 80 100 Percent of Cells W/ MDCs Glucose Yeast Extract + Peptone Thiolutin - - + + - - +NaCl - - +- +- -** *** F+ + - - + + - -020 40 60 80 100 Percent of Cells W/ MDCs ** Glucose Auxin Mig1-AID Mig1-AID + OSTIR 
+
+snf1 
+
+Yeast Extract + Peptone - + - + - + - +G
+
+Tom70-GFP Tim50-mCh Merge DIC Tom70-GFP Tim50-mCh Merge DIC Wild Type snf1 
+
+Glucose Restriction (Yeast Extract + Peptone) Tom70-GFP Tim50-mCh Merge DIC 
+
+> mig1
+
+Tom70-GFP Tim50-mCh Merge DIC 
+
+> snf1  mig1
+
++ + - - + + - -020 40 60 80 100 Percent of Cells W/ MDCs Glucose Auxin 
+
+mig1 
+
+Yeast Extract + Peptone - + - +Snf1-AID Snf1-AID + OSTIR - + - +ns Figure 4 
+
+low glucose / glycolysis & salt stress 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint A snf1 snf1 mig1 Wild Type 0H YPAD YPA 3H Vph1 Por1 Om45 Ponceau 0H YPAD YPA 3H 0H YPAD YPA 3H 0H YPAD YPA 3H mig1 snf1 Wild Type 0H NaCl KCl 4H 4H snf1 mig1 4H 0H NaCl KCl 
+
+B CD- 100nM 250nM - 100nM 250nM 020 40 60 Percent of Cells W/ MDCs SD-URA+casAA Beta-estradiol Gal4-Ert2 + Hap4-FLAG Hap4-FLAG ** *- + - + - + - + - + - + - + - +020 40 60 Percent of Cells W/ MDCs Gal4-Ert2 + Hap4-FLAG S-URA YPA 50nM Beta-estradiol S-URA YPA Glucose 2% 0.02% 2% 0.02% 2% - 2% -Hap4-FLAG **** ns ns E FB-estradiol (nM) Pgk1 FLAG Cit 1*Vph1 Por1 Om45 Ponceau Aco1 
+
+Gal4-Ert2 + Hap4-FLAG Hap4-FLAG 0H 2H --50 0H 2H --50 0H NaCl KCl 
+
+279 upregulated proteins 446 downregulated proteins 
+
+Mitochondrial Proteomics of HAP4 OE vs EV VPH1 
+
+-4 -2 0 2 40246
+
+log2(FC) p-adj (-log10)  CIT1 COX7 MIR1 POR1 HAP4 OM45 ACO1 MCP1 TOM70 TCD2 OAC1 DIC1 PGK1 Figure 5 *
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint A BC DE FG+ - + - + -020 40 60 80 100 Percent of Cells W/ MDCs Glucose Wild Type tom70 tom70 tom71 
+
+** ** Tcd2-GFP + - + -020 40 60 80 100 Percent of Cells W/ ER localized Oac1-GFP Glucose Wild Type tom70 tom71 
+
+** ** Oac1-GFP Sec61-mCherry ns + - + -020 40 60 80 100 Percent of Cells W/ cytosolic Om45-GFP Glucose Wild Type tom70 tom71 
+
+** *Om45-GFP ns 
+
+tom70 tom71 
+
+Glucose restriction (Yeast Extract + Peptone) Oac1-GFP Sec61-mCh Merge DIC Wild Type 
+
+Oac1-GFP Sec61-mCh Merge DIC Wild Type 0 2 4 6050 100 150 200 250 
+
+Distance ( μm) Intensity (AU) 
+
+tom70 tom71 
+
+0 2 4 60100 200 300 
+
+Distance ( μm) Intensity (AU) 0 2 4050 100 150 200 
+
+Distance ( μm) Intensity (AU) Wild Type 
+
+tom70 tom71 
+
+0 2 4 6 80100 200 300 
+
+Distance ( μm) Intensity (AU) 
+
+tom70 tom71 
+
+Glucose restriction (Yeast Extract + Peptone) Wild Type Om45-GFP Tim50-mCh Merge DIC Om45-GFP tom70-mCh Merge DIC 
+
+Figure 6 + - + + + - + +020 40 60 80 100 Percent of Cells W/ MDCs Glucose Rapamycin - +- - - +- -Cox7-GFP Cox7-GFP 
+
+tom70 tom71 
+
+Yeast Extract + Peptone Vph1 Por1 Om45 Ponceau Wild Type 
+
+tom70 tom71 0H YPAD YPA 0H YPAD YPA 1INPUTS 2CONVERGENCE AT MITOCHONDRIA 3MDC RESPONSE Metabolic remodeling stresses Glucose restriction Carbon-source switch Salt/osmotic stress Snf1-dependent Rapamycin Concanamycin A Snf1-independent Direct protein-load inputs / OMM burden OMM protein overexpression Tail-anchor mistargeting CHX / translation stress HAP4 Acute HAP4 induction Mitochondrial metabolic adaptation/reduced capacity Increased mitochondrial-targeted protein expression Acute hydrophobic 
+
+membrane-protein 
+
+load increase at the OMM Hydrophobic membrane proteins / precursors OMM protein-load increase MDC formation and cargo sequestration Delivery for degradation in the vacuole Proposed MDC M odel: MDCs are engaged when elevated OMM protein load coincides with an acute ly remodeling mitochondrial state, sequestering excess cargo for vacuolar clearance.  
+
+> MDC fission autophagy
+
+vacuole 
+
+H
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint ABCVph1 Por1 Om45 Ponceau Ponceau Yeast Extract + Peptone + 2% Glucose Time 0H 0.5H 1H 1.5H 2H 3H 4H 5H 6H Cit1 Aco1 Ponceau 
+
+Tim50-GFP Tom70-mCh Merge DIC Cox7-GFP Tom70-mCh Merge DIC 
+
+Tcd2-GFP Tom70-mCh Merge DIC GFP-Mcp1 Tom70-mCh Merge DIC 
+
+Oac1-GFP Tom70-mCh Merge DIC 
+
+Dic1-GFP Tom70-mCh Merge DIC 
+
+0 4 6 4 6YPAD YPA Mir1-GFP 
+
+GFP Free GFP Vph1 Ponceau 
+
+0 4 6 4 6YPAD YPA Tcd2-GFP 0 4 6 4 6YPAD YPA Dic1-GFP 
+
+Hours Glucose restriction (Yeast Extract + Peptone) E F2% - 2% 2% 2% -020 40 60 80 100 Percent of Cells W/ MDCs Glucose 2-DG - - 0.2% 1% 2% 2% Yeast Extract + Peptone 020 40 60 80 100 % MDCs w/ Co-Localization Tim50-GFP Tcd2-GFP GFP-Mcp1 Cox7-GFP Oac1-GFP Dic1-GFP YPA-RAP-Treatment DYPA RAP ConcA 0.0 0.5 1.0 1.5 2.0 2.5 MDC diameter ( μm) Diploid wild type Figure S1 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint A BC DGlc - Glyc Gal Suc Raf Fru 020 40 60 80 100 Percent of Cells W/ MDCs Synthetic Glc Percent of Cells w/ YPADS+0.02%D S SGlyc YPADS+0.02%D S SGlyc 020 40 60 80 100 Fragmented Mitos 
+
+dnm1 Wild Type haploid strains YPADS+0.02%D S SGlyc YPADS+0.02%D S SGlyc 020 40 60 80 100 Percent of Cells W/ MDCs 
+
+dnm1 Wild Type haploid strains E FG2% - 2% 1% 0.5% 0.2% 0.02% 0.002%0.0002% -020 40 60 80 100 Percent of Cells W/ Fragmented Mitos Yeast Extract + Peptone Synthetic Glucose 2% 0.02% 2% 0.02% 020 40 60 80 100 Percent of Cells W/ MDCs - Nitrogen Glucose Minimal 2% 2% 2% - -020 40 60 80 100 Percent of Cells W/ MDCs Glucose Cas AA CHX - + + ++- - -Synthetic + +2% - 2% .02% .02% 2% .02% .02% 020 40 60 80 100 Percent of Cells W/ MDCs Glucose Minimal Cas AA - - + +-- - -Yeast Extract + Peptone Synthetic Over Night H
+
+> Glycine L-Alanine L-Valine L-Leucine L-Isoleucine L-Proline L-Phenylalanine L-Tyrosine L-Serine L-Threonine L-Methionine L-Asparagine L-Aspartic acid L-Glutamic acid L-Lysine Pyroglutamic acid Ornithine Beta-Alanine 4-Hydroxyproline 0.0 0.5 1.0 1.5 2.0 510 15 20 25 Fold change vs YPAD control
+
+YPAD 
+
+YPA 
+
+YPAG 
+
+S   
+
+> **** ** **** **** **** **** **** *** ** **** **** ***** **
+
+Figure S2 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint A B
+
++ - + - + - + -020 40 60 80 100 Percent of Cells W/ MDCs Wild Type reg1 hxk2 
+
+Glucose 
+
+reg2 
+
+C D2% 2% .02% .02% 2% 2% .02% .02% 020 40 60 80 100 Percent of Cells W/ MDCs Glucose Yeast Extract + Peptone Auxin ns *** - + - +Snf1-AID Snf1-AID + OSTIR - + - +EGlc Glc Gal Gal Glc Glc Gal Gal 020 40 60 80 100 Percent of Cells W/ MDCs Yeast Extract + Peptone Auxin ns ** - + - +Snf1-AID Snf1-AID + OSTIR - + - +Glc G+ - + - + - + -020 40 60 80 100 Percent of Cells W/ MDCs EV snf1 SCM4 OE 
+
+Glucose 
+
+snf1 SCM4 OE 
+
+HI+ + - - + + - -020 40 60 80 100 Percent of Cells W/ MDCs Glucose Yeast Extract + Peptone Auxin - + - +Snf1-AID + EV Snf1-AID + OSTIR + SCM4 OE 
+
+- + - ++ - + - + - + -020 40 60 80 100 Percent of Cells W/ MDCs Wild Type gpa2 gpr1 
+
+Glucose 
+
+ira2 Diploid Snf1-AI D - F L A GDiploid OSTIR DMSO 0H .5H 1H Auxin 0H .5H 1H DMSO 0H .5H 1H Auxin 0H .5H 1H FLAG Ponceau aα0H 0H Haploid parents Snf1-AI D - F L A G
+
+- - 1% 1% - - 1% 1% 020 40 60 80 100 Percent of Cells W/ MDCs 2-DG Yeast Extract + Peptone + 2% Glucose Auxin - + - +Snf1-AID Snf1-AID + OSTIR - + - +** F- - + + - - + +020 40 60 80 100 Percent of Cells W/ MDCs ConcA Yeast Extract + Peptone + 2% Glucose Auxin - + - +Snf1-AID Snf1-AID + OSTIR - + - +ns Figure S3 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint A BC DEF- + - + - + - + - +020 40 60 80 100 Percent of Cells W/ MDCs DMSO ConcA RAP Cerulenin YPAD YPA + - + - + - + - + - + -020 40 60 80 100 Percent of Cells W/ MDCs Wild Type rim15 fox2 
+
+Glucose 
+
+atg11 Wild Type atg32 
+
+Diploid Haploid Yeast Extract + Peptone + + - - + + - -020 40 60 80 100 Percent of Cells W/ MDCs Glucose Auxin Yeast Extract + Peptone - + - +Acc1-AID Acc1-AID + OSTIR - + - +** - - + + - - + +020 40 60 80 100 Percent of Cells W/ MDCs Rapamycin Auxin Yeast Extract + Peptone + 2% Glucose - + - +Acc1-AID Acc1-AID + OSTIR - + - +**** + - + - + - + - + -020 40 60 80 100 Percent of Cells W/ MDCs WT S2A Glucose 
+
+mig1 /Mig1-phospho-null S4A S3A S1A ** *ns Crispr mutants Figure S4 FLAG Ponceau Snf1-AID-FLAG DMSO 0H 1H Auxin 0H DMSO 1H Auxin 0H 0H aαmig1 Snf1-AID -FLAG +OSTIR Acc1-AID-FLAG DMSO 0H 1H Auxin 0H DMSO 1H Auxin 0H 0H aαAcc1-AID -FLAG +OSTIR DMSO 0H 1H Auxin 0H DMSO 1H Auxin 0H 0H aαsnf1 Mig1-AID -FLAG +OSTIR Mig1-AID -FLAG Mig1-AID -FLAG *Vph1 Por1 Om45 Ponceau 0H DMSO DMSO Wild Type Glucose ++--++0H Thiol Thiol 0H DMSO Thiol NaCl ++-Wild Type 
+
+G
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint A BC- + - + - + - +020 40 60 80 100 Percent of Cells W/ MDCs Rapamycin SD-URA B-estradiol 50nM - - + + - - + +** Gal1-Msn4 + Hap4-FLAG Hap4-FLAG Snf1-AID-FLAG + OSTIR YPAD YPA Auxin YPAD YPA DMSO 0H Vph1 Por1 Om45 Ponceau DMSO RAP Auxin DMSO RAP DMSO 0H 
+
+Figure S5 Vph1 Por1 Om45 Ponceau 0H DMSO RAP 6H Wild Type ConcA CHX YPA S
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 10, 2026. ;https://doi.org/10.64898/2026.06.09.731211 doi: bioRxiv preprint
