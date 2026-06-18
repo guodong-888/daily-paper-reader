@@ -1,0 +1,57 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-18T21:56:01.860486+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-06-15-732469-v1",
+      "source": "biorxiv",
+      "title": "Sequential- vs. density gradient- centrifugation for the isolation of mitochondria-containing extracellular vesicles",
+      "abstract": "A subset of extracellular vehicles (EVs) with particle diameters >200 nm, large vesicles (lEVs) contain mitochondria that increase recipient cell bioenergetics. To date, sequential centrifugation (SC) is the most reported protocol to separate lEVs from the smaller EVs (<200 nm)/exosomes. We have previously demonstrated that lEVs derived from brain endothelial cells (BECs) using the standard SC method transferred their innate mitochondria to recipient BECs, increased recipient BEC bioenergetics, reduced brain infarct volume, and improved behavioral outcomes in a mouse model of transient ischemic stroke. Despite their promising therapeutic activity, SC-isolated lEVs are likely a mixture of mitochondria-containing lEVs and non-mitochondria-containing lEVs. We hypothesized that subsequent purification of SC-isolated lEVs using density-gradient centrifugation (DGC) may yield a purer sample of mitochondria-containing lEVs. We established a DGC protocol to purify lEVs. In this pilot study, lEVs isolated using SC and DGC protocols were compared to determine their physicochemical characteristics and their effects on recipient BEC bioenergetics. SC-lEVs and DGC-lEVs both significantly restored ATP levels in OGD-injured BECs with no difference between groups. However, a Seahorse mitochondrial function assay revealed distinct functional effects: SC-lEVs did not significantly alter respiration, whereas DGC-lEVs induced a dose-dependent increase in oxygen consumption rate, indicating enhanced oxidative phosphorylation. These findings demonstrate that DGC purification yields a more mitochondria-enriched and functionally potent lEV preparation with an enhanced capacity to restore oxidative phosphorylation in ischemic BECs.\n\nGraphical abstract\n\nO_FIG O_LINKSMALLFIG WIDTH=200 HEIGHT=132 SRC=\"FIGDIR/small/732469v1_ufig1.gif\" ALT=\"Figure 1\">\nView larger version (38K):\norg.highwire.dtl.DTLVardef@16b6383org.highwire.dtl.DTLVardef@1526ecforg.highwire.dtl.DTLVardef@e90afaorg.highwire.dtl.DTLVardef@1cfc046_HPS_FORMAT_FIGEXP  M_FIG C_FIG",
+      "authors": [
+        "Dave, K. M.",
+        "Brady, B. T.",
+        "Govindaswamy, B.",
+        "Basudkar, V. S.",
+        "Stolz, D. B.",
+        "Soundara Manickam, D."
+      ],
+      "primary_category": "bioengineering",
+      "categories": [
+        "bioengineering"
+      ],
+      "published": "2026-06-17T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.15.732469v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "mitochondria-containing EVs affect bioenergetics, relevant to flap survival",
+      "llm_evidence_cn": "含线粒体细胞外囊泡影响生物能量，与皮瓣存活相关",
+      "llm_evidence": "含线粒体细胞外囊泡影响生物能量，与皮瓣存活相关",
+      "canonical_evidence": "含线粒体细胞外囊泡影响生物能量，与皮瓣存活相关",
+      "llm_tldr_en": "Compares isolation methods for mitochondria-containing large EVs, which transfer functional mitochondria to recipient cells and improve outcomes in ischemic stroke.",
+      "llm_tldr_cn": "大型细胞外囊泡（lEVs）携带线粒体可增加受体细胞生物能量，改善缺血性卒中预后。该研究比较了顺序离心与密度梯度离心两种分离方法，发现后者能更纯化lEVs。该方法为线粒体递送治疗缺血组织（如皮瓣）提供了工具支持。",
+      "llm_tldr": "大型细胞外囊泡（lEVs）携带线粒体可增加受体细胞生物能量，改善缺血性卒中预后。该研究比较了顺序离心与密度梯度离心两种分离方法，发现后者能更纯化lEVs。该方法为线粒体递送治疗缺血组织（如皮瓣）提供了工具支持。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "mitochondrial function exercise and flap survival",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
