@@ -1,0 +1,59 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-19T20:33:42.161868+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-06-10-731320-v1",
+      "source": "biorxiv",
+      "title": "Scalable microvascular networks-on-chip enable 8-week unidirectional perfusion for long-term vascular toxicity screening",
+      "abstract": "Cardiovascular toxicity is a leading cause of late-stage drug attrition, yet current in vitro vascular models lack the longevity and scalability needed to capture clinically relevant responses in mature vasculature. We developed a vascular microphysiological system comprising 32 parallel, self-assembled microvascular networks from primary human endothelial cells and stromal fibroblasts. Networks were unidirectionally perfused by gravity-driven, pump-free flow. They remained functionally perfusable for at least 57 days, the longest duration reported for self-assembled microvascular networks, and underwent progressive maturation characterised by perivascular fibroblast organisation, basement membrane deposition, and matrix remodelling. Variance decomposition confirmed high reproducibility, with intra-plate variability of 3-7% and no operator-dependent effects on network morphometry. Exploiting this extended culture window, we reveal maturation-dependent shifts in endothelial inflammatory responsiveness and cytotoxic susceptibility. Distinct acute and chronic toxicity profiles of clinically used tyrosine kinase inhibitors are resolved, and a concentration- and time-dependent spectrum of sorafenib-induced microvascular responses is produced. These results show that vascular longevity and progressive maturation are key requirements for assessing vascular toxicity, and provide a scalable platform for evaluating acute and chronic drug responses in mature human microvascular tissues.",
+      "authors": [
+        "Rodrigues, A.",
+        "Ruiter, S. P.",
+        "Schilt, I.",
+        "Clavijo, C.",
+        "Olivier, T.",
+        "Vulto, P.",
+        "Burton, T. P.",
+        "van den Broek, L. J."
+      ],
+      "primary_category": "cell biology",
+      "categories": [
+        "cell biology"
+      ],
+      "published": "2026-06-11T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.10.731320v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "microvascular network model applicable to studying flap survival factors",
+      "llm_evidence_cn": "微血管网络模型可用于研究影响皮瓣存活的因素",
+      "llm_evidence": "微血管网络模型可用于研究影响皮瓣存活的因素",
+      "canonical_evidence": "微血管网络模型可用于研究影响皮瓣存活的因素",
+      "llm_tldr_en": "Developed a scalable microvascular networks-on-chip with 57-day perfusion, enabling long-term vascular studies relevant to flap survival factor analysis.",
+      "llm_tldr_cn": "开发了一种可扩展的微血管网络芯片，实现57天单向灌注，为研究影响皮瓣存活的血流因素提供了长期体外模型。该模型由原代人内皮细胞和基质成纤维细胞自组装形成，可用于筛选影响微血管稳定性的因素。",
+      "llm_tldr": "开发了一种可扩展的微血管网络芯片，实现57天单向灌注，为研究影响皮瓣存活的血流因素提供了长期体外模型。该模型由原代人内皮细胞和基质成纤维细胞自组装形成，可用于筛选影响微血管稳定性的因素。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
