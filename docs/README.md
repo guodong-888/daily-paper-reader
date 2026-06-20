@@ -6,24 +6,22 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-19
-- 运行时间：2026-06-19 20:33:55 UTC
+- 最新运行日期：2026-06-20
+- 运行时间：2026-06-20 21:29:42 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：0
 - 精读区：0
-- 速读区：1
+- 速读区：0
 
 ### 今日简报（AI）
-今天速读1篇关于微血管芯片的论文。该芯片实现8周单向灌注，可用于长期血管毒性筛查。评分中等（6/10），建议关注其可扩展性与实际应用可靠性。
-- 详情：[/202606/19/README](/202606/19/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/202606/20/README](/202606/20/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Scalable microvascular networks-on-chip enable 8-week unidirectional perfusion for long-term vascular toxicity screening](/202606/19/biorxiv-10-64898-2026-06-10-731320-v1-scalable-microvascular-networks-on-chip-enable-8-week-unidirectional-perfusion-for-long-term-vascular-toxicity-screening)  
-   标签：评分：6.0/10、query:flap-ex-met
-   evidence：微血管网络模型可用于研究影响皮瓣存活的因素
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
