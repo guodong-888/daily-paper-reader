@@ -1,0 +1,73 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-23T21:05:46.104990+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-06-16-732673-v1",
+      "source": "biorxiv",
+      "title": "A multi-organ spatial metabolomic atlas of exercising mice reveals neuronal Complex I as a convergent and sufficient axis for tau pathology reduction in PS19",
+      "abstract": "We constructed a spatially resolved metabolomic atlas of long-term exercise across six major organs in wild-type mice: brain, heart, lung, liver, kidney, and skeletal muscle, cataloguing 224 metabolic features and revealing coordinated inter-organ remodeling. Surprisingly, the brain showed particularly pronounced region-specific adaptation. Because pathological tau associates with synaptic mitochondria from early stages of tauopathy, we extended this multi-organ spatial metabolomic approach to PS19 mice and found that exercise reduced over 70% of observable tau pathology in PS19 hippocampus and restored the mitochondrial-related metabolome. Integrated proteomic and spatial metabolomic analyses identified NADH dehydrogenase Complex I as the convergent node. To test this finding biologically, we expressed the yeast NADH dehydrogenase, Ndi1, in PS19 neurons in the absence of exercise. This increased cerebral antioxidants, restored shuttle-linked metabolites, and reduced tau pathology. Increasing NADH dehydrogenase activity through NDI1 reproduces the core anti-tau and metabolic effects of exercise. These findings provide a molecular mechanism for how exercise may prevent or slow tau pathology accumulation, complementing the human-cohort literature linking exercise to delayed cognitive decline.",
+      "authors": [
+        "Medina, T.",
+        "Quinones, S.",
+        "Liu, Z.",
+        "Wu, L.",
+        "Ziani, B.",
+        "Shedlock, C.",
+        "Ma, X.",
+        "Ryan, A.",
+        "Larson, R.",
+        "Soto, C. M.",
+        "Barco-Caiaffa, V.",
+        "Titus, A.",
+        "Wong, K.",
+        "Rao, N.",
+        "Florea, S.",
+        "Gutierrez-Monreal, M. A.",
+        "Mitchell, G. S.",
+        "Vander Kooi, C. W.",
+        "Gentry, M. S.",
+        "Chandel, N. S.",
+        "Esser, K. A.",
+        "Sun, R. C."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-06-22T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.16.732673v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "exercise-induced multi-organ metabolic remodeling and mitochondrial Complex I involvement",
+      "llm_evidence_cn": "运动诱导的多器官代谢重塑和线粒体复合物I参与",
+      "llm_evidence": "运动诱导的多器官代谢重塑和线粒体复合物I参与",
+      "canonical_evidence": "运动诱导的多器官代谢重塑和线粒体复合物I参与",
+      "llm_tldr_en": "A multi-organ spatial metabolomic atlas of exercising mice reveals coordinated metabolic remodeling and mitochondrial Complex I involvement in tau reduction; the approach is transferable to studying exercise-induced metabolic changes in skin flaps.",
+      "llm_tldr_cn": "该研究构建了首个运动小鼠多器官空间代谢组学图谱，涵盖脑、心、肺、肝、肾和骨骼肌，共224种代谢特征，揭示了运动诱导的协调性代谢重塑。在tau蛋白病小鼠中，运动减少海马体70%以上tau病理并恢复线粒体相关代谢组。该工作提供了一种可转移到皮瓣代谢研究中的空间代谢组学方法，有助于揭示运动改善皮瓣存活的代谢机制。",
+      "llm_tldr": "该研究构建了首个运动小鼠多器官空间代谢组学图谱，涵盖脑、心、肺、肝、肾和骨骼肌，共224种代谢特征，揭示了运动诱导的协调性代谢重塑。在tau蛋白病小鼠中，运动减少海马体70%以上tau病理并恢复线粒体相关代谢组。该工作提供了一种可转移到皮瓣代谢研究中的空间代谢组学方法，有助于揭示运动改善皮瓣存活的代谢机制。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

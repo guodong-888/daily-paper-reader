@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-23",
+  "date": "2026-06-23",
+  "generated_at": "2026-06-23T21:06:11",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/23/biorxiv-10-64898-2026-06-16-732673-v1-a-multi-organ-spatial-metabolomic-atlas-of-exercising-mice-reveals-neuronal-complex-i-as-a-convergent-and-sufficient-axis-for-tau-pathology-reduction-in-ps19",
+      "section": "quick",
+      "title_en": "A multi-organ spatial metabolomic atlas of exercising mice reveals neuronal Complex I as a convergent and sufficient axis for tau pathology reduction in PS19",
+      "authors": "Medina, T., Quinones, S., Liu, Z., Wu, L., Ziani, B., Shedlock, C., Ma, X., Ryan, A., Larson, R., Soto, C. M., Barco-Caiaffa, V., Titus, A., Wong, K., Rao, N., Florea, S., Gutierrez-Monreal, M. A., Mitchell, G. S., Vander Kooi, C. W., Gentry, M. S., Chandel, N. S., Esser, K. A., Sun, R. C.",
+      "date": "2026-06-22",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.16.732673v1.full.pdf",
+      "score": "6.0",
+      "evidence": "运动诱导的多器官代谢重塑和线粒体复合物I参与",
+      "tldr": "运动诱导多器官代谢重塑，脑区特异性适应显著。在tau病理小鼠中，运动减少海马tau病理70%以上，恢复线粒体代谢。整合组学分析发现NADH脱氢酶复合体I是核心节点。神经元表达酵母Ndi1可模拟运动的部分抗tau效应，为运动延缓认知衰退提供分子机制。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "We constructed a spatially resolved metabolomic atlas of long-term exercise across six major organs in wild-type mice: brain, heart, lung, liver, kidney, and skeletal muscle, cataloguing 224 metabolic features and revealing coordinated inter-organ remodeling. Surprisingly, the brain showed particularly pronounced region-specific adaptation. Because pathological tau associates with synaptic mitochondria from early stages of tauopathy, we extended this multi-organ spatial metabolomic approach to PS19 mice and found that exercise reduced over 70% of observable tau pathology in PS19 hippocampus and restored the mitochondrial-related metabolome. Integrated proteomic and spatial metabolomic analyses identified NADH dehydrogenase Complex I as the convergent node. To test this finding biologically, we expressed the yeast NADH dehydrogenase, Ndi1, in PS19 neurons in the absence of exercise. This increased cerebral antioxidants, restored shuttle-linked metabolites, and reduced tau pathology. Increasing NADH dehydrogenase activity through NDI1 reproduces the core anti-tau and metabolic effects of exercise. These findings provide a molecular mechanism for how exercise may prevent or slow tau pathology accumulation, complementing the human-cohort literature linking exercise to delayed cognitive decline.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
