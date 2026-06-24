@@ -1,0 +1,59 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-24T21:04:54.522217+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-06-12-731968-v1",
+      "source": "biorxiv",
+      "title": "Confidence-supported label-free metabolic imaging with FPhaS phase autofluorescence microscopy",
+      "abstract": "Label-free optical redox imaging utilizes endogenous NAD(P)H and FAD autofluorescence to evaluate metabolism in living specimens. The conventional optical redox ratio collapses these two channels into a single value; however, it does not indicate whether a pixel has sufficient photon support or the cellular context necessary for quantitative aggregation. To address this limitation, we introduce FPhaS, a fixed-calibration phase- autofluorescence framework that integrates quantitative phase imaging (QPI) with simultaneous label-free autofluorescence multi-harmonic microscopy (SLAM), using fluorescence lifetime imaging (FLIM) solely for validation. Because QPI and SLAM are acquired with the same objective, a unified non-biological calibration aligns phase-derived structural data with the autofluorescence frame, yielding a residual error of 0.39 pixels. This calibration is maintained across all biological specimens. This shared geometric reference enables local evaluation of structural and metabolic information, rather than comparing approximately aligned images. FPhaS decomposes the data into cell presence, ratio credibility, and confidence-supported pooling. We validated FPhaS on A549 cells under high and low-photon conditions; the framework is designed to generalize to other cell and tissue types. Confidence-weighted intensity redox estimates were compared with lifetime-derived measurements within mask-locked cellular regions. Concordance improved exclusively when both the denominator photon support and an independent structural criterion were satisfied. The same reference layer generated cell-level descriptors of metabolic content, metabolic-structural organization, and measurement reliability, while also constraining the CombinedWLS reconstruction under diminished fluorescence acquisition. FPhaS redefines label-free metabolic imaging from producing comprehensive ratio maps to identifying regions where optical evidence substantiates quantitative inference.",
+      "authors": [
+        "Fan, H.",
+        "Shi, J.",
+        "Yang, Z.",
+        "Ho, A.",
+        "Yang, L.",
+        "Tan, K. K. D.",
+        "Aksamitiene, E.",
+        "Boppart, S. A."
+      ],
+      "primary_category": "bioengineering",
+      "categories": [
+        "bioengineering"
+      ],
+      "published": "2026-06-17T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.12.731968v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "label-free metabolic imaging method applicable to study metabolic changes in flaps during exercise",
+      "llm_evidence_cn": "无标记代谢成像方法，可用于研究运动期间皮瓣代谢变化",
+      "llm_evidence": "无标记代谢成像方法，可用于研究运动期间皮瓣代谢变化",
+      "canonical_evidence": "无标记代谢成像方法，可用于研究运动期间皮瓣代谢变化",
+      "llm_tldr_en": "FPhaS phase autofluorescence microscopy provides confidence-supported label-free metabolic imaging, enabling quantitative assessment of tissue metabolism.",
+      "llm_tldr_cn": "该工作针对传统光学氧化还原比率缺乏光子置信度的问题，提出FPhaS框架，将定量相位成像与自发荧光成像结合，仅利用FLIM验证，实现置信度支持的无标记代谢成像。该方法可可靠地评估活体样本的代谢状态，为研究运动诱导的皮瓣代谢变化提供了有力工具。",
+      "llm_tldr": "该工作针对传统光学氧化还原比率缺乏光子置信度的问题，提出FPhaS框架，将定量相位成像与自发荧光成像结合，仅利用FLIM验证，实现置信度支持的无标记代谢成像。该方法可可靠地评估活体样本的代谢状态，为研究运动诱导的皮瓣代谢变化提供了有力工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
