@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-06-27 <!--dpr-date:20260627-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/27/biorxiv-10-64898-2026-06-23-733906-v1-non-invasive-in-vivo-lactate-monitoring-via-nir-spectroscopy" data-sidebar-item="{&quot;title&quot;: &quot;Non-invasive in vivo lactate monitoring via NIR spectroscopy&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/biorxiv-10-64898-2026-06-23-733906-v1-non-invasive-in-vivo-lactate-monitoring-via-nir-spectroscopy&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;运动期间无创乳酸监测用于代谢变化研究&quot;}">Non-invasive in vivo lactate monitoring via NIR spectroscopy</a>
   * 2026-06-24 <!--dpr-date:20260624-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/24/biorxiv-10-64898-2026-06-12-731968-v1-confidence-supported-label-free-metabolic-imaging-with-fphas-phase-autofluorescence-microscopy" data-sidebar-item="{&quot;title&quot;: &quot;Confidence-supported label-free metabolic imaging with FPhaS phase autofluorescence microscopy&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/biorxiv-10-64898-2026-06-12-731968-v1-confidence-supported-label-free-metabolic-imaging-with-fphas-phase-autofluorescence-microscopy&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;无标记代谢成像方法，可用于研究运动期间皮瓣代谢变化&quot;}">Confidence-supported label-free metabolic imaging with FPhaS phase autofluorescence microscopy</a>

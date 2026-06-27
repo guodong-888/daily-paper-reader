@@ -1,0 +1,58 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-27T20:05:13.407970+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-06-23-733906-v1",
+      "source": "biorxiv",
+      "title": "Non-invasive in vivo lactate monitoring via NIR spectroscopy",
+      "abstract": "We present a non-invasive approach for continuous monitoring of lactate dynamics in-vivo using near-infrared (NIR) spectroscopy. Lactate-related spectral features were measured non-invasively within the overtone region (1600 -1850 nm). Several anatomical measurement sites were evaluated, and the middle phalanx of the dorsal finger emerged as the most promising location due to its superior spectral quality and stable tissue perfusion, becoming the exclusive site for all further experiments. Across multiple exercise sessions, predictive models achieved high within-day accuracy (R^2 [&ge;] 0.8), while cross-day performance was affected by spectral drift and physiological variability. A dynamic offset-correction procedure effectively mitigated these baseline shifts, enabling stable prediction accuracy across days, weeks, and subjects. These findings demonstrate the feasibility of NIR-based lactate estimation and highlight the importance of adaptive correction strategies for reliable long-term, non-invasive monitoring.",
+      "authors": [
+        "Lehnert, T.",
+        "Seidel, S.",
+        "Euchner, J.",
+        "Thierbach, A.",
+        "Schmidt, F.",
+        "Ögün, C. M.",
+        "Hermes, W."
+      ],
+      "primary_category": "biophysics",
+      "categories": [
+        "biophysics"
+      ],
+      "published": "2026-06-26T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.23.733906v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "non-invasive lactate monitoring during exercise for metabolic changes",
+      "llm_evidence_cn": "运动期间无创乳酸监测用于代谢变化研究",
+      "llm_evidence": "运动期间无创乳酸监测用于代谢变化研究",
+      "canonical_evidence": "运动期间无创乳酸监测用于代谢变化研究",
+      "llm_tldr_en": "This paper presents a non-invasive NIR spectroscopy method for continuous lactate monitoring during exercise, which could be applied to study metabolic changes in flap survival context.",
+      "llm_tldr_cn": "该研究开发了一种基于近红外光谱的无创体内乳酸动态监测方法，可在运动过程中连续测量乳酸浓度，解决了现有侵入性监测的局限性。实验在人体多个解剖部位进行，发现手指中节指骨是最佳测量点，模型在日内具有高准确度。该技术为研究运动引起的代谢变化提供了新工具，可能间接应用于皮瓣存活相关的代谢研究。",
+      "llm_tldr": "该研究开发了一种基于近红外光谱的无创体内乳酸动态监测方法，可在运动过程中连续测量乳酸浓度，解决了现有侵入性监测的局限性。实验在人体多个解剖部位进行，发现手指中节指骨是最佳测量点，模型在日内具有高准确度。该技术为研究运动引起的代谢变化提供了新工具，可能间接应用于皮瓣存活相关的代谢研究。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

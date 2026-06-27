@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-27",
+  "date": "2026-06-27",
+  "generated_at": "2026-06-27T20:05:32",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/27/biorxiv-10-64898-2026-06-23-733906-v1-non-invasive-in-vivo-lactate-monitoring-via-nir-spectroscopy",
+      "section": "quick",
+      "title_en": "Non-invasive in vivo lactate monitoring via NIR spectroscopy",
+      "authors": "Lehnert, T., Seidel, S., Euchner, J., Thierbach, A., Schmidt, F., Ögün, C. M., Hermes, W.",
+      "date": "2026-06-26",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.23.733906v1.full.pdf",
+      "score": "6.0",
+      "evidence": "运动期间无创乳酸监测用于代谢变化研究",
+      "tldr": "针对现有乳酸监测需侵入性采血的问题，本文提出基于近红外光谱的非侵入性连续监测方法。在手指中节指骨处采集1600-1850 nm光谱，通过多次运动实验建立预测模型，实现同一天内R²≥0.8的准确度。针对跨天光谱漂移和生理变异，引入动态偏移校正，有效提升跨日、跨周及跨被试的预测稳定性。结果为长期无创乳酸监测提供了可行方案。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "We present a non-invasive approach for continuous monitoring of lactate dynamics in-vivo using near-infrared (NIR) spectroscopy. Lactate-related spectral features were measured non-invasively within the overtone region (1600 -1850 nm). Several anatomical measurement sites were evaluated, and the middle phalanx of the dorsal finger emerged as the most promising location due to its superior spectral quality and stable tissue perfusion, becoming the exclusive site for all further experiments. Across multiple exercise sessions, predictive models achieved high within-day accuracy (R^2 [&ge;] 0.8), while cross-day performance was affected by spectral drift and physiological variability. A dynamic offset-correction procedure effectively mitigated these baseline shifts, enabling stable prediction accuracy across days, weeks, and subjects. These findings demonstrate the feasibility of NIR-based lactate estimation and highlight the importance of adaptive correction strategies for reliable long-term, non-invasive monitoring.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
