@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-28",
+  "date": "2026-06-28",
+  "generated_at": "2026-06-28T20:10:09",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/28/biorxiv-10-64898-2026-06-20-733486-v1-leucine-aminopeptidase-3-regulates-skeletal-muscle-mitochondrial-homeostasis-with-sex-dependent-metabolic-consequences",
+      "section": "quick",
+      "title_en": "Leucine Aminopeptidase 3 Regulates Skeletal Muscle Mitochondrial Homeostasis with Sex-Dependent Metabolic Consequences",
+      "authors": "Osana, S., Murakami, R., Natsuyama, R., Tabuchi, A., Kano, R., Baba, K., Wang, H., Takada, H., Suzuki, N., Murayama, K., Kanzaki, M., Kitajima, Y., Sudo, M., Hoshino, D., Nagatomi, R., Kano, Y.",
+      "date": "2026-06-25",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.20.733486v1.full.pdf",
+      "score": "6.0",
+      "evidence": "研究骨骼肌线粒体稳态及运动能力关联",
+      "tldr": "骨骼肌稳态依赖蛋白质周转与线粒体质量控制协同调控，但分子机制不明。本研究利用LAP3基因敲除小鼠，发现LAP3缺失优先影响骨骼肌，导致肌肉萎缩、线粒体增大，雌性小鼠还出现肌纤维减小、耐力下降、能量消耗增加、脂质氧化升高及脂滴积累。蛋白质组学揭示脂质与蛋白质稳态通路重塑，且LAP3缺失上调Pink1和Tax1bp1，促进泛素蛋白积累，提示线粒体质量控制与蛋白稳态改变。细胞实验显示LAP3定位于线粒体，其表达变化影响线粒体形态。综上，LAP3连接细胞内肽周转与线粒体稳态，且雌性骨骼肌对LAP3缺失更敏感。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Skeletal muscle homeostasis depends on the coordinated regulation of protein turnover and mitochondrial quality control; however, the molecular mechanisms linking these processes remain unclear. In this study, we examined the physiological role of leucine aminopeptidase 3 (LAP3), a post-proteolytic aminopeptidase, using constitutive LAP3-deficient mice. LAP3 deficiency preferentially affected skeletal muscle, causing reduced muscle mass and mitochondrial enlargement in both sexes. Female LAP3-deficient mice also showed reduced myofiber size, impaired endurance capacity, increased energy expenditure, elevated lipid oxidation, and lipid droplet accumulation adjacent to the mitochondria. Proteomic analyses revealed remodeling of pathways related to lipid metabolism and protein homeostasis. Consistent with these findings, LAP3 deficiency increased the expression of Pink1 and Tax1bp1 and promoted the accumulation of ubiquitinated proteins, suggesting alterations in mitochondrial quality control and proteostatic regulation. In cultured myogenic cells, LAP3 localized to mitochondrial fractions, and both LAP3 knockdown and overexpression altered mitochondrial morphology. Taken together, these results identify LAP3 as a regulator of skeletal muscle homeostasis and support a role for LAP3 in linking intracellular peptide turnover to mitochondrial homeostasis, with female skeletal muscle showing greater susceptibility to LAP3 deficiency.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

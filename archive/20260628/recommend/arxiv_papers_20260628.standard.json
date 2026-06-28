@@ -1,0 +1,67 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-28T20:09:44.088015+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-06-20-733486-v1",
+      "source": "biorxiv",
+      "title": "Leucine Aminopeptidase 3 Regulates Skeletal Muscle Mitochondrial Homeostasis with Sex-Dependent Metabolic Consequences",
+      "abstract": "Skeletal muscle homeostasis depends on the coordinated regulation of protein turnover and mitochondrial quality control; however, the molecular mechanisms linking these processes remain unclear. In this study, we examined the physiological role of leucine aminopeptidase 3 (LAP3), a post-proteolytic aminopeptidase, using constitutive LAP3-deficient mice. LAP3 deficiency preferentially affected skeletal muscle, causing reduced muscle mass and mitochondrial enlargement in both sexes. Female LAP3-deficient mice also showed reduced myofiber size, impaired endurance capacity, increased energy expenditure, elevated lipid oxidation, and lipid droplet accumulation adjacent to the mitochondria. Proteomic analyses revealed remodeling of pathways related to lipid metabolism and protein homeostasis. Consistent with these findings, LAP3 deficiency increased the expression of Pink1 and Tax1bp1 and promoted the accumulation of ubiquitinated proteins, suggesting alterations in mitochondrial quality control and proteostatic regulation. In cultured myogenic cells, LAP3 localized to mitochondrial fractions, and both LAP3 knockdown and overexpression altered mitochondrial morphology. Taken together, these results identify LAP3 as a regulator of skeletal muscle homeostasis and support a role for LAP3 in linking intracellular peptide turnover to mitochondrial homeostasis, with female skeletal muscle showing greater susceptibility to LAP3 deficiency.",
+      "authors": [
+        "Osana, S.",
+        "Murakami, R.",
+        "Natsuyama, R.",
+        "Tabuchi, A.",
+        "Kano, R.",
+        "Baba, K.",
+        "Wang, H.",
+        "Takada, H.",
+        "Suzuki, N.",
+        "Murayama, K.",
+        "Kanzaki, M.",
+        "Kitajima, Y.",
+        "Sudo, M.",
+        "Hoshino, D.",
+        "Nagatomi, R.",
+        "Kano, Y."
+      ],
+      "primary_category": "physiology",
+      "categories": [
+        "physiology"
+      ],
+      "published": "2026-06-25T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.20.733486v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "studies mitochondrial homeostasis in skeletal muscle with exercise implications",
+      "llm_evidence_cn": "研究骨骼肌线粒体稳态及运动能力关联",
+      "llm_evidence": "研究骨骼肌线粒体稳态及运动能力关联",
+      "canonical_evidence": "研究骨骼肌线粒体稳态及运动能力关联",
+      "llm_tldr_en": "LAP3 deficiency impairs skeletal muscle mitochondrial homeostasis, reduces endurance capacity, and alters metabolism, providing insights into mitochondrial function in exercise that may extend to flap survival.",
+      "llm_tldr_cn": "本研究探讨亮氨酸氨基肽酶3(LAP3)在骨骼肌线粒体稳态中的作用。利用LAP3基因敲除小鼠模型，发现LAP3缺失导致肌肉质量下降、线粒体增大，雌性小鼠运动耐力受损、能量消耗增加、脂质氧化增强。这些结果揭示了LAP3调控线粒体功能的新机制，为理解运动训练中线粒体适应如何影响组织存活（如皮瓣）提供了重要线索。",
+      "llm_tldr": "本研究探讨亮氨酸氨基肽酶3(LAP3)在骨骼肌线粒体稳态中的作用。利用LAP3基因敲除小鼠模型，发现LAP3缺失导致肌肉质量下降、线粒体增大，雌性小鼠运动耐力受损、能量消耗增加、脂质氧化增强。这些结果揭示了LAP3调控线粒体功能的新机制，为理解运动训练中线粒体适应如何影响组织存活（如皮瓣）提供了重要线索。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "mitochondrial function exercise and flap survival",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

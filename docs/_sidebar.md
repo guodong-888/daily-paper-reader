@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-06-28 <!--dpr-date:20260628-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/28/biorxiv-10-64898-2026-06-20-733486-v1-leucine-aminopeptidase-3-regulates-skeletal-muscle-mitochondrial-homeostasis-with-sex-dependent-metabolic-consequences" data-sidebar-item="{&quot;title&quot;: &quot;Leucine Aminopeptidase 3 Regulates Skeletal Muscle Mitochondrial Homeostasis with Sex-Dependent Metabolic Consequences&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/biorxiv-10-64898-2026-06-20-733486-v1-leucine-aminopeptidase-3-regulates-skeletal-muscle-mitochondrial-homeostasis-with-sex-dependent-metabolic-consequences&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;研究骨骼肌线粒体稳态及运动能力关联&quot;}">Leucine Aminopeptidase 3 Regulates Skeletal Muscle Mitochondrial Homeostasis with Sex-Dependent Metabolic Consequences</a>
   * 2026-06-27 <!--dpr-date:20260627-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/27/biorxiv-10-64898-2026-06-23-733906-v1-non-invasive-in-vivo-lactate-monitoring-via-nir-spectroscopy" data-sidebar-item="{&quot;title&quot;: &quot;Non-invasive in vivo lactate monitoring via NIR spectroscopy&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/biorxiv-10-64898-2026-06-23-733906-v1-non-invasive-in-vivo-lactate-monitoring-via-nir-spectroscopy&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;运动期间无创乳酸监测用于代谢变化研究&quot;}">Non-invasive in vivo lactate monitoring via NIR spectroscopy</a>
