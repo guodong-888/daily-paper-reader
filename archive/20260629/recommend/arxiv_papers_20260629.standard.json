@@ -1,0 +1,101 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-29T21:44:24.954931+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-06-18-733224-v1",
+      "source": "biorxiv",
+      "title": "Exercise training improves exercise capacity independent of AMPKa2 T172-mediated adaptations in skeletal muscle",
+      "abstract": "Regular exercise induces adaptations in skeletal muscle and other organ systems to improve physical performance and overall health. Exercise results in phosphorylation of 5 AMP-activated protein kinase (AMPK) at threonine 172 (T172) of the 2 subunit; however, the role of this activation in cellular and functional adaptations has not been elucidated. To this end, we subjected non-activatable Ampk2(T172A) knock-in (KI) adult mice and wild-type (WT) littermates to 4 weeks of voluntary wheel running (VWR). Exercise training led to significant improvements in endurance capacity, maximal oxygen consumption ([Formula]O2max), and glucose tolerance, as well as skeletal muscle IIb-to-IIa fiber type shift in both WT and KI mice. Contrastingly, VWR resulted in increased mitochondrial OxPhos protein expression, mitochondrial volume density, and capillary density in skeletal muscle of WT but not KI mice. Exercise-induced improvements of mitochondrial respiration and conductance revealed by high-resolution respirometry of isolated mitochondria were blunted in KI mice. Therefore, for the first time, we reveal that AMPK2 T172 activation is required for exercise training-induced mitochondrial biogenesis, improvement of mitochondrial respiratory function, and angiogenesis in skeletal muscle, but that these adaptations are not solely responsible for improved [Formula]O2max and exercise endurance capacity.\n\nSignificance StatementExercise is the most effective lifestyle intervention for promoting health and preventing chronic diseases through adaptive changes in skeletal muscle and many other tissues/organs. AMPK is an energy sensor and signaling regulator for exercise-induced skeletal muscle adaptation, yet its functional role and the impact on exercise capacity have been studied in mouse genetic models wherein protein stoichiometry is disrupted. Using non-activatable Ampk2(T172A) knock-in mice, we ascertained that AMPK2 activation via T172 phosphorylation is required for endurance training-induced mitochondrial and angiogenic adaptations in skeletal muscle. Importantly, these adaptations are not required for improved exercise capacity, challenging the prevailing concept that increased mitochondrial content and function and microvasculature are the sole driving factors for the performance gains with endurance training.",
+      "authors": [
+        "Mao, X.",
+        "Montalvo, R. N.",
+        "Takahashi, K.",
+        "Booth, F. W.",
+        "Brooks, G. A.",
+        "Yan, Z."
+      ],
+      "primary_category": "physiology",
+      "categories": [
+        "physiology"
+      ],
+      "published": "2026-06-23T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.18.733224v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "exercise training study with AMPK and metabolic adaptations relevant to exercise effects on flap survival",
+      "llm_evidence_cn": "运动训练研究，涉及AMPK和代谢适应，与运动对组织存活影响相关",
+      "llm_evidence": "运动训练研究，涉及AMPK和代谢适应，与运动对组织存活影响相关",
+      "canonical_evidence": "运动训练研究，涉及AMPK和代谢适应，与运动对组织存活影响相关",
+      "llm_tldr_en": "This study shows that voluntary wheel running improves endurance, glucose tolerance, and muscle fiber type shift independent of AMPKa2 T172 phosphorylation, providing a model for exercise-induced metabolic adaptations potentially applicable to flap survival research.",
+      "llm_tldr_cn": "该研究通过使用AMPKa2非激活敲入小鼠模型，进行自愿转轮运动训练，发现运动训练能够提高运动能力、最大耗氧量和葡萄糖耐受性，并诱导骨骼肌纤维类型转换，且这些适应不依赖于AMPKa2亚基的Thr172磷酸化。研究提供了一个运动训练诱导代谢适应的模型，其评估方法（如运动能力测试、代谢测量）可为研究运动训练对皮瓣存活的影响提供方法学参考。结果提示运动训练可通过AMPK非依赖途径改善代谢功能，这可能与皮瓣存活中的代谢调控机制相关。",
+      "llm_tldr": "该研究通过使用AMPKa2非激活敲入小鼠模型，进行自愿转轮运动训练，发现运动训练能够提高运动能力、最大耗氧量和葡萄糖耐受性，并诱导骨骼肌纤维类型转换，且这些适应不依赖于AMPKa2亚基的Thr172磷酸化。研究提供了一个运动训练诱导代谢适应的模型，其评估方法（如运动能力测试、代谢测量）可为研究运动训练对皮瓣存活的影响提供方法学参考。结果提示运动训练可通过AMPK非依赖途径改善代谢功能，这可能与皮瓣存活中的代谢调控机制相关。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "exercise training effect on flap survival",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-06-24-734154-v1",
+      "source": "biorxiv",
+      "title": "OxyBLI: A Genetics-Based Approach for In Vivo Real-Time Visualization of Tissue Oxygenation Dynamics",
+      "abstract": "Accurate measurement of cellular oxygen levels is essential for understanding the balance between oxygen demand and supply in tissues. However, conventional methods only yield compromised results. We harnessed the oxygen dependence of bioluminescence to develop OxyBLI, a noninvasive optical method that directly monitors oxygen levels in specific cell populations of intact experimental animals. We characterized OxyBLI signals across various critical situations associated with common interventions. Hypoxic breathing and subsequent systemic tissue hypoxia caused blood to be redistributed in a way that prioritized brain oxygenation. In contrast, hyperoxic breathing sharply increased tissue oxygenation, which promptly returned to the target level owing to a vasoconstrictor response. These findings are expected to help resolve the long-standing clinical issue regarding the risks and benefits of administering supplemental oxygen to acutely ill patients. Our multifaceted approach, which presents multiple challenges to individual animals over time, will advance our understanding of the delicate interaction between hypoxia and hyperoxia.",
+      "authors": [
+        "Iwano, S.",
+        "Kato, J.",
+        "Toramaru, T.",
+        "Hama, H.",
+        "Sugiyama, M.",
+        "Takahashi, R.",
+        "Takahashi, M.",
+        "Hioki, H.",
+        "Nakashiba, T.",
+        "Miyawaki, A."
+      ],
+      "primary_category": "physiology",
+      "categories": [
+        "physiology"
+      ],
+      "published": "2026-06-28T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.24.734154v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "tissue oxygenation monitoring tool",
+      "llm_evidence_cn": "组织氧合监测工具",
+      "llm_evidence": "组织氧合监测工具",
+      "canonical_evidence": "组织氧合监测工具",
+      "llm_tldr_en": "OxyBLI is a genetics-based bioluminescence approach for real-time visualization of tissue oxygenation in vivo, enabling noninvasive monitoring of oxygen dynamics that directly influence flap survival factors.",
+      "llm_tldr_cn": "该研究利用生物发光的氧依赖性开发了OxyBLI，一种无创光学方法，可在活体动物中实时监测特定细胞群的氧水平。实验显示，低氧呼吸导致血液重分配优先保障脑氧合，高氧则快速提高组织氧合。组织氧合是影响皮瓣存活的关键因素，该方法为研究皮瓣氧合状态及运动对氧合的影响提供了有力工具。",
+      "llm_tldr": "该研究利用生物发光的氧依赖性开发了OxyBLI，一种无创光学方法，可在活体动物中实时监测特定细胞群的氧水平。实验显示，低氧呼吸导致血液重分配优先保障脑氧合，高氧则快速提高组织氧合。组织氧合是影响皮瓣存活的关键因素，该方法为研究皮瓣氧合状态及运动对氧合的影响提供了有力工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

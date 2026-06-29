@@ -6,24 +6,31 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-28
-- 运行时间：2026-06-28 20:10:02 UTC
+- 最新运行日期：2026-06-29
+- 运行时间：2026-06-29 21:44:50 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：2
 - 精读区：0
-- 速读区：1
+- 速读区：2
 
 ### 今日简报（AI）
-今日速读1篇，聚焦亮氨酸氨基肽酶3对骨骼肌线粒体稳态的性别依赖性代谢影响。线粒体稳态调节存在性别差异，可能为代谢疾病研究提供新线索。建议进一步关注该酶在肌肉代谢中的性别特异性机制，以探索个性化干预策略。
-- 详情：[/202606/28/README](/202606/28/README)
+今日速读两篇6分论文，分别聚焦运动能力改善机制与组织氧合实时成像技术。
+
+最值得关注的方向：运动训练对运动能力的提升可能不依赖于AMPKa2经典信号通路；OxyBLI技术实现了活体内组织氧合动态的可视化监测。
+
+建议普通读者关注运动训练的非经典机制，以及新型成像工具在临床氧合评估中的应用潜力。
+- 详情：[/202606/29/README](/202606/29/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Leucine Aminopeptidase 3 Regulates Skeletal Muscle Mitochondrial Homeostasis with Sex-Dependent Metabolic Consequences](/202606/28/biorxiv-10-64898-2026-06-20-733486-v1-leucine-aminopeptidase-3-regulates-skeletal-muscle-mitochondrial-homeostasis-with-sex-dependent-metabolic-consequences)  
+1. [Exercise training improves exercise capacity independent of AMPKa2 T172-mediated adaptations in skeletal muscle](/202606/29/biorxiv-10-64898-2026-06-18-733224-v1-exercise-training-improves-exercise-capacity-independent-of-ampka2-t172-mediated-adaptations-in-skeletal-muscle)  
    标签：评分：6.0/10、query:flap-ex-met
-   evidence：研究骨骼肌线粒体稳态及运动能力关联
+   evidence：运动训练研究，涉及AMPK和代谢适应，与运动对组织存活影响相关
+2. [OxyBLI: A Genetics-Based Approach for In Vivo Real-Time Visualization of Tissue Oxygenation Dynamics](/202606/29/biorxiv-10-64898-2026-06-24-734154-v1-oxybli-a-genetics-based-approach-for-in-vivo-real-time-visualization-of-tissue-oxygenation-dynamics)  
+   标签：评分：6.0/10、query:flap-ex-met
+   evidence：组织氧合监测工具
 
 
 <div class="dpr-home-promo-card">

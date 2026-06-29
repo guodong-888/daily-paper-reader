@@ -1,0 +1,1717 @@
+Title: Exercise training improves exercise capacity independent of AMPKα2 T172-mediated adaptations in skeletal muscle
+
+URL Source: https://www.biorxiv.org/content/10.64898/2026.06.18.733224v1.full.pdf
+
+Number of Pages: 35
+
+Markdown Content:
+1
+
+Exercise training improves exercise capacity independent of AMPK a2 T172-mediated 1
+
+adaptations in skeletal muscle 2
+
+3
+
+Xuansong Mao 1, Ryan N. Montalvo 1, Kenya Takahashi 1, Frank W. Booth 3, George A. 4
+
+Brooks 4 and Zhen Yan 1,2,* 
+
+5
+
+6
+
+> 1
+
+Fralin Biomedical Research Institute Center for Exercise Medicine Research at Virginia 7
+
+Tech Carilion, Roanoke, Virginia 24016, USA 8
+
+> 2
+
+Department of Human Nutrition, Foods, and Exercise, College of Agriculture and Life 9
+
+Sciences, Virginia Tech, Blacksburg, Virginia 24061, USA 10 
+
+> 3
+
+Department of Pathobiology and Integrative Biomedical Sciences, College of Veterinary 11 
+
+Medicine, University of Missouri, Columbia, Missouri 65211, USA 12 
+
+> 4
+
+Department of Integrative Biology, Integrative Biology, University of California, Berkeley, 13 
+
+California 94602, USA 14 
+
+*Correspondence: Zhen Yan 15 
+
+Email: zhenyan1@vtc.vt.edu 16 
+
+17 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+2
+
+Competing Interest Statement: The authors do not declare any conflicts of interest. 18 
+
+Keywords: AMPK; Exercise training; Mitochondrial function; Metabolism; Skeletal 19 
+
+muscle 20 
+
+21 
+
+Abstract 22 
+
+Regular exercise induces adaptations in skeletal muscle and other organ systems to 23 
+
+improve physical performance and overall health. Exercise results in phosphorylation of 24 
+
+5’ AMP-activated protein kinase (AMPK) at threonine 172 (T172) of the a2 subunit; 25 
+
+however, the role of this activation in cellular and functional adaptations has not been 26 
+
+elucidated. To this end, we subjected non-activatable Ampk 
+
+a2(T172A ) knock-in (KI) adult 27 
+
+mice and wild-type (WT) littermates to 4 weeks of voluntary wheel running (VWR). 28 
+
+Exercise training led to significant improvements in endurance capacity, maximal oxygen 29 
+
+consumption ( 𝑉 ̇ O2max), and glucose tolerance, as well as skeletal muscle IIb-to-IIa fiber 30 
+
+type shift in both WT and KI mice. Contrastingly, VWR resulted in increased mitochondrial 31 
+
+OxPhos protein expression, mitochondrial volume density, and capillary density in skeletal 32 
+
+muscle of WT but not KI mice. Exercise-induced improvements of mitochondrial 33 
+
+respiration and conductance revealed by high-resolution respirometry of isolated 34 
+
+mitochondria were blunted in KI mice. Therefore, for the first time, we reveal that AMPK a235 
+
+T172 activation is required for exercise training-induced mitochondrial biogenesis, 36 
+
+improvement of mitochondrial respiratory function, and angiogenesis in skeletal muscle, 37 
+
+but that these adaptations are not solely responsible for improved 𝑉 ̇ O2max and exercise 38 
+
+endurance capacity. 39 
+
+Significance Statement 40 
+
+Exercise is the most effective lifestyle intervention for promoting health and preventing 41 
+
+chronic diseases through adaptive changes in skeletal muscle and many other 42 
+
+tissues/organs. AMPK is an energy sensor and signaling regulator for exercise-induced 43 
+
+skeletal muscle adaptation, yet its functional role and the impact on exercise capacity have 44 
+
+been studied in mouse genetic models wherein protein stoichiometry is disrupted. Using 45 
+
+non-activatable Ampk 
+
+a2(T172A) knock-in mice, we ascertained that AMPK a2 activation 46 
+
+via T172 phosphorylation is required for endurance training-induced mitochondrial and 47 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+3
+
+angiogenic adaptations in skeletal muscle. Importantly, these adaptations are not required 48 
+
+for improved exercise capacity, challenging the prevailing concept that increased 49 
+
+mitochondrial content and function and microvasculature are the sole driving factors for 50 
+
+the performance gains with endurance training. 51 
+
+Introduction 52 
+
+A fundamental theory of exercise physiology is that the human body adapts to the acute 53 
+
+and chronic stress of physical activity to improve its maximal functional capacity (1). 54 
+
+Exercise training, particularly endurance exercise, leads to adaptations in most systems, 55 
+
+including the cardiovascular and musculoskeletal systems that support an overall increase 56 
+
+in exercise capacity and performance (2, 3). Important clinically, exercise capacity, or 57 
+
+cardiorespiratory fitness, is inversely associated with all-cause of mortality (4). Exercise 58 
+
+training is now considered the most potent lifestyle intervention for health promotion and 59 
+
+chronic disease prevention (5-7). 60 
+
+Extensive research has been directed toward skeletal muscle adaptations responsible for 61 
+
+improved exercise capacity and metabolic homeostasis. In a seminal study, John Holloszy 62 
+
+(1967) demonstrated that in rodents, long-term treadmill running can double mitochondrial 63 
+
+enzyme activities in skeletal muscle, providing the first biochemical evidence of exercise-64 
+
+induced mitochondrial adaptation (8). The results of increased skeletal muscle 65 
+
+mitochondrial content and electron transport chain enzymatic activity have since been 66 
+
+reaffirmed in a vast number of studies (2, 9-11), thus laying the foundation for the idea 67 
+
+that mitochondrial expansion is crucial for improved exercise endurance capacity after 68 
+
+training (12-14). In another seminal study at the same time period, Carrow et al. (1967) 69 
+
+showed that long-term treadmill running in rats increased capillary density in skeletal 70 
+
+muscle (15), which has since been reaffirmed (16, 17). Intriguingly, these two lines of 71 
+
+concurrent research focused on cellular structures that are responsible for the delivery 72 
+
+and consumption of oxygen as energy system essential for ATP production to main 73 
+
+function of skeletal muscle. Since then, significant focus has been given to the mass of 74 
+
+the mitochondrial oxidative energy system and capillary remodeling in skeletal muscle (18-75 
+
+28). The findings have led to a long-standing concept that mitochondrial and microvascular 76 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+4
+
+adaptations in skeletal muscle are crucial for improved exercise capacity and performance 77 
+
+induced by exercise training (12, 13). 78 
+
+79 
+
+In the last three decades, numerous studies have focused on identification and elucidation 80 
+
+of signaling regulators for mitochondrial biogenesis and angiogenesis in skeletal muscle 81 
+
+in response to exercise training. 5’ AMP-activated protein kinase (AMPK), an energy 82 
+
+sensor and regulator of metabolism (29-34), emerged as a primary determinant of skeletal 83 
+
+muscle adaptation. AMPK is readily activated by phosphorylation at threonine 172 (T172) 84 
+
+of the dominant a2 catalytic subunit in response muscle contraction and exercise (35, 36). 85 
+
+In support of this conclusion, muscle-specific overexpression of a dominant-negative form 86 
+
+of Ampk a2 resulted in diminished exercise-induced increases in mitochondrial content 87 
+
+and mitochondria-specific antioxidant capacity (37). Muscle-specific deletion of a AMPK 88 
+
+downstream target gene, peroxisome-proliferator-activated receptor g coactivator 1 a89 
+
+(Pgc-1 
+
+a) (38), blocked exercise training-induced mitochondrial biogenesis and 90 
+
+angiogenesis in skeletal muscle (39, 40); whereas muscle-specific overexpression of Pgc-91 
+
+1a promoted mitochondrial biogenesis and angiogenesis in skeletal muscle (41, 42). 92 
+
+Furthermore, skeletal muscle-specific deletion of the upstream AMPK kinase, Lkb1, 93 
+
+blunted exercise training-induced mitochondrial biogenesis in skeletal muscle (43). In 94 
+
+contrast, there are findings that do not support the inferred importance of AMPK in skeletal 95 
+
+muscle adaptation. For example, mice with muscle-specific deletion of the Ampk 
+
+a2 gene 96 
+
+or the Ampk 
+
+a1/Ampk 
+
+a2 genes, or muscle-specific overexpression of an inactive Ampk a297 
+
+showed normal enhancement of mitochondrial biogenesis after training (44-47). Hence, 98 
+
+the definitive roles of AMPK activation in skeletal muscle adaptation to exercise training 99 
+
+remains to be fully elucidated. 100 
+
+The interpretations of some of these previous findings may have been influenced by the 101 
+
+methodology of gene deletion or dominant-negative overexpression approaches, which 102 
+
+can alter protein stoichiometry (i.e., loss or overexpression of specific proteins) that have 103 
+
+been shown to cause compensatory changes (48-50). Furthermore, prior works using 104 
+
+these genetic models with exercise training have not comprehensively measured 105 
+
+mitochondrial respiratory capacity, metabolic flexibility and free radical generation, which 106 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+5
+
+are key determinants of mitochondrial OXPHOS coupling efficiency, respiratory control, 107 
+
+and overall energy substrate partitioning. 108 
+
+To evaluate the role of AMPK a2 T172 activation in skeletal muscle adaptations in 109 
+
+response to endurance training, we employed Ampk 
+
+a2(T172A) knock-in (KI) mice 110 
+
+generated through CRISPR-Cas9-mediated gene editing by substituting the T172 111 
+
+phosphorylation for alanine (T172A) in the Ampk a2 subunit (51). We hypothesized that 112 
+
+AMPK a2 T172 activation in skeletal muscle is required for exercise-induced mitochondrial 113 
+
+biogenesis and angiogenesis, which are necessary for the improved endurance exercise 114 
+
+capacity and VO 2max. For this reason, we comprehensively examined the role of AMPK a2115 
+
+T172 activation in skeletal muscle mitochondrial adaptation at protein, structural and 116 
+
+functional levels. We also assessed angiogenesis and fiber-type shift and determined how 117 
+
+these adaptive processes regulated by AMPK a2 T172 activation contribute to the exercise 118 
+
+performance. 119 
+
+Results 120 
+
+Ampk 
+
+a2(T172A) adult KI mice exhibit normal whole-body functional adaptations in 121 
+
+response to endurance exercise training 122 
+
+Exercise-induced AMPK activation in skeletal muscle has been well documented by 123 
+
+studies in animals and humans (36, 52). Consistent with this, we observed robust 124 
+
+AMPK a1/2 activation through T172 phosphorylation in plantaris muscle by low-frequency 125 
+
+(10 Hz, 2 hr) electric stimulation of the plantar flexor muscles (Fig. S1 A-B ), as well as 90-126 
+
+min treadmill running (Fig. S1 C-I), along with activation of downstream signaling 127 
+
+molecules (Fig. S1 A-I). As described above, to ascertain the role of AMPK a2 T172 128 
+
+activation in exercise training-induced adaptations, we uniquely employed non-activatable 129 
+
+Ampk 
+
+a2(T172A) KI mice in this experiment (Fig. 1 A, S2 A-B ). Homozygous KI and their 130 
+
+wild type (WT) littermates were subjected to 4 weeks of voluntary wheel running (VWR). 131 
+
+On average, KI mice exhibited reduced voluntary running distance compared to WT mice 132 
+
+(WT: 10.4 vs. KI: 7.4 km/day, Fig. 1 B, S2 C). 133 
+
+134 
+
+We assessed exercise capacity by an exhaustive treadmill running test (ETT). As shown 135 
+
+recently (51), current sedentary KI mice had impaired running capacity compared to WT 136 
+
+controls (Fig. 1 C). VWR improved running distance significantly in both WT and KI mice 137 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+6
+
+(Fig. 1 C). Elevated blood lactate at the end of ETT confirmed exhaustion in both animal 138 
+
+groups (Fig. S2 D). The significantly greater blood lactate post-ETT, shown as Dlactate in 139 
+
+sedentary KI mice, is interpreted to mean greater lactate production via glycogenolysis 140 
+
+and glycolysis and/or limited lactate clearance capacity (Fig. 1 D) (53, 54), To further 141 
+
+evaluate the impact on exercise capacity and metabolism, we performed a VO 2max 142 
+
+treadmill running test (Fig. 1 E) to assess maximal oxygen consumption ( 𝑉 ̇ O2max), energy 143 
+
+substrate utilization partitioning via respiratory exchange ratio (RER) (i.e., VCO 2/VO 2). 144 
+
+VWR significantly improved maximal running performance, 𝑉 ̇ O2max, maximum speed, 145 
+
+heat production, but not maximal RER, in both WT and KI mice compared to sedentary 146 
+
+controls (Fig. 1 F, S2 E-I ). VWR also delayed the rise of RER in both KI and WT mice (Fig. 147 
+
+1G), indicating increased utilization on fatty acid metabolism during submaximal exercise 148 
+
+intensities (Fig. S2 J and K). VWR improved glucose tolerance in both WT and KI groups, 149 
+
+reflected by both reduced area under the curve and reduced elevation of blood glucose at 150 
+
+30 min after glucose injection (Fig. 1 H and I). In addition, VWR reduced body weight and 151 
+
+fat mass without affecting lean mass as well as moderately decreased gastrocnemius 152 
+
+muscle mass and increased soleus muscle mass in both WT and KI mice, (Fig. S3 A-H). 153 
+
+Collectively, despite reduced voluntary running distance, Ampk 
+
+a2(T172A) KI mice had 154 
+
+normal improvements in endurance capacity and metabolic adaptations following 155 
+
+endurance training. 156 
+
+157 
+
+AMPK a2 T172 activation is required for exercise-induced mitochondrial 158 
+
+adaptations and angiogenesis but not for fiber-type transformation in skeletal 159 
+
+muscle 160 
+
+Given the exercise performance and metabolic findings, we next examined parameters of 161 
+
+mitochondrial biogenesis, fiber type transformation and angiogenesis, which are key 162 
+
+adaptations in skeletal muscle following endurance training (8, 10, 55-58). Protein markers 163 
+
+of mitochondrial content, including cytochrome c oxidase subunit 4 (Cox4) and 164 
+
+cytochrome c (Cyt c), were significantly downregulated in Ampk 
+
+a2(T172A) KI mice at 165 
+
+baseline, while VWR led to a trend of increased expression in WT mice but not in KI mice 166 
+
+(Fig. 2 A-C). Similar but less robust trends were observed for mitochondrial membrane 167 
+
+voltage-dependent anion channel protein (Vdac), and mitochondria-specific antioxidant 168 
+
+enzyme, superoxide dismutase 2 (Sod2) (Fig. 2 D-E). Mitochondrial OXPHOS subunit 169 
+
+proteins followed similar trends, with complex IV protein significantly elevated in WT mice 170 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+7
+
+but not in KI mice after VWR (Fig. 2 F and G). Our findings suggest the requirement of 171 
+
+AMPK a2 T172 activation in enhanced expression of key mitochondrial respiratory 172 
+
+components by exercise. To assess proteins involving in mitochondrial structural 173 
+
+organization, we examined components of the mitochondrial contact site and cristae 174 
+
+organizing system (MICOS) (59). Core components of Mic60-containing subcomplex 175 
+
+(Immt and Apool) were reduced KI mice, whereas Mic19 (Chchd3) and Samm50, a 176 
+
+component of the sorting and assembly machinery (SAM) complex were unchanged (Fig. 177 
+
+S4 A-E ). Our findings suggest that disrupted cristae organization may also underlie 178 
+
+impaired mitochondrial function in the skeletal muscle of KI mice. 179 
+
+180 
+
+Next, we examined the muscle fiber-type composition in plantaris muscle. At baseline, 181 
+
+sedentary KI mice exhibited a shift toward glycolytic fibers, characterized by increased 182 
+
+type IIb and IId/x myofibers and diminished type IIa myofibers as compared to WT mice 183 
+
+(Fig. 2 H-J ). VWR induced a similar increase in type IIa myofibers and reduction in type IIb 184 
+
+and IId/x myofibers (Fig. 2 H-J ). These findings indicate that fiber-type transformation 185 
+
+occurred independently of AMPK a2 T172 phosphorylation. Finally, we assessed 186 
+
+angiogenesis. Exercise training increased capillary density (CD31) in WT mice; however, 187 
+
+this effect was absent in KI mice (Fig 2 H and K). A similar pattern was observed when 188 
+
+analyzed across individual fiber types (Fig 2L and M). Collectively, these results 189 
+
+demonstrate that AMPK a2 T172 phosphorylation is essential for mitochondrial and 190 
+
+angiogenic adaptations to endurance training, but dispensable for fiber-type 191 
+
+transformation in skeletal muscle. 192 
+
+193 
+
+Endurance training-induced increase in skeletal muscle mitochondrial volume 194 
+
+density is dependent on AMPK a2 T172 activation 195 
+
+We then utilized transmission electron microscope (TEM) to assess effects on 196 
+
+mitochondrial reticulum morphology. VWR increased mitochondrial volume density 197 
+
+(Mito VD ) in plantaris muscle of WT mice but not in KI mice (Fig. 3 A and B, S5 A), whereas 198 
+
+apparent mitochondrial number profile counting (Mito P) was unchanged across groups 199 
+
+(Fig. 3 C, S5 B). Similar to the effect of endurance training on Mito VD , analyses of 200 
+
+mitochondrial reticulum dimension, feret diameter and perimeter, showed trends for 201 
+
+training-induced increases in WT but not in KI mice, with no changes observed in aspect 202 
+
+ratio or circularity (Fig. 3 D-I , S5 C-G ). Hence, these findings further support our concept 203 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+8
+
+that endurance training enhances muscle mitochondrial content, and this adaptation 204 
+
+requires AMPK a2 T172 phosphorylation. Combined with mitochondrial protein data, these 205 
+
+results support a conclusion that AMPK a2 activation plays a critical role in exercise 206 
+
+induced mitochondrial remodeling, specifically mitochondrial biogenesis. 207 
+
+208 
+
+AMPK a2 T172 activation is critical for exercise training-induced improvements in 209 
+
+mitochondrial maximal respiratory function and metabolic flexibility in skeletal 210 
+
+muscle 211 
+
+To investigate the role of AMPK a2 T172 activation in skeletal muscle mitochondrial 212 
+
+bioenergetics and redox regulation following exercise training, we performed a high-213 
+
+resolution respirometry on mitochondria isolated from plantaris muscle using a creatine 214 
+
+kinase clamp (Fig. 4A-B). Endurance training resulted in an increase of maximal 215 
+
+respiration and enhanced respiratory conductance in WT mice, both of which were absent 216 
+
+in KI mice (Fig. 4 C-F). In contrast, KI mice exhibited significantly elevated mitochondrial 217 
+
+H2O2 emission and electron leak across a range of energetic demands, indicating impaired 218 
+
+redox balance (Fig. 4 G-H ). Finally, the impact of endurance training was minimal for redox 219 
+
+regulation in both WT and KI mice. Mitochondrial ADP sensitivity, assessed by Michaelis-220 
+
+Menton kinetics for Km, was not altered by training or genotype (Fig. S6 A and B). These 221 
+
+findings further illustrate the importance of AMPK a2 T172 activation in exercise training-222 
+
+induced mitochondrial bioenergetic adaptation in skeletal muscle. 223 
+
+Discussion 224 
+
+Repeated bouts of exercise activate multiple signaling networks in skeletal muscle to 225 
+
+induce adaptive changes that improve functional performance (60, 61). Although AMPK 226 
+
+has been shown to be a central driving factor in endurance exercise-induced mitochondrial 227 
+
+and metabolic adaptations in skeletal muscle (34, 47, 51, 62-65), much of the evidence 228 
+
+derives from mouse genetic models wherein protein stoichiometry was disrupted (44-47). 229 
+
+Using a CRISPR-Cas9-mediated gene editing targeting the Ampk a2 T172 230 
+
+phosphorylation site, we previously demonstrated its essential role in overall energy 231 
+
+metabolism at baseline and during exercise (51). In the present study, we further 232 
+
+examined the role AMPK a2 T172 in exercise training-induced adaptations. Our data 233 
+
+revealed that AMPK a2 T172 phosphorylation is required for exercise training-induced 234 
+
+increases in mitochondrial content and respiratory function, as well as angiogenesis in 235 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+9
+
+skeletal muscle, but not for fiber type shifting or transformation. Despite impaired 236 
+
+mitochondrial and angiogenic adaptations, Ampk 
+
+a2(T172A) KI mice exhibited normal 237 
+
+improvements in endurance exercise capacity and metabolic homeostasis with training. 238 
+
+Thus, while these findings reveal the importance of AMPK a2 T172 activation, they also 239 
+
+challenge the prevailing view that mitochondrial and angiogenic adaptations in skeletal 240 
+
+muscle are required for enhanced exercise capacity. 241 
+
+242 
+
+There are various instances of experimental evidence supporting our findings regarding 243 
+
+the role of AMPK in mitochondrial adaptation in response to exercise. First, acute treadmill 244 
+
+running-induced mRNA expression of mitochondrial and oxidative genes was attenuated 245 
+
+in muscle-specific Ampk 
+
+a1/2 knockout (KO) mice (44). Furthermore, long-term VWR 246 
+
+promoted mitochondrial respiratory and Sod2 proteins in WT mice but not in muscle-247 
+
+specific Ampk 
+
+a2 kinase dead (KD) mice (37). Here, we used a new model system and 248 
+
+obtained comprehensive evidence by expanding our measurements to mitochondrial 249 
+
+ultra-structure and respiratory function as well as reactive oxygen species generation. Our 250 
+
+findings support the notion that AMPK a2 T172 activation is required for endurance 251 
+
+training-induced mitochondrial adaptation in skeletal muscle. However, studies using 252 
+
+genetically modified mice, including skeletal muscle-specific knockout of Ampk a253 
+
+subunit(s) or overexpression of an inactive Ampk 
+
+a2 (DN), reported little impact of the loss 254 
+
+of AMPK on exercise training-induced increases of mitochondrial proteins (44, 45, 47). 255 
+
+Those discrepancies may reflect altered signaling landscape due to the disruptive nature 256 
+
+of those genetic models. In this context, our KI model provides a distinct advantage by 257 
+
+preserving the stoichiometry of AMPK while selectively abolishing canonical activation at 258 
+
+AMPK a2 T172. 259 
+
+260 
+
+The evidence of the role AMPK in exercise training-induced angiogenesis is skeletal 261 
+
+muscle is less abundant and definitive. In one study, acute treadmill running led to 262 
+
+increased expression of Vegf mRNA, an important regulator for capillary maintenance and 263 
+
+angiogenesis, in an AMPK a-dependent manner (44), whereas, in another study, long-term 264 
+
+voluntary wheel running resulted in increased capillary density and fiber-type 265 
+
+transformation toward a more oxidative phenotype in skeletal muscle in both WT and 266 
+
+muscle-specific transgenic mice of inactive Ampk 
+
+a2 (DN) with a greater induction of Vegf 267 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+10 
+
+mRNA in DN mice compared with WT mice (66). Our findings are consistent with those of 268 
+
+the first study. In a recent study we used phosphoproteomic analysis in skeletal muscle to 269 
+
+reveal that Ampk 
+
+a2(T172A) KI mice had a significant perturbation in eNOS (Nos3) 270 
+
+signaling in response to an acute bout of exhaustive exercise (51). In fact, eNOS has been 271 
+
+shown to be essential for ischemia-induced vascular remodeling in skeletal muscle (67), 272 
+
+and inhibition of NOS activity blocked VEGF and VEGFR2 expression and angiogenesis 273 
+
+induced by chronic electrical stimulation of motor nerve, an in vivo model mimicking 274 
+
+endurance exercise (68). Our findings suggest that AMPK a2 T172 activation is required 275 
+
+for endurance training-induced angiogenesis in skeletal muscle. 276 
+
+277 
+
+Considering present and previous results, a remaining question concerns the mechanism 278 
+
+by which AMPK activation may trigger adaptive processes in skeletal muscles following 279 
+
+each bout of endurance exercise. AMPK has been shown to directly phosphorylate PGC-280 
+
+1a (38), a master regulator of mitochondrial biogenesis and angiogenesis in skeletal 281 
+
+muscle (69-71), and PGC-1 a’s nuclear/mitochondrial translocation and subsequent 282 
+
+transcriptional activities have been shown to be dependent on AMPK (72-74). Importantly, 283 
+
+exercise induced-mitochondrial biogenesis and angiogenesis, but not fiber-type 284 
+
+transformation, in skeletal muscle have been shown to be dependent on Pgc-1 a (39, 40). 285 
+
+It is important to note that our findings in the current study phenocopied these previous 286 
+
+studies, supporting that AMPK activation in concert with PGC-1 a in inducing mitochondrial 287 
+
+biogenesis and angiogenesis, but not to be responsible for fiber type transformation in 288 
+
+skeletal muscle in response to endurance training. 289 
+
+290 
+
+Increased mitochondrial content and respiratory enzyme activity and improved capillary 291 
+
+density in skeletal muscle are classically linked to functional improvements by exercise 292 
+
+training (2, 8, 14, 17, 19, 75). These adaptations may reduce metabolic perturbation during 293 
+
+exercise with enhanced fat oxidation and lactate clearance, leading to an improved 294 
+
+intramyocellular homeostasis and, thereby, endurance exercise capacity (12, 18). 295 
+
+Consistently, a recent study by García-Domínguez et al. reported that mitochondrial 296 
+
+adaptations are functionally required for exercise-induced improvements in exercise 297 
+
+capacity (14). An intriguing and unexpected finding of the present study is that exercise 298 
+
+training-induced mitochondrial and angiogenic adaptations were ameliorated in KI mice, 299 
+
+yet endurance exercise capacity and substrate selection during VO 2max testing were 300 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+11 
+
+improved to a similar extent as in WT mice, which are very similar to the findings observed 301 
+
+in mice with muscle-specific deletion of the master gene of mitochondrial remodeling , Pgc-302 
+
+1
+
+a (76). Thus, several interpretations of the data are possible. Our findings can be 303 
+
+interpreted to mean that exercise-induced mitochondrial biogenesis and angiogenesis in 304 
+
+skeletal muscle are not required for the improved maximal exercise capacity following 305 
+
+endurance training in adult mice (Fig. 4 I). It could also mean that respiratory capacity in 306 
+
+mouse muscle is in surplus to begin with. And, finally, unmeasured factors, such as 307 
+
+sarcolemmal and mitochondrial monocarboxylate transporter (MCT) abundances (77) that 308 
+
+are involved in lactate clearance (53, 54, 78), were involved. 309 
+
+310 
+
+Over the years there have been suggestions that central factors, such as cardiac output, 311 
+
+pulmonary system and blood flow, are main determining factor for 𝑉 ̇ O2max and endurance 312 
+
+capacity in healthy, untrained adult subjects (13, 79, 80), whereas peripheral factors, such 313 
+
+as mitochondrial mass in skeletal muscle, may become limiting during endurance 314 
+
+exercise, aging and disease states (81, 82). Alternatively, classic and current findings may 315 
+
+be interpreted to mean that our bodies are elegantly built with multiple redundancies in 316 
+
+the regulation of carbon and oxygen flows, and their matching, under diverse 317 
+
+circumstances. Thus, as in the present investigation, alteration of a single gene may 318 
+
+produce ambiguous results when obviously multiple enzyme and organ systems are 319 
+
+involved in controlling exercise endurance under diverse circumstances 320 
+
+321 
+
+Conclusion 322 
+
+Phosphorylation of AMPK a2 T172 is a critical regulatory step in the structural and 323 
+
+bioenergetic remodeling processes in skeletal muscle in response to endurance training 324 
+
+in young, healthy animals. However, these adaptations are not obligatorily required for the 325 
+
+improvement of exercise capacity following training. These findings reinforce the 326 
+
+complexity and elegant redundancy of whole-body functional adaptation to exercise 327 
+
+training. 328 
+
+329 
+
+Materials and Methods 330 
+
+Animals 331 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+12 
+
+All experimental procedures were approved by the Institutional Animal Care and Use 332 
+
+Committee at the Virginia Tech (protocol No. 22-251). To ascertain the functional role of 333 
+
+the Ampk a2 (threonine 172), we performed CRISPR/Cas9-mediated gene editing and 334 
+
+developed loss-of-function Ampk 
+
+a2 (T172A) mice with mutation of the critical activation 335 
+
+phosphorylation site threonine to alanine. For experiments in the present study, Ampk 
+
+a2336 
+
+(T172A) KI mice (in C57BL/6 background) were generated at the Genetically Engineered 337 
+
+Murine Model (GEMM) core facility at the University of Virginia. Both sexes of Ampk 
+
+a2338 
+
+(T172A) KI and age-matched WT C57BL/6 controls were used for experiments. Mice were 339 
+
+assigned randomly to different experimental groups (n = 17-18; male = 9-10/group, female 340 
+
+= 7-9/group). Sedentary mice were group housed (2-4 mice per cage), exercise trained 341 
+
+mice were housed individually in VWR cages, in temperature-controlled (21 °C) quarters 342 
+
+with a 12:12-h light-dark cycle and ad libitum access to water and normal chow (Purina). 343 
+
+Acute treadmill running 344 
+
+Acute endurance exercise was conducted by using the Exercise 3/6 Treadmill (Columbus 345 
+
+Instruments, Columbus, OH, USA) following a protocol described before (51, 83). 346 
+
+Electrical stimulation 347 
+
+Nerve-stimulated contraction was conducted in vivo under anesthesia using the Aurora 348 
+
+Whole Animal System according to our previously published procedure (84).The 349 
+
+frequency stimulation was consisted of a 10 Hz stimulation frequency, 0.25 ms stimulation 350 
+
+duration for 30 min per session for 4 sessions (2 hrs in total). Immediately after the 351 
+
+electrical stimulation procedure, plantaris muscle tissue was collected and stored at -80°C 352 
+
+upon further analysis. 353 
+
+Exhaustive treadmill running test 354 
+
+Endurance capacity was assessed by an exhaustive treadmill running test for all 355 
+
+experimental mice according to our previous published studies (83, 85, 86). 356 
+
+Glucose tolerance test 357 
+
+Glucose tolerance test was performed according to our published procedure (83) 24 hrs 358 
+
+after the last bout of voluntary wheel running. 359 
+
+VO2max treadmill running test 360 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+13 
+
+All mice were tested by the Oxymax Metabolic Treadmill System (Columbus Instruments, 361 
+
+Columbus, OH, USA) (51). 362 
+
+Tissue preparation & Western Blot 363 
+
+Mice were euthanized under 2.5% isoflurane at the time of skeletal muscle harvest. Mice 364 
+
+were fasted overnight before tissue collections. The plantaris, gastrocnemius, soleus, 365 
+
+heart and tibia were removed with surgical tools rinsed in 1X PBS, weighed and prepared 366 
+
+for different assays accordingly. For western blot, tissues were homogenized in glass 367 
+
+homogenizers with protein sample buffer containing 50 mM Tris-HCL, pH 7.4, 0.01% 368 
+
+bromophenol blue, 10% glycerol, 1% sodium dodecyl sulfate (SDS), 127 mM 2-369 
+
+mercaptoethanol, and 20 mM dithiothreitol, supplemented with protease inhibitor cocktails 370 
+
+and phosphatase inhibitor cocktail tablets (Sigma-Aldrich). Homogenized tissue lysates 371 
+
+were then boiled in a heat block at 98 °C for 5 min and stored in -70 °C. Protein 372 
+
+concentration was determined by the RCDC protein assay kit (Biorad). Protein lysates 373 
+
+were subjected to sodium dodecyl sulfate-polyacrylamide gel electrophoresis at 100V for 374 
+
+~2 hrs, and transferred onto nitrocellulose membranes at 80V for 2 hrs. Membranes were 375 
+
+probed with the following primary antibodies at a 1:1000 dilution: targeting phospho-376 
+
+Ampk a1/2 (Thr172) (CST, 2535), Ampk a1/2 (CST, 2532), phospho-Acc (CST, 3661), 377 
+
+phospho-Ulk1(CST, 5869), Ulk1 (Sigma-Aldrich, A7481), phospho-Akt (CST, 4060), Akt 378 
+
+(CST, 9272), Cox4 (CST, 4844), cytochrome c (CST, 4272), Vdac (CST, 4866), Sod2 379 
+
+(CST, 13141), total Oxphos cocktail (Abcam, ab110413) Apool (Proteintech, 28514-1-AP), 380 
+
+Chchd3 (Proteintech, 25625-1-AP), Immt (Proteintech, 10179-1-AP), Samm50 381 
+
+(Proteintech, 28679-1-AP), Gapdh (CST, 2118). Secondary antibodies were goat anti-382 
+
+rabbit IR800 and anti-mouse IR680. Membranes were scanned using the odyssey infrared 383 
+
+imaging system (LICOR). Proteins were analyzed and normalized to a common protein 384 
+
+standard loaded on gel. 385 
+
+Immunofluorescence 386 
+
+Skeletal muscle fiber type and capillary density were determined by immunofluorescence 387 
+
+staining in plantaris muscles as previously described (17, 39). Rat anti-CD31 (MCA1364, 388 
+
+Serotec) followed by mouse anti-MHC I (BF-F8) and anti-MHC IIa antibody (SC71), 389 
+
+followed by appropriate fluorophore-conjugated secondary antibodies. Images were 390 
+
+acquired using a Keyence BZ-X800 Series Fluorescence Microscope under identical 391 
+
+settings across samples. Muscle fiber types were classified based on fluorescence 392 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+14 
+
+signals, with type I and type IIa fibers identified by specific staining, and unstained fibers 393 
+
+categorized as type IIb + IId/x. Fiber type distribution was quantified across the entire 394 
+
+muscle cross-section at x4 magnification. Capillary density was assessed by quantifying 395 
+
+CD31-positive puncta relative to tissue area at 20x magnification. In addition, capillary 396 
+
+contacts per fiber type were determined by counting the number of capillaries surrounding 397 
+
+individual fiber types. 398 
+
+Transmission electron microscope (TEM) 399 
+
+Plantaris muscle tissue were harvested from mice and prepared accordingly to TEM core 400 
+
+facility. Muscle tissues were fixed overnight at 4 °C in 2.5% glutaraldehyde and 4% 401 
+
+paraformaldehyde in 0.1 M NaCacodylate buffer (pH 7.4). After buffer washes, samples 402 
+
+were post-fixed in 2% osmium tetroxide with 1.5% potassium ferrocyanide for 1h at room 403 
+
+temperature, followed by 1% uranyl acetate stain in 50% ethanol for 1 h. Dehydration was 404 
+
+carried out in graded ethanol (70%, 90%, 100%), then tissue were infiltrated with the 405 
+
+EPON/propylene oxide mixture overnight and followed by embedded in 100% EPON 406 
+
+resin. Ultrathin sections were cut and collected on copper grids. Samples were examined 407 
+
+under the FEI Tecnai (G2 Spirit Twin) transmission electron microscope (ThermoFisher 408 
+
+Scientific, Hillsboro, OR, USA) at 120 kV with a magnification of x1200. To avoid sampling 409 
+
+bias, all samples were assigned anonymous codes, and all analyses were conducted 410 
+
+blindly. Mitochondrial features were quantified using a two-dimensional serological 411 
+
+method. For each sample, ten random images were acquired and analyzed with NIH 412 
+
+imageJ software. A defined 9 ´9 grid was superimposed on each image. The relative 413 
+
+mitochondrial volume density (Mito VD ), define as the volume of mitochondria per volume 414 
+
+of muscle fiber, was estimated by counting the number of grid intersections falling on 415 
+
+mitochondria and dividing by the total number of grid points. Mitochondrial number 416 
+
+(mitochondrial profiles per area, Mito P) was quantified by the number of mitochondria per 417 
+
+unit cytoplasmic area. Individual mitochondrial features were quantified by free hand-418 
+
+drawing tool of ImageJ to quantify mitochondrial reticulum dimension, feret diameter, 419 
+
+perimeter, aspect ratio and circularity. 420 
+
+421 
+
+Preparation of Isolated mitochondria from skeletal muscle 422 
+
+The procedure of isolating mitochondria was described in our previous published study 423 
+
+(87). Briefly, mice plantaris muscle were harvested and then, homogenized in a 1000 mL 424 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+15 
+
+of cold FRAC buffer (0.03 mM fatty acid-free BSA, 70 mM sucrose, 210 mM Mannitol, 5 425 
+
+mM HEPES, and 1 mM EGTA) through an electrical tissue homogenizer (BioSpec) at 4 426 
+
+°C for ~30 seconds. Homogenized tissues were then spun at 800X g for 10 minutes at 4 427 
+
+°C. Supernatant were then collected and spun at 9000X g for 10 minutes at 4 °C. The 428 
+
+resultant pellets were collected and resuspended in FRAC buffer (without BSA) for protein 429 
+
+concentration determination by the Bradford assay (Thermo-Fischer, Agawam, MA, USA). 430 
+
+High-resolution respirometry 431 
+
+High resolution respirometry was used to assess mitochondrial respiratory rate ( JO2) or 432 
+
+oxygen consumption rate (OCR) through Oroboros O2k (Innsbruck, Austria). The creatine 433 
+
+kinase (CK) clamp technique was employed to evaluate JO2 of isolated mitochondria from 434 
+
+plantaris muscle. Compared to conventional ADP derived approach, the CK technique 435 
+
+takes advantage of enzymatic reaction of CK to clamp ATP:ADP under a physiologically 436 
+
+relevant range (Fig. 4 A and B)(88, 89). Through this platform, we were able to also 437 
+
+measure the metabolic flexibility or mitochondrial conductance by having sequential 438 
+
+phosphocreatine (PCr) titrations to create different levels of ATP free energies ( DGATP ). 439 
+
+Theoretically, JO2decreases when DGATP decreases and vice versa, when electron 440 
+
+transport chain (ETC) is tightly coupled to the changing demand for ATP re-synthesis. On 441 
+
+days of the experiment, Oroboros O2k chambers were warmed to 37ºC and set to 500 442 
+
+rpm stirrer speed and filled with Buffer D (105 mM K-MES potassium salt, 30 mM KCl, 1 443 
+
+mM EGTA, 10 mM KH 2PO 4, 5 mM MgCl 2-6H 2O, 0.05% BSA, pH7.1) to record the 100% 444 
+
+air saturation, followed by saturating sodium dithionite (Sigma S1256) to record zero-point 445 
+
+calibration. Following calibration, chambers were washed thoroughly with water, then 446 
+
+refilled with Buffer D supplemented with 5mM creatine monohydrate (Sigma C0780). 10ug 447 
+
+of mitochondria based on the Braford assay of each sample was added into each 448 
+
+chamber, energized by 5mM pyruvate and 2.5mM malate (non-phosphorylating 449 
+
+respiration). Maximal respiratory flux was measured by adding 20mM creatine kinase, 450 
+
+1mM PCr and 5mM ATP, which generates a DGATP of -12.94 kcal/mol. Cytochrome C 451 
+
+(0.005mM) was added to evaluate the membrane integrity of mitochondria with a threshold 452 
+
+of 10% increase in flux to be exclusionary. Finally, sequential PCr titrations was performed 453 
+
+(3, 6, 15, 30mM) to create 4 different free energy states ( DGATP = -13.38, -13.71, -14.12, -454 
+
+14.45 kcal/mol, respectively) to evaluate the corresponding mitochondrial respiratory flux 455 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+16 
+
+changes (conductance). The calculation of DGATP for CK bioenergetic clamp can be found 456 
+
+here: https://dmpio.github.io/bioenergetic-calculators/ck_clamp/. 457 
+
+458 
+
+We evaluated mitochondrial ADP sensitivity defined by [ADP] 50 Km, the ADP 459 
+
+concentration required to reach half maximal respiratory flux, by using Michaelis-Menten 460 
+
+kinetics. ADP concentrations were calculated as previously described (90). 461 
+
+Measurement of mitochondrial ROS emission 462 
+
+Mitochondrial reactive oxygen species (ROS) emission was determined using Amplex 463 
+
+Ultra Red (AUR), based on the concept that horseradish peroxidase (HRP) catalyzes the 464 
+
+Hydrogen peroxide (H 2O2)-dependent oxidation of non-fluorescent Amplex Red to 465 
+
+fluorescent resorufin. Superoxide dismutase was added to the reaction mixture to ensure 466 
+
+that all superoxide is converted to H 2O2. Briefly, a standard curve for H 2O2 (25-250 nM) 467 
+
+was prepared using buffer D, containing AUR stock solution (0.02 mM; prepared according 468 
+
+to the manufacturer’s instructions), HRP (1U/mL), SOD (20 U/mL), auranofin (AF; 0.0001 469 
+
+mM), malate (2.5 mM), pyruvate (5 mM), creatine kinase (20 mM), phosphocreatine (PCr; 470 
+
+1mM), and ATP (5 mM) in a final volume of 0.6 mL. Fluorescence measurements were 471 
+
+performed using a Horiba Quantmaster 4 Fluorometer (Edison, NJ, USA) under the 472 
+
+following conditions: 37 °C, excitation/emission wavelengths of 565/600 nm, stirring at 500 473 
+
+rpm, and a 0.875 mL cuvette with an adaptor. Data collection set to 1-second intervals 474 
+
+with a 60-second pause, over a 4-minute period for each stage. The H 2O2 concentration 475 
+
+in the reaction will range from 25 to 250 nM, using a 0.1 mM H 2O2 stock solution. The 476 
+
+background fluorescence was subtracted using FelixFL software after 10 seconds of 477 
+
+exposure prior to AUR addition with an open window. Further background correction was 478 
+
+applied to each run based on the fluorescence rate before H 2O2 addition. The H 2O2479 
+
+concentration was calculated as previously described range (88, 89). Following 480 
+
+mitochondrial isolation from the plantaris and protein quantification (described above), 10 481 
+
+μg of mitochondria each sample was added to the pre-warmed cuvette under the same 482 
+
+conditions as the O2k assay. Electron leak was expressed as a percentage of total flux, 483 
+
+calculated as the ratio of H 2O2 production ( JH2O2) to oxygen consumption ( JO2) ( JH2O2 /484 
+
+JO2 = % leak). 485 
+
+Statistical Analyses 486 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+17 
+
+Data are presented as means ± SE. Experimental outcome measures with only one 487 
+
+variable was analyzed using Student’s t test. When there are two variables (Exercise ´488 
+
+Genotype), outcome measures were analyzed via two-way ANOVA, with Tukey post hoc 489 
+
+analyses when there is a significant interaction. Statistical significance was set as p <490 
+
+0.05. 491 
+
+Acknowledgments: 492 
+
+We thank Wenqing Shen, A Robb Burgart and Mei Zhang for their technical support. 493 
+
+Funding: 494 
+
+The present study was supported by NIH-R01AR050429, NIH-R01AR077440 and a grant 495 
+
+by Red Gates Foundation to Z.Y. X.M was supported by a grant from the Lyerly 496 
+
+Foundation. R.N.M was supported by grants from American Diabetes Association 1-26-497 
+
+PDF-0629 and American College of Sports Medicine Endowment #5364. 498 
+
+Author Contributions: 499 
+
+X.M. and Z.Y. conceived and designed the studies; X.M. and R.N.M. performed the 500 
+
+experiments; X.M., R.N.M., and K.T. analyzed the data; X.M., R.N.M., and Z.Y. 501 
+
+interpreted the results of experiments; X.M., R.N.M. and Z.Y. prepared the figures; X.M. 502 
+
+drafted the manuscript; X.M., R.N.M., K.T., F.W.B., G.A.B. and Y.Z. edited and revised 503 
+
+the manuscript; X.M., R.N.M., K.T., F.W.B, G.A.B. and Z.Y. approved final version of the 504 
+
+manuscript. 505 
+
+506 
+
+Data sharing plans: 507 
+
+All data is included in the manuscript and/or supporting information. 508 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+18 
+
+References 509 
+
+1. Patel PN, Horenstein MS, Zwibel H. Exercise Physiology. StatPearls. Treasure Island 510 (FL)2026. 511 2. Davies KJ, Packer L, Brooks GA. Biochemical adaptation of mitochondria, muscle, and 512 whole-animal respiration to endurance training. Arch Biochem Biophys. 1981;209(2):539-54. 513 PubMed PMID: 7294809. 514 3. Brooks GA. Bioenergetics of exercising humans. Compr Physiol. 2012;2(1):537-62. doi: 515 10.1002/cphy.c110007. PubMed PMID: 23728979. 516 4. Kodama S. Cardiorespiratory Fitness as a Quantitative Predictor of All-Cause Mortality 517 and Cardiovascular Events in Healthy Men and Women. JAMA. 2009;301(19):2024. doi: 518 10.1001/jama.2009.681. 519 5. Warburton DE, Nicol CW, Bredin SS. Health benefits of physical activity: the evidence. 520 CMAJ. 2006;174(6):801-9. doi: 10.1503/cmaj.051351. PubMed PMID: 16534088; PubMed 521 Central PMCID: PMC1402378. 522 6. Bull FC, Al-Ansari SS, Biddle S, Borodulin K, Buman MP, Cardon G, et al. World Health 523 Organization 2020 guidelines on physical activity and sedentary behaviour. Br J Sports Med. 524 2020;54(24):1451-62. doi: 10.1136/bjsports-2020-102955. PubMed PMID: 33239350; PubMed 525 Central PMCID: PMC7719906. 526 7. Febbraio MA, Pedersen BK. Exercise as a therapeutic intervention for long-lasting and 527 chronic diseases. Cell Metab. 2026;38(5):844-62. Epub 20260323. doi: 528 10.1016/j.cmet.2026.02.017. PubMed PMID: 41875883. 529 8. Holloszy JO. Biochemical adaptations in muscle. Effects of exercise on mitochondrial 530 oxygen uptake and respiratory enzyme activity in skeletal muscle. J Biol Chem. 531 1967;242(9):2278-82. PubMed PMID: 4290225. 532 9. Holloszy JO, Booth FW. Biochemical adaptations to endurance exercise in muscle. Annu 533 Rev Physiol. 1976;38:273-91. doi: 10.1146/annurev.ph.38.030176.001421. PubMed PMID: 534 130825. 535 10. Baldwin KM, Klinkerfuss GH, Terjung RL, Mole PA, Holloszy JO. Respiratory capacity of 536 white, red, and intermediate muscle: adaptative response to exercise. Am J Physiol. 537 1972;222(2):373-8. doi: 10.1152/ajplegacy.1972.222.2.373. PubMed PMID: 4333578. 538 11. Mole PA, Oscai LB, Holloszy JO. Adaptation of muscle to exercise. Increase in levels of 539 palmityl Coa synthetase, carnitine palmityltransferase, and palmityl Coa dehydrogenase, and in 540 the capacity to oxidize fatty acids. J Clin Invest. 1971;50(11):2323-30. doi: 10.1172/JCI106730. 541 PubMed PMID: 5096516; PubMed Central PMCID: PMC292174. 542 12. Brooks GA, Mercier J. Balance of carbohydrate and lipid utilization during exercise: the 543 "crossover" concept. J Appl Physiol (1985). 1994;76(6):2253-61. doi: 544 10.1152/jappl.1994.76.6.2253. PubMed PMID: 7928844. 545 13. Bassett DR, Jr., Howley ET. Limiting factors for maximum oxygen uptake and 546 determinants of endurance performance. Med Sci Sports Exerc. 2000;32(1):70-84. doi: 547 10.1097/00005768-200001000-00012. PubMed PMID: 10647532. 548 14. Garcia-Dominguez E, Garcia-Dominguez C, Cabrera-Alarcon JL, Munoz-Hernandez MDM, 549 Hernansanz-Agustin P, Curtabbi A, et al. Mitochondrial remodeling in skeletal muscle underlies 550 exercise-induced reversal of age-associated functional decline in mice and humans. Proc Natl 551 Acad Sci U S A. 2026;123(14):e2508286123. Epub 20260330. doi: 10.1073/pnas.2508286123. 552 PubMed PMID: 41911459. 553 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+19 15. Carrow RE, Brown RE, Van Huss WD. Fiber sizes and capillary to fiber ratios in skeletal 554 muscle of exercised rats. Anat Rec. 1967;159(1):33-9. doi: 10.1002/ar.1091590106. PubMed 555 PMID: 6062782. 556 16. Olfert IM, Breen EC, Mathieu-Costello O, Wagner PD. Skeletal muscle capillarity and 557 angiogenic mRNA levels after exercise training in normoxia and chronic hypoxia. J Appl Physiol 558 (1985). 2001;91(3):1176-84. doi: 10.1152/jappl.2001.91.3.1176. PubMed PMID: 11509513. 559 17. Waters RE, Rotevatn S, Li P, Annex BH, Yan Z. Voluntary running induces fiber type-560 specific angiogenesis in mouse skeletal muscle. Am J Physiol Cell Physiol. 2004;287(5):C1342-8. 561 Epub 20040714. doi: 10.1152/ajpcell.00247.2004. PubMed PMID: 15253894. 562 18. Holloszy JO, Coyle EF. Adaptations of skeletal muscle to endurance exercise and their 563 metabolic consequences. J Appl Physiol Respir Environ Exerc Physiol. 1984;56(4):831-8. doi: 564 10.1152/jappl.1984.56.4.831. PubMed PMID: 6373687. 565 19. Lundby C, Jacobs RA. Adaptations of skeletal muscle mitochondria to exercise training. 566 Exp Physiol. 2016;101(1):17-22. Epub 20151117. doi: 10.1113/EP085319. PubMed PMID: 567 26440213. 568 20. Jacobs RA, Rasmussen P, Siebenmann C, Diaz V, Gassmann M, Pesta D, et al. 569 Determinants of time trial performance and maximal incremental exercise in highly trained 570 endurance athletes. J Appl Physiol (1985). 2011;111(5):1422-30. Epub 20110901. doi: 571 10.1152/japplphysiol.00625.2011. PubMed PMID: 21885805. 572 21. Heyne E, Zeeb S, Junker C, Petzinna A, Schrepper A, Doenst T, et al. Exercise Training 573 Differentially Affects Skeletal Muscle Mitochondria in Rats with Inherited High or Low Exercise 574 Capacity. Cells. 2024;13(5). Epub 20240224. doi: 10.3390/cells13050393. PubMed PMID: 575 38474357; PubMed Central PMCID: PMC10931189. 576 22. Vigelso A, Andersen NB, Dela F. The relationship between skeletal muscle mitochondrial 577 citrate synthase activity and whole body oxygen uptake adaptations in response to exercise 578 training. Int J Physiol Pathophysiol Pharmacol. 2014;6(2):84-101. Epub 20140712. PubMed 579 PMID: 25057335; PubMed Central PMCID: PMC4106645. 580 23. Jacobs RA, Fluck D, Bonne TC, Burgi S, Christensen PM, Toigo M, et al. Improvements in 581 exercise performance with high-intensity interval training coincide with an increase in skeletal 582 muscle mitochondrial content and function. J Appl Physiol (1985). 2013;115(6):785-93. Epub 583 20130620. doi: 10.1152/japplphysiol.00445.2013. PubMed PMID: 23788574. 584 24. Fritzen AM, Thogersen FB, Thybo K, Vissing CR, Krag TO, Ruiz-Ruiz C, et al. Adaptations in 585 Mitochondrial Enzymatic Activity Occurs Independent of Genomic Dosage in Response to 586 Aerobic Exercise Training and Deconditioning in Human Skeletal Muscle. Cells. 2019;8(3). Epub 587 20190312. doi: 10.3390/cells8030237. PubMed PMID: 30871120; PubMed Central PMCID: 588 PMC6468422. 589 25. McKendry J, Joanisse S, Baig S, Liu B, Parise G, Greig CA, et al. Superior Aerobic Capacity 590 and Indices of Skeletal Muscle Morphology in Chronically Trained Master Endurance Athletes 591 Compared With Untrained Older Adults. J Gerontol A Biol Sci Med Sci. 2020;75(6):1079-88. doi: 592 10.1093/gerona/glz142. PubMed PMID: 31155637. 593 26. Murias JM, Kowalchuk JM, Ritchie D, Hepple RT, Doherty TJ, Paterson DH. Adaptations in 594 capillarization and citrate synthase activity in response to endurance training in older and young 595 men. J Gerontol A Biol Sci Med Sci. 2011;66(9):957-64. Epub 20110629. doi: 596 10.1093/gerona/glr096. PubMed PMID: 21715648. 597 27. Olfert IM, Howlett RA, Wagner PD, Breen EC. Myocyte vascular endothelial growth 598 factor is required for exercise-induced skeletal muscle angiogenesis. Am J Physiol Regul Integr 599 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+20 Comp Physiol. 2010;299(4):R1059-67. Epub 20100804. doi: 10.1152/ajpregu.00347.2010. 600 PubMed PMID: 20686173; PubMed Central PMCID: PMC2957383. 601 28. Prior SJ, Ryan AS, Blumenthal JB, Watson JM, Katzel LI, Goldberg AP. Sarcopenia Is 602 Associated With Lower Skeletal Muscle Capillarization and Exercise Capacity in Older Adults. J 603 Gerontol A Biol Sci Med Sci. 2016;71(8):1096-101. Epub 20160217. doi: 10.1093/gerona/glw017. 604 PubMed PMID: 26888434; PubMed Central PMCID: PMC5007615. 605 29. Spaulding HR, Yan Z. AMPK and the Adaptation to Exercise. Annual Review of 606 Physiology. 2022;84(1):209-27. doi: 10.1146/annurev-physiol-060721-095517. 607 30. O'Neill HM. AMPK and Exercise: Glucose Uptake and Insulin Sensitivity. Diabetes Metab 608 J. 2013;37(1):1-21. Epub 20130215. doi: 10.4093/dmj.2013.37.1.1. PubMed PMID: 23441028; 609 PubMed Central PMCID: PMC3579147. 610 31. Hardie DG, Ross FA, Hawley SA. AMPK: a nutrient and energy sensor that maintains 611 energy homeostasis. Nature Reviews Molecular Cell Biology. 2012;13(4):251-62. doi: 612 10.1038/nrm3311. 613 32. Lee-Young RS, Griffee SR, Lynes SE, Bracy DP, Ayala JE, McGuinness OP, et al. Skeletal 614 muscle AMP-activated protein kinase is essential for the metabolic response to exercise in vivo. J 615 Biol Chem. 2009;284(36):23925-34. Epub 20090612. doi: 10.1074/jbc.M109.021048. PubMed 616 PMID: 19525228; PubMed Central PMCID: PMC2781986. 617 33. Kjøbsted R, Roll JLW, Jørgensen NO, Birk JB, Foretz M, Viollet B, et al. AMPK and TBC1D1 618 Regulate Muscle Glucose Uptake After, but Not During, Exercise and Contraction. Diabetes. 619 2019;68(7):1427-40. doi: 10.2337/db19-0050. 620 34. Fentz J, Kjobsted R, Birk JB, Jordy AB, Jeppesen J, Thorsen K, et al. AMPKalpha is critical 621 for enhancing skeletal muscle fatty acid utilization during in vivo exercise in mice. FASEB J. 622 2015;29(5):1725-38. Epub 20150121. doi: 10.1096/fj.14-266650. PubMed PMID: 25609422. 623 35. Winder WW, Hardie DG. Inactivation of acetyl-CoA carboxylase and activation of AMP-624 activated protein kinase in muscle during exercise. Am J Physiol. 1996;270(2 Pt 1):E299-304. doi: 625 10.1152/ajpendo.1996.270.2.E299. PubMed PMID: 8779952. 626 36. Hamada T, Arias EB, Cartee GD. Increased submaximal insulin-stimulated glucose uptake 627 in mouse skeletal muscle after treadmill exercise. J Appl Physiol (1985). 2006;101(5):1368-76. 628 Epub 20060629. doi: 10.1152/japplphysiol.00416.2006. PubMed PMID: 16809629. 629 37. Brandauer J, Andersen MA, Kellezi H, Risis S, Frosig C, Vienberg SG, et al. AMP-activated 630 protein kinase controls exercise training- and AICAR-induced increases in SIRT3 and MnSOD. 631 Front Physiol. 2015;6:85. Epub 20150324. doi: 10.3389/fphys.2015.00085. PubMed PMID: 632 25852572; PubMed Central PMCID: PMC4371692. 633 38. Jäger S, Handschin C, St.-Pierre J, Spiegelman BM. AMP-activated protein kinase (AMPK) 634 action in skeletal muscle via direct phosphorylation of PGC-1α. Proceedings of the National 635 Academy of Sciences. 2007;104(29):12017-22. doi: 10.1073/pnas.0705070104. 636 39. Geng T, Li P, Okutsu M, Yin X, Kwek J, Zhang M, et al. PGC-1alpha plays a functional role 637 in exercise-induced mitochondrial biogenesis and angiogenesis but not fiber-type 638 transformation in mouse skeletal muscle. Am J Physiol Cell Physiol. 2010;298(3):C572-9. Epub 639 20091223. doi: 10.1152/ajpcell.00481.2009. PubMed PMID: 20032509; PubMed Central PMCID: 640 PMC3353735. 641 40. Chinsomboon J, Ruas J, Gupta RK, Thom R, Shoag J, Rowe GC, et al. The transcriptional 642 coactivator PGC-1alpha mediates exercise-induced angiogenesis in skeletal muscle. Proc Natl 643 Acad Sci U S A. 2009;106(50):21401-6. Epub 20091204. doi: 10.1073/pnas.0909131106. PubMed 644 PMID: 19966219; PubMed Central PMCID: PMC2795492. 645 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+21 41. Lin J, Wu H, Tarr PT, Zhang CY, Wu Z, Boss O, et al. Transcriptional co-activator PGC-1 646 alpha drives the formation of slow-twitch muscle fibres. Nature. 2002;418(6899):797-801. doi: 647 10.1038/nature00904. PubMed PMID: 12181572. 648 42. Kargl CK, Sullivan BP, Middleton D, York A, Burton LC, Brault JJ, et al. Peroxisome 649 proliferator-activated receptor gamma coactivator 1-alpha overexpression improves angiogenic 650 signalling potential of skeletal muscle-derived extracellular vesicles. Exp Physiol. 651 2023;108(2):240-52. Epub 20221201. doi: 10.1113/EP090874. PubMed PMID: 36454193; 652 PubMed Central PMCID: PMC9949767. 653 43. Tanner CB, Madsen SR, Hallowell DM, Goring DM, Moore TM, Hardman SE, et al. 654 Mitochondrial and performance adaptations to exercise training in mice lacking skeletal muscle 655 LKB1. Am J Physiol Endocrinol Metab. 2013;305(8):E1018-29. Epub 20130827. doi: 656 10.1152/ajpendo.00227.2013. PubMed PMID: 23982155; PubMed Central PMCID: 657 PMC3798697. 658 44. Fentz J, Kjobsted R, Kristensen CM, Hingst JR, Birk JB, Gudiksen A, et al. AMPKalpha is 659 essential for acute exercise-induced gene responses but not for exercise training-induced 660 adaptations in mouse skeletal muscle. Am J Physiol Endocrinol Metab. 2015;309(11):E900-14. 661 Epub 20150929. doi: 10.1152/ajpendo.00157.2015. PubMed PMID: 26419588. 662 45. Jorgensen SB, Treebak JT, Viollet B, Schjerling P, Vaulont S, Wojtaszewski JF, et al. Role 663 of AMPKalpha2 in basal, training-, and AICAR-induced GLUT4, hexokinase II, and mitochondrial 664 protein expression in mouse muscle. Am J Physiol Endocrinol Metab. 2007;292(1):E331-9. Epub 665 20060905. doi: 10.1152/ajpendo.00243.2006. PubMed PMID: 16954334. 666 46. Lee-Young RS, Ayala JE, Fueger PT, Mayes WH, Kang L, Wasserman DH. Obesity impairs 667 skeletal muscle AMPK signaling during exercise: role of AMPKα2 in the regulation of exercise 668 capacity in vivo. International Journal of Obesity. 2011;35(7):982-9. doi: 10.1038/ijo.2010.220. 669 47. Rockl KS, Hirshman MF, Brandauer J, Fujii N, Witters LA, Goodyear LJ. Skeletal muscle 670 adaptation to exercise training: AMP-activated protein kinase mediates muscle fiber type shift. 671 Diabetes. 2007;56(8):2062-9. Epub 20070518. doi: 10.2337/db07-0255. PubMed PMID: 672 17513699. 673 48. Chen Y, Muller JD. Determining the stoichiometry of protein heterocomplexes in living 674 cells with fluorescence fluctuation spectroscopy. Proc Natl Acad Sci U S A. 2007;104(9):3147-52. 675 Epub 20070216. doi: 10.1073/pnas.0606557104. PubMed PMID: 17307882; PubMed Central 676 PMCID: PMC1805531. 677 49. Steinberg GR, O'Neill HM, Dzamko NL, Galic S, Naim T, Koopman R, et al. Whole body 678 deletion of AMP-activated protein kinase beta2 reduces muscle AMPK activity and exercise 679 capacity. J Biol Chem. 2010;285(48):37198-209. Epub 20100920. doi: 10.1074/jbc.M110.102434. 680 PubMed PMID: 20855892; PubMed Central PMCID: PMC2988326. 681 50. O'Neill HM, Maarbjerg SJ, Crane JD, Jeppesen J, Jørgensen SB, Schertzer JD, et al. AMP-682 activated protein kinase (AMPK) β1β2 muscle null mice reveal an essential role for AMPK in 683 maintaining mitochondrial content and glucose uptake during exercise. Proceedings of the 684 National Academy of Sciences. 2011;108(38):16092-7. doi: 10.1073/pnas.1105062108. 685 51. Montalvo RN, Li X, Many GM, Sagendorf TJ, Yu Q, Shen W, et al. Ampk alpha2 T172 686 activation dictates exercise performance and energy transduction in skeletal muscle. Sci Adv. 687 2026;12(9):eaeb3338. Epub 20260225. doi: 10.1126/sciadv.aeb3338. PubMed PMID: 41739941; 688 PubMed Central PMCID: PMC12935046. 689 52. Clark SA, Chen ZP, Murphy KT, Aughey RJ, McKenna MJ, Kemp BE, et al. Intensified 690 exercise training does not alter AMPK signaling in human skeletal muscle. Am J Physiol 691 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+22 Endocrinol Metab. 2004;286(5):E737-43. Epub 20031223. doi: 10.1152/ajpendo.00462.2003. 692 PubMed PMID: 14693511. 693 53. Donovan CM, Brooks GA. Endurance training affects lactate clearance, not lactate 694 production. The American journal of physiology. 1983;244(1):E83-92. Epub 1983/01/01. 695 PubMed PMID: 6401405. 696 54. Bergman BC, Wolfel EE, Butterfield GE, Lopaschuk GD, Casazza GA, Horning MA, et al. 697 Active muscle and whole body lactate kinetics after endurance training in men. J Appl Physiol 698 (1985). 1999;87(5):1684-96. Epub 1999/11/24. doi: 10.1152/jappl.1999.87.5.1684. PubMed 699 PMID: 10562610. 700 55. Howald H, Hoppeler H, Claassen H, Mathieu O, Straub R. Influences of endurance 701 training on the ultrastructural composition of the different muscle fiber types in humans. 702 Pflugers Arch. 1985;403(4):369-76. doi: 10.1007/BF00589248. PubMed PMID: 4011389. 703 56. Andersen P, Henriksson J. Training induced changes in the subgroups of human type II 704 skeletal muscle fibres. Acta Physiol Scand. 1977;99(1):123-5. doi: 10.1111/j.1748-705 1716.1977.tb10361.x. PubMed PMID: 842360. 706 57. Green HJ, Thomson JA, Daub WD, Houston ME, Ranney DA. Fiber composition, fiber size 707 and enzyme activities in vastus lateralis of elite athletes involved in high intensity exercise. Eur J 708 Appl Physiol Occup Physiol. 1979;41(2):109-17. doi: 10.1007/BF00421658. PubMed PMID: 709 157274. 710 58. Cotter M, Hudlicka O, Vrbova G. Growth of capillaries during long-term activity in 711 skeletal muscle. Bibl Anat. 1973;11:395-8. PubMed PMID: 4789069. 712 59. van der Laan M, Horvath SE, Pfanner N. Mitochondrial contact site and cristae 713 organizing system. Curr Opin Cell Biol. 2016;41:33-42. Epub 20160407. doi: 714 10.1016/j.ceb.2016.03.013. PubMed PMID: 27062547. 715 60. Hoffman NJ, Parker BL, Chaudhuri R, Fisher-Wellman KH, Kleinert M, Humphrey SJ, et al. 716 Global Phosphoproteomic Analysis of Human Skeletal Muscle Reveals a Network of Exercise-717 Regulated Kinases and AMPK Substrates. Cell Metab. 2015;22(5):922-35. Epub 20151001. doi: 718 10.1016/j.cmet.2015.09.001. PubMed PMID: 26437602; PubMed Central PMCID: PMC4635038. 719 61. Nelson ME, Parker BL, Burchfield JG, Hoffman NJ, Needham EJ, Cooke KC, et al. 720 Phosphoproteomics reveals conserved exercise ‐stimulated signaling and AMPK regulation of 721 store ‐operated calcium entry. The EMBO Journal. 2019;38(24). doi: 722 10.15252/embj.2019102578. 723 62. Mu J, Brozinick JT, Jr., Valladares O, Bucan M, Birnbaum MJ. A role for AMP-activated 724 protein kinase in contraction- and hypoxia-regulated glucose transport in skeletal muscle. Mol 725 Cell. 2001;7(5):1085-94. doi: 10.1016/s1097-2765(01)00251-9. PubMed PMID: 11389854. 726 63. Sakamoto K, McCarthy A, Smith D, Green KA, Grahame Hardie D, Ashworth A, et al. 727 Deficiency of LKB1 in skeletal muscle prevents AMPK activation and glucose uptake during 728 contraction. EMBO J. 2005;24(10):1810-20. Epub 20050505. doi: 10.1038/sj.emboj.7600667. 729 PubMed PMID: 15889149; PubMed Central PMCID: PMC1142598. 730 64. Bergeron R, Ren JM, Cadman KS, Moore IK, Perret P, Pypaert M, et al. Chronic activation 731 of AMP kinase results in NRF-1 activation and mitochondrial biogenesis. Am J Physiol Endocrinol 732 Metab. 2001;281(6):E1340-6. doi: 10.1152/ajpendo.2001.281.6.E1340. PubMed PMID: 733 11701451. 734 65. Zong H, Ren JM, Young LH, Pypaert M, Mu J, Birnbaum MJ, et al. AMP kinase is required 735 for mitochondrial biogenesis in skeletal muscle in response to chronic energy deprivation. Proc 736 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+23 Natl Acad Sci U S A. 2002;99(25):15983-7. Epub 20021120. doi: 10.1073/pnas.252625599. 737 PubMed PMID: 12444247; PubMed Central PMCID: PMC138551. 738 66. Zwetsloot KA, Westerkamp LM, Holmes BF, Gavin TP. AMPK regulates basal skeletal 739 muscle capillarization and VEGF expression, but is not necessary for the angiogenic response to 740 exercise. J Physiol. 2008;586(24):6021-35. Epub 20081027. doi: 10.1113/jphysiol.2008.159871. 741 PubMed PMID: 18955383; PubMed Central PMCID: PMC2655430. 742 67. Yu J, deMuinck ED, Zhuang Z, Drinane M, Kauser K, Rubanyi GM, et al. Endothelial nitric 743 oxide synthase is critical for ischemic remodeling, mural cell recruitment, and blood flow 744 reserve. Proc Natl Acad Sci U S A. 2005;102(31):10999-1004. Epub 20050725. doi: 745 10.1073/pnas.0501444102. PubMed PMID: 16043715; PubMed Central PMCID: PMC1182413. 746 68. Milkiewicz M, Hudlicka O, Brown MD, Silgram H. Nitric oxide, VEGF, and VEGFR-2: 747 interactions in activity-induced angiogenesis in rat skeletal muscle. Am J Physiol Heart Circ 748 Physiol. 2005;289(1):H336-43. Epub 20050225. doi: 10.1152/ajpheart.01105.2004. PubMed 749 PMID: 15734877. 750 69. Lin J, Wu H, Tarr PT, Zhang C-Y, Wu Z, Boss O, et al. Transcriptional co-activator PGC-1α 751 drives the formation of slow-twitch muscle fibres. Nature. 2002;418(6899):797-801. doi: 752 10.1038/nature00904. 753 70. Benefield D, Abdelmageed Y, Fowler J, Smith S, Arias-Parbul K, Dunning C, et al. Adult 754 skeletal muscle peroxisome proliferator-activated receptor gamma -related coactivator 1 is 755 involved in maintaining mitochondrial content. Am J Physiol Regul Integr Comp Physiol. 756 2023;324(4):R470-R9. Epub 20230130. doi: 10.1152/ajpregu.00241.2022. PubMed PMID: 757 36717166; PubMed Central PMCID: PMC10026983. 758 71. Thom R, Rowe GC, Jang C, Safdar A, Arany Z. Hypoxic induction of vascular endothelial 759 growth factor (VEGF) and angiogenesis in muscle by truncated peroxisome proliferator-activated 760 receptor gamma coactivator (PGC)-1alpha. J Biol Chem. 2014;289(13):8810-7. Epub 20140206. 761 doi: 10.1074/jbc.M114.554394. PubMed PMID: 24505137; PubMed Central PMCID: 762 PMC3979394. 763 72. Smith BK, Mukai K, Lally JS, Maher AC, Gurd BJ, Heigenhauser GJF, et al. AMP ‐activated 764 protein kinase is required for exercise ‐induced peroxisome proliferator ‐activated receptor γ765 co ‐activator 1 α translocation to subsarcolemmal mitochondria in skeletal muscle. The Journal 766 of Physiology. 2013;591(6):1551-61. doi: 10.1113/jphysiol.2012.245944. 767 73. Little JP, Safdar A, Cermak N, Tarnopolsky MA, Gibala MJ. Acute endurance exercise 768 increases the nuclear abundance of PGC-1alpha in trained human skeletal muscle. Am J Physiol 769 Regul Integr Comp Physiol. 2010;298(4):R912-7. Epub 20100127. doi: 770 10.1152/ajpregu.00409.2009. PubMed PMID: 20106991. 771 74. Wu Z, Puigserver P, Andersson U, Zhang C, Adelmant G, Mootha V, et al. Mechanisms 772 controlling mitochondrial biogenesis and respiration through the thermogenic coactivator PGC-773 1. Cell. 1999;98(1):115-24. doi: 10.1016/S0092-8674(00)80611-X. PubMed PMID: 10412986. 774 75. Li P, Akimoto T, Zhang M, Williams RS, Yan Z. Resident stem cells are not required for 775 exercise-induced fiber-type switching and angiogenesis but are necessary for activity-dependent 776 muscle growth. Am J Physiol Cell Physiol. 2006;290(6):C1461-8. Epub 20060111. doi: 777 10.1152/ajpcell.00532.2005. PubMed PMID: 16407413. 778 76. Ballmann C, Tang Y, Bush Z, Rowe GC. Adult expression of PGC-1alpha and -1beta in 779 skeletal muscle is not required for endurance exercise-induced enhancement of exercise 780 capacity. Am J Physiol Endocrinol Metab. 2016;311(6):E928-E38. Epub 20161025. doi: 781 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+24 10.1152/ajpendo.00209.2016. PubMed PMID: 27780821; PubMed Central PMCID: 782 PMC5183883. 783 77. Leija RG, Arevalo JA, Xing D, Vazquez-Medina JP, Brooks GA. The mitochondrial lactate 784 oxidation complex: endpoint for carbohydrate carbon disposal. Am J Physiol Endocrinol Metab. 785 2025;328(1):E126-E36. Epub 2024/12/23 22:58. doi: 10.1152/ajpendo.00306.2024. PubMed 786 PMID: 39714986. 787 78. Dubouchaud H, Butterfield GE, Wolfel EE, Bergman BC, Brooks GA. Endurance training, 788 expression, and physiology of LDH, MCT1, and MCT4 in human skeletal muscle. American 789 journal of physiology Endocrinology and metabolism. 2000;278(4):E571-9. Epub 2000/04/06. 790 PubMed PMID: 10751188. 791 79. Saltin B, Strange S. Maximal oxygen uptake: "old" and "new" arguments for a 792 cardiovascular limitation. Med Sci Sports Exerc. 1992;24(1):30-7. PubMed PMID: 1548993. 793 80. Saltin B, Calbet JA. Point: in health and in a normoxic environment, VO2 max is limited 794 primarily by cardiac output and locomotor muscle blood flow. J Appl Physiol (1985). 795 2006;100(2):744-5. doi: 10.1152/japplphysiol.01395.2005. PubMed PMID: 16421282. 796 81. Haykowsky MJ, Brubaker PH, Stewart KP, Morgan TM, Eggebeen J, Kitzman DW. Effect 797 of endurance training on the determinants of peak exercise oxygen consumption in elderly 798 patients with stable compensated heart failure and preserved ejection fraction. J Am Coll 799 Cardiol. 2012;60(2):120-8. doi: 10.1016/j.jacc.2012.02.055. PubMed PMID: 22766338; PubMed 800 Central PMCID: PMC3429944. 801 82. Coen PM, Jubrias SA, Distefano G, Amati F, Mackey DC, Glynn NW, et al. Skeletal muscle 802 mitochondrial energetics are associated with maximal aerobic capacity and walking speed in 803 older adults. J Gerontol A Biol Sci Med Sci. 2013;68(4):447-55. Epub 20121009. doi: 804 10.1093/gerona/gls196. PubMed PMID: 23051977; PubMed Central PMCID: PMC3593613. 805 83. Laker RC, Drake JC, Wilson RJ, Lira VA, Lewellen BM, Ryall KA, et al. Ampk 806 phosphorylation of Ulk1 is required for targeting of mitochondria to lysosomes in exercise-807 induced mitophagy. Nature Communications. 2017;8(1). doi: 10.1038/s41467-017-00520-9. 808 84. Wilson RJ, Drake JC, Cui D, Ritger ML, Guan Y, Call JA, et al. Voluntary running protects 809 against neuromuscular dysfunction following hindlimb ischemia-reperfusion in mice. J Appl 810 Physiol (1985). 2019;126(1):193-201. Epub 20181115. doi: 10.1152/japplphysiol.00358.2018. 811 PubMed PMID: 30433863; PubMed Central PMCID: PMC6383643. 812 85. Cui D, Drake JC, Wilson RJ, Shute RJ, Lewellen B, Zhang M, et al. A novel voluntary 813 weightlifting model in mice promotes muscle adaptation and insulin sensitivity with 814 simultaneous enhancement of autophagy and mTOR pathway. FASEB J. 2020;34(6):7330-44. 815 Epub 20200418. doi: 10.1096/fj.201903055R. PubMed PMID: 32304342; PubMed Central 816 PMCID: PMC7325858. 817 86. Shute RJ, Montalvo RN, Shen W, Guan Y, Yu Q, Zhang M, et al. Weightlifting outperforms 818 voluntary wheel running for improving adiposity and insulin sensitivity in obese mice. J Sport 819 Health Sci. 2025;15:101100. Epub 20251030. doi: 10.1016/j.jshs.2025.101100. PubMed PMID: 820 41175930; PubMed Central PMCID: PMC12816905. 821 87. Drake JC, Wilson RJ, Laker RC, Guan Y, Spaulding HR, Nichenko AS, et al. Mitochondria-822 localized AMPK responds to local energetics and contributes to exercise and energetic stress-823 induced mitophagy. Proceedings of the National Academy of Sciences. 824 2021;118(37):e2025932118. doi: 10.1073/pnas.2025932118. 825 88. McLaughlin KL, Hagen JT, Coalson HS, Nelson MAM, Kew KA, Wooten AR, et al. Novel 826 approach to quantify mitochondrial content and intrinsic bioenergetic efficiency across organs. 827 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+25 Sci Rep. 2020;10(1):17599. Epub 20201019. doi: 10.1038/s41598-020-74718-1. PubMed PMID: 828 33077793; PubMed Central PMCID: PMC7572412. 829 89. Fisher-Wellman KH, Davidson MT, Narowski TM, Lin C-T, Koves TR, Muoio DM. 830 Mitochondrial Diagnostics: A Multiplexed Assay Platform for Comprehensive Assessment of 831 Mitochondrial Energy Fluxes. Cell Reports. 2018;24(13):3593-606.e10. doi: 832 10.1016/j.celrep.2018.08.091. 833 90. Kumar RA, Thome T, Sharaf OM, Ryan TE, Arnaoutakis GJ, Jeng EI, et al. Reversible Thiol 834 Oxidation Increases Mitochondrial Electron Transport Complex Enzyme Activity but Not 835 Respiration in Cardiomyocytes from Patients with End-Stage Heart Failure. Cells. 2022;11(15). 836 Epub 20220725. doi: 10.3390/cells11152292. PubMed PMID: 35892589; PubMed Central 837 PMCID: PMC9330889. 838 
+
+839 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint
+
+Figure 1. Exercise training improves exercise capacity and glucose tolerance independent of Ampk a2T172 activation. Ampk 
+
+a2(T172A) KI and WT littermates were subjected to VWR for 4 weeks with sedentary KI and WT mice as controls followed by exhaustive treadmill running test, VO 2max treadmill running test and GTT. 
+
+A: Schematic illustration of Ampk 
+
+a2(T172A) KI mouse; B: Daily voluntary wheel running distance for WT (10413 ±508m) and KI (7404 ±554m) mice in exercise groups; C: Running distance of exhaustive treadmill running test for all groups; D: Changes of blood lactate before and after exhaustive treadmill running test, n = 18-20 per group ; E : Graphic demonstration of VO 2max treadmill running test; F: Maximal oxygen consumption (𝑉 ̇ O2max); G: Respiratory exchange ratio (RER) (𝑉 ̇ CO 2/𝑉 ̇ O2), n = 7-9 per group; H: Blood glucose during GTT; and I: Area under the curve during GTT in all groups, n = 18-20 per group. Data presented as means ± SEM analyzed by two-way ANOVA. * p < 0.05, ** p < 0.01, **** p < 0.0001. ME: main effect; Ex: exercise. 
+
+0 7 14 21 28 05000 10000 15000 
+
+days Meters 
+
+Daily running distance  
+
+> WT average distance: 10413 ±508m KI average distance: 7404 ±554m
+
+WT KI 02000 4000 6000 8000 
+
+> Distance (meters)
+
+Sed 
+
+Ex 
+
+Exhaustive treadmill running test   
+
+> ✱ME: genotype
+> ✱✱✱✱ ME: Ex
+
+30 60 120 0100 200 300 400            
+
+> Time (min) Blood glucose(mg/dL) WT_Sed
+> WT_Ex
+> KI_Sed
+> KI_Ex
+> Glucose tolerance test
+> ✱✱ ME: Ex
+> WT KI 05000 10000 15000 ml/kg/hr  ✱✱ ME: genotype
+> ✱✱✱✱ ME: Ex
+> V̇O2max
+> -12 012 24 36 48 0.7 0.8 0.9 1.0
+> Time (min) RER WT_Sed
+> WT_Ex
+> KI_Sed
+> KI_Ex
+> Respiratory exchange ratio
+> ✱✱✱✱ ME: Ex
+> ✱✱✱✱ ✱✱✱✱
+
+A. B. C. D. E. F. G. 
+
+WT KI 010000 20000 30000 40000 
+
+> AUC (mg/dL*min)
+
+Glucose tolerance test  
+
+> ✱ME: Ex
+
+H. I. 
+
+WT KI -2 02468
+
+> mM
+
+ΔLactate  
+
+> ✱✱ ✱✱✱✱
+
+V̇O2max treadmill running test 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint 012345OXPHOS (fold change)  Complex I II III IV V            
+
+> ✱✱✱✱ ✱✱✱✱ ✱✱✱✱ ME: genotype
+> ✱✱✱ ME: Ex
+> ✱✱✱✱ ME: genotype
+> ✱✱✱✱ ME: genotype
+> ✱✱✱✱
+> ME: genotype
+> WT KI 0.0 0.5 1.0 1.5 2.0 2.5
+> Fold change
+> Sod2
+> ✱✱✱ ME: genotype
+> WT KI 0.0 0.5 1.0 1.5 2.0 Fold change
+> Vdac
+> ✱✱ ME: genotype
+> WT KI 0123Fold change
+> Cox4
+> Sed
+> Ex
+> ✱✱✱✱ ME: genotype
+> WT KI 0123
+> Fold change
+> Cyt c
+> ✱✱✱✱ ME: genotype
+
+B. C. D. E. F. I. H. 
+
+A. G.       
+
+> WT KI 020 40 60 80
+> Type IIa
+> % of fiber type  ✱✱ ME: genotype
+> ✱✱✱ ME: Ex
+> WT KI 020 40 60 80
+> Type IIb + IId/x
+> % of fiber type  ✱✱ ME: genotype
+> ✱✱ ME: Ex
+
+J. K. L. M.     
+
+> WT KI 0200 400 600 800
+> Capillary/mm 2 ✱✱ ME: genotype
+> Capillary density
+> WT KI 01234
+> Capillary contacts
+> Type IIa
+> WT KI 0123
+> Capilary contacts  ✱✱
+> Type IIb + IId/x
+
+Figure 2. Mitochondrial and angiogenic adaptations, but not fiber type transformation, to exercise training is dependent on Ampk a2 T172 activation. Plantaris muscles from exercise-trained and sedentary mice were analyzed by western blot and immunofluorescence. A: Representative western blot image for Cox4, Cyt c, Vdac and Sod2; B-E : Quantification of protein expression in plantaris muscle; F:Representative western blot image for Oxphos complexes (I-V); G: Quantification of Oxphos subunit protein expression in plantaris muscle, n = 11-12 per group; H: Immunofluorescence staining of endothelial cells (green) and myosin heavy chain (MHC) type IIa in plantaris muscle (x20 magnification). Scale Bar = 100 
+
+μm; I-J : Quantification of percentage of type IIa (red) and type IIb + IId/x (unstained) fibers; K-M :Quantification of capillary density, capillary contacts per fiber for type IIa and type IIb + IId/x fibers, n = 5 per group. Data presented as means ± SEM and analyzed by two-way ANOVA. ** p < 0.01, *** p < 0.001, **** p < 0.0001. 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint Figure 3. Exercise training increases mitochondrial volume density in an Ampk a2 T172-dependent manner . Intermyofibrillar mitochondria in the plantaris muscles from exercise-trained and sedentary mice were analyzed using transmission electron microscopy (TEM). A: Representative TEM images of WT and KI mice with or without exercise training. Scale bar = 1 μm; B: Mitochondrial volume density (Mito VD ); C: Mitochondrial number profile counting; D-H : Additional measurements of mitochondrial morphology. A total of 350-500 mitochondria were analyzed from each mouse, and data are presented as the mean of all mitochondria from each mouse. I: A heatmap of quantification of mitochondrial morphology measurements normalized to sedentary WT mice, n = 3-4 per group. Data presented as means ± SEM and analyzed by two-way ANOVA. * 
+
+p < 0.05, ** p < 0.01. 
+
+WT KI 0.0 0.2 0.4 0.6 0.8 1.0 
+
+> 4π*area/perimeter^2
+
+Cicularity 
+
+WT KI 010 20 30 40 
+
+> %Sed
+> Ex
+> ✱✱ ✱✱
+> ns
+
+Mito VD 
+
+A. B. 
+
+H. D. E. F. G. C. 
+
+WT KI 0.0 0.2 0.4 0.6 0.8 
+
+> Number/ μm2
+
+Mito P
+
+WT KI 0.0 0.2 0.4 0.6 0.8  
+
+> μm2
+> ✱ME: Ex
+
+Dimension 
+
+WT KI 0.0 0.5 1.0 1.5 
+
+> μm
+
+Feret diameter 
+
+WT KI 01234
+
+> μm
+
+Perimeter 
+
+WT KI 01234
+
+> major/minor axis
+
+Aspect ratio              
+
+> 1.86 1.31 1.30 1.00 1.01
+> 0.94 1.03 1.02 1.00 1.02
+> 0.97 0.98 0.95 1.02 1.00
+> Dimension Feret diameter Perimeter Aspect ratio Cicularity WT_Ex KI_Sed KI_Ex 1.0 1.2 1.4 1.6 1.8 FC
+
+I. 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint WT KI 02000 4000 6000 8000  
+
+> ~1/R  ✱✱✱✱
+> ME: genotype
+> ✱✱ ME: Exercise
+
+Conductance 
+
+WT KI 0500 1000 1500 2000 
+
+> pmol/s/mg
+
+Sed 
+
+Ex  
+
+> ✱ME: genotype
+
+JO2 : Malate pyruvate              
+
+> -14.45 -14.12 -13.71 -13.38 05000 10000 15000
+> ΔGATP (kcals/mol)
+> JO2 (pmol/s/mg) WT_Sed WT_Ex
+> KI_Sed KI_Ex
+> †
+> §†††
+> §§§§ME: genotype
+> †ME: Ex
+> Int:
+> p= 0.0776 Int:
+> p= 0.0869 Int:
+> p= 0.0953 Int:
+> p= 0.0599
+
+A. B. C. D. E. F. G. 
+
+> -14.45 -14.12 -13.71 -13.38 -12.94 0510 15 0.00 0.05 0.10 0.15 0.20
+> ΔGATP ATP, PCr, Cr [mM] ADP [mM] ATP
+> PCr
+> Cr
+> ADP
+
+H. I. 
+
+WT KI 05000 10000 15000 20000   
+
+> pmol/s/mg
+> ✱✱ ✱✱✱✱
+> p= 0.0775
+
+Max JO2: ΔGATP -12.94 
+
+050 100 150 200 250 
+
+H2O2 emission 
+
+> JH2O2(pmol/mg/min)
+
+Mal/Pyt -12.94 -13.71 -14.45 
+
+ΔGATP (kcals/mol)      
+
+> ✱ME: genotype ✱ME: genotype ✱ME: genotype
+> 0.0 0.1 0.2 0.3 0.4 0.8
+> JH2O2/JO2*100
+
+Electron leak (%)    
+
+> Mal/Pyt -12.94 -13.71 -14.45
+
+ΔGATP (kcals/mol) 
+
+> ✱✱
+> ME: genotype
+> ✱✱✱
+> ME: genotype
+> ✱✱✱
+> ME: genotype
+
+Figure 4. Exercise training improves mitochondrial respiratory function dependent on Ampk a2T172 activation. Mitochondria isolated from plantaris muscle were assessed for respiratory function by high-resolution respirometry and reactive oxygen species (H 2O2) emission by fluorospectroscopy in a creatine kinase clamp. A-B : A graphic illustration depicting the use of the creatine kinase clamp method, highlighting its key components and showing how the clamp modulates the concentrations of ATP, phosphocreatine (PCr), creatine (Cr) and ADP in response to varying bioenergetic demands. The illustration should demonstrate changes in DGATP (Gibbs free energy), which is highest at -12.95 and progressively declines (more negative) as energetic demand decreases; C: JO2 measurement at non-phosphorylating (NP) respiration; D: Maximal oxygen consumption ( JO2 Max); E: Linear relationship between JO2 and DGATP during PCr titration; F: Conductance rate of PCr titration; G: H 2O2 emission measurement; H: electron leak; n = 7-9 per group. Data presented as means ± SEM and analyzed by two-way ANOVA. * p < 0.05, ** p < 0.01, *** p < 0.001, **** p < 0.0001; and I: A graphic demonstration summarizing the findings in the present study for potential factors determining exercise capacity following endurance training, 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint Supplementary information/figures 
+
+Supplementary figure 1. Acute treadmill running and electrical stimulation activate Ampk a T172 in skeletal muscle. Wild type C57BL/6J mice (male) were subjected to 90 min acute treadmill running with sedentary mice as control or unilateral electrical stimulation of the sciatic nerve at 10 Hz for 2 hours with the contralateral leg as control. Plantaris muscles were analyzed by western blot. A: Representative western blot images for p-Ampk a1/2 (T172), p-Acc (S79), p-Tbc1d1 (S237), p-Akt (S473 & T308), and respective total proteins in electrically stimulated muscle (ES) and the contralateral control muscle (Con); 
+
+B: Quantification of protein expression, n = 4; C: Representative western blot images for p-Ampk a1/2 (T172), p-Acc (S79), p-Akt (S473 & T308), p-Tbc1d1 (S237), p-Ulk1 (S555), and respective total proteins from exercised (Ex) and sedentary mice (Sed), CS stands for common standard; D-I : Quantification of protein expression, n = 3-4 per group. Data presented as means ± SEM and analyzed by two-tailed t-test. *p < 0.05, ** p < 0.01. 
+
+> p-Ampk α1/2 (T172) p-Acc (S79) p-Tbc1d1 (S237) p-Akt (S473) p-Akt (T308) 012345
+> p-protein/total protein Fold change Con
+> 10Hz 2h
+> ✱✱✱
+> p=0.06
+> Sed Ex 0.0 0.5 1.0 1.5 2.0 2.5
+> Fold change
+> *p-Ampk α1/2(T172)/Total
+> Sed Ex 01234Fold change  ✱✱
+> p-Tbc1d1 (S237)/Total
+> Sed Ex 0.0 0.5 1.0 1.5 2.0 Fold change
+> p-Akt Ser473/Total
+> Sed Ex 0.0 0.5 1.0 1.5 2.0 Fold change
+> p-Akt Thr308/Total
+> Sed Ex 01234
+> Fold change
+> ✱✱
+> p-Ulk1 S555/Total
+> Sed Ex 0.0 0.5 1.0 1.5 2.0 2.5
+> Fold change
+> p-Acc (S79)/Total
+
+A. B. C. D. E. F. G. H. I. 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint Supplementary figure 2. Additional parameters measured during exhaustive treadmill running test and VO2max treadmill running test. Ampk 
+
+a2(T172A) KI and WT littermates were subjected to VWR for 4 weeks with sedentary KI and WT mice as controls followed by exhaustive treadmill running test and VO 2max treadmill running test. A: Representative western blot image for p-Ampk a1/2 (T172) with a-tubulin as loading control in plantaris muscles. Blue triangle points to a1 subunit, and orange triangle points to a2 subunit; B:Quantification of the p-Ampk a1/2 (T172) in WT and Ampk 
+
+a2(T172) KI mice; C: Average daily voluntary wheel running distance for WT and KI mice, n = 18-20 per group. Data presented as means ± SEM and analzyed by two-tailed t-test. *** p < 0.001, **** p < 0.0001; D: Blood lactate before and after exhaustive treadmill running test; E-I : Total running distance, duration, maximal speed, heat production, and maximum RER during the VO 2max treadmill running test; and J-K : Percentage of carbohydrate and fatty acid oxidation, n = 7-9 per group. Data presented as means ± SEM and analyzed by two-way ANOVA. ** p <
+
+0.01, **** p < 0.0001 .                    
+
+> WT KI 0.0 0.5 1.0 1.5 2.0
+> Fold change
+> p-Ampk α1/2 (T172)
+> ✱✱✱✱
+> 0246810
+> mM
+> Blood lactate level
+> ✱✱✱ ✱✱ ✱✱✱✱ ✱✱
+> pre pre pre pre post post post post
+> WT KI 020 40 60 80
+> Min
+> Duration
+> ✱✱✱✱ ME: genotype
+> ✱✱✱✱ ME: Ex
+> WT KI 020 40 60 80 Meters/min
+> Maximum speed
+> ✱✱✱✱ ME: genotype
+> ✱✱✱✱ ME: Ex
+> WT KI 020000 40000 60000 80000
+> kcal/hr
+> Heat
+> ✱✱ ME: genotype
+> ✱✱✱✱ ME: Ex
+> WT KI 0.0 0.5 1.0 1.5
+> Respiratory exchange ratio  Maximum RER
+
+A. B. C. D. E. F. H. I. J. K.              
+
+> WT KI 05000 10000 15000 20000
+> Meters
+> Average daily running
+> ✱✱✱
+> WT KI 01000 2000 3000
+> Meters
+> Distance
+> ✱✱✱✱ p=0.06
+> ✱✱✱✱
+> -12 012 24 36 48 020 40 60 80 100
+> Time (min) %
+> CHO utilization
+> WT_Sed
+> WT_Ex
+> KI_Sed
+> KI_Ex
+> -12 012 24 36 48 020 40 60 80 100
+> Time (min) %
+> FAT utilization
+
+G. 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint Supplementary figure 3. Measurements of body weight, muscle mass, lean body mass and fat mass in exercise trained and sedentary WT and Ampk 
+
+a2(T172) KI mice. Ampk 
+
+a2(T172A) KI and WT littermates were subjected to VWR for 4 weeks with sedentary KI and WT mice as controls followed by direct measurements of tibia length, body weight and muscle mass and echoMRI measurments of lean body mass and fat mass. A: Tibia length (TBL); B-C : Body weight and body weight normalized by TBL; D-F : Skeletal muscle mass nomalized by TBL, n = 18-20 per group; G-H : Lean body mass and fat mass, n = 7-9 per group. Data presented as means ± SEM and analyzed by two-way ANOVA. * p < 0.05, ** p < 0.01. 
+
+WT KI 0.00 0.05 0.10 0.15 0.20 0.25 
+
+> % of body weight
+
+Fat mass  
+
+> ✱✱ ME: Ex
+
+WT KI 0.0 0.5 1.0 1.5 2.0 
+
+> g/mm Normalized to TBL
+
+Lean mass 
+
+WT KI 0510 15 20 25 
+
+> mm
+
+Tibia length 
+
+Sed 
+
+Ex 
+
+WT KI 0.0 0.5 1.0 1.5 2.0 
+
+> g/mm (normalized to TBL)
+
+Body weight 
+
+WT KI 010 20 30 40 
+
+> Gram
+
+Body weight  
+
+> ✱✱ ME: Ex
+
+WT KI 0.0 0.5 1.0 1.5 2.0 
+
+> mg/mm (normalized to TBL)
+
+Plantaris 
+
+WT KI 0246810 
+
+> mg/mm (normalized to TBL)
+
+Gastrocnemius  
+
+> ✱ME: Ex
+
+WT KI 0.0 0.2 0.4 0.6 0.8 
+
+> mg/mm (normalized to TBL)
+
+Soleus   
+
+> ✱✱ ME: genotype
+> ✱ME: Ex
+
+A. B. C. D. E. F. G. H. 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint Supplementary figure 4. Mitochondrial contact site and cristae organizing system (MICOS) proteins are reduced in Ampk 
+
+a2(T172A) mice. Ampk 
+
+a2(T172A) KI and WT littermates were subjected to VWR for 4 weeks with sedentary KI and WT mice as controls followed by western blot analysis of plantaris muscle. A:Representative western blot image for Immt (Mic60), Apool (Mic27), Chchd3 (Mic19) and Samm50; B-E :Quantification of protein expression normalized by Vdac, n = 11-12 per group. Data presented as means ±
+
+SEM and analyzed by two-way ANOVA are * p < 0.05, ** p < 0.01.       
+
+> WT KI 0.0 0.5 1.0 1.5 2.0 Normalize to Vdac
+> Immt
+> ✱✱ ME: genotype
+> WT KI 0.0 0.5 1.0 1.5
+> Normalized to Vdac  Samm50
+> WT KI 01234
+> Normalized to Vdac  Apool
+> ✱ME: genotype
+> WT KI 0.0 0.5 1.0 1.5 2.0
+> Normalized to Vdac  Chchd3
+
+A. B. C. D. E. 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint Supplementary figure 5. Measurements of mitochondrial morphology and structure by TEM in plantaris muscle. Ampk 
+
+a2(T172A) KI and WT littermates were subjected to VWR for 4 weeks with sedentary KI and WT mice as controls followed by TEM analysis in plantaris muscles. A-B: 
+
+Quantification of mitochondrial volume density (Mito VD ) and number (Mito P). Each dot denotes a single image analyzed, and each column denotes a single mouse; C-G : Mitochondrial morphological measurements (dimension, feret diameter, perimeter, aspect ratio and circularity) from each mouse. 
+
+Each dot denotes one mitochondrion (350-550 mitochondria quantified per mouse). Data presented as means ± SEM and analyzed by two-way ANOVA. ** p < 0.01. 
+
+> WT_Sed WT_Sed WT_Sed WT_Sed WT_Ex WT_Ex WT_Ex WT_Ex KI_Sed KI_Sed KI_Sed KI_Ex KI_Ex KI_Ex
+
+0.0 0.5 1.0 1.5 
+
+Circularity 
+
+> 4π*area/perimeter^2
+> WT_Sed WT_Sed WT_Sed WT_Sed WT_Ex WT_Ex WT_Ex WT_Ex KI_Sed KI_Sed KI_Sed KI_Ex KI_Ex KI_Ex
+
+0.0 0.2 0.4 0.6 0.8 1.0 
+
+> Number/ μm2
+
+Mito P
+
+> WT_Sed WT_Sed WT_Sed WT_Sed WT_Ex WT_Ex WT_Ex WT_Ex KI_Sed KI_Sed KI_Sed KI_Ex KI_Ex KI_Ex
+
+020 40 60 
+
+> %
+> ✱✱ ✱✱
+
+Mito VD 
+
+> WT_Sed WT_Sed WT_Sed WT_Sed WT_Ex WT_Ex WT_Ex WT_Ex KI_Sed KI_Sed KI_Sed KI_Ex KI_Ex KI_Ex
+
+0.0 0.2 0.4 0.6 0.8 1.0 1.2 48
+
+> μm2
+
+Dimension 
+
+> WT_Sed WT_Sed WT_Sed WT_Sed WT_Ex WT_Ex WT_Ex WT_Ex KI_Sed KI_Sed KI_Sed KI_Ex KI_Ex KI_Ex
+
+0.0 0.5 1.0 1.5 2.0 48
+
+> μm
+
+Feret diameter 
+
+> WT_Sed WT_Sed WT_Sed WT_Sed WT_Ex WT_Ex WT_Ex WT_Ex KI_Sed KI_Sed KI_Sed KI_Ex KI_Ex KI_Ex
+
+0.0 2.5 5.0 20 
+
+> μm
+
+Perimeter 
+
+> WT_Sed WT_Sed WT_Sed WT_Sed WT_Ex WT_Ex WT_Ex WT_Ex KI_Sed KI_Sed KI_Sed KI_Ex KI_Ex KI_Ex
+
+012345816 
+
+> Major axis/minor axis
+
+Aspect ratio 
+
+A. B. C. D. E. F. G. 
+
+.CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted June 23, 2026. ;https://doi.org/10.64898/2026.06.18.733224 doi: bioRxiv preprint Supplementary figure 6. ADP sensitivity is not significantly changed by exercise or Ampk a2 (T172). Ampk 
+
+a2(T172A) KI and WT littermates were subjected to VWR for 4 weeks with sedentary KI and WT mice as controls followed by high-resolution respirometry analysis of isolated mitochondria from plantaris muscles. A: Oxygen consumption at ADP [c] 0.016mM, 0.026mM, 0.049mM, 0.083mM, and 0.164mM corresponding to ∆G ATP of -14.45, -14.12, -13.71, -13.38, and -12.94kCal/mol, respectively; and B: ADP sensitivity (Km) determined by Michaelis Menton analysis, n = 7-9 per group. Data presented as means ± SEM. 
+
+0.00 0.05 0.10 0.15 0.20 05000 10000 15000 
+
+[ADP] 50 Km
+
+> JO2 (pmol/s/mg)
+
+WT_Sed WT_Ex 
+
+KI_Sed KI_Ex 
+
+WT KI 0.00 0.05 0.10 0.15 
+
+ADP sensitivity 
+
+> [ADP] 50  Km
+
+Sed 
+
+Ex 
+
+A. B.

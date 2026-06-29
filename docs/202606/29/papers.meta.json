@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-29",
+  "date": "2026-06-29",
+  "generated_at": "2026-06-29T21:45:00",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/29/biorxiv-10-64898-2026-06-18-733224-v1-exercise-training-improves-exercise-capacity-independent-of-ampka2-t172-mediated-adaptations-in-skeletal-muscle",
+      "section": "quick",
+      "title_en": "Exercise training improves exercise capacity independent of AMPKa2 T172-mediated adaptations in skeletal muscle",
+      "authors": "Mao, X., Montalvo, R. N., Takahashi, K., Booth, F. W., Brooks, G. A., Yan, Z.",
+      "date": "2026-06-23",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.18.733224v1.full.pdf",
+      "score": "6.0",
+      "evidence": "运动训练研究，涉及AMPK和代谢适应，与运动对组织存活影响相关",
+      "tldr": "运动训练通过AMPKa2 T172磷酸化激活AMPK，但改善运动能力和最大耗氧量并不依赖此激活。使用非激活型Ampk2(T172A)敲入小鼠进行4周自愿轮跑，发现野生型和敲入鼠均提升了运动能力、最大耗氧量和葡萄糖耐量，并发生IIb-to-IIa肌纤维类型转换。然而，敲入鼠的骨骼肌线粒体生物合成、呼吸功能和毛细血管密度未增加。这表明AMPKa2激活介导的线粒体与血管适应并非运动能力提升的必要条件，挑战了传统认知。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Regular exercise induces adaptations in skeletal muscle and other organ systems to improve physical performance and overall health. Exercise results in phosphorylation of 5 AMP-activated protein kinase (AMPK) at threonine 172 (T172) of the 2 subunit; however, the role of this activation in cellular and functional adaptations has not been elucidated. To this end, we subjected non-activatable Ampk2(T172A) knock-in (KI) adult mice and wild-type (WT) littermates to 4 weeks of voluntary wheel running (VWR). Exercise training led to significant improvements in endurance capacity, maximal oxygen consumption ([Formula]O2max), and glucose tolerance, as well as skeletal muscle IIb-to-IIa fiber type shift in both WT and KI mice. Contrastingly, VWR resulted in increased mitochondrial OxPhos protein expression, mitochondrial volume density, and capillary density in skeletal muscle of WT but not KI mice. Exercise-induced improvements of mitochondrial respiration and conductance revealed by high-resolution respirometry of isolated mitochondria were blunted in KI mice. Therefore, for the first time, we reveal that AMPK2 T172 activation is required for exercise training-induced mitochondrial biogenesis, improvement of mitochondrial respiratory function, and angiogenesis in skeletal muscle, but that these adaptations are not solely responsible for improved [Formula]O2max and exercise endurance capacity.\n\nSignificance StatementExercise is the most effective lifestyle intervention for promoting health and preventing chronic diseases through adaptive changes in skeletal muscle and many other tissues/organs. AMPK is an energy sensor and signaling regulator for exercise-induced skeletal muscle adaptation, yet its functional role and the impact on exercise capacity have been studied in mouse genetic models wherein protein stoichiometry is disrupted. Using non-activatable Ampk2(T172A) knock-in mice, we ascertained that AMPK2 activation via T172 phosphorylation is required for endurance training-induced mitochondrial and angiogenic adaptations in skeletal muscle. Importantly, these adaptations are not required for improved exercise capacity, challenging the prevailing concept that increased mitochondrial content and function and microvasculature are the sole driving factors for the performance gains with endurance training.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/29/biorxiv-10-64898-2026-06-24-734154-v1-oxybli-a-genetics-based-approach-for-in-vivo-real-time-visualization-of-tissue-oxygenation-dynamics",
+      "section": "quick",
+      "title_en": "OxyBLI: A Genetics-Based Approach for In Vivo Real-Time Visualization of Tissue Oxygenation Dynamics",
+      "authors": "Iwano, S., Kato, J., Toramaru, T., Hama, H., Sugiyama, M., Takahashi, R., Takahashi, M., Hioki, H., Nakashiba, T., Miyawaki, A.",
+      "date": "2026-06-28",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.24.734154v1.full.pdf",
+      "score": "6.0",
+      "evidence": "组织氧合监测工具",
+      "tldr": "细胞氧水平精准测量是理解组织氧供需平衡的关键，但传统方法存在局限。本研究利用生物发光对氧的依赖性，开发OxyBLI非侵入性光学方法，实现体内特定细胞群氧合实时可视化。实验表明，低氧条件下血液优先保障脑氧合；高氧导致氧合骤升但血管收缩使其回落。该成果有助于评估危重患者补充氧的利弊，推进对低氧与高氧相互作用的理解。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Accurate measurement of cellular oxygen levels is essential for understanding the balance between oxygen demand and supply in tissues. However, conventional methods only yield compromised results. We harnessed the oxygen dependence of bioluminescence to develop OxyBLI, a noninvasive optical method that directly monitors oxygen levels in specific cell populations of intact experimental animals. We characterized OxyBLI signals across various critical situations associated with common interventions. Hypoxic breathing and subsequent systemic tissue hypoxia caused blood to be redistributed in a way that prioritized brain oxygenation. In contrast, hyperoxic breathing sharply increased tissue oxygenation, which promptly returned to the target level owing to a vasoconstrictor response. These findings are expected to help resolve the long-standing clinical issue regarding the risks and benefits of administering supplemental oxygen to acutely ill patients. Our multifaceted approach, which presents multiple challenges to individual animals over time, will advance our understanding of the delicate interaction between hypoxia and hyperoxia.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
