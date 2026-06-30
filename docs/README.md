@@ -6,31 +6,28 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-29
-- 运行时间：2026-06-29 21:44:50 UTC
+- 最新运行日期：2026-06-30
+- 运行时间：2026-06-30 20:54:19 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：1
 - 精读区：0
-- 速读区：2
+- 速读区：1
 
 ### 今日简报（AI）
-今日速读两篇6分论文，分别聚焦运动能力改善机制与组织氧合实时成像技术。
+今日重点关注肌肉收缩的时间依赖性力学-生物能量学模型。
 
-最值得关注的方向：运动训练对运动能力的提升可能不依赖于AMPKa2经典信号通路；OxyBLI技术实现了活体内组织氧合动态的可视化监测。
+该模型揭示了肌肉收缩过程中力学与生物能量代谢的动态耦合关系，为理解运动生理和肌肉疲劳提供了新视角。
 
-建议普通读者关注运动训练的非经典机制，以及新型成像工具在临床氧合评估中的应用潜力。
-- 详情：[/202606/29/README](/202606/29/README)
+建议读者可进一步探索模型在康复训练或运动装备设计中的潜在应用。
+- 详情：[/202606/30/README](/202606/30/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Exercise training improves exercise capacity independent of AMPKa2 T172-mediated adaptations in skeletal muscle](/202606/29/biorxiv-10-64898-2026-06-18-733224-v1-exercise-training-improves-exercise-capacity-independent-of-ampka2-t172-mediated-adaptations-in-skeletal-muscle)  
+1. [A time-dependent mechano-bioenergetics model of muscle contraction](/202606/30/biorxiv-10-64898-2026-06-24-734405-v1-a-time-dependent-mechano-bioenergetics-model-of-muscle-contraction)  
    标签：评分：6.0/10、query:flap-ex-met
-   evidence：运动训练研究，涉及AMPK和代谢适应，与运动对组织存活影响相关
-2. [OxyBLI: A Genetics-Based Approach for In Vivo Real-Time Visualization of Tissue Oxygenation Dynamics](/202606/29/biorxiv-10-64898-2026-06-24-734154-v1-oxybli-a-genetics-based-approach-for-in-vivo-real-time-visualization-of-tissue-oxygenation-dynamics)  
-   标签：评分：6.0/10、query:flap-ex-met
-   evidence：组织氧合监测工具
+   evidence：肌肉收缩的时间依赖性机械-生物能量学模型；可用于研究运动诱导的代谢变化
 
 
 <div class="dpr-home-promo-card">

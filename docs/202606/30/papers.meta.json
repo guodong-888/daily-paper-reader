@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-30",
+  "date": "2026-06-30",
+  "generated_at": "2026-06-30T20:54:23",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/30/biorxiv-10-64898-2026-06-24-734405-v1-a-time-dependent-mechano-bioenergetics-model-of-muscle-contraction",
+      "section": "quick",
+      "title_en": "A time-dependent mechano-bioenergetics model of muscle contraction",
+      "authors": "Konno, R. N., Lichtwark, G. A., Dick, T. J. M.",
+      "date": "2026-06-30",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.24.734405v1.full.pdf",
+      "score": "6.0",
+      "evidence": "肌肉收缩的时间依赖性机械-生物能量学模型；可用于研究运动诱导的代谢变化",
+      "tldr": "现有骨骼肌能量消耗模型忽略时间依赖性和ATP恢复成本，难以预测重复收缩的能量响应。本研究基于Ca2+运输、横桥循环和ATP再生等生理过程，构建了时间依赖性模型。模型成功预测了动态、次最大和抽搐收缩下的能量率，并再现了收缩频率对峰值能量率的影响及恢复时间过程。该模型参数少、计算成本低，可泛化至不同肌肉和物种，便于整合到肌肉骨骼模型中。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Predictions of skeletal muscle energy consumption under a diverse range of muscle contractile conditions are critical for improving our understanding of locomotion. Existing mathematical models, while capturing the mechanical dependence of energy consuming processes, neglect the time-dependent behaviour and recovery costs associated with regenerating ATP. This time-dependence is important for predicting the energetic response of muscles during repetitive or cyclical tasks like locomotion, where muscle undergoes many contraction cycles. This study presents a novel model to predict energetic rates based on physiological processes: Ca2+ transport costs, cross-bridge cycling costs, and ATP regeneration. Previous mathematical models include the dependence on Ca2+ transport and cross-bridge cycling, but neglect the time-dependent response and the subsequent recovery of ATP following the contraction. Model parameters were obtained from existing data on isolated muscle preparations, and predicted energetic rates were validated on separate datasets across a range of contractile conditions including dynamic, sub-maximal, and twitch contractions. The time-dependent model was able to capture the influence of contraction frequency on peak energetic rates and the time-course of energetic recovery observed experimentally. The model captures key physiological processes while maintaining a minimal number of free parameters and low computational cost. This enables generalisability across muscles and species, and implementation into larger scale musculoskeletal models.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
