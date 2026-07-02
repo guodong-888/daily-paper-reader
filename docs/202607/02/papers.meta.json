@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-02",
+  "date": "2026-07-02",
+  "generated_at": "2026-07-02T21:44:41",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/02/biorxiv-10-64898-2026-06-29-735310-v1-kinetic-lipidomics-quantifying-in-vivo-changes-in-lipid-metabolism-using-metabolic-labeling",
+      "section": "quick",
+      "title_en": "Kinetic Lipidomics: Quantifying in vivo changes in lipid metabolism using metabolic labeling",
+      "authors": "Nielsen, C., Denton, R., Driggs, B., Gates, S., Hilton, T., Naylor, B., Quilling, C., Virgin, K., Cutler, K., Sorensen, M., Poulson, M., Snedaker, P., Hernandez, Z., Transtrum, M., Price, J. C.",
+      "date": "2026-07-01",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.29.735310v1.full.pdf",
+      "score": "7.0",
+      "evidence": "动力学脂质组学方法可量化体内脂质代谢变化，适用于运动与皮瓣的代谢适应研究",
+      "tldr": "脂质代谢动力学研究面临挑战，现有方法局限于靶向分析。本研究将氘水标记与质谱结合，开发了非靶向脂质组学动力学方法，通过实验确定每个脂质的氘代位点数，从而同时量化数百种脂质的合成分数和周转率。在表达人ApoE亚型的小鼠脑组织中验证了该方法，揭示了基因型依赖的脂质代谢差异。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Lipid metabolism reflects the dynamic balance between metabolic turnover and concentration. Kinetic mass spectrometry (MS) enables direct quantification of molecular turnover in vivo. Previous work has shown that MS-based kinetic proteomics has provided powerful insights into proteome regulation. Analogous lipidome-wide kinetic measurements remain limited by challenges in defining molecule-specific labeling behavior. Here, we extend kinetic MS to untargeted lipidomics. Isotope labeling with deuterated water (2H2O) is commonly used for monitoring turnover of palmitate and other select lipids by measuring labeling of stable CH positions with deuterium (2H). Here, we extend the deuterium-incorporation model underlying these targeted lipid turnover assays to support untargeted analysis of all detectable lipids. This allows us to empirically quantify the effective fraction of endogenous synthesis (Asyn) and the turnover rate (k) across hundreds of lipid species simultaneously. One central barrier to lipidome-wide kinetic modeling is determining the endogenous number of deuterium-labeling sites for each molecule (nL) which is required to estimate Asyn and k accurately. The nL value is an essential component of biological kinetic assays. In kinetic proteomics, curated amino acid nL libraries enable peptide-level modeling by summing sequence-specific labeling-site values, but comparable resources are lacking for lipids and may not generalize across metabolic states or non-mammalian systems. Yet, gaps remain for lipids and for amino acids in modified metabolic conditions or non-mammalian biologies. Here, we empirically determine lipid nL values and validate the process with peptides against an nL library. To evaluate this strategy in a biologically relevant setting, we applied it to brain tissue from transgenic mice expressing human ApoE isoforms, where altered lipid transport and metabolism are implicated in Alzheimers disease risk. These data validate the method in a clinically relevant context and suggest that genotype-dependent metabolism can alter empirically determined lipid nL values.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

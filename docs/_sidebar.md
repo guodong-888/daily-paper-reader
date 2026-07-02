@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-02 <!--dpr-date:20260702-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/02/biorxiv-10-64898-2026-06-29-735310-v1-kinetic-lipidomics-quantifying-in-vivo-changes-in-lipid-metabolism-using-metabolic-labeling" data-sidebar-item="{&quot;title&quot;: &quot;Kinetic Lipidomics: Quantifying in vivo changes in lipid metabolism using metabolic labeling&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/biorxiv-10-64898-2026-06-29-735310-v1-kinetic-lipidomics-quantifying-in-vivo-changes-in-lipid-metabolism-using-metabolic-labeling&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;动力学脂质组学方法可量化体内脂质代谢变化，适用于运动与皮瓣的代谢适应研究&quot;}">Kinetic Lipidomics: Quantifying in vivo changes in lipid metabolism using metabolic labeling</a>
   * 2026-06-30 <!--dpr-date:20260630-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/30/biorxiv-10-64898-2026-06-24-734405-v1-a-time-dependent-mechano-bioenergetics-model-of-muscle-contraction" data-sidebar-item="{&quot;title&quot;: &quot;A time-dependent mechano-bioenergetics model of muscle contraction&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/biorxiv-10-64898-2026-06-24-734405-v1-a-time-dependent-mechano-bioenergetics-model-of-muscle-contraction&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;肌肉收缩的时间依赖性机械-生物能量学模型；可用于研究运动诱导的代谢变化&quot;}">A time-dependent mechano-bioenergetics model of muscle contraction</a>
