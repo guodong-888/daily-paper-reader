@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-03",
+  "date": "2026-07-03",
+  "generated_at": "2026-07-03T20:39:36",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/03/biorxiv-10-64898-2026-06-26-734741-v1-can-exercise-training-improve-mitochondrial-thermal-responses-in-rainbow-trout-cardiomyocytes",
+      "section": "deep",
+      "title_en": "Can exercise training improve mitochondrial thermal responses in rainbow trout cardiomyocytes?",
+      "authors": "Prescott, L., Le, T., Seppanen, E., Henttinen, T., Anttila, K.",
+      "date": "2026-07-01",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.26.734741v1.full.pdf",
+      "score": "8.0",
+      "evidence": "运动训练改善线粒体功能，直接相关于运动与线粒体功能",
+      "tldr": "气候变化引发的水温升高对鱼类心脏功能构成威胁，而线粒体ATP合成是心脏耐热性的关键。本研究探讨运动训练对虹鳟心脏线粒体在最佳（16°C）和临界（26°C）温度下的影响。经过4周训练，虽然统计上无显著差异，但训练个体在高温下表现出更高的最大呼吸能力和呼吸控制比，表明线粒体功能有改善趋势；高温本身导致质子漏增加和偶联效率下降。该工作揭示了运动训练可能微调心脏线粒体的热敏感性，拓展了改善水产养殖物种热恢复力的干预思路。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Climate-driven warming is challenging the physiological limits of aquatic ectotherms, with cardiac performance emerging as one of the key determinants of thermal tolerance. Cardiac function relies on mitochondrial ATP production, and mitochondrial dysfunction has been linked to cardiac failure at critical temperatures. However, mitochondria are plastic and may represent a target for interventions aimed at improving thermal tolerance in fish. Exercise training improves whole-animal performance in fish, including cardiac thermal performance, and improves mitochondrial function in other taxa. However, its effects on the thermal sensitivity of cardiac mitochondria remain unknown. This study investigated whether exercise-training alters cardiac mitochondrial performance at optimal and critical temperatures in rainbow trout Oncorhynchus mykiss. Farmed rainbow trout were subjected to a four-week exercise training regime, while control fish remained under standard rearing conditions. Cardiac mitochondrial respiration was assessed in permeabilised heart fibres at 16{degrees}C (optimal growth temperature) and 26{degrees}C (temperature associated with cardiac arrhythmia) and several biochemical and nuclear indicators were measured. No significant differences were detected between treatments for any measured variable. However, trained fish generally exhibited higher maximal respiratory capacities and respiratory control ratios, particularly at the elevated temperature, suggesting subtle improvements in mitochondrial function despite considerable inter-individual variation. Temperature influenced mitochondrial performance, increasing proton leak and reducing coupling efficiency. These findings demonstrate that cardiac mitochondrial function is thermally sensitive and represents a potential targeted for improving thermal resilience in aquaculture species.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

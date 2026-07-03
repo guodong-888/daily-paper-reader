@@ -6,24 +6,24 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-02
-- 运行时间：2026-07-02 21:44:36 UTC
+- 最新运行日期：2026-07-03
+- 运行时间：2026-07-03 20:39:29 UTC
 - 运行状态：成功
 - 本次总论文数：1
-- 精读区：0
-- 速读区：1
+- 精读区：1
+- 速读区：0
 
 ### 今日简报（AI）
-今天速读了1篇关于动力学脂质组学的论文。该研究通过代谢标记定量体内脂质代谢的动态变化，值得关注。建议对脂质代谢机制感兴趣的读者深入了解其分析方法的创新点。
-- 详情：[/202607/02/README](/202607/02/README)
+今日精读一篇高分研究：运动训练如何影响虹鳟鱼心肌细胞的线粒体热反应。核心发现：运动可能增强鱼类心脏线粒体对温度变化的适应能力。下一步建议：关注运动对心脏能量代谢的调节机制，尤其是温度应激下的保护作用。
+- 详情：[/202607/03/README](/202607/03/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Can exercise training improve mitochondrial thermal responses in rainbow trout cardiomyocytes?](/202607/03/biorxiv-10-64898-2026-06-26-734741-v1-can-exercise-training-improve-mitochondrial-thermal-responses-in-rainbow-trout-cardiomyocytes)  
+   标签：评分：8.0/10、query:flap-ex-met
+   evidence：运动训练改善线粒体功能，直接相关于运动与线粒体功能
 
 ### 速读区论文标签
-1. [Kinetic Lipidomics: Quantifying in vivo changes in lipid metabolism using metabolic labeling](/202607/02/biorxiv-10-64898-2026-06-29-735310-v1-kinetic-lipidomics-quantifying-in-vivo-changes-in-lipid-metabolism-using-metabolic-labeling)  
-   标签：评分：7.0/10、query:flap-ex-met
-   evidence：动力学脂质组学方法可量化体内脂质代谢变化，适用于运动与皮瓣的代谢适应研究
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
