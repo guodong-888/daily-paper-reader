@@ -1,0 +1,54 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-06T21:42:47.107584+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-06-29-735073-v1",
+      "source": "biorxiv",
+      "title": "Zero-Shot Metabolite Prediction from Gene Expression via Physics-Informed Graph Neural Networks",
+      "abstract": "Predicting metabolite concentrations from gene expression is instrumental for linking regulatory programs to metabolic phenotypes. Prior approaches rely on static enzyme-metabolite mappings and often omit data-driven learning or biochemical constraints, limiting their ability to generalize to new metabolites. We present GAZE (Graph Attention for Zero-shot metabolite Estimation), a physics-informed graph neural network that integrates enzyme expression, Enzyme Commission functional embeddings, and ChemBERTa metabolite descriptors within a unified metabolic graph (5,414 nodes, 16,307 edges). A Metabolite-Conditioned Reader uses each metabolites SMILES embedding to query learned pathway representations, enabling zero-shot prediction with no metabolite-specific parameters. We evaluate GAZE in three scenarios: (i) standard cross-validation on the Cancer Atlas of Metabolic Profiles (18,044 genes, 180 metabolites, 867 cell lines), achieving R2 = 0.816; (ii) leave-one-metabolite-out (LOMO) zero-shot evaluation across 50 held-out metabolites, where the physics-informed variant halves the median R2 deficit relative to a standard GNN baseline (-0.34 vs. -0.72), with 30% of unseen metabolites achieving positive R2; and (iii) external validation on an independent clear cell renal cell carcinoma tissue cohort (220 samples), where GAZE achieves median Spearman{rho} = 0.330 across 214 metabolites without fine-tuning. GAZE outperforms scCellFie, MEBOCOST, and UnitedMet across all evaluation settings.",
+      "authors": [
+        "Novella Rausell, C.",
+        "Rabelink, T.",
+        "Mahfouz, A."
+      ],
+      "primary_category": "bioinformatics",
+      "categories": [
+        "bioinformatics"
+      ],
+      "published": "2026-07-02T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.29.735073v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "provides a method for predicting metabolite concentrations from gene expression, applicable to study metabolic changes in exercise and flap survival",
+      "llm_evidence_cn": "提供从基因表达预测代谢物浓度的方法，可用于研究运动与皮瓣存活中的代谢变化",
+      "llm_evidence": "提供从基因表达预测代谢物浓度的方法，可用于研究运动与皮瓣存活中的代谢变化",
+      "canonical_evidence": "提供从基因表达预测代谢物浓度的方法，可用于研究运动与皮瓣存活中的代谢变化",
+      "llm_tldr_en": "GAZE uses physics-informed graph neural networks to predict metabolite concentrations from gene expression in a zero-shot manner, enabling metabolic profiling relevant to exercise-induced changes in flap survival.",
+      "llm_tldr_cn": "现有方法依赖静态酶-代谢物映射且缺乏泛化能力。该研究提出GAZE，一种物理信息图神经网络，集成酶表达、EC功能嵌入和ChemBERTa代谢物描述符，在代谢图上实现零样本代谢物预测。通过代谢物条件阅读器查询学习到的通路表示，可推广到新代谢物。该方法为研究运动训练导致的皮瓣代谢重塑提供了有力工具。",
+      "llm_tldr": "现有方法依赖静态酶-代谢物映射且缺乏泛化能力。该研究提出GAZE，一种物理信息图神经网络，集成酶表达、EC功能嵌入和ChemBERTa代谢物描述符，在代谢图上实现零样本代谢物预测。通过代谢物条件阅读器查询学习到的通路表示，可推广到新代谢物。该方法为研究运动训练导致的皮瓣代谢重塑提供了有力工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

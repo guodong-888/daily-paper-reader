@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-06",
+  "date": "2026-07-06",
+  "generated_at": "2026-07-06T21:43:08",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/06/biorxiv-10-64898-2026-06-29-735073-v1-zero-shot-metabolite-prediction-from-gene-expression-via-physics-informed-graph-neural-networks",
+      "section": "quick",
+      "title_en": "Zero-Shot Metabolite Prediction from Gene Expression via Physics-Informed Graph Neural Networks",
+      "authors": "Novella Rausell, C., Rabelink, T., Mahfouz, A.",
+      "date": "2026-07-02",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.29.735073v1.full.pdf",
+      "score": "6.0",
+      "evidence": "提供从基因表达预测代谢物浓度的方法，可用于研究运动与皮瓣存活中的代谢变化",
+      "tldr": "从基因表达预测代谢物浓度是连接调控程序与代谢表型的关键。现有方法依赖静态酶-代谢物映射，难以泛化到新代谢物。本文提出GAZE，一种物理信息图神经网络，整合酶表达、EC功能嵌入和ChemBERTa代谢物描述符，通过代谢物条件阅读器实现零样本预测。在标准交叉验证中R²=0.816；留一代谢物零样本预测中，物理信息变体将中位R²差距从-0.72减半至-0.34，30%未见过代谢物获正R²；外部验证中位斯皮尔曼ρ=0.330。GAZE显著优于现有方法，为零样本代谢物预测提供了有效框架。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Predicting metabolite concentrations from gene expression is instrumental for linking regulatory programs to metabolic phenotypes. Prior approaches rely on static enzyme-metabolite mappings and often omit data-driven learning or biochemical constraints, limiting their ability to generalize to new metabolites. We present GAZE (Graph Attention for Zero-shot metabolite Estimation), a physics-informed graph neural network that integrates enzyme expression, Enzyme Commission functional embeddings, and ChemBERTa metabolite descriptors within a unified metabolic graph (5,414 nodes, 16,307 edges). A Metabolite-Conditioned Reader uses each metabolites SMILES embedding to query learned pathway representations, enabling zero-shot prediction with no metabolite-specific parameters. We evaluate GAZE in three scenarios: (i) standard cross-validation on the Cancer Atlas of Metabolic Profiles (18,044 genes, 180 metabolites, 867 cell lines), achieving R2 = 0.816; (ii) leave-one-metabolite-out (LOMO) zero-shot evaluation across 50 held-out metabolites, where the physics-informed variant halves the median R2 deficit relative to a standard GNN baseline (-0.34 vs. -0.72), with 30% of unseen metabolites achieving positive R2; and (iii) external validation on an independent clear cell renal cell carcinoma tissue cohort (220 samples), where GAZE achieves median Spearman{rho} = 0.330 across 214 metabolites without fine-tuning. GAZE outperforms scCellFie, MEBOCOST, and UnitedMet across all evaluation settings.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
