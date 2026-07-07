@@ -6,26 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-06
-- 运行时间：2026-07-06 21:43:01 UTC
+- 最新运行日期：2026-07-07
+- 运行时间：2026-07-07 21:54:48 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：2
 - 精读区：0
-- 速读区：1
+- 速读区：2
 
 ### 今日简报（AI）
-今日焦点：通过物理信息图神经网络实现基因表达到代谢物的零样本预测。  
-最值得关注：将物理学约束融入图神经网络，无需训练数据即可预测未知代谢物。  
-建议：关注该模型在代谢组学中的应用前景，尤其是难以实验测定的代谢物预测场景。
-- 详情：[/202607/06/README](/202607/06/README)
+今日速读两篇分数均为6.0的论文，聚焦肌肉收缩力学-能量模型与代谢控制理论。  
+值得关注的方向：肌肉收缩的时间依赖性力学能量耦合机制，以及线粒体与细胞质之间的代谢动态调控及营养分配。  
+建议普通读者可先阅读代谢控制理论一文，理解系统生物学视角下的能量代谢整合思路。
+- 详情：[/202607/07/README](/202607/07/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Zero-Shot Metabolite Prediction from Gene Expression via Physics-Informed Graph Neural Networks](/202607/06/biorxiv-10-64898-2026-06-29-735073-v1-zero-shot-metabolite-prediction-from-gene-expression-via-physics-informed-graph-neural-networks)  
+1. [A time-dependent mechano-bioenergetics model of muscle contraction](/202607/07/biorxiv-10-64898-2026-06-24-734405-v1-a-time-dependent-mechano-bioenergetics-model-of-muscle-contraction)  
    标签：评分：6.0/10、query:flap-ex-met
-   evidence：提供从基因表达预测代谢物浓度的方法，可用于研究运动与皮瓣存活中的代谢变化
+   evidence：肌肉收缩的时间依赖机械-生物能量学模型；运动期间的ATP再生和代谢
+2. [Control theory analysis of dynamic metabolic response elucidates mitochondrial-cytoplasmic coupling and nutrient partitioning](/202607/07/biorxiv-10-64898-2026-06-28-735091-v1-control-theory-analysis-of-dynamic-metabolic-response-elucidates-mitochondrial-cytoplasmic-coupling-and-nutrient-partitioning)  
+   标签：评分：6.0/10、query:flap-ex-met
+   evidence：控制理论分析动态代谢反应；适用于研究运动中的代谢变化
 
 
 <div class="dpr-home-promo-card">

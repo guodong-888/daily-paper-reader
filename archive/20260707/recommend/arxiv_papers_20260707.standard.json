@@ -1,0 +1,90 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-07T21:54:34.694304+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-06-24-734405-v1",
+      "source": "biorxiv",
+      "title": "A time-dependent mechano-bioenergetics model of muscle contraction",
+      "abstract": "Predictions of skeletal muscle energy consumption under a diverse range of muscle contractile conditions are critical for improving our understanding of locomotion. Existing mathematical models, while capturing the mechanical dependence of energy consuming processes, neglect the time-dependent behaviour and recovery costs associated with regenerating ATP. This time-dependence is important for predicting the energetic response of muscles during repetitive or cyclical tasks like locomotion, where muscle undergoes many contraction cycles. This study presents a novel model to predict energetic rates based on physiological processes: Ca2+ transport costs, cross-bridge cycling costs, and ATP regeneration. Previous mathematical models include the dependence on Ca2+ transport and cross-bridge cycling, but neglect the time-dependent response and the subsequent recovery of ATP following the contraction. Model parameters were obtained from existing data on isolated muscle preparations, and predicted energetic rates were validated on separate datasets across a range of contractile conditions including dynamic, sub-maximal, and twitch contractions. The time-dependent model was able to capture the influence of contraction frequency on peak energetic rates and the time-course of energetic recovery observed experimentally. The model captures key physiological processes while maintaining a minimal number of free parameters and low computational cost. This enables generalis-ability across muscles and species, and implementation into larger scale musculoskeletal models.",
+      "authors": [
+        "Konno, R. N.",
+        "Lichtwark, G. A.",
+        "Dick, T. J. M."
+      ],
+      "primary_category": "physiology",
+      "categories": [
+        "physiology"
+      ],
+      "published": "2026-06-30T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.24.734405v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "time-dependent mechano-bioenergetics model of muscle contraction; ATP regeneration and metabolism during exercise",
+      "llm_evidence_cn": "肌肉收缩的时间依赖机械-生物能量学模型；运动期间的ATP再生和代谢",
+      "llm_evidence": "肌肉收缩的时间依赖机械-生物能量学模型；运动期间的ATP再生和代谢",
+      "canonical_evidence": "肌肉收缩的时间依赖机械-生物能量学模型；运动期间的ATP再生和代谢",
+      "llm_tldr_en": "Presents a model predicting muscle energy consumption including ATP regeneration, relevant to metabolic changes during exercise and potentially flap survival.",
+      "llm_tldr_cn": "本文提出了一种新模型，预测骨骼肌在重复收缩中的能量消耗速率，包括钙离子转运、横桥循环和ATP再生成本。该模型弥补了现有模型忽略时间依赖性和恢复成本的不足，能够更准确地模拟运动过程中的代谢动态。虽然直接应用于皮瓣存活仍属间接，但其对肌肉新陈代谢的精细建模为研究运动诱导的代谢适应提供了重要工具。",
+      "llm_tldr": "本文提出了一种新模型，预测骨骼肌在重复收缩中的能量消耗速率，包括钙离子转运、横桥循环和ATP再生成本。该模型弥补了现有模型忽略时间依赖性和恢复成本的不足，能够更准确地模拟运动过程中的代谢动态。虽然直接应用于皮瓣存活仍属间接，但其对肌肉新陈代谢的精细建模为研究运动诱导的代谢适应提供了重要工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-06-28-735091-v1",
+      "source": "biorxiv",
+      "title": "Control theory analysis of dynamic metabolic response elucidates mitochondrial-cytoplasmic coupling and nutrient partitioning",
+      "abstract": "Cells adjust their internal circuits in response to changes in their environment. Hence, exposing cells to changing conditions provides a way to probe the intrinsic dynamics of cellular internal circuits. Metabolic networks are examples of such circuits since metabolic fluxes dynamically adjust when environmental conditions are transiently altered. Most existing theoretical frameworks focus on cellular metabolic steady states and do not consider the dynamics of changes in metabolic fluxes. In this work, we applied transfer function analysis from control theory to analyze the changes of NADH oxidative fluxes in the mitochondria and cytoplasm in mouse oocytes in response to dynamical perturbations of oxygen depletion and recovery. We observed an overshoot of NADH oxidative flux in the cytoplasm upon oxygen recovery which is absent in the mitochondrial NADH oxidative flux. Metabolic perturbation experiments and transfer function analysis indicate that this cytoplasmic NADH overshoot results from the coupling of the mitochondrial and cytoplasmic NADH cycles. The degree of overshoot is determined by competing timescales associated with the exchange rates of lactate and pyruvate with the media and their interconversion rates catalyzed by lactate dehydrogenase. Applying control theory to the data enables the inference of the exchange and conversion rates of pyruvate and lactate, allowing predictions of the contribution of lactate to mitochondrial respiration. Our work indicates that the oocytes maintain a homeostatic respiration rate across nutrient conditions by modulating the contribution of lactate to mitochondrial respiration.",
+      "authors": [
+        "Yang, X.",
+        "Needleman, D. J."
+      ],
+      "primary_category": "biophysics",
+      "categories": [
+        "biophysics"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.28.735091v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Control theory analysis of dynamic metabolic responses; applicable to studying metabolic changes during exercise",
+      "llm_evidence_cn": "控制理论分析动态代谢反应；适用于研究运动中的代谢变化",
+      "llm_evidence": "控制理论分析动态代谢反应；适用于研究运动中的代谢变化",
+      "canonical_evidence": "控制理论分析动态代谢反应；适用于研究运动中的代谢变化",
+      "llm_tldr_en": "This paper applies control theory transfer function analysis to study dynamic metabolic responses in mouse oocytes, revealing mitochondrial-cytoplasmic coupling and nutrient partitioning, offering a framework applicable to exercise-induced metabolic changes.",
+      "llm_tldr_cn": "现有代谢理论多聚焦稳态，忽略动态响应。本研究将控制理论中的传递函数分析应用于小鼠卵母细胞，在动态扰动下分析线粒体和细胞质中NADH氧化通量的变化，揭示了线粒体-细胞质耦合及营养分配机制。该框架为解析运动等动态条件下的代谢重编程提供了方法论支持，对理解运动训练如何改变代谢以增强皮瓣存活具有潜在价值。",
+      "llm_tldr": "现有代谢理论多聚焦稳态，忽略动态响应。本研究将控制理论中的传递函数分析应用于小鼠卵母细胞，在动态扰动下分析线粒体和细胞质中NADH氧化通量的变化，揭示了线粒体-细胞质耦合及营养分配机制。该框架为解析运动等动态条件下的代谢重编程提供了方法论支持，对理解运动训练如何改变代谢以增强皮瓣存活具有潜在价值。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
