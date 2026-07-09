@@ -1,0 +1,137 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-09T21:19:55.028096+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.00222v1",
+      "source": "arxiv",
+      "title": "Causal Inference for All: Marginal Estimands for Outcomes Truncated by Death",
+      "abstract": "In longitudinal studies, outcomes of interest are often truncated by death, meaning that they are only observed or well-defined conditional on intercurrent events such as survival. Existing strategies face a trade-off: causally interpretable estimands, such as survivor average causal effects, target a latent subgroup, whereas while-alive and composite summaries apply to the full population but are difficult to interpret as causal effects on the non-mortality outcome. We address these challenges by introducing methodology for a new set of estimands that (i) concern the entire population, (ii) remain causally interpretable, and (iii) leverage the longitudinal data commonly available in studies with outcomes truncated by death. The set of estimands includes single-world marginal separable effects that generalize conditional separable effects to full-population summaries. We develop identification and estimation results for these estimands and apply the methodology in a reanalysis of a prostate cancer trial, highlighting how different estimands can yield different treatment conclusions.",
+      "authors": [
+        "Ruixuan Zhao",
+        "Mats Stensrud",
+        "Linbo Wang"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "math.ST"
+      ],
+      "published": "2026-06-30T22:00:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.00222v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Causal inference method for factors affecting survival outcomes",
+      "llm_evidence_cn": "因果推断方法适用于分析影响皮瓣存活的因素",
+      "llm_evidence": "因果推断方法适用于分析影响皮瓣存活的因素",
+      "canonical_evidence": "因果推断方法适用于分析影响皮瓣存活的因素",
+      "llm_tldr_en": "Introduces marginal estimands for outcomes truncated by death, enabling causally interpretable analysis of survival data applicable to flap survival studies.",
+      "llm_tldr_cn": "在长期研究中，结局常因死亡而截断，现有方法在因果解释上存在局限。本文提出了一组新的边际估计量，适用于因死亡截断的结局，既能覆盖整个人群，又保持因果可解释性，且可利用纵向数据。该方法可直接应用于皮瓣存活研究中分析各种影响因素，如运动训练或代谢状态，提供可靠的因果推断基础。",
+      "llm_tldr": "在长期研究中，结局常因死亡而截断，现有方法在因果解释上存在局限。本文提出了一组新的边际估计量，适用于因死亡截断的结局，既能覆盖整个人群，又保持因果可解释性，且可利用纵向数据。该方法可直接应用于皮瓣存活研究中分析各种影响因素，如运动训练或代谢状态，提供可靠的因果推断基础。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-07-01-735944-v1",
+      "source": "biorxiv",
+      "title": "High-Intensity Interval Training Remodels Adipose Tissue Inflammatory Signaling and Enhances Immunometabolic Health via microRNA Regulation",
+      "abstract": "Sedentary behavior promotes chronic low-grade inflammation in adipose tissue, contributing to metabolic dysfunction and insulin resistance. High-intensity interval training (HIIT) is a time-efficient exercise strategy with potent anti-inflammatory and metabolic benefits; however, its effects on adipose tissue inflammatory signaling and microRNA (miRNA) regulation remain incompletely understood. This study investigated the effects of eight weeks of HIIT on inflammatory and epigenetic markers in interscapular white adipose tissue (iWAT) of male Wistar rats. Fourteen rats were randomly assigned to either a sedentary (SED; n = 7) or HIIT (n = 7) group. The HIIT protocol consisted of treadmill running five days per week for eight weeks. Body weight and iWAT mass were assessed, and molecular adaptations were evaluated at multiple regulatory levels using RT-qPCR for mRNA targets (NLRP3, TNF-, PPAR-{gamma}, and IL-10) and miRNAs (miR-21 and miR-30d-5p), while protein levels of NLRP3 and PPAR-{gamma} were assessed using Western blotting. Compared with the SED group, HIIT significantly reduced body weight (p < 0.001) and iWAT mass (p = 0.002). Furthermore, HIIT downregulated the expression of pro-inflammatory mediators, including NLRP3 (gene: p = 0.001; protein: p < 0.001) and TNF- (p = 0.025), while upregulating anti-inflammatory regulators PPAR-{gamma} (gene: p = 0.026; protein: p = 0.020) and IL-10 (p = 0.010). In parallel, inflammation-associated miRNAs, including miR-21 (p = 0.004) and miR-30d-5p (p = 0.002), were markedly downregulated. These coordinated transcriptional, post-transcriptional, and translational adaptations suggest that HIIT attenuates adipose tissue inflammation and promotes a favorable immunometabolic phenotype through integrated molecular and epigenetic mechanisms.",
+      "authors": [
+        "Sadeghi Mohammadi, M.",
+        "Marandi, S. M.",
+        "Rezaee, Z.",
+        "Saner, N. J.",
+        "Poosti, M."
+      ],
+      "primary_category": "physiology",
+      "categories": [
+        "physiology"
+      ],
+      "published": "2026-07-07T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.07.01.735944v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "HIIT remodels adipose tissue inflammatory signaling and enhances immunometabolic health, exercise-induced metabolic changes",
+      "llm_evidence_cn": "高强度间歇训练重塑脂肪组织炎症信号并增强免疫代谢健康，运动诱导的代谢变化",
+      "llm_evidence": "高强度间歇训练重塑脂肪组织炎症信号并增强免疫代谢健康，运动诱导的代谢变化",
+      "canonical_evidence": "高强度间歇训练重塑脂肪组织炎症信号并增强免疫代谢健康，运动诱导的代谢变化",
+      "llm_tldr_en": "Investigates eight weeks of HIIT on adipose tissue inflammatory signaling and miRNA regulation in rats, showing reduced inflammation and improved metabolic markers.",
+      "llm_tldr_cn": "该研究探讨高强度间歇训练（HIIT）对雄性Wistar大鼠白色脂肪组织炎症信号和microRNA调节的影响。八周HIIT后，脂肪组织炎症标志物降低，胰岛素敏感性改善，并伴随特定miRNA表达变化。揭示了HIIT通过表观遗传调控发挥抗炎和代谢益处的机制，虽未涉及皮瓣，但与运动诱导的代谢适应密切相关。",
+      "llm_tldr": "该研究探讨高强度间歇训练（HIIT）对雄性Wistar大鼠白色脂肪组织炎症信号和microRNA调节的影响。八周HIIT后，脂肪组织炎症标志物降低，胰岛素敏感性改善，并伴随特定miRNA表达变化。揭示了HIIT通过表观遗传调控发挥抗炎和代谢益处的机制，虽未涉及皮瓣，但与运动诱导的代谢适应密切相关。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-06-30-733797-v1",
+      "source": "biorxiv",
+      "title": "Multimodal molecular profiling of the metabolic penumbra in hyperacute stroke",
+      "abstract": "BackgroundThe ischemic penumbra, a metabolically compromised yet potentially salvageable region surrounding the ischemic core, is a prime target for acute stroke intervention. Yet an objective molecular definition of the penumbra, particularly during the earliest stages of ischemia, remains lacking.\n\nMethods and ResultsWe applied principal component analysis (PCA) followed by k-means clustering to high-resolution mass spectrometry imaging data covering multiple metabolic pathways to identify a metabolically defined penumbra in a mouse model of hyperacute stroke (45 min middle cerebral artery occlusion, MCAO). Targeted spatial metabolomic profiling by matrix-assisted laser desorption/ionization (MALDI) and desorption electrospray ionization (DESI) reveals a distinct penumbral metabolic profile, marked by relative preservation of high-energy phosphates, comparable lactate accumulation, and reduced succinate accumulation relative to the core. Spatial transcriptomics revealed selective induction of immediate-early genes, including Npas4, Fos and Junb, within the penumbra. Consistently, imaging mass cytometry shows enrichment of phospho-histone H3 (pHH3) within the penumbra, suggesting a chromatin-associated response potentially linked to immediate-early gene activation.\n\nConclusionTogether, these findings provide a multimodal molecular atlas of the hyperacute metabolically defined penumbra and reveal molecular features that facilitates its identification and inform future therapeutic strategies.",
+      "authors": [
+        "Mottahedin, A.",
+        "Couch, Y.",
+        "Holloway, P.",
+        "Mergenthaler, P.",
+        "Boehm-Sturm, P.",
+        "Attar, M.",
+        "Foster, R.",
+        "Dannhorn, A.",
+        "Buchan, A."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-07-04T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.30.733797v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Metabolic profiling of ischemic penumbra relates to metabolic changes in flap survival",
+      "llm_evidence_cn": "代谢半暗带图谱与皮瓣存活中的代谢变化相关",
+      "llm_evidence": "代谢半暗带图谱与皮瓣存活中的代谢变化相关",
+      "canonical_evidence": "代谢半暗带图谱与皮瓣存活中的代谢变化相关",
+      "llm_tldr_en": "Uses multimodal mass spectrometry imaging to define the metabolic penumbra in hyperacute stroke, offering methods to study metabolic changes in ischemic tissue relevant to flap survival.",
+      "llm_tldr_cn": "超急性卒中缺血半暗带的分子定义尚不明确，而皮瓣缺血同样涉及代谢改变的区域。本研究应用主成分分析和k-means聚类对高分辨率质谱成像数据进行分析，鉴定了代谢定义的半暗带区域，涉及多种代谢途径。该代谢图谱方法可推广至皮瓣缺血模型，用于研究运动诱导的代谢适应如何影响组织存活。",
+      "llm_tldr": "超急性卒中缺血半暗带的分子定义尚不明确，而皮瓣缺血同样涉及代谢改变的区域。本研究应用主成分分析和k-means聚类对高分辨率质谱成像数据进行分析，鉴定了代谢定义的半暗带区域，涉及多种代谢途径。该代谢图谱方法可推广至皮瓣缺血模型，用于研究运动诱导的代谢适应如何影响组织存活。",
+      "llm_tags": [
+        "query:flap-ex-met:composite"
+      ],
+      "matched_query_tag": "query:flap-ex-met:composite",
+      "matched_query_text": "Papers central to 运动与皮瓣代谢研究, especially work that connects or combines: exercise training effect on flap survival; factors influencing flap survival; metabolic changes during exercise and flap survival; mitochondrial function exercise and flap survival; exercise induced metabolic changes in skin flap; exercise preconditioning improves flap survival via metabolism; Does exercise preconditioning improve flap survival through metabolic reprogramming?; Metabolic adaptations from exercise training that enhance flap viability; How does exercise alter metabolism to enhance skin flap survival in humans and mice?.",
+      "matched_requirement_id": "req-composite-flap-ex-met",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

@@ -1,0 +1,2155 @@
+Title: Causal Inference for All: Marginal Estimands for Outcomes Truncated by Death
+
+URL Source: https://arxiv.org/pdf/2607.00222v1
+
+Published Time: Thu, 02 Jul 2026 00:19:42 GMT
+
+Number of Pages: 54
+
+Markdown Content:
+# Causal Inference for All: Marginal Estimands for Outcomes Truncated by Death 
+
+Ruixuan Zhao 1, Mats Stensrud 2, and Linbo Wang 1,3 1Department of Computer and Mathematical Sciences, University of Toronto Scarborough 
+
+> 2
+
+Institute of Mathematics, ´ Ecole Polytechnique F´ ed´ erale de Lausanne 
+
+> 3
+
+Department of Statistical Sciences, University of Toronto 
+
+Abstract 
+
+In longitudinal studies, outcomes of interest are often truncated by death, meaning that they are only observed or well-defined conditional on intercurrent events such as survival. Exist-ing strategies face a trade-off: causally interpretable estimands, such as survivor average causal effects, target a latent subgroup, whereas while-alive and composite summaries apply to the full population but are difficult to interpret as causal effects on the non-mortality outcome. We address these challenges by introducing methodology for a new set of estimands that (i) concern the entire population, (ii) remain causally interpretable, and (iii) leverage the longitudinal data commonly available in studies with outcomes truncated by death. The set of estimands includes single-world marginal separable effects that generalize conditional separable effects to full-population summaries. We develop identification and estimation results for these estimands and apply the methodology in a reanalysis of a prostate cancer trial, highlighting how different estimands can yield different treatment conclusions. 
+
+Keywords: Local average treatment effect; Longitudinal data; Selection bias; Separable effect; Survivor average causal effect. 1
+
+> arXiv:2607.00222v1 [stat.ME] 30 Jun 2026
+
+# 1 Introduction 
+
+In longitudinal studies, outcomes are often only well-defined conditional on a post-treatment event, such as survival. This creates a fundamental challenge for causal inference because contrasts re-stricted to those who survive need not have a causal interpretation. Truncation by death is the canoni-cal example: in studies of quality of life (QoL), outcomes are well-defined only while participants are alive. In HIV vaccine studies, virologic and immunologic outcomes such as HIV viral load and CD4 cell count are often of interest only among individuals who become infected (Gilbert et al., 2003, Wang et al., 2017a). In labor economics, the effect of a job training program on salary is of interest only for individuals who obtain employment, with job attainment truncating the earnings outcome. In studies with a single follow-up time, a naive yet common practice is to restrict comparisons to observed survivors in each treatment arm. In longitudinal settings, the while-alive strategy ex-tends this survivor-restricted idea by aggregating each participant’s outcomes over observed survival time. Because the strategy includes outcomes only over observed survival time, it can be viewed as a longitudinal analogue of survivor-restricted comparisons, even though the International Council for Harmonisation (ICH) E9(R1) Addendum (ICH, 2019) does not formally define such an estimand. The comparisons are not causally interpretable because they contrast outcomes from different subpopu-lations or from different time periods under different treatment arms, thereby introducing selection bias. Another common approach is to treat truncation by death as a missing-data problem, either by estimating outcomes under a hypothetical intervention on the intercurrent event, that is, under a counterfactual scenario in which the intercurrent event does not occur (the hypothetical strategy; ICH, 2019), or by assigning a prespecified value or rank to outcomes after death (the composite strategy; ICH, 2019). However, choosing an appropriate prespecified value or rank can be controversial and of limited interpretability (Lachin, 2020). More fundamentally, outcomes such as QoL are arguably undefined, rather than missing, for individuals who die (Little et al., 2012). To address these challenges, a strategy widely advocated in the causal inference literature is to focus on the always-survivor group, that is, the individuals who would survive under either treatment (Robins, 1986, §12.2). The resulting survivor average causal effect (SACE) (Rubin, 2006) has gener-ated a large literature on identification, estimation, and sensitivity analysis (e.g. Gilbert et al., 2003, Ding et al., 2011, Wang et al., 2017a,b), and is also included among the estimands discussed in the 2ICH E9(R1) Addendum (ICH, 2019). Yet the SACE has had limited practical uptake, partly because it targets an unobserved and often healthier principal stratum rather than the full population relevant for clinical or policy decisions (Bornkamp et al., 2021, Stensrud and Dukes, 2022). This limitation is not merely technical: because principal-stratum membership is unknown, recommendations based on the SACE may be difficult to apply to individual patients and may expose individuals outside the principal stratum to an ineffective or even harmful treatment, raising ethical concerns (Robins, 1986, Hern´ an and Scharfstein, 2018, Stensrud et al., 2022). Recently, Stensrud et al. (2023) proposed the conditional separable effect (CSE), which conceptu-alizes treatment as two components operating through distinct pathways on survival and the outcome. The CSE avoids the cross-world conditioning in the SACE, but still conditions on survival under an intervention on the survival-related component. It is therefore causally interpretable but remains a survival-conditioned estimand, rather than a full-population summary of longitudinal outcomes. 
+
+Figure 1: Illustration of the “while guaranteed-survival” and “while extended-survival” estimands, each associated with a distinct time period, when Ti(z) ≥ Ti(1 − z) for individual i.To reconcile the discrepancy between causally interpretable estimands and the summaries com-monly used in practice, we separate two questions that are often conflated. First, over the period during which the outcome would be well-defined under either treatment, what is the treatment effect on the non-mortality outcome? Second, when one treatment prolongs survival, what is the outcome experience during the additional survival time? Figure 1 illustrates this partition into guaranteed sur-vival and extended survival periods. This separation yields full-population causal estimands while making explicit the cross-world quantities required to define and identify them. Our first contribution is a class of “while guaranteed-survival” estimands. Let T (z) denote the potential follow-up time under treatment z. These estimands summarize treatment effects over the 3guaranteed survival period [0 , T (0) ∧ T (1)] , where the outcome would be well-defined regardless of treatment. They retain the full-population appeal of while-alive and composite summaries, while avoiding treatment-specific time domains and therefore defining a coherent causal contrast. By al-lowing exit-time, average, cumulative, or AUC-based weighting schemes, they can be tailored to different clinical questions about the outcome experience before death truncates comparability. Second, we introduce “while extended-survival” estimands for the period during which an indi-vidual would survive under one treatment but not under the other. When T (z) > T (1 −z), this period is the interval (T (1 − z), T (z)] shown in Figure 1. This part of the trajectory is ignored by the SACE and guaranteed-survival contrasts, but is often implicitly captured by standard clinical summaries such as while-alive or composite strategies. For QoL outcomes, explicitly targeting this period dis-tinguishes treatments that prolong survival with meaningful QoL from those that prolong survival in a severely compromised state, sometimes described as a “living death.” Third, we develop single-world marginal separable effects that generalize recent work on sep-arable effects (Stensrud et al., 2022, 2023). Under a conceptual decomposition of treatment into an outcome-related component ZY and a survival-related component ZS , these estimands compare interventions that vary ZY while holding ZS fixed. They define population-level contrasts without relying on the cross-world survival times used by the while guaranteed-survival and while extended-survival estimands. This yields a complementary single-world framework, and we further clarify conditions under which the while guaranteed-survival and while extended-survival estimands corre-spond to marginal separable effects. Beyond defining these estimands, we study how they can be learned from observed longitudinal trial data. For the while guaranteed-survival and while extended-survival estimands, we derive iden-tification results using a substitution-variable approach that links the required cross-world quantities to observed longitudinal data, and we propose compatible plug-in estimators. For marginal separable effects, we give identification conditions under a treatment decomposition and construct influence-function-based estimators. Throughout, these assumptions are used for identification and estimation rather than for defining the estimands themselves. The rest of the paper is organized as follows. Section 2 introduces the longitudinal setup and reviews existing strategies for outcomes truncated by death. Section 3 defines the while guaranteed-4survival and while extended-survival estimands. Sections 4 and 5 develop identification and estima-tion results for these estimands and for marginal separable effects, respectively. Section 6 reanalyzes a prostate cancer trial, and Section 7 discusses implications and limitations. 
+
+# 2 Preliminaries 
+
+## 2.1 Basic setup 
+
+Consider a longitudinal study, where individuals are assigned a binary treatment Z ∈ { 0, 1} at base-line and baseline covariates L0 are observed. By convention, we set Z = 1 as active treatment and 
+
+Z = 0 as control. Then, for discrete follow-up time points t = 1 , ..., t max , let St denote the survival status at time point t, where St = 1 if the individual was alive and St = 0 otherwise. Similarly, we denote Y t as the non-mortality outcome at time t, where Y t is well-defined only if St = 1 . We assume S0 = 1 , and the baseline outcome Y 0 is well-defined for each individual, with Y 0 ∈ L0.Figure 2 shows a diagram to illustrate the data structure introduced above. In addition, we define the observed follow-up time as T = max {t : St = 1 } ∧ tmax , where tmax is the maximum follow-up time in the study. We use overbars to denote the history of a random variable over time t, such as 
+
+¯St = ( S1, ..., S t), and underbars to denote its future, such as St = ( St, ..., S tmax ).
+
+Z Y 1 Y 2 Y 3
+
+Binary treatment Outcome at time 1 Outcome at time 2 Outcome at time 3 
+
+S1 S2 S3
+
+Survival status at time 1 Survival status at time 2 Survival status at time 3 Figure 2: Longitudinal data structure with outcomes truncated by death. Survival status St determines whether the outcome Y t is well-defined at each follow-up time. In the potential outcomes framework, for z = 0 , 1, let the potential survival status at time t be 
+
+St(z), which is the survival status that would be observed were the individual assigned treatment z.Similarly, we denote Y t(z) and T (z) as the potential outcome at time t and potential follow-up time 5under treatment z, respectively. Also, note that Y t(z) is well-defined only if St(z) = 1 . For z = 0 , 1,let T (z) ∧ T (1 − z) and T (z) ∨ T (1 − z) denote, respectively, the minimal and maximal follow-up time across two treatments. Under the standard consistency condition, the observed survival statuses, the survival time, and the outcomes satisfy St = ZS t(1) + (1 − Z)St(0) , T = ZT (1) + (1 − Z)T (0) , and Y t = ZY t(1) + (1 − Z)Y t(0) , respectively. Furthermore, the observed samples 
+
+{L0 
+
+> i
+
+, Z i, ¯Stmax  
+
+> i
+
+, ¯Y tmax  
+
+> i
+
+}ni=1 are independently drawn from the joint distribution of {L0, Z, ¯Stmax , ¯Y tmax }.Throughout, for a random vector V , let V denote its support, and use lowercase letters to denote its realizations. For two random vectors A and B, denote pA|B (a|b) as the conditional density or conditional mass function of A = a given B = b.
+
+## 2.2 Survivor average causal effect 
+
+The survivor average causal effect (SACE) is a widely studied principal stratum estimand (Robins, 1986, Rubin, 2006). Specifically, we use Gt to denote the survival type at time t, for t = 1 , ..., t max ,which is defined as follows: Gt = LL if St(1) = St(0) = 1 , Gt = LD if St(1) = 1 and St(0) = 0 ,
+
+Gt = DL if St(1) = 0 and St(0) = 1 , and Gt = DD if St(1) = St(0) = 0 . Then, the SACE at time t is E[Y t(1) − Y t(0) |Gt = LL ], or equivalently E[Y t(1) − Y t(0) |T (1) ≥ t, T (0) ≥ t]. In longitudinal settings, Grossi et al. (2025) evaluates treatment effects among always-survivor groups across a sequence of time points, using estimands of the form E[Y r(1) − Y r(0) | T (1) ≥ t, T (0) ≥ t]
+
+for r ≤ t. For fixed t, these estimands describe the treatment-effect trajectory over r = 1 , . . . , t 
+
+within the same always-survivor subgroup. However, comparisons across t are inappropriate because they involve different latent subgroups (Comment et al., 2025). Accordingly, Grossi et al. (2025) also reports posterior membership probabilities for the longitudinal principal strata, clarifying their proportions and baseline characteristics. 
+
+## 2.3 Separable effect 
+
+Stensrud et al. (2023) considered an extension of the setup in Section 2.1 by accounting for observed time-varying covariates Lt at times t = 1 , . . . , t max , which may be treatment-induced confounders between St and Y t. This extended setting is shown in Figure 3(a). The separable effects start with the premise that the original treatment Z in the current trial can be conceptualized as comprising two 6binary components, ZY ∈ { 0, 1} and ZS ∈ { 0, 1}. The component ZY directly affects the longitu-dinal outcome process ¯Y tmax without influencing survival ¯Stmax , whereas ZS directly affects survival and may influence ¯Y tmax only through the covariate process ¯Ltmax and survival ¯Stmax . More specif-ically, let Y t(zY , z S ), Lt(zY , z S ), St(zY , z S ) and T (zY , z S ) denote the potential outcome at time t,the potential time-varying covariate at time t, the potential survival status at time t, and the poten-tial follow-up time, respectively, under treatment components (zY , z S ). The following assumptions formalize the assumptions on ZY and ZS .
+
+Assumption 1 (ZY partial isolation) : St(zY , z S ) = St(zS ) for zY , z S ∈ { 0, 1} and t = 1 , ..., t max .
+
+Assumption 2* (Weakly ZS partial isolation) : Let Y t(zY , ¯lt, ¯st) denote the potential outcome at time t under an intervention that sets ZY = zY , ¯Lt = ¯lt, and ¯St = ¯st. Then Y t(zY , z S ) = 
+
+Y t zY , ¯Lt(zY , z S ), ¯St(zS ), for t = 1 , . . . , t max .
+
+Assumption 2* can be controversial because it implicitly assumes that it is possible to intervene on ¯St. Instead, a common alternative in the separable effects literature (Stensrud et al., 2022, 2023) is to consider a hypothetical four-arm trial C in which ZY and ZS are jointly randomized in the same population. Let V (C) denote the random variable V under the treatment assignment in trial C, to distinguish it from the observed V in the current two-arm trial. Since L0 is the baseline covariate measured prior to treatment assignment and is unaffected by treatment, we use L0, rather than L0(C),under trial C. Then, the following assumption captures the notion that ZS may influence Y t only through ( ¯St, ¯Lt) for t = 1 , . . . , t max .
+
+Assumption 2 (ZS dismissible component condition) : For t = 1 , ..., t max ,
+
+ZS (C)|= Y t(C) | ZY (C), S t(C) = 1 , ¯Lt(C), L 0.
+
+Assumption 2 can be read off from a causal graph; see for example Figure 3(b). The effect of 
+
+ZY on Y t can be quantified by the conditional separable effect (CSE), E[Y t(1 , z S ) − Y t(0 , z S ) |
+
+St(zS ) = 1] , which is the average causal effect of treatment ZY on Y t had all individuals been assigned the treatment ZS = zS , among those who would be alive under ZS = zS . Compared with the SACE, the CSE is single-world because it is defined under a single intervention regime on the treatment components. The conditioning event {St(zS ) = 1 } could, in principle, be identified in the 7Figure 3: Two causal diagrams illustrating the separable effects framework: panel (a) shows the causal graph for the current study, and panel (b) shows the causal graph under the four-arm trial C.Baseline covariates L0 are omitted in both graphs for brevity. hypothetical four-arm trial, whereas always-survivor membership is generally not identifiable. Next, we adopt a consistency assumption that links the potential outcomes under the decomposed treatment representation (ZY , Z S ) to those under the observed treatment Z.
+
+Assumption 3 (Intervention consistency) : For z′ ∈ { 0, 1}, Y t(zY = z′, z S = z′) = Y t(z = z′),
+
+St(zS = z′) = St(z = z′) and Lt(zY = z′, z S = z′) = Lt(z = z′).We compare the CSE evaluated at zS = 0 with the SACE under the separable effects framework with Assumptions 1, 2, and 3. Recall that at time t, the SACE can be expressed as E[Y t(1 , 1) −
+
+Y t(0 , 0) | St(1) = St(0) = 1] . Under monotonicity, St(1) ≥ St(0) , a.s, both the CSE with zS = 0 
+
+and the SACE concern the same subpopulation {i : Sti (1) = Sti (0) = 1 } for t = 1 , . . . , t max .However, the SACE captures both the direct effect of ZY on Y t and the effect of ZS mediated through 
+
+¯Lt, whereas the CSE isolates the effect of ZY by fixing zS = 0 . They coincide if ¯Lt is empty (Stensrud et al., 2023). 
+
+## 2.4 Related work 
+
+Among existing approaches for longitudinal outcomes truncated by death, the while-alive strategy is closely connected to the estimands considered in this paper because it is also designed to summarize longitudinal outcome trajectories. Building on Wei et al. (2023), Janvin et al. (2024), we represent this class of “while-alive” estimands as follows: 
+
+λ(z) := E
+
+h T (z)
+
+X
+
+> r=0
+
+ζrT (z)Y r(z)
+
+i
+
+, (1) 8where ζrT (z) denotes a weight that may depend on T (z), the last time point at which the individual would be alive under treatment z. Although λ(z) is a population-level summary, the contrast λ(1) −
+
+λ(0) compares outcomes accumulated over different time periods across treatment arms and therefore does not generally admit a causal interpretation. As shown by Janvin et al. (2024), even when the treatment has no direct effect on the outcome, such contrasts can differ from zero purely due to differences in survival times between arms. Other estimands for longitudinal outcomes truncated by death, including the recently developed PLOT estimand of Baklicharov et al. (2025), are discussed in Supplementary Material Section S1, and Table S1.1 summarizes their mathematical forms and main limitations. 
+
+# 3 Full-population estimands for outcomes truncated by death 
+
+We now introduce a set of estimands that, as illustrated in Figure 1, characterizes the potential out-come trajectories of each individual i across two distinct survival periods: the guaranteed survival period and the extended survival period. The guaranteed survival period, 0 ≤ t ≤ Ti(1) ∧ Ti(0) ,is the period during which the individual would be alive under both treatments. During this period, both Y ti (1) and Y ti (0) are well-defined, so treatment arms can be compared using common weights chosen to reflect the clinical or scientific objective. The extended survival period, Ti(1) ∧ Ti(0) <t ≤ Ti(1) ∨ Ti(0) , is the additional survival time under the treatment that would prolong survival. During this period, only one of the two potential outcome paths, Y ti (1) or Y ti (0) , is well-defined, and summaries over this period describe the quality (or burden) of the additional survival time. 
+
+## 3.1 A class of while guaranteed-survival estimands 
+
+To develop estimands for the full population during the guaranteed survival period, in which both potential outcomes are well-defined, we first illustrate the key ideas using a toy example. Figure 4 gives graphical illustrations for the example with two individuals i = 1 , 2 and three discrete follow-up times ( t = 1 , 2, 3) at 3, 6, and 12 months. We denote Y ti (z) and Ti(z) as the potential outcome at time t and the potential follow-up time under treatment z for individual i. Also, let Y 0 
+
+> i
+
+be the baseline outcome for individual i. Then, we use this example to motivate the estimands that align 9with different research aims. 
+
+Figure 4: A toy example with two individuals to illustrate our proposed estimands. 
+
+Example 1 (Exit time) : Consider an estimand that summarizes outcomes before death or at the end of the study. In Figure 4, the estimand takes the form μ(z) = 12 Y 21 (z) + 12 Y 32 (z), which averages the potential outcomes at the last time point at which each individual would survive under both treatment arms. For individual 1, although Y 31 (1) is well-defined because the individual would survive to 12 
+
+months under treatment z = 1 , μ(1) still uses Y 21 (1) to ensure comparability with μ(0) . Note that this comparability comes with a caveat. When potential survival times differ between treatment arms, the longer-survival treatment is evaluated before the end of the individual’s survival under that treatment. The shorter-survival treatment, by contrast, is evaluated at the final observation before death, when the individual’s condition may already have deteriorated. 
+
+Example 2 (Average) : Consider an estimand that quantifies a time-averaged treatment effect, μ(z) = 
+
+> 12
+
+n13 Y 01 + 13 Y 11 (z) + 13 Y 21 (z)
+
+o
+
++ 12
+
+n14 Y 02 + 14 Y 12 (z) + 14 Y 22 (z) + 14 Y 32 (z)
+
+o
+
+, where, for each individual, it first averages the potential outcomes over all time points during the guaranteed survival period, and then averages these individual-specific averages over all individuals. This estimand assigns equal weight to each individual, regardless of how long they survive. 
+
+Example 3 (Cumulative) : In settings such as health technology assessment and cost-effectiveness analysis, the outcome of interest often accumulates over follow-up. Examples include inpatient bed days, dialysis hours, medical expenditures, symptom burden, toxicity, and QoL burden. Motivated by such settings, consider the cumulative estimand μ(z) = 12
+
+n
+
+Y 01 + Y 11 (z) + Y 21 (z)
+
+o
+
++ 12
+
+n
+
+Y 02 +
+
+Y 12 (z) + Y 22 (z) + Y 32 (z)
+
+o
+
+, which sums potential outcomes over all time points in the guaranteed survival period. Because each time point enters the sum with equal unit weight, individuals with 10 longer guaranteed-survival periods contribute more to this estimand. 
+
+Example 4 (AUC-based) : For irregular visit schedules, let τt denote the time of visit t since study entry, with τ = ( τ0, τ 1, . . . , τ tmax ) and τ0 = 0 . In Figure 4, τ = (0 , 1/4, 1/2, 1) , with time mea-sured in years. A time-weighted cumulative estimand is μ(z) = 12
+
+n14     
+
+> Y01+Y11(z)2
+
++ 14    
+
+> Y11(z)+ Y21(z)2
+
+o
+
++
+
+> 12
+
+n14     
+
+> Y02+Y12(z)2
+
++ 14     
+
+> Y12(z)+ Y22(z)2
+
++ 12    
+
+> Y22(z)+ Y32(z)2
+
+o
+
+, which incorporates the time intervals to construct an area-under-the-curve (AUC)-based cumulative summary over the guaranteed survival period, as il-lustrated by the shaded areas in Figure 5. 
+
+Figure 5: Illustration of the area under the potential outcome curves for individual 1 (left panel) and individual 2 (right panel). The preceding examples are special cases of a broader class of while guaranteed-survival esti-mands. This class provides a unified framework for summarizing well-defined potential outcomes over the guaranteed survival period while allowing the weights to encode different clinical or scien-tific objectives: 
+
+μ(z) := E
+
+h T (0) ∧T (1) 
+
+X
+
+> r=0
+
+wrT (0) ∧T (1) Y r(z)
+
+i
+
+, (2) Here wrT (0) ∧T (1) is the weight assigned to time point r = 0 , 1, . . . , T (0) ∧ T (1) . It may depend on 
+
+T (0) ∧ T (1) , the last time point at which the individual would be alive under both treatment arms. We define the corresponding treatment contrast as ∆gua := μ(1) − μ(0) , which captures the causal effect of treatment on outcomes over the guaranteed survival period. In Table 1, we present four possible weighting schemes, each corresponding to Examples 1–4. The following remarks relate our while guaranteed-survival estimands with principal-stratum es-11 Table 1: Four example types of weighting schemes for the while guaranteed-survival estimand 
+
+Type Weight Exit time wexit ,r T (0) ∧T (1) =
+
+(
+
+1, r = T (0) ∧ T (1) ,
+
+0, r < T (0) ∧ T (1) 
+
+Average wavg ,r T (0) ∧T (1) = 1  
+
+> {T(0) ∧T(1) }+1
+
+Cumulative wcum ,r T (0) ∧T (1) = 1 
+
+AUC-based wAUC ,r T (0) ∧T (1) = I(T (0) ∧ T (1) ≥ 1) 
+
+×
+
+
+
+> 12
+
+τT (0) ∧T (1) − τ{T (0) ∧T (1) }− 1
+
+ , r = T (0) ∧ T (1)  
+
+> 12
+
+[τr+1 − τr−1] , 0 < r < T (0) ∧ T (1)  
+
+> 12
+
+τ1, r = 0 
+
+timands (Robins, 1986, Rubin, 2006, Grossi et al., 2025). 
+
+Remark 1 (SACE at time ˙r): For a fixed time point ˙r, when wrT (0) ∧T (1) = I(T (0) ∧T (1) ≥ ˙r)Pr( T (0) ∧T (1) ≥ ˙r) I(r = ˙ r),the contrast of while guaranteed-survival estimands across two treatment arms is reduced to SACE at time ˙r, i.e., ∆gua = E[Y ˙r(1) − Y ˙r(0) |S ˙r(1) = S ˙r(0) = 1] . From this perspective, the SACE can be viewed as a special case of our while guaranteed-survival estimand with a time-dependent weight that may not be easy to interpret. 
+
+## 3.2 A class of while extended-survival estimands 
+
+Suppose that an investigator aims to evaluate the potential outcomes during the extended survival period. For an individual with T (1) > T (0) , treatment z = 1 prolongs survival relative to z = 0 . This extended survival period starts after the final time point at which the individual would survive under 
+
+z = 0 and ends at the final time point under z = 1 , namely (T (0) , T (1)] . To assess their potential outcomes under z = 1 during this period, we summarize them by PT (1)   
+
+> r=T(0)
+
+ϕrT (0) ,T (1) Y r(1) , where the weights ϕrT (0) ,T (1) are chosen to summarize this interval and may depend on its start and end points, namely T (0) and T (1) . Analogously, for an individual with T (0) > T (1) , the potential outcomes under z = 0 over (T (1) , T (0)] can be summarized as PT (0)   
+
+> r=T(1)
+
+ϕrT (1) ,T (0) Y r(0) , where ϕrT (1) ,T (0) is defined in the same way as before. Then, to compare the potential outcomes during the extended survival periods under different treatments, we propose the following class of while extended-survival estimands: 
+
+μext := E
+
+I(T (1) > T (0)) 
+
+ 
+
+> T(1)
+
+X 
+
+> r=T(0)
+
+ϕrT (0) ,T (1) Y r (1) 
+
+ − I(T (1) < T (0)) 
+
+ 
+
+> T(0)
+
+X 
+
+> r=T(1)
+
+ϕrT (1) ,T (0) Y r (0) 
+
+ . (3) 
+
+Define zmin := argmin z T (z) and zmax := argmax z T (z), and we present three examples for 12 the weights ϕrT (zmin ),T (zmax ), for r = T (zmin ), ..., T (zmax ), in Table 2 and illustrate the AUC-based weighting scheme in the following example through the toy example in Figure 4. Table 2: Three example types of weighting schemes for the while extended-survival estimand 
+
+Type Weight Average ϕavg ,r T (zmin ),T (zmax ) = 1   
+
+> T(zmax )−T(zmin )
+
+I(r > T (zmin )) 
+
+Cumulative ϕcum ,r T (zmin ),T (zmax ) = I(r > T (zmin )) 
+
+AUC-based ϕAUC ,r T (zmin ),T (zmax ) =
+
+
+
+> 12
+
+τT (zmax ) − τT (zmax )−1
+
+ , r = T (zmax ), 
+
+> 12
+
+[τr+1 − τr−1] , T (zmin ) < r < T (zmax ),
+
+> 12
+
+τT (zmin )+1 − τT (zmin )
+
+ , r = T (zmin )
+
+Example 5 (AUC-based) : Figure 6 illustrates the quantities corresponding to the estimands ∆gua 
+
+and μext using the toy example in Figure 4. Under the AUC-based weighting scheme wAUC ,r T (0) ∧T (1) ,
+
+∆gua = 12 ∆gua  
+
+> 1
+
++ 12 ∆gua  
+
+> 2
+
+, where ∆gua  
+
+> 1
+
+=
+
+n14     
+
+> Y01+Y11(1) 2
+
++ 14    
+
+> Y11(1)+ Y21(1) 2
+
+o
+
+−
+
+n14     
+
+> Y01+Y11(0) 2
+
++ 14    
+
+> Y11(0)+ Y21(0) 2
+
+o
+
+and ∆gua  
+
+> 2
+
+=
+
+n14     
+
+> Y02+Y12(1) 2
+
++ 14     
+
+> Y12(1)+ Y22(1) 2
+
++ 12    
+
+> Y22(1)+ Y32(1) 2
+
+o
+
+−
+
+n14     
+
+> Y02+Y12(0) 2
+
++ 14     
+
+> Y12(0)+ Y22(0) 2
+
++ 12    
+
+> Y22(0)+ Y32(0) 2
+
+o
+
+denote, respectively, the areas between the potential outcome curves under treatment and control over the guaranteed survival period for individuals 1 and 2. Similarly, under the AUC-based weighting scheme ϕAUC ,r T (zmin ),T (zmax ), the while extended-survival estimand is given by μext = 12 μext  
+
+> 1
+
++ 12 μext  
+
+> 2
+
+. As shown in Figure 6, μext  
+
+> 1
+
+= 12     
+
+> Y21(1)+ Y31(1) 2
+
+approximates the area under the potential outcome trajectory over the extended survival period from 6 months to 1 year for individual 1. In contrast, μext  
+
+> 2
+
+= 0 
+
+because, for individual 2, the extended survival period is empty, as the potential survival time is the same under two treatment arms. 
+
+Figure 6: Illustration of the areas under the potential outcome curves for two estimands. The blue regions correspond to ∆gua  
+
+> i
+
+for i = 1 , 2, whereas the red region corresponds to μext 1 . For individual 2, the corresponding extended survival region is empty. 13 4 Identification and estimation of the proposed full-population estimands 
+
+This section shows how the proposed survival-period estimands can be learned from observed lon-gitudinal trial data. We first express the estimands as weighted sums of principal-stratum outcome components, then identify these components using a substitution-variable approach (Wang et al., 2017b), and finally construct plug-in estimators. The assumptions below are used for identification and estimation only and are not part of the estimand definitions. 
+
+## 4.1 Identification of while guaranteed-survival estimands 
+
+To facilitate identification, we rewrite μ(z) in (2) as 
+
+μ(z) = 
+
+> tmax
+
+X
+
+> t=0
+> t
+
+X
+
+> r=0
+
+wrt E[I{T (0) ∧ T (1) = t}Y r(z)] , (4) where wrt denotes the weight wrT (0) ∧T (1) evaluated at T (0) ∧ T (1) = t, and is therefore nonrandom given t. Thus, identification of μ(z) reduces to identifying the component E[I{T (0) ∧ T (1) = t}Y r(z)] 
+
+for 0 ≤ r ≤ t ≤ tmax . By iterated expectation, this component decomposes into a principal-stratum mean potential outcome and the corresponding conditional principal score: 
+
+E[I{T (0) ∧ T (1) = t}Y r(z)] =EEY r(z) | T (0) ∧ T (1) = t, ¯Lr(z), L 0 Pr T (0) ∧ T (1) = t | ¯Lr(z), L 0  .
+
+We first introduce the following assumptions commonly used for principal-score identification (Wang et al., 2017b, Grossi et al., 2025). 
+
+Assumption 4 (Monotonicity) : T (1) ≥ T (0) almost surely. 
+
+Assumption 5 ((G,L)-ignorability) : Z|= ¯Gtmax , ¯Ltmax (z) | L0 for z = 0 , 1.
+
+Assumption 6 (Positivity) : 0 < Pr( Z = z | L0) < 1 and p¯Lr ,S r |Z,L 0 (¯lr, 1 | z, L 0) > 0 almost surely, for any z = 0 , 1 and r = 1 , . . . , t max .Under Assumptions 4 - 6, the conditional principal score Pr {T (0) ∧ T (1) = t | ¯Lr(z), L 0} is 14 directly identifiable for z = 0 , because monotonicity reduces {T (0) ∧ T (1) = t} to {T (0) = t}. The case z = 1 is more difficult: even under monotonicity, the score Pr {T (0) ∧ T (1) = t | ¯Lr(1) , L 0}
+
+conditions on post-treatment covariates under z = 1 . We therefore impose the following survival principal ignorability assumption. 
+
+Assumption 7 (Survival principal ignorability) :
+
+Sr(0) |= ¯Lr(1) | Sr(1) = 1 , L 0, for r = 1 , .., t max ,St+1 (0) |= ¯Lt(1) | Gt = LL, L 0, for t = 1 , .., t max − 1.
+
+A latent-process rationale for Assumption 7 in the cancer-study setting is provided in Remark 5 in Supplementary Material Section S2. The identification result for the conditional principal score under z = 1 is then given in the following lemma. 
+
+Lemma 1: Under Assumptions 4 - 7, for 1 ≤ r ≤ t ≤ tmax , any ¯lr ∈ ¯Lr and l0 ∈ L 0, Pr {T (0) ∧
+
+T (1) = t | ¯Lr(1) = ¯lr, L 0 = l0} is identified by Pr (T =t|Z=0 ,L 0=l0) 
+
+> Pr( St=1 |Z=1 ,L 0=l0)
+
+Pr  St = 1 | ¯Lr = ¯lr, Z = 1 , L 0 = l0 .
+
+We now turn to identification of the principal-stratum mean potential outcomes E
+
+n
+
+Y r(z) | T (0) ∧
+
+T (1) = t, ¯Lr(z), L 0
+
+o
+
+, for 1 ≤ r ≤ t ≤ tmax .
+
+Assumption 8 (Y-ignorability) : Z|= Y r(z) | T (z) = t, ¯Lr(z), L 0 and Z|= Y r(1) | T (0) = t, ¯Lr(1) , L 0,for z = 0 , 1 and 1 ≤ r ≤ t ≤ tmax .
+
+Assumption 9 (G-Markov sufficiency) : Y r
+
+> |=
+
+Gr+1 | Gr = LL, ¯Lr, Z = 1 , L 0 for r = 1 , .., t max − 1.Assumptions 8 and 9 reduce the principal-stratum mean potential outcome to an observed-data outcome regression among individuals in Gr = LL , conditional on ¯Lr, Z, and L0. Relative to Grossi et al. (2025), this formulation is less restrictive in that it allows Y r and future survival to remain associated through the observed ¯Lr, although the assumptions remain cross-world and untestable in principle (Robins and Richardson, 2010). Further discussion is provided in Remark 6 in Supplemen-tary Material. Following Wang et al. (2017b), let A ∈ L0 be a substitution variable and let X = L0\A. For z ∈{0, 1}, g ∈ { LL, LD }, ¯lr ∈ ¯Lr, a ∈ A , and x ∈ X , define Er(¯lr, z, a, x ) := E(Y r | Sr = 1 , ¯Lr =¯lr, Z = z, A = a, X = x), Mr(¯lr, g, z, a, x ) := E(Y r | ¯Lr = ¯lr, G r = g, Z = z, A = a, X = x),and πr
+
+> 0/1
+
+(a, x ) := Pr( Sr = 1 | Z = 0 , A = a, X = x)/Pr( Sr = 1 | Z = 1 , A = a, X = x). The no-15 interaction and substitution-relevance assumptions below use A to recover the outcome regression within Gr = LL , conditional on ¯Lr, Z, and L0.
+
+Assumption 10 (No interaction) : For r = 1 , ..., t max , any x ∈ X , a0, a 1 ∈ A and ¯lr ∈ ¯Lr,
+
+Mr(¯lr, LD, 1, a 1, x ) − M r(¯lr, LD, 1, a 0, x ) = Mr(¯lr, LL, 1, a 1, x ) − M r(¯lr, LL, 1, a 0, x ) = 
+
+Mr(¯lr, LL, 0, a 1, x ) − M r(¯lr, LL, 0, a 0, x ).
+
+Assumption 11 (Substitution relevance) : A̸ ⊥⊥ Gr | Sr = 1 , Z = 1 , X for r = 1 , ..., t max .We consider Assumption 10 rather than an exclusion restriction–type assumption in Wang et al. (2017b) to allow for unmeasured confounders between the contemporaneous variables Y r and Sr,such as organ function decline due to treatment toxicity or comorbid conditions in longitudinal clini-cal trial data. 
+
+Theorem 1: Suppose Assumptions 4 - 11 hold. Then, for 1 ≤ r ≤ t ≤ tmax , any x ∈ X , a0, a 1 ∈ A ,
+
+¯lr ∈ ¯Lr and i = 0 , 1, Mr(¯lr, LL, 1, a i, x ) is identified by solving 
+
+Er(¯lr, 1, a i, x ) = Mr(¯lr, LL, 1, a i, x )πr
+
+> 0/1
+
+(ai, x ) + Mr(¯lr, LD, 1, a i, x )(1 − πr
+
+> 0/1
+
+(ai, x )); (5) 
+
+Er(¯lr, 0, a 1, x ) − E r(¯lr, 0, a 0, x ) = Mr(¯lr, g, 1, a 1, x ) − M r(¯lr, g, 1, a 0, x ), for g = LL, LD. (6) Furthermore, 
+
+E[I{T (0) ∧ T (1) = t}Y r(0)] = E
+
+hI(T = t, Z = 0) Pr( Z = 0 |L0) Y r
+
+i
+
+. (7) 
+
+E[I{T (0) ∧ T (1) = t}Y r(1)] =E
+
+"
+
+I(Z = 1) Pr( Z = 1 | L0)I(St = 1) Pr( T = t | Z = 0 , L 0)Pr( St = 1 | Z = 1 , L 0)Mr( ¯Lr, LL, 1, A, X )
+
+#
+
+. (8) Note that when r = 0 , because Y 0 ∈ L0, under Assumptions 4 - 6, 
+
+EI{T (0) ∧ T (1) = t}Y 0 = E
+
+hI(T = t, Z = 0) Pr( Z = 0 | L0) Y 0
+
+i
+
+. (9) Together with Theorem 1, this identifies all components in (4), and hence identifies μ(z) for z = 0 , 1.16 4.2 Identification of while extended-survival estimands 
+
+Under Assumption 4, the while extended-survival estimand in (3) reduces to 
+
+μext = E
+
+I(T (1) > T (0))  
+
+> T(1)
+
+X 
+
+> r=T(0)
+
+ϕrT (0) ,T (1) Y r(1) 
+
+ .
+
+A complication is that the start and end points of the extended survival period, T (0) and T (1) , are random, so the weight ϕrT (0) ,T (1) is random as well. For the cumulative and AUC-based weighting schemes, this dependence can be handled by rewriting μext as the difference between two weighted summaries under treatment: 
+
+μext = E
+
+ 
+
+> T(1)
+
+X
+
+> r=0
+
+ϕrT (1) Y r(1) 
+
+ −
+
+ 
+
+> T(0)
+
+X
+
+> r=0
+
+ϕrT (0) Y r(1) 
+
+ , (10) where ϕrT (z) denotes a weight that may depend on T (z). The choices of ϕrT (z) corresponding to the cumulative and AUC-based weighting schemes are given in Supplementary Table S2.1. Under the AUC-based scheme, this representation equals the difference between the areas under the trajectory over [0 , T (1)] and [0 , T (0)] , as illustrated by the red shaded region in Figure 6. Similar to Section 4.1, we rewrite μext in (3) as: 
+
+μext =
+
+> tmax
+
+X
+
+> t=0
+> t
+
+X
+
+> r=0
+
+ϕrt E[I{T (1) = t}Y r(1)] −
+
+> tmax
+
+X
+
+> t=0
+> t
+
+X
+
+> r=0
+
+ϕrt E[I{T (0) = t}Y r(1)] , (11) where ϕrt denotes the weight ϕrT (z) evaluated at T (z) = t, and is therefore nonrandom conditional on 
+
+T (z) = t. Under Assumptions 5, 6 and 8, the first term in (11) is identified as E[I{T (1) = t}Y r(1)] = 
+
+E
+
+h I(T =t,Z =1) Pr( Z=1 |L0) Y r
+
+i
+
+, while identification of the second term in (11) follows from results in Section 4.1. So far, we have shown that under the cumulative and AUC-based weighting schemes ϕrT (0) ,T (1) , the estimand μext admits the decomposition in (10) and is therefore identifiable. More generally, we say a weighting scheme {ϕrT (0) ,T (1) : r = T (0) , . . . , T (1) } is decomposable if there exist weights {ϕrT (0) :
+
+r = 0 , . . . , T (0) } and {ϕrT (1) : r = 0 , . . . , T (1) } such that ϕrT (1) = ϕrT (0) for r = 0 , . . . , T (0) − 1, and 
+
+ϕrT (0) ,T (1) = ϕrT (1) − ϕrT (0) I{r = T (0) } for r = T (0) , . . . , T (1) . Under any decomposable weighting scheme, μext admits the representation in (10). 17 Remark 2: Not all weighting schemes ϕrT (0) ,T (1) are decomposable, and decomposability is required for the identification result above. For example, the average weighting scheme ϕavg ,r T (zmin ),T (zmax ) is not decomposable because, for T (0) < r ≤ T (1) , the weight depends on both T (0) and T (1) . Therefore, the identification results above do not directly apply to μext under the average weighting scheme. 
+
+## 4.3 Estimation 
+
+The previous sections established that μ(z) and μext are identifiable under the stated identification assumptions. When L0 is high-dimensional and continuous, however, additional model parameter-ization is required. This step is not merely computational. It translates the identification formulas into estimators while preserving the monotonicity and survival-ordering restrictions implied by the assumptions in Section 4.1. We impose the following constraints: 
+
+Pr( Sr(0) = 1 | X, A ) ≤ Pr( Sr(1) = 1 | X, A ), r = 1 , . . . , t max ; (12) 
+
+Pr( Sr+1 (z) = 1 | X, A ) ≤ Pr( Sr(z) = 1 | X, A ), r = 1 , . . . , t max − 1, z = 0 , 1; (13) 
+
+Er(¯lr, 1, a, x ) − E r(¯lr, 0, a, x ) is bounded as a function of a ∈ A , for x ∈ X , ¯lr ∈ ¯Lr, r = 1 , . . . , t max .
+
+(14) Constraint (12) follows from Assumption 4, and constraint (14) is implied by (5)–(6). In addition, because Sr is non-increasing in r, constraint (13) is required in addition to the estimation procedure of Wang et al. (2017b). We next propose parameterizations that satisfy constraints (12)–(14) and are compatible with the identifiability assumptions in Section 4.1. The parameterizations are chosen to encode the restrictions needed for the observed-data likelihood to align with the principal-stratum identification argument. For r = 1 , . . . , t max ,
+
+P1 : Mr( ¯Lr, G r, Z, A, X ) = m( ¯Lr, G r, Z, A, X ; αr), where αr is an unknown finite-dimensional parameter and Gr takes values in {LL, LD };
+
+P2 : Pr( Sr(1) = 1 | Sr−1(1) = 1 , L 0) = l1(L0; βr), where βr is an unknown finite-dimensional parameter; 
+
+P3 : Pr( Sr (0)=1 |Sr−1(0)=1 ,L 0)Pr( Sr (1)=1 |Sr−1(1)=1 ,L 0) = l0/1(L0; γr), where γr is an unknown finite-dimensional parameter; 18 P4 : Pr( Z = 1 | L0) = lz (L0; θ), where θ is an unknown finite-dimensional parameter. For simulation and real data applications, we use linear models for m(·) and logistic regression mod-els for l1(·), l0/1(·), and lz (·), all without interaction terms. The observed-data modeling constraints implied by these parameterizations are provided in Remark 7 in Supplementary Material Section S2. Let bαr, bβr, bγr, and bθ denote the maximum likelihood estimators of αr, βr, γr, and θ, respectively. Using (7), (8), and (9), we define the following plug-in quantities: 
+
+bQr 
+
+> 0,t
+
+= Pn
+
+(
+
+I(T = t, Z = 0) 1 − lz (L0; bθ) Y r
+
+)
+
+, bQr 
+
+> 1,t
+
+=
+
+bQ00,t , r = 0 ,
+
+Pn
+
+nI(St=1 ,Z =1)   
+
+> lz(L0;bθ)
+
+bπtm( ¯Lr, LL, 1, A, X ; bαr)
+
+o
+
+, r ≥ 1,
+
+where Pn is the empirical average, and bπt is defined as Qtk=1 l0/1(L0; bγk)
+
+
+
+1 − l1(L0; bβt+1 )l0/1(L0; bγt+1 )
+
+
+
+if t < t max and Qtmax  
+
+> k=1
+
+l0/1(L0; bγk) if t = tmax . Finally, the estimators for μ(z) and μext , for z = 0 , 1,are given by bμ(0) = Ptmax 
+
+> t=0
+
+Ptr=0 wrt bQr
+
+> 0,t
+
+, bμ(1) = Ptmax 
+
+> t=0
+
+Ptr=0 wrt bQr
+
+> 1,t
+
+, and 
+
+bμext =
+
+> tmax
+
+X
+
+> t=0
+> t
+
+X
+
+> r=0
+
+ϕrt Pn
+
+(
+
+I(T = t, Z = 1) 
+
+lz (L0; bθ) Y r
+
+)
+
+−
+
+> tmax
+
+X
+
+> t=0
+> t
+
+X
+
+> r=0
+
+ϕrt bQr
+
+> 1,t
+
+.
+
+# 5 Population-level summaries of separable effects 
+
+The while guaranteed-survival and while extended-survival estimands target the full population, but they remain cross-world because they depend on the joint distribution of T (1) and T (0) . In this section, we revisit the separable effects introduced in Section 2.3, which conceptually decompose treatment into two components. We develop a new class of marginal separable effect estimands that extend the CSE to the full population. 
+
+## 5.1 A class of marginal separable estimands 
+
+Inspired by the CSE and applying an analogous construction to Section 3.1, we define a class of marginal separable estimands for the full population 
+
+Γ( zY , z S ) := E
+
+  
+
+> T(zS)
+
+X
+
+> r=0
+
+ψrT (zS )Y r(zY , z S )
+
+ , (15) 19 where ψrT (zS ) is a weight, for r = 0 , 1, ..., T (zS ), that may depend on T (zS ), the last time point at which the individual would be alive under ZS = zS . In general, Γ( zY , z S ) collapses the longitu-dinal potential outcomes under treatment components (ZY , Z S ) = ( zY , z S ) during the time period 
+
+[0 , T (zS )] , and the contrast ∆sep (zS ) := Γ(1 , z S ) − Γ(0 , z S ) is the corresponding average causal effect of treatment ZY on outcomes had all individuals been assigned ZS = zS . Unlike the cross-world survival time T (0) ∧ T (1) , we are now considering a single-world quantity T (zS ). The event 
+
+{T (zS ) = t} could therefore, in principle, be learned from a future four-arm trial of the treatment components described in Section 2.3. Table 3: Four example types of weighting schemes for the marginal separable effect estimands 
+
+Type Weight Exit time ψexit ,r T (zS ) =
+
+(
+
+1, r = T (zS ),
+
+0, r < T (zS )
+
+Average ψavg ,r T (zS ) = 1  
+
+> T(zS)+1
+
+Cumulative ψcum ,r T (zS ) = 1 
+
+AUC-based ψAUC ,r T (zS ) = I(T (zS ) ≥ 1) ×
+
+
+
+> 12
+
+τT (zS ) − τT (zS )−1
+
+ , r = T (zS ), 
+
+> 12
+
+[τr+1 − τr−1] , 0 < r < T (zS ), 
+
+> 12
+
+τ1, r = 0 
+
+The weighting scheme in (15) may be chosen to reflect different clinical goals, and Table 3 presents four illustrative examples. In addition, similar to Remark 1, we provide the following remark to illustrate the relationship between our marginal separable estimands and the CSE. 
+
+Remark 3 (CSE at time ˙r): For a fixed time point ˙r, when ψrT (zS ) = I(T (zS )≥ ˙r)Pr( T (zS )≥ ˙r) I(r = ˙ r), we have 
+
+Γ( zY , z S ) = E[Y ˙r(zY , z S ) | S ˙r(zS ) = 1] and ∆sep (zS ) coincides with the CSE at time ˙r. Thus, the CSE can be interpreted as a special case of our marginal separable effect estimand. 
+
+## 5.2 Identification 
+
+To identify Γ( zY , z S ) for zY , z S ∈ { 0, 1}, we first rewrite (15) as 
+
+Γ( zY , z S ) = 
+
+> tmax
+
+X
+
+> t=0
+> t
+
+X
+
+> r=0
+
+ψrt E [I{T (zS ) = t}Y r(zY , z S )] , (16) 20 where ψrt denotes the weight ψrT (zS ) evaluated at T (zS ) = t. Thus, identification of Γ( zY , z S ) reduces to identifying E[I{T (zS ) = t}Y r(zY , z S )] for 0 ≤ r ≤ t ≤ tmax .Motivated by existing work on conditional separable effects, and in addition to Assumption 2 on the treatment component ZS (C), we impose the following dismissible component conditions for ZY
+
+and an S-Markov sufficiency assumption under the four-arm trial C.
+
+Assumption 12 (ZY dismissible component condition) : For r = 1 , . . . , t max ,(1) ZY (C)|= Sr(C) | ZS (C), S r−1(C) = 1 , ¯Lr(C), L 0;(2) ZY (C)|= Lr(C) | ZS (C), S r−1(C) = 1 , ¯Lr−1(C), L 0.
+
+Assumption 13 (S-Markov sufficiency) : Sr+1 (C)|= Y r(C) | ZY (C), Z S (C), S r(C) = 1 , ¯Lr(C), L 0,
+
+for r = 1 , . . . , t max − 1.Assumptions 12 and 13 can be assessed from the causal graph under trial C in Figure 3(b) us-ing d-separation. Assumption 12 reflects the conceptual decomposition of treatment, under which the outcome-related component ZY does not directly affect survival or survival-related time-varying covariates ¯Ltmax . For example, in a cancer clinical trial, these time-varying covariates often charac-terize tumor progression or disease status, which ZY is not expected to directly affect. Similarly to Assumption 9 in Section 4.1, Assumption 13 rules out directed paths from Y r(C) to (Lt(C), S t(C)) 
+
+for any r < t . The plausibility of this assumption depends on the context, in particular the length of the follow-up window. For example, quality of life is unlikely to have direct effects on death over short time periods, say months or a few years, although these variables likely have strong common causes. Over longer time horizons, however, such direct effects become more plausible. We further impose the following standard weak ignorability assumption. 
+
+Assumption 14 (Ignorability) : Z|= ¯Y tmax (z), ¯Stmax (z), ¯Ltmax (z) | L0.
+
+Theorem 2: Suppose Assumptions 1, 2, 3, 6, and 12 - 14 hold. For r = 0 and t = 0 , . . . , t max , the components E[I{T (zS ) = t}Y r(zY , z S )] in (16) are identified as 
+
+EI{T (zS ) = t}Y 0 = E
+
+I(T = t, Z = zS )Pr( Z = zS | L0) Y 0
+
+
+
+.
+
+21 For 1 ≤ r ≤ t ≤ tmax ,
+
+E [I{T (zS ) = t}Y r(zY , z S )] = E
+
+h
+
+E
+
+n
+
+I(T = t) E(Y r | Sr = 1 , ¯Lr, Z = zY , L 0) Z = zS , L 0
+
+oi 
+
+.
+
+(17) Theorem 2 identifies all components in (16), and hence identifies Γ( zY , z S ).
+
+## 5.3 Connection to while guaranteed-survival and while extended-survival es-timands 
+
+In general, the while guaranteed-survival and while extended-survival estimands differ from the marginal separable effect estimands. Conceptually, the former characterizes the effects by parti-tioning the survival time into two distinct periods. In contrast, the marginal separable effects assess the effect of ZY on outcomes while holding the survival-related component fixed at ZS = zS , over 
+
+[0 , T (zS )] . Nevertheless, these estimands can be connected under additional assumptions. In particular, under Assumptions 1 - 4, both μ(z) and Γ( zY , 0) summarize the potential outcomes during the time period [0 , T (0)] . However, ∆sep (0) isolates the effect of ZY on {Y r : r = 1 , ..., T (0) }
+
+over [0 , T (0)] by fixing zS = 0 . In contrast, ∆gua captures not only the effect of ZY on {Y r :
+
+r = 1 , ..., T (0) }, but also the effect of ZS on {Y r : r = 1 , ..., T (0) } mediated through {Lr : r =1, ..., T (0) }. This distinction is similar in spirit to our discussion of the SACE and CSE in Section 2.3. Therefore, under the following assumption that rules out any additional effect of ZS on Y t that does not pass through ¯St, we have ∆gua = ∆ sep (0) under appropriate choices of the weighting schemes. 
+
+Assumption 15 (ZS partial isolation) : For zY ∈ { 0, 1}, Y t(zY , 1) = Y t(zY , 0) if St(1) = St(0) = 1 .On the other hand, under Assumptions 4 and 15, Γ(1 , 0) = E
+
+hPT (0)  
+
+> r=0
+
+ψrT (0) Y r(1 , 1) 
+
+i
+
+. Hence, with appropriate choices of the weighting schemes, Γ(1 , 1) − Γ(1 , 0) could summarize the potential outcomes under (zY , z S ) = (1 , 1) over (T (0) , T (1)] , aligning with the quantity targeted by μext .Then the following proposition specifies the conditions under which ∆gua = ∆ sep (0) and μext =Γ(1 , 1) − Γ(1 , 0) . When choosing appropriate weighting schemes to establish the equivalence, we focus on fixed-index weights wrt in (4), ϕrt in (11), and ψrt in (16). 
+
+Proposition 1: Under Assumptions 1, 3, 4, and 15, if wrt = ψrt , then ∆gua = ∆ sep (0) ; if ϕrt = ψrt ,22 then μext = Γ(1 , 1) − Γ(1 , 0) .
+
+## 5.4 Estimation 
+
+Let Λrt (zY , z S ) denote the corresponding component identified in Theorem 2 for 0 ≤ r ≤ t. The influence function in Theorem 3 of Supplementary Material Section S2 motivates estimation under 
+
+P4, defined in Section 4.3, and two additional model classes. For r = 1 , . . . , t max ,
+
+P5: E[Y r | Sr = 1 , ¯Lr, Z, L 0] = κ( ¯Lr, Z, L 0; ηr), where ηr is an unknown finite-dimensional parameter; 
+
+P6: pLr |Sr−1, ¯Lr−1,Z,L 0 (lr | 1, ¯Lr−1, Z, L 0) = lL( ¯Lr−1, Z, L 0; ρrL), and Pr( Sr = 1 | Sr−1 = 1 , ¯Lr, Z, L 0) = 
+
+lS ( ¯Lr, Z, L 0; ρrS ), where ρr = (( ρrL)⊤, (ρrS )⊤)⊤ is an unknown finite-dimensional parameter. Solving the corresponding estimating equation under P4 ∩ P 5 ∩ P 6 yields a triply robust estimator of Λrt (zY , z S ), consistent if any two model classes are correctly specified. Because P6 requires mod-eling pLr |Sr−1, ¯Lr−1,Z,L 0 , we use the simpler estimator obtained by omitting the P6-dependent terms. For r = 1 , . . . , t ,
+
+bΛrt (zY , z S ) = Pn
+
+(
+
+I(T = t, Z = zS )
+
+zS lz (L0; bθ) + (1 − zS )(1 − lz (L0; bθ)) κ( ¯Lr, z Y , L 0; bηr)
+
+)
+
+.
+
+For r = 0 , bΛ0 
+
+> t
+
+(zY , z S ) uses the same inverse-probability weighted form, with the outcome-regression term replaced by Y 0.The resulting estimator is bΓ( zY , z S ) = Ptmax 
+
+> t=0
+
+Ptr=0 ψrt bΛrt (zY , z S ). In simulations and the appli-cation, we use the same model for lz (·) as in Section 4.3 and specify κ(·) using linear models without interaction terms. Simulation studies assessing the finite-sample performance of the proposed estimators in Sec-tions 4.3 and 5.4 are reported in Supplementary Material Section S4. 
+
+# 6 The Southwest Oncology Group Trial 
+
+We illustrate our approaches by reanalyzing a randomized phase III prostate cancer trial conducted by the Southwest Oncology Group (SWOG) between October 1999 and January 2003, comparing 23 Docetaxel plus Estramustine (DE) with Mitoxantrone plus Prednisone (MP) in men with metastatic androgen-independent prostate cancer (Petrylak et al., 2004). The dataset created by Ding et al. (2011) contains 487 men aged 47 − 88 years, with 258 randomly assigned to DE ( Z = 1 ) and 229 to MP ( Z = 0 ). Baseline covariates ( L0) include age, race, type of prognosis, bone pain, performance status, and baseline QoL. Health-related QoL, scored from 0 to 100, was assessed at 3 months, 6 months, and 1 year among survivors. We set τ = (0 , 1/4, 1/2, 1) , corresponding to the elapsed times in years from baseline to the scheduled assessment times, and derive a time-varying disease progression indicator Lt (t = 1 , 2, 3) from the recorded progression date. 
+
+Figure 7: Estimated survival curve under two chemotherapies. Following Park et al. (2026), we impute missing QoL values among survivors using k-nearest neighbors (KNN) imputation (Troyanskaya et al., 2001). Death is treated as a truncating event rather than as a missing QoL value. Figure 7 shows that patients receiving DE have higher survival prob-abilities than those receiving MP, consistent with prior findings reported in Petrylak et al. (2004). However, Petrylak et al. (2004) reported higher rates of grade 3 or 4 neutropenic fevers, nausea and vomiting, and cardiovascular events among patients receiving DE than among those receiving MP. The survival benefit and toxicity profile together motivate an analysis of treatment effects on changes in QoL from baseline. Several analyses have compared changes in QoL between treatment groups among the always-survivor group at the 6-month or 1-year follow-up (Ding et al., 2011, Wang et al., 2017b, Yang and Ding, 2018). Following Ding et al. (2011) and Wang et al. (2017b), we use baseline QoL as a substitution variable to estimate the SACE at each follow-up time, denoted by SACE( t) for t =
+
+24 1, 2, 3. As shown in the left panel of Figure 8, the conclusions depend on the endpoint: the 6-month and 1-year endpoints suggest a QoL benefit of DE relative to MP among the corresponding always-survivor group, whereas the 3-month endpoint suggests the opposite. However, SACE( t) should not be compared directly across t, because as shown in the right panel of Figure 8, the always-survivor group changes and shrinks over time. Focusing on these typically healthier subgroups also limits the interpretability and practical relevance of the findings for the full trial population. 
+
+Figure 8: The left panel shows the estimated SACE(t) at three time points together with the corre-sponding 95% confidence intervals, and the right panel shows the estimated subgroup probability for the always-survivor group at each time point. We then apply the while guaranteed-survival estimands to evaluate the effect of chemotherapy on changes in QoL during the guaranteed survival period, again using baseline QoL as the substitution variable. For comparison, we report the while-alive contrast λ(1) − λ(0) , which is commonly used in longitudinal analyses but does not admit a causal interpretation in this setting. Details of the estimation procedure for λ(z), z = 0 , 1 are provided in Supplementary Material Section S3. Table 4 reports estimates of λ(1) − λ(0) and ∆gua under several weighting schemes. The while-alive estimates are small and positive, with 95% confidence intervals covering zero. The while guaranteed-survival estimates are also positive, but the exit-time estimate is close to the commonly used [−5, 5] benchmark for a clinically meaningful difference in QoL (Cocks et al., 2012). This variation is informative because the weighting schemes target different clinical questions. Under the exit-time weighting scheme, the while guaranteed-survival estimate is much larger than the corresponding while-alive estimate and is slightly smaller than the SACE at 1 year. This pattern 25 is consistent with the concern that while-alive summaries compare outcomes at different exit times under DE and MP, which may attenuate the estimated effect when DE prolongs survival; the SACE at 1 year, by contrast, targets a healthier always-survivor subgroup. Comparing ∆gua across weighting schemes suggests that the estimated benefit of DE relative to MP depends on the clinical goal of interest: DE appears more favorable when emphasis is placed on exit-time or end-of-life outcomes, whereas the difference is small when the focus is average QoL over time or the longitudinal trajectory. Table 4: Estimates for the contrasts λ(1) −λ(0) , ∆gua and ∆sep (0) under different weighting schemes. The bootstrap standard errors and quantile-based confidence intervals are derived from 500 bootstrap samples                                        
+
+> Approach Weight Point estimate Bootstrapped SE 95% CI While-alive
+> λ(1) −λ(0)
+> Exit time 0.91 1.66 (−2.31, 4.30) Average 0.40 0.92 (−1.50, 2.09) AUC-based 1.05 1.02 (−0.92, 2.92) While guaranteed-survival
+> ∆gua
+> SACE at 1 year 5.99 2.51 (−1.86, 7.84) Exit time 5.10 2.17 (−0.44, 7.94) Average 1.83 1.11 (−1.05, 3.15) AUC-based 1.81 1.16 (−1.23, 3.23) Marginal separable effect
+> ∆sep (0)
+> CSE at 1 year 1.19 1.86 (−2.13, 5.00) Exit time 0.68 1.46 (−1.89, 3.75) Average −0.66 0.86 (−2.36, 0.94) AUC-based −0.54 0.90 (−2.34, 1.12)
+
+We next consider marginal separable effects by conceptualizing the chemotherapy regimen as having a survival-related component ZS , which affects survival through antitumor activity, and a QoL-related component ZY , which affects QoL more directly through symptom relief or treatment toxicity (Stensrud et al., 2023). This decomposition is conceptual rather than experimentally imple-mented in the SWOG trial, so the estimates should be interpreted through the assumptions of the separable effects framework. We estimate Γ( zY , z S ) by adjusting for baseline covariates and the time-varying indicator of cancer progression, and Table 4 reports ∆sep (0) .The estimates of ∆sep (0) are close to zero, with confidence intervals covering zero, and are smaller than the corresponding ∆gua estimates. This pattern is consistent with the distinction in Section 5.3: 
+
+∆gua may include pathways through which the survival-related component affects QoL via cancer progression, whereas ∆sep (0) isolates the QoL-related component while fixing ZS = 0 . The larger 
+
+∆gua estimates are therefore compatible with an indirect QoL benefit through the survival-related 26 component of DE, consistent with the stronger antitumor role of DE and the more palliative role historically associated with MP (Petrylak et al., 2004, Tannock et al., 1996). Finally, we evaluate QoL during the extended survival period under DE relative to MP using the AUC-based weighting scheme, which accounts for the unequal spacing of the follow-up assessments. Table 5 reports the restricted survival-time contrast, the while extended-survival estimate, and the corresponding cumulative QoL values during the extended survival period. Results suggest that DE increased 1-year restricted survival time by 0.05 years, or about 0.6 months, relative to MP. Over this additional survival time, μext = −0.77 indicates a cumulative QoL loss of 0.77 QoL score-years relative to baseline. After adding back baseline QoL, the corresponding AUC-based cumulative QoL was 1.45 QoL score-years. Because the estimated survival gain is small, normalizing this cumulative QoL change by the additional survival time would be unstable and could imply a large average QoL decrement over the added time. We therefore interpret these results on the cumulative scale: the point estimate suggests some QoL decline during the modest additional survival period under DE, but the confidence intervals are wide and include values compatible with little change or improvement. According to Table 5, the marginal separable contrast, Γ(1 , 1) − Γ(1 , 0) , is larger than the corre-sponding estimate of μext . This agrees with the interpretations of the two estimands: μext summarizes QoL during the extended survival period under the full treatment regimens, whereas Γ(1 , 1) − Γ(1 , 0) 
+
+isolates the contribution of the survival-related component while holding the QoL-related component fixed. Thus, the larger marginal separable contrast may reflect that, by improving tumor control, the survival-related component of DE may reduce cancer progression and thereby indirectly improve QoL. Table 5: Summary measures for evaluating QoL during the extended survival time under DE, using AUC-based weighting. Entries are reported as estimates (95% bootstrap CI )                  
+
+> Measure Primary estimate Corresponding AUC-based cumulative QoL Increase in restricted 1-year survival time under DE relative to MP (years) 0.05 (0 ,0.10) —While extended-survival μext −0.77 ( −1.49, 1.98) 1.45 (0 ,5.67)
+> Marginal separable effect Γ(1 ,1) −Γ(1 ,0) 1.60 (0 .78 ,2.58) 3.82 (0 .68 ,6.72)
+
+27 7 Discussion 
+
+When death truncates a longitudinal outcome, a causal estimand must specify not only the target population and treatment contrast, but also which part of each potential outcome trajectory is being summarized. This paper gives a unified theory and methodology for such estimands. The results can be used to formulate full-population summaries and to extend two widely used classes of causal esti-mands: principal stratification, represented by the SACE, and separable effects. The prostate cancer application demonstrates how these choices lead to estimands that answer distinct causal questions. Several limitations remain. The while guaranteed-survival and while extended-survival esti-mands are full-population estimands but remain cross-world, and their identification relies on as-sumptions such as monotonicity, principal ignorability, and substitution-variable conditions. In ad-dition, our identification strategy assumes that the outcome process does not directly affect subse-quent survival after conditioning on the measured history. Some of these restrictions may be re-laxable with additional auxiliary information. Proxy-variable approaches (Park et al., 2026) may help extend the separable-effect formulation to settings with unmeasured survival-outcome con-founding. Separately, alternative substitution-variable strategies could exploit baseline or early post-baseline variables that help distinguish latent survival histories, thereby targeting components such as 
+
+E{Y r(z) | T (0) ∧ T (1) = t} under different identifying restrictions. Future work may also develop sensitivity analyses for these assumptions and extend the framework to continuous-time measure-ments, competing intercurrent events, and dynamic treatment regimes. 
+
+# Acknowledgements 
+
+We thank Stijn Vansteelandt for helpful discussions that motivated this work, and Zhen Luo for in-sightful comments that led to the development of the while extended-survival estimands. We are also grateful to Gregory Chen, Vanessa Didelez, Guowen Huang, Fabrizia Mealli, Thomas Richardson, James Robins, Jessica Young, Xin Zhang, and Xiao-Hua Zhou for helpful comments. Zhao was partially supported by a CANSSI Ontario Postdoctoral Fellowship in Statistical Sciences. Stensrud and Wang would like to thank the Isaac Newton Institute for Mathematical Sciences, Cambridge, for support and hospitality during the programme Foundations of causal inference, where work on this 28 paper was completed. We used OpenAI ChatGPT to assist with grammar checks and code organiza-tion. All substantive content, analyses, code, and conclusions were developed, reviewed, and verified by the authors. 
+
+# Data availability 
+
+Code for the simulation studies and real-data analysis is available at https://github.com/ Ruixuan-Zhao/marginal-estimands-truncated-by-death . The real data are not publicly available, so a simulated dataset is provided for running the real-data analysis code. 
+
+# References 
+
+Baklicharov, G., Van Lancker, K., and Vansteelandt, S. (2025). Weakening assumptions in the evalu-ation of treatment effects in longitudinal randomized trials with truncation by death or other inter-current events. arXiv preprint arXiv:2509.10067 .Bornkamp, B., Rufibach, K., Lin, J., Liu, Y., Mehrotra, D. V., Roychoudhury, S., Schmidli, H., Shentu, Y., and Wolbers, M. (2021). Principal stratum strategy: potential role in drug development. 
+
+Pharmaceutical Statistics , 20(4):737–751. Cocks, K., King, M., Velikova, G., de Castro Jr, G., St-James, M. M., Fayers, P., and Brown, J. (2012). Evidence-based guidelines for interpreting change scores for the European Organisation for the Research and Treatment of Cancer Quality of Life Questionnaire Core 30. European Journal of Cancer , 48(11):1713–1721. Comment, L., Mealli, F., Haneuse, S., and Zigler, C. M. (2025). Survivor average causal effects for continuous time: a principal stratification approach to causal inference with semicompeting risks. 
+
+Biometrical Journal , 67(2):e70041. Ding, P., Geng, Z., Yan, W., and Zhou, X.-H. (2011). Identifiability and estimation of causal effects by principal stratification with outcomes truncated by death. Journal of the American Statistical Association , 106(496):1578–1591. Gilbert, P. B., Bosch, R. J., and Hudgens, M. G. (2003). Sensitivity analysis for the assessment of causal vaccine effects on viral load in HIV vaccine trials. Biometrics , 59(3):531–541. 29 Grossi, G., Mariani, M., Mattei, A., and Mealli, F. (2025). Bayesian principal stratification with longitudinal data and truncation by death. Econometrics and Statistics , pages 1–12. In press. Hern´ an, M. A. and Scharfstein, D. (2018). Cautions as regulators move to end exclusive reliance on intention to treat. Annals of Internal Medicine , 168(7):515–516. ICH (2019). ICH E9(R1): Addendum on Estimands and Sensitivity Analysis in Clinical Tri-als to the Guideline on Statistical Principles for Clinical Trials. Technical report, ICH. Available at https://database.ich.org/sites/default/files/E9-R1_Step4_ Guideline_2019_1203.pdf .Janvin, M., Young, J. G., Ryalen, P. C., and Stensrud, M. J. (2024). Causal inference with recurrent and competing events. Lifetime Data Analysis , 30(1):59–118. Lachin, J. M. (2020). Worst-rank score methods—a nonparametric approach to informatively missing data. JAMA , 324(16):1670–1671. Little, R. J., D’Agostino, R., Cohen, M. L., Dickersin, K., Emerson, S. S., Farrar, J. T., Frangakis, C., Hogan, J. W., Molenberghs, G., Murphy, S. A., et al. (2012). The prevention and treatment of missing data in clinical trials. New England Journal of Medicine , 367(14):1355–1360. Park, C., Stensrud, M. J., and Tchetgen Tchetgen, E. J. (2026). Proximal causal inference for condi-tional separable effects. Journal of the Royal Statistical Society Series B: Statistical Methodology ,page qkag051. Advance article. Petrylak, D. P., Tangen, C. M., Hussain, M. H., Lara Jr, P. N., Jones, J. A., Taplin, M. E., Burch, P. A., Berry, D., Moinpour, C., Kohli, M., et al. (2004). Docetaxel and estramustine compared with mitoxantrone and prednisone for advanced refractory prostate cancer. New England Journal of Medicine , 351(15):1513–1520. Robins, J. (1986). A new approach to causal inference in mortality studies with a sustained exposure period—application to control of the healthy worker survivor effect. Mathematical Modelling ,7(9-12):1393–1512. Robins, J. M. and Richardson, T. S. (2010). Alternative graphical causal models and the identifi-cation of direct effects. In Shrout, P. E., Keyes, K. M., and Ornstein, K., editors, Causality and Psychopathology: Finding the Determinants of Disorders and their Cures , pages 103–158. Oxford University Press, Oxford, UK. 30 Rubin, D. B. (2006). Causal inference through potential outcomes and principal stratification: appli-cation to studies with “censoring” due to death. Statistical Science , 21(3):299–309. Stensrud, M. J. and Dukes, O. (2022). Translating questions to estimands in randomized clinical trials with intercurrent events. Statistics in Medicine , 41(16):3211–3228. Stensrud, M. J., Robins, J. M., Sarvet, A., Tchetgen Tchetgen, E. J., and Young, J. G. (2023). Condi-tional separable effects. Journal of the American Statistical Association , 118(544):2671–2683. Stensrud, M. J., Young, J. G., Didelez, V., Robins, J. M., and Hern´ an, M. A. (2022). Separable effects for causal inference in the presence of competing events. Journal of the American Statistical Association , 117(537):175–183. Tannock, I. F., Osoba, D., Stockler, M. R., Ernst, D. S., Neville, A. J., Moore, M. J., Armitage, G. R., Wilson, J. J., Venner, P. M., Coppin, C., et al. (1996). Chemotherapy with mitoxantrone plus prednisone or prednisone alone for symptomatic hormone-resistant prostate cancer: a Canadian randomized trial with palliative end points. Journal of Clinical Oncology , 14(6):1756–1764. Troyanskaya, O., Cantor, M., Sherlock, G., Brown, P., Hastie, T., Tibshirani, R., Botstein, D., and Altman, R. B. (2001). Missing value estimation methods for DNA microarrays. Bioinformatics ,17(6):520–525. Wang, L., Richardson, T. S., and Zhou, X.-H. (2017a). Causal analysis of ordinal treatments and binary outcomes under truncation by death. Journal of the Royal Statistical Society Series B: Statistical Methodology , 79(3):719–735. Wang, L., Zhou, X.-H., and Richardson, T. S. (2017b). Identification and estimation of causal effects with outcomes truncated by death. Biometrika , 104(3):597–612. Wei, J., Muetze, T., Jahn-Eimermacher, A., and Roger, J. (2023). Properties of two while-alive esti-mands for recurrent events and their potential estimators. Statistics in Biopharmaceutical Research ,15(2):257–267. Yang, F. and Ding, P. (2018). Using survival information in truncation by death problems without the monotonicity assumption. Biometrics , 74(4):1232–1239. 31 Supplementary Material for “Causal Inference for All: Marginal Estimands for Outcomes Truncated by Death” 
+
+Ruixuan Zhao 1, Mats Stensrud 2, and Linbo Wang 1,3 1Department of Computer and Mathematical Sciences, University of Toronto Scarborough 
+
+> 2
+
+Institute of Mathematics, ´ Ecole Polytechnique F´ ed´ erale de Lausanne 
+
+> 3
+
+Department of Statistical Sciences, University of Toronto 
+
+Abstract. This supplement provides additional material for the manuscript “Causal Inference for All: Marginal Estimands for Outcomes Truncated by Death.” Section S1 reviews existing estimand strategies for longitudinal outcomes truncated by death. Section S2 gives additional technical details for the identification and estimation results in the main text. Section S3 describes identification and estimation of while-alive estimands, and Section S4 reports additional simulation details. 
+
+# S1: Existing estimands for longitudinal outcomes truncated by death 
+
+This section provides additional discussion on existing estimands for longitudinal outcomes truncated by death. Section 2.4 focuses on the while-alive strategy because it is most closely connected to the proposed estimands. Here, we briefly review other commonly used strategies. Early approaches focused on naive comparisons at a given time point, such as E[Y t(z) | St(z) = 1] , or equivalently E[Y t(z) | T (z) ≥ t] (Kurland et al., 2009). These estimands compare outcomes among individuals who would be alive under treatment z at time t, but contrasts across treatment arms generally involve different survivor subpopulations and are therefore subject to selection bias. A related line of work defines estimands under hypothetical interventions that eliminate the trun-cating event, sometimes referred to as hypothetical estimands (ICH, 2019). The hypothetical esti-mand can be written as E(Y t(z, s t = 1)) , which quantifies the effect of treatment on the outcome at 32 time t if the individual had survived. However, this intervention is usually infeasible and therefore has limited practical relevance (Young et al., 2020). Composite estimands have also been used to summarize joint survival and outcome behavior at the population level. For example, Diehr et al. (1995) considered estimands, E[St(z)I(Y t(z) ≥ y)] ,defined as the probability of being alive at a given time with QoL exceeding a prespecified threshold, directly addressing questions such as the chance of being alive at three years with acceptable QoL. Related formulations assign a prespecified value to the outcome following truncation (Lu et al., 2025) or rank death relative to observed outcomes (Lok et al., 2010, Xiang et al., 2023). However, the selection of a prespecified value is not always straightforward. For example, under a composite estimand such as E[St(z)Y t(z)] (Lu et al., 2025), QoL after death is often set to zero to represent the worst state, yet it is not always clear whether death itself or survival with severely compromised QoL should be regarded as worse (Rosenbaum, 2006). Moreover, the composite outcome arguably does not shed light on the mechanistic effect of treatment on the outcome of interest that is not mediated by the intercurrent event. More recently, to test the null hypothesis of no treatment effect on longitudinal outcomes trun-cated by death, Baklicharov et al. (2025) proposed a time-dependent Pairwise Last Observation Time (PLOT) estimand, which contrasts outcomes between pairs of individuals receiving different treat-ments at a common time point where both individuals would survive. In particular, they consid-ered two independent random individuals, where one is assigned to treatment z = 1 with observed 
+
+( ¯Y tmax (1) , T (1)) and the other (indexed with ∗) is assigned to z = 0 with observed ( ¯Y tmax  
+
+> ∗
+
+(0) , T ∗(0)) .Then, for a fixed time point t, the PLOT estimand is defined as E[Y T (1) ∧T∗(0) ∧t(1) − Y T (1) ∧T∗(0) ∧t 
+
+> ∗
+
+(0)] ,where the expectation is taken over all independently drawn pairs of individuals assigned to different treatments. As discussed further in Remark 4, this estimand may still be subject to residual selec-tion bias. Baklicharov et al. (2025) further showed that this bias can be eliminated under additional conditions at the cost of stronger assumptions. For ease of reference, Table S1.1 summarizes the strategies reviewed above and in Sections 2.2– 2.4. For each estimand, the table provides the mathematical formulation, a brief description, and a caveat highlighting key limitations, with representative references. 
+
+Remark 4 (Comparison to the PLOT Estimand) : Our estimand in Example 1 shares a feature with 33 Table S1.1: Summary of estimands for longitudinal data with outcomes truncated by death 
+
+> Strategy  Description  Estimand  Caveats
+> Naive (Dynamic) stratification by survival status or follow-up time (Kurland et al., 2009)
+> E[Y t(z) | St(z) = 1]  or  E[Y t(z) | T (z) ≥ t] Subject to selection bias While-alive  While-alive estimand (Wei et al., 2023)  λ(z) in (1)  Subject to selection bias Hypothetical Hypothetical estimand under the elimination of death (Young et al., 2020)
+> E[Y t(z, s t = 1)]  Assume values for undefined outcomes Composite Joint estimand of survival and outcome (Diehr et al., 1995)  E[St(z)I(Y t(z) ≥ y)]  Threshold-based dichotomization loses information Composite estimand (Lu et al., 2025)  E[St(z)Y t(z)]  Assigning a prespecified value can be controversial Principal stratum Principal stratum (Robins, 1986, Rubin, 2006, Frangakis and Rubin, 2002)  E[Y t(z) | Gt = LL ] or  E[Y t(z) | T (1)  ≥ t, T  (0)  ≥ t]
+> Defined on an unknown subpopulation and inapplicable to individuals outside Principal stratum in longitudinal setting (Grossi et al., 2025)  E[Y r (z) | T (1)  ≥ t, T  (0)  ≥ t] for  r ≤ t Subgroup compositions change over time Others PLOT estimand (Baklicharov et al., 2025)  EY T (1) ∧T∗(0) ∧t(1)  vs.  EY T (1) ∧T∗(0) ∧t
+> ∗ (0)  Subject to residual selection bias unless further particular assumptions hold Conditional separable effect (Stensrud et al., 2023)  E[Y t(zY , z S ) | St(zS ) = 1]  Defined on a subpopulation
+
+34 the PLOT estimand in Baklicharov et al. (2025): both ensure that comparisons across treatment arms are made at a common time point. However, the PLOT estimand 
+
+E Y T (1) ∧T∗(0) ∧t(1) − Y T (1) ∧T∗(0) ∧t 
+
+> ∗
+
+(0) 
+
+may exhibit residual selection bias relative to the treatment effect at the same time point (i.e., 
+
+E
+
+h
+
+Y T (1) ∧T (0) ∧t(1) −Y T (1) ∧T (0) ∧t(0) 
+
+i
+
+). The effects we consider, like E Y T (1) ∧T (0) (1) − Y T (1) ∧T (0) (0) ,avoid such bias. We use the toy examples in Figure 4 to illustrate that the PLOT estimand does not always preserve the null of no treatment effect. Suppose that the potential outcomes take the values shown in the left panel of Figure S1.1, then the null that Y ti (1) = Y ti (0) for any t ≤ Ti(1) ∧ Ti(0) and i = 1 , 2 holds. The contrast of our estimand in Example 1 is equal to zero, aligning with the null. However, the PLOT estimand with t = 3 is equal to 12 {Y 22 (1) − Y 21 (0) } + 12 {Y 31 (1) − Y 32 (0) } = −20 , which implies that this test is not valid in this scenario. Conversely, a zero PLOT estimand does not necessarily imply the absence of a treatment effect. For example, as shown in the right panel of Figure S1.1, the null fails to hold, but the PLOT estimand with t = 3 is equal to zero. 
+
+Figure S1.1: Two examples with the values of the potential outcomes to illustrate the potential pitfalls of the PLOT estimand. For individual 1, the orange solid line denotes the longitudinal potential outcomes under treatment z = 1 , and the orange dashed line denotes the potential outcomes under 
+
+z = 0 . For individual 2, the green solid and dashed lines denote the potential outcomes under z = 1 
+
+and z = 0 , respectively. 35 Table S2.1: Choices of ϕrT (z) in (10) corresponding to the cumulative and AUC-based weighting schemes listed in Table 2 
+
+Type Weight Cumulative ϕcum ,r T (z) = 1 
+
+AUC-based ϕAUC ,r T (z) = I(T (z) ≥ 1) ×
+
+ 
+
+> 12
+
+(τT (z) − τT (z)−1), r = T (z), 
+
+> 12
+
+(τr+1 − τr−1), 0 < r < T (z), 
+
+> 12
+
+τ1, r = 0 
+
+# S2: Additional Technical Details for Identification and Estimation in Sections 4 and 5 
+
+Remark 5 (A latent-process rationale for survival principal ignorability) : In the cancer study, Lr(z)
+
+can be an indicator of potential disease progression by time r under treatment z. Suppose that disease progression and death may arise through three underlying cancer-related processes. Let TH denote the failure time associated with a treatment-sensitive harmful process, which may lead to disease progression or death under control but can be eliminated by active treatment. Let TP denote the failure time associated with a treatment-resistant disease progression process, which may lead to disease progression under either control or active treatment. Let TD denote the failure time associated with a treatment-resistant death process, which may lead to death under either control or active treatment. Then, we have the following latent process formulation, for r = 1 , . . . , t max ,
+
+Lr(0) = I {min( TH, T P, T D) ≤ r} , Lr(1) = I {min( TP, T D) ≤ r} ,Sr(0) = I {min( TH, T D) > r } , Sr(1) = I {TD > r } .
+
+If TH, TP, and TD are mutually independent conditional on baseline covariates L0, then the above latent process formulation implies Assumption 7. 
+
+Remark 6 (Discussion on G-Markov sufficiency) : As shown in Figure 3(a), Assumption 9 precludes directed paths from Y r to St, and guarantees that all back-door paths between Y r and St are blocked by L0, ¯Lr and ¯Sr for any r < t . It may hold for QoL outcomes if changes in QoL primarily reflect current disease progression, and subsequent survival is driven by disease progression rather than QoL itself. The assumption may also be plausible for medical cost outcomes, which are broadly 36 better interpreted as a marker of disease severity and healthcare utilization than as a direct cause of subsequent survival. 
+
+Proof of Lemma 1. For z = 1 and t < t max , under Assumptions 4 and 7, 
+
+Pr  T (0) ∧ T (1) = t, ¯Lr(1) = ¯lr | L0 = l0 = X
+
+> ¯lt\¯lr
+
+Pr  T (0) ∧ T (1) = t, ¯Lt(1) = ¯lt | L0 = l0
+
+= X
+
+> ¯lt\¯lr
+
+Pr  St+1 (0) = 0 | Gt = LL, ¯Lt(1) = ¯lt, L 0 = l0 Pr  St(0) = 1 | St(1) = 1 , ¯Lt(1) = ¯lt, L 0 = l0
+
+× Pr  St(1) = 1 , ¯Lt(1) = ¯lt | L0 = l0
+
+= Pr  St+1 (0) = 0 | Gt = LL, L 0 = l0 Pr  St(0) = 1 | St(1) = 1 , L 0 = l0
+
+× Pr  St(1) = 1 , ¯Lr(1) = ¯lr | L0 = l0
+
+= Pr ( T (0) = t | L0)Pr ( St(1) = 1 | L0) Pr  St(1) = 1 , ¯Lr(1) = ¯lr | L0 = l0 .
+
+When t = tmax , we have 
+
+Pr  T (0) ∧ T (1) = tmax , ¯Lr(1) = ¯lr | L0 = l0 = X 
+
+> ¯ltmax \¯lr
+
+Pr  Stmax (0) = 1 , ¯Ltmax (1) = ¯ltmax | L0 = l0
+
+= X 
+
+> ¯ltmax \¯lr
+
+Pr  Stmax (0) = 1 | Stmax (1) = 1 , ¯Ltmax (1) = ¯ltmax , L 0 = l0
+
+× Pr  Stmax (1) = 1 , ¯Ltmax (1) = ¯ltmax | L0 = l0
+
+= Pr  Stmax (0) = 1 | Stmax (1) = 1 , L 0 = l0 × Pr  Stmax (1) = 1 , ¯Lr(1) = ¯lr | L0 = l0
+
+= Pr ( T (0) = tmax | L0)Pr ( Stmax (1) = 1 | L0) Pr  Stmax (1) = 1 , ¯Lr(1) = ¯lr | L0 = l0 ,
+
+where the third equation follows from Assumption 7. Then, since 
+
+Pr  T (0) ∧ T (1) = t, ¯Lr(1) = ¯lr | L0 = l0
+
+= Pr  T (0) ∧ T (1) = t | ¯Lr(1) = ¯lr, L 0 = l0 Pr   ¯Lr(1) = ¯lr | L0 = l0 ,
+
+37 we have 
+
+Pr  T (0) ∧ T (1) = t | ¯Lr(1) = ¯lr, L 0 = l0
+
+= Pr ( T (0) = t | L0)Pr ( St(1) = 1 | L0) Pr  St(1) = 1 | ¯Lr(1) = ¯lr, L 0 = l0 .
+
+Under Assumptions 5 and 6, 
+
+Pr  T (0) ∧ T (1) = t | ¯Lr(1) = ¯lr, L 0 = l0 = Pr ( T = t | Z = 0 , L 0)Pr ( St = 1 | Z = 1 , L 0) Pr  St = 1 | ¯Lr = ¯lr, Z = 1 , L 0 = l0 .
+
+Proof of Theorem 1. Under Assumption 4, we decompose E(Y r|Z = 1 , S r = 1 , ¯Lr, L 0) as follows: 
+
+E(Y r | Z = 1 , S r = 1 , ¯Lr, X, A = a)=E(Y r | Z = 1 , G r = LL, ¯Lr, X, A = a) Pr( Gr = LL | Sr = 1 , Z = 1 , ¯Lr, X, A = a)+ E(Y r | Z = 1 , G r = LD, ¯Lr, X, A = a)
+
+
+
+1 − Pr( Gr = LL | Sr = 1 , Z = 1 , ¯Lr, X, A = a)
+
+
+
+.
+
+(18) We have 
+
+Pr( Gr = LL | Sr = 1 , Z = 1 , ¯Lr, X, A = a)= Pr( Gr = LL | Sr(1) = 1 , ¯Lr(1) , X, A = a)= Pr( Sr(0) = 1 | Sr(1) = 1 , X, A = a)=Pr( Sr(0) = 1 | X, A = a)Pr( Sr(1) = 1 | X, A = a)=Pr( Sr = 1 | Z = 0 , X, A = a)Pr( Sr = 1 | Z = 1 , X, A = a),
+
+where the first equation follows Assumption 5, the second equation follows Assumptions 4 and 7, and the last equation follows Assumptions 5 and 6. Furthermore, it follows from Assumptions 4 and 38 10 that we have the following two equations for a0, a 1 ∈ A such that a0̸ = a1,
+
+E(Y r | Z = 1 , G r = LL, ¯Lr, X, A = a1) − E(Y r | Z = 1 , G r = LL, ¯Lr, X, A = a0)=E(Y r | Z = 0 , S r = 1 , ¯Lr, X, A = a1) − E(Y r | Z = 0 , S r = 1 , ¯Lr, X, A = a0), (19) 
+
+E(Y r | Z = 1 , G r = LD, ¯Lr, X, A = a1) − E(Y r | Z = 1 , G r = LD, ¯Lr, X, A = a0)=E(Y r | Z = 0 , S r = 1 , ¯Lr, X, A = a1) − E(Y r | Z = 0 , S r = 1 , ¯Lr, X, A = a0). (20) Therefore, when A has at least two levels and Assumption 11 holds, (18), (19) and (20) form a system of four equations with four unknown expectations E(Y r|Z = 1 , G r = LL, ¯Lr, X, A = a1),
+
+E(Y r|Z = 1 , G r = LL, ¯Lr, X, A = a0), E(Y r|Z = 1 , G r = LD, ¯Lr, X, A = a1) and E(Y r|Z =1, G r = LD, ¯Lr, X, A = a0). Consequently, E(Y r|Z = 1 , G r = LL, ¯Lr, X, A ) is identifiable from observed distribution. We next derive the identification formulas in (7) and (8). For z = 0 ,
+
+E[I{T (0) ∧ T (1) = t}Y r(0)] = E[I{T (0) = t}Y r(0)] = X 
+
+> ¯lr,l 0
+
+EY r(0) | T (0) = t, ¯Lr(0) = ¯lr, L 0 = l0 × Pr  T (0) = t, ¯Lr(0) = ¯lr | L0 = l0 pL0 (l0)= X 
+
+> ¯lr,l 0
+
+EY r | T = t, ¯Lr = ¯lr, Z = 0 , L 0 = l0 × Pr  T = t, ¯Lr = ¯lr | Z = 0 , L 0 = l0 pL0 (l0)= X
+
+> l0
+
+EI{T = t}Y r | Z = 0 , L 0 = l0 pL0 (l0)=EL0
+
+EI{T = t}Y r | Z = 0 , L 0 
+
+=E
+
+I{T = t, Z = 0 }
+
+Pr( Z = 0 | L0) Y r
+
+
+
+,
+
+where the first equation follows Assumption 4, the third equation follows Assumptions 5 and 8, and the last equation follows from Assumption 6. For z = 1 , it follows from Assumptions 8 and 9 that 
+
+EY r(1) | T (0) = t, ¯Lr(1) = ¯lr, L 0 = l0
+
+=EY r | T (0) = t, ¯Lr = ¯lr, Z = 1 , L 0 = l0
+
+39 =EY r | Gr = LL, ¯Lr = ¯lr, Z = 1 , L 0 = l0 = Mr(¯lr, LL, a, x ),
+
+where l=(a, x ⊤)⊤. Thus, the preceding identification of Mr( ¯Lr, LL, 1, A, X ), together with Lemma 1, gives 
+
+E[I{T (0) ∧ T (1) = t}Y r(1)] =EEY r(1) | T (0) ∧ T (1) = t, ¯Lr(1) , L 0 Pr T (0) ∧ T (1) = t | ¯Lr(1) , L 0 
+
+= X 
+
+> ¯lr,l 0
+
+EY r(1) | T (0) = t, ¯Lr(1) = ¯lr, L 0 = l0 × Pr  T (0) = t, ¯Lr(1) = ¯lr | L0 = l0 pL0 (l0)= X 
+
+> ¯lr,l 0
+
+Mr(¯lr, LL, 1, a, x ) Pr ( T = t | Z = 0 , L 0 = l0)Pr ( St = 1 | Z = 1 , L 0 = l0) Pr  St = 1 , ¯Lr = ¯lr | Z = 1 , L 0 = l0 pL0 (l0).
+
+We also have 
+
+E
+
+"
+
+I(Z = 1) Pr( Z = 1 | L0)I(St = 1) Pr( T = t | Z = 0 , L 0)Pr( St = 1 | Z = 1 , L 0)Mr( ¯Lr, LL, 1, A, X )
+
+#
+
+=E
+
+"
+
+1Pr( Z = 1 | L0)Pr( T = t | Z = 0 , L 0)Pr( St = 1 | Z = 1 , L 0)E I(Z = 1 , S t = 1) Mr( ¯Lr, LL, 1, A, X ) | L0
+
+#
+
+=E
+
+"
+
+Pr( T = t | Z = 0 , L 0)Pr( St = 1 | Z = 1 , L 0)E I(St = 1) Mr( ¯Lr, LL, 1, A, X ) | Z = 1 , L 0
+
+#
+
+=E
+
+"
+
+Pr( T = t | Z = 0 , L 0)Pr( St = 1 | Z = 1 , L 0)
+
+(X
+
+> ¯lr
+
+Mr(¯lr, LL, 1, A, X ) Pr( St = 1 , ¯Lr = ¯lr | Z = 1 , L 0)
+
+) # 
+
+= X 
+
+> ¯lr,l 0
+
+Mr(¯lr, LL, 1, a, x ) Pr ( T = t | Z = 0 , L 0 = l0)Pr ( St = 1 | Z = 1 , L 0 = l0) Pr  St = 1 , ¯Lr = ¯lr | Z = 1 , L 0 = l0 pL0 (l0).
+
+Thus, (7) and (8) hold. This completes the proof of Theorem 1. 
+
+Remark 7 (Observed-data modeling constraints) : The parameterizations in Section 4.3 imply the following modeling constraints on the observed data distribution, which are used to derive the maxi-mum likelihood estimators: 
+
+Pr( Sr = 1 | Sr−1 = 1 , Z = 1 , L 0) = l1(L0; βr); Pr( Sr = 1 | Sr−1 = 1 , Z = 0 , L 0) = l1(L0; βr)l0/1(L0; γr); 
+
+Er( ¯Lr, 0, A, X ) = m( ¯Lr, LL, 0, A, X ; αr); 
+
+40 Er( ¯Lr, 1, A, X ) = 
+
+> r
+
+Y
+
+> k=1
+
+l0/1(L0; γk) m( ¯Lr, LL, 1, A, X ; αr) + 
+
+
+
+1 −
+
+> r
+
+Y
+
+> k=1
+
+l0/1(L0; γk)
+
+
+
+m( ¯Lr, LD, 1, A, X ; αr).
+
+Proof of Theorem 2. When r = 0 , Y 0 ∈ L0 is measured before treatment assignment. By Assump-tions 1, 3, 6 and 14, 
+
+EI{T (zS ) = t}Y 0 = EY 0 Pr {T (zS ) = t | L0}
+
+= EY 0 Pr( T = t | Z = zS , L 0)
+
+= E
+
+I(T = t, Z = zS )Pr( Z = zS | L0) Y 0
+
+
+
+.
+
+For 1 ≤ r ≤ t ≤ tmax , we first consider 
+
+E[I(T (zY , z S ) = t)Y r(zY , z S )] = E[Y r(zY , z S )|T (zY , z S ) = t] Pr( T (zY , z S ) = t)= X 
+
+> ¯lr,l 0
+
+E[Y r(zY , z S )|T (zY , z S ) = t, ¯Lr(zY , z S ) = ¯lr, L 0 = l0]
+
+× Pr( T (zY , z S ) = t, ¯Lr(zY , z S ) = ¯lr, L 0 = l0).
+
+For the term E[Y r(zY , z S )|T (zY , z S ) = t, ¯Lr(zY , z S ) = ¯lr, L 0 = l0], we have 
+
+E[Y r(zY , z S )|T (zY , z S ) = t, ¯Lr(zY , z S ) = ¯lr, L 0 = l0]=E[Y r(zY , z S )|T (zY , z S ) = t, ¯Lr(zY , z S ) = ¯lr, Z Y (C) = zY , Z S (C) = zS , L 0 = l0]=E[Y r(C)|T (C) = t, ¯Lr(C) = ¯lr, Z Y (C) = zY , Z S (C) = zS , L 0 = l0]=E[Y r(C)|Sr(C) = 1 , ¯Lr(C) = ¯lr, Z Y (C) = zY , Z S (C) = zY , L 0 = l0]=E[Y r(zY , z Y )|Sr(zY , z Y ) = 1 , ¯Lr(zY , z Y ) = ¯lr, L 0 = l0]=E[Y r(z = zY )|Sr(z = zY ) = 1 , ¯Lr(z = zY ) = ¯lr, L 0 = l0]=E[Y r|Sr = 1 , ¯Lr = ¯lr, Z = zY , L 0 = l0],
+
+where the first equation follows from the fact that the treatment components (ZY (C), Z S (C)) are randomly assigned, the third equation follows from Assumptions 2 and 13, the fifth equation follows from Assumption 3, and the last equation follows from Assumptions 6 and 14. 41 It follows from the law of total probability that 
+
+Pr( T (zY , z S ) = t, ¯Lr(zY , z S ) = ¯lr, L 0 = l0)= X
+
+> ¯lt+1 \¯lr+1
+
+Pr( St+1 (zY , z S ) = 0 |St(zY , z S ) = 1 , ¯Lt+1 (zY , z S ) = ¯lt+1 , L 0 = l0)
+
+× Pr( Lt+1 (zY , z S ) = lt+1 |St(zY , z S ) = 1 , ¯Lt(zY , z S ) = ¯lt, L 0 = l0)
+
+× Πti=1 
+
+n
+
+Pr( Si(zY , z S ) = 1 |Si−1(zY , z S ) = 1 , ¯Li(zY , z S ) = ¯li, L 0 = l0)
+
+× Pr( Li(zY , z S ) = li|Si−1(zY , z S ) = 1 , ¯Li−1(zY , z S ) = ¯li−1, L 0 = l0)
+
+o
+
+× pL0 (l0).
+
+Then, we have 
+
+Pr( St+1 (zY , z S ) = 0 |St(zY , z S ) = 1 , ¯Lt+1 (zY , z S ) = ¯lt+1 , L 0 = l0)= Pr( St+1 (zY , z S ) = 0 |St(zY , z S ) = 1 , ¯Lt+1 (zY , z S ) = ¯lt+1 , Z Y (C) = zY , Z S (C) = zS , L 0 = l0)= Pr( St+1 (C) = 0 |St(C) = 1 , ¯Lt+1 (C) = ¯lt+1 , Z Y (C) = zY , Z S (C) = zS , L 0 = l0)= Pr( St+1 (C) = 0 |St(C) = 1 , ¯Lt+1 (C) = ¯lt+1 , Z Y (C) = zS , Z S (C) = zS , L 0 = l0)= Pr( St+1 (zS , z S ) = 0 |St(zS , z S ) = 1 , ¯Lt+1 (zS , z S ) = ¯lt+1 , L 0 = l0)= Pr( St+1 (z = zS ) = 0 |St(z = zS ) = 1 , ¯Lt+1 (z = zS ) = ¯lt+1 , L 0 = l0)= Pr( St+1 = 0 |St = 1 , ¯Lt+1 = ¯lt+1 , Z = zS , L 0 = l0),
+
+where the first equality follows from the fact that the treatment components (ZY (C), Z S (C)) are randomly assigned, the third equation follows from Assumption 12(1), the fifth equation follows from Assumption 3, and the last equation follows from Assumption 14. Similarly, it follows from Assumptions 3, 14 and 12(2) that we have 
+
+Pr( Lt+1 (zY , z S ) = lt+1 |St(zY , z S ) = 1 , ¯Lt(zY , z S ) = ¯lt, L 0 = l0)= Pr( Lt+1 = lt+1 |St = 1 , ¯Lt = ¯lt, Z = zS , L 0 = l0).
+
+42 Furthermore, according to Assumptions 3, 12 and 14, we repeat the above procedures and obtain 
+
+Pr( Si(zY , z S ) = 1 |Si−1(zY , z S ) = 1 , ¯Li(zY , z S ) = ¯li, L 0 = l0)= Pr( Si = 1 |Si−1 = 1 , ¯Li = ¯li, Z = zS , L 0 = l0),
+
+Pr( Li(zY , z S ) = li|Si−1(zY , z S ) = 1 , ¯Li−1(zY , z S ) = ¯li−1, L 0 = l0)= Pr( Li = li|Si−1 = 1 , ¯Li−1 = ¯li−1, Z = zS , L 0 = l0).
+
+Combining the above equalities, we obtain 
+
+Pr( T (zY , z S ) = t, ¯Lr(zY , z S ) = ¯lr, L 0 = l0)= X
+
+> ¯lt+1 \¯lr+1
+
+Pr( St+1 = 0 |St = 1 , ¯Lt+1 = ¯lt+1 , Z = zS , L 0 = l0)
+
+× Pr( Lt+1 = lt+1 |St = 1 , ¯Lt = ¯lt, Z = zS , L 0 = l0)
+
+× Πti=1 
+
+n
+
+Pr( Si = 1 |Si−1 = 1 , ¯Li = ¯li, Z = zS , L 0 = l0)
+
+× Pr( Li = li|Si−1 = 1 , ¯Li−1 = ¯li−1, Z = zS , L 0 = l0)
+
+o
+
+× pL0 (l0)= Pr( T = t, ¯Lr = ¯lr|Z = zS , L 0 = l0)pL0 (l0).
+
+Finally, combining all the above results, we have 
+
+E[I(T (zY , z S ) = t)Y r(zY , z S )] = X
+
+> ¯lr
+
+E(Y r|Sr = 1 , ¯Lr = ¯lr, Z = zY , L 0 = l0) Pr( T = t, ¯Lr = ¯lr|Z = zS , L 0 = l0)pL0 (l0)=E
+
+n
+
+E
+
+h
+
+E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)I(T = t) Z = zS , L 0
+
+io 
+
+.
+
+This completes the proof of Theorem 2. 
+
+Proof of Proposition 1. For z = 0 , 1 and r ≤ t, it follows from Assumption 3 that we have 
+
+E[I(T (z) = t)Y r(z)] = E[I(T (zY = z, z S = z) = t)Y r(zY = z, z S = z)] ,
+
+43 which implies μ(0) = Γ(0 , 0) if wrt = ψrt . Then, consider 
+
+E[I(T (0) ∧ T (1) = t)Y r(1)] =E[I(T (0) = t)Y r(1)] =E[I(T (zY = 0 , z S = 0) = t)Y r(zY = 1 , z S = 1)] =E[I(T (zY = 0 , z S = 0) = t)Y r(zY = 1 , z S = 0)] =E[I(T (zS = 0) = t)Y r(zY = 1 , z S = 0)] ,
+
+where the first, second, third, and last equalities follow from Assumptions 4, 3, 15, and 1, respectively, and thus there holds true that μ(1) = Γ(1 , 0) if wrt = ψrt . Finally, when ϕrt = ψrt , we also have 
+
+μext = Γ(1 , 1) − Γ(1 , 0) . This completes the proof of Proposition 1. We characterize the nonparametric influence function IF (Λ rt (zY , z S )) of Λrt (zY , z S ) for r ≥ 1
+
+without imposing restrictions on the observed data distribution (Bickel et al., 1993, Tsiatis, 2006) in the following Theorem. 
+
+Theorem 3: The nonparametric influence function of the estimand (17) is given by 
+
+IF (Λ rt (zY , z S )) = E
+
+n
+
+I(T = t)E  Y r | Sr = 1 , ¯Lr, Z = zY , L 0 Z = zS , L 0
+
+o
+
++ I(Z = zS )Pr( Z = zS | L0)
+
+h
+
+I(T = t)E(Y r | Sr = 1 , ¯Lr, Z = zY , L 0)
+
+− E I(T = t)E(Y r | Sr = 1 , ¯Lr, Z = zY , L 0) | Z = zS , L 0
+
+i
+
++ I(Z = zY )Pr( Z = zY | L0)
+
+pT, ¯Lr |Z,L 0 (t, ¯Lr | zS , L 0)
+
+pSr , ¯Lr |Z,L 0 (1 , ¯Lr | zY , L 0)Sr Y r − E(Y r | Sr = 1 , ¯Lr, Z = zY , L 0)
+
++ E
+
+n
+
+I(T = t)E(Y r | Sr = 1 , ¯Lr, Z = zY , L 0) Z = zS , L 0
+
+o I(Z = zS )Pr( Z = zS | L0)
+
+×
+
+ I(T = t)Pr( T = t | Z = zS , L 0) − 1
+
+
+
+− Λrt (zY , z S ).
+
+Proof of Theorem 3. Let 
+
+ν(p) = E[I(t = T (zS )) Y r(zY , z S )] 
+
+44 =E
+
+n
+
+E
+
+h
+
+E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)I(T = t) Z = zS , L 0
+
+io 
+
+=E
+
+n
+
+E
+
+h
+
+E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) T = t, Z = zS , L 0
+
+i
+
+Pr( T = t|Z = zS , L 0)
+
+o
+
+,
+
+and consider 
+
+dν (pϵ)
+
+dϵ ϵ=0 
+
+=
+
+Z
+
+Eϵ
+
+h
+
+Eϵ(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) T = t, Z = zS , L 0
+
+i
+
+Pr ϵ(T = t|Z = zS , L 0)df ϵ(l0)
+
+dϵ dl 0
+
+> ϵ=0
+
++ Eϵ
+
+n Z
+
+Eϵ(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)df ϵ(¯lr|T = t, Z = zS , L 0)
+
+dϵ d¯lrPr ϵ(T = t|Z = zS , L 0)
+
+o
+
+> ϵ=0
+
++ Eϵ
+
+n
+
+Eϵ
+
+h Z
+
+yr df ϵ(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)
+
+dϵ dy r T = t, Z = zS , L 0
+
+i
+
+Pr ϵ(T = t|Z = zS , L 0)
+
+o
+
+> ϵ=0
+
++ Eϵ
+
+n
+
+Eϵ
+
+h
+
+Eϵ(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) T = t, Z = zS , L 0
+
+idf ϵ(T = t|Z = zS , L 0)
+
+dϵ 
+
+o
+
+> ϵ=0
+
+:= T1 + T2 + T3 + T4.
+
+For T1, T2, T3 and T4, we derive 
+
+T1 =E
+
+n
+
+E
+
+h
+
+E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) T = t, Z = zS , L 0
+
+i
+
+Pr( T = t|Z = zS , L 0)S(L0)
+
+o
+
+=E
+
+n
+
+E
+
+h
+
+E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) T = t, Z = zS , L 0
+
+i
+
+Pr( T = t|Z = zS , L 0)S(Y r, T, S r, ¯Lr, Z, L 0)
+
+o
+
+,T2
+
+=E
+
+n
+
+E
+
+h
+
+E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)S( ¯Lr|T = t, Z = zs, L 0) T = t, Z = zS , L 0
+
+i
+
+Pr( T = t|Z = zS , L 0)
+
+o
+
+=E
+
+n
+
+E
+
+h I(T = t, Z = zS )Pr( T = t, Z = zS |L0)E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)S( ¯Lr|T, Z, L 0) L0
+
+i
+
+Pr( T = t|Z = zS , L 0)
+
+o
+
+=E
+
+n
+
+E
+
+hI(T = t, Z = zS )Pr( Z = zS |L0) E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)S( ¯Lr|T, Z, L 0) L0
+
+io 
+
+=E
+
+nI(T = t, Z = zS )Pr( Z = zS |L0) E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)S( ¯Lr|T, Z, L 0)
+
+o
+
+=E
+
+n I(Z = zS )Pr( Z = zS |L0)
+
+
+
+I(T = t)E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)
+
+− E[I(T = t)E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)|Z = zs, L 0]
+
+
+
+S( ¯Lr|T, Z, L 0)
+
+o
+
+45 =E
+
+n I(Z = zS )Pr( Z = zS |L0)
+
+
+
+I(T = t)E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)
+
+− E[I(T = t)E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)|Z = zs, L 0]
+
+
+
+S( ¯Lr, T, Z, L 0)
+
+o
+
+=E
+
+n I(Z = zS )Pr( Z = zS |L0)
+
+
+
+I(T = t)E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)
+
+− E[I(T = t)E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)|Z = zs, L 0]
+
+
+
+S(Y r, T, S r, ¯Lr, Z, L 0)
+
+o
+
+,T3
+
+=E
+
+n
+
+E
+
+h
+
+E(Y rS(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)|Sr = 1 , ¯Lr, Z = zY , L 0) T = t, Z = zS , L 0
+
+i
+
+× Pr( T = t|Z = zS , L 0)
+
+o
+
+=E
+
+n
+
+E
+
+hI(T = t, Z = zS )Pr( Z = zS |L0) E(Y rS(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)|Sr = 1 , ¯Lr, Z = zY , L 0) L0
+
+io 
+
+=E
+
+nI(T = t, Z = zS )Pr( Z = zS |L0) E( I(Sr = 1 , Z = zY )Pr( Sr = 1 , Z = zY | ¯Lr, L 0)Y rS(Y r|Sr, ¯Lr, Z, L 0)| ¯Lr, L 0)
+
+o
+
+=E
+
+nPr( T = t, Z = zS | ¯Lr, L 0)Pr( Z = zS |L0)
+
+I(Z = zY )Sr
+
+Pr( Sr = 1 , Z = zY | ¯Lr, L 0)Y rS(Y r|Sr, ¯Lr, Z, L 0)
+
+o
+
+=E
+
+nPr( T = t, Z = zS | ¯Lr, L 0)Pr( Z = zS |L0)
+
+I(Z = zY )Sr
+
+Pr( Sr = 1 , Z = zY | ¯Lr, L 0)
+
+× (Y r − E(Y r|Sr = 1 , ¯Lr, Z = zy, L 0)) S(Y r|Sr, ¯Lr, Z, L 0)
+
+o
+
+=E
+
+nPr( T = t, Z = zS | ¯Lr, L 0)Pr( Z = zS |L0)
+
+I(Z = zY )Sr
+
+Pr( Sr = 1 , Z = zY | ¯Lr, L 0)
+
+× (Y r − E(Y r|Sr = 1 , ¯Lr, Z = zy, L 0)) S(Y r, T, S r, ¯Lr, Z, L 0)
+
+o
+
+,
+
+and 
+
+T4
+
+=E
+
+n
+
+E
+
+h
+
+E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) T = t, Z = zS , L 0
+
+i
+
+E(I(T = t)S(T |Z = zs, L 0)|Z = zS , L 0)
+
+o
+
+=E
+
+n
+
+E
+
+h
+
+E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) T = t, Z = zS , L 0
+
+i
+
+E( I(Z = zS )Pr( Z = zS |L0)I(T = t)S(T |Z, L 0)|L0)
+
+o
+
+=E
+
+n
+
+E
+
+h
+
+E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) T = t, Z = zS , L 0
+
+i I(Z = zS )Pr( Z = zS |L0)
+
+× (I(T = t) − E(T = t|Z = zS , L 0)) S(T |Z, L 0)
+
+o
+
+46 =E
+
+n
+
+E
+
+h
+
+E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) T = t, Z = zS , L 0
+
+i I(Z = zS )Pr( Z = zS |L0)
+
+× (I(T = t) − E(T = t|Z = zS , L 0)) S(T, Z, L 0)
+
+o
+
+=E
+
+n
+
+E
+
+h
+
+E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) T = t, Z = zS , L 0
+
+i I(Z = zS )Pr( Z = zS |L0)
+
+× (I(T = t) − Pr( T = t|Z = zS , L 0)) S(Y, T, S r, ¯Lr, Z, L 0)
+
+o
+
+.
+
+Thus, the influence function of ν(p) is 
+
+ν1(p) = E
+
+h
+
+E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) T = t, Z = zS , L 0
+
+i
+
+Pr( T = t|Z = zS , L 0) − ν(p)+ I(Z = zS )Pr( Z = zS |L0)
+
+
+
+I(T = t)E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)
+
+− E[I(T = t)E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)|Z = zs, L 0]
+
+
+
++ Pr( T = t, Z = zS | ¯Lr, L 0)Pr( Z = zS |L0)
+
+I(Z = zY )Sr
+
+Pr( Sr = 1 , Z = zY | ¯Lr, L 0)(Y r − E(Y r|Sr = 1 , ¯Lr, Z = zy, L 0)) + E
+
+h
+
+E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) T = t, Z = zS , L 0
+
+i I(Z = zS )Pr( Z = zS |L0)
+
+× (I(T = t) − Pr( T = t|Z = zS , L 0)) =E
+
+h
+
+I(T = t)E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) Z = zS , L 0
+
+i
+
+− ν(p)+ I(Z = zS )Pr( Z = zS |L0)
+
+
+
+I(T = t)E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)
+
+− E[I(T = t)E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0)|Z = zs, L 0]
+
+
+
++ I(Z = zY )Pr( Z = zY |L0)Pr( T = t, ¯Lr|Z = zS , L 0)Pr( Sr = 1 , ¯Lr|Z = zY , L 0)Sr(Y r − E(Y r|Sr = 1 , ¯Lr, Z = zy, L 0)) + E
+
+h
+
+I(T = t)E(Y r|Sr = 1 , ¯Lr, Z = zY , L 0) Z = zS , L 0
+
+i I(Z = zS )Pr( Z = zS |L0)
+
+× ( I(T = t)Pr( T = t|Z = zS , L 0) − 1) .
+
+# S3: Identification and estimation of while-alive estimands 
+
+The following Table S3.1 provides four example types of weighting schemes for the while-alive estimand λ(z).47 Table S3.1: Four example types of while-alive estimands with their corresponding weighting schemes Type Weight Exit time ζrT (z) =
+
+(
+
+1, r = T (z),
+
+0, r < T (z).
+
+Average ζrT (z) = 1 
+
+> T(z)+1
+
+Cumulative ζrT (z) = 1 
+
+AUC-based ζrT (z) = I(T (z) ≥ 1) ×
+
+ 
+
+> 12
+
+(τT (z) − τT (z)−1), r = T (z), 
+
+> 12
+
+(τr+1 − τr−1), 0 < r < T (z), 
+
+> 12
+
+τ1, r = 0 .
+
+Under Assumptions 5, 6 and 8, λ(z) is identifiable from the observed distribution. Then, the while-alive estimator for λ(z) with z = 0 , 1 is 
+
+bλ(z) = 
+
+> tmax
+
+X
+
+> t=0
+> t
+
+X
+
+> r=0
+
+ζrt Pn
+
+n I(T = t, Z = z)
+
+zl z (L0; bθ) + (1 − z)(1 − lz (L0; bθ)) Y r
+
+o
+
+.
+
+# S4: Simulation 
+
+We examine the numerical performance of the proposed estimators in Sections 4.3 and 5.4, respec-tively. The estimators are evaluated in terms of mean bias (scaled by 10 3) and standard error (scaled by 10 3). 
+
+## Substitution variable approach 
+
+The specific data-generating mechanism is described as follows: (1) Generate baseline covariates X = ( X1, X 2, X 3)⊤: X1 is a discrete variable taking values −1
+
+and 1 with probabilities Pr( X1 = −1) = Pr( X1 = 1) = 0 .5; X2, X 3
+
+> ind
+
+∼ Uniform( −1, 1); 
+
+(2) Generate substitution variable A from a Bernoulli distribution with Pr( A = 1 |X) = expit (ι⊤X),where ι = (0 .2, 0.1, −0.1) ⊤;(3) Generate exposure variable Z from a Bernoulli distribution with Pr( Z = 1 |L0) = expit (θ⊤ 
+
+> z
+
+L0),where L0 = ( A, X ⊤)⊤ and θz = (0 .1, 0.2, −0.1, 0.1) ⊤;(4) Set tmax = 3 , τ = (0 , 1/4, 1/2, 1) , S0 = 1 and Y 0 = 0 ;48 (5) Generate the three independent latent processes. Using the latent-process notation introduced earlier, TD denotes the treatment-resistant death process, TH denotes the treatment-sensitive harmful process, and TP denotes the treatment-resistant progression process. For r = 1 , 2, 3,let pr(L0), ρr(L0), and sr(L0) be the conditional probabilities that these three processes, re-spectively, do not occur during interval r, given that they have not occurred before interval r.Specifically, 
+
+p1(L0) = expit(2 .2 + 0 .2A + 0 .3X1 − 0.2X2 + 0 .1X3),p2(L0) = expit(2 .1 + 0 .2A + 0 .3X1 − 0.2X2 + 0 .1X3),p3(L0) = expit(2 .0 + 0 .2A + 0 .3X1 − 0.2X2 + 0 .1X3),ρ1(L0) = ρ2(L0) = ρ3(L0) = expit(1 .4 + 0 .1A − 0.2X1 + 0 .1X2 + 0 .2X3),
+
+and 
+
+s1(L0) = expit(0 .5 − 0.2A + 0 .1X1 − 0.2X2 + 0 .1X3),s2(L0) = expit(0 .4 − 0.2A + 0 .1X1 − 0.2X2 + 0 .1X3),s3(L0) = expit(0 .3 − 0.2A + 0 .1X1 − 0.2X2 + 0 .1X3).
+
+Generate independent Bernoulli variables 
+
+BrD ∼ Bernoulli {pr(L0)}, BrH ∼ Bernoulli {ρr(L0)}, BrP ∼ Bernoulli {sr(L0)},
+
+and set R0 
+
+> D
+
+= R0 
+
+> H
+
+= R0 
+
+> P
+
+= 1 . Define 
+
+RrD = Rr−1 
+
+> D
+
+BrD, RrH = Rr−1 
+
+> H
+
+BrH , RrP = Rr−1 
+
+> P
+
+BrP ,
+
+recursively. (6) Construct Sr(z), Lr(z), T (z), and the survival type Gr. For r = 1 , 2, 3, define 
+
+Sr(0) = RrH RrD, Sr(1) = RrD,
+
+49 and 
+
+Lr(0) = 1 − RrH RrP RrD, Lr(1) = 1 − RrP RrD.
+
+Then let 
+
+T (z) = 
+
+> 3
+
+X
+
+> r=1
+
+Sr(z),
+
+and define Gr from the pair (Sr(1) , S r(0)) .(7) Generate Y r(0) if Sr(0) = 1 and Y r(1) if Sr(1) = 1 , for r = 1 , 2, 3. Let B(L0) = 0 .5 + 0.2A + 0 .3X1 − 0.2X2 + 0 .2X3, ηZ = 0 .5 and ηG = 0 .1. (Code LL to be 1 and LD to be 0)• Generate Y 1(1) from a normal distribution N (ξ11 , 0.52), where ξ11 = B(L0) + L1(1) + 
+
+ηZ + ηGG1, if S1(1) = 1 ; generate Y r(1) from a normal distribution N (ξr 
+
+> 1
+
+, 0.52), where 
+
+ξr 
+
+> 1
+
+= B(L0) + Lr(1) + ηZ + rη GGr + Y r−1(1) − (r − 1) ηGGr−1, if Sr(1) = 1 for r = 2 , 3;• Generate Y 1(0) from a normal distribution N (ξ10 , 0.52), where ξ10 = B(L0) + L1(0) , if 
+
+S1(0) = 1 ; generate Y r(0) from a normal distribution N (ξr 
+
+> 0
+
+, 0.52), where ξr 
+
+> 0
+
+= B(L0) + 
+
+Lr(0) + Y r−1(0) , if Sr(0) = 1 for r = 2 , 3;(8) Reveal the observed data (Sr, L r, Y r): Sr = ZS r(1) + (1 − Z)Sr(0) , and if Sr = 1 , Lr =
+
+ZL r(1) + (1 − Z)Lr(0) and Y r = ZY r(1) + (1 − Z)Y r(0) . If Sr = 0 , then Lr and Y r are unobserved. Finally, T = P3 
+
+> r=1
+
+Sr.We are interested in estimating μ(1) − μ(0) and μext under different weighting schemes, and the corresponding true values are presented in Table S4.1. Table S4.2 summarizes the simulation results based on sample sizes of n = 500 , 2000 with 500 independent replications. Table S4.1: The true values of μ(1) − μ(0) and μext under different weighting schemes weight μ(1) − μ(0) μext 
+
+Exit time 0.98 -Average 0.49 -Cumulative 1.75 3.06 AUC-based 0.46 0.96 50 Table S4.2: Bias ( ×10 3) and standard error ( ×10 3, shown in parentheses) for estimating μ(1) − μ(0) 
+
+and μext with different choices of weights; Results are based on sample sizes of n = 500 , 2000 with 
+
+500 independent replications Sample size Weight μ(1) − μ(0) μext 
+
+n = 500 
+
+Exit time −43.95 (14.09) -Average −18.23 (6.88) -Cumulative −64.62 (24.74) 63.21 (28.65) AUC-based −16.45 (6.54) 14.67 (7.99) 
+
+n = 2000 
+
+Exit time −10.96 (8.76) -Average −4.43 (4.14) -Cumulative −16.82 (14.87) 11.20 (16.13) AUC-based −4.58 (3.92) 3.37 (4.45) 
+
+## Conditional separable effect approach 
+
+We simulate samples according to Figure 3 and the specific data-generating mechanism is described as follows: (1) Generate baseline covariates L0 = ( X⊤, A )⊤;• X = ( X1, X 2, X 3)⊤ are combination of discrete and continuous variables: X1 is a discrete variable taking values −1 and 1 with probabilities Pr( X1 = −1) = Pr( X1 = 1) = 0 .5;
+
+X2, X 3
+
+> ind
+
+∼ Uniform( −1, 1); 
+
+• A is generated from a Bernoulli distribution with Pr( A = 1 |X) = expit (ι⊤X), where 
+
+ι = (0 .2, 0.1, −0.1) ⊤;(2) Generate exposure variable Z from a Bernoulli distribution with Pr( Z = 1 |L0) = expit (θ⊤ 
+
+> z
+
+L0),where L0 = ( A, X ⊤)⊤ and θz = (0 .1, 0.2, −0.1, 0.1) ⊤, and define Z ≡ ZY ≡ ZS ;(3) Set tmax = 3 , τ = (0 , 1/4, 1/2, 1) , S0 = 1 and Y 0 = 0 ;(4) Generate Lt, St and Y t for t = 1 , ..., t max ; Let θ = (1 .0, 0.5, 0.5, 0.5) ⊤;If St−1 = 1 ,• Lt is generated from a Bernoulli distribution with Pr( Lt = 1 |St−1 = 1 , ¯Lt−1, Z S ) = 
+
+expit (θ⊤L0 + Lt−1 + ZS );• St is generated from a Bernoulli distribution with Pr( St = 1 |St−1 = 1 , ¯Lt, Z S ) = 
+
+expit (−1.1 + θ⊤L0 + Lt + 0 .5ZS );51 • Y t is generated from a normal distribution N (0 .5 + θ⊤L0 + Lt + Y t−1 + ZY , 0.52) if 
+
+St = 1 .We are interested in estimating Γ(1 , 0) − Γ(0 , 0) and Γ(1 , 1) − Γ(0 , 1) with different choices of weighting schemes, and their true values are provided in Table S4.3. Table S4.4 summarizes the simulation results based on sample sizes of n = 500 , 2000 with 500 independent replications. Table S4.3: The true values of Γ(1 , 0) − Γ(0 , 0) and Γ(1 , 1) − Γ(0 , 1) under different weighting schemes Weight Γ(1 , 0) − Γ(0 , 0)( zS = 0) Γ(1 , 1) − Γ(0 , 1)( zS = 1) 
+
+Exit time 1.03 1.44 Average 0.51 0.72 Cumulative 1.76 2.58 AUC-based 0.44 0.68 Table S4.4: Bias ( ×10 3) and standard error ( ×10 3, shown in parentheses) for estimating Γ(1 , 0) −
+
+Γ(0 , 0) and Γ(1 , 1) − Γ(0 , 1) under different weighting schemes; Results are based on sample sizes of n = 500 , 2000 with 500 independent replications. Sample size Weight Γ(1 , 0) − Γ(0 , 0)( zS = 0) Γ(1 , 1) − Γ(0 , 1)( zS = 1) 
+
+n = 500 
+
+Exit time 8.47 (3.91) 6.42 (4.63) Average 4.31 (1.95) 3.36 (2.27) Cumulative 14.71 (7.53) 11.00 (8.80) AUC-based 3.49 (2.18) 2.82 (2.54) 
+
+n = 2000 
+
+Exit time 0.11 (1.98) −2.03 (2.28) Average −0.07 (0.99) −1.19 (1.13) Cumulative −0.20 (3.73) −4.73 (4.40) AUC-based −0.21 (1.06) −1.46 (1.27) 52 References 
+
+Baklicharov, G., Van Lancker, K., and Vansteelandt, S. (2025). Weakening assumptions in the evalu-ation of treatment effects in longitudinal randomized trials with truncation by death or other inter-current events. arXiv preprint arXiv:2509.10067 .Bickel, P. J., Klaassen, C. A., Bickel, P. J., Ritov, Y., Klaassen, J., Wellner, J. A., and Ritov, Y. (1993). 
+
+Efficient and adaptive estimation for semiparametric models , volume 4. Springer. Diehr, P., Patrick, D., Hedrick, S., Rothman, M., Grembowski, D., Raghunathan, T. E., and Beres-ford, S. (1995). Including deaths when measuring health status over time. Medical Care , 33(4 Suppl):AS164–AS172. Frangakis, C. E. and Rubin, D. B. (2002). Principal stratification in causal inference. Biometrics ,58(1):21–29. Grossi, G., Mariani, M., Mattei, A., and Mealli, F. (2025). Bayesian principal stratification with longitudinal data and truncation by death. Econometrics and Statistics , pages 1–12. In press. ICH (2019). ICH E9(R1): Addendum on Estimands and Sensitivity Analysis in Clinical Tri-als to the Guideline on Statistical Principles for Clinical Trials. Technical report, ICH. Available at https://database.ich.org/sites/default/files/E9-R1_Step4_ Guideline_2019_1203.pdf .Kurland, B. F., Johnson, L. L., Egleston, B. L., and Diehr, P. H. (2009). Longitudinal data with follow-up truncated by death: match the analysis method to research aims. Statistical Science ,24(2):211–222. Lok, J. J., Bosch, R. J., Benson, C. A., Collier, A. C., Robbins, G. K., Shafer, R. W., Hughes, M. D., et al. (2010). Long-term increase in CD4+ T-cell counts during combination antiretroviral therapy for HIV-1 infection. AIDS , 24(12):1867–1876. Lu, S., Yi, Y., Qu, Y., Liu, H. K., Ye, T., and Ding, P. (2025). Estimating treatment effects with competing intercurrent events in randomized controlled trials. arXiv preprint arXiv:2503.03049 .53 Robins, J. (1986). A new approach to causal inference in mortality studies with a sustained exposure period—application to control of the healthy worker survivor effect. Mathematical Modelling ,7(9-12):1393–1512. Rosenbaum, P. R. (2006). Comment: the place of death in the quality of life. Statistical Science ,21(3):313–316. Rubin, D. B. (2006). Causal inference through potential outcomes and principal stratification: appli-cation to studies with “censoring” due to death. Statistical Science , 21(3):299–309. Stensrud, M. J., Robins, J. M., Sarvet, A., Tchetgen Tchetgen, E. J., and Young, J. G. (2023). Condi-tional separable effects. Journal of the American Statistical Association , 118(544):2671–2683. Tsiatis, A. A. (2006). Semiparametric theory and missing data . Springer. Wei, J., Muetze, T., Jahn-Eimermacher, A., and Roger, J. (2023). Properties of two while-alive esti-mands for recurrent events and their potential estimators. Statistics in Biopharmaceutical Research ,15(2):257–267. Xiang, Q., Bosch, R. J., and Lok, J. J. (2023). The survival-incorporated median vs the median in the survivors or in the always-survivors: What are we measuring? and why? Statistics in Medicine ,42(29):5479–5490. Young, J. G., Stensrud, M. J., Tchetgen Tchetgen, E. J., and Hern´ an, M. A. (2020). A causal frame-work for classical statistical estimands in failure-time settings with competing events. Statistics in Medicine , 39(8):1199–1236. 54

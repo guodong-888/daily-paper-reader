@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-09",
+  "date": "2026-07-09",
+  "generated_at": "2026-07-09T21:22:32",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/09/2607.00222v1-causal-inference-for-all-marginal-estimands-for-outcomes-truncated-by-death",
+      "section": "quick",
+      "title_en": "Causal Inference for All: Marginal Estimands for Outcomes Truncated by Death",
+      "authors": "Ruixuan Zhao, Mats Stensrud, Linbo Wang",
+      "date": "2026-06-30",
+      "pdf": "https://arxiv.org/pdf/2607.00222v1",
+      "score": "7.0",
+      "evidence": "因果推断方法适用于分析影响皮瓣存活的因素",
+      "tldr": "纵向研究中，结局常因死亡而截断，现有估计量要么针对幸存者子群体，要么难以因果解释。本文提出全人群边际可分离效应，利用纵向数据实现因果可解释，并发展识别与估计方法。在前列腺癌试验中应用，发现不同估计量导致不同治疗结论。该工作为截断结局分析提供了兼顾全人群与因果可解释性的新框架。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "In longitudinal studies, outcomes of interest are often truncated by death, meaning that they are only observed or well-defined conditional on intercurrent events such as survival. Existing strategies face a trade-off: causally interpretable estimands, such as survivor average causal effects, target a latent subgroup, whereas while-alive and composite summaries apply to the full population but are difficult to interpret as causal effects on the non-mortality outcome. We address these challenges by introducing methodology for a new set of estimands that (i) concern the entire population, (ii) remain causally interpretable, and (iii) leverage the longitudinal data commonly available in studies with outcomes truncated by death. The set of estimands includes single-world marginal separable effects that generalize conditional separable effects to full-population summaries. We develop identification and estimation results for these estimands and apply the methodology in a reanalysis of a prostate cancer trial, highlighting how different estimands can yield different treatment conclusions.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/09/biorxiv-10-64898-2026-06-30-733797-v1-multimodal-molecular-profiling-of-the-metabolic-penumbra-in-hyperacute-stroke",
+      "section": "quick",
+      "title_en": "Multimodal molecular profiling of the metabolic penumbra in hyperacute stroke",
+      "authors": "Mottahedin, A., Couch, Y., Holloway, P., Mergenthaler, P., Boehm-Sturm, P., Attar, M., Foster, R., Dannhorn, A., Buchan, A.",
+      "date": "2026-07-04",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.30.733797v1.full.pdf",
+      "score": "7.0",
+      "evidence": "代谢半暗带图谱与皮瓣存活中的代谢变化相关",
+      "tldr": "超急性卒中缺血半暗带缺乏客观分子定义。该研究通过PCA聚类分析高分辨率质谱成像数据，在45分钟MCAO小鼠模型中定义了代谢半暗带。发现其保存高能磷酸盐、减弱琥珀酸积累，且即早基因和pHH3富集。多模态分子图谱为半暗带识别和治疗策略提供新依据。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "BackgroundThe ischemic penumbra, a metabolically compromised yet potentially salvageable region surrounding the ischemic core, is a prime target for acute stroke intervention. Yet an objective molecular definition of the penumbra, particularly during the earliest stages of ischemia, remains lacking.\n\nMethods and ResultsWe applied principal component analysis (PCA) followed by k-means clustering to high-resolution mass spectrometry imaging data covering multiple metabolic pathways to identify a metabolically defined penumbra in a mouse model of hyperacute stroke (45 min middle cerebral artery occlusion, MCAO). Targeted spatial metabolomic profiling by matrix-assisted laser desorption/ionization (MALDI) and desorption electrospray ionization (DESI) reveals a distinct penumbral metabolic profile, marked by relative preservation of high-energy phosphates, comparable lactate accumulation, and reduced succinate accumulation relative to the core. Spatial transcriptomics revealed selective induction of immediate-early genes, including Npas4, Fos and Junb, within the penumbra. Consistently, imaging mass cytometry shows enrichment of phospho-histone H3 (pHH3) within the penumbra, suggesting a chromatin-associated response potentially linked to immediate-early gene activation.\n\nConclusionTogether, these findings provide a multimodal molecular atlas of the hyperacute metabolically defined penumbra and reveal molecular features that facilitates its identification and inform future therapeutic strategies.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/09/biorxiv-10-64898-2026-07-01-735944-v1-high-intensity-interval-training-remodels-adipose-tissue-inflammatory-signaling-and-enhances-immunometabolic-health-via-microrna-regulation",
+      "section": "quick",
+      "title_en": "High-Intensity Interval Training Remodels Adipose Tissue Inflammatory Signaling and Enhances Immunometabolic Health via microRNA Regulation",
+      "authors": "Sadeghi Mohammadi, M., Marandi, S. M., Rezaee, Z., Saner, N. J., Poosti, M.",
+      "date": "2026-07-07",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.07.01.735944v1.full.pdf",
+      "score": "6.0",
+      "evidence": "高强度间歇训练重塑脂肪组织炎症信号并增强免疫代谢健康，运动诱导的代谢变化",
+      "tldr": "久坐行为导致脂肪组织慢性低度炎症，引发代谢功能障碍和胰岛素抵抗。本研究对雄性Wistar大鼠进行8周高强度间歇训练(HIIT)，检测肩胛间白色脂肪组织(iWAT)的炎症和表观遗传标志物。结果显示，HIIT显著降低体重和脂肪质量，下调促炎因子NLRP3、TNF-α及炎症相关miR-21、miR-30d-5p，上调抗炎因子PPAR-γ和IL-10。该研究揭示了HIIT通过整合转录、翻译和miRNA调控，减轻脂肪组织炎症并促进免疫代谢健康的新机制。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Sedentary behavior promotes chronic low-grade inflammation in adipose tissue, contributing to metabolic dysfunction and insulin resistance. High-intensity interval training (HIIT) is a time-efficient exercise strategy with potent anti-inflammatory and metabolic benefits; however, its effects on adipose tissue inflammatory signaling and microRNA (miRNA) regulation remain incompletely understood. This study investigated the effects of eight weeks of HIIT on inflammatory and epigenetic markers in interscapular white adipose tissue (iWAT) of male Wistar rats. Fourteen rats were randomly assigned to either a sedentary (SED; n = 7) or HIIT (n = 7) group. The HIIT protocol consisted of treadmill running five days per week for eight weeks. Body weight and iWAT mass were assessed, and molecular adaptations were evaluated at multiple regulatory levels using RT-qPCR for mRNA targets (NLRP3, TNF-, PPAR-{gamma}, and IL-10) and miRNAs (miR-21 and miR-30d-5p), while protein levels of NLRP3 and PPAR-{gamma} were assessed using Western blotting. Compared with the SED group, HIIT significantly reduced body weight (p < 0.001) and iWAT mass (p = 0.002). Furthermore, HIIT downregulated the expression of pro-inflammatory mediators, including NLRP3 (gene: p = 0.001; protein: p < 0.001) and TNF- (p = 0.025), while upregulating anti-inflammatory regulators PPAR-{gamma} (gene: p = 0.026; protein: p = 0.020) and IL-10 (p = 0.010). In parallel, inflammation-associated miRNAs, including miR-21 (p = 0.004) and miR-30d-5p (p = 0.002), were markedly downregulated. These coordinated transcriptional, post-transcriptional, and translational adaptations suggest that HIIT attenuates adipose tissue inflammation and promotes a favorable immunometabolic phenotype through integrated molecular and epigenetic mechanisms.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
