@@ -1,0 +1,2526 @@
+Title: Assessing Microcirculation Impairment in Ischemic Stroke Mice Using Arteriovenous Co-fluctuation Analysis
+
+URL Source: https://www.biorxiv.org/content/10.64898/2026.07.08.737374v1.full.pdf
+
+Number of Pages: 48
+
+Markdown Content:
+> 1
+
+## Title: Assessing Microcirculation Impairment in Ischemic Stroke 2
+
+## Mice Using Arteriovenous Co-fluctuation Analysis 3
+
+## Running Title: Measuring cortical blood flow microcirculation 4
+
+Bochao Niu 1 # , Yanlin Bi 2,3# , Benjamin Klugah-Brown 4,5 , Yang Yuan 2 , Quandan 5
+
+Tan 1 , Guoliang Zhu 1 , Yapeng Lin 6 , Junli Hao 7 , Kejie Chen 8 , Lingling Wang 9, Zhe 6
+
+Kang Law 10,11 , Hongyan Gong 2,3 *, Jie Yang 1*7 
+
+> 1
+
+Department of Neurology, Sichuan Provincial People's Hospital, School of Medicine, 8
+
+University of Electronic Science and Technology of China, Chengdu, China ；9 
+
+> 2
+
+Department of Anesthesiology, Qingdao Municipal Hospital, Qingdao Hospital of 10 
+
+Health and Rehabilitation Sciences University, Qingdao, China 11  
+
+> 3
+
+Shandong Key Laboratory of Neurorehabilitation, Qingdao, China 12  
+
+> 4
+
+The Clinical Hospital of Chengdu Brain Science Institute, MOE Key Laboratory for 13 
+
+Neuroinformation, School of Life Science and Technology, University of Electronic 14 
+
+Science and Technology of China, Chengdu, China. 15  
+
+> 5
+
+China-Cuba Belt and Road Joint Laboratory on Neurotechnology and 16 
+
+Brain-Apparatus Communication, School of Life Science and Technology, University 17 
+
+of Electronic Science and Technology of China, Chengdu, China 18  
+
+> 6
+
+Department of Neurology, The First Affiliated Hospital of Chengdu Medical College, 19 
+
+Chengdu, China 20  
+
+> 7
+
+School of Bioscience and Technology, Chengdu Medical College, Chengdu, China 21  
+
+> 8
+
+School of Public Health, Chengdu Medical College, Chengdu, China 22  
+
+> 9
+
+School of Comprehensive Health Management, Xihua University, Chengdu, China 23 
+
+> 10
+
+Department of Medicine, Faculty of Medicine, Universiti Kebangsaan Malaysia 24 
+
+(National University of Malaysia), Kuala Lumpur, Malaysia 25  
+
+> 11
+
+Hospital Canselor Tuanku Muhriz UKM, Faculty of Medicine, Kuala Lumpur, 26 
+
+Malaysia 27 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+# These authors contributed equally: Bochao Niu, Yanlin Bi 28 
+
+* Correspondence: 29 
+
+Jie Yang, E-mail: yangjie1126@163.com 30 
+
+Hongyan Gong , E-mail: gonghongyan@uhrs.edu.cn 31 
+
+> 32
+
+.CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint Abstract 33 
+
+Accurate assessment of cerebral hemodynamics impairment traditionally relies on 34 
+
+arterial metrics, yet often overlooks venous drainage and arteriovenous dynamics, 35 
+
+thereby limiting the evaluation of ischemia-induced microvascular dysfunction. To 36 
+
+address this limitation, we implemented a signal-averaging framework, combined 37 
+
+with co-fluctuation analysis, to extract predominantly arterial and venous 38 
+
+hemodynamic signals and construct a dynamic arteriovenous co-fluctuation index that 39 
+
+quantifies frame-by-frame coordination between arterial inflow and venous outflow 40 
+
+activity. This time-resolved index enables spatial characterization of large-scale 41 
+
+cortical arteriovenous coordination beyond conventional static correlation-based 42 
+
+analyses. Comparative analyses between healthy controls and acute ischemic stroke 43 
+
+mice demonstrated that the arteriovenous co-fluctuation index sensitively detects 44 
+
+disruption of vascular coordination, revealing a slower state transition that occurs 45 
+
+alongside distinct temporal abnormalities and regional heterogeneity between 46 
+
+ischemic core and penumbral regions. These findings underscore the utility of 47 
+
+arteriovenous coordination as a sensitive indicator of microcirculatory dysfunction, 48 
+
+offering a practical analytical tool for assessing stroke-induced microvascular 49 
+
+impairment. 50 
+
+> 51
+
+Keywords: arteriovenous coupling, co-fluctuation analysis, cerebral blood flow, 52 
+
+blood flow microcirculation, ischemic stroke 53 
+
+> 54
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+## Introduction 55 
+
+Recanalization therapies such as intravenous thrombolysis and endovascular 56 
+
+mechanical thrombectomy are effective treatments for patients with large vessel 57 
+
+occlusions (Jia et al., 2024; Liu et al., 2026; Sperring et al., 2023). However, a 58 
+
+substantial proportion of patients continue to exhibit persistent neurological 59 
+
+impairment despite successful macrovascular recanalization, a phenomenon 60 
+
+commonly referred to as “no-reflow” (Jia et al., 2024; Sperring et al., 2023). This 61 
+
+clinical dissociation indicates that restoration of large-vessel patency alone is 62 
+
+insufficient to fully recover downstream microvascular perfusion and tissue viability. 63 
+
+Preservation of ischemic penumbral tissue depends on coordinated function across the 64 
+
+arterial-capillary-venous axis, requiring not only adequate arterial inflow but also 65 
+
+effective venous drainage and the maintenance of capillary-level perfusion dynamics. 66 
+
+Current clinical perfusion imaging approaches, including CT perfusion, MR 67 
+
+perfusion, Doppler ultrasound, and positron emission tomography, primarily 68 
+
+emphasize arterial perfusion-related parameters such as cerebral blood flow (CBF) 69 
+
+(Kropf et al., 2025; Leigh et al., 2018), cerebral blood volume (CBV) (Lakhani et al., 70 
+
+2025; Picchi et al., 2025), and mean transit time (MTT) (Bulut et al., 2022; Hilkens et 71 
+
+al., 2024; Leigh et al., 2018). Although these metrics have substantially advanced 72 
+
+stroke diagnosis and therapeutic decision-making, they remain predominantly focused 73 
+
+on arterial supply and provide limited characterization of venous drainage dynamics 74 
+
+and integrated arteriovenous coordination. Consequently, conventional perfusion 75 
+
+metrics may incompletely capture tissue-level vascular dysfunction, particularly in 76 
+
+regions where impaired venous outflow or disrupted vascular synchronization 77 
+
+contributes to ongoing hypoperfusion despite preserved arterial inflow (Li et al., 2023; 78 
+
+Proner et al., 2026). 79 
+
+Ischemic stroke initiates a multiscale cascade of hemodynamic disturbances that 80 
+
+progressively disrupt vascular coordination across both macrovascular and 81 
+
+microvascular systems. At the macrovascular level, collateral circulation is rapidly 82 
+
+recruited through redistribution of blood flow via pial anastomoses and 83 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+leptomeningeal vessels (Glück et al., 2024). Our prior work demonstrated enhanced 84 
+
+functional integration efficiency within whole-brain networks of the ischemic 85 
+
+hemisphere (Niu, Wu, et al., 2024), suggesting that large-scale vascular compensation 86 
+
+may be accompanied by adaptive network-level reorganization. At the microvascular 87 
+
+level, tissue perfusion becomes impaired through mechanisms including capillary 88 
+
+constriction, pericyte dysfunction, and increased vascular resistance (Sun et al., 2021; 89 
+
+Xu et al., 2025). Importantly, our prior studies further demonstrated disruption of the 90 
+
+normal temporal synchrony between arterial inflow and venous outflow dynamics 91 
+
+following ischemia (Niu, Sihai, et al., 2024), representing a fundamental breakdown 92 
+
+in arteriovenous coordination that extends beyond simple flow reduction. These 93 
+
+observations collectively demonstrate that the functional outcome of microcirculation 94 
+
+in ischemia is determined by integrated dysfunction across the 95 
+
+arterial-capillary-venous axis, wherein impairment at any level compromises the 96 
+
+viability of the entire microvascular unit. 97 
+
+Despite increasing recognition of vascular coordination in cerebrovascular 98 
+
+physiology, current in vivo optical imaging approaches remain limited in their ability 99 
+
+to characterize dynamic interactions between arterial and venous hemodynamics. 100 
+
+Although high-resolution imaging techniques can quantify parameters such as 101 
+
+capillary red blood cell velocity, perfused capillary density, and tissue blood volume 102 
+
+(Gong et al., 2025; B. X. Liu et al., 2025; Wang et al., 2021; Xu et al., 2025), these 103 
+
+approaches typically generate composite hemodynamic signals arising from 104 
+
+sequential vascular compartments, including arteries, capillaries, and veins. This 105 
+
+spatial overlap makes selective isolation of arterial and venous hemodynamic 106 
+
+signatures particularly challenging in large-scale cortical imaging datasets. 107 
+
+Several technical factors contribute to this limitation. First, the dense spatial 108 
+
+interdigitation of cortical arteries and veins creates substantial anatomical overlap, 109 
+
+complicating compartment-specific signal segregation (Park et al., 2023; Schmid et al., 110 
+
+2019). Second, because optical imaging methods detect hemodynamic activity 111 
+
+through erythrocyte-derived contrast signals, both arterial and venous compartments 112 
+
+contribute strong signal intensity, particularly in regions where vessels are closely 113 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+apposed (Boas & Dunn, 2010; Han et al., 2026). In addition, local blood flow 114 
+
+directionality and velocity profiles may not differ sufficiently to permit reliable 115 
+
+computational separation in all cortical regions. Third, the limited depth resolution of 116 
+
+optical imaging systems introduces out-of-focus scattering and signal contamination 117 
+
+from vessels located at different cortical depths (Schmid et al., 2019). As a result, 118 
+
+superficial veins and deeper penetrating arterioles may contribute overlapping signals 119 
+
+that are difficult to reliably separate using conventional post-hoc. 120 
+
+Consequently, venous drainage dynamics and coordinated arteriovenous 121 
+
+interactions remain underrepresented in conventional cerebrovascular analyses. To 122 
+
+address this limitation, we developed a co-fluctuation-based analytical framework to 123 
+
+characterize the dynamic coordination between arterial and venous blood flow activity. 124 
+
+Inspired by the theoretical framework of Esfahlani et al. (Zamani Esfahlani et al., 125 
+
+2020), demonstrating that static functional connectivity can be decomposed into 126 
+
+frame-wise co-fluctuation events, we reformulated negative arteriovenous correlations 127 
+
+as temporally evolving anti-phase fluctuation dynamics. By computing instantaneous 128 
+
+products of normalized arterial and venous signals across time, we generated 129 
+
+continuous arteriovenous co-fluctuation time series that transform conventional static 130 
+
+correlation measures into a dynamic index of vascular coordination. This framework 131 
+
+enables time-resolved assessment of arterial-venous synchronization and provides a 132 
+
+systems-level approach for investigating vascular dysfunction in ischemic stroke 133 
+
+beyond traditional artery-centric perfusion models. 134 
+
+> 135
+
+## Materials and Method 136 
+
+2.1 Experimental Animal Preparations 137 
+
+All animal procedures adhered to ARRIVE guidelines and complied with the 138 
+
+ethical standards of the Laboratory Animal Welfare Ethics Committee of Qingdao 139 
+
+University, under approval number 202301C575420240908. To verify the method's 140 
+
+robustness and applicability, we conducted evaluations on multiple datasets 141 
+
+comprising both rat and mouse models. One group of adult male Sprague-Dawley rats 142 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+(3–4 months, 280–320 g, n = 19) was sourced from our prior research (Niu, 2026). 143 
+
+Another group of rats (6–8 months, 300–350 g, n = 30) was obtained from previous 144 
+
+work (Niu et al., 2026). Adult male C57BL/6J mice (8–12 weeks, 20–25 g, n = 30 for 145 
+
+control group, n = 19 for stroke group) were obtained from Qingdao Daren Fucheng 146 
+
+Animal Co., Ltd. Animals were individually housed in specific pathogen-free 147 
+
+conditions, with ad libitum access to food and water, under a 12-hour light/dark cycle. 148 
+
+For surgical preparation, animals were anesthetized using isoflurane (4% for 149 
+
+induction, 1.5%–2.0% for maintenance) and positioned in a stereotaxic frame. Core 150 
+
+body temperature was monitored via rectal probe and maintained at 37±0.5°C using a 151 
+
+feedback-controlled heating system. Ophthalmic ointment was applied to prevent 152 
+
+corneal drying during the procedure. 153 
+
+Whole-brain laser speckle contrast imaging was performed using a thinned-skull 154 
+
+preparation. Briefly, the scalp was incised along the midline, and the periosteum was 155 
+
+bluntly dissected to expose the skull. The bone surface was cleaned with 3% hydrogen 156 
+
+peroxide, then gradually thinned using a spherical drill under continuous saline 157 
+
+irrigation to achieve optical transparency while minimizing thermal damage. 158 
+
+Postoperatively, animals received subcutaneous carprofen (5 mg/kg) for 159 
+
+postoperative analgesia and were housed in a temperature-controlled recovery 160 
+
+chamber at 30°C for at least 24 hours before imaging. All surgical and imaging 161 
+
+procedures were performed by experienced personnel to ensure animal welfare and 162 
+
+experimental consistency. 163 
+
+2.2 Resting-State Imaging for Cortical Cerebral Blood Flow 164 
+
+Cortical cerebral blood flow was monitored using laser speckle contrast imaging 165 
+
+(LSCI) systems (RFLSI III, RWD Life Science, China, for mice; SIM BFI HR Pro, 166 
+
+SIM Opto-Technology, China, for rats). Both systems utilized the safety threshold (< 167 
+
+20 mW/cm²) to ensure adequate tissue penetration without thermal damage. Imaging 168 
+
+parameters were optimized for whole-cortex coverage, with pixel resolutions of 549 × 169 
+
+600 (~14.6 μm/pixel) for mice and 494 × 656 (42.5 × 44.2 μm²) for rats, at sampling 170 
+
+rates of 5 Hz and 10 Hz, respectively. 171 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+Resting-state CBF data were acquired under stable isoflurane anesthesia from the 172 
+
+following rodents: two groups of Sprague-Dawley rats (n = 19 and n = 30), and one 173 
+
+group of C57BL/6J mice (n = 30). Animals were securely immobilized in a174 
+
+stereotaxic frame to minimize motion artifacts, and 10-minute baseline recordings 175 
+
+were obtained for each animal. All imaging sessions were conducted in a controlled 176 
+
+environment that was maintained at a constant temperature, sound-isolated, and 177 
+
+light-shielded. Core body temperature was kept at 37±0.5°C via a feedback-regulated 178 
+
+heating platform throughout data acquisition to preserve the physiological stability of 179 
+
+cerebral perfusion. 180 
+
+2.3 Induced MCAO Model Preparation 181 
+
+Focal cerebral ischemia was modeled using transient middle cerebral artery 182 
+
+occlusion (tMCAO) in male C57BL/6J mice (8–12 weeks of age, n = 19). Animals 183 
+
+were anesthetized with 2% isoflurane, and a silicone-coated nylon filament (0.23 mm 184 
+
+tip diameter) was advanced 9–11 mm along the external carotid artery to occlude the 185 
+
+left middle cerebral artery origin, as in our previous study (Gong et al., 2025). After 186 
+
+60 minutes of occlusion, the filament was withdrawn to reperfuse blood flow. Core 187 
+
+body temperature was maintained at 37°C during surgery and for 2 hours 188 
+
+postoperatively to minimize temperature-related variations in ischemic injury. 189 
+
+Resting-state CBF imaging was performed in each animal within 72 hours 190 
+
+following tMCAO induction. All imaging procedures, acquisition parameters, and 191 
+
+physiological monitoring protocols were identical to those used for healthy control 192 
+
+mice. 193 
+
+2.4 Signal Preprocessing Pipeline 194 
+
+Resting-state CBF imaging was preprocessed using a standardized pipeline 195 
+
+developed and validated in our research (Niu et al., 2026; Niu, Wu, et al., 2024). The 196 
+
+preprocessing workflow began with spatial normalization: cortical spatial masks were 197 
+
+generated based on stereotaxic coordinates from rat and mouse brain atlases, and 198 
+
+affine registration was applied to align individual CBF maps to a standard rat brain 199 
+
+template. Individualized masks were then applied to each CBF image to exclude 200 
+
+non-cerebral background and environmental noise. 201 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+The CBF time series was preprocessed via four sequential steps: (1) Denoising: 202 
+
+Raw RGB images were converted to gray images and smoothed twice with Gaussian 203 
+
+filters. The first pass used a 5 × 5 pixel kernel with a standard deviation of 1.3 to 204 
+
+suppress mechanical noise (White et al., 2011), the second employed a Gaussian 205 
+
+kernel with a full width at half maximum of 5 pixels to enhance the signal-to-noise 206 
+
+ratio through spatial smoothing (Bergonzi et al., 2015). (2) Head motion regression: 207 
+
+Head motion parameter was extracted from the background activity and regressed out 208 
+
+from the blood flow signal to minimize motion-related artifacts. (3) Outlier 209 
+
+correction: Temporal outliers in the time series were corrected using nearest-neighbor 210 
+
+interpolation. (4) Detrend: Linear trends and very slow oscillations (< 0.01 Hz) were 211 
+
+removed from the time series to eliminate slow signal drift. 212 
+
+2.5 Vascular Mask Construction Framework 213 
+
+A critical limitation of optical imaging is its limited depth of field (L. J. Liu et al., 214 
+
+2025; Park et al., 2023), which prevents clear discrimination between arteries and 215 
+
+veins at different cortical depths ( Fig. 1A ). To address this constraint, we developed a 216 
+
+comprehensive segmentation framework to construct reliable arterial and venous 217 
+
+masks, integrating multiple strategies across spatial scales and anatomical regions to 218 
+
+ensure methodological robustness, anatomical accuracy, and broad applicability. 219 
+
+Strategy 1: high-resolution manual segmentation. 220 
+
+In the rats' somatosensory-motor cortex (n = 19), which is densely vascularized, 221 
+
+five distinct compartments were manually segmented based on morphological criteria: 222 
+
+large arteries, small arteries, brain parenchyma, veins, and mixed arteriovenous 223 
+
+regions ( Figs. 1B, S1 ). This labor-intensive approach generates anatomically faithful 224 
+
+reference masks with precise boundary definition, serving as a benchmark for 225 
+
+automated segmentation validation. However, the extensive manual effort limits its 226 
+
+wide application across entire brain volumes. 227 
+
+Strategy 2: representative ROI placement. 228 
+
+Multiple ROIs in the healthy mice (n = 30) were selected from arterial trunks, 229 
+
+venous trunks, and non-vascular brain parenchyma (Figs. 1C, 4A ), serving as 230 
+
+representative samples of arterial, venous, and background signals, respectively. This 231 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+sampling strategy provides operational simplicity and broad applicability with 232 
+
+minimal computational burden. Its primary limitation lies in the potential failure to 233 
+
+capture whole-brain hemodynamic variability when spatial sampling density is 234 
+
+insufficient. 235 
+
+Strategy 3: semi-automated clustering-based segmentation. 236 
+
+K-means clustering (k = 5) was applied to the denoised CBF maps of both rats 237 
+
+and mice (n = 30 for each species) to partition the image space into distinct signal 238 
+
+domains. Temporal correlation matrices were computed across cluster-derived signals, 239 
+
+with negatively correlated clusters identified as arterial and venous masks ( Fig. 1D ). 240 
+
+The remaining clusters were categorized as mixed vascular regions or background 241 
+
+noise based on spatial distribution. This semi-automated workflow enables efficient 242 
+
+whole-brain segmentation; cluster boundaries may require post-hoc refinement guided 243 
+
+by the arteriovenous anticorrelation principle. 244 
+
+> 245
+
+Fig. 1 Segmentation masks of different vessel types from raw CBF images. A. 246 
+
+Arterial and venous vessels are tightly coupled in the cerebral cortex. B. Manually 247 
+
+segmented masks for large arteries, arterioles, cerebral tissue, veins, and mixed 248 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+arteriovenous regions. C. Arterial, tissue, and venous masks from manual ROI 249 
+
+placement. D. Masks of arteries, veins, and mixed arteriovenous regions derived from 250 
+
+k-means clustering segmentation. 251 
+
+> 252
+
+2.6 Validation of Signal Purification Robustness 253 
+
+To verify the reliability of our spatial averaging strategy for arterial and venous 254 
+
+signal purification, we conducted a comprehensive robustness assessment through 255 
+
+three complementary analyses: 256 
+
+(1) Signal homogeneity within vascular masks. 257 
+
+Using manually segmented arterial, venous, and mixed vascular masks, we 258 
+
+computed functional connectivity matrices from all pixels within each mask. 259 
+
+Distribution characteristics of correlation coefficients, including kurtosis and 260 
+
+skewness, were analyzed to quantify signal heterogeneity. Distributions exhibiting 261 
+
+high kurtosis and positive skewness reflected synchronized blood flow activity and 262 
+
+minimal compositional heterogeneity, whereas deviations from this pattern suggested 263 
+
+potential high heterogeneity. In addition, the proportion of negative correlations 264 
+
+within each matrix was quantified to measure cross-contamination between arterial 265 
+
+and venous compartments. 266 
+
+(2) Stability of the spatial averaging procedure. 267 
+
+Bootstrap resampling was performed on individual vascular masks at 268 
+
+progressively increasing sampling densities (ranging from 5% to 95% of the total 269 
+
+number of pixels) to generate random subsets of the original signal population. For 270 
+
+each subset, the averaged time series was compared against the full-mask reference 271 
+
+using Pearson correlation and phase difference. High similarity at low sampling rates 272 
+
+demonstrated the stability of the spatial averaging approach. 273 
+
+(3) Quantifying resilience to segmentation errors. 274 
+
+To assess robustness against realistic segmentation errors, we synthetically 275 
+
+mixed arterial mask signals with increasing proportions of venous signals (0.05 to 276 
+
+0.50 in 0.05 steps), generating a continuum of hybrid signal profiles. The correlation 277 
+
+between each hybrid signal and the original arterial signal was tracked across mixing 278 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+levels. The mixing threshold was defined as the proportion at which correlation 279 
+
+dropped to 90% of its initial value, thereby quantifying the maximum tolerable 280 
+
+venous interference for reliable signal purification. 281 
+
+2.7 Methodological Framework for Dynamic Arteriovenous Coupling Analysis 282 
+
+Recent advances by Esfahlani and colleagues (Zamani Esfahlani et al., 2020) 283 
+
+established a mathematical insight showing that static functional connectivity emerges 284 
+
+from the temporal integration of instantaneous co-fluctuation patterns across brain 285 
+
+networks. This insight has prompted a paradigm shift in neuroscience, moving the 286 
+
+field from static to dynamic analyses of brain connectivity. The co-fluctuation 287 
+
+approach quantifies the instantaneous synchronization of hemodynamic signals 288 
+
+between brain regions via edge-time series analysis. Its temporal average is 289 
+
+mathematically equivalent to the Pearson correlation, thereby providing a rigorous 290 
+
+mathematical foundation for reinterpreting static connectivity within a dynamic 291 
+
+framework. 292 
+
+Our prior investigation revealed that arterial and venous blood flow signals in the 293 
+
+cerebral cortex exhibit anti-phase oscillations and negative correlations (Niu, Sihai, et 294 
+
+al., 2024). This observation challenges traditional interpretations of arteriovenous 295 
+
+relationships, suggesting that negative correlations reflect not merely static statistical 296 
+
+properties, but rather the cumulative outcome of discrete, transient anti-phase 297 
+
+fluctuation events occurring throughout the hemodynamic time series. Guided by this 298 
+
+co-fluctuation perspective, we developed a novel framework for constructing 299 
+
+arteriovenous co-fluctuation time series, transforming the Pearson negative 300 
+
+correlation into a frame-by-frame arteriovenous circulation index. This approach 301 
+
+enables direct quantification of coupling dynamics between arterial inflow and venous 302 
+
+outflow, allowing real-time tracking of microvascular coordination. The methodology 303 
+
+comprises three integrated components, as shown in Figure 2: 304 
+
+Step 1: Vascular blood signal purification. We generated mean time series for 305 
+
+the arterial and venous compartments by spatially averaging blood flow signals across 306 
+
+all voxels within their respective vascular masks. This spatial averaging effectively 307 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+suppresses local noise while preserving the dominant oscillatory characteristics of 308 
+
+each vascular compartment. 309 
+
+Step 2: Instantaneous arteriovenous circulation index computation. The 310 
+
+extracted time series were Z-score normalized to eliminate scale differences and 311 
+
+facilitate direct comparison between arterial and venous signals. Recognizing the 312 
+
+inherent anti-oscillation relationship between arterial inflow and venous outflow 313 
+
+during the resting state, we developed a specialized transformation to address the 314 
+
+challenge posed by negative product values, which can potentially obscure strong 315 
+
+coupling states. 316 
+
+( ) ( ) 1( ) 1 ( ) ( )   
+
+> iiiii
+
+A t V t E t N A t V t 
+
+⋅= − ⋅∑ (1) 317 
+
+where i indicates each time point, ( ) A t and ( ) V t represent the normalized arterial 318 
+
+and venous time series. Specifically, we converted the instantaneous product sequence 319 
+
+into a probability density function by: (1) computing the absolute area under the 320 
+
+product curve, and (2) normalizing by the total integrated area. This transformation 321 
+
+yields a non-negative coupling metric, ( ) E t , where higher values indicate stronger 322 
+
+moment-to-moment arteriovenous synchronization. 323 
+
+Step 3: Spatiotemporal retransforming of whole-brain microvascular 324 
+
+dynamics. We applied the time-varying coupling index as a dynamic weighting factor 325 
+
+to the original resting-state CBF time series through frame-wise multiplication. This 326 
+
+generates a spatiotemporal map of arteriovenous coupling-modulated hemodynamic 327 
+
+activity, enabling comprehensive characterization of microvascular coordination 328 
+
+dynamics across the entire brain. 329 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint 330
+
+Fig. 2 Computational pipeline of arteriovenous fluctuation coupling. A. Vascular 331 
+
+masks extracted from clustering maps were used for signal purification via pixel 332 
+
+averaging. Purified arterial and venous signals showed a strong negative correlation. 333 
+
+B, C. Purified arterial and venous signals were multiplied to yield a negative 334 
+
+arteriovenous circulation time series. This time series was then converted to positive 335 
+
+values and utilized to amplify the raw cerebral blood flow time series, thereby 336 
+
+enabling real-time whole-brain circulation mapping. 337 
+
+> 338
+
+2.8 Characterizing Spatiotemporal Dynamics of Microcirculatory Activity 339 
+
+The co-fluctuation analysis framework was used to dynamically characterize 340 
+
+cerebral blood flow microcirculatory states through integrated temporal and spatial 341 
+
+pattern analysis, aiming to elucidate microcirculatory functional impairments induced 342 
+
+by stroke. 343 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+Given that temporal co-fluctuation amplitudes exhibited a right-skewed 344 
+
+distribution, prompting us to define the top 5% of timepoints based on amplitude 345 
+
+distribution as high-coupling states, and the bottom 5% as low-coupling states. The 346 
+
+former represents optimal microcirculatory coordination, and the latter reflecting 347 
+
+poorest coordination. Principal component analysis was applied to timepoints 348 
+
+corresponding to these two states, with spatial activity patterns derived from the first 349 
+
+principal component to compare regional blood flow distribution between high and 350 
+
+low coupling conditions. To further evaluate stroke-induced alterations in 351 
+
+microcirculatory dynamic transitions, arteriovenous time series from both stroke and 352 
+
+control groups were normalized and combined for k-means clustering (cluster number 353 
+
+ranging from 3 to 6) to identify shared functional states. State-specific metrics, 354 
+
+including temporal occupancy, duration, occurrence times, self-transition probability, 355 
+
+and between-state transition probabilities, were employed to compare groups and 356 
+
+quantitatively characterize stroke-related abnormalities in microcirculatory state 357 
+
+transitions. 358 
+
+To reveal spatial patterns of CBF and microcirculatory impairment, we used the 359 
+
+contralateral hemisphere as an internal reference to quantify ischemic injury severity. 360 
+
+For each region in the ischemic hemisphere, we calculated the difference in signal 361 
+
+intensity relative to its contralateral homolog as a measure of regional damage. Based 362 
+
+on established criteria from previous studies (Biose et al., 2020; C. Li et al., 2022; Li 363 
+
+et al., 2013), regions below 70% of the contralateral value were classified as the 364 
+
+ischemic core, and those with 50–70% of the contralateral intensity were classified as 365 
+
+the ischemic penumbra. Intra-regional homogeneity was assessed using Pearson’s 366 
+
+correlation to quantify regional coherence, complemented by phase difference 367 
+
+analysis to evaluate regional synchronization. Finally, we examined associations 368 
+
+between cortical vascular composition and ischemic vulnerability indicators including 369 
+
+ischemic volume and penumbra/core ratio. Correlation analyses were performed, with 370 
+
+significance assessed via FDR-corrected P-values (q < 0.01) and model fitting 371 
+
+evaluated using correlation coefficients. 372 
+
+2.9 Statistical Analysis 373 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+Statistical analyses were conducted in MATLAB. Data normality was assessed 374 
+
+using the Kolmogorov-Smirnov test and Q-Q plots. For comparisons among multiple 375 
+
+groups, one-way ANOVA was performed. For parameter comparisons of different 376 
+
+vascular types obtained by manual segmentation, the Mann-Whitney U test was 377 
+
+applied. For pairwise comparisons, two-tailed paired t-tests (n = 30) compared 378 
+
+differences between top and bottom states within the same animal group. Two-tailed 379 
+
+unpaired t-tests were used to compare microcirculation parameters between healthy 380 
+
+controls and mice with induced ischemic stroke. To control for multiple comparisons, 381 
+
+false discovery rate corrections were implemented. Statistical significance was set at 382 
+
+*p < 0.05, **p < 0.01, and ***p < 0.001. 383 
+
+2.10 Large Language Models Statement 384 
+
+The authors declare that Qianwen AI large model was employed only for 385 
+
+linguistic refinement and readability enhancement of the manuscript. No AI tools 386 
+
+were involved in study design, data collection/analysis, result interpretation, or the 387 
+
+drafting of scientific arguments and conclusions. 388 
+
+> 389
+> 390
+
+## Results 391 
+
+3.1 Characterization of Cerebral Blood Flow in Masks of Different Vasculatures 392 
+
+In vivo optical imaging of cerebral hemodynamics faces a fundamental 393 
+
+resolution constraint: the limited optical depth-of-field precludes clear spatial 394 
+
+separation of closely positioned arteries and veins at different cortical depths (Glück 395 
+
+et al., 2024; Park et al., 2023). When optical blur and light scatter cause signal overlap 396 
+
+between vessels at distinct depths, mathematical isolation of pure arterial or venous 397 
+
+components becomes technically infeasible, even with post-hoc signal processing ( Fig. 398 
+
+1A ). Current research usually overlooks this limitation (Fischer et al., 2023; Mo et al., 399 
+
+2023; Wang et al., 2024; Wang et al., 2021), either treating mixed vascular signals as 400 
+
+homogeneous or focusing exclusively on arterial dynamics, thereby hindering a 401 
+
+penetrating understanding of arteriovenous coordination mechanisms. We therefore 402 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+hypothesize that optical imaging captures composite signals from anatomically 403 
+
+stacked arterial and venous structures. These vascular networks exhibit 404 
+
+region-specific structural coupling patterns: highly coupled regions prevent signal 405 
+
+separation while loosely coupled regions allow partial discrimination. Despite being 406 
+
+invisible in raw imaging datasets, this anatomical coupling mechanism exerts a 407 
+
+profound influence on the accurate interpretation of CBF dynamics. 408 
+
+To validate this hypothesis, we employed a manual segmentation strategy to 409 
+
+construct five distinct vascular masks ( Fig. 1B ) that characterize region-specific 410 
+
+vascular architecture. In high-coupling regions where arterial and venous networks 411 
+
+are densely interwoven, we delineated three separate vascular compartments: 412 
+
+venous-dominant, arterial-dominant, and mixed arteriovenous territories. In contrast, 413 
+
+in low-coupling regions characterized by spatially segregated vascular networks, we 414 
+
+focused on two functionally distinct tissue types: small arteriolar beds and adjacent 415 
+
+parenchymal tissue. The segmented vascular masks and statistical information are 416 
+
+presented in Supplementary Figure S1 and Supplementary Table 1, respectively. 417 
+
+These precisely segmented masks enabled the extraction of resting-state CBF signals, 418 
+
+facilitating the analysis of spatial variations in arteriovenous coupling patterns across 419 
+
+cortical regions. We then validated these functional data using two perspectives: 420 
+
+global signal properties and local spatial homogeneity, revealing how anatomical 421 
+
+coupling strength modulates the dynamic patterns of CBF activity. 422 
+
+First, we averaged all pixel signals within each vascular mask to generate a mean 423 
+
+time series and compared the differences among these time series. Spectral power 424 
+
+analysis revealed that in the 0.01–0.2 Hz band, the power proportion in veins 425 
+
+(0.58±0.16) was significantly lower than that in brain tissue (0.66±0.15, P FDR = 0.006). 426 
+
+In the 0.2–0.74 Hz band, arteries exhibited the highest power proportion ( Fig. 3A ), 427 
+
+whereas arterioles and brain tissue showed the lowest. In addition, signals from the 428 
+
+same vessel type exhibited strong positive correlations ( Fig. 3B ) with near-zero time 429 
+
+lags. In contrast, heterogeneous signals between arteries and veins showed strong 430 
+
+negative correlations with larger time lags. 431 
+
+We then evaluated pixel-level homogeneity within each vascular mask using 432 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+Pearson's correlation analysis. Among the five vascular masks, the correlation 433 
+
+matrices of arterioles and brain tissue showed the highest homogeneity ( Figs. 3C, S2 ), 434 
+
+followed by arteries, and the arteriovenous mixed regions exhibited the lowest 435 
+
+homogeneity. Quantitative analysis further confirmed that the arteriole and brain 436 
+
+tissue masks had the highest pixel purity ( Fig. 3D ), whereas arteriovenous mixed 437 
+
+regions had the lowest. Analysis of kurtosis and skewness demonstrated that 438 
+
+correlation matrices in arterioles and brain tissue exhibited higher kurtosis and 439 
+
+skewness (e.g., arterioles kurtosis 15.9±8.4 vs. arteries kurtosis 11.4±8.1, P FDR <440 
+
+0.001). 441 
+
+Collectively, these findings reveal significant spatial heterogeneity in 442 
+
+arteriovenous vascular coupling, which is closely associated with resting-state blood 443 
+
+flow dynamics. In high-coupling regions characterized by dense arterial-venous 444 
+
+interweaving, signal contamination prevents the independent discrimination between 445 
+
+arterial and venous signals. By contrast, in low-coupling regions where vascular 446 
+
+networks are relatively segregated, vascular masks of small arteriolar beds and 447 
+
+parenchymal tissue display high signal separation fidelity and enhanced internal 448 
+
+homogeneity. 449 
+
+> 450
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint 451
+
+Fig. 3 Signal quality comparison across different vascular masks. A. Arteries exhibit 452 
+
+the highest cerebral blood flow and the highest percentage of vascular activity power 453 
+
+(0.2–0.74 Hz), whereas cerebral tissue shows the opposite trend. B. Signals from 454 
+
+homogeneous arteries show a strong positive correlation with a time delay near 0 s. In 455 
+
+contrast, signals between arteries and veins are negatively correlated with a larger 456 
+
+time delay. C, D. Arterioles and cerebral tissue display the strongest internal similarity 457 
+
+in correlation matrices, along with the highest kurtosis and skewness, suggesting more 458 
+
+consistent signal characteristics in these regions. Metric differences across vascular 459 
+
+components are assessed using the Mann–Whitney U test with FDR adjustment. 460 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+Detailed statistics for each vasculature type are provided in Table S1. *p < 0.05, **p < 461 
+
+0.01, ***p < 0.001 462 
+
+> 463
+
+3.2 Blood Flow Signal Purification and Noise Effects on the Purification Process 464 
+
+In the previous section, we demonstrated significant spatial heterogeneity in 465 
+
+arteriovenous coupling across cortical regions. In high-coupling regions, tightly 466 
+
+interwoven arterial and venous networks hinder signal separation. In low-coupling 467 
+
+regions, vascular signals separate more clearly with better internal consistency within 468 
+
+masks. However, these observations merely characterize structural-functional 469 
+
+relationships and do not yield practical methods for the complete separation and 470 
+
+purification of arterial and venous signals. This methodological gap limits both the 471 
+
+accurate assessment of venous drainage and a deeper understanding of arteriovenous 472 
+
+coordination mechanisms. To address this limitation, we implemented a manual 473 
+
+ROI-based approach to define five distinct vascular compartments ( Fig. 4A ): arteries, 474 
+
+veins, brain tissue, and their intersection regions. By quantifying how non-target 475 
+
+vascular signals interfere with signal purification within each mask, we established a 476 
+
+generalizable framework for arteriovenous signal separation and purification. 477 
+
+To isolate pure blood flow signals, we implemented a signal averaging technique 478 
+
+and evaluated its performance through two complementary approaches. First, we 479 
+
+examined signal convergence characteristics by progressively expanding ROI sizes 480 
+
+and quantifying the technique's efficacy in extracting pure vascular signals from 481 
+
+mixed inputs. Second, we assessed noise resilience by measuring interference caused 482 
+
+by both homogeneous vascular noise (originating from the same vessel type) and 483 
+
+heterogeneous vascular noise (from different vessel types), thereby establishing the 484 
+
+method's performance boundaries under distinct noise conditions. 485 
+
+First, we manually selected ROIs to quantify blood flow signals from five 486 
+
+distinct vascular compartments in the cerebral cortex ( Fig. 4A ): arteries, brain tissue, 487 
+
+veins, artery-tissue junctions, and vein-tissue junctions. For each ROI, we performed 488 
+
+signal averaging on randomly selected pixel subsets of varying sizes, using the mean 489 
+
+signal from all pixels serving as the reference standard. Our results demonstrated that 490 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+signal purification from small pixel subsets exhibits large variability around the 491 
+
+reference signal ( Figs. 4A, S3A ), characterized by dispersed phase differences and 492 
+
+low Pearson correlation coefficients. In contrast, when averaging more than half of 493 
+
+the pixels within an ROI, signal fluctuations diminish markedly, phase differences 494 
+
+converge toward zero, and correlation coefficients exceed 0.8. Further quantitative 495 
+
+analysis reveals a nonlinear convergence pattern ( Figs. 4B, S4 ), where averaging only 496 
+
+50% of the pixels achieved 92% similarity to the full ROI signal. This finding 497 
+
+indicates substantial signal redundancy within vascular ROIs, suggesting that inherent 498 
+
+signal consistency provides robust resilience against random fluctuations and 499 
+
+heterogeneous noise during purification processes. 500 
+
+To systematically evaluate the impact of noise on signal purification, we 501 
+
+conducted controlled simulations with noise components introduced quantitatively. 502 
+
+Our analysis revealed distinct responses to different noise types. Homogeneous noise 503 
+
+mixtures, such as arterial signals combined with parenchymal tissue or venous signals 504 
+
+mixed with venous-parenchymal interface signals, exhibited minimal interference 505 
+
+with purification performance (Figs. 4C, S5–S6 ). Remarkably, even when 506 
+
+homogeneous noise constituted more than 50% of the total signal, purified outputs 507 
+
+maintained > 95% similarity to reference standards. In contrast, heterogeneous noise 508 
+
+mixtures, particularly arterial-venous signal combinations, induced a rapid 509 
+
+performance degradation ( Figs. 4C, S5 ), with similarity approaching zero when noise 510 
+
+pixels surpassed the 50% threshold. 511 
+
+To precisely quantify heterogeneous noise effects, we implemented simulations 512 
+
+using vascular masks generated through k-means segmentation. These results 513 
+
+demonstrated that mask size fundamentally determines noise tolerance limits ( Figs. 5, 514 
+
+S7–S9 ). Using arterial masks as a representative case: with only 10 pixels, 9% venous 515 
+
+noise contamination reduced similarity to below 90% of baseline values; however, 516 
+
+expanding the mask to 50 pixels increased the noise tolerance threshold to 24%. 517 
+
+Importantly, we identified a threshold effect governing purification efficacy: beyond 518 
+
+38% noise contamination, increasing the number of pixels provided no additional 519 
+
+purification benefit, with similarity remaining below 90% of its initial value 520 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+regardless of mask size. 521 
+
+> 522
+
+Fig. 4 The illustration of signal purification and mixing across various vascular ROIs. 523 
+
+A. As pixel count in ROIs increases, random CBF fluctuations diminish and phase 524 
+
+differences tend toward 0°. However, when arterial ROIs incorporate venous signals, 525 
+
+the phase deviation from 0° grows as the noise component increases. B. Using larger 526 
+
+pixel counts for purification enhances the Pearson correlation with the reference, 527 
+
+decreases phase differences, and reduces variance. C. Homogeneous mixing, such as 528 
+
+tissue or artery–tissue, maintains the purified signal's features, whereas heterogeneous 529 
+
+venous mixing substantially changes these characteristics. For instance, a 50% 530 
+
+arterial–venous mixture results in minimal correlation with the reference. 531 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint 532
+
+Fig. 5 Impact of venous noise on arterial signal purification. A. When the venous 533 
+
+noise ratio remains below the 20% threshold, arterial signal purity is maintained, as 534 
+
+evidenced by intra-arterial correlation values approaching 1 and phase differences 535 
+
+near 0°. In contrast, a 40% venous noise ratio exceeds the purification capacity, 536 
+
+resulting in ineffective signal purification. B. As venous noise increases, the 537 
+
+proportion of pixels exhibiting strong negative artery-vein correlations (r < −0.4) 538 
+
+declines. With a low pixel count for purification, a 10% noise level reduces this 539 
+
+proportion to 90% of its initial value. However, higher pixel counts enhance noise 540 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+tolerance, delaying this decline. 541 
+
+> 542
+
+3.3 Spatiotemporal Decoding of Whole-Brain Arteriovenous Microcirculation 543 
+
+Cerebral blood flow delivers essential oxygen and metabolic substrates to 544 
+
+support neuronal function, making accurate measurement of its dynamics is critical 545 
+
+for understanding brain physiology. However, optical imaging faces a persistent 546 
+
+challenge: arterial and venous signals on the cortical surface cannot be fully separated 547 
+
+(Glück et al., 2024; Park et al., 2023), severely compromising measurements of 548 
+
+microcirculation. In our previous work, we mitigated this limitation by extracting 549 
+
+venous signals and applying regression analysis to suppress their contamination (Niu 550 
+
+et al., 2026; Niu, Wu, et al., 2024). Although this approach enhanced signal purity, 551 
+
+residual venous influence persisted. Our early analysis revealed a key physiological 552 
+
+insight: during resting states, arterial and venous blood flow signals exhibit robust 553 
+
+anti-phase oscillations with strong negative temporal correlation (Niu, Sihai, et al., 554 
+
+2024). This intrinsic vascular coordination offers a natural basis for signal separation. 555 
+
+Leveraging this insight, we developed a co-fluctuation analysis framework that 556 
+
+transforms the arterial-venous negative correlation coefficient into a frame-by-frame 557 
+
+vascular circulation index. Multiplying this index by the original CBF signal 558 
+
+effectively isolates microcirculatory activity, enabling precise characterization of 559 
+
+cortical hemodynamics. 560 
+
+Temporal analysis of whole-brain arteriovenous coupling signals revealed a 561 
+
+strongly right-skewed distribution ( Fig. 6A ), characterized by intermittent bursting 562 
+
+activity with prolonged periods at minimal baseline levels punctuated by brief, 563 
+
+high-amplitude peaks. To investigate these contrasting microcirculatory states, we 564 
+
+extracted the top 5% of timepoints (signal peaks) and the bottom 5% (troughs) for 565 
+
+comparative analysis (Fig. 6B, C). Whole-brain activity patterns during peak 566 
+
+moments closely resembled the mean signal across the entire recording period (r = 567 
+
+0.98±0.017), while exhibiting a strong negative correlation with trough timepoints (r 568 
+
+= −0.89±0.35). Principal component analysis of whole-brain functional activity 569 
+
+demonstrated remarkable spatial stability across temporal states ( Fig. 6C ), revealing 570 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+consistent regional specificity with maximal activity in sensorimotor cortices and 571 
+
+minimal engagement of temporal and limbic regions. Notably, peak moments showed 572 
+
+the lowest variance explained by the first principal component (80.8%±12.2%), 573 
+
+consistent with the rapid dynamic transitions observed at these timepoints. To 574 
+
+evaluate regional differences in hemodynamic variability, we compared 575 
+
+microcirculatory dynamics across arterial, venous, and arteriovenous mixed vascular 576 
+
+territories. Arteriovenous mixed regions exhibited significantly higher temporal 577 
+
+variability than other vascular compartments ( Fig. 6D ). Cross-species validation 578 
+
+revealed that rats exhibited microcirculatory activity patterns highly consistent with 579 
+
+those observed in mice ( Fig. S10 ). 580 
+
+> 581
+
+Fig. 6 Spatiotemporal characteristics of whole-cerebral blood circulation activity in 582 
+
+rats. A, B. The time series of arteriovenous fluctuation coupling exhibits a583 
+
+right-skewed distribution. Timepoints corresponding to the top 5% (peaks) and 584 
+
+bottom 5% (troughs) of this distribution were extracted for further analysis. The 585 
+
+cortical activity pattern at peaks closely resembles that of the full time series, but is 586 
+
+negatively correlated with that at troughs. C. The spatial pattern of cortical circulation 587 
+
+activity is highly consistent across peak, trough, and full signals, with maximal 588 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+activity in the sensorimotor cortex and minimal activity in the temporal and limbic 589 
+
+cortices. Interregional parameter differences are examined by one-way ANOVA (n = 590 
+
+30), followed by pairwise t-tests with FDR correction using V2L as the reference. D. 591 
+
+Arterial and venous regions showed lower signal variance than arteriovenous mixed 592 
+
+regions. Comparisons of individual items across timepoints and vascular components 593 
+
+are assessed via paired t-test with FDR adjustment (n = 30). ***p < 0.001 in B, C, and 594 
+
+D, *** indicates p < 0.001 whose PC1 scores are greater than secondary visual cortex 595 
+
+in C. Bot.: bottom 596 
+
+> 597
+
+To assess whether cerebral blood flow exhibits a consistent spatial organization 598 
+
+analogous to microcirculatory dynamics, we analyzed CBF dynamics during the peak, 599 
+
+trough, and entire signal periods within the circulation time series. The result showed 600 
+
+that minimal spatial correlation between these different temporal states (r < 0.30). 601 
+
+Principal component analysis of the CBF signal failed to identify a dominant spatial 602 
+
+pattern ( Figs. S11, 12 ), with no significant regional topological distinctions observed 603 
+
+across the brain (P FDR > 0.05). 604 
+
+3.4 Stroke-induced Impairment of Cerebral Microcirculatory Activity 605 
+
+In previous sections, we established that arteriovenous coordination serves as an 606 
+
+effective biomarker of microcirculatory integrity, with significant spatial differences 607 
+
+in microcirculatory activity observed across brain regions. These findings imply that a 608 
+
+comprehensive assessment of post-stroke tissue viability requires evaluating both 609 
+
+arterial inflow and venous outflow dynamics. We therefore hypothesized that 610 
+
+analyzing arteriovenous coordination would provide superior detection of 611 
+
+microcirculatory impairment compared to conventional arterial perfusion metrics 612 
+
+alone. To test this hypothesis, we developed an acute ischemic stroke model, acquired 613 
+
+resting-state functional CBF data, and conducted integrated analyses of temporal 614 
+
+dynamics and spatial distribution patterns to assess the diagnostic efficacy of this 615 
+
+approach. 616 
+
+Temporal dynamics analysis revealed significant alterations in arteriovenous 617 
+
+coordination after ischemic stroke. K-means clustering of arteriovenous temporal 618 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+profiles showed markedly reduced fluctuation velocity in stroke animals compared to 619 
+
+controls (Fig. 7A ), with probability density distributions showing an increased 620 
+
+proportion of signal concentration within baseline minimum ranges ( Fig. 7B ). These 621 
+
+findings corresponded to impaired state transition capacity in the stroke group. 622 
+
+Although the relative proportions of functional states remained stable across different 623 
+
+cluster numbers (k = 3 to 5) and their spatial activity patterns exhibited high similarity 624 
+
+(Figs. 7A, S13 ), stroke animals displayed abnormal state persistence, characterized by 625 
+
+increased intra-state retention probabilities ( Figs. 7C, S14 ) and prolonged dwell times 626 
+
+(Fig. 7D ). Specifically, for k = 3 clustering, the self-transition probability for state 1 627 
+
+was significantly higher in stroke animals (0.98±0.009) than in controls (0.97±0.014; 628 
+
+P FDR = 0.0097). Conversely, inter-state transition probabilities were substantially 629 
+
+reduced in stroke animals ( Figs. 7C, S15 ), and transition times between distinct states 630 
+
+were decreased ( Fig. 7D ). For example, the transition probability from state 1 to state 631 
+
+3 was significantly lower in stroke animals (0.014±0.009) compared to controls 632 
+
+(0.024±0.013; P FDR = 0.0096). 633 
+
+To clarify the spatial heterogeneity of microcirculation within the ischemic 634 
+
+hemisphere, we performed a whole-brain analysis of microcirculation activity in the 635 
+
+stroke model. Regions with lower mixed arteriovenous vasculature, specifically visual, 636 
+
+auditory, and limbic motor cortices, exhibited severe microcirculatory impairment 637 
+
+(Fig. 8A ) and reduced CBF perfusion ( Fig. S16A ). In contrast, somatosensory-motor 638 
+
+regions, characterized by a higher proportion of mixed arteriovenous vasculature, 639 
+
+showed indistinguishable impairment (P FDR > 0.05). This differential vulnerability 640 
+
+prompted us to examine microcirculatory heterogeneity within the ischemic territory 641 
+
+itself. Using established thresholds, microcirculatory signal intensity <30% of 642 
+
+contralateral homologous regions for infarct core, and 30–50% for ischemic 643 
+
+penumbra, we identified distinct functional signatures between these two territories. 644 
+
+The penumbra exhibited greater temporal signal variability ( Fig. 8B ) but higher 645 
+
+spatial homogeneity ( Fig. 8C ) than the ischemic core. Specifically, compared with 646 
+
+ischemic core, functional connectivity matrices derived from penumbral pixels 647 
+
+showed higher mean correlation coefficients (0.94±0.047 vs. 0.89±0.075; 648 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+P=0.003), smaller mean phase differences (0.051±0.047 vs. 0.081±0.082; 649 
+
+P=0.022), and lower inter-element variance within the matrices. Parallel analyses 650 
+
+of CBF dynamics corroborated these findings ( Fig. S16 ). Moreover, the ischemic 651 
+
+vulnerable regions delineated by the microcirculation framework showed excellent 652 
+
+spatial concordance with those identified by the CBF method ( Fig. S17 ). Crucially, 653 
+
+the microcirculation-based segmentation achieved a significantly greater statistical 654 
+
+difference (T = 4.27) in the Pearson correlation between the ischemic penumbra and 655 
+
+infarct core than the standard CBF approach (T = 2.53). 656 
+
+The regional heterogeneity in arteriovenous coupling across the brain prompted 657 
+
+us to investigate whether vascular composition influences ischemic vulnerability. Our 658 
+
+analysis revealed that arterial proportion was positively correlated with total ischemic 659 
+
+lesion extent (r =0.56, P FDR =0.016), whereas venous proportion (r =−0.57, 660 
+
+P FDR =0.010) and arteriovenous mixed-region proportion (r =−0.46, PFDR 661 
+
+> 
+
+=0.045) both exhibited significant inverse correlations with lesion extent. 662 
+
+However, lesion size alone provides an incomplete assessment of ischemic severity. 663 
+
+Given the divergent tissue fates of ischemic penumbra and infarct core, we further 664 
+
+examined how vascular composition relates to the penumbra/core ratio. Notably, 665 
+
+arterial vessel proportion correlated negatively with this ratio (r =−0.54, P FDR 666 
+
+> 
+
+=0.017), while arteriovenous mixed-region proportion showed a positive 667 
+
+correlation (r =0.48, P FDR =0.042). Consistent with these observations, parallel 668 
+
+analyses based on conventional CBF signals corroborated the close link between 669 
+
+vascular composition and ischemic vulnerability ( Fig. S16D ). 670 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint 671
+
+Fig. 7 Stroke disrupts dynamic functional transitions in cerebral microcirculation. A, 672 
+
+B. Stroke attenuates fluctuation dynamics in arteriovenous circulation. Compared to 673 
+
+controls, stroke mice exhibit reduced signal fluctuation speed, increased 674 
+
+right-skewness in probability density distributions, and increased signal occupancy 675 
+
+within the minimum baseline range. C, D. Stroke impairs the capacity for functional 676 
+
+state transition across three distinct microcirculatory states. Post-stroke 677 
+
+microcirculation exhibits prolonged dwell times per state, with increased 678 
+
+state-maintenance probability, while the inter-state transition probability is markedly 679 
+
+reduced, ultimately decreasing overall state-transition events. Group differences 680 
+
+between control (n = 30) and stroke (n = 19) are assessed using an unpaired t-test. *p 681 
+
+< 0.05, **p < 0.01, ***p < 0.001 682 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint 683
+
+Fig. 8 Quantitative profiling of microcirculatory impairment in ischemic regions. A. 684 
+
+Microcirculation intensity is lower in the left visual and temporal regions compared to 685 
+
+their right-hemisphere counterparts. Homologous differences between ischemic and 686 
+
+contralateral hemispheres are analyzed with a one sample t test (n = 19). B, C. The 687 
+
+ischemic penumbra exhibits preserved microcirculatory function relative to the 688 
+
+impaired infarct core. Microcirculation signal intensity is significantly higher in the 689 
+
+penumbra, accompanied by robust functional connectivity metrics, including higher 690 
+
+mean inter-voxel correlation coefficients, smaller mean phase differences, and lower 691 
+
+variance in functional connectivity matrices. Metric differences between the ischemic 692 
+
+core and penumbra are assessed using a paired t-test (n = 19). D. Vascular architecture 693 
+
+influences regional susceptibility to ischemic damage. Arterial vessel proportion is 694 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+positively correlated with ischemic lesion size, while the proportions of arteriovenous 695 
+
+mixed and venous vessels show inverse correlations. Of note, a larger fraction of 696 
+
+mixed vascular regions predicts a higher penumbra-to-core ratio. *p < 0.05, **p < 697 
+
+0.01, ***p < 0.001 698 
+
+> 699
+
+## Discussion 700 
+
+In this study, we applied a co-fluctuation analysis framework to transform the 701 
+
+inverse temporal relationship between arterial and venous hemodynamic activity into 702 
+
+a frame-by-frame arteriovenous circulation index for assessing cerebral 703 
+
+microcirculatory dynamics. Methodological validation demonstrated that both arterial 704 
+
+and venous vascular masks contain heterogeneous signal components; however, 705 
+
+spatial signal averaging effectively suppressed this contamination and enabled robust 706 
+
+extraction of predominantly arterial and venous hemodynamic time series. This 707 
+
+approach permitted characterization of large-scale arteriovenous coordination and 708 
+
+construction of an arteriovenous circulation coefficient reflecting dynamic vascular 709 
+
+synchronization. Under physiological conditions, cortical microcirculatory activity 710 
+
+exhibited a conserved spatial organization, with strong activity observed in 711 
+
+sensorimotor cortices and comparatively lower activity in temporal and limbic regions. 712 
+
+In the ischemic stroke model, regions exhibiting stronger arteriovenous coordination 713 
+
+demonstrated relative resistance to ischemic injury, whereas regions with weaker 714 
+
+coupling suffered more severe impairment. By comparison, the ischemic penumbra 715 
+
+maintained a more preserved microcirculatory and perfusion function than the infarct 716 
+
+core, which was severely impaired. Temporal analyses further revealed that ischemic 717 
+
+stroke disrupted normal microcirculatory dynamics, characterized by prolonged 718 
+
+persistence within individual functional states and reduced inter-state transition 719 
+
+probability. 720 
+
+4.1 Physiological Basis of Arteriovenous Oscillatory Coupling 721 
+
+The cerebral circulation functions as an integrated physiological network that 722 
+
+coordinates arterial inflow, capillary-level exchange, and venous drainage to maintain 723 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+metabolic homeostasis. Conventional neuroimaging approaches have largely 724 
+
+examined arterial and venous compartments independently (Fu et al., 2024; L. J. Liu 725 
+
+et al., 2025; Oelschlegel et al., 2024; Taxt et al., 2021), thereby overlooking their 726 
+
+dynamic physiological interdependence. Although these approaches have substantially 727 
+
+advanced our understanding of cerebral perfusion, they remain limited in their ability 728 
+
+to characterize real-time, system-level vascular coordination. To address this 729 
+
+limitation, we developed a co-fluctuation-based analytical framework that transforms 730 
+
+the inverse temporal relationship between arterial and venous signals into a dynamic 731 
+
+arteriovenous circulation index capable of tracking large-scale vascular 732 
+
+synchronization over time. 733 
+
+Consistent with our previous studies (Niu et al., 2026; Niu, Sihai, et al., 2024), 734 
+
+arterial and venous signals exhibited robust anti-phase oscillatory behavior under 735 
+
+physiological conditions, reflected by negative Pearson correlations. Following acute 736 
+
+ischemia, this relationship became substantially attenuated and, in some regions, 737 
+
+shifted toward positive correlation (Niu, Sihai, et al., 2024), indicating disruption of 738 
+
+normal vascular coordination. This anti-phase blood flow pattern is validated by 739 
+
+multiple experimental findings (Glück et al., 2024; Liu et al., 2021; Shen et al., 2012; 740 
+
+Skøtt et al., 2025). Fluorescent labeling studies (Liu et al., 2021) confirmed the 741 
+
+opposing temporal fluctuation between arterial inflow and venous outflow signals. 742 
+
+Furthermore, phase analysis (Glück et al., 2024) revealed that healthy cerebral 743 
+
+vasculature maintains an arterial-venous phase difference exceeding 120°, which 744 
+
+diminishes to approximately 60° during acute ischemic episodes. Collectively, these 745 
+
+observations establish that the anti-phase relationship between arterial and venous 746 
+
+flow is a fundamental characteristic of normal cerebral perfusion and a sensitive 747 
+
+biomarker of impaired vascular coordination after ischemic injury. Importantly, while 748 
+
+anti-phase synchronization likely reflects coordinated inflow-outflow dynamics, its 749 
+
+precise physiological determinants remain incompletely understood and may involve 750 
+
+contributions from vascular compliance (Lecordier et al., 2023; Xu et al., 2025), 751 
+
+neurovascular coupling (Evans et al., 2025), transit delays (Glück et al., 2024), 752 
+
+vasomotor oscillations (Li et al., 2024), and systemic physiological rhythms (Zhang et 753 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+al., 2025). 754 
+
+> 755
+
+4.2 Methodological Validation for Separating Arterial and Venous Signals 756 
+
+To ensure accurate separation of arterial and venous blood flow signals, we 757 
+
+conducted a comprehensive validation of our signal separation methodology. In 758 
+
+optical imaging, the spatial interweaving of vascular networks frequently results in 759 
+
+individual pixels containing mixed arterial and venous components. Direct analysis of 760 
+
+raw signals, therefore, introduces substantial confounding effects arising from 761 
+
+overlapping flow dynamics, potentially compromising subsequent arteriovenous 762 
+
+coupling analyses. We therefore rigorously evaluated our separation framework to 763 
+
+determine whether the extracted arterial and venous signals reliably reflected their 764 
+
+dominant hemodynamic profiles, thereby establishing a methodological basis for 765 
+
+subsequent analyses of arteriovenous coordination. 766 
+
+To assess the feasibility of arterial-venous signal separation, we manually 767 
+
+segmented cortical vascular masks. Because the sensorimotor cortex exhibits 768 
+
+particularly high vascular density, five vascular compartments were defined: 769 
+
+artery-dominant, vein-dominant, arteriolar, parenchymal tissue, and arteriovenous 770 
+
+mixed regions. Quantitative analysis based on signal decomposition demonstrated that 771 
+
+compartment-specific signal contribution was below 85% in both venous and 772 
+
+arteriovenous mixed regions, whereas arteriolar and parenchymal tissue regions 773 
+
+exhibited substantially higher signal specificity. These findings indicate intrinsic 774 
+
+limitations in completely separating arterial and venous signals within highly 775 
+
+interwoven vascular territories. The close spatial proximity of cortical vascular 776 
+
+structures, together with their tight metabolic and hemodynamic coupling, constrains 777 
+
+signal isolation (Grandjean et al., 2023; Xiong et al., 2017). This observation is 778 
+
+consistent with previous neurovascular imaging studies demonstrating that highly 779 
+
+interconnected vascular regions present substantial challenges for 780 
+
+compartment-specific signal extraction (Park et al., 2023; Schmid et al., 2019). 781 
+
+Based on these findings, we developed an optimized framework combining ROI 782 
+
+placement and semi-automated vascular segmentation to improve arterial-venous 783 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+signal fidelity across the cortical surface. Notably, signal analysis demonstrated that 784 
+
+using only 50% of the arterial ROI pixels preserved approximately 92% of the signal 785 
+
+similarity relative to the full ROI, indicating functional redundancy in vascular masks 786 
+
+that suppresses heterogeneous signal contamination. To quantitatively assess the 787 
+
+robustness of this signal purification strategy, we conducted simulation experiments 788 
+
+using mixed artery-vein signal processing. Simulation analyses further demonstrated 789 
+
+that when spatial sampling exceeded 200 pixels, the correlation between purified 790 
+
+signals and the original simulated source signals remained above 0.90 despite up to 38% 791 
+
+heterogeneous signal contamination. These findings indicate that spatial averaging 792 
+
+substantially suppresses stochastic noise and enhances the consistency of 793 
+
+compartment-specific signal components. 794 
+
+Collectively, these results demonstrate that signal averaging effectively reduces 795 
+
+heterogeneous noise and improves intra-compartment signal coherence, thereby 796 
+
+enabling robust differentiation between arterial and venous hemodynamic activity. 797 
+
+Our previous investigations similarly demonstrated that whole-brain signal averaging 798 
+
+using limited pixel counts yielded relatively weak correlations, whereas increasing 799 
+
+pixel numbers strengthened signal consistency (Niu, Sihai, et al., 2024). This principle 800 
+
+is well supported in the literature. Bauernfeind et al. (Brigadoi et al., 2014) 801 
+
+demonstrated that spatial averaging of multi-channel fNIRS signals significantly 802 
+
+attenuates physiological noise, with noise reduction proportional to the square root of 803 
+
+the number of averaged channels, thereby improving signal-to-noise ratio. Similarly, 804 
+
+Zheng et al. (Zheng et al., 2019) showed that resting-state spatial filtering approaches, 805 
+
+including common average referencing, enhance the stability and consistency of target 806 
+
+neural activity signals. Together, these findings support the technical feasibility and 807 
+
+physiological relevance of our signal purification strategy for dynamic hemodynamic 808 
+
+analysis 809 
+
+4.3 Paradigm Shift in the Measurement of Blood Flow Microvasculature 810 
+
+The validated signal purification approach provides a methodological foundation 811 
+
+for reframing the study of cerebral microcirculation. Rather than conceptualizing 812 
+
+cerebral blood flow as a static transport system, our findings support the interpretation 813 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+that cerebral vascular organization behaves as a dynamically coordinated network. 814 
+
+Within this framework, arteriovenous synchronization may represent an emergent 815 
+
+systems-level property reflecting coordinated vascular regulation across the 816 
+
+arterial-capillary-venous axis. 817 
+
+For decades, research on blood flow dynamics has centered on static vascular 818 
+
+metrics (Boas & Dunn, 2010; Jin et al., 2024; Xu et al., 2025), such as cerebral blood 819 
+
+volume, flow velocity, and vessel caliber, by extracting time-averaged parameters 820 
+
+from observation windows. These approaches have provided foundational insights for 821 
+
+both basic neuroscience and clinical applications forward; they remain widely 822 
+
+employed in studies of static functional connectivity (Aykan et al., 2025; Niu, Sihai, et 823 
+
+al., 2024; Zhang & Jiang, 2025), amplitude of low-frequency fluctuations (Lu et al., 824 
+
+2024), and power spectral analysis (Niu et al., 2026). Yet this averaging approach 825 
+
+ignores the rich temporal activity inherent to resting-state brain activity. Emerging 826 
+
+evidence (Gutierrez-Barragan et al., 2022; Klugah-Brown et al., 2026; Lee et al., 2024; 827 
+
+Yang et al., 2023) challenges the assumption of fixed temporal organization within 828 
+
+brain networks. Instead, real-time coordination within brain networks exhibits 829 
+
+aperiodic, spontaneous rhythmic characteristics (L. Li et al., 2022; Zamani Esfahlani 830 
+
+et al., 2020). These time-varying characteristics unlock unique neural fingerprints that 831 
+
+are specific to individual subjects (Lee et al., 2024; Yang et al., 2023; Zamani 832 
+
+Esfahlani et al., 2020), offering a promising pathway toward personalized 833 
+
+neurofunctional profiling. 834 
+
+In addition, our results provide compelling evidence for the fundamental 835 
+
+principle that cerebral vascular architecture is exquisitely tailored to functional 836 
+
+demands. The spatial organization of arteriovenous networks demonstrates 837 
+
+remarkable regional specialization: in high-metabolic regions such as the 838 
+
+sensorimotor cortex, dense and tightly coordinated arterial-venous patterning 839 
+
+facilitates superior hemodynamic performance, whereas territories with relatively 840 
+
+sparse venous networks demonstrate reduced circulatory efficiency and weaker 841 
+
+arteriovenous synchrony. This vascular patterning mirrors evolutionary adaptations in 842 
+
+rodents, whose sensorimotor systems are critical for whisker-based environmental 843 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+navigation and complex motor behaviors (Grandjean et al., 2023; Xiong et al., 2017), 844 
+
+and have evolved optimized vascular networks to meet their high-energy demands. 845 
+
+Collectively, these observations provide compelling hemodynamic evidence for the 846 
+
+fundamental principle of structure-function adaptation. 847 
+
+In summary, our analytical framework represents a conceptual advance in 848 
+
+cerebrovascular research. Rather than focusing on isolated vascular parameters or 849 
+
+static perfusion metrics, our approach captures the dynamic coordination between 850 
+
+arterial supply and venous drainage across the entire vascular network. This paradigm 851 
+
+shift not only overcomes the limitations of traditional artery-centric analyses but also 852 
+
+provides a powerful framework for characterizing the spatiotemporal dynamics of 853 
+
+cerebral microcirculation. 854 
+
+4.4 Evaluating Microcirculatory Dysfunction Induced by Ischemic Stroke 855 
+
+Ischemic stroke has long been considered a disorder of arterial insufficiency, 856 
+
+with therapeutic paradigms centered on vascular recanalization and restoration of 857 
+
+cerebral blood flow (Hilkens et al., 2024; Kropf et al., 2025). However, nearly half of 858 
+
+patients still experience persistent hypoperfusion, motor dysfunction, and incomplete 859 
+
+cognitive recovery despite successful reperfusion therapy, challenging the sufficiency 860 
+
+of arterial-centric pathophysiological models. Recent investigations increasingly 861 
+
+implicate venous outflow obstruction as a critical contributor to stroke pathogenesis 862 
+
+(Li et al., 2023; Wang et al., 2023). The interplay between arterial insufficiency and 863 
+
+venous congestion provides a possible framework for explaining the clinical paradox 864 
+
+of successful reperfusion but poor functional outcomes. Based on this integrative 865 
+
+perspective, we propose that stroke-induced ischemia involves microcirculatory 866 
+
+failure, mediated by dysfunction of the arteriovenous circulation. To validate this 867 
+
+hypothesis, we developed a novel assessment framework quantifying arteriovenous 868 
+
+fluctuation coupling and implemented it in an acute ischemic stroke model to 869 
+
+characterize microcirculatory dynamics. 870 
+
+Our findings demonstrate that stroke-induced microcirculatory impairment 871 
+
+manifests across both temporal and spatial dimensions. Temporally, post-stroke 872 
+
+arteriovenous dynamics exhibited delayed state transitions, consistent with previous 873 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+reports describing cerebrovascular sluggishness and impaired vascular responsiveness 874 
+
+following ischemic injury (Østergaard et al., 2016; Wang et al., 2023). Spatial 875 
+
+analyses revealed marked regional heterogeneity in ischemic vulnerability: visual 876 
+
+cortical regions characterized by relatively sparse arteriovenous integration exhibited 877 
+
+more severe disruption of circulation dynamics, whereas somatosensory regions with 878 
+
+denser mixed vascular architecture exhibited comparatively preserved function. 879 
+
+Although these findings do not establish causality, they suggest that regions with 880 
+
+stronger arteriovenous integration may possess greater hemodynamic resilience, 881 
+
+potentially through enhanced collateral compensation or improved redistribution of 882 
+
+blood flow following ischemia (Glück et al., 2024; Xiong et al., 2017; Xue et al., 883 
+
+2025). Quantitative analyses further demonstrated that artery-dominant vascular 884 
+
+composition correlated positively with ischemic lesion extent, whereas higher 885 
+
+proportions of mixed arteriovenous regions correlated inversely with lesion severity 886 
+
+and positively with the penumbra/core ratio. These findings should be interpreted 887 
+
+cautiously, as they likely reflect region-specific vascular organization rather than 888 
+
+direct causal protection. 889 
+
+Of note, the microcirculation-based method yielded ischemic lesion maps highly 890 
+
+consistent with those from the conventional CBF approach, confirming its comparable 891 
+
+performance in identifying ischemic lesions. Beyond standard CBF, our 892 
+
+microcirculation framework further characterizes ischemic injury by integrating 893 
+
+temporal dynamic patterns and spatial heterogeneity, thereby providing 894 
+
+multidimensional diagnostic insights unavailable from conventional perfusion 895 
+
+analysis. Furthermore, our approach achieves a more pronounced separation between 896 
+
+the ischemic penumbra and infarct core, facilitating a more rigorous assessment of 897 
+
+ischemic heterogeneity. Collectively, the proposed strategy not only preserves the 898 
+
+lesion-detection capability of standard CBF approaches but also expands the 899 
+
+analytical dimensions for evaluating stroke-induced injury, offering a novel 900 
+
+perspective for the comprehensive diagnosis of acute stroke. 901 
+
+4.5 Limitations 902 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+Several limitations should be acknowledged. First, the present framework is 903 
+
+derived primarily from cortical surface laser speckle imaging and therefore does not 904 
+
+directly capture deep-brain or capillary-level microcirculatory dynamics. Accordingly, 905 
+
+the term “microcirculation” in this study should be interpreted as large-scale cortical 906 
+
+microvascular coordination rather than direct visualization of capillary exchange. 907 
+
+Second, the arteriovenous circulation index represents an indirect surrogate measure 908 
+
+of vascular synchronization rather than a direct quantification of perfusion efficiency 909 
+
+or oxygen delivery. Third, because all imaging experiments were performed under 910 
+
+isoflurane anesthesia, anesthesia-related modulation of vascular oscillations and 911 
+
+neurovascular coupling may influence the observed dynamics. Fourth, although signal 912 
+
+purification analyses demonstrated strong robustness, definitive validation against 913 
+
+ground-truth vascular labeling methods, such as fluorescent angiography or 914 
+
+two-photon microscopy, was not performed. Finally, the observed associations 915 
+
+between vascular architecture and ischemic vulnerability remain correlational and 916 
+
+should not be interpreted as evidence of direct causal protection. 917 
+
+4.6 Conclusion 918 
+
+Using a co-fluctuation analysis framework, we developed a dynamic 919 
+
+arteriovenous circulation index that quantifies the temporal coordination between 920 
+
+arterial inflow and venous outflow during cerebral blood flow activity. Application of 921 
+
+this framework in ischemic stroke mice demonstrated that disruption of arteriovenous 922 
+
+synchronization is associated with altered microcirculatory dynamics and regional 923 
+
+ischemic vulnerability. These findings provide a systems-level perspective on 924 
+
+cerebrovascular dysfunction that extends beyond conventional artery-centric 925 
+
+perfusion analyses and may offer a useful framework for future investigation of 926 
+
+microvascular pathophysiology in ischemic stroke. 927 
+
+> 928
+> 929
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+Credit authorship contribution statement 930 
+
+Conceptualization Bochao Niu, Hongyan Gong, Data Collection and Curation Bochao 931 
+
+Niu, Hongyan Gong, Yang Yuan, Methodology Bochao Niu, Writing–Original Draft 932 
+
+Bochao Niu, Writing-Review Benjamin Klugah-Brown, Quandan Tan, Guoliang Zhu, 933 
+
+Yapeng Lin, Junli Hao, Kejie Chen, Lingling Wang, Zhe Kang Law, Supervision Jie 934 
+
+Yang, Funding acquisition Jie Yang, Hongyan Gong, Yanlin Bi. All authors read and 935 
+
+approved the submitted version of the manuscript. 936 
+
+> 937
+
+Code Availability 938 
+
+To access the broader scientific exploration, the customized MATLAB scripts 939 
+
+mentioned in this research are available in Github 940 
+
+(https://github.com/JoeySmartWei/Microcirculation-Assessment-based-on-Arterioven 941 
+
+ous-Co-fluctuation-Analysis). The manual vascular segmentation datasets and the 942 
+
+resting-state datasets of healthy rodents are publicly available in the Science Data 943 
+
+Bank (ScienceDB) at https://www.scidb.cn/anonymous/QmZhMjZq. The MCAO 944 
+
+stroke datasets are restricted due to privacy concerns, but can be obtained from the 945 
+
+corresponding author upon reasonable request. 946 
+
+> 947
+
+Declarations 948 
+
+The author(s) declared no potential conflicts of interest with respect to the 949 
+
+research, authorship, and/or publication of this article. 950 
+
+> 951
+
+Acknowledgments 952 
+
+This work was supported by the National Natural Science Foundation of China 953 
+
+(NSFC82571515), the National Key Research and Development Program of China 954 
+
+(2026YFE0215600), the Sichuan Provincial Science and Technology Department 955 
+
+(2023YFS0042), the Health Commission of Sichuan Provincial (24LCYJZD04), and 956 
+
+the Qingdao Science and Technology Program for Benefiting People Special Project 957 
+
+(No.25-1-5-smjk-16-nsh). 958 
+
+> 959
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+## References 960 
+
+Aykan, S. A., Lai, J. H., Sugimoto, K., Aykan, O., Fung, W. Y., Ho, D., Joutel, A., Sakadzic, S., 961 
+
+Chung, D. Y., & Ayata, C. (2025). Impaired resting-state functional connectivity in 962 
+
+cerebral autosomal-dominant arteriopathy, subcortical infarcts, and 963 
+
+leukoencephalopathy mutant mice. Stroke , 56 (4), 987-995. 964 
+
+https://doi.org/10.1161/strokeaha.124.049772 965 
+
+Bergonzi, K. M., Bauer, A. Q., Wright, P. W., & Culver, J. P. (2015). Mapping functional 966 
+
+connectivity using cerebral blood flow in the mouse brain. Journal of Cerebral Blood 967 
+
+Flow & Metabolism , 35 (3), 367-370. https://doi.org/10.1038/jcbfm.2014.211 968 
+
+Biose, I. J., Dewar, D., Macrae, I. M., & McCabe, C. (2020). Impact of stroke co-morbidities 969 
+
+on cortical collateral flow following ischaemic stroke. Journal of Cerebral Blood 970 
+
+Flow & Metabolism , 40 (5), 978-990. https://doi.org/10.1177/0271678x19858532 971 
+
+Boas, D. A., & Dunn, A. K. (2010). Laser speckle contrast imaging in biomedical optics. 972 
+
+Journal of Biomedical Optics , 15 (1), 011109. https://doi.org/10.1117/1.3285504 973 
+
+Brigadoi, S., Ceccherini, L., Cutini, S., Scarpa, F., Scatturin, P., Selb, J., Gagnon, L., Boas, D. 974 
+
+A., & Cooper, R. J. (2014). Motion artifacts in functional near-infrared spectroscopy: 975 
+
+a comparison of motion correction techniques applied to real cognitive data. 976 
+
+Neuroimage , 85 Pt 1 (0 1), 181-191. https://doi.org/10.1016/j.neuroimage.2013.04.082 977 
+
+Bulut, H. T., Altun, Y., Arik, A., Oktay, C., & Çorapli, M. (2022). Use of multiparametric 978 
+
+magnetic resonance imaging as a screening tool for the determination of acute 979 
+
+ischemic stroke duration. EUROPEAN REVIEW FOR MEDICAL AND 980 
+
+PHARMACOLOGICAL SCIENCES , 26 (3), 846-852. 981 
+
+https://doi.org/10.26355/eurrev_202202_27992 982 
+
+Evans, L. E., Gray, A. L., Walsh, K. R., Danby, T. G. E., Pritchard, H. A. T., Allan, S. M., 983 
+
+Gurney, A. M., Greenstein, A. S., & Schiessl, I. (2025). Combining In vivo 984 
+
+two-photon and laser speckle microscopy with the ex vivo capillary-parenchymal 985 
+
+arteriole preparation as a novel approach to study neurovascular coupling. 986 
+
+Microcirculation , 32 (1), Article e70001. https://doi.org/10.1111/micc.70001 987 
+
+Fischer, P., Tamim, I., Sugimoto, K., Morais, A., Imai, T., Takizawa, T., Qin, T., Schlunk, F., 988 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+Endres, M., Yaseen, M. A., Chung, D. Y., Sakadzic, S., & Ayata, C. (2023). Spreading 989 
+
+depolarizations suppress hematoma growth in hyperacute intracerebral hemorrhage in 990 
+
+mice. Stroke , 54 (10), 2640-2651. https://doi.org/10.1161/strokeaha.123.042632 991 
+
+Fu, S. Z., Xu, J., Chang, S. L., Yang, L. Y., Ling, S. T., Cai, J. H., Chen, J. Y., Yuan, J. C., Cai, 992 
+
+Y., Zhang, B., Huang, Z. C., Yang, K., Sui, W. H., Xue, L. Y., & Zhao, Q. L. (2024). 993 
+
+Robust vascular segmentation for raw complex images of laser speckle contrast based 994 
+
+on weakly supervised learning. Ieee Transactions on Medical Imaging , 43 (1), 39-50. 995 
+
+https://doi.org/10.1109/tmi.2023.3287200 996 
+
+Glück, C., Zhou, Q. Y., Droux, J., Chen, Z. Y., Glandorf, L., Wegener, S., Razansky, D., 997 
+
+Weber, B., & El Amki, M. (2024). Pia- FLOW: Deciphering hemodynamic maps of 998 
+
+the pial vascular connectome and its to arterial occlusion. Proceedings of the National 999 
+
+Academy of Sciences of the United States of America , 121 (28), Article e2402624121. 1000 
+
+https://doi.org/10.1073/pnas.2402624121 1001 
+
+Gong, H., Zheng, F., Niu, B., Wang, B., Xu, L., Yang, Y., Wang, J., Tang, X., & Bi, Y. (2025). 1002 
+
+Auricular transcutaneous vagus nerve stimulation enhances post-stroke neurological 1003 
+
+and cognitive recovery in mice by suppressing ferroptosis through α7 nicotinic 1004 
+
+acetylcholine receptor activation. Cns Neuroscience & Therapeutics , 31 (5), e70439. 1005 
+
+https://doi.org/10.1111/cns.70439 1006 
+
+Grandjean, J., Desrosiers-Gregoire, G., Anckaerts, C., Angeles-Valdez, D., Ayad, F., Barrière, 1007 
+
+D. A., Blockx, I., Bortel, A., Broadwater, M., Cardoso, B. M., Célestine, M., 1008 
+
+Chavez-Negrete, J. E., Choi, S., Christiaen, E., Clavijo, P., Colon-Perez, L., Cramer, 1009 
+
+S., Daniele, T., Dempsey, E., . . . Hess, A. (2023). A consensus protocol for functional 1010 
+
+connectivity analysis in the rat brain. Nature Neuroscience , 26 (4), 673-681. 1011 
+
+https://doi.org/10.1038/s41593-023-01286-8 1012 
+
+Gutierrez-Barragan, D., Singh, N. A., Alvino, F. G., Coletta, L., Rocchi, F., De Guzman, E., 1013 
+
+Galbusera, A., Uboldi, M., Panzeri, S., & Gozzi, A. (2022). Unique spatiotemporal 1014 
+
+fMRI dynamics in the awake mouse brain. Current Biology , 32 (3), 631-644.e636. 1015 
+
+https://doi.org/10.1016/j.cub.2021.12.015 1016 
+
+Han, M., Zhong, H., Zhang, Y., Zhang, M., Ren, Y., Xu, Z., Ling, L., Xue, Z., He, Y., Liu, C., 1017 
+
+Tan, Y., Zhang, L., Chen, J., & Wang, D. (2026). Photoacoustic imaging-guided, 1018 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+synchronously targeted thrombolysis and neuroprotection of acute ischemic stroke. 1019 
+
+Iscience , 29 (2), 114777. https://doi.org/10.1016/j.isci.2026.114777 1020 
+
+Hilkens, N. A., Casolla, B., Leung, T. W., & de Leeuw, F. E. (2024). The Stroke. Lancent ,1021 
+
+403 (10446), 2820-2836. https://doi.org/10.1016/S0140-6736(24)00642-1 1022 
+
+Jia, M. L., Jin, F. Y., Li, S. J., Ren, C. H., Ruchi, M., Ding, Y. C., Zhao, W. B., & Ji, X. M. 1023 
+
+(2024). No-reflow after stroke reperfusion therapy: an emerging phenomenon to be 1024 
+
+explored. Cns Neuroscience & Therapeutics , 30 (2), Article e14631. 1025 
+
+https://doi.org/10.1111/cns.14631 1026 
+
+Jin, T., Li, B. C., Li, L. Y., Qi, W. Z., & Xi, L. (2024). High spatiotemporal mapping of 1027 
+
+cortical blood flow velocity with an enhanced accuracy. Biomedical Optics Express ,1028 
+
+15 (4), 2419-2432. https://doi.org/10.1364/boe.520886 1029 
+
+Klugah-Brown, B., Li, Y., Wu, H., Yang, Z., Hagan, A. T., Agoalikum, E., Wang, P., & Biswal, 1030 
+
+B. B. (2026). Dynamic brain connectivity patterns induced by oxytocin: an fMRI 1031 
+
+Co-Activation pattern analysis study. Molecular Psychiatry .1032 
+
+https://doi.org/10.1038/s41380-026-03549-9 1033 
+
+Kropf, A., Anderson, J. L., Esposito, M., Tremble, S. M., & Cipolla, M. J. (2025). History of 1034 
+
+pre-eclampsia negatively impacts stroke severity postpartum in rats. Neuroprotection ,1035 
+
+3(2), 172-182. https://doi.org/10.1002/nep3.70002 1036 
+
+Lakhani, D., Balar, A., Khan, M., Salim, H., Ko, M., Wen, S. J., Hillis, A., Heit, J., Albers, G., 1037 
+
+Dmytriw, A., Wintermark, M., Nael, K., Rai, A., & Yedavalli, V. (2025). The relative 1038 
+
+cerebral blood volume (rCBV) >42% is independently associated with hemorrhagic 1039 
+
+transformation in successfully reperfused anterior circulation large vessel occlusion. 1040 
+
+Stroke , 56 . https://doi.org/10.1161/str.56.suppl_1.TP188 1041 
+
+Lecordier, S., Menet, R., Allain, A. S., & Elali, A. (2023). Non-classical monocytes promote 1042 
+
+neurovascular repair in cerebral small vessel disease associated with microinfarctions 1043 
+
+via CX3CR1. Journal of Cerebral Blood Flow and Metabolism , 43 (11), 1873-1890. 1044 
+
+https://doi.org/10.1177/0271678x231183742 1045 
+
+Lee, K., Ji, J. L., Fonteneau, C., Berkovitch, L., Rahmati, M., Pan, L., Repovš, G., Krystal, J. 1046 
+
+H., Murray, J. D., & Anticevic, A. (2024). Human brain state dynamics are highly 1047 
+
+reproducible and associated with neural and behavioral features. Plos Biology , 22 (9), 1048 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+e3002808. https://doi.org/10.1371/journal.pbio.3002808 1049 
+
+Leigh, R., Knutsson, L., Zhou, J. Y., & Zijl, P. C. M. (2018). Imaging the physiological 1050 
+
+evolution of the ischemic penumbra in acute ischemic stroke. Journal of Cerebral 1051 
+
+Blood Flow & Metabolism , 38 (9), 1500-1516. 1052 
+
+https://doi.org/10.1177/0271678X17700913 1053 
+
+Li, C., Zhou, G., Yang, M., Tang, Q., Zhu, L., & Wang, Y. (2022). Laser speckle flowmetry 1054 
+
+for the prognostic estimation study of permanent focal ischemia in mice. Biomed 1055 
+
+Research International , 2022 , 1729255. https://doi.org/10.1155/2022/1729255 1056 
+
+Li, J. Z., Zhang, Y. Y., Zhang, D. D., Wang, W. T., Xie, H. Q., Ruan, J. Y., Jin, Y. X., Li, T. B., 1057 
+
+Li, X. Z., Zhao, B. R., Zhang, X. X., Lin, J. Y., Shi, H. J., & Jia, J. M. (2024). Ca2+ 1058 
+
+oscillation in vascular smooth muscle cells control myogenic spontaneous 1059 
+
+vasomotion and counteract post-ischemic no-reflow. Communications Biology , 7(1), 1060 
+
+Article 332. https://doi.org/10.1038/s42003-024-06010-1 1061 
+
+Li, L., Su, X. R., Zheng, Q. Y., Xiao, J. M., Huang, X. Y., Chen, W., Yang, K. H., Nie, L., 1062 
+
+Yang, X., Chen, H. F., Shi, S. L., & Duan, X. J. (2022). Cofluctuation analysis reveals 1063 
+
+aberrant default mode network patterns in adolescents and youths with autism 1064 
+
+spectrum disorder. Human Brain Mapping , 43 (15), 4722-4732. 1065 
+
+https://doi.org/10.1002/hbm.25986 1066 
+
+Li, X., Lin, L., Zhang, J., Fan, Y., Xing, S., Jiang, L., Yang, Z., Zhao, J., & Li, J. (2023). 1067 
+
+Microvascular dysfunction associated with unfavorable venous outflow in acute 1068 
+
+ischemic stroke patients. Journal of Cerebral Blood Flow & Metabolism , 43 (2_suppl), 1069 
+
+106-115. https://doi.org/10.1177/0271678x231165606 1070 
+
+Li, Y., Zhu, S., Yuan, L., Lu, H., Li, H., & Tong, S. (2013). Predicting the ischemic infarct 1071 
+
+volume at the first minute after occlusion in rodent stroke model by laser speckle 1072 
+
+imaging of cerebral blood flow. Journal of Biomedical Optics , 18 (7), 76024. 1073 
+
+https://doi.org/10.1117/1.Jbo.18.7.076024 1074 
+
+Liu, B. X., Tang, R., Long, E. A., Yaqoob, Z., Simkulet, M. G., Postnov, D. D., Erdener, S. E., 1075 
+
+Boas, D. A., & Cheng, X. J. (2025). Mapping of blood flow and slow speckle tissue 1076 
+
+dynamics using laser speckle contrast imaging. Biomedical Optics Express , 16 (9), 1077 
+
+3712-3724. https://doi.org/10.1364/boe.570754 1078 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+Liu, D., He, Z., Zhao, Y., Yang, Y., Shi, W., Li, X., & Ma, H. (2021). Xanthene-based NIR-II 1079 
+
+dyes for in vivo dynamic imaging of blood circulation. Journal of the American 1080 
+
+Chemical Society , 143 (41), 17136-17143. https://doi.org/10.1021/jacs.1c07711 1081 
+
+Liu, L. J., Xu, Z. Q., Lai, Z. J., Xu, B., Wu, T. F., Ma, G. Y., Zhang, H. D., Li, J. H., Ma, W. L., 1082 
+
+Lei, T. C., Li, X. F., Guo, Z. Y., Song, Z., Chen, N. B., Ye, S. W., Meng, J., Lai, P. X., 1083 
+
+Shen, F., Chang, J. L., . . . Liu, C. B. (2025). Photoacoustic and fluorescence hybrid 1084 
+
+microscope for cortex-wide imaging of neurovascular dynamics with subcellular 1085 
+
+resolution. Science Advances , 11 (30), Article eadw5275. 1086 
+
+https://doi.org/10.1126/sciadv.adw5275 1087 
+
+Liu, S., Chen, T. T., & Li, Y. B. (2026). Advances in no-reflow after stroke reperfusion 1088 
+
+therapy. Experimental Neurology , 396 , Article 115532. 1089 
+
+https://doi.org/10.1016/j.expneurol.2025.115532 1090 
+
+Lu, Y., Lin, Z., Li, M., Zhuang, Y., Nie, B., Lei, J., Zhao, Y., & Zhao, H. (2024). Three-phase 1091 
+
+enriched environment improves post-stroke gait dysfunction via facilitating neuronal 1092 
+
+plasticity in the bilateral sensorimotor cortex: a multimodal MRI/PET analysis in rats. 1093 
+
+Neuroscience Bulletin , 40 (6), 719-731. https://doi.org/10.1007/s12264-023-01155-1 1094 
+
+Mo, Y. J., Zeng, Y., Huo, L. Y., Liu, G., Tao, J. W., Jiang, Y., Zhao, T., Zhou, Z. L., & Mu, X. 1095 
+
+H. (2023). Early-stage effect of HIBD on neuro-motor function and organic 1096 
+
+composition of neurovascular units in neonatal rats. Frontiers in Neuroscience , 17 ,1097 
+
+Article 1242936. https://doi.org/10.3389/fnins.2023.1242936 1098 
+
+Niu, B. (2026). Cerebral blood flow imaging dataset of SD rat under resting-state and 1099 
+
+task-evoked conditions Science Data Bank. 1100 
+
+https://doi.org/doi:10.57760/sciencedb.38966 1101 
+
+Niu, B. C., Klugah-Brown, B., Xia, Y., Yao, D. Z., & Biswal, B. B. (2026). Temporal 1102 
+
+variability analysis of cortical blood flow in rats with hyperacute cerebral ischemia. 1103 
+
+Neuroscience Bulletin , 42 (1), 55-74. https://doi.org/10.1007/s12264-025-01450-z 1104 
+
+Niu, B. C., Sihai, G., Gong, H. Y., Hu, P., Shah, P. S., Liu, X. Q., Xia, Y., Yao, D. Z., 1105 
+
+Klugah-Brown, B., & Biswal, B. (2024). Assessment of hyperacute cerebral ischemia 1106 
+
+using laser speckle contrast imaging. Brain Connectivity , 14 (9), 459-470. 1107 
+
+https://doi.org/10.1089/brain.2024.0026 1108 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+Niu, B. C., Wu, H. Z., Li, Y. L., Klugah-Brown, B., Hanna, G., Yao, Y. W., Jing, J. L., Baig, T. 1109 
+
+I., Xia, Y., Yao, D. Z., & Biswal, B. (2024). Topological functional network analysis 1110 
+
+of cortical blood flow in hyperacute ischemic rats. Brain Structure & Function ,1111 
+
+230 (1), Article 20. https://doi.org/10.1007/s00429-024-02864-7 1112 
+
+Oelschlegel, A. M., Bhattacharjee, R., Wenk, P., Harit, K., Rothkötter, H. J., Koch, S. P., 1113 
+
+Boehm-Sturm, P., Matuschewski, K., Budinger, E., Schlüter, D., Goldschmidt, J., & 1114 
+
+Nishanth, G. (2024). Beyond the microcirculation: sequestration of infected red blood 1115 
+
+cells and reduced flow in large draining veins in experimental cerebral malaria. 1116 
+
+Nature Communications , 15 (1). <Go to ISI>://WOS:001186695300028 1117 
+
+Østergaard, L., Engedal, T. S., Moreton, F., Hansen, M. B., Wardlaw, J. M., Dalkara, T., 1118 
+
+Markus, H. S., & Muir, K. W. (2016). Cerebral small vessel disease: capillary 1119 
+
+pathways to stroke and cognitive decline. Journal of Cerebral Blood Flow & 1120 
+
+Metabolism , 36 (2), 302-325. https://doi.org/10.1177/0271678x15606723 1121 
+
+Park, B., Oh, D., Kim, J., & Kim, C. (2023). Functional photoacoustic imaging: from nano-1122 
+
+and micro- to macro-scale. Nano Convergence , 10 (1), 29. 1123 
+
+https://doi.org/10.1186/s40580-023-00377-3 1124 
+
+Picchi, E., Di Giuliano, F., Pucci, N., Sallustio, F., Minosse, S., Mascolo, A. P., Marrama, F., 1125 
+
+Ferrazzoli, V., Da Ros, V., Diomedi, M., Federici, M., & Garaci, F. (2025). CT 1126 
+
+perfusion imaging in patients with acute ischemic stroke: the role of premorbid statin 1127 
+
+treatment. Tomography , 11 (5), Article 54. 1128 
+
+https://doi.org/10.3390/tomography11050054 1129 
+
+Proner, B., Vingiani, V., Valletta, R., Gorgatti, T., Posteraro, A., Dall'Ora, E., Franchini, E., 1130 
+
+Zamboni, G., & Bonatti, M. (2026). Impact of clinical and radiologic factors on CTP 1131 
+
+timing in acute ischemic stroke. American Journal of Neuroradiology , 47 (1), 28-34. 1132 
+
+https://doi.org/10.3174/ajnr.A8904 1133 
+
+Schmid, F., Barrett, M. J. P., Jenny, P., & Weber, B. (2019). Vascular density and distribution 1134 
+
+in neocortex. Neuroimage , 197 , 792-805. 1135 
+
+https://doi.org/10.1016/j.neuroimage.2017.06.046 1136 
+
+Shen, Z., Lu, Z., Chhatbar, P. Y., O'Herron, P., & Kara, P. (2012). An artery-specific 1137 
+
+fluorescent dye for studying neurovascular coupling. Nature Methods , 9(3), 273-276. 1138 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+https://doi.org/10.1038/nmeth.1857 1139 
+
+Skøtt, M. V., Matchkov, V., & Postnov, D. D. (2025). Arterial-wall origin and transient 1140 
+
+dynamics of flow- and vaso-motion activities in the awake mouse brain revealed by 1141 
+
+laser speckle contrast imaging. Neurophotonics , 12 (Suppl 2), S22804. 1142 
+
+https://doi.org/10.1117/1.NPh.12.S2.S22804 1143 
+
+Sperring, C. P., Savage, W. M., Argenziano, M. G., Leifer, V. P., Alexander, J., Echlov, N., 1144 
+
+Spinazzi, E. F., & Connolly, E. S. (2023). No-reflow post-recanalization in acute 1145 
+
+ischemic stroke: mechanisms, measurements, and molecular markers. Stroke , 54 (9), 1146 
+
+2472-2480. https://doi.org/10.1161/strokeaha.123.044240 1147 
+
+Sun, P., Ma, F. F., Xu, Y., Zhou, C., Stetler, R. A., & Yin, K. J. (2021). Genetic deletion of 1148 
+
+endothelial microRNA-15a/16-1 promotes cerebral angiogenesis and neurological 1149 
+
+recovery in ischemic stroke through Src signaling pathway. Journal of Cerebral 1150 
+
+Blood Flow & Metabolism , 41 (10), 2725-2742, Article 0271678x211010351. 1151 
+
+https://doi.org/10.1177/0271678x211010351 1152 
+
+Taxt, T., Andersen, E., & Jirik, R. (2021). Single voxel vascular transport functions of arteries, 1153 
+
+capillaries and veins; and the associated arterial input function in dynamic 1154 
+
+susceptibility contrast magnetic resonance brain perfusion imaging. Magnetic 1155 
+
+Resonance Imaging , 84 , 101-114. https://doi.org/10.1016/j.mri.2021.08.008 1156 
+
+Wang, J., Li, Q. Q., Chu, S. F., Liu, X., Zhang, J. L., & He, W. B. (2024). Impact of 1157 
+
+Codonopsis decoction on cerebral blood flow and cognitive function in rats with 1158 
+
+chronic cerebral ischemia. Journal of Ethnopharmacology , 323 , Article 117585. 1159 
+
+https://doi.org/10.1016/j.jep.2023.117585 1160 
+
+Wang, J., Wang, J., Li, J., Liu, J., Wu, J., Gu, S., Yao, Y., Luo, T., Huang, C., Huang, F., & Li, 1161 
+
+Y. (2023). Significant slowed cortical venous blood flow in patients with acute 1162 
+
+ischemic stroke with large vessel occlusion suggests poor collateral circulation and 1163 
+
+prognosis. Academic Radiology , 30 (9), 1896-1903. 1164 
+
+https://doi.org/10.1016/j.acra.2022.12.004 1165 
+
+Wang, Z. Z., Liu, J. F., Liu, X., Guo, X. J., Li, T., Pang, R., & Duan, M. L. (2021). Perfusion 1166 
+
+microvessel density in the cerebral cortex of septic rats is negatively correlated with 1167 
+
+endothelial microparticles in circulating plasma. Metabolic Brain Disease , 36 (5), 1168 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+1029-1036. https://doi.org/10.1007/s11011-021-00702-x 1169 
+
+White, B. R., Bauer, A. Q., Snyder, A. Z., Schlaggar, B. L., Lee, J. M., & Culver, J. P. (2011). 1170 
+
+Imaging of functional connectivity in the mouse brain. Plos One , 6(1), e16322. 1171 
+
+https://doi.org/10.1371/journal.pone.0016322 1172 
+
+Xiong, B., Li, A., Lou, Y., Chen, S., Long, B., Peng, J., Yang, Z., Xu, T., Yang, X., Li, X., 1173 
+
+Jiang, T., Luo, Q., & Gong, H. (2017). Precise cerebral vascular atlas in stereotaxic 1174 
+
+coordinates of whole mouse brain. Frontiers in Neuroanatomy , 11 , 128. 1175 
+
+https://doi.org/10.3389/fnana.2017.00128 1176 
+
+Xu, Y. Y., Chen, C., Weng, J. L., Chen, T., He, Y. C., Song, Z. W., & Wang, Y. Z. (2025). 1177 
+
+Microcirculation dysfunction in subacute stroke: the role of delayed capillary pericyte 1178 
+
+loss. Aging and Disease . https://doi.org/10.14336/ad.2025.0197 1179 
+
+Xue, L. P., Ouyang, W., Qi, P. Y., Zhu, Y., Qi, X. R., Zhang, X., Zhang, X. J., Wang, L. N., & 1180 
+
+Cui, L. L. (2025). Key mechanisms of angiogenesis in the infarct core: association of 1181 
+
+macrophage infiltration with venogenesis. Molecular Brain , 18 (1), Article 12. 1182 
+
+https://doi.org/10.1186/s13041-025-01182-1 1183 
+
+Yang, H., Yao, X., Zhang, H., Meng, C., & Biswal, B. (2023). Estimating dynamic individual 1184 
+
+coactivation patterns based on densely sampled resting-state fMRI data and utilizing 1185 
+
+it for better subject identification. Brain Structure & Function , 228 (7), 1755-1769. 1186 
+
+https://doi.org/10.1007/s00429-023-02689-w 1187 
+
+Zamani Esfahlani, F., Jo, Y., Faskowitz, J., Byrge, L., Kennedy, D. P., Sporns, O., & Betzel, R. 1188 
+
+F. (2020). High-amplitude cofluctuations in cortical activity drive functional 1189 
+
+connectivity. Proceedings of the National Academy of Sciences of the United States of 1190 
+
+America , 117 (45), 28393-28401. https://doi.org/10.1073/pnas.2005531117 1191 
+
+Zhang, J. Y., Zhu, D., Chang, M. R., Luo, S. Z., Yao, B. B., Zhu, Y., & Zheng, Y. (2025). The 1192 
+
+relationship between cerebral perfusion, blood pressure variability and 90-day 1193 
+
+prognosis in patients with acute posterior circulation cerebral infarction: an 1194 
+
+observational study. International Journal of General Medicine , 18 , 7061-7073. 1195 
+
+https://doi.org/10.2147/ijgm.S508474 1196 
+
+Zhang, Y., & Jiang, J. (2025). A novel method on functional connectivity biomarkers: the 1197 
+
+potential of spatiotemporal graph convolutional network in identifying imaging 1198 
+
+> .CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint
+
+biomarkers for Alzheimer's disease. Ageing and Neurodegenerative Diseases , 5(2), 13. 1199 
+
+https://doi.org/10.20517/and.2025.09 1200 
+
+Zheng, Y., Zhang, D., Wang, L., Wang, Y., Deng, H., Zhang, S., Li, D., & Wang, D. (2019). 1201 
+
+Resting-state-based spatial filtering for an fNIRS-based motor imagery 1202 
+
+brain-computer interface. Ieee Access , 7, 120603-120615. 1203 
+
+https://doi.org/10.1109/ACCESS.2019.2936434 1204 
+
+> 1205
+
+.CC-BY-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 13, 2026. ;https://doi.org/10.64898/2026.07.08.737374 doi: bioRxiv preprint

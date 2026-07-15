@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-15",
+  "date": "2026-07-15",
+  "generated_at": "2026-07-15T21:08:03",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/15/biorxiv-10-64898-2026-07-08-737374-v1-assessing-microcirculation-impairment-in-ischemic-stroke-mice-using-arteriovenous-co-fluctuation-analysis",
+      "section": "quick",
+      "title_en": "Assessing Microcirculation Impairment in Ischemic Stroke Mice Using Arteriovenous Co-fluctuation Analysis",
+      "authors": "Yang, J., Niu, B., Bi, Y., Yuan, Y., Gong, H., Klugah-Brown, B., Tan, Q., Zhu, G., Hao, J., Lin, Y., Chen, K., Wang, L., Law, Z. K.",
+      "date": "2026-07-13",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.07.08.737374v1.full.pdf",
+      "score": "6.0",
+      "evidence": "微循环损伤评估方法可应用于皮瓣存活的影响因素分析",
+      "tldr": "传统脑血流动力学评估多依赖动脉指标，忽视静脉及动静脉动力学，限制了微血管功能障碍评价。本文采用信号平均框架结合共波动分析，提取动脉和静脉血流信号，构建动态动静脉共波动指数以量化帧间协调性。在急性缺血性卒中小鼠模型中，该指数敏感检测到血管协调性破坏，表现为状态转换缓慢、时间异常及缺血核心与半暗带区域异质性。结果表明动静脉协调性可作为微循环功能障碍的敏感指标，为评估卒中后微血管损伤提供了实用分析工具。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Accurate assessment of cerebral hemodynamics impairment traditionally relies on arterial metrics, yet often overlooks venous drainage and arteriovenous dynamics, thereby limiting the evaluation of ischemia-induced microvascular dysfunction. To address this limitation, we implemented a signal-averaging framework, combined with co-fluctuation analysis, to extract predominantly arterial and venous hemodynamic signals and construct a dynamic arteriovenous co-fluctuation index that quantifies frame-by-frame coordination between arterial inflow and venous outflow activity. This time-resolved index enables spatial characterization of large-scale cortical arteriovenous coordination beyond conventional static correlation-based analyses. Comparative analyses between healthy controls and acute ischemic stroke mice demonstrated that the arteriovenous co-fluctuation index sensitively detects disruption of vascular coordination, revealing a slower state transition that occurs alongside distinct temporal abnormalities and regional heterogeneity between ischemic core and penumbral regions. These findings underscore the utility of arteriovenous coordination as a sensitive indicator of microcirculatory dysfunction, offering a practical analytical tool for assessing stroke-induced microvascular impairment.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,64 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-15T21:06:09.952377+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-07-08-737374-v1",
+      "source": "biorxiv",
+      "title": "Assessing Microcirculation Impairment in Ischemic Stroke Mice Using Arteriovenous Co-fluctuation Analysis",
+      "abstract": "Accurate assessment of cerebral hemodynamics impairment traditionally relies on arterial metrics, yet often overlooks venous drainage and arteriovenous dynamics, thereby limiting the evaluation of ischemia-induced microvascular dysfunction. To address this limitation, we implemented a signal-averaging framework, combined with co-fluctuation analysis, to extract predominantly arterial and venous hemodynamic signals and construct a dynamic arteriovenous co-fluctuation index that quantifies frame-by-frame coordination between arterial inflow and venous outflow activity. This time-resolved index enables spatial characterization of large-scale cortical arteriovenous coordination beyond conventional static correlation-based analyses. Comparative analyses between healthy controls and acute ischemic stroke mice demonstrated that the arteriovenous co-fluctuation index sensitively detects disruption of vascular coordination, revealing a slower state transition that occurs alongside distinct temporal abnormalities and regional heterogeneity between ischemic core and penumbral regions. These findings underscore the utility of arteriovenous coordination as a sensitive indicator of microcirculatory dysfunction, offering a practical analytical tool for assessing stroke-induced microvascular impairment.",
+      "authors": [
+        "Yang, J.",
+        "Niu, B.",
+        "Bi, Y.",
+        "Yuan, Y.",
+        "Gong, H.",
+        "Klugah-Brown, B.",
+        "Tan, Q.",
+        "Zhu, G.",
+        "Hao, J.",
+        "Lin, Y.",
+        "Chen, K.",
+        "Wang, L.",
+        "Law, Z. K."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-07-13T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.07.08.737374v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "microcirculation impairment assessment method applicable to flap survival factors",
+      "llm_evidence_cn": "微循环损伤评估方法可应用于皮瓣存活的影响因素分析",
+      "llm_evidence": "微循环损伤评估方法可应用于皮瓣存活的影响因素分析",
+      "canonical_evidence": "微循环损伤评估方法可应用于皮瓣存活的影响因素分析",
+      "llm_tldr_en": "Develops arteriovenous co-fluctuation analysis to assess microcirculation impairment in ischemic stroke, offering a transferable method for evaluating factors influencing flap survival.",
+      "llm_tldr_cn": "该研究针对传统脑血流动力学评估忽略静脉因素的局限，提出信号平均框架结合共波动分析，提取动脉和静脉血流信号，构建动态动静脉共波动指数，量化皮层动静脉协调性。该方法可直接用于评估皮瓣移植后的微循环状态，为研究影响皮瓣存活的因素（如血流灌注障碍）提供新的量化工具。",
+      "llm_tldr": "该研究针对传统脑血流动力学评估忽略静脉因素的局限，提出信号平均框架结合共波动分析，提取动脉和静脉血流信号，构建动态动静脉共波动指数，量化皮层动静脉协调性。该方法可直接用于评估皮瓣移植后的微循环状态，为研究影响皮瓣存活的因素（如血流灌注障碍）提供新的量化工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

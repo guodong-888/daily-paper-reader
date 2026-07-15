@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-15 <!--dpr-date:20260715-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/15/biorxiv-10-64898-2026-07-08-737374-v1-assessing-microcirculation-impairment-in-ischemic-stroke-mice-using-arteriovenous-co-fluctuation-analysis" data-sidebar-item="{&quot;title&quot;: &quot;Assessing Microcirculation Impairment in Ischemic Stroke Mice Using Arteriovenous Co-fluctuation Analysis&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/biorxiv-10-64898-2026-07-08-737374-v1-assessing-microcirculation-impairment-in-ischemic-stroke-mice-using-arteriovenous-co-fluctuation-analysis&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;微循环损伤评估方法可应用于皮瓣存活的影响因素分析&quot;}">Assessing Microcirculation Impairment in Ischemic Stroke Mice Using Arteriovenous Co-fluctuation Analysis</a>
   * 2026-07-09 <!--dpr-date:20260709-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/09/2607.00222v1-causal-inference-for-all-marginal-estimands-for-outcomes-truncated-by-death" data-sidebar-item="{&quot;title&quot;: &quot;Causal Inference for All: Marginal Estimands for Outcomes Truncated by Death&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.00222v1-causal-inference-for-all-marginal-estimands-for-outcomes-truncated-by-death&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;因果推断方法适用于分析影响皮瓣存活的因素&quot;}">Causal Inference for All: Marginal Estimands for Outcomes Truncated by Death</a>
