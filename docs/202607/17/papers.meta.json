@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-17",
+  "date": "2026-07-17",
+  "generated_at": "2026-07-17T21:21:29",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/17/biorxiv-10-64898-2026-07-13-738308-v1-metabolic-responses-to-physiological-stressors-assessed-using-continuous-glucose-monitoring-integrated-with-indirect-calorimetry-in-mice",
+      "section": "quick",
+      "title_en": "Metabolic responses to physiological stressors assessed using continuous glucose monitoring integrated with indirect calorimetry in mice",
+      "authors": "Zhou, E. Y., Holman, C., Lee, M., Rubio, W. B., Calhoun, R., Chu, Q., Banks, A., Baur, J. A.",
+      "date": "2026-07-17",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.07.13.738308v1.full.pdf",
+      "score": "6.0",
+      "evidence": "利用连续血糖监测和间接测热法测量小鼠运动时的代谢反应",
+      "tldr": "小鼠血糖水平受进食、激素、活动等影响而动态变化。该研究同时使用连续血糖监测（CGM）和间接测热法，量化了常规实验操作对代谢的影响。结果发现，禁食引发短暂应激反应和低血糖，而尾尖采血本身导致高血糖，冷暴露则引起持续高血糖。这些发现表明常见实验室操作会显著干扰代谢，综合监测技术可揭示这些动态变化。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Continuous glucose monitoring (CGM) in rodents has provided unprecedented temporal resolution of glycemic dynamics in vivo. Even in the absence of deliberate perturbation, glucose levels in mice are dynamic, fluctuating in response to the timing and duration of feeding events, changes in neurological and hormonal states, physical activity, and photoperiod. To obtain a comprehensive view of metabolic adaptations under common experimental conditions, we monitored freely moving mice simultaneously using CGM and indirect calorimetry to quantify glucose, food intake, physical activity and metabolic rate. We characterized glycemic and metabolic responses to routine laboratory interventions, including short-term and overnight fasting, refeeding, tail blood sampling during glucose tolerance tests, changes in ambient temperature to cold or thermoneutral conditions, and access to running wheels. We found that food removal induced a robust, transient stress response characterized by increased blood glucose, body temperature, energy expenditure, and physical activity. However, prolonged fasting ultimately led to hypoglycemia and torpor. The magnitude and variability of glycemic responses to insulin tolerance tests were strongly influenced by fasting duration, and tail-tip blood collection itself elicited substantial hyperglycemia. In contrast to prolonged fasting, refeeding produced relatively modest and transient effects on glucose and energy expenditure. Cold exposure elicited increased energy expenditure along with a sustained hyperglycemic response. Voluntary wheel running induced transient increases in glucose and metabolic activity and promoted a shift toward increased fatty acid oxidation. Together, these findings demonstrate that common laboratory manipulations exert dynamic, often substantial effects on glycemia and whole-body metabolism that are readily revealed by CGM and indirect calorimetry.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/17/biorxiv-10-64898-2026-07-15-738540-v1-a-high-throughput-3d-microtissue-platform-for-multiparametric-analysis-of-tissue-remodeling",
+      "section": "quick",
+      "title_en": "A high-throughput, 3D microtissue platform for multiparametric analysis of tissue remodeling.",
+      "authors": "Vasan, A., Nguyen, Q., Davis, E., Karakan, M. C., Westphal, E., Shah, V., Wong, W., Lejeune, E., Eyckmans, J.",
+      "date": "2026-07-16",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.07.15.738540v1.full.pdf",
+      "score": "6.0",
+      "evidence": "高通量3D微组织平台，用于分析影响皮瓣存活的组织重塑动力学",
+      "tldr": "细胞外基质重塑和力生成是组织形态发生与修复的核心，但缺乏可规模化的定量方法。本文开发了一种集成于96孔板的高通量3D微组织平台，采用模塑铸造和层层表面修饰确保>95%组织形成及10天稳定培养。该平台可同时定量组织闭合、收缩性和压实，配套计算工具加速数据处理80倍。药物测试表明这三个参数为独立变量，且与临床结局的相关性（Kendall τ-b=0.72）优于传统2D划痕实验。该工作为3D系统中的组织重塑动态提供了可规模化的功能筛选和定量评估方法。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Extracellular matrix (ECM) remodeling and force generation are fundamental drivers of tissue morphogenesis and repair, yet scalable methods to quantitatively interrogate these dynamic mechanical processes remain limited. Here, we present a high-throughput screening platform that integrates engineered three-dimensional (3D) microtissues within a standardized 96-well format. We introduce a robust mold-casting fabrication process and a layer-by-layer surface modification strategy, that ensures long-term tissue stability and prevents detachment (95% tissue formation success; stable in culture for more than 10 days). This system enables simultaneous, longitudinal quantification of tissue closure, tissue contractility, and tissue compaction from a phase-contrast imaging modality. The computational data analysis tools that accompany this framework ensure reproducibility through deterministic computation and accelerate data extraction 80-fold relative to manual annotation. Using pharmacological compounds, we show that tissue closure dynamics, force generation, and compaction represent independent variables of ECM-driven tissue remodeling, challenging assumptions embedded in commonly used contraction-based assays. Furthermore, benchmarking against reported clinical drug responses demonstrates that the 3D platform better aligns with clinical outcomes (Kendall {tau}-b = 0.72, p=0.045, n =8/10) than a conventional two-dimensional scratch wound assay (Kendall {tau}-b = 0.52, p=0.25, n =4/10). Together, this work establishes a scalable assay for functional screening and quantitative assessment of tissue remodeling dynamics in three-dimensional systems.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
