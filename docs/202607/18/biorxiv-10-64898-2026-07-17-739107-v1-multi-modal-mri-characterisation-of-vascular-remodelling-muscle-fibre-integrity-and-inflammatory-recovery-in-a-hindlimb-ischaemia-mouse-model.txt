@@ -1,0 +1,664 @@
+Title: Multi-modal MRI characterisation of vascular remodelling, muscle fibre integrity, and inflammatory recovery in a hindlimb ischaemia mouse model
+
+URL Source: https://www.biorxiv.org/content/10.64898/2026.07.17.739107v1.full.pdf
+
+Number of Pages: 24
+
+Markdown Content:
+# Multi-modal MRI characterisation of vascular 1remodelling, muscle fibre integrity, and 2inflammatory recovery in a hindlimb ischaemia 3mouse model. 4Lyons, C.J. [1] , Doulgkeroglou, M.N. [2] , Sanz-Nogués, C. [1] , Chen, XZ. [1] , Lagonda, 5C.A. [1] , O’Brien, T.* [1] , Colgan, N.* [3,4] .61 = Regenerative Medicine Institute (REMEDI), Centre for Research in Medical 7Devices (CÚRAM), Institute for Health Discovery and Innovation (IHDI), Discipline of 8Advanced Therapies, University of Galway, Galway. 92 = CÚRAM, Research Ireland Centre for Medical Devices, University of Galway, 10 Galway, Ireland. 11 3 = Technical University of the Shannon, Athlone. 12 4 = Physics, School of Natural Sciences, University of Galway. 13 * = Equal contribution. 14 
+
+Keywords: MRI, hindlimb ischaemia, pre-clinical imaging, vascular, muscle fibre 15 integrity, inflammation 16 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+# Abbreviations 17 cISS = Cumulative Ischaemia Severity Score 18 CLTI = Chronic Limb Threatening Ischaemia 19 DW-EPI = Diffusion Weighted Echo Planar Imaging 20 FA = Fractional Anisotropy 21 FLAIR = Fluid-Attenuated Inversion Recovery 22 Gast = Gastrocnemius 23 GRE = Gradient Echo 24 HLI = Hindlimb Ischaemia 25 IC = Inferior Calf 26 MC = Middle Calf 27 MD = Mean diffusivity 28 MRI = Magnetic Resonance Imaging 29 SC = Superior Calf 30 TOF = Time of Flight 31 32 33 34 35 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+# Abstract 36 The hindlimb ischaemia (HLI) mouse model is a widely used preclinical model of 37 chronic limb-threatening ischaemia (CLTI). While CLTI involves complex interactions 38 between impaired perfusion, inflammation and muscle wasting, the standard imaging 39 approach, laser Doppler imaging (LDI), only assesses perfusion. MRI is used 40 clinically to assess neural tracts, inflammation, and perfusion in the brain. We 41 therefore evaluated whether a multimodal MRI approach could longitudinally monitor 42 recovery in the HLI mouse model. Mice underwent MRI three days pre-HLI surgery, 43 and on Days +3 and +7 post-surgery, with histology on Day +7. The MRI detected 44 significant increases in muscle volume and inflammation after HLI surgery, with 45 significant decreases in perfusion, vascular length, and muscle fibre integrity. Overall, 46 MRI can monitor inflammation, muscle fibre integrity, and vascular recovery post-HLI 47 and should be applied in future studies to identify mechanisms of therapeutic 48 recovery in a sequential in vivo analysis without requiring animal sacrifice. 49 50 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+51 
+
+Graphical Abstract. 52 53 
+
+.CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint Chronic limb-threatening ischaemia (CLTI) is a multifaceted condition resulting from 54 progressive atherosclerotic narrowing and occlusion of the lower limb arteries. The 55 resulting reduction in blood flow creates a severely hypoxic and inflammatory tissue 56 environment, leading to progressive tissue damage and loss of limb function [1]. CLTI 57 presents as ischaemic rest pain, non-healing ulcers and/or gangrene in the affected 58 lower limb. An estimated 10-25% of CLTI patients do not respond to standard 59 revascularisation therapies and continue to progress to advanced disease, placing 60 them at risk of major limb amputation [2,3]. Overall, CLTI carries a poor prognosis, 61 with a 5-year mortality rate typically exceeding 50% [4,5]. Consequently, there is an 62 urgent need to develop novel therapeutic strategies for this patient population. 63 The hindlimb ischaemia (HLI) mouse model is widely used as a preclinical model for 64 evaluating potential therapeutics for CLTI, with laser Doppler imaging (LDI) being the 65 most common imaging modality to longitudinally monitor blood flow recovery following 66 HLI induction [6–9]. LDI provides high-resolution (0.1 mm) assessment of limb 67 perfusion recovery but does not quantify the inflammatory response, muscle 68 volumetric changes, or alterations in muscle architecture, all of which are substantially 69 affected in CLTI and HLI. This is particularly relevant as many therapeutics being 70 investigated for CLTI, including mesenchymal stromal cells, exert pleiotropic effects 71 that extend beyond revascularisation, including promotion of muscle regeneration and 72 the reduction of inflammation and fibrosis [10–12]. In most cases, endpoint histology 73 is required to quantify these effects. Longitudinal assessment of these parameters in 74 vivo would therefore require euthanasia and tissue collection at each timepoint, 75 preventing serial evaluation within the same animal. 76 Magnetic resonance imaging (MRI) is routinely used clinically for the non-invasive 77 monitoring of pathophysiology in soft tissues. Advances in MRI technology have 78 enabled the assessment of pathophysiological changes in the HLI pre-clinical model; 79 however, several groups have primarily focused on the use of MRI to monitor 80 vascular recovery over time [13–17]. This study aims to integrate complementary MRI 81 sequences and analytical techniques in a longitudinal multimodal imaging framework 82 to investigate the HLI mouse model, enabling the simultaneous assessment of 83 vascular remodelling, muscle integrity, and inflammatory recovery over time [13,18]. 84 By combining these complementary analyses, MRI can characterise the temporal 85 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+pathological cascade underlying the functional recovery and provide a comprehensive 86 understanding of the trajectory of limb recovery after an ischaemic injury. 87 Methodology 88 Animals 89 Six male 7-8 week old BALB/cAnN-Foxn1 nu/Rj mice were sourced from Janvier Labs 90 and were housed in a licensed preclinical facility at the University of Galway, with 91 monitoring and support from qualified animal technicians and a veterinary surgeon. 92 Ethical approval was granted by the Institutional Animal Care Research Ethics 93 Committee. Project authorisation was granted by the Health Product Regulatory 94 Authority (HPRA) in Ireland. Animals were then acclimatised for seven days prior to 95 any procedure (Figure 1). 96 97 
+
+Figure 1. Study timeline. Scans were carried out on a 3T MRI system. MRI Scans 98 
+
+include: DW-EPI (muscle fibre integrity), 3D GRE (muscle volume), FLAIR 99 
+
+(inflammation), 3D-TOF (angiogenesis), and ASL (perfusion). 100 Induction of HLI 101 On Day 0, animals were anaesthetised with 100 mg/kg of Ketamine and 0.5 mg/kg of 102 Medetomidine injected subcutaneously prior to surgery. The HLI surgery consisted of 103 unilateral ligation of the left femoral artery distal to the pudendoepigastric branch and 104 then transecting the artery (Figure 1). Animals were administered with 0.1 mg/kg of 105 buprenorphine thrice daily for pain management. Animals were then euthanised on 106 Day +7 after surgery using CO 2 .107 MRI 108 Animals were scanned with a nanoScan 3T (Mediso Ltd) with a 42 mm Mouse WB 109 RF coil and Nucline software (v. 3.05.12) on Day -3 before HLI surgery and then on 110 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+Days +3 and +7 after surgery. Animals were anesthetised using 5% isoflurane and 111 then maintained with 1.5-2% isoflurane in a temperature-controlled environment 112 (37 oC). Mice were placed in a prone position with their legs raised to facilitate the 113 hindlimbs resting on the horizontal plane as noted in a paper by Bryant [18]. 114 After performing a scout on each animal, a 3D Shim was carried out, focusing on the 115 hindlimbs. Scans were then performed in the following order: 3D Multi-TOF, ASL, 116 FLAIR, DW-EPI, and 3D-GRE, with a total scan time of ~2 hrs. The settings for each 117 scan are outlined below. 118 3D Multi-TOF: scan length = 7.2 mm, slice number = 36, resolution = 0.21 x 0.21 x 119 0.2 mm, number of fields of view = 5, overlap slices = 8, number of excitations = 2, 120 TR = 25 ms, TE = 4.4 ms, flip angle = 30 o.121 FLAIR imaging: slices number = 30, slice gap = 0.1 mm, resolution 0.238 x 0.238 x 122 1.1 mm, excitation number = 4, TR = 8379 ms, TI = 4179 ms, TE = 33.1 ms, and an 123 echo trail length = 8. 124 A flow-sensitive alternating inversion recovery sequence [19] echo planar imaging 125 readout, ASL, was implemented with the following parameters: slice number = 12, 126 resolution = 0.781 x 1.042 x 1 mm, excitation number = 10, TR = 3.6 ms, TE = 18 ms, 127 flip angle = 30 o, post labelling delay = 3204 ms, and an arterial spin labelling 128 repetition time = 4909 ms. 129 DW-EPI: slice number = 15, resolution = 0.4 x 0.4 x 0.4 mm, slice gap = 0.4 mm, 130 excitation number = 5, TR shot number = 1, TR = 3000 ms, TE = 26 ms, B value = 131 500 s/mm 2 with three B = 0 s/mm 2 images. 132 3D-GRE: resolution = 0.25 x 0.25 x 0.22 mm, slice number = 108, number of 133 excitations = 4, TE = 6.3 ms, TR = 20 ms, flip angle = 10 o.134 MRI Image Analysis 135 MRI muscle volumetric and FLAIR assessment was measured using 3D Slicer (v. 136 5.8.0) by creating volumes of interest around the calf muscles and calculating the 137 enclosed volume and average pixel intensity, respectively. Representative images of 138 each scan type were taken using InterView Fusion (v 3.11.010.000). 139 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+To calculate the water diffusion parameters MRIcroGL (v 1.2.20220720) was used to 140 convert the DICOM file into a NIfTI format. This was then converted into .sz file format 141 using DSI Studio (v. Hou " 侯"). FSL Topup and FSL eddy correction were carried out 142 using the NIfTI file with subsequent motion, orientation correction, and then b-table 143 rotation. The restricted diffusion was quantified using restricted diffusion imaging, as 144 per Yeh et al. [20]. The diffusion data were then reconstructed using generalized q-145 sampling imaging [21] and a diffusion sampling length ratio of 0.6. 146 To analyse the surface profile of the vasculature the 3D-TOF data were analysed 147 using 3D Slicer coupled with the Vascular Modelling Toolkit extension [22]. 3D-TOF 148 images were thresholded and then the Vascular Modelling Toolkit extension was used 149 to identify the endpoints, and centreline, after which a centreline curve was 150 generated. Afterwards, the longest combined length of artery was quantified for both 151 left and right limbs. The longest combined length of artery was calculated by 152 beginning at the descending aorta-common iliac branch point until the furthest arterial 153 branch in each limb extremity as the endpoint. 154 Pulsed ASL was performed by using the proximal inversion with control for off-155 resonance effects technique (PICORE) as described by Buxton’s et al. [23]. The 156 process is defined by three functions: (a) the delivery function c(t) is the normalized 157 arterial concentration of magnetisation arriving at the voxel at time t; (b) the residue 158 function r(t,t') is the fraction of tagged water molecules that arrived at time t' and are 159 still in the voxel at time t; and (c) the magnetisation relaxation function m(t,t') is the 160 fraction of the original longitudinal magnetisation tag carried by the water molecules 161 that arrived at time t' that remains at time t. For the perfusion maps, it is assumed that 162 the off-resonance and magnetisation transfer effects of the tag and control pulses are 163 identical. In-house software implemented in MATLAB was used to process the 164 images and generate peak perfusion maps. An ROI was placed on both the right and 165 left limbs to measure the perfusion (ml/min/100g) in the hind limb. 166 Histology 167 The calf muscles were carefully dissected from ischaemic and non-ischaemic limbs. 168 The soleus was then further separated from the gastrocnemius and plantaris, and 169 both set of muscles were imaged, and their wet weight recorded. Tissue samples 170 were fixed with 10% buffered formalin for 48 hrs at room temperature and processed 171 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+for histological analysis using the Epredia™ Excelsior™ AS Tissue Processor. 172 Samples were then embedded in wax transversally, and 5 μm sections were taken. 173 Sections were taken every 30 μm through the muscles with 5-6 sections per muscle 174 analysed. 175 Sections were stained with Mayers Haematoxylin (Sigma, MHS32) and Eosin Y 176 (Sigma, HT110232) (H&E) as follows. Slides were rehydrated with xylene (2 x 10 177 mins) then rehydrated via an ethanol series of 100%, 100%, 95%, 70%, and 50% and 178 deionised water for 2 mins each. Samples were then stained with Mayers 179 Haematoxylin for 6 mins and placed in running tap water for 4 mins for sample 180 blueing. Counterstaining with Eosin Y was performed for 2 mins prior to briefly rinsing 181 with water before dehydrating in 70%, 95%, 100%, 100% for 30 sec each and then 182 xylene for 10 mins twice. Slides were mounted with DPX and images taken at 10X 183 using an Olympus BX43 upright light microscope with the IC capture software (v 184 3.7.8.2). 185 Masson’s Trichrome (Abcam, AB150686) staining was carried out using the above 186 dehydration/rehydration steps and the manufacturers protocol with several 187 modifications: 8 mins Biebrich staining, 15 mins in phosphotungstic acid solution, 12 188 mins Analine blue staining and incubating for 3 mins in 1% acetic acid. Images were 189 taken at 10X magnification. 190 Skeletal muscle tissue damage was assessed using a multiparametric scoring tool for 191 assessing ischaemia severity as described previously [24]. Two blinded independent 192 investigators scored the degree of inflammation, fibrosis, intermuscular adipocyte 193 infiltration, necrosis, and muscle regeneration. 194 Statistical Analysis 195 Data were tested for normality using a Shapiro-Wilk test and then assessed using 196 either a One-way ANOVA or a Kruskal Wallis test as appropriate using Graphpad 197 Prism (v 9.5.1). The Sidak post-hoc test was used for normally distributed data, or the 198 Dunn’s test for non-parametric data. For all parametric two-sample analysis an 199 unpaired Student’s T-test was used. Two-sample non-parametric ordinal data were 200 compared using a one-way Wilcoxon test. Pearson correlation and linear regression 201 analysis were performed between FLAIR data, and mean diffusivity or fractional 202 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+anisotropy using Graphpad Prism. Statistical significance was defined at P ≤ 0.05. All 203 data are represented as mean ± standard deviation (SD) unless stated otherwise. 204 All MRI data are displayed as a ratio of the ischaemic to non-ischaemic limb. 205 A Pearson correlation analysis was carried out between the FLAIR intensity values 206 and the fractional anisotropy (FA) and mean diffusivity (MD) to determine the link 207 between inflammation and the muscle fibre integrity. The Pearson correlation was 208 carried out using Graphpad Prism (v. 9.5.1). 209 Results 210 3D-GRE shows significant increases in muscle volume on Day +3 post-211 HLI 212 HLI is characterised by a loss in muscle mass due to ischaemia-induced necrosis and 213 inflammation [10]. To determine whether a change in muscle volume in the ischaemic 214 limb post-surgery was detectable by MRI, we used 3D-GRE scans. Results show that 215 the ischaemic limb muscle volume was significantly increased on Day +3 compared 216 to Day -3 (P = 0.0002), but returned to baseline levels by Day +7 (Figure 2A+B). The 217 lack of difference in the volume at Day +7 agrees with the absence of muscle weight 218 difference noted upon dissecting the muscles (Figure 2C+D). 219 220 
+
+Figure 2. 3D-GRE Muscle Volume Analysis. A) Representative anatomical 3D-GRE images 221 
+
+of muscles. B) Volumes of the calf muscles were calculated as a ratio of the non-ischaemic 222 
+
+limb. There was a significant increase in muscle mass on Day +3 after HLI vs Day -3 (P = 223 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+0.0002). This was restored to baseline levels by Day +7. C) Representative dissections of 224 
+
+lower limb muscles showing significant pigmentation loss in ischaemic muscles. D) Wet 225 
+
+weights of calf muscles of the hindlimb. No significant difference in muscle weights between 226 
+
+ischaemic + non-ischaemic at Day +7. Gast = Gastrocnemius. N = 6. Mean±SD. Scale Bar = 227 
+
+1 cm. ***<0.001. 228 Significant increases in FLAIR measured inflammation at Day +3 and +7 229 A notable hallmark of HLI is the associated inflammation that occurs, particularly at 230 early timepoints [10,25]. FLAIR imaging was used to quantify water content providing 231 an indirect measure of tissue inflammation [26,27]. Therefore, we generated volumes 232 of interest around the calf and estimated the relative pixel intensity on FLAIR scans 233 as a measure of the degree of inflammation. This was then calculated as a ratio of the 234 ischaemic vs non-ischaemic limb. We noted a significant increase in the degree of 235 inflammation in the ischaemic limb vs the non-ischaemic limb on Day +3 and +7 vs 236 Day -3 (P < 0.0001 and P < 0.0001, respectively) (Figure 3A+B). Histological analysis 237 of the ischaemic limb at Day +7 confirmed the presence of severe inflammation, 238 characterised by an accumulation of leukocytes scattered across large areas of the 239 muscle, accompanied by a significant loss of muscle fibre integrity (fibre 240 degeneration) as well as large areas of muscle fibre necrosis (purple-coloured muscle 241 fibres in Masson Trichrome staining) (Figure 3C-D). At this early timepoint, there was 242 a mild deposition of intermuscular collagen fibrillar material (blue deposits in 243 Masson’s Trichrome staining), but there was no presence of intermuscular adipocyte 244 infiltration, which is more obvious in later timepoints [12]. The cumulative ischaemic 245 score (cISS) was calculated for each animal by adding up the individual scores 246 (Figure 3E+F), with a total cISS = 10.5 noted in the ischaemic limb, indicating severe 247 ischaemic damage [24]. In contrast, the non-ischaemic limb possessed very mild 248 inflammatory and fibrotic scores (cISS = 1.5), as previously observed at this timepoint 249 [25,28]. 250 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+251 
+
+Figure 3. Significant inflammation observed in ischaemic muscles post HLI. A) 252 
+
+Representative FLAIR images of inflammation in leg muscles. Scale Bar = 1 cm. B) 253 
+
+Muscle inflammation was measured using volumes of interest of the muscle distal to 254 
+
+the knee joint and then calculating the average pixel intensity within the volume of 255 
+
+interest. The pixel intensity was then taken as a ratio of the ischaemic to non-256 
+
+ischaemic limb. There was a significant increase in muscle water content, indicative 257 
+
+of inflammation, on Day +3 and +7 after HLI vs Day –3 (P < 0.0001 and < 0.0001, 258 
+
+respectively). Mean ± SD. Representative H&E (C) and Masson’s Trichrome (D) 259 
+
+histological images. Scale bar = 200 μm. E + F) Individual and cumulative ischaemia 260 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+score indicates significant increases in inflammation, fibrosis, necrosis, and fibre 261 
+
+degeneration in ischaemic muscles vs non-ischaemic control limbs. N = 6, median ± 262 
+
+interquartile Range. * < 0.05, **** < 0.0001. RPI = Relative pixel intensity. 263 HLI is a complex and severe condition that results in many pathological changes 264 including tissue necrosis. With the MRI’s ability to detect white tract destruction in the 265 brain, we wanted to discern its ability to identify changes in muscle fibre integrity. 266 Using DW-EPI images, we calculated the FA and MD values in three regions of the 267 calf muscles using two consecutive slices per region, beginning just below the knee 268 joint (superior, middle, and inferior) (Figure 4A-D). The FA and MD were then 269 calculated as a ratio of the ischaemic vs non-ischaemic limb (Figure 4E+F). We found 270 a significant decrease in the FA values on Day +3 after surgery, followed by partial 271 restoration on Day +7. There was only a significant change in the MD values in the 272 mid-calf, with an increase on Day +3 and subsequent decrease on Day +7 (P = 0.03 273 and 0.01, respectively). 274 275 
+
+Figure 4. Significant decrease in muscle fibre organisation after HLI. A-C) 276 
+
+Representative volumes of interest. D) Representative DW-EPI image of the middle calf at 277 
+
+different timepoints. E) Fractional anisotropy of calf muscles indicating a significant decrease 278 
+
+in muscle fibre linearity on Day +3 and +7 after surgery throughout the calf muscles. F) 279 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+Significant increase in water movement noted by Day +3, likely due to oedema, and 280 
+
+significantly restricted water movement, likely associated with immune cell infiltration, on Day 281 
+
++7 in the middle calf region. Both the fractional anisotropy and mean diffusivity were 282 
+
+calculated as a ratio of the ischaemic to the non-ischaemic limb. N = 3-6. Mean±SD. * <0.05, 283 
+
+*** <0.001. IC = Inferior Calf, MC = Middle Calf, SC = Superior Calf. 284 The diffusion data were then correlated with the FLAIR water content data to 285 investigate the association between inflammation and tissue damage. There was a 286 significant strong negative correlation between the FLAIR and FA values at each level 287 of the calf muscles (superior (P < 0.0001, r = -0.87), middle (P < 0.0001, r = -0.87), 288 inferior (P = 0.0017, r = -0.74)) (Figure 5A+B), and a significant moderate correlation 289 between the MD and FLAIR values at the mid-calf region only (P = 0.03, r = 0.54). 290 291 
+
+Figure 5. Pearson correlation of FLAIR and DW-EPI. A) The correlation between FLAIR 292 
+
+and fractional anisotropy shows that muscle fibre integrity has a significant and strong 293 
+
+negative correlation with water infiltration, as detected by FLAIR. This data suggests that the 294 
+
+muscle fibre integrity decreased in tandem with inflammation. B) The water content (FLAIR) 295 
+
+only significantly correlated with the mean diffusivity in the middle calf region, suggesting that 296 
+
+the ratio of the cell and water content was mostly unchanged in the calf. RPI = Relative pixel 297 
+
+intensity. 298 Significant decrease in arterial tree length and perfusion after HLI 299 Restoring blood flow post-ischaemia is a critical step towards functional limb recovery. 300 Thus, identifying vascular remodelling via MRI along with restored blood perfusion are 301 crucial metrics to determine the ability of the body to restore nutrients to the nearby 302 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+ischaemic tissue. Using 3D-TOF imaging, we validated successful surgical ischaemia 303 with a corresponding significant decrease in the max length of vessels in the 304 ischaemic limb vs the non-ischaemic limb at Day +3 and +7 vs -3 (P < 0.0001 and 305 0.0001, respectively) (Figure 6A-C). By Day +7, there was no substantial increase in 306 max arterial length identified. Using ASL imaging, we noted a corresponding 307 significant decrease in the perfusion in the ischaemic limb by Day +3 and Day +7 308 compared to pre-surgery values (P = 0.03 and 0.04, respectively) (Figure 6D-F). 309 310 Figure 6. Limb Vascular Deterioration. A) Representative TOF images of vessels in the 311 
+
+hindlimb. MRI can identify the vasculature of the lower limb and the site of surgical arterial 312 
+
+transection (red arrow). Scale bar = 1cm. B) Model of the surface profiling at each timepoint. 313 
+
+C) Graph of the longest combined arterial length beginning from the descending aorta-314 
+
+common femoral branch junction to the furthest arterial branch in each limb. The arterial 315 
+
+length was then calculated as a ratio of the ischaemic to non-ischaemic limb. Our findings 316 
+
+show a significant decrease in the longest combined length of artery in the ischaemic limb 317 
+
+after HLI surgery compared to Day-3 (P < 0.0001). N = 6. D) Representative perfusion 318 
+
+images at Day -3, +3, and +7. E) Processed image of hindlimb for perfusion modelling. The 319 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+red arrow indicates a region of high perfusion in the non-ischaemic limb, with no 320 
+
+corresponding high perfusion in the ischaemic limb. F) Quantification of the relative perfusion 321 
+
+in ischaemic vs non-ischaemic limbs showing a significant decrease in perfusion after HLI 322 
+
+surgery. N = 3-6. * = 0.05. **** <0.0001. 323 324 
+
+.CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint Discussion 325 Here, we developed an MRI multiparametric approach to characterise the 326 pathological cascade following HLI, encompassing tissue structure, vascular 327 responses, and mechanisms underlying recovery. Overall, this study demonstrates 328 the potential of MRI to longitudinally monitor recovery in the HLI mouse model, 329 capturing the muscular, inflammatory, and vascular responses through the combined 330 use of 3D-GRE, ASL, 3D-TOF, DW-EPI and FLAIR imaging. 331 Patients with CLTI exhibit substantial loss of muscle mass and function [29], a 332 phenotype that our lab and others have also observed in the HLI mouse model 333 [12,25]. This decline is likely attributable to impaired nutrient delivery, ischaemia-334 induced tissue necrosis, and reduced mechanical loading, which collectively promote 335 muscle atrophy and structural deterioration. Here, we have shown that MRI can be 336 used to track changes in muscle volume across time. At an early timepoint of Day +3 337 post-HLI we identified a significant increase in muscle mass using volumetric analysis 338 of MRI images (Figure 2). This increase in volume is likely due to the oedema 339 associated with the ischaemia induced inflammation, which was corroborated in the 340 FLAIR imaging [30]. We predict this muscle mass will decrease at later timepoints as 341 shown by Evans et al. [25], as suggested by the drop in muscle volume on Day +7. 342 While data by Scalabrin et al [31] noted a significant decrease in gastrocnemius and 343 soleus weights at Day 7 post-HLI, our data did not find significantly differences. The 344 difference is likely attributed to Scalabrin et al transecting both the femoral artery and 345 vein, causing a more severe phenotype. Sustained inflammation is a key hallmark of 346 limb ischaemia and is known to contribute negatively to tissue remodelling and 347 functional recovery. The hypoxic and inflammatory environment act as potent 348 chemoattractant stimuli, promoting rapid immune cell infiltration while contributing to 349 extensive tissue necrosis and oedema. Our histological data similarly shows 350 significant immune cell infiltration and tissue necrosis at Day +7 (Figure 3). MRI 351 analysis demonstrated water content changes, a surrogate marker of inflammation, 352 and demonstrated significant oedema on both Day +3 and +7. In addition, at Day +7 353 histological assessment revealed early muscle remodelling, characterised by mild 354 collagen deposition and large areas of muscle fibre degeneration, although extensive 355 collagen accumulation and adipocyte infiltration were not yet evident. The absence of 356 adipocyte accumulation suggests that this represents an early remodelling stage prior 357 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+to the development of the more advanced fibrotic and adipogenic phenotype 358 observed at later timepoints [12,13,24,32]. Our DW-EPI data shows that there was 359 significant reduction in muscle fibre integrity post-HLI surgery at Day +3, which begins 360 to recover by Day +7 (Figure 4), which significantly correlated with the extent of 361 oedema as evaluated by the FLAIR imaging (Figure 5). Similar correlations have 362 been observed between T2 relaxation times and % of muscle damage determined 363 using histology [13]. Overall, MRI can reliably detect early muscle remodelling 364 changes longitudinally including inflammation and muscle integrity, using changes to 365 water influx and muscle fibre integrity. 366 While LDI is the gold standard technique to measure blood flow recovery post-HLI, 367 MRI can visualise and functionally validate the surgical ligation. This can be done by 368 directly imaging the vessels while also comparing perfusion between the ischaemic 369 and non-ischaemic limbs. MRI imaging confirmed successful induction of the HLI 370 model, demonstrated by a significant reduction in perfusion in the ischaemic limb with 371 ASL imaging at Day +3 and +7. This finding was further supported by 3D-TOF 372 imaging, which revealed a significant reduction in arterial tree length (Figure 6). The 373 decrease in perfusion is similar to that observed in HLI studies that use LDI [33–35]. 374 However, ASL demonstrated a decrease in perfusion of only ~15% of the ischaemic 375 vs non-ischaemic control after HLI surgery. In contrast, LDI typically demonstrates a 376 drop in perfusion of ~80% perfusion after HLI, suggesting a higher sensitivity to 377 detecting changes in perfusion. A study by Bryant et al. [18] showed potential for 378 dynamic contrast imaging for detecting perfusion changes in inflammation; therefore, 379 future work can assess whether dynamic contrast-enhanced MRI provides superior 380 sensitivity compared to ASL in HLI. 381 The main limitations of this work are the long imaging times required (e.g. 2 hrs per 382 animal for all the scan modalities), complexity of the analysis, expertise, and cost of 383 an MRI machine. Despite this, multimodal MRI has the advantage of providing 384 comprehensive information on muscle structure, inflammation, and vascular 385 remodelling. It facilitates longitudinal analysis of multiple parameters in vivo without 386 the need for animal sacrifice. Nevertheless, LDI may remain a more practical 387 approach for longitudinal monitoring of perfusion recovery due to its simplicity and 388 resolution, and perhaps can be applied in parallel. Furthermore, our data 389 demonstrates low variability in muscle volume, inflammation, muscle fibre integrity, 390 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+and vascular monitoring data. Therefore, even with low animal numbers, significant 391 changes were identified between the ischaemic and non-ischaemic limbs. Finally, we 392 observed no significant functional and anatomical recovery by Day +3 and +7, which 393 is likely due to endogenous vascular recovery beginning at later timepoints following 394 HLI induction [13,36]. Therefore, further studies incorporating later timepoints will be 395 required to fully characterise the temporal progression of the endogenous HLI 396 recovery process. Finally, this work did not investigate a potential therapeutic to 397 discern its therapeutic mechanism of recovery. To demonstrate the maximum 398 potential of longitudinal MRI, future work should investigate novel therapeutics in the 399 HLI model. 400 In the current study we demonstrate the feasibility of using MRI for multimodal in vivo 401 sequential analysis of the response to limb ischemia. This report also lays the 402 foundation to apply mutli-modal MRI imaging to examine the recovery of HLI mouse 403 models in response to novel therapeutics. MRI can provide invaluable information on 404 the mechanisms of action of new therapies, thereby accelerating their translation to 405 the clinic. Subsequent investigations should examine recovery at later timepoints, as 406 many HLI studies extend follow-up to 21 or 28 days post-ischaemia. Incorporating 407 later imaging timepoints will provide invaluable information into the endogenous 408 recovery process following HLI induction, including the resolution of inflammation, 409 vascular remodelling, and restoration of muscle fibre integrity to determine whether 410 these processes are accelerated by therapeutic interventions. 411 Conclusion 412 This work demonstrates the potential of multimodal MRI as a longitudinal tool to 413 monitor recovery following HLI induction in vivo, enabling detection of changes in 414 muscle fibre integrity, vascular remodelling, and inflammation over time. Future work 415 can apply MRI technology to help elucidate the mechanism of action of therapeutics 416 to better facilitate their clinical translation. 417 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+# Acknowledgements 418 We would like to thank Gabor Mosaic from Mediso Ltd (Hungary) for his technical 419 input on the MRI and to CÚRAM, Research Ireland Centre for Medical Devices, 420 University of Galway, Galway, Ireland for the use of the MRI machine. Figures were 421 made with the help of Biorender. 422 Funding 423 This work was supported by the Research Ireland Frontiers for the Future Programme 424 (20/FFP-A/8794) and Research Ireland (13/RC/2073_P2). The MRI machine was 425 procured using funding from the National Preclinical Imaging Centre (18/RI/5759). 426 Conflicts of Interest 427 None. 428 Author Contribution 429 C.J.L. = Conceptualisation, data acquisition, data analysis, manuscript writing. 430 M.N.D. = Data acquisition. 431 X.Z.C. = Data acquisition. 432 C.A.L. = Data acquisition and manuscript review. 433 C.S.N. = Data acquisition and manuscript review. 434 T.O.B. = Conceptualisation, funding acquisition, manuscript review. 435 N.C. = Conceptualisation, data analysis, manuscript writing, and review. 436 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint
+
+# References 437 
+
+> [1]  Kinlay S. Management of Critical Limb Ischemia. Circ Cardiovasc Interv
+
+438 
+
+> 2016;9:e001946. https://doi.org/10.1161/CIRCINTERVENTIONS.115.001946.
+
+439 
+
+> [2]  Norgren L, Hiatt WR, Dormandy JA, Nehler MR, Harris KA, Fowkes FGR. Inter-Society
+
+440 
+
+> Consensus for the Management of Peripheral Arterial Disease (TASC II). J Vasc Surg
+
+441 
+
+> 2007;45 Suppl S. https://doi.org/10.1016/J.JVS.2006.12.037.
+
+442 
+
+> [3]  Migliara B. Treatment of No-Option CLI Patients. Journal of Vascular and Endovascular
+
+443 
+
+> Therapy 2018;3. https://doi.org/10.21767/2573-4482.18.03.15.
+
+444 
+
+> [4]  Spreen MI, Gremmels H, Teraa M, Sprengers RW, Verhaar MC, Van Eps RGS, et al.
+
+445 
+
+> Diabetes Is Associated With Decreased Limb Survival in Patients With Critical Limb
+
+446 
+
+> Ischemia: Pooled Data From Two Randomized Controlled Trials. Diabetes Care
+
+447 
+
+> 2016;39:2058–64. https://doi.org/10.2337/DC16-0850.
+
+448 
+
+> [5]  Duff S, Mafilios MS, Bhounsule P, Hasegawa JT. The burden of critical limb ischemia: a
+
+449 
+
+> review of recent literature. Vasc Health Risk Manag 2019;15:187–208.
+
+450 
+
+> https://doi.org/10.2147/VHRM.S209241.
+
+451 
+
+> [6]  Nowak-Sliwinska P, Alitalo K, Allen E, Anisimov A, Aplin AC, Auerbach R, et al.
+
+452 
+
+> Consensus guidelines for the use and interpretation of angiogenesis assays.
+
+453 
+
+> Angiogenesis 2018;21:425–532. https://doi.org/10.1007/s10456-018-9613-x.
+
+454 
+
+> [7]  Ray KK, Oru E, Rosenson RS, Jones J, Ma X, Walgren J, et al. Effect of metformin in a
+
+455 
+
+> novel experimental model of peripheral artery disease. Clin Sci 2025;139:847–56.
+
+456 
+
+> https://doi.org/10.1016/S0140-6736(25)00507-0.
+
+457 
+
+> [8]  Kang K-T, Lin R-Z, Kuppermann D, Melero-Martin JM, Bischoff J. Endothelial colony
+
+458 
+
+> forming cells and mesenchymal progenitor cells form blood vessels and increase blood
+
+459 
+
+> flow in ischemic muscle. Sci Rep 2017;7:770. https://doi.org/10.1038/s41598-017-
+
+460 
+
+> 00809-1.
+
+461 
+
+> [9]  Rossi E, Goyard C, Cras A, Dizier B, Bacha N, Lokajczyk A, et al. Co-injection of
+
+462 
+
+> mesenchymal stem cells with endothelial progenitor cells accelerates muscle recovery
+
+463 
+
+> in hind limb ischemia through an endoglin-dependent mechanism. Thromb Haemost
+
+464 
+
+> 2017;117:1908–18. https://doi.org/10.1160/TH17-01-0007.
+
+465 
+
+> [10]  McClung JM, McCord TJ, Keum S, Johnson S, Annex BH, Marchuk DA, et al. Skeletal
+
+466 
+
+> Muscle–Specific Genetic Determinants Contribute to the Differential Strain-Dependent
+
+467 
+
+> Effects of Hindlimb Ischemia in Mice. Am J Pathol 2012;180:2156.
+
+468 
+
+> https://doi.org/10.1016/j.ajpath.2012.01.032.
+
+469 
+
+> [11]  Miyake K, Azuma N, Rinoie C, Maeda S, Harada A, Li L, et al. Regenerative Effect of
+
+470 
+
+> Umbilical Cord-Derived Mesenchymal Stromal Cells in a Rat Model of Established Limb
+
+471 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint Ischemia. Circulation Journal 2023;87:412–20. https://doi.org/10.1253/circj.CJ-22-
+
+472 
+
+> 0257.
+
+473 
+
+> [12]  Sanz-Nogués C, Keane AJ, Creane M, Hynes SO, Chen X, Lyons CJ, et al. Mesenchymal
+
+474 
+
+> stromal cell transplantation ameliorates fibrosis and microRNA dysregulation in
+
+475 
+
+> skeletal muscle ischemia. Stem Cells 2024;42:976.
+
+476 
+
+> https://doi.org/10.1093/stmcls/sxae058.
+
+477 
+
+> [13]  Zaccagnini G, Palmisano A, Canu T, Maimone B, Russo FML, Ambrogi F, et al. Magnetic
+
+478 
+
+> Resonance Imaging Allows the Evaluation of Tissue Damage and Regeneration in a
+
+479 
+
+> Mouse Model of Critical Limb Ischemia. PLoS One 2015;10:e0142111.
+
+480 
+
+> https://doi.org/10.1371/journal.pone.0142111.
+
+481 
+
+> [14]  Ziv K, Nevo N, Dafni H, Israely T, Granot D, Brenner O, et al. Longitudinal MRI Tracking
+
+482 
+
+> of the Angiogenic Response to Hind Limb Ischemic Injury in the Mouse. Magn Reson
+
+483 
+
+> Med 2004;51:304–11. https://doi.org/10.1002/mrm.10687.
+
+484 
+
+> [15]  Jacoby C, Böring YC, Beck A, Zernecke A, Aurich V, Weber C, et al. Dynamic changes in
+
+485 
+
+> murine vessel geometry assessed by high-resolution magnetic resonance angiography:
+
+486 
+
+> A 9.4T study. Journal of Magnetic Resonance Imaging 2008;28:637–45.
+
+487 
+
+> https://doi.org/10.1002/jmri.21482.
+
+488 
+
+> [16]  Aref Z, de Vries MR, Quax PHA. Variations in Surgical Procedures for Inducing Hind
+
+489 
+
+> Limb Ischemia in Mice and the Impact of These Variations on Neovascularization
+
+490 
+
+> Assessment. Int J Mol Sci 2019;20:3704. https://doi.org/10.3390/ijms20153704.
+
+491 
+
+> [17]  Goggi JL, Haslop A, Boominathan R, Chan K, Soh V, Cheng P, et al. Imaging the
+
+492 
+
+> Proangiogenic Effects of Cardiovascular Drugs in a Diabetic Model of Limb Ischemia.
+
+493 
+
+> Contrast Media Mol Imaging 2019;2019:2538909.
+
+494 
+
+> https://doi.org/10.1155/2019/2538909.
+
+495 
+
+> [18]  Bryant ND, Li K, Does MD, Barnes S, Gochberg DF, Yankeelov TE, et al. Multi-parametric
+
+496 
+
+> MRI characterization of inflammation in murine skeletal muscle. NMR Biomed
+
+497 
+
+> 2014;27:716–25. https://doi.org/10.1002/NBM.3113;CTYPE:STRING:JOURNAL.
+
+498 
+
+> [19]  Kim S -G. Quantification of relative cerebral blood flow change by flow-sensitive
+
+499 
+
+> alternating inversion recovery (FAIR) technique: application to functional mapping.
+
+500 
+
+> Magn Reson Med 1995;34:293–301. https://doi.org/10.1002/MRM.1910340303.
+
+501 
+
+> [20]  Yeh FC, Liu L, Hitchens TK, Wu YL. Mapping immune cell infiltration using restricted
+
+502 
+
+> diffusion MRI. Magn Reson Med 2017;77:603–12.
+
+503 
+
+> https://doi.org/10.1002/MRM.26143.
+
+504 
+
+> [21]  Yeh FC, Wedeen VJ, Tseng WYI. Generalized q-sampling imaging. IEEE Trans Med
+
+505 
+
+> Imaging 2010;29:1626–35. https://doi.org/10.1109/TMI.2010.2045126.
+
+506 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint [22]  Izzo R, Steinman D, Manini S, Antiga L. The Vascular Modeling Toolkit: A Python Library
+
+507 
+
+> for the Analysis of Tubular Structures in Medical Images. J Open Source Softw
+
+508 
+
+> 2018;3:745. https://doi.org/10.21105/JOSS.00745.
+
+509 
+
+> [23]  Buxton RB, Frank LR, Wong EC, Siewert B, Warach S, Edelman RR. A general kinetic
+
+510 
+
+> model for quantitative perfusion imaging with arterial spin labeling. Magn Reson Med
+
+511 
+
+> 1998;40:383–96. https://doi.org/10.1002/MRM.1910400308.
+
+512 
+
+> [24]  Sanz-Nogués C, Creane M, Hynes SO, Chen X, Lagonda CA, Goljanek-Whysall K, et al.
+
+513 
+
+> Development and Validation of a Multiparametric Semiquantitative Scoring System for
+
+514 
+
+> the Histopathological Assessment of Ischaemia Severity in Skeletal Muscle. J Tissue Eng
+
+515 
+
+> Regen Med 2023;2023:5592455. https://doi.org/10.1155/2023/5592455.
+
+516 
+
+> [25]  Evans WS, Pena GS, Gelman B, Kuzmiak-Glancy S, Prior SJ. Unilateral hindlimb
+
+517 
+
+> ischaemia-induced systemic inflammation is associated with non-ischaemic skeletal
+
+518 
+
+> muscle inflammation. Exp Physiol 2024;109:1604–13.
+
+519 
+
+> https://doi.org/10.1113/EP091901.
+
+520 
+
+> [26]  Deplano L, Piga M, Porcu M, Stecco A, Suri JS, Mannelli L, et al. Whole-Body MRI in
+
+521 
+
+> Rheumatology: Major Advances and Future Perspectives. Diagnostics 2021;11:1770.
+
+522 
+
+> https://doi.org/10.3390/DIAGNOSTICS11101770.
+
+523 
+
+> [27]  Adams EM, Chow CK, Premkumar A, Plotz PH. The idiopathic inflammatory
+
+524 
+
+> myopathies: spectrum of MR imaging findings. Radiographics 1995;15:563–74.
+
+525 
+
+> https://doi.org/10.1148/RADIOGRAPHICS.15.3.7624563.
+
+526 
+
+> [28]  Keane AJ, Sanz-Nogués C, Jayasooriya D, Creane M, Chen X, Lyons CJ, et al. miR-1, miR-
+
+527 
+
+> 133a, miR-29b and skeletal muscle fibrosis in chronic limb-threatening ischaemia. Sci
+
+528 
+
+> Rep 2024;14:29393. https://doi.org/10.1038/s41598-024-76415-9.
+
+529 
+
+> [29]  Sivaharan A, Boylan L, Witham MD, Nandhra S. Sarcopenia in Patients Undergoing
+
+530 
+
+> Lower Limb Bypass Surgery is Associated with Higher Mortality and Major Amputation
+
+531 
+
+> Rates. Ann Vasc Surg 2021;75:227–36. https://doi.org/10.1016/J.AVSG.2021.02.022.
+
+532 
+
+> [30]  Kupinski AM, Bock DEM, Bell DR. Skeletal muscle ischemia-reperfusion causes
+
+533 
+
+> transitory increase in microvascular protein permeability. Am J Physiol 1997;273.
+
+534 
+
+> https://doi.org/10.1152/AJPHEART.1997.273.1.H303.
+
+535 
+
+> [31]  Scalabrin M, Engman V, Maccannell A, Critchlow A, Roberts LD, Yudalsheva N, et al.
+
+536 
+
+> Temporal analysis of skeletal muscle remodeling post hindlimb ischemia reveals
+
+537 
+
+> intricate autophagy regulation. Https://DoiOrg/101152/Ajpcell001742022
+
+538 
+
+> 2022;323:C1601–10. https://doi.org/10.1152/AJPCELL.00174.2022.
+
+539 
+
+> [32]  Yu Y, Yin G, Bao S, Guo Z. Kinetic alterations of collagen and elastic fibres and their
+
+540 
+
+> association with cardiac function in acute myocardial infarction. Mol Med Rep
+
+541 
+
+> 2017;17:3519. https://doi.org/10.3892/MMR.2017.8347.
+
+542 
+
+> .CC-BY-NC 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 17, 2026. ;https://doi.org/10.64898/2026.07.17.739107 doi: bioRxiv preprint [33]  Hess DL, Kelly-Goss MR, Cherepanova OA, Nguyen AT, Baylis RA, Tkachenko S, et al.
+
+543 
+
+> Perivascular cell-specific knockout of the stem cell pluripotency gene Oct4 inhibits
+
+544 
+
+> angiogenesis. Nature Communications 2019 10:1 2019;10:967-.
+
+545 
+
+> https://doi.org/10.1038/s41467-019-08811-z.
+
+546 
+
+> [34]  Toyonaga H, Arai K, Zhang M, Cheng L, Tanaka H. mRNA-based in vivo induction of
+
+547 
+
+> ETV2 to restore blood flow in a preclinical mouse hindlimb ischemia model. Mol Ther
+
+548 
+
+> Nucleic Acids 2025;36:102592. https://doi.org/10.1016/J.OMTN.2025.102592.
+
+549 
+
+> [35]  Peng X, Wang J, Lassance-Soares RM, Najafi AH, Sood S, Aghili N, et al. Gender
+
+550 
+
+> differences affect blood flow recovery in a mouse model of hindlimb ischemia. Am J
+
+551 
+
+> Physiol Heart Circ Physiol 2011;300:H2027.
+
+552 
+
+> https://doi.org/10.1152/AJPHEART.00004.2011.
+
+553 
+
+> [36]  Ochoa O, Sun D, Reyes-Reyna SM, Waite LL, Michalek JE, McManus LM, et al. Delayed
+
+554 
+
+> angiogenesis and VEGF production in CCR2−/− mice during impaired skeletal muscle
+
+555 
+
+> regeneration. Https://DoiOrg/101152/Ajpregu000692007 2007;293:651–61.
+
+556 
+
+> https://doi.org/10.1152/AJPREGU.00069.2007.
+
+557 
+
+558 559

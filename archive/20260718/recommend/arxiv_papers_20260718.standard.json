@@ -1,0 +1,99 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-18T20:56:34.575768+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-07-17-739107-v1",
+      "source": "biorxiv",
+      "title": "Multi-modal MRI characterisation of vascular remodelling, muscle fibre integrity, and inflammatory recovery in a hindlimb ischaemia mouse model",
+      "abstract": "The hindlimb ischaemia (HLI) mouse model is a widely used preclinical model of chronic limb-threatening ischaemia (CLTI). While CLTI involves complex interactions between impaired perfusion, inflammation and muscle wasting, the standard imaging approach, laser Doppler imaging (LDI), only assesses perfusion. MRI is used clinically to assess neural tracts, inflammation, and perfusion in the brain. We therefore evaluated whether a multimodal MRI approach could longitudinally monitor recovery in the HLI mouse model. Mice underwent MRI three days pre-HLI surgery, and on Days +3 and +7 post-surgery, with histology on Day +7. The MRI detected significant increases in muscle volume and inflammation after HLI surgery, with significant decreases in perfusion, vascular length, and muscle fibre integrity. Overall, MRI can monitor inflammation, muscle fibre integrity, and vascular recovery post-HLI and should be applied in future studies to identify mechanisms of therapeutic recovery in a sequential in vivo analysis without requiring animal sacrifice.",
+      "authors": [
+        "Lyons, C. J.",
+        "Doulgkeroglou, M. N.",
+        "Sanz-Nogues, C.",
+        "Lagonda, C. A.",
+        "Chen, X.",
+        "Colgan, N.",
+        "O'Brien, T."
+      ],
+      "primary_category": "biophysics",
+      "categories": [
+        "biophysics"
+      ],
+      "published": "2026-07-17T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.07.17.739107v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "studies vascular remodelling inflammation and muscle integrity in hindlimb ischaemia model which are key factors influencing flap survival",
+      "llm_evidence_cn": "研究后肢缺血模型中的血管重塑、炎症和肌肉完整性，这些是影响皮瓣存活的关键因素",
+      "llm_evidence": "研究后肢缺血模型中的血管重塑、炎症和肌肉完整性，这些是影响皮瓣存活的关键因素",
+      "canonical_evidence": "研究后肢缺血模型中的血管重塑、炎症和肌肉完整性，这些是影响皮瓣存活的关键因素",
+      "llm_tldr_en": "Multi-modal MRI characterizes vascular remodelling, muscle fibre integrity, and inflammatory recovery in a hindlimb ischaemia mouse model, providing transferable methods and insights into factors affecting tissue survival.",
+      "llm_tldr_cn": "该研究利用多模态MRI纵向监测后肢缺血小鼠模型的恢复过程，检测到血管重塑、肌肉纤维完整性和炎症变化。这些因素与皮瓣存活密切相关，因此该研究的方法和发现可转移至皮瓣存活研究，为理解影响组织存活的因子提供了新方法。",
+      "llm_tldr": "该研究利用多模态MRI纵向监测后肢缺血小鼠模型的恢复过程，检测到血管重塑、肌肉纤维完整性和炎症变化。这些因素与皮瓣存活密切相关，因此该研究的方法和发现可转移至皮瓣存活研究，为理解影响组织存活的因子提供了新方法。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-07-16-738913-v1",
+      "source": "biorxiv",
+      "title": "A deployable microfluidic platform for parallel and longitudinal hyperpolarised magnetic resonance metabolic phenotyping",
+      "abstract": "Hyperpolarised magnetic resonance (MR) enables real-time measurement of metabolic flux in living systems but remains difficult to deploy for cell-based studies because each hyperpolarisation event typically interrogates a single biological condition, limiting throughput, replication and longitudinal experimentation. Here we present a deployable microfluidic platform for parallel and longitudinal hyperpolarised 13C metabolic phenotyping using standard MRI instrumentation. By combining microfluidics with spatially resolved MR spectroscopic imaging, the platform converts a single hyperpolarised preparation into multiple independent metabolic measurements without dedicated radiofrequency receive arrays or specialised instrumentation. We demonstrate reproducible discrimination of metabolically active and inactive samples, resolve cell-type-specific metabolic phenotypes, quantify biochemical and pharmacological perturbations, and recover metabolic exchange kinetics from parallel samples. Beyond increasing throughput, the platform enables repeated, non-destructive metabolic interrogation of the same recirculating three-dimensional cell cultures, allowing longitudinal phenotyping of living constructs rather than endpoint comparisons of independent samples. Across this study, 186 HP-MR measurements were acquired using only 44 polarisation events, corresponding to an approximately 4-fold increase in experimental throughput, while longitudinal monitoring reduced biological sample preparation 5-fold by following the same constructs over time. By lowering the technical barrier to hyperpolarised metabolic imaging while enabling both parallel and longitudinal metabolic phenotyping, this platform provides an accessible framework for drug discovery, microphysiological systems and patient-derived models.",
+      "authors": [
+        "Gomez-Cabeza, D.",
+        "Mangas-Florencio, L.",
+        "Matajsz, G.",
+        "Azagra, M.",
+        "Herrero-Gomez, A.",
+        "Eills, J.",
+        "Marco-Rius, I."
+      ],
+      "primary_category": "bioengineering",
+      "categories": [
+        "bioengineering"
+      ],
+      "published": "2026-07-17T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.07.16.738913v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "metabolic phenotyping platform for exercise-induced metabolic changes in flaps",
+      "llm_evidence_cn": "代谢表型平台可用于研究运动诱导的皮瓣代谢变化",
+      "llm_evidence": "代谢表型平台可用于研究运动诱导的皮瓣代谢变化",
+      "canonical_evidence": "代谢表型平台可用于研究运动诱导的皮瓣代谢变化",
+      "llm_tldr_en": "A microfluidic platform enabling parallel and longitudinal hyperpolarised MR metabolic phenotyping, converting a single hyperpolarised preparation into multiple measurements, potentially useful for studying exercise-induced metabolic changes in flap survival.",
+      "llm_tldr_cn": "该研究针对超极化磁共振在细胞代谢测量中通量低、无法纵向实验的问题，开发了一种结合微流控和空间分辨磁共振波谱成像的平台。通过将单个超极化制备转化为多个独立测量，实现了平行和纵向代谢表型分析。该平台无需专用硬件，易于部署。它为研究运动训练如何改变皮瓣代谢以促进存活提供了有力的代谢测定手段。",
+      "llm_tldr": "该研究针对超极化磁共振在细胞代谢测量中通量低、无法纵向实验的问题，开发了一种结合微流控和空间分辨磁共振波谱成像的平台。通过将单个超极化制备转化为多个独立测量，实现了平行和纵向代谢表型分析。该平台无需专用硬件，易于部署。它为研究运动训练如何改变皮瓣代谢以促进存活提供了有力的代谢测定手段。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

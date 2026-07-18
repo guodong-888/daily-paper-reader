@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-18",
+  "date": "2026-07-18",
+  "generated_at": "2026-07-18T20:58:02",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/18/biorxiv-10-64898-2026-07-17-739107-v1-multi-modal-mri-characterisation-of-vascular-remodelling-muscle-fibre-integrity-and-inflammatory-recovery-in-a-hindlimb-ischaemia-mouse-model",
+      "section": "quick",
+      "title_en": "Multi-modal MRI characterisation of vascular remodelling, muscle fibre integrity, and inflammatory recovery in a hindlimb ischaemia mouse model",
+      "authors": "Lyons, C. J., Doulgkeroglou, M. N., Sanz-Nogues, C., Lagonda, C. A., Chen, X., Colgan, N., O'Brien, T.",
+      "date": "2026-07-17",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.07.17.739107v1.full.pdf",
+      "score": "7.0",
+      "evidence": "研究后肢缺血模型中的血管重塑、炎症和肌肉完整性，这些是影响皮瓣存活的关键因素",
+      "tldr": "慢性肢体威胁性缺血（CLTI）涉及灌注、炎症和肌肉萎缩的复杂相互作用，但标准成像仅测灌注。本研究利用多模态MRI纵向监测后肢缺血小鼠模型，术前3天及术后3、7天扫描，第7天组织学验证。结果发现术后肌肉体积和炎症显著增加，灌注、血管长度和肌纤维完整性显著下降。MRI可无创、序列地评估炎症、肌纤维完整性和血管重建，避免牺牲动物，为治疗机制研究提供新工具。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "The hindlimb ischaemia (HLI) mouse model is a widely used preclinical model of chronic limb-threatening ischaemia (CLTI). While CLTI involves complex interactions between impaired perfusion, inflammation and muscle wasting, the standard imaging approach, laser Doppler imaging (LDI), only assesses perfusion. MRI is used clinically to assess neural tracts, inflammation, and perfusion in the brain. We therefore evaluated whether a multimodal MRI approach could longitudinally monitor recovery in the HLI mouse model. Mice underwent MRI three days pre-HLI surgery, and on Days +3 and +7 post-surgery, with histology on Day +7. The MRI detected significant increases in muscle volume and inflammation after HLI surgery, with significant decreases in perfusion, vascular length, and muscle fibre integrity. Overall, MRI can monitor inflammation, muscle fibre integrity, and vascular recovery post-HLI and should be applied in future studies to identify mechanisms of therapeutic recovery in a sequential in vivo analysis without requiring animal sacrifice.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/18/biorxiv-10-64898-2026-07-16-738913-v1-a-deployable-microfluidic-platform-for-parallel-and-longitudinal-hyperpolarised-magnetic-resonance-metabolic-phenotyping",
+      "section": "quick",
+      "title_en": "A deployable microfluidic platform for parallel and longitudinal hyperpolarised magnetic resonance metabolic phenotyping",
+      "authors": "Gomez-Cabeza, D., Mangas-Florencio, L., Matajsz, G., Azagra, M., Herrero-Gomez, A., Eills, J., Marco-Rius, I.",
+      "date": "2026-07-17",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.07.16.738913v1.full.pdf",
+      "score": "6.0",
+      "evidence": "代谢表型平台可用于研究运动诱导的皮瓣代谢变化",
+      "tldr": "超极化磁共振虽能实时测量代谢通量，但通量低且难以进行细胞研究。本文提出一种可部署微流控平台，结合微流控与空间分辨MR波谱成像，将单次超极化转化为多个独立测量。该平台可区分代谢活性、解析细胞类型特异性表型、量化药理学扰动，并实现纵向监测同一三维细胞培养。研究以44次极化事件完成186次测量，通量提升约4倍，生物样本制备减少5倍，降低了超极化代谢成像的技术门槛。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Hyperpolarised magnetic resonance (MR) enables real-time measurement of metabolic flux in living systems but remains difficult to deploy for cell-based studies because each hyperpolarisation event typically interrogates a single biological condition, limiting throughput, replication and longitudinal experimentation. Here we present a deployable microfluidic platform for parallel and longitudinal hyperpolarised 13C metabolic phenotyping using standard MRI instrumentation. By combining microfluidics with spatially resolved MR spectroscopic imaging, the platform converts a single hyperpolarised preparation into multiple independent metabolic measurements without dedicated radiofrequency receive arrays or specialised instrumentation. We demonstrate reproducible discrimination of metabolically active and inactive samples, resolve cell-type-specific metabolic phenotypes, quantify biochemical and pharmacological perturbations, and recover metabolic exchange kinetics from parallel samples. Beyond increasing throughput, the platform enables repeated, non-destructive metabolic interrogation of the same recirculating three-dimensional cell cultures, allowing longitudinal phenotyping of living constructs rather than endpoint comparisons of independent samples. Across this study, 186 HP-MR measurements were acquired using only 44 polarisation events, corresponding to an approximately 4-fold increase in experimental throughput, while longitudinal monitoring reduced biological sample preparation 5-fold by following the same constructs over time. By lowering the technical barrier to hyperpolarised metabolic imaging while enabling both parallel and longitudinal metabolic phenotyping, this platform provides an accessible framework for drug discovery, microphysiological systems and patient-derived models.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
