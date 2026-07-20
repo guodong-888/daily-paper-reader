@@ -1,0 +1,3218 @@
+Title: Stressor identity shapes plasma proteomic and metabolic responses in humans
+
+URL Source: https://www.biorxiv.org/content/10.64898/2026.07.17.739102v1.full.pdf
+
+Number of Pages: 57
+
+Markdown Content:
+Title: 1
+
+Stressor identity shapes plasma proteomic and metabolic responses in humans 2
+
+3
+
+4
+
+Authors: 5
+
+Ebert T 1,2 *$, Bajaj T 1*, Stepan J 3,4 , Herhaus B 5, Eberz J 6, Bi W 7, Kallabis S 8, Junglas E 1, Lennarz M 1,6
+
+Heinz DE 1,9 , Brahmer A 6, Sokn MC 1, Frei S 10,11 , Bulut S 1, Stanivuk D 1,12 , Strupp J 1, Hohenthanner H 7,7
+
+Bajaj P 1, Bergmann M 13 , Braun NC 14 , Fischer T 3, Halbe E 13 , Huppertz M 13 , Jurek B 15,16 , Jaksch -8
+
+Bogensperger H 3, Kaspar -Schrödl S 17 , Kempf V 1, Kölle M 13 , Kratz E 6, Kudaliyanage A 2, Laakmann 9
+
+M1, Lammertz K 1, Leds chbor -Frahnert C 13 , Leeners B 4, Lindner A 2, Lux S 13 , Mackert S 1, Maier S 3,10 
+
+Mayr B 18 , Mecdad Y 1, Mohsen G 19 , Niemeyer C 1, Prominski K 1, Rabaszowski A 20 , Rohner H 13 , Saleh 11 
+
+M21 , Sareban M 18,22,23 , Schmidt MV 15 , Tumusiime J 13 , Tuncöz E 1 , Zimmermann A 24 , Schneider H 17 ,12 
+
+Philipsen A 13 , Müller MB 12,25 , Steigenberger B 26 ,Cox J 7, Gapp K 10,11 , Petrowski K 5, Krämer -Albers 13 
+
+EM 6, Paczia N 27 , Meissner F 2, Gassen NC 1,28$ 
+
+14 
+
+15 
+
+16 
+
+Affiliations: 17  1 Neurohomeostasis Research Group, Department of Psychiatry and Psychotherapy, Uni versity 18 
+
+Hospital Bonn, Bonn, Germany. 19  2 Department of Systems Immunology and Proteomics, Institute of Innate Immunity, University 20 
+
+Hospital Bonn, Bonn, Germany. 21  3 Department of Obstetrics and Gynecology, Salzburger Landeskliniken (SALK),  Paracelsus Private 22 
+
+Medical University (PMU) , Salzburg, Austria. 23  4 Department of Reproductive Endocrinology, University Hospital Zurich, Zurich, Switzerland. 24  5 Medical Psychology and Medical Sociology, University Medical Center of the Johannes Gutenberg 25 
+
+University Mainz, Main z, Germany. 26  6 Institute of Developmental Biology and Neurobiology, Johannes Gutenberg University Mainz, 27 
+
+Mainz, Germany. 28  7 Computational Systems Biochemistry Research Group, Max -Planck Institute of Biochemistry, 29 
+
+Martinsried, Germany. 30  8 Core Facility Transla tional Proteomics, Medical Faculty, University of Bonn, Bonn, Germany 31  9 Research Group Neuronal Plasticity, Max Planck Institute of Psychiatry, Munich, Germany 32  10  Neuroscience Center Zurich, ETH Zurich and University of Zurich, Zurich, Switzerland. 33  11  Laboratory of Epigenetics and Neuroendocrinology, Department of Health Sciences and 34 
+
+Technology, Institute for Neuroscience, ETH Zurich, Switzerland. 35  12 Leibniz Institute for Resilience Research, Mainz, Germany. 36  13 Department of Psychiatry and Psychotherapy , University Hospital Bonn, Bonn, Germany. 37  14  Institute of Human Genetics, School of Medicine, University of Bonn and University Hospital 38 
+
+Bonn, Bonn, Germany 39  15 Research Group Neurobiology of Stress Resilience, Max Planck Institute of Psychiatry, Munich, 40 
+
+Germany. 41  16 Organismic Neurobiology, Faculty of Biology, Ludwig Maximilians University (LMU) Munich, 42 
+
+Munich, Germany. 43  17 Institute of Clinical Chemistry and Pathobiochemistry, School of Medicine and Health, Technical 44 
+
+University of Munich, Munich, Germany 45  18 University Institute of Sports Medicine, Prevention and Rehabilitation, Paracelsus Medical 46 
+
+University, Salzburg, Austria. 47  19  Department of Anaesthesiology and Intensive Care Medicine, University Hospital Bonn, Bonn, 48 
+
+Germany. 49  20  Department of Orthopedic s, Klinikum Rechts der Isar, Munich, Germany. 50  21  Department of Neurology, University Hospital Bonn, Bonn, Germany. 51  22  Institute of Clinical Sports Medicine and Prevention, University Hospital Krems  – NOE LGA, 52 
+
+Krems, Austria. 53  23  Department of Sport and Exer cise Medicine, Faculty of Medicine, Karl Landsteiner University, 54 
+
+Krems, Austria. 55  
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint 24
+
+Department of Anaesthesiology and Intensive Care Medicine, University Hospital Bonn, Bonn, 56 
+
+Germany. 57  25  Translational Psychiatry, Dept. of Psychiatry and Psychotherapy, Uni versity Medical Center Mainz, 58 
+
+Germany. 59  26 Mass Spectrometry Core Facility, Max Planck Institute of Biochemistry, Martinsried, Germany. 60  27  Department of Biochemistry & Synthetic Metabolism, Max Planck Institute for Terrestrial 61 
+
+Microbiology, Marburg,  Germany. 62  28 Institute of Virology, Charité - Universitätsmedizin Berlin, Corporate Member of Freie Universität 63 
+
+Berlin, Humboldt -Universität zu Berlin, and Berlin Institute of Health, Berlin, Germany. 64 
+
+65 
+
+66 
+
+* these authors contributed equally 67  $correspondence:  tim.ebert@ukbonn.de , nils.gassen@ukbonn.de 68 
+
+69 
+
+70 
+
+Abstract 71 
+
+Acute stress triggers rapid physiological adaptations, yet how distinct stress modalities shape the 72 
+
+human circulating molecular landscape remains unclear. We performed longitudinal deep plasma 73 
+
+proteomics and targeted metabolomics across three paradigms: psychological stress, controlled 74 
+
+physical stress, and combined psychological –physical stress induced by bung ee jumping. Despite 75 
+
+robust hypothalamic –pituitary –adrenal axis activation, psychological stress induced minimal 76 
+
+plasma proteomic and metabolic changes, whereas physical stress triggered rapid, coordinated 77 
+
+proteome remodeling accompanied by stressor -specifi c metabolic adaptations. Combined stress 78 
+
+elicited the strongest and most persistent proteomic response, defining a graded molecular 79 
+
+signature across stress modalities. Cross -paradigm integration identified a stress -associated 80 
+
+protein core enriched for immu ne granule effectors, RNA -binding proteins, and vesicle -linked 81 
+
+signatures, suggesting regulated extracellular release. Consistently, extracellular vesicle profiling 82 
+
+in the mixed -stress paradigm supported vesicle -associated secretion, while functional exper iments 83 
+
+indicated that glucocorticoid signaling alone is insufficient to trigger release. Together, these 84 
+
+findings reveal stressor identity as a key determinant of the human circulating molecular response. 85 
+
+86 
+
+87 
+
+88 
+
+89 
+
+90 
+
+91 
+
+92 
+
+93 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+Introduction 94 
+
+The acute stress response is a fundamental physiological adaptive process that enables organisms to 95 
+
+cope with environmental challenges. Triggered by perceived threats ranging from psychological and 96 
+
+social stressors to intense physical demands, acute stress rapidly mobilizes neuroendocrine, metabolic, 97 
+
+and immune systems to suppo rt adaptive behavioral and physiological responses (Chrousos & Gold, 98 
+
+1992 ). Under healthy conditions, these responses are tightly regulated and resolved once the threat 99 
+
+subsides, allowing restoration of homeostasis. In contrast, prolonged or dysregulated s tress responses 100 
+
+contribute to the development of numerous pathological conditions, including cardiovascular disease, 101 
+
+metabolic dysfunction, and psychiatric disorders (de Kloet & Joëls, 2023; McEwen et al., 1998 ). 102 
+
+Historically, stress research has focused on central nervous system circuits and activation of the 103 
+
+hypothalamic –pituitary –adrenal (HPA) axis . However, growing evidence indicates that acute stress 104 
+
+rapidly reshapes the circulating molecular environment, reflecting coordinated responses across multip le 105 
+
+organs and physiological systems (Rohleder et al., 2019; Galluzzi et al., 2018 ). Plasma serves as a central 106 
+
+integrative compartment for systemic signaling , containing endocrine mediators , immune -derived 107 
+
+proteins, metabolic intermediates , and cell -derive d vesicles that together mediate the inter -organ 108 
+
+communication. Advances in high -resolution omics technologies have begun to reveal the complexity 109 
+
+of these circulating responses. Plasma proteomics and metabolomics studies have identified stress -110 
+
+associated changes in inflammatory mediators, metabolic pathways, and acute -phase proteins in humans 111 
+
+exposed to psychological or physiological challenges (Marsland et al., 2017; Steptoe et al. , 2007; 112 
+
+Contrepois et al., 2020 ). Despite these advances, a central questio n remains unresolved: do different 113 
+
+forms of acute stress (e.g. physical versus social -emotional stress) engage shared systemic molecular 114 
+
+programs, or do they elicit fundamentally distinct circulating response patterns? 115 
+
+This question has important implicati ons for ad vancing our understanding of stress -related 116 
+
+pathophysiology. Psychological and physical stressors differ fundamentally in their cognitive appraisal, 117 
+
+metabolic demands, mechanical load and in their valence: whereas exercise represents a predominan tly 118 
+
+positive, adaptive stressor (eustress), psychological stress is frequently experienced as negative and 119 
+
+uncontrollable (distress), and is strongly linked to adverse health outcomes when chronic or dysregulated 120 
+
+(Heidt et al., 2014; Knezevic et al ., 2023; Herhaus et al., 2024; Gaab et al., 2005 ). Despite this 121 
+
+fundamental difference in valence, both modalities reliably activate canonical neuroendocrine pathways, 122 
+
+particularly the HPA axis. Determining whether these stress modalities converge on common system ic 123 
+
+pathways or instead trigger modality -specific circulating responses is essential for understanding how 124 
+
+stress signals propagate th roughout the organism. Beyond identifying stress -responsive molecules, an 125 
+
+additional open question concerns the mechanisms by which intracellular stress signals are transmitted 126 
+
+into the circulation. Increasing evidence suggests that non -classical secretion pathways, including 127 
+
+extracellular vesicle (EV) release and unconventional protein secretion, play key roles in intercellul ar 128 
+
+stress communication. EVs can transport proteins, RNA -binding factors, and damage -associated 129 
+
+molecular patterns (DAMPs) between tissues, thereby propagating stress signals systemically ( Tkach 130 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+and Théry, 2016; van Niel et al., 2018 ). However, whether suc h mechanisms contribute to the circulating 131 
+
+molecular signatures of acute stress in humans remains largely unexplored. 132 
+
+Here, we performed longitudinal deep plasma proteomics and targeted metabolomics across three 133 
+
+complementary human stress paradigms: purely psychological stress induced by the Trier Social Stress 134 
+
+Test (TSST), controlled physical stress induced by maximal exercise on a bicycle ergometer , and mixed 135 
+
+psychological –physical stress induced by bungee jumping. These paradigms span a graded spectrum o f136 
+
+stress exposure , differing in cognitive appraisal, physiological load, and emotional salience while 137 
+
+reliably eliciting acute stress responses. Using nanoparticle -enabled plasma proteomics ( Blume et al., 138 
+
+2020 ), together with targeted metabolomics, we quan tified thousands of circulating molecules a t139 
+
+multiple timepoints to resolve stressor -specific molecular trajectories. Across these paradigms, we 140 
+
+identify a stress -associated protein core that emerges under conditions of intense physiological stress 141 
+
+and bec omes amplified during combined psychological –physical challenge. Integrating EV -profiling 142 
+
+with cellular and in vivo perturbation experiments, we further implicate EV -mediated unconventional 143 
+
+secretion pathways as a central mechanism linking intracellular stress states to systemic plasma 144 
+
+remodeling. 145 
+
+146 
+
+Results 147 
+
+Psychological stress induces robust endocrine activation but minimal plasma proteomic changes 148 
+
+To define how distinct stress modalities shape systemic molecular responses in human s, we first 149 
+
+examined changes in plasma proteins in response to purely psychological stress using plasma samples 150 
+
+collected during the TSST in a cohort comprising 20 healthy controls and 20 individuals diagnosed with 151 
+
+panic disorder (Table S1) . The TSST is a highly standardized and widely used laboratory paradigm that 152 
+
+robustly induces acute psychosocial stress through socially evaluative public speaking and mental 153 
+
+arithmetic ( Kirschbaum et al., 1993 ). Plasma samples were obtained at multiple timepoints before and 154 
+
+after stress exposure, enabling longitudinal assessment of endocrine, proteomic, and metabolomic 155 
+
+response ( Fig. 1A, B). Serum cortisol measurements confirmed robust activation of the HPA axis across 156 
+
+participants, with cortisol levels peaking shortly af ter stress induction and gradually returning toward 157 
+
+baseline, without differences between patients with panic disorder and healthy controls ( Fig. 1 C). 158 
+
+To enable sensitive detection of stress -induced changes in the circulating proteome, we implemented a 159 
+
+nov el deep plasma proteomics approach utilizing surface -functionalized superparamagnetic 160 
+
+nanoparticles (NPs) to fractionate plasma proteins (Fig. 1B) . This optimized workflow markedly 161 
+
+enhanced our detection capability, enabling quantification of > 6000 prote ins per sample after filtering 162 
+
+across the TSST dataset (Fig. S1A -F) . Each sample was fractionated with two types of nanoparticles 163 
+
+(NP1/2, Fig. 1B) and analyzed separately via LC -MS, providing high -resolution insights into plasma 164 
+
+protein abundance. 165 
+
+Despite this extensive proteomic depth, differential abundance analysis comparing post -stress time 166 
+
+points with the immediate pre -stress baseline revealed only a few significantly regulated proteins 167 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+(adjusted p < 0.05)  following  TSST exposure, both in the combined  cohort ( Fig. 1D;  Table S2 ) and 168 
+
+when analyzing the two groups separately  (Fig.  S2A -H;  Table S3 ). Most proteins exhibited small effect 169 
+
+sizes without evidence  of  coordinated or sustained regulation.  Notably, several of  the significantly 170 
+
+regulated proteins were intracellular stress - and cytoskeleton -associated factors previously reported in 171 
+
+circulating plasma proteomes, including the adaptor protein NCK1 ( Fig. 1D ). 172 
+
+Gene set enrichment analysis of ranked proteomic data re vealed a selective but reproducible enrichment 173 
+
+of mitochondrial and energy -related pathways ( Fig. 1E, Fig. S3A; Table S4 ). In particular, terms related 174 
+
+to aerobic respiration and oxidative phosphorylation were among the most consistently enriched gene 175 
+
+sets following TSST exposure, suggesting distinct engagement of systemic energy metabolism. 176 
+
+To test whether psychological stress elicits distinct systemic molecular responses in a clinically 177 
+
+vulnerable population, we compared plasma proteomic changes between i ndividuals with panic disorder 178 
+
+and healthy controls. Despite known heightened stress sensitivity in panic disorder ( Abelson et al., 179 
+
+2007 ), the circulating proteomic response to stress was largely conserved across groups, with no 180 
+
+reproducible differences de tected at any post -stress timepoint (Fig. S3B -G; Table S5 ). 181 
+
+Several proteins displayed qualitatively divergent temporal trajectories between controls and patients 182 
+
+with panic disorder ( Fig. 1F; Table S6 ). While these differences did not reach statistical si gnificance, 183 
+
+the proteins with the lowest interaction p -values included regulators of innate immune regulation 184 
+
+(IRAK3), mitochondrial function (CMC1), and ER –Golgi trafficking (KDELR1), suggesting subtle 185 
+
+differences in cellular stress adaptation rather than exaggerated systemic plasma responses. 186 
+
+Together, these findings reveal a dissociation between endocrine activation and systemic plasma 187 
+
+proteomic remodeling during acute psychological stress. Despite robust HPA axis activation, the 188 
+
+circulating proteom e rem ained largely stable in both healthy individuals and participants with panic 189 
+
+disorder. Instead, the detectable signal point ed to subtle metabolic adaptation, suggesting that acute 190 
+
+psychological stress is reflected more prominently in selective metabolic pa thways rather than large -191 
+
+scale protein release. This relative stability of the circulating proteome during purely psychological 192 
+
+stress provided an important reference point for interpreting responses to more intense physiological 193 
+
+challenges examined in the subsequent stress paradigms. 194 
+
+195 
+
+Physical stress induces coordinated plasma proteome remodeling 196 
+
+To define the circulating proteomic response to acute physical stress , we next profiled plasma samples 197 
+
+from 1 5 recreationally active m en , performing a standardized incremental cycling test to volitional 198 
+
+exhaustion reaching their individual maximal oxygen uptake (VO 2max, (Fig. 2A , Table S8; ). Plasma 199 
+
+samples were collected pre -exercise, after a 15 min warm -up, directly after peak exertion, a nd during 200 
+
+the early recovery phase, enabling longitudinal assessment of rapid stress -induced molecular dynamics 201 
+
+(Fig. 2A ). 202 
+
+Given the robust cortisol response observed during the TSST, we asked whether acute physical stress 203 
+
+engages the HPA axis to a compara ble or greater extent. To capture the hormonal landscape of the 204 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+exercise response, we quantified plasma cortisol throughout the experiment ( Fig. 2B ). Exercise to 205 
+
+exhaustion induced pronounced increases in cortisol, indicating robust activation of adrenal 206 
+
+glucocorticoid pathways during acute physical stress. 207 
+
+To understand how these systemic hormonal signals translate into broader molecular adaptations, we 208 
+
+next profiled the circulating plasma proteome following maximal exercise in 12 male participants. Deep 209 
+
+proteomic profiling (Fig. S4A -F) ) identified a large number of significantly regulated proteins across 210 
+
+post -exercise timepoints compared to bas eline (NP 1: 101 proteins at T2 vs T0; NP2: 324 proteins at T2 211 
+
+vs T0; adjusted p < 0.05; Table S9, S10 ) ( Fig. S4G ). Among the most strongly regulated proteins were 212 
+
+factors associated with immune activation and granule release (e.g. LTF, CTSG), stress -responsive 213 
+
+alarmins (e.g. S100A8/A9), and cytoskeletal and intracellular stress regulators, reflecting rapid systemic 214 
+
+ad aptation to acute physical load. 215 
+
+To investigate how these exercise -responsive plasma proteins exhibited coordinated temporal dynamics, 216 
+
+we performed unsupervised clustering of regulated proteins based on their abundance trajectories across 217 
+
+the experiment. T his analysis revealed two dominant and conserved response patterns (Fig. 2C, 2D ). 218 
+
+One cluster exhibited a rapid increase in protein abundance immediately after maximal exertion ,219 
+
+followed by gradual return to baseline during recovery, whereas the second clu ster showed reciprocal 220 
+
+dynamics, characterized by transient decreases during peak stress and early recovery. The highly similar 221 
+
+profiles observed across both NPs indicate that these patterns are robust and independent of nanoparticle 222 
+
+chemistry. Gene ontolo gy analysis of these opposing temporal clusters revealed complementary 223 
+
+biological programs underlying the systemic stress response (Fig. 2E, 2F; Table S11 ). Proteins increased 224 
+
+at peak exertion were enriched for RNA processing, ribosome biogenesis, and chro matin -associated 225 
+
+processes, consistent with the release of intracellular biosynthetic and gene expression -related 226 
+
+components during maximal physical load. In contrast, proteins showing reciprocal decreases were 227 
+
+enriched for coagulation -, metabolic -, and hu moral immune –related pathways, reflecting coordinated 228 
+
+modulation of systemic plasma components during acute stress adaptation. 229 
+
+Within these coordinated response patterns, several proteins with established roles in stress and exercise 230 
+
+physiology , exhibited pronounced and temporally structured regulation, including mediators of 231 
+
+neurotrophic signaling (BDNF), metabolic regulation (CNDP2), innate immune activation (CTSG, 232 
+
+HMGB1), and extracellular matrix remodeling (MMP9) ( Fig. 2G ). 233 
+
+Together, these results demonstrate that acute physical stress induces a rapid and highly organized 234 
+
+remodeling of the cir culating plasma proteome, characterized by conserved temporal dynamics and 235 
+
+coordinated pathway -level regulation. Exercise -triggered increases of intracellular biosynthetic and 236 
+
+gene expression -associated proteins occurred in parallel with transient reductions in coagulation -,237 
+
+metabolic -, and humoral immune -related components, indicating a coordinated shift from homeostatic 238 
+
+maintenance toward acute stress adaptati on . This pronounced systemic response contrasts sharply with 239 
+
+the minimal plasma proteomic effects observed during psychological stress . These findings position 240 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+controlled physical exercise as an intermediate stress modality, eliciting clear but largely tra nsient 241 
+
+plasma proteome remodeling compared with the minimal changes observed during psychological stress. 242 
+
+243 
+
+Mixed psychological –physical stress induces amplified and sustained plasma proteome remodeling 244 
+
+Having defined systemic molecular responses to isolate d psychological and physical stress, we next 245 
+
+investigated a paradigm combining both modalities. We analyzed plasma samples from 22 male 246 
+
+participants undergoing bungee jump ing , a naturalistic paradigm combining acute psychological threat 247 
+
+with intense physic al load ( Fig. 3 A; Table S12 ). Blood samples were collected at baseline ( 7 days befo re 248 
+
+the bungee jump), 50 and 15 minutes prior to the jump to capture anticipatory stress responses and at 249 
+
+multiple timepoints following the jump (20, 60, 120 and 240 minutes) , as well as at a late follow -up 7 -250 
+
+10 days later. This longitudinal sampling scheme enabl ed assessment of both anticipatory and post -251 
+
+stress molecular dynamics across acute stress and recovery phases. Moreover, this setting enabled us to 252 
+
+test whether simult aneous exposure to intense psychological threat and high mechanical load amplifies 253 
+
+systemic molecular responses beyond those observed for either stress modality alone. 254 
+
+Initially, we assessed whether our setup induced psychological stress in the participant s. Self -report 255 
+
+questionnaire responses indicated an increase in subjective stress, arousal, and enthusiasm among the 256 
+
+jumpers, which declined by the end of the experiment (Fig. S5A). Critically, these subjective responses 257 
+
+were mirrored at the endocrine leve l: plasma cortisol measurements confirmed a significant increase 258 
+
+immediately after the jump, followed by a subsequent decline back toward baseline (Fig. 3B) , providing 259 
+
+converging evidence that bungee jumping reliably engaged both the psychological and phys iological 260 
+
+stress axes. 261 
+
+To determine whether the endocrine activation observed during bungee jumping translated into systemic 262 
+
+proteomic changes, we next profiled the circulating plasma proteome across the experiment (Table S13) .263 
+
+In contrast to the largely stable plasma proteome observed during purely psychological stress and the 264 
+
+transient changes detected after maximal cycling effort controlled physical exercise, d eep plasma 265 
+
+proteomic profiling revealed extensive and highly coordinated remodeling of circul ating prote ins 266 
+
+following bungee jumping, with widespread regulation that peak ed 4 h post -jump ( Fig. 3C; Table S1 4). 267 
+
+Consistent with this escalating stress gradient, mixed psychological -physical stress produced the most 268 
+
+extensive and long -lasting remodeling of the circulating proteome across all paradigms analyzed. 269 
+
+Notably, many of the most strongly upregulated proteins, including HMGB1, MNDA and BPI, were 270 
+
+nuclear factors with established extracellular functions in immune signaling pathways such as RAGE 271 
+
+rece ptor binding. 272 
+
+To resolve the temporal organization of this response, we performed u nsupervised clustering of 273 
+
+significantly regulated proteins based on their abundance trajectories. This analysis uncovered three 274 
+
+distinct and conserved response patterns that were highly similar across NPs (Fig. 3D; Table S15 ). The 275 
+
+largest cluster (blue) displayed a continuous increase in protein abundance over time, reaching maximal 276 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+regulation at T7, consistent with a dominant and sustained plasma proteomic response to mixed 277 
+
+psychological –physical stress. 278 
+
+In addition to this delayed response, o ne cluster (green) showed maximal regulation already at the pre -279 
+
+jump timepoint (T2), indicating early proteomic changes preceding the physical stressor and coinciding 280 
+
+with elevated corti sol levels. A third cluster (orange) exhibited reciprocal dynamics, characterized by a 281 
+
+pronounced decrease at T2 and T 3 followed by partial recovery, suggesting transient suppression of 282 
+
+specific circulating proteins during the initial stress phase (Fig. 3D ; Fig. S5H ).283 
+
+Gene ontology analysis of these clusters revealed a striking enrichment of intracellular biological 284 
+
+processes (F ig. 3E, F; Fig. S5J; Table S16 ). P roteins in the dominant late -response cluster (blue) were 285 
+
+strongly enriched for RNA biosynthesis, RNA processing, ribonucleoprotein complex assembly, and 286 
+
+chromatin organization, indicating sustained release of nuclear proteins following mixed psychological –287 
+
+physical stress exposure ( Fig. 3E ). In contrast, the anticipatory cluster (green) w as enriched f or pathways 288 
+
+related to protein localization, cytoskeletal and actin filament organization, endosomal transport, and 289 
+
+plasma membrane –associated remodeling, consistent with early cellular reorganization and stress -290 
+
+induced secretory activity (Fig. 3F ).291 
+
+Sever al proteins with established roles in stress and exercise physiology exhibited pronounced and 292 
+
+temporally structured regulation. Similar to the exercise paradigm , BDNF, CTSG, HMGB1, and MMP9 293 
+
+were strongly induced in response to this stressor, whereas CNDP2 was downregulated, in contrast to 294 
+
+its upregulation during physical exercise ( Fig. 3G ). Notably, many of these upregulated proteins 295 
+
+remained elevated even 4 hours after the jump, indicating a sustained systemic response, whereas the 296 
+
+exercise -induced proteom ic changes were largely transient ( Fig. 3G ). Consistent with this observation, 297 
+
+the sustained release of MMP9 mirrors previous reports identifying this protein as a glucocorticoid -298 
+
+responsive secreted factor (Martinelli et al., 2021 ), suggesting convergent s tress -induced secretory 299 
+
+mechanisms across distinct experimental paradigms. 300 
+
+These findings demonstrate that mixed psychological -physical stress triggers a pronounced and 301 
+
+sustained remodeling of the circulating plasma proteome. Compared with the minimal cha nges observed 302 
+
+during purely psychological stress and the transient responses induced by controlled physical exercise, 303 
+
+bungee jumping elicits a broader and longer -lasting (up to 4 hours) systemic proteomic response 304 
+
+characterized by sustained release of nucl ear stress signals and immune -associated proteins. Taken 305 
+
+together, the three stress paradigms reveal a clear hierarchy of systemic proteomic responses: minimal 306 
+
+changes during purely psychological stress, transient remodeling following physical exertion, an d307 
+
+extensive, sustained proteome reorganization during combined psychological –physical stress. 308 
+
+309 
+
+Shared and stressor -specific circulating metabolic and protein signatures across stress modalities 310 
+
+Having defined minimal proteomic responses to psychological st ress, transient remodeling during 311 
+
+maximal cycling effort,, and sustained proteome reorganization during mixed psychological –physical 312 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+stress exposure, we next asked to what extent these responses share common molecular components 313 
+
+across stress modalities. 314 
+
+To systematically compare molecular responses across stress modalities , we integrated plasma 315 
+
+proteomic and metabolomic data obtained during psychological stress (TSST), physical exertion 316 
+
+(bicycle ergometer test ), and mixed psychological –physical stress (bun gee jumping). This integrative 317 
+
+analysis allowed us to determine which circulating molecular signatures are stressor -specific and which 318 
+
+represent shared responses to acute stress exposure. 319 
+
+Consistent with the minimal proteomic remodeling observed during TSS T, psychological stress resulted 320 
+
+in only a small number of significantly regulated plasma proteins and showed little overlap with either 321 
+
+physical or mixed stress paradigms, even when considering increasingly larger sets of top -ranked 322 
+
+proteins ( Fig. 4A ). Th is limited overlap underscores that acute psychological stress primarily engages 323 
+
+endocrine and metabolic signaling while leaving the circulating proteome largely stable. In contrast, 324 
+
+physical exercise and bungee jumping displayed substantial convergence at the proteome level, shar ing 325 
+
+205 significantly regulated proteins ( Fig. 4B; Tab le S17 ). Peak -time comparisons further demonstrated 326 
+
+that these shared proteins were regulated in the same direction across both paradigms , defining a 327 
+
+coherent stress -associated core plasma proteome . Within the mixed psychological –physical stress 328 
+
+paradigm, this core r esponse was amplified in magnitude but largely conserved in composition and 329 
+
+directionality relative to physical exercise (Fig. 4C; Fi g. S6A ). Thus, while exercise an d bungee jumping 330 
+
+differed in response amplitude and duration, they engaged largely overlapping systemic proteomic 331 
+
+programs. Functionally, this shared stress -responsive core comprised intracellular stress sensors and 332 
+
+alarmins (e.g. HMGB1/2/3, S100 family me mbers), granule - and vesicle -associated immune effectors 333 
+
+(ANXA1, BPI, CTSG), and proteins linked to cytoskeletal remodeling and unconventional secretion. 334 
+
+These components point to coordinated activation of danger -associated signaling and secretory 335 
+
+programs that propagate systemic stress responses through the circulation. Together, these analyses 336 
+
+identify a conserved circulating stress -response proteome that is preferentially engaged by intense 337 
+
+physiological stress and amplified during combined psychological –physical challenge, suggesting that 338 
+
+systemic protein release represents a central molecular axis of human stress adaptation. 339 
+
+To determine whether stressor -specific responses extend beyond the circulating proteome, we next 340 
+
+examined metabolic adaptations across the different stress paradigms using plasma metabolomics (Table 341 
+
+S18). Targeted analysis revealed coordinated remodeling o f metabolic pathways that differed markedly 342 
+
+in both breadth and magnitude across conditions. Physical stress paradigms induced the most extensive 343 
+
+metabolic responses: in the exercise cohort, 24 of 35 measured neurotransmitter and amino acid 344 
+
+metabolites wer e significantly altered (FDR < 0.05) (Fig. S7A) , while in the bungee jump cohort, 12 of 345 
+
+47 metabolites reached significance (FDR < 0.05) (Fig. S7B,C) . Psychosocial stress alone elicited a 346 
+
+substantially more limited metabolic response, with only 2 of 56 mea sured metabolites significantly 347 
+
+altered across all participants (FDR < 0.05) (Fig. S6A,D) . Strikingly, this modest overall response 348 
+
+masked a pronounced group difference: PD patients showed a markedly broader metabolic remodeling 349 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+under psychological stress, with 6 metabolites reaching FDR -corrected significance, including N -350 
+
+lactoyl -phenylalanine (Lac -Phe) (Fig. S6C,F ), whereas healthy controls showed virtually no significant 351 
+
+metabolic changes (Fig. S6B,E ). This pattern suggests that PD patients exhibit an ex aggerated or 352 
+
+dysregulated metabolic stress response to psychosocial challenge that is not observed in healthy 353 
+
+individuals. 354 
+
+To illustrate the nature of these stress -induced metabolic changes, we examined the arginine –citrulline –355 
+
+ornithine axis and the gluta mate/glutamine network, pathways well established as stress -responsive in 356 
+
+the context of physiological challenge (Fig. 4E ). These interconnected amino acid interconversion 357 
+
+routes, linking arginine and citrulline via the urea cycle, ornithine to polyamine s ynthesis, and glutamate 358 
+
+to glutamine through nitrogen buffering, showed consistent, time -dependent alterations under physical 359 
+
+stress in both the exercise and bungee jump cohorts, while remaining largely unchanged under 360 
+
+psychosocial stress alone (Fig. 4E ). 361 
+
+Beyond metabolites, acute stress also triggers a rapid and coordinated steroidogenic response that varies 362 
+
+in magnitude and duration across stressors. To capture the full breadth of the adrenal and gonadal 363 
+
+steroidogenic response to physical and mixed stres s, we performed targeted LC –MS/MS quantification 364 
+
+of 14 circulating steroid hormones spanning three major classes, progestogens, glucocorticoids, and 365 
+
+androgens, in the exercise and bungee jump cohorts ( Fig. 4D ). Both stress paradigms induced robust 366 
+
+and clas s-specific steroidogenic responses. Glucocorticoids, particularly cortisol and corticosterone, 367 
+
+showed the most pronounced increases, peaking immediately after maximal exertion (exercise cohort: 368 
+
+T2) and shortly after the jump (bungee jump cohort: T3), consi stent with canonical HPA axis activation. 369 
+
+Progestogen intermediates, including 17 -OHP and DOC, were co -regulated with cortisol, reflecting 370 
+
+shared upstream steroidogenic flux through the adrenal cortex. 371 
+
+Androgen dynamics were more stressor specific. In the exercise cohort, DHEA and DHEAS showed 372 
+
+transient increases following peak exertion, consistent with adrenal androgen co -secretion during 373 
+
+sympathoadrenal activation, whereas testosterone and DHT remained relatively stable. In the bungee 374 
+
+jump cohort, a more sustained androgen response was observed, with elevations persisting beyond the 375 
+
+immediate post -stress period, potentially reflecting the prolonged adrenocortical activation 376 
+
+characteristic of mixed psychological –physical stress. 377 
+
+378 
+
+Mechanistic exploration of stress -induced secretion 379 
+
+To investigate the cellular and molecular mechanisms driving the pronounced and sustained plasma 380 
+
+proteome remodeling observed after bungee jumping, we next focused on extracellular vesicles (EVs) 381 
+
+as potential mediators of stress -induced protein secretion .382 
+
+Semiquantitative profiling of EV subfractions using immunobead -based flow cytometry revealed a 383 
+
+robust and sustained increase in se veral circulating EV populations following stress , peaking at 4 hours 384 
+
+post -jump (T7). By the follow -up time point (T8, 7 –10 days later ), EV levels largely returned to baseline 385 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+(T0),  pointing towards a successful termination of stress -induced effects on EVs  (Fig. 5A,B; Fig. S9A, 386 
+
+B). 387 
+
+Targeted protein analyses confirmed stress -associated increases i n the canonical EV markers, including 388 
+
+CD9 and the EV cargo protein HNRNPD in lysates of isolated EVs ( Fig. 5 E ). Additionally, plasma 389 
+
+levels of LC3B, a central regulator of autophagy ( Kabeya et al., 2000 ) and the loading of RNA -binding 390 
+
+proteins into EVs ( Leidal et al ., 2020) were markedly elevated, providing a mechanistic link between 391 
+
+autophagy -related pathways and stress -induced EV release (Fig. 5 D). 392 
+
+Unbiased proteomic profiling of isolated EVs identified a distinct set of stress -regulated EV -associated 393 
+
+proteins, with the largest changes observed at T7. Notably, these included immune -related factors such 394 
+
+as CTS G (Fig. 5C ). EV alterations were largely ab sent at other time points, mirroring the transient 395 
+
+kinetics observed at the vesicle level (Fig. S9C, D; Table S19 ).396 
+
+To place EV secretion into a systemic context, we compared EV proteomes and the previously defined 397 
+
+stress -associated protein core. A substan tial fraction of stress -regulated plasma proteins, including core 398 
+
+factors detected in both exercise and bungee studies, were present in EVs, supporting EV -mediated 399 
+
+unconventional secretion as a central driver of stress -induced plasma proteomic signatures (Fig. 5F; 400 
+
+Table S20 ). 401 
+
+To begin dissecting the upstream signals responsible for stress -induced protein secretion, we asked 402 
+
+whethe r individual circulating stress mediators are sufficient to recapitulate the observed stress response 403 
+
+in vitro. P rimary human PBM Cs were stimulated with selected stress hormones and metabolites ,404 
+
+including cortisol, lactate and Lac -Phe, which were strongly regulated in our experiments (Fig. 1C, 2B, 405 
+
+3B, 4D). These stimuli alone failed to recapitulate the robust secretory patterns obse rved in vivo ,406 
+
+eliciting only weak and variable directional changes in stress -core and other proteins ( Fig. 5G; Fig. 407 
+
+S10A -C; Table S21 ). These findings argue against a simple hormonal trigger and suggest that the in 408 
+
+vivo secretory response requires the convergence of multiple stress signals. 409 
+
+Finally, to assess whether human stress -associated blood signatures can be reproduced under controlled 410 
+
+conditions and mechanistically dissected in vivo, we analyzed serum proteomes from mice subjected to 411 
+
+acute restra int stress (ARS), an established model for inducing psychological stress ( Schmidt, 2024 ). To 412 
+
+directly test the role of glucocorticoid receptor (GR) signaling, a subset of animals was treated with a 413 
+
+GR -PROTAC to induce targeted GR degradation prior to stres s exposure ( Gazorpak et al., 2023 ). 414 
+
+Mirroring the limited observed response in purely psychological stress (TSST) in humans , ARS alone 415 
+
+did not induce detectable serum proteomic remodeling , and GR degradation neither unmasked nor 416 
+
+amplified stress -induced p rotein release (Fig. 5 H; Table S22 ), indicating that neither psycholo gical 417 
+
+stress nor glucocorticoid signaling alone is sufficient to drive systemic secretion. 418 
+
+Together, these data support a model in which stress -induced unconventional secretion is most rob ustly 419 
+
+triggered under conditions combining psychological and physical stress. Rather than being solely 420 
+
+dependent on glucocorticoid signaling, systemic proteomic remodeling appears to arise from the 421 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+integration of multiple stress signals, including metaboli c, cellular, and mechanical cues, which 422 
+
+converge on EV -mediated unconventional secretory pathways in a stressor -specific manner. 423 
+
+424 
+
+425 
+
+.CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint Discussion 426 
+
+Adaptive responses to acute stress require the rapid integration of cognitive appraisal, endocrine 427 
+
+signaling, metabolic adaptation, and immune activation. By combining deep plasma proteomics and 428 
+
+targeted metabolomics across three complementary human stress paradigms, psychological stress 429 
+
+(TSST), physical exertion , and mixed psychological -physical stress, our study reveals that the 430 
+
+qualitative nature of a stressor critically determines whether systemic molecular remodeling occurs. 431 
+
+These data define a gradien t of circulating responses in which endocrine activation alone is insufficient 432 
+
+to drive large -scale plasma proteome remodeling, whereas stressors imposing metabolic and mechanical 433 
+
+load engage coordinated systemic secretory programs. 434 
+
+435 
+
+A striking observation is the dissociation between hormonal stress activation and circulating proteomic 436 
+
+responses. Despite robust HPA axis activation, purely psychological stress induced by the TSST 437 
+
+resulted in minimal plasma proteomic remodeling. This finding challenges the co mmon assumption 438 
+
+that glucocorticoid signaling alone orchestrates systemic stress responses and instead suggests that 439 
+
+endocrine activation is dissociable from large -scale protein release into circulation, pointing to 440 
+
+additional physiological inputs, such as metabolic or mechanical load, as critical drivers of systemic 441 
+
+secretory responses. Notably, this compartmentalization was also evident in individuals with panic 442 
+
+disorder, a population with heightened stress sensitivity ( Abelson et al., 2007 ), but showed n o443 
+
+amplified peripheral proteomic responses. This stability of the plasma proteome likely reflects strong 444 
+
+systemic buffering of transient neuroendocrine stress signals. The few regulated proteins were 445 
+
+predominantly intracellular stress - and cytoskeleton -ass ociated factors, suggesting selective release 446 
+
+from activated immune or vascular cells rather than widespread secretory responses. Together, these 447 
+
+observations suggest psychological stress alone largely remains confined to neuroendocrine signaling, 448 
+
+while sy stemic plasma remodeling requires more intense or traumatic experiences or additional 449 
+
+physiological inputs. In contrast, both physical exercise and mixed psychological –physical stress 450 
+
+triggered extensive plasma proteomic responses . Across these paradigms , we identified a conserved 451 
+
+stress -associated protein core comprising intracellular stress sensors, immune granule components, 452 
+
+and cytoskeletal regulators. Many proteins within this core, including HMGB family members, S100 453 
+
+proteins and neutrophil granule enzymes, belong to the class of leaderless proteins that lack classical 454 
+
+signal peptides, suggesting secretion through unconventional pathways rather than canonical ER -Golgi 455 
+
+route (Rammes et al., 1997; Gardella et al., 2002; Rabouille, 2017; Galluzzi et al. , 2018) . In addition, 456 
+
+the enrichment of alarmins and neutrophil granule proteins raises the possibility that regulated cell -457 
+
+death -associated processes, such as pyroptosis, necroptosis or NETosis, contribute to their appearance 458 
+
+in plasma. Many of these mole cules function as damage -associated molecular patterns (DAMPs), 459 
+
+mediating systemic danger signaling and immune activation during cellular stress and tissue strain. 460 
+
+Our integrated extracellular vesicle (EV) analyses provide convergent evidence supporting EV-461 
+
+mediated secretion as a major contributor to these circulating signatures. We observed a robust 462 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+expansion of circulating EV subpopulations, substantial overlap between EV - and plasma -detected 463 
+
+proteins, and enrichment of canonical EV cargo molecules in th e bungee jump cohort. These 464 
+
+observations are consistent with prio r studies demonstrating that acute exercise stimulates EV release 465 
+
+(Whitham et al., 2018; Brahmer et al., 2019) . However, compared to EVs released during exercise, EVs 466 
+
+released after bungee ju mp are more sustained within the circulation (over 4 h), while exercise EVs are 467 
+
+cleared within 90 minutes ( Brahmer et al., 2019 ). 468 
+
+The observed increase in plasma LC3B levels in the bungee jump cohort further suggests engagement 469 
+
+of LC3 -dependent vesicle loa ding and secretion (LDELS), an autophagy -related pathway that 470 
+
+selectively incorporat es RNA -binding and cytosolic proteins into EVs (Leidal et al., 2020) . This 471 
+
+mechanism provides a plausible explanation for the prominent enrichment of RNA -binding proteins a nd 472 
+
+nuclear factors within the stress -regulated plasma proteome. Notably , several strongly regulated proteins 473 
+
+in our dataset, including HMGB1 and MMP9, have previously been shown t o undergo secretion through 474 
+
+secretory autophagy pathways under inflammatory s tress conditions (Martinelli et al., 2021; Hisaoka -475 
+
+Nakashima et al., 2024 ), providing mechanistic precedent for autophagy -dependent release of 476 
+
+intracellular alarmins. 477 
+
+Beyond shared mechanisms, our data reveal pronounced temporal differences between stress modalities 478 
+
+and there by potentially diverging stress intensities . Physical exercise induced rapid plasma proteomic 479 
+
+changes that largely resolved during the recovery phase, consistent with the transient metabolic demands 480 
+
+of acute exertion. In contrast, mixed psychological –physical stress elicited responses of greater 481 
+
+amplitude and persistence, with several proteins remaining elevated for several hours after exposure .482 
+
+The presence of anticipatory molecular changes prior to the jump demonstrate that perceived t hreat 483 
+
+alone can initiate early systemic reorganization before the physical challenge occurs. Such anticipatory 484 
+
+responses have been described at the endocrine and neural level but have not been observed in 485 
+
+circulating molecular profiles (Engert et al., 2013 ; Herman et al., 2016 ). This sustained elevation of 486 
+
+alarmins and immune -associated proteins may have important physiological implications for long -term 487 
+
+health . Prolonged circulation of DAMP molecules such as HMGB proteins and S100 family members 488 
+
+has been i mplicated in neuroimmune communication and systemic inflammatory priming (Andersson 489 
+
+et al., 2018; Yang et al., 2020 ). Such mechanisms could contribute to the link between repeated stress 490 
+
+exp osure and long -term vulnerability to cardiovascular, metabolic, an d psychiatric disorders ( Vaccarino 491 
+
+& Bremner, 2024; Kivimäki et al., 2023; Slavich & Irwin, 2014 ). 492 
+
+Targeted metabolomics provided independent support for the stressor -specific molecular hierarchy 493 
+
+observed at the proteome level. Physical stress paradigms in duced broad and coordinated metabolic 494 
+
+remodeling, with many measured metabolites significantly altered in both the exercise and bungee jump 495 
+
+cohorts, whereas psychological stress alone elicited minimal metabolic changes in healthy individuals. 496 
+
+This converge nce between proteomic and metabolic responses reinforces the notion that systemic 497 
+
+molecular remodeling requires physiological inputs beyond endocrine activation alone. Notably, the 498 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+metabolic response to psychological stress differed markedly between health y controls and individuals 499 
+
+with panic disorder: while controls showed virtually no significant metabolic changes under the TSST, 500 
+
+PD patients exhibited a substantially broader metabolic response, with significant alterations in both 501 
+
+glycolytic and amino aci d metabolites. This dissociation, amplified metabolic reactivity in the 502 
+
+absence of differences in either cortisol or proteomic responses, suggests that panic disorder is 503 
+
+associated with altered peripheral metabolic stress sensitivity through mechanisms tha t remain to 504 
+
+be determined. 505 
+
+Our mechanistic perturbation experiments indicate that no single mediator is sufficient to re produce the 506 
+
+observed secretory response. Neither stimulation of immune cells with cortisol, lactate, or Lac -Phe, nor 507 
+
+acute restraint st ress in mice, even in the context of pharmacological glucocorticoid receptor 508 
+
+degradation, recapitulate the extensive plasma remodeling observed in h umans during physical or mixed 509 
+
+stress . These findings suggest that systemic stress secretion requires integr ation of multiple converging 510 
+
+physiological signals, including mechanical strain, metabolic flux, and endocrine signaling, which are 511 
+
+most strongly engaged under conditions combin ing psychological and physical challenge. 512 
+
+Several limitations warrant consideration . First, the absence of a crossover design precluded within -513 
+
+individual comparisons across stress paradigms, which would allow more precise dissection of stressor -514 
+
+specific molecular effects. Second, the cellular origins of stress -regulated plas ma proteins remain 515 
+
+incompletely resolved. Although EV signatures suggest contributions from immune and potentially 516 
+
+muscle -derived compartments, future studies integrating spatial transcriptomics or tissue -specific EV 517 
+
+tracing will be required to further def ine the precise sources of systemic stress signals. Third, both sexes 518 
+
+were represented in the TSST experiment, whereas the other two paradigms included only male 519 
+
+participants, which may influence the generalizability of the findings. 520 
+
+In summary, our resul ts demonstrate that acute stress is encoded in the circulating molecular landscape 521 
+
+in a modality -dependent manner. While psychological stress remains largely confined to neuroendocrine 522 
+
+signaling, physical and mixed stressors activate coordinated systemic p rograms characterized by EV -523 
+
+associated unconventional protein secretion and the release of a conserved stress -associated protein core. 524 
+
+These findings establish a framework for understanding how diverse environmental challenges shape 525 
+
+our circulating molecu lar landscape and highlight extracellular vesicle -mediated secretion as a central 526 
+
+mechanism linking cellular stress states to systemic communication. 527 
+
+528 
+
+529 
+
+530 
+
+531 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+Figures 532 
+
+533 
+
+534 
+
+Figure 1. Psychological stress induces robust endocrine activation but minimal plasma proteomic 535 
+
+remodeling. 536 
+
+(A) Experimental design of the Trier Social Stress Test (TSST) cohort. Plasma samples were collected at 11 537 
+
+timepoints (T0 –T10) spanning 15 min before the TSST procedure (T0), and up to 105 minutes post -TSST in n = 538 
+
+20 healthy controls (CTL) and n=20 individuals with panic disorder (PD). Serum cortisol measurements, deep 539 
+
+plasma proteomics (DPP) and targeted plasma metabolomics were performed at indicated timepoints. (B) DPP 540 
+
+workflow schematic. Plasma proteins are fractionated using nanop articles prior to LC -MS analysis. (C) Serum 541 
+
+cortisol levels (line plot, mean + SD) and heatmap of cortisol trajectories across timepoints for PD patients and 542 
+
+CTL. Shading indicates the post -TSST period (n = 20 controls, n = 20 PD patients, Linear mixed mod el with post -543 
+
+hoc comparisons of estimated marginal means against baseline (−15 min) using Dunnett -type contrasts; Holm –544 
+
+Bonferroni correction for multiple comparisons. *** p < 0.001)). (D) Volcano plots showing differential protein 545 
+
+abundance comparing pos t-TSST timepoints T8 (left) and T10 (right) to pre -stress baseline (T0) in the combined 546 
+
+cohort (CTL and PD). (Moderated paired t -tests; Benjamini -Hochberg (BH) correction for multiple testing; 547 
+
+adjusted p < 0.05 highlighted) (E) Gene Set Enrichment Analysis (GSEA) of ranked proteomic data (T8 vs. T0) 548 
+
+for biological process gene sets, performed on the combined cohort. (F) Group × time interaction analysis (DPP, 549 
+
+NP2). Line plots show log₂ fold -change relative to T0 for proteins with the lowest interaction p -va lues between 550 
+
+PD and CTL groups. Data shown as mean ± SEM. 551 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+552 
+
+Figure S1. Deep plasma proteomics workflow characterization in the TSST cohort (n=40). (A) Number of 553 
+
+measured proteins per sample in NP1 pre - and post -filtering. (B) Box plot showing the mean of m easured proteins 554 
+
+in NP1 pre - and post -filtering. (C) Number of measured proteins per sample in NP2 pre - and post -filtering. (D) 555 
+
+Box plot showing the mean number of measured proteins in NP2 pre - and post -filtering. (E) Principal component 556 
+
+analysis of NP1 me asurements. (F) Principal component analysis of NP2 measurements. 557 
+
+558 
+
+559 
+
+560 
+
+561 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+562 
+
+Figure S2. Differential plasma protein abundance across individual TSST timepoints in healthy controls 563 
+
+and individuals with panic disorder. (A –H) Volcano plots showing differential protein abundance at individual 564 
+
+post -TSST timepoints relative to pre -stress baseline (T0), analyzed separately for healthy controls (CTL; n=20) 565 
+
+and individuals with panic disorder (PD; n=20) using NP1 and NP2 nanop article fractions. Moderated paired t -566 
+
+tests with Benjamini –Hochberg (BH) correction for multiple testing; significantly regulated proteins (adjusted p < 567 
+
+0.05) are highlighted. 568 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+569 
+
+Figure S3. Gene set enrichment analysis and group comparison of plasma proteo mic responses to 570 
+
+psychological stress. (A) Gene Set Enrichment Analysis (GSEA) of ranked proteomic data (T10 vs. T0) for 571 
+
+biological process gene sets, performed on the combined cohort. (B –G) Differential plasma protein abundance 572 
+
+comparing individuals with panic disorder (PD) and healthy controls (CTL) at individual TSST timepoints. 573 
+
+Moderated t -tests with BH correction; adjusted p < 0.05 highlighted. 574 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+575 
+
+576 
+
+.CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint Figure 2. Physical stress induces coordinated plasma proteome remodeling. 577 
+
+(A) Experimental design of the endurance sports cohort. n=15 recreationally active male participants performed a 578 
+
+standardized incremental cycling test to volitional exhaustion (VO₂max). Plasma samples were collected at 5 579 
+
+timepoints (T0 –T4): baseline (BL), after a 15 -minute warm -up (T1) , immediately after maximal exertion (T2), 580 
+
+and during early recovery (T3, T4). Deep plasma proteomics (DPP) and targeted plasma metabolomics were 581 
+
+performed at indicated timepoints. (B) Plasma cortisol levels (line plot, mean + SD) and heatmap of individual 582 
+
+cortisol trajectories across timepoints. Shading indicates the post -exercise period. Linear mixed model with post -583 
+
+hoc comparisons of estimated marginal means against baseline (T0) using Dunnett -type contrasts; Holm –584 
+
+Bonferroni correction for multiple compa risons. n=8. * p < 0.05, ** p < 0.01, *** p < 0.001) (C) Heatmaps of z -585 
+
+scored protein abundances for significantly regulated proteins (n=12; adjusted p < 0.05; linear model with 586 
+
+empirical Bayes moderation, blocking on subject; BH correction for multiple te sting) across timepoints for NP1 587 
+
+(top) and NP2 (bottom). Proteins are grouped into two unsupervised clusters (cluster 1: blue; cluster 2: green). (D) 588 
+
+Mean z -score trajectories for the two protein clusters across timepoints for NP1 (top) and NP2 (bottom). N umbers 589 
+
+indicate the count of proteins per cluster. (E) Over -representation analysis (ORA) of biological process gene 590 
+
+ontology terms for cluster 1. Results shown for NP1 and NP2. (F) ORA of biological process gene ontology terms 591 
+
+for cluster 2. Results shown for NP1 and NP2. (G) Log₂ intensity trajectories (mean ± SEM) for selected stress -592 
+
+relevant proteins across timepoints for NP1 (red) and NP2 (teal). 593 
+
+594 
+
+595 
+
+596 
+
+597 
+
+598 
+
+599 
+
+600 
+
+601 
+
+602 
+
+603 
+
+604 
+
+605 
+
+606 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+607 
+
+Figure S4. Deep plasma proteomics workflow characterization in the exercise cohort (n=12). (A) Number of 608 
+
+measured proteins per sample in NP1 pre - and post -filtering. (B) Box plot showing the mean of measured proteins 609 
+
+in NP1 pre - and post -filtering. (C) Num ber of measured proteins per sample in NP2 pre - and post -filtering. (D) 610 
+
+Box plot showing the mean number of measured proteins in NP2 pre - and post -filtering. (E) Principal component 611 
+
+analysis of NP1 measurements. (F) Principal component analysis of NP2 meas urements. (G) Three -dimensional 612 
+
+volcano plot displaying differential protein abundance across post -baseline timepoints (T1, T2, T3, T4) relative to 613 
+
+baseline (T0) for NP1 and NP2. Significantly regulated proteins (n=12; adjusted p < 0.05; moderated paired t -test, 614 
+
+BH correction) are color -coded by direction of regulation. 615 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+616 
+
+617 
+
+.CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint Figure 3. Mixed psychological -physical stress induces amplified and sustained plasma proteome 618 
+
+remodeling. 619 
+
+(A) Experimental design of the bungee jumping cohort. n=22 male bungee jumpers. Plasma samples were collected 620 
+
+at 9 timepoints (T0 –T8) spanning 7 –10 days pre -jump (BL), anticipatory timepoints (T1, T2), immediately post -621 
+
+jump (T3), and up to 240 minutes post -ju mp (T4 –T7), with a follow -up visit 7 –10 days later (T8). EV profiling, 622 
+
+deep plasma proteomics (DPP), and targeted plasma metabolomics were performed at indicated timepoints. (B) 623 
+
+Plasma cortisol levels (line plot, mean + SD, n = 17 -20 male bungee jumpers) a nd heatmap of individual cortisol 624 
+
+trajectories across timepoints. Shading indicates the post -jump period. Linear mixed model with post -hoc 625 
+
+comparisons of estimated marginal means against baseline (T0) using Dunnett -type contrasts; Holm –Bonferroni 626 
+
+correctio n for multiple comparisons. * p < 0.05, ** p < 0.01, *** p < 0.001) (C) Three -dimensional volcano plot 627 
+
+displaying differential protein abundance across post -jump timepoints (T2, T3, T5, T7) relative to baseline (T0) 628 
+
+for NP1 and NP2. Significantly regulated proteins (n=16; adjusted p < 0.05; moderated paired t -test, BH 629 
+
+correction) are color -coded by direction of regulation. (D) Mean z -score trajectories of significantly regulated 630 
+
+proteins (n=16; adjusted p < 0.05; linear model with empirical Bayes moderation , blocking on subject; BH 631 
+
+correction for multiple testing) for three unsupervised protein clusters across timepoints for NP1 (top) and NP2 632 
+
+(bottom). Numbers indicate protein counts per cluster. (E) ORA of biological process gene ontology terms for 633 
+
+cluster 1. Results shown for NP1 and NP2. (F) ORA of biological process gene ontology terms for cluster 2. 634 
+
+Results shown for NP1 and NP2. (G) Log₂ intensity trajectories (mean ± SEM) for selected stress -re levant proteins 635 
+
+across timepoints for NP1 (red) and NP2 (teal). 636 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+637 
+
+Figure S5. Deep plasma proteomics workflow characterization in the bungee jump cohort. (A) Subjective 638 
+
+measures of enthusiasm, arousal and stress among jumpers on the day of the jump, as asse ssed by the “Single 639 
+
+Stress Items” questionnaire (Mixed effects model, p ≤ 0.05 (*), p ≤ 0.001 (***)). (B) Number of measured 640 
+
+proteins per sample in NP1 pre - and post -filtering. (C) Box plot showing the mean of measured proteins in NP1 641 
+
+pre - and post fil tering. (D) Number of measured proteins per sample in NP2 pre - and post filtering. (E) Box plot 642 
+
+showing the mean number of measured proteins in NP2 pre - and post -filtering. (F) Principal component analysis 643 
+
+of NP1 measurements. (G) Principal component anal ysis of NP2 measurements. (H,I) Heatmap of z -scored protein 644 
+
+abundances for significantly regulated proteins (n=16; adjusted p < 0.05; linear model with empirical Bayes 645 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+moderation, blocking on subject; BH correction for multiple testing) across timepoints f or (H) NP1 and (I) NP2. 646 
+
+(J) ORA of biological process gene ontology terms for cluster 3. Results shown for NP2. 647 
+
+648 
+
+649 
+
+650 
+
+Figure 4. Shared and stressor -specific circulating proteomic and metabolic signatures across stress 651 
+
+modalities. 652 
+
+653 
+
+(A) Bar plot showing the number of overlapping top -ranked regulated proteins between the TSST and bungee 654 
+
+jump study (orange) and between the TSST and exercise study (dark orange) at increasing protein set sizes (top 655 
+
+50, 100, 200, 500). Proteins were ranked by BH -adjusted p -value from time -course analysis (linear model with 656 
+
+empirical Bayes moderation, blocking on subject; NP1 and NP2 collapsed by taking the minimum adjusted p -657 
+
+value per protein). (B) Venn diagram illustrating the overlap of significantly regulat ed proteins (BH -adjusted p < 658 
+
+0.05; time -course analysis by linear model with empirical Bayes moderation, blocking on subject) between the 659 
+
+exercise study (black), bungee jump study (teal), and their intersection (=stress core). (C) Concordance scatter plot 660 
+
+of NP -robust log₂ fold -change (minimum of NP1 and NP2) at fixed peak timepoints for all stress core proteins (n 661 
+
+= 205; Exercise: T2 vs T0, Bungee jump: T7 vs T0). Each point represents one protein, colored by direction of 662 
+
+regulation (green: upregulated in both; purple: downregulated in both; grey: discordant). The dotted line indicates 663 
+
+the identity line (y = x); the solid line shows the linear regression fit (r = 0.38). Points above the identity line 664 
+
+indicate greater fold -change in the bungee jump cohort. (D) Plasma steroid profiling heatmaps for the exercise 665 
+
+cohort (left, T0 –T4) and bungee jump cohort (right, T0 –T8), showing fold -change to T0 for 14 steroids grouped 666 
+
+by class: progestogens (prog), glucocorticoids (cort), and androgens (andro). Abbreviations: P4, progesterone; 17 -667 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+OHP, 17 -hydroxyprogesterone; Aldo, aldosterone; DOC, deoxycorticosterone; B, corticosterone; E, cortisone; S, 668 
+
+11 -deoxycortisol; 21 -DF, 21 -deoxycortisol; A4, androstenedione; T, testosterone; DHT, dihydrotestosterone; 669 
+
+DHEA, dehydroepia ndrosterone; DHEAS, DHEA sulfate. Bungee study: n = 16 -20; Sport study: n =7 -8) (E) 670 
+
+Targeted plasma metabolomics across stress paradigms. Metabolite changes in the arginine -citrulline -ornithine 671 
+
+and glutamate/glutamine interconversion network. Box plots sho w fold -change to pre -stress timepoint across 672 
+
+timepoints for TSST (FC to T1), endurance sports (FC to T0), and bungee jump (FC to T0) cohorts. Post -hoc 673 
+
+comparisons against baseline: Bungee -Jumping and Exercise: estimated marginal means (emmeans) with 674 
+
+Benjam ini -Hochberg correction; TSST: Wilcoxon signed -rank test with Benjamini -Hochberg correction. (TSST: 675 
+
+n=40; Exercise: n=15; Bungee: n=21 -22; * p < 0.05, ** p < 0.01, *** p < 0.001; **** p < 0.0001) 676 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+677 
+
+678 
+
+.CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint Figure S6. Targeted plasma metabolomics in the TSST coho rt. (A) Heatmap of log₂ fold -change at peak 679 
+
+timepoints (Sport: T2, Bungee: T7) for the top 20 proteins of the stress core (proteins significantly regulated in 680 
+
+both cohorts, BH -adjusted p < 0.05). Effect sizes are NP -robust (minimum log₂ fold -change across NP1 and NP2). 681 
+
+Proteins are ranked by the minimum NP -robust log₂ fold -change across Sport and Bungee . (B) Heatmap of log₂ -682 
+
+transformed metabolite intensities across both groups in the TSST cohort, z -scored per metabolite (n=40; Friedman 683 
+
+test, BH correction f or multiple testing, custom neurotransmitter and amino acid panel (NT/AA)). The significance 684 
+
+strip on the right indicates the result of the overall time effect test (red = FDR < 0.05, orange = p < 0.05 nominal, 685 
+
+grey = p > 0.05) (C) Heatmap of log₂ -transfor med metabolite intensities (custom NT/AA panel) across the control 686 
+
+group in the TSST cohort, z -scored per metabolite (n=20; Friedman test, BH correction for multiple testing). (D) 687 
+
+Heatmap of log₂ -transformed metabolite intensities (custom NT/AA panel) acro ss the PD group in the TSST 688 
+
+cohort, z -scored per metabolite (n=20; Friedman test, BH correction for multiple testing). (E) Heatmap of log₂ -689 
+
+transformed metabolite intensities across both groups in the TSST cohort, z -scored per metabolite (n=40; Friedman 690 
+
+tes t, BH correction for multiple testing, custom sugar phosphates and organic acid panel (SuP/OA)). The 691 
+
+significance strip on the right indicates the result of the overall time effect test (red = FDR < 0.05, orange = p < 692 
+
+0.05 nominal, grey = p > 0.05) (F) Hea tmap of log₂ -transformed metabolite intensities (custom sugar phosphates 693 
+
+and organic acid panel (SuP/OA)) across the control group in the TSST cohort, z -scored per metabolite (n=20; 694 
+
+Friedman test, BH correction for multiple testing). (G) Heatmap of log₂ -tr ansformed metabolite intensities (custom 695 
+
+sugar phosphates and organic acid panel (SuP/OA)) across the PD group in the TSST cohort, z -scored per 696 
+
+metabolite (n=20; Friedman test, BH correction for multiple testing). 697 
+
+698 
+
+699 
+
+700 
+
+701 
+
+702 
+
+703 
+
+704 
+
+705 
+
+706 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+707 
+
+708 
+
+709 
+
+710 
+
+711 
+
+712 
+
+713 
+
+714 
+
+715 
+
+716 
+
+Figure S7. Targeted plasma metabolomics in the exercise and bungee jump cohort. (A) Heatmap of log₂ -717 
+
+transformed metabolite intensities (custom neurotransmitter and amino acid panel (NT/AA)) in the exercise cohort, 718 
+
+z-scored per metabolite (n=15; linear mixe d model, BH correction for multiple testing). The significance strip on 719 
+
+the right indicates the result of the overall time effect test (red = FDR < 0.05, orange = p < 0.05 nominal, grey = p 720 
+
+> 0.05) (B) Heatmap of log₂ -transformed metabolite intensities (cu stom NT/AA panel) in the bungee jump cohort, 721 
+
+z-scored per metabolite (n=21 -22; linear mixed model, BH correction for multiple testing). (C) Heatmap of log₂ -722 
+
+transformed metabolite intensities (custom SuP/OA panel) in the bungee jump cohort, z -scored per me tabolite 723 
+
+(n=21 -22; linear mixed model, BH correction for multiple testing). The significance strip on the right indicates the 724 
+
+result of the overall time effect test (red = FDR < 0.05, orange = p < 0.05 nominal, grey = ns). 725 
+
+726 
+
+727 
+
+728 
+
+729 
+
+730 
+
+731 
+
+732 
+
+733 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+734 
+
+Figure S8. (A) Bar grap hs showing concentrations of steroid hormones in the plasma at different timepoints within 735 
+
+the exercise cohort (n = 7 -8, Linear mixed models (random intercept per subject) with BH FDR correction across 736 
+
+all 14 steroids. Post -hoc Dunnett -type contrasts vs. b aseline (T0), Holm –Bonferroni corrected. * p < 0.05, ** p < 737 
+
+0.01, *** p < 0.001). ( B) Bar graphs showing concentrations of steroid hormones in the plasma at different 738 
+
+timepoints within the jumpers (n = 16 -20, Linear mixed models (random intercept per subje ct) with BH FDR 739 
+
+correction across all 14 steroids. Post -hoc Dunnett -type contrasts vs. baseline (T0), Holm –Bonferroni corrected. * 740 
+
+p < 0.05, ** p < 0.01, *** p < 0.001). 741 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+742 
+
+743 
+
+Figure 5. Stress -induced plasma proteome remodeling is driven by extracellular vesi cle -mediated 744 
+
+unconventional secretion. 745 
+
+746 
+
+(A) Heatmap showing fold changes relative to baseline (T0) for different extracellular vesicle (EV) subpopulations 747 
+
+in plasma of jumpers, identified by surface epitopes using the MACSPlex EV Kit for immune -oncology. L ine plots 748 
+
+display the mean of significantly regulated EV subpopulations over the course of the experiment (n = 14 -18, Mixed 749 
+
+effects model followed by Dunnett's multiple comparisons test, p ≤ 0.05 (*), p ≤ 0.01 (**)). (B) Heatmap 750 
+
+showing fold changes re lative to baseline (T0) for EV subpopulations in plasma of jumpers identified by surface 751 
+
+epitopes with the MACSPlex EV Kit for neurobiology. Line plots display the mean of significantly regulated EV 752 
+
+subpopulations over the course of the experiment (n = 14 -18, Mixed effects model followed by Dunnett's multiple 753 
+
+comparisons test p ≤ 0.05 (*). (C Volcano plot showing differential protein abundance in EV proteome of the 754 
+
+bungee jumpers at T7 compared to baseline (T0) (n = 12; paired moderated t -tests; BH -adjust ed p < 0.05). (D) 755 
+
+Plasma LC3B levels (fold -change to T0, mean + SEM) across bungee jump timepoints, with the post -jump period 756 
+
+shaded (n = 12, Friedman test followed by Dunn’s multiple comparisons, p ≤ 0.0001 ( **** )). (E) Targeted protein 757 
+
+quantification of HNRNPD and CD9 in EV lysates (fold -change to T0, mean + SEM). (n = 12, Friedman test 758 
+
+followed by Dunn’s multiple comparisons; p ≤ 0.01(**), p ≤ 0.001(***). (F) Bar plot comparing the number of 759 
+
+proteins unique to the pl asma compartment (PL), shared between plasma and EVs, or belonging to the stress core, 760 
+
+for plasma (PL) and EV proteomes. (G) PBMC secretome experiment. Primary human PBMCs from n=8 healthy 761 
+
+male donors were stimulated for 1 hour with cortisol, lactate, or N -lactoyl -phenylalanine (N -Lac -Phe), and 762 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+supernatants were collected. Box plots show log₂ fold -change relative to vehicle (VEH) for stress core proteins 763 
+
+(pink) and all other detected proteins (grey) for each stimulus condition. (H) Deep serum proteomics (DP P) in a 764 
+
+mouse acute restraint stress (ARS) model (n=10 mice per group). Volcano plots show differential protein 765 
+
+abundance for ARS vs. control (CTL, left) and ARS vs. ARS + KH -103 (glucocorticoid receptor degrader, right) 766 
+
+using NP1 (green/light blue) and NP 2 (dark green/dark blue). (Moderated t -tests; Benjamini -Hochberg (BH) 767 
+
+correction for multiple testing; adjusted p < 0.05 highlighted). 768 
+
+769 
+
+770 
+
+771 
+
+772 
+
+773 
+
+774 
+
+775 
+
+776 
+
+777 
+
+778 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+779 
+
+Figure S9. (A) Bar plots showing fold changes relative to baseline (T0) for different EV subpopulations identified 780 
+
+by surface epitopes with the MACSPlex EV Kit for immune -oncology. (n = 14 -18, Mixed effects model followed 781 
+
+by Dunnett's multiple comparisons test. ( p ≤ 0.0 5 (*), p ≤ 0.01 (**), p ≤ 0.0001 (****)). (B) Bar plots 782 
+
+.CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint showing fold changes relative to baseline (T0) for different EV subpopulations identified by surface epitopes with 783 
+
+the MACSPlex EV Kit for neurobiology. (n = 14 -18, Mixed effects model followed by Dunnett's multiple 784 
+
+comparisons test. ( p ≤ 0.05 (*), p ≤ 0.01 (**), p ≤ 0.001 (***)). (C) Volcano plot showing differential 785 
+
+protein abundance in EV proteome of the bungee jumpers at T6 compared to baseline (T0). (n = 12; paired 786 
+
+moderated t -tests; B H-adjusted p < 0.05). (D) Volcano plot showing differential protein abundance in EV proteome 787 
+
+of the bungee jumpers at T8 compared to baseline (T0). (n = 12; paired moderated t -tests; BH -adjusted p < 0.05). 788 
+
+789 
+
+Figure S10. PBMC secretome responses to individ ual stress mediators. (A) Volcano plot showing differential 790 
+
+protein abundance in the secretome of cells stimulated with cortisol compared to vehicle. (n = 8; moderated t -tests; 791 
+
+BH -adjusted p < 0.05). (B) Volcano plot showing differential protein abundance in the secretome of cells 792 
+
+stimulated with lactate compared to vehicle. (n = 8; moderated t -tests; BH -adjusted p < 0.05). (C) Volcano plot 793 
+
+showing differential protein abundance in the secretome of cells stimulated with Lac -Phe compared to vehicle. (n 794 
+
+= 8; moderated t -tests; BH -adjusted p < 0.05). 795 
+
+796 
+
+797 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+References 798 
+
+Abelson JL, Khan S, Liberzon I, Young EA. HPA axis activity in patients with panic disorder: review 799 
+
+and synthesis of four studies. Depress Anxiety . 2007;24(1):66 -76. doi: 10.1002/da.20220 800 
+
+American Psychiatric Association. Diagnostic and Statistical Manual of Mental Disorders (DSM -IV -801 
+
+TR), 4th edn. American Psychiatric Association, Washington DC (2000). 802 
+
+Ammar C, Schessner JP, Willems S, Michaelis AC, Mann M. Accurate Label -Free Quantification by 803 
+
+directLFQ to Compare Unlimited Numbers of Proteomes.  Mol Cell Proteomics .804 
+
+2023;22(7):100581. doi:10.1016/j.mcpro.2023.100581 805 
+
+Andersson U, Yang H, Harris H. Extracellular HMGB1 as a therapeutic target in inflammatory diseases. 806 
+
+Expert Opin Ther Targets. 2018;22(3):263 -277. doi:10.1080/14728222.2018.1439924 807 
+
+Batth TS, Tollenaere MX, Rüther P, Gonzalez -Franquesa A, Prabhakar BS, Bekker -Jensen S et al. 808 
+
+Protein Aggregation Capture on Microparticles Enables Multipurpose Proteomics Sample 809 
+
+Preparation. Mol Cell Proteomics. 2019;18(5):1027 -1035. doi:10.1074/mcp.TIR118.001270 810 
+
+PMID:30833379 811 
+
+Y. Benjamini, Y. Hochberg, Co ntrolling the False Discovery Rate: A Practical and Powerful Approach 812 
+
+to Multiple Testing. J. R. Stat. Soc. Ser. B Methodol. 57, 289 –300 (1995). 813 
+
+Blume, J. E. et al. Rapid, deep and precise profiling of the plasma proteome with multi -nanoparticle 814 
+
+protein co rona. Nat. Commun. 11, 3662 (2020). 815 
+
+Brahmer, A. et al. Platelets, endothelial cells and leukocytes contribute to the exercise -triggered release 816 
+
+of extracellular vesicles into the circulation. J. Extracell. Vesicles 8, 1615820 (2019). 817 
+
+Brahmer A, Geiß C, Lyg eraki A, Neuberger E, Tzaridis T, Nguyen TT et al. Assessment of technical and 818 
+
+clinical utility of a bead -based flow cytometry platform for multiparametric phenotyping of 819 
+
+CNS -derived extracellular vesicles. Cell Commun Signal. 2023;21(1):276. doi:10.1186/s 12964 -820 
+
+023 -01308 -9 PMID:37803478 821 
+
+Chrousos, G. P. & Gold, P. W. The concepts of stress and stress system disorders. Overview of physical 822 
+
+and behavioral homeostasis. JAMA 267, 1244 –1252 (1992). 823 
+
+Contrepois K, Wu S, Moneghetti KJ, Hornburg D, Ahadi S, Tsai MS et al. Molecular Choreography of 824 
+
+Acute Exercise. Cell. 2020;181(5):1112 -1130.e16. doi:10.1016/j.cell.2020.04.043 825 
+
+PMID:32470399 826 
+
+de Kloet, E. R. & Joëls, M. The cortisol switch between vulnerability and resilience. Mol. Psychiatry 827 
+
+(2023). 828 
+
+Engert V, Efanov S I, Duchesne A, Vogel S, Corbo V, Pruessner JC. Differentiating anticipatory from 829 
+
+reactive cortisol responses to psychosocial stress. Psychoneuroendocrinology. 2013;38(8):1328 -830 
+
+1337. doi:10.1016/j.psyneuen.2012.11.018 PMID:23246327 831 
+
+Gaab J, Rohleder N, Nater UM, Ehlert U. Psychological determinants of the cortisol stress response: the 832 
+
+role of anticipatory cognitive appraisal. Psychoneuroendocrinology . 2005;30(6):599 -610. 833 
+
+doi:10.1016/j.psyneuen.2005.02.001 834 
+
+Galluzzi L, Yamazaki T, Kroemer G. Linking cellular st ress responses to systemic homeostasis. Nat Rev 835 
+
+Mol Cell Biol . 2018;19(11):731 -745. doi:10.1038/s41580 -018 -0068 -0836 
+
+Gardella S, Andrei C, Ferrera D, et al. The nuclear protein HMGB1 is secreted by monocytes via a non -837 
+
+classical, vesicle -mediated secretory pat hway. EMBO Rep . 2002;3(10):995 -1001. 838 
+
+doi:10.1093/embo -reports/kvf198 839 
+
+Gazorpak M, Hugentobler KM, Paul D, et al. Harnessing PROTAC technology to combat stress 840 
+
+hormone receptor activation. Nat Commun . 2023;14(1):8177. Published 2023 Dec 9. 841 
+
+doi:10.1038/s4146 7-023 -44031 -2842 
+
+Heidt, T. et al. Chronic variable stress activates hematopoietic stem cells. Nat. Med. 20, 754 –758 (2014). 843 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+Herhaus B, Heni M, Bloch W, Petrowski K. Dynamic interplay of cortisol and BDNF in males under 844 
+
+acute and chronic psychosocial stress – A randomized controlled study. 845 
+
+Psychoneuroendocrinology. 2024;170:107192. doi:10.1016/j.psyneuen.2024.107192 846 
+
+PMID:39332135 847 
+
+Herman JP, McKlveen JM, Ghosal S, Kopp B, Wulsin A, Makinson R et al. Regulation of the 848 
+
+Hypothalamic -Pituitary -Adrenocortical Stress Response. Compr Physiol. 2016;6(2):603 -621. 849 
+
+doi:10.1002/cphy.c150015 PMID:27065163 850 
+
+Hisaoka -Nakashima K, Takeuchi Y, Saito Y, Shimoda T, Nakamura Y, Wang D et al. Glucocorticoids 851 
+
+induce HMGB1 release in primary cultured rat cortical microglia. Neuroscienc e. 2024;560:56 -852 
+
+66. doi:10.1016/j.neuroscience.2024.09.031 PMID:39304023 853 
+
+Kabeya Y, Mizushima N, Ueno T, Yamamoto A, Kirisako T, Noda T et al. LC3, a mammalian 854 
+
+homologue of yeast Apg8p, is localized in autophagosome membranes after processing. EMBO 855 
+
+J. 2000; 19(21):5720 -5728. doi:10.1093/emboj/19.21.5720 856 
+
+Kirschbaum, C., Pirke, K. M. & Hellhammer, D. H. The 'Trier Social Stress Test' --a tool for 857 
+
+investigating psychobiological stress responses in a laboratory setting. Neuropsychobiology 28, 858 
+
+76 –81 (1993). 859 
+
+Kivimä ki M, Bartolomucci A, Kawachi I. The multiple roles of life stress in metabolic disorders. Nat 860 
+
+Rev Endocrinol. 2023;19(1):10 -27. doi:10.1038/s41574 -022 -00746 -8 PMID:36224493 861 
+
+Knezevic, E. et al. The role of cortisol in chronic stress, neurodegenerative dis eases, and psychological 862 
+
+disorders. Cells 12, 2726 (2023). 863 
+
+P. A. Kosecki, P. Brooke, L. Abbott, E. Canonico, The effect of sample hemolysis on blood ethanol 864 
+
+analysis using headspace gas chromatography. J. Forensic Sci. 66, 1136 –1142 (2021). 865 
+
+Leek JT, Johnso n WE, Parker HS, Jaffe AE, Storey JD. The sva package for removing batch effects and 866 
+
+other unwanted variation in high -throughput experiments. Bioinformatics. 2012;28(6):882 -883. 867 
+
+doi:10.1093/bioinformatics/bts034 PMID:22257669 868 
+
+Leidal, A. M. et al. The LC3 -conjugation machinery specifies the loading of RNA -binding proteins into 869 
+
+extracellular vesicles. Nat. Cell Biol. 22, 187 –199 (2020). 870 
+
+Lucien F, Gustafson D, Lenassi M, Li B, Teske JJ, Boilard E et al. MIBlood -EV: Minimal information to 871 
+
+enhance the quality and reproducibility of blood extracellular vesicle research. J Extracell 872 
+
+Vesicles. 2023;12(12):e12385. doi:10.1002/jev2.12385 PMID:38063210 873 
+
+Mackert S, Niemeyer C, Mecdad Y, Ebert T, Bajaj T, Durand S et al. Spermidine alleviates depression 874 
+
+via control of the stress response. bioRxiv. 2024. doi:10.1101/2024.12.04.626625 875 
+
+PMID:39677641 876 
+
+Marsland, A. L. et al. The effects of acute psychological stress on circulating and stimulated 877 
+
+inflammatory markers: a systemat ic review and meta -analysis. Brain Behav. Immun. 64, 208 –878 
+
+219 (2017). 879 
+
+Martinelli, S. et al. Stress -primed secretory autophagy promotes extracellular BDNF maturation by 880 
+
+enhancing MMP9 secretion. Nat. Commun. 12, 4643 (2021). 881 
+
+McEwen, B. S. Stress, adaptation, and disease: allostasis and allostatic load. Ann. N. Y. Acad. Sci. 840, 882 
+
+33 –44 (1998). 883 
+
+Rabouille C. Pathways of Unce Protein Secretion. Trends Cell Biol. 2017;27(3):230 -240. 884 
+
+doi:10.1016/j.tcb.2016.11.007 PMID:27989656 885 
+
+Rammes A, Roth J, Goebeler M, Klempt M, Hartmann M, Sorg C. Myeloid -related protein (MRP) 8 and 886 
+
+MRP14, calcium -binding proteins of the S100 family, are secreted by activated monocytes via a 887 
+
+novel, tubulin -dependent pathway. J Biol Chem . 1997;272(14):9496 -9502. 888 
+
+doi:10.1074/jbc.272.14.9496 889 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+Rit chie ME, Phipson B, Wu D, Hu Y, Law CW, Shi W et al. limma powers differential expression 890 
+
+analyses for RNA -sequencing and microarray studies. Nucleic Acids Res. 2015;43(7):e47. 891 
+
+doi:10.1093/nar/gkv007 PMID:25605792 892 
+
+Rohleder, N. Stress and inflammation - Th e need to address the gap in the transition between acute and 893 
+
+chronic stress effects. Psychoneuroendocrinology 105, 164 –171 (2019). 894 
+
+Schmidt KT. Restraint to Induce Stress in Mice and Rats. J Vis Exp. 2024;(214):10.3791/67387. 895 
+
+Published 2024 Dec 6. doi:10.3 791/67387 896 
+
+Slavich GM, Irwin MR. From stress to inflammation and major depressive disorder: a social signal 897 
+
+transduction theory of depression. Psychol Bull . 2014;140(3):774 -815. doi:10.1037/a0035302 898 
+
+Steptoe, A., Hamer, M. & Chida, Y. The effects of acute ps ychological stress on circulating 899 
+
+inflammatory factors in humans: a review and meta -analysis. Brain Behav. Immun. 21, 901 –912 900 
+
+(2007). 901 
+
+Tkach M, Théry C. Communication by Extracellular Vesicles: Where We Are and Where We Need to 902 
+
+Go. Cell . 2016;164(6):1226 -12 32. doi:10.1016/j.cell.2016.01.043 903 
+
+Vaccarino V, Bremner JD. Stress and cardiovascular disease: an update. Nat Rev Cardiol. 904 
+
+2024;21(9):603 -616. doi:10.1038/s41569 -024 -01024 -y PMID:38698183 905 
+
+van Niel G, D'Angelo G, Raposo G. Shedding light on the cell biolog y of extracellular vesicles. Nat Rev 906 
+
+Mol Cell Biol . 2018;19(4):213 -228. doi:10.1038/nrm.2017.125 907 
+
+Whitham, M. et al. Extracellular vesicles provide a means for tissue crosstalk during exercise. Cell 908 
+
+Metab. 27, 237 –251.e4 (2018). 909 
+
+Wittchen, H. U., Zaudig, M. & Fydrich, T. Strukturiertes Klinisches Interview für DSM -IV (SCID). 910 
+
+Hogrefe, Göttingen (1997). 911 
+
+Yang H, Wang H, Andersson U. Targeting Inflammation Driven by HMGB1.  Front Immunol .912 
+
+2020;11:484. Published 2020 Mar 20. doi:10.3389/fimmu.2020.00484 913 
+
+Yu G, Wan g LG, Han Y, He QY. clusterProfiler: an R package for comparing biological themes among 914 
+
+gene clusters. OMICS. 2012;16(5):284 -287. doi:10.1089/omi.2011.0118 PMID:22455463 915 
+
+916 
+
+917 
+
+918 
+
+919 
+
+920 
+
+921 
+
+922 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+Material and Methods 923 
+
+924 
+
+Human studies 925 
+
+926 
+
+Cohort 1: Trier Social Stress Test 927 
+
+Ethical approval and study participants 928 
+
+Participants were recruited through newspaper advertisements, online announcements, and notice 929 
+
+boards at various universities. Prior to enrollment, eligibility was assessed via a structured interview 930 
+
+based on the Str uctured Clinical Interview for Axes I and II for DSM -IV (Wittchen et al., 1997; APA, 931 
+
+2000);. The experimental group consisted of individuals diagnosed with panic disorder according to 932 
+
+DSM -IV criteria, aged between 18 and 65 years. A matched control group o f healthy individuals was 933 
+
+established, paired by age and gender to the experimental group. Groups did not differ significantly in 934 
+
+age, gender, or use of oral contraceptives (all p > 0.05). Exclusion criteria included any acute or chronic 935 
+
+comorbid medical illness, additional psychiatric diagnoses, current psychotropic medication or 936 
+
+substance use, known allergies, and stressful life events within the preceding 6 months. Each group 937 
+
+comprised n = 32 participants. All participants provided written informed conse nt. The study protocol 938 
+
+was approved by the Ethics Committee of the Landesärztekammer Rheinland -Pfalz, Germany 939 
+
+(No#2019 -14188). 940 
+
+941 
+
+General study design 942 
+
+We conducted a single -center, non -blinded, non -randomized, controlled repeated -measures prospective 943 
+
+study t o investigate molecular and psychological responses to acute psychosocial stress in healthy 944 
+
+controls and in panic disorder patients. All assessments were performed on weekdays between 2:00 and 945 
+
+6:00 p.m. The participants were instructed not to eat and not d rink caffeinated drinks for at least three 946 
+
+hours before the test session as well as to refrain from intense physical exercise and alcohol consumption 947 
+
+for 12 h before the experiment. Female participants completed the stress test during the luteal phase of 948 
+
+their menstrual cycle to control for hormonal influences. The study protocol lasted approximately 90 949 
+
+min and comprised three sequential phases: a pre -stress phase, a stress phase, and a post -stress phase. 950 
+
+951 
+
+Psychosocial Stress Protocol 952 
+
+The stress condition was the Trier Social Stress Test (TSST), following the Kirschbaum et al. (1993 )953 
+
+protocol. It consisted of three sections: preparation, interview, and a calculation task, with each section 954 
+
+lasting 5 minutes. 955 
+
+956 
+
+957 
+
+958 
+
+Blood collection and sample processing 959 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+At eac h designated time point (T0 –T4), blood was collected into 7.5 mL EDTA tubes (S -Monovette® 960 
+
+7.5 mL Z, Sarstedt, Nümbrecht, Germany) . Samples were centrifuged at 1,610 × g for 10 min. Plasma 961 
+
+was subsequently aliquoted and stored at −80 °C until further analys is. 962 
+
+963 
+
+Serum cortisol measurements 964 
+
+For serum cortisol measurements, blood samples were collected in serum monovettes (S -Monovette® 965 
+
+7.5 mL Z, Sarstedt, Nümbrecht, Germany). After blood collection, the monovettes were left at room 966 
+
+temperature for 30 min to a llow the blood to coagulate. The monovettes were then centrifuged at 2500 g 967 
+
+for 10 min at 20°C, divided into aliquots and stored at −80°C. Serum cortisol concentrations were 968 
+
+determined by single analysis and quantified using a commercially available enz yme -linked 969 
+
+immunosorbent assay (ELISA) kit (IBL International GmbH, Germany). The detection limit of cortisol 970 
+
+was 4.03 –800 ng/mL with an analytical sensitivity of 3.79 ng/mL. 971 
+
+972 
+
+Cohort 2: Exercise Study 973 
+
+Ethical approval and study participants 974 
+
+The study was conducted between November 12, 2021, and January 18, 2022, at the Department of 975 
+
+Obstetrics and Gynecology and the Institute of Sports Medicine, Prevention and Rehabilitation, 976 
+
+Paracelsus Medical University Salzburg, Austria. 977 
+
+This study is part of a larger investigation that included both recreationally active participants and 978 
+
+professional cyclists (see ClinicalTrials.gov: NCT05359744). This publication focuses on the results of 979 
+
+the recreationally active participants (n=15). 980 
+
+Fifteen healthy recreationally ac tive males [VO₂max 46,9 mL·kg⁻¹·min⁻¹ (SD = 5.12)] participated in a 981 
+
+single -day interventional study. Participants were eligible if they were between 18 and 40 years of age 982 
+
+and provided written informed consent to participate in the exercise intervention. All procedures were 983 
+
+conducted in accordance with the Declaration of Helsinki. The study protocol was approved by the 984 
+
+Ethics Committee of the State of Salzburg (EK No. 1132/2021) and registered at ClinicalTrials.gov 985 
+
+(NCT05359744). 986 
+
+987 
+
+General study design 988 
+
+We c onducted a single -center, non -blinded, non -randomized prospective study to investigate molecular 989 
+
+changes during cardiopulmonary exercise testing (CPET) across varying workload (W) intensities on a 990 
+
+cycle ergometer. All assessments were performed in the morn ing following an 8 –12 h overnight fast. 991 
+
+Baseline evaluations included anthropometric measurements (body mass [kg], height [cm], and body 992 
+
+mass index [BMI; kg·m⁻²]), resting 12 -lead electrocardiography (ECG), resting heart rate, peripheral 993 
+
+oxygen saturation, resting blood pressure, and medical history assessment. In addition, transthoracic 994 
+
+echocardiography was performed. Venous blood samples were obtained via an indwelling venous 995 
+
+catheter inserted into an antecubital vein, which remained in situ throughout th e entire testing protocol. 996 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+Blood samples were collected at baseline prior to exercise (T0), after completion of the aerobic warm -997 
+
+up phase (T1), immediately after the incremental test to volitional exhaustion (T3), and during recovery 998 
+
+at 10 min (T4) and 30 min (T5) post -exercise. 999 
+
+1000 
+
+Cardiopulmonary exercise testing (CPET) 1001 
+
+Participants first completed a 15 -min warm -up at a workload of 1 W·kg⁻¹. Predominantly aerobic energy 1002 
+
+metabolism during the warm -up was verified by spirometric assessment (stable respiratory quotient 1003 
+
+without an increase in CO₂ production) and blood lactate measurements, defined as no increase ≥ 0.5 1004 
+
+mmol·L⁻¹ during the final 5 min of the warm -up (Biosen S -line Clinic, EKF Diagnostic GmbH, 1005 
+
+Magdeburg, Germany). Aft er a 5 -min resting period, maximal oxygen uptake (VO₂max) was determined 1006 
+
+using an incremental ramp protocol on an electromagnetically braked cycle ergometer (Lode Excalibur 1007 
+
+Sport, Lode B.V., Groningen, Netherlands) allowing for a linear increase in workloa d. Initial workload 1008 
+
+and ramp increments were individualized based on participants’ BMI, targeting test termination due to 1009 
+
+voluntary exhaustion within 8 –12 min. The test was terminated upon volitional exhaustion. Pulmonary 1010 
+
+gas exchange and ventilation were measured breath -by -breath using a computerized metabolic cart 1011 
+
+(Metalyzer 3B, Cortex Biophysik GmbH, Leipzig, Germany). Throughout the entire protocol, 1012 
+
+participants were continuously monitored using a 12 -lead ECG (ECGpro Version 5.10, AMEDTEC 1013 
+
+Medizintechnik Aue GmbH, Aue, Germany). Blood pressure was measured at time points T0 through 1014 
+
+T4. Blood samples for lactate analysis were collected at T0, at minute 7 of the warm -up, at T1, and at 1015 
+
+T3. 1016 
+
+1017 
+
+Blood collection and sample processing 1018 
+
+At each designated time poi nt (T0 –T4), blood was collected into 7.5 mL lithium heparin tubes (Sarstedt, 1019 
+
+Nümbrecht, Germany; 11.608.001). Samples were centrifuged at 1,610 × g for 10 min. Plasma was 1020 
+
+subsequently aliquoted and stored at −80 °C until further analysis. 1021 
+
+1022 
+
+Cohort 3:Bung ee study 1023 
+
+It was a monocenter, non -blinded, non -randomized prospective trial. The intervention group (n = 22) 1024 
+
+performed a bungee jump, while the control group (n = 10) was not exposed to any experimental stress 1025 
+
+setup. Participants were recruited between May 2021 and January 2022. The study was conducted with 1026 
+
+healthy, male participants. For the present analyses, molecular profiling was performed exclusively in 1027 
+
+the intervention group, focusing on within -subject stress -induced changes. 1028 
+
+1029 
+
+Ethics 1030 
+
+The study was car ried out on the premises of the Telekom Baskets Bonn and at the Department of 1031 
+
+Psychiatry and Psychotherapy, University Hospital Bonn. The trial protocol was approved by the Ethics 1032 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+Committee of the University Hospital Bonn, Germany (lfd. Nr. 028/21; Clinica lTrials.gov identifier: 1033 
+
+NCT05144022). The study was conducted in accordance with the Declaration of Helsinki. 1034 
+
+1035 
+
+Participants 1036 
+
+After potential participants expressed their interest in performing a bungee jump, they were contacted 1037 
+
+by the study team to evaluate possible participation. All participants were male and had no relevant 1038 
+
+previous illnesses. None had ever done a bungee jump before. Exclusion criteria included any 1039 
+
+neurological or psychiatric pre -existing conditions, regular medication (except for thyroid medication), 1040 
+
+pathological fear of heights, excessive alcohol consumption, smoking, illegal drug use, cardiovascular 1041 
+
+or pulmonary diseases, serious eye diseases, spine fractures, and surgeries within the last 4 -6 months. 1042 
+
+The same inclusion and exclusion cr iteria applied to the control subjects. 1043 
+
+1044 
+
+1045 
+
+Procedures 1046 
+
+Intervention Group (Bungee Jump Group) (n = 22) 1047 
+
+At the baseline appointments (and at every other blood draw), participants were asked not to eat or drink 1048 
+
+(except for water) for at least 12 hours. Partici pants were informed in advance (by e -mail and/or 1049 
+
+telephone) about the experimental setup. After arriving in the examination room, participants provided 1050 
+
+written informed consent and underwent further screening assessments for eligibility. This included 1051 
+
+verb al queries of inclusion and exclusion criteria, physical, neurological, and psychopathological 1052 
+
+examinations, and an electrocardiogram conducted by medical doctors. If any abnormalities were found, 1053 
+
+indicating the participant did not meet the inclusion crite ria or met the exclusion criteria, they were 1054 
+
+excluded from the study. Participants also provided a urine sample, tested for illegal substances. If illegal 1055 
+
+substances were found, the participant was excluded from the study. If no reasons for exclusion were 1056 
+
+found, participants completed questionnaires on demographics and mental state, followed by the 1057 
+
+measurement of pulse and blood pressure and a venous blood sample (T0, baseline). 1058 
+
+7-10 days after the baseline appointment, the bungee jump took place. Again, al l participants were asked 1059 
+
+not to eat or drink (except for water) for at least 12 hours. In total, seven venous blood draws were taken 1060 
+
+on the day of the jump. The first blood draw (T1) occurred upon arrival at the experimental site, on 1061 
+
+average 48 minutes be fore the jump, followed by the second blood draw on the ground shortly on 1062 
+
+average 20 min before the jump (T2) and the third blood draw on average five min after the jump (T3). 1063 
+
+Additional blood draws were performed 20 minutes after the jump (T4), one hour a fter the jump (T5), 1064 
+
+two hours after the jump (T6), and four hours after the jump (T7). Participants fasted throughout this 1065 
+
+period. Between blood samples, participants were asked to avoid movement and stay at the experimental 1066 
+
+site. At selected blood draws, participants completed several psychological state questionnaires and 1067 
+
+cognitive tasks were performed at specified time points, which are not part of this manuscript. 1068 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+For the bungee jump, participants were lifted on a platform to a height of 60 meters by a crane. The 1069 
+
+technical execution of the jump, including safety measures, was carried out by an external company 1070 
+
+specialized in bungee jumping. 1071 
+
+The follow -up appointment (T8) took place 7 -10 days after the day of the jump. Again, blood was taken 1072 
+
+for PBMC and plasma isolation, and participants completed the same questionnaires as at T0. 1073 
+
+1074 
+
+Blood collection and sample processing 1075 
+
+Blood was collected in  three  7.5 ml lithium heparin sampling tubes (Sarstedt, 11.608.001) and two 4.9 1076 
+
+ml lithium heparin sampling tubes ( Sarsted, 04.1939.001) at each timepoint. 7.5 ml lithium heparin 1077 
+
+sampling tubes were centrifuged at 1610 x g for 10 min. Afterwards plasma was collected and stored at 1078 
+
+-80 °C until it was further processed. 1079 
+
+1080 
+
+1081 
+
+1082 
+
+Single Stress Items questionnaire 1083 
+
+Subjective stress, arousal and enthusiasm levels were assessed using a questionnaire specially designed 1084 
+
+for the study called “Single Stress Items”. In the questionnaire, participants were asked on the day of 1085 
+
+the jump to indicate their level of stress, enthusiasm and arousal on a scale from 0 to 100 as part of an 1086 
+
+open questionnaire. 1087 
+
+1088 
+
+Acute restraint stress experiment 1089 
+
+Animals 1090 
+
+C57BL/6JRj male mice were obtained from obtained from Janvier (France). Animals were housed in 1091 
+
+SealSafe PLUS ventilated cages (Tecniplast) in gro ups of 4 –5 under a reversed 12‑h light –dark cycle 1092 
+
+(lights off at 09:30 a.m.) with food and water ad libitum. The temperature in the housing facility was 1093 
+
+kept constant at 22 °C. All animals were acclimatized to the facility for at least two weeks before 1094 
+
+exp eriments. Age‑matched mice (8 –10 weeks old) were used to minimize age‑related variability. The 1095 
+
+day before injections, mice were weighed and single‑housed to reduce handling‑related stress and to 1096 
+
+standardize conditions. 1097 
+
+1098 
+
+Injections and Stress paradigm 1099 
+
+Mice  (n = 20) were randomly assigned to one of four experimental groups. KH‑103 stock solution was 1100 
+
+prepared by dissolving KH‑103 powder in 40% Captisol (Selleck Chemicals) in DMSO. For 1101 
+
+injections, the stock was diluted to obtain a working solution containing 5 % KH‑103 in 1102 
+
+Captisol/DMSO, formulated into 20% Solutol (GLPBIO) in 0.9% sterile saline (Moltox) (w/v), 1103 
+
+yielding a final formulation with 5% DMSO. The mixture was vortexed thoroughly and sonicated in a 1104 
+
+heated water bath until a homogeneous, clear solution w as obtained. 1105 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+All animals received a subcutaneous injection of either KH‑103 (44 mg/kg) or vehicle and were then 1106 
+
+left undisturbed in their single‑housing cage for 2 h. Depending on group assignment, mice were 1107 
+
+subsequently exposed either to acute restraint s tress or to a handling control condition. Acute restraint 1108 
+
+stress was performed by placing mice individually into 50 mL Falcon tubes with a large air hole for 1109 
+
+90 min. The restraint tube was placed in the single -housing cage for the duration of stress. Hand ling 1110 
+
+controls were briefly handled and returned to their single -housing cage for the same duration. 1111 
+
+Following the 90‑min manipulation, all mice remained undisturbed for an additional 150 min before 1112 
+
+euthanasia. 1113 
+
+1114 
+
+Serum collection 1115 
+
+Trunk blood was collected im mediately after euthanasia via cervical dislocation and decapitation. 1116 
+
+Samples were allowed to clot at room temperature for 30 min and subsequently centrifuged at 1117 
+
+2,500 × g for 15 min at 4 °C. The resulting serum was carefully transferred into fresh microce ntrifuge 1118 
+
+tubes and stored at −80 °C until further analysis .1119 
+
+1120 
+
+Plasma Proteomics  of human cohorts 1121 
+
+Sample preparation for deep plasma proteomics analysis 1122 
+
+For plasma proteomic profiling, a predefined subset of participants and timepoints was selected from 1123 
+
+each cohort to balance longitudinal coverage of the acute and delayed stress response with the analytical 1124 
+
+depth and throughput of deep plasma proteomics. T imepoints were chosen to capture baseline, peak and 1125 
+
+recovery phases of the respective stress paradigms. In the TSST cohort (Cohort 1),  n = 20 participants 1126 
+
+per group were analyzed at timepoints T1, T8, and T10. In the exercise cohort (Cohort 2),  n = 12 1127 
+
+part icipants were analyzed at T0, T1, T2, T3, and T4. In the bungee cohort (Cohort 3),  n = 16 participants 1128 
+
+were analyzed at T0, T2, T3, T5, and T7. 1129 
+
+We utilized a nanoparticle -based enrichment strategy (Seer Proteograph TM  XT)  (Blume et al., 2020)  to 1130 
+
+overcome t he high abundance problem of blood plasma samples and enable deep plasma -derived 1131 
+
+proteomes. From the collected EDTA (Cohort 1) or Lithium -Heparin blood plasma (Cohort 2 and 3), 1132 
+
+240 μl of each sample was used for protein enrichment by protein corona formati on around two 1133 
+
+nanoparticle mixtures (NP1 and NP2). Following, samples were tryptically digested, and peptides 1134 
+
+cleaned up, all carried out within a working day on a liquid handling system following the 1135 
+
+manufacturer’s protocol. Afterwards, peptide concentrat ions were determined (Thermo 1136 
+
+Pierce TM Fluorescence Quantitative Peptide Assay), and peptides were vacuum -dried completely within 1137 
+
+the collection plate overnight. On the next day, 200 ng of peptides were loaded onto Evosep Evotip Pure 1138 
+
+trap columns following t he manufacturer’s protocol. Eleven synthetic peptides were spiked in as internal 1139 
+
+standards and at equimolar concentrations. 1140 
+
+1141 
+
+Liquid chromatography -tandem mass spectrometry 1142 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+For the exercise and bungee jumping cohorts, proteomics samples were analyzed using  a liquid 1143 
+
+chromatography -tandem mass spectrometry (LC -MS/MS) system comprising an Evosep One 1144 
+
+chromatographic system (Evosep) and a timsTOF Pro 2 mass spectrometer (Bruker Daltonics). Peptides 1145 
+
+were separated employing the pre -installed 40 -sample -per -day whis per method with 31 -minute 1146 
+
+chromatographic gradients. Separation occurred on an Aurora Elite CSI analytical column (Ionopticks), 1147 
+
+15 cm in length with a 75 μm inner diameter, packed with 1.7 μm C18 particles. The LC system was 1148 
+
+directly coupled to the mass sp ectrometer, with eluting peptides transferred to the MS via a Captive 1149 
+
+Spray nano -electrospray ion source, operating at a constant spray voltage of 1.5 kV. Data were acquired 1150 
+
+in data -independent acquisition mode with parallel accumulation -serial fragmentati on (diaPASEF). The 1151 
+
+dual TIMS analyzer ran at 100% duty cycle, utilising 100 ms for both accumulation and ramping times. 1152 
+
+Peptides were isolated within a mass -to -charge range of 350 –1100 m/z and an ion mobility range of 1153 
+
+0.63 –1.45 Vs/cm². Sixteen py_DiAID -opt imized PASEF windows with variable sizes were used for 1154 
+
+acquisition. Collisional energies were incrementally increased from 24 eV at 0.63 Vs/cm² to 49 eV at 1155 
+
+1.45 Vs/cm². 1156 
+
+For the TSST cohort, proteomics samples were analyzed using a liquid chromatography -ta ndem mass 1157 
+
+spectrometry (LC -MS/MS) system comprising an Evosep One chromatographic system (Evosep) and 1158 
+
+an Orbitrap Astral mass spectrometer (Thermo Fisher Scientific). Peptides were separated using the pre -1159 
+
+installed 40 -sample -per -day Whispher Zoom method wi th a 32.5 -minute effective gradient and an 1160 
+
+Aurora Elite analytical column (Ionopticks, 15 cm length, 75 μm inner diameter, 1.7 μM C18 material. 1161 
+
+Eluting peptides were directly transferred to the MS via a Nanospray Flex ionization source, operated 1162 
+
+with a con stant spray voltage of 1.8 kV. Data was acquired in data -independent acquisition mode. Full 1163 
+
+MS spectra were acquired with the Orbitrap detector operated at a resolution of 240,000. The AGC 1164 
+
+target was set to 300 % with a maximum injection time of 5 ms. The scan range was set to 380 – 980 1165 
+
+m/z and a full MS acquisition event was triggered every 600 ms. Fragment MS spectra were recorded 1166 
+
+using the Astral detector. DIA windows were set to a width of 3 m/z with a total of 199 DIA windows. 1167 
+
+Fragmentation was achieve d by Higer collisional dissociation (HCD) using relative HCD collision 1168 
+
+energies of 25%. The AGC target was set to 300 % with a maximum injection time of 5 ms. 1169 
+
+1170 
+
+Data analysis 1171 
+
+Raw data files were processed by Spectronaut (version 19.1) with the Direct DIA se arch option using 1172 
+
+the built -in search engine Pulsar and the following default settings: the number of trypsin missed 1173 
+
+cleavages was set to 2, with minimum and maximum peptide lengths of 7 and 52 amino acids, 1174 
+
+respectively. PSM, peptide, and protein group ide ntification FDR thresholds were set to 0.01. The search 1175 
+
+was performed using the reviewed UniProt database (H. sapiens, downloaded on 02/15/2023, 1176 
+
+SwissProt). Carbamidomethyl (C) was set as a fixed modification, and Oxidation (M) and Acetyl 1177 
+
+(Protein N -term) were set as variable modifications. IDPicker was used as Protein Inference Strategy. 1178 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+A proteotypicity filter was applied during analysis. Quantification of peptides was performed at the MS2 1179 
+
+level. 1180 
+
+1181 
+
+Normalization, Filtering and Transformation 1182 
+
+Bioinformatic analyses were conducted using R (v4.3.2). For the exercise and bungee jumping cohorts, 1183 
+
+batch effect normalization between plates was achieved by applying the ComBAT algorithm using the 1184 
+
+sva R package (3.50.0) ( Leek et al., 2012 ). Before ComBAT , missing peptide intensities were imputed 1185 
+
+using a width of 0.3 and down -shift of 1.8, equivalent to the Perseus method, with a seed of 20241874. 1186 
+
+Imputed adjusted intensitiies were subsequently removed before directLFQ (0.2.18 with Anaconda 1187 
+
+Python 3.11.5) (Ammar et al., 2023 ) was used to quantify protein intensities based on adjusted peptide 1188 
+
+intensities. 1189 
+
+For the TSST cohort, no systematic batch effects were detected based on exploratory data analysis and 1190 
+
+quality control metrics. Therefore, no additional ba tch correction was applied, and normalized protein 1191 
+
+intensities obtained from Spectronaut using the MaxLFQ algorithmwere used directly for downstream 1192 
+
+analyses 1193 
+
+Protein intensities were log2 -transformed and filtered to retain protein groups quantified in at l east 1194 
+
+50% of samples in at least one time point. No missing value imputation was performed. 1195 
+
+1196 
+
+Statistical Analysis 1197 
+
+Plasma proteomics data were analyzed in R using the limma package ( Ritchie et al., 2015 ). 1198 
+
+Longitudinal differential abundance analysis was co nducted using linear models with empirical Bayes 1199 
+
+moderation to assess within -subject changes across time points. To account for repeated measurements 1200 
+
+within individuals, intra -subject correlation was estimated using the duplicateCorrelation function and 1201 
+
+in corporated into the linear modeling framework. Two complementary statistical approaches were 1202 
+
+applied: (i) moderated paired t -tests for selected pairwise comparisons between time points, and (ii) 1203 
+
+moderated F -tests to assess overall temporal effects across a ll time points. P values were adjusted for 1204 
+
+multiple testing using the Benjamini –Hochberg false discovery rate (FDR) procedure ( Benjamini and 1205 
+
+Hochberg, 1995 ), and adjusted p values < 0.05 were considered statistically significant. 1206 
+
+1207 
+
+Hierarchical clustering and pathway enrichment analysis 1208 
+
+Unsupervised clustering of significantly regulated proteins was performed in the primary analysis based 1209 
+
+on their longitudinal expression profiles using hierarchical clustering with Euclidean distance and 1210 
+
+complete linkage. T hese cluster assignments were subsequently reused for aggregated visualization. 1211 
+
+For aggregated heatmaps, protein intensities were z -score standardized across all samples. Z -scores were 1212 
+
+averaged across participants for each time point to obtain mean tempora l profiles. Proteins were ordered 1213 
+
+according to their original cluster assignments, and no additional clustering was performed. Heatmaps 1214 
+
+were generated using the pheatmap and ComplexHeatmap packages in R. 1215 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+GO enrichment analysis was performed using the clust erProfiler R package ( Yu et al., 2012 ). Enriched 1216 
+
+terms were identified with a q -value cutoff of 0.05, adjusted using the Benjamini -Hochberg method 1217 
+
+(Benjamini and Hochberg, 1995 ). Redundant GO terms were simplified using the simplify function with 1218 
+
+a similar ity cutoff of 0.7. 1219 
+
+1220 
+
+Proteomics of mouse serum 1221 
+
+Serum proteomics of the mouse cohort was performed using the same nanoparticle -based protein 1222 
+
+enrichment strategy as described above. Due to limited sample availability, 30 μl of serum was used per 1223 
+
+sample. Samp les were analyzed by liquid chromatography –tandem mass spectrometry (LC -MS/MS) 1224 
+
+using an Evosep One chromatographic system (Evosep) coupled to an Orbitrap Astral mass spectrometer 1225 
+
+(Thermo Fisher Scientific), with instrument settings identical to those appli ed in the TSST cohort. 1226 
+
+Database searching and protein quantification were performed in Spectronaut as described above, using 1227 
+
+the UniProt Mus musculus reference proteome (SwissProt, downloaded on 18/11/2021). Protein 1228 
+
+intensities were log2 -transformed, and p rotein groups were retained if quantified in at least 50% of 1229 
+
+samples in at least one experimental group. No missing value imputation was performed. 1230 
+
+Statistical analysis was carried out in R using the limma package. Moderated t -tests were applied for 1231 
+
+compar isons between groups. P -values were adjusted for multiple testing using the Benjamini –1232 
+
+Hochberg false discovery rate (FDR) procedure; adjusted p -values < 0.05 were considered statistically 1233 
+
+significant. 1234 
+
+1235 
+
+Targeted Metabolomics of human cohorts 1236 
+
+1237 
+
+Sample prepa ration 1238 
+
+Polar metabolite fractions were extracted from 50 μl of human plasma using methyl tert -butyl ether 1239 
+
+(MTBE):methanol:water (50:30:20, v/v/v, all LC -MS -grade). Medium blanks were processed in 1240 
+
+parallel. For 50 μl of human plasma, 1 ml pre -chilled (−20 ° C) extraction buffer was added, samples 1241 
+
+were vortexed and kept on ice. Extracts were incubated in a cooled thermomixer (4 °C, 1,500 rpm, 30 1242 
+
+min, Bioer), centrifuged (21,000 × g , 10 min, 4 °C, Eppendorf), and supernatants transferred. To induce 1243 
+
+phase separation, 200 μl MTBE (Sigma -Aldrich) and 150 μl water (Biosolve) were added and the 1244 
+
+mixture was incubated in a thermomixer (10 min, 15 °C, Bioer), followed by centrifugation (16,000 ×1245 
+
+g, 10 min, 15 °C, Eppendorf). The lipid (upper) and polar (lower) pha ses (~650 μl and ~600 μl, 1246 
+
+respectively) were collected, dried in a SpeedVac (room temperature, 4 –6 h for polar fractions, 1247 
+
+Eppendorf), and stored at −80 °C. 1248 
+
+1249 
+
+LC -MS acquisition 1250 
+
+Semi -quantitative determination of NADPH, NADP, NADH, NAD, AMP, ADP, ATP, Sedoh eptulose -1251 
+
+7-Phosphate, 6-Phosphogluconate, Fructose -6-Phosphate, Glucose -6-Phosphate, Pentose -1252 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+Monophosphates (total), 3 -Phospho -Glycerate, Phosphoenole -Pyruvate, Alpha -Ketoglutarate, Malate, 1253 
+
+Succinate, Fumarate, Lactate, Pyruvate, Glycolate, and Glyoxylate was performed using a LC -MS/MS. 1254 
+
+The chromatographic separation was performed on an Agilent Infinity II 1290 HPLC system using a 1255 
+
+SeQuant ZIC -pHILIC column (150 × 2.1 mm, 5 μm particle size, peek coated, Merck) connected to a 1256 
+
+guard column of similar specific ity (20 × 2.1 mm, 5 μm particle size, Phenomoenex) a constant flow 1257 
+
+rate of 0.1 ml/min with mobile phase A comprised of 10 mM ammonium acetate in water, pH 9, 1258 
+
+supplemented with medronic acid to a final concentration of 5 μM and mobile phase B comprised of 1 01259 
+
+mM ammonium acetate in 90:10 acetonitrile to water, pH 9 at 40° C . 1260 
+
+The injection volume was 2 μl. The mobile phase profile consisted of the following steps and linear 1261 
+
+gradients: 0 – 1 min constant at 75 % B; 1 – 6 min from 75 to 40 % B; 6 to 9 min const ant at 40 % B; 9 1262 
+
+– 9.1 min from 40 to 75 % B; 9.1 to 20 min constant at 75 % B. An Agilent 6495 ion funnel mass 1263 
+
+spectrometer was used in positive and negative mode with an electrospray ionization source and the 1264 
+
+following conditions: ESI spray voltage 3000 V( -)/1500 V(+), nozzle voltage 2000 V( -)/1000 V(+), 1265 
+
+sheath gas 300° C at 9 l/min, nebulizer pressure 20 psig and drying gas 100° C at 11 l/min. Compounds 1266 
+
+were identified based on their mass transition and retention time compared to standards. Chromatograms 1267 
+
+were integrated using MassHunter software (Agilent, Santa Clara, CA, USA). Relative Abundance was 1268 
+
+determined based on peak area. 1269 
+
+1270 
+
+Quantitative determination of neurotransmitters was performed using a LC -MS/MS. The 1271 
+
+chromatographic separation was performed on an Agilent Infinity II 1290 HPLC system using a 1272 
+
+ZicHILIC SeQuant column (150 × 2.1 mm, 3.5 μm particle size, 100 Å pore size) connected to a 1273 
+
+ZicHILIC guard column (20 × 2.1 mm, 5 μm particle size) (Merck KgAA) a constant flow rate of 0.35 1274 
+
+ml/min with mobile phase A being 0.1 % Formic acid in 99:1 water:acetonitrile (Honeywell, 1275 
+
+Morristown, New Jersey, USA) and phase B being 0.1 % formic acid 99:1 acetonitrile:water 1276 
+
+(Honeywell, Morristown, New Jersey, USA) at 25° C. The injection volume was 2 μl. The mob ile phase 1277 
+
+profile consisted of the following steps and linear gradients: 0 – 8 min from 80 to 60 % B; 8 – 10 min 1278 
+
+from 60 to 10 % B; 10 – 12 min constant at 10 % B; 12 – 12.1 min from 10 to 80 % B; 12 to 15 min 1279 
+
+constant at 80 % B. An Agilent 6470 mass spect rometer was used in positive mode with an electrospray 1280 
+
+ionization source and the following conditions: ESI spray voltage 4500 V, nozzle voltage 1500 V, sheath 1281 
+
+gas 300° C at 12 l/min, nebulizer pressure 30 psig and drying gas 250° C at 11 l/min. 1282 
+
+Compounds w ere identified based on their mass transition and retention time compared to standards. 1283 
+
+Chromatograms were integrated using MassHunter software (Agilent, Santa Clara, CA, USA). 1284 
+
+Relative abundance was determined based on the peak area. 1285 
+
+Chromatograms were integrated using MassHunter software (Agilent, Santa Clara, CA, USA). 1286 
+
+1287 
+
+1288 
+
+1289 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+Statistical analysis 1290 
+
+Metabolite intensities were log₂ -transformed prior to analysis; zero values were treated as missing. 1291 
+
+Metabolites with a detection rate below 7 0% across all samples were excluded from analysis. 1292 
+
+Bungee -Jumping and Exercise cohorts: The effect of time on metabolite levels was assessed using 1293 
+
+linear mixed -effects models (LME) with timepoint as a fixed effect (factor) and participant as a 1294 
+
+random inter cept to account for repeated measurements: log₂(intensity) ~ factor(timepoint) + 1295 
+
+(1|participant). Model significance was evaluated by likelihood ratio test (LRT) comparing the full 1296 
+
+model against a null model without the timepoint term. P -values were adjust ed for multiple 1297 
+
+comparisons using the Benjamini -Hochberg false discovery rate (FDR) procedure across all tested 1298 
+
+metabolites. Metabolites with FDR < 0.05 were considered statistically significant. Post -hoc pairwise 1299 
+
+comparisons against baseline (t = 0) were performed using the emmeans package (treatment vs. 1300 
+
+control contrasts) with Benjamini -Hochberg correction. 1301 
+
+TSST cohort: Due to the small number of repeated measurements (3 timepoints) and moderate sample 1302 
+
+size (n = 20 per group), linear mixed -effects models showed singular fit (random intercept variance ≈ 1303 
+
+0). Therefore, the non -parametric Friedman test (equivalent to one -way repeated measures ANOVA) 1304 
+
+was used to assess within -group time effects, separately for the control group, the PD group, and all 1305 
+
+participa nts combined. Post -hoc pairwise comparisons against baseline (t = −15 min) were performed 1306 
+
+using Wilcoxon signed -rank tests with Benjamini -Hochberg correction. All analyses were performed 1307 
+
+in R (version 4.4) using the packages lme4, emmeans, and base R. 1308 
+
+1309 
+
+Targeted metabolomics of steroid hormones 1310 
+
+Steroids were determined by isotope dilution mass spectrometry (IDMS) using the MassChrom® 1311 
+
+Steroids assay for the quantitative determination of steroids in serum by liquid chromatography 1312 
+
+tandem mass spectrometry (L C-MS/MS) (Chromsystems GmbH, Gräfelfing/Germany). 1313 
+
+Sample preparation was carried out with sample clean up columns included in the assay. In short: 500 1314 
+
+μl of sample was mixed with 50 μl Internal Standard Mix and 450 μl Extracton Buffer in the equilibrated 1315 
+
+columns. The columns were centrifuged at 400 x g for one minute and the effluent discarded. After two 1316 
+
+wash steps steroids were eluted by 500 μl Elution buffer into autosampler vials. Eluents were dried at 1317 
+
+50°C under nitrogen to dryness. The samples were re constituted in 100 μl reconstitution buffer. 2 μl to 1318 
+
+20 μl were injected into the mass spectrometry system dependent on the panel and included analytes. 1319 
+
+An AB Sciex API 5500 Qtrap LC/MS/MS (AB Sciex LLC, Framingham, MA, USA) equipped with an 1320 
+
+Agilent 1200 HPLC system (Agilent, Santa Clara, CA, USA) was used in multiple reaction mode 1321 
+
+(MRM). Aldosterone, Androstenedione, Cortisol, 11 -Deoxycortisol, 21 -Deoxycortisol, Cortisone, 1322 
+
+Corticosterone, 11 -Deoxycorticosterone, Dehydroepiandrosterone (DHEA), Dehydroepian drosterone 1323 
+
+sulfate (DHEAS), Progesterone, 17 -OH -Progesterone, Testosterone and Dihydrotestosterone (DHT) 1324 
+
+were quantified in two different panels. Aldosterone and DHEAS were measured in negative, the other 1325 
+
+analytes in positive mode. A full calibration with seven calibration levels was carried out within each 1326 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+run. Three control samples with different levels were included, too. Data were evaluated by Analyst 1327 
+
+1.7.2. using the matching internal standard. 1328 
+
+Steroid concentrations below the lower limit of quantific ation (LOQ) were imputed as LOQ/2 prior to 1329 
+
+analysis. For each steroid, a linear mixed model (LMM) was fitted with time point as a fixed effect and 1330 
+
+a random intercept per subject to account for repeated measurements (R packages lme4 and lmerTest ). 1331 
+
+To contro l for multiple comparisons across the 14 measured steroids, p -values from the omnibus F -test 1332 
+
+(Type III) were adjusted using the Benjamini –Hochberg false discovery rate (FDR) procedure. For 1333 
+
+steroids surviving FDR correction (FDR < 0.05), post -hoc comparison s of estimated marginal means 1334 
+
+(EMMs) were conducted between each time point and baseline (BE1) using Dunnett -type contrasts, with 1335 
+
+Holm –Bonferroni correction applied within each steroid. 1336 
+
+1337 
+
+EV profiling by multiplexed bead -based flow cytometry 1338 
+
+Quality contr ol of plasma samples 1339 
+
+Blood plasma dedicated for EV analysis was inspected for hemolysis and platelet background according 1340 
+
+to the Minimal Information for Blood EV research (MIBlood -EV) guidelines ( Lucien et al., 2023 ) to 1341 
+
+assess the quality of blood plasma samples and identify potential confounders of EV analysis. 1342 
+
+1343 
+
+The presence of hemolysis was assessed qualitatively by visual inspection of plasma samples using the 1344 
+
+hemolysis reference palette ( Kosecki et al., 2021 ). All plasma samples used for EV preparatio ns in this 1345 
+
+study were below 100 mg/dl hemoglobin and thus suitable for further processing. 1346 
+
+The residual platelet concentration in plasma samples was determined by flow cytometry. 20 μl of 1347 
+
+plasma were diluted with 80 μl of FACS staining buffer (0.5 % BSA, 2 mM EDTA and 0.1 % NaN3 in 1348 
+
+PBS) and stained with 5 μl of CD61 -FITC antibody (cat. no. 336404, Biolegend). Measurement was 1349 
+
+performed at an Attune Nxt flow cytometer (Thermo Fisher Scientific) to confirm minimal residual 1350 
+
+platelet concentration in plasma sampl es. The residual platelet concentration for all plasma samples was 1351 
+
+below 2x10 6 platelets/ml. 1352 
+
+1353 
+
+EV separation from plasma samples by immuno -affinity capture 1354 
+
+EVs were separated by immuno -affinity capture using the EV Isolation Kit CD63 (Miltenyi Biotec) 1355 
+
+acco rding to the manufacturer’s instructions. Briefly, plasma was thawed in a water bath at 37 °C and 1356 
+
+diluted to a final volume of 2 ml in PBS. 50 μl of CD63 antibody -coupled magnetic beads were added 1357 
+
+to 2 ml of diluted plasma, following 1 hour of incubation a t RT under constant shaking. Diluted samples 1358 
+
+were loaded onto μ columns attached to a μMACS™ Separator. CD63 + EVs were magnetically captured, 1359 
+
+washed, and eluted in 120 μl isolation buffer. 120 μl eluates were immediately used as input for the 1360 
+
+MACSPlex EV K it IO, human, or MACSPlex EV Kit Neuro, human, platforms (Miltenyi Biotec, 1361 
+
+Bergisch Gladbach). Five subjects were processed with lower plasma input (350 μl instead of 600 μl), 1362 
+
+however normalized data were in the same range. 1363 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+1364 
+
+EV profiling by multiplexed b ead -based flow cytometry 1365 
+
+Phenotyping of CD63 +EVs was performed by multiplexed bead -based flow cytometry as described 1366 
+
+(Brahmer et al., 2023 ) using the platforms MACSPlex EV Kit IO, human, and MACSPlex EV Kit 1367 
+
+Neuro, human, (Miltenyi Biotec). CD63 + EVs (120 μl) were incubated overnight with 15 μl of 1368 
+
+MACSPlex EV Kit IO, human, or MACSPlex EV Kit Neuro, human, capture beads (containing 39 1369 
+
+different antibody -coated bead subsets). Samples and a buffer control were further processed according 1370 
+
+to the manufacturer’s instructions of the MACSPlex EV Kit, human (Miltenyi Biotec). Briefly, samples 1371 
+
+were washed and incubated for 1 h at RT with 15 μl of a cocktail of APC -labelled tetraspanin detection 1372 
+
+antibodies anti -CD9, anti -CD63 and anti -CD81. Flow cytometric analysis of EV samples was performed 1373 
+
+using the MACSQuant ® Analyzer 16 (Miltenyi Biotec) and the corresponding software 1374 
+
+MACSQuantify™ (Version 2.13.3). The signal intensity measured for each target was subtracted by the 1375 
+
+signal intensity for the respective target in th e buffer control measurement. Negative values were set to 1376 
+
+zero. Signal intensities exceeding a predefined threshold with a value of 5, as specified by the 1377 
+
+manufacturer, were considered as robust and quantifiable signals. 1378 
+
+1379 
+
+EV isolation using membrane affinity method 1380 
+
+EV isolation was performed at room temperature (RT) using the exoEasy Maxi Kit (QIAGEN), which 1381 
+
+is based on a membrane affinity method, following the manufacturer’s protocol. Briefly, 1 mL of plasma 1382 
+
+was thawed and centrifuged at 3000 × g for 5 min. The resulting supernatant was mixed with an equal 1383 
+
+volume of buffer XBP, loaded onto the exoEasy column, and centrifuged at 500 × g for 1 min. The flow -1384 
+
+through was discarded, and the column membrane was washed with 10 mL of buffer XWP by 1385 
+
+centrifugat ion at 4900 × g for 5 min. Finally, EVs were eluted in 400 μL of buffer XE by centrifugation 1386 
+
+at 500 × g for 5 min. For the preparation of EV lysates, EV isolates were lysed in an appropriate volume 1387 
+
+of SDS lysis buffer (1% SDS, 50 mM Tris -HCl, pH 8), freshl y supplemented with 1x cOmplete™ 1388 
+
+EDTA -free protease inhibitor cocktail (Roche, 4693132001) for 20 min on ice. Subsequently, samples 1389 
+
+were pulse -sonicated, vortexed and centrifuged for 10 min at 4°C at 13,000 rpm. The resulting 1390 
+
+supernatants were transferred to new 1.5 ml reaction tubes and analyzed by immunoblotting and LC -1391 
+
+MS proteomics. 1392 
+
+1393 
+
+Proteomics of EVs 1394 
+
+For proteomics of EVs, each sample was quantified using the Bicinchoninic acid assay (BCA Protein 1395 
+
+Assay Kit, Thermo Scientific, 23225). The aliquots to be quantified were diluted twenty times before 1396 
+
+adding them to a 96 -well microplate (Thermo Scientific, 2205). Afterwards the working solution was 1397 
+
+prepared by mixing reagent A and reagent B with ratio A:B in a ratio of 50:1. 200 μL of the working 1398 
+
+solution was then added, and the microplate was incubated at 37 °C for 30 min. Finally, the microplate 1399 
+
+was quantified using SPARK® Multimode Microplate Reader and SPARKControl Magellan analysis 1400 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+software. For each sample, 10 μg of protein was mixed with reduction/alkyla tion buffer to achieve final 1401 
+
+concentrations of 1% SDS, 10 mM TCEP (tris(2 -carboxyethyl)phosphine), and 30 mM CAA 1402 
+
+(chloroacetamide) in a total volume of 50 μL. Samples were heated at 90°C for 10 minutes to ensure 1403 
+
+complete denaturation, reduction, and alkyla tion. MagReSyn Hydroxyl microparticles (ReSyn 1404 
+
+Biosciences) were used at a 1:4 protein -to -bead ratio (w/w) and equilibrated twice with 70% acetonitrile 1405 
+
+prior to use. The reduced and alkylated samples were added to the equilibrated microparticles, and 1406 
+
+aceton itrile was added to a final concentration of 70% to induce on -bead protein aggregation. Following 1407 
+
+a 10 -minute incubation, magnetic separation was performed. 1408 
+
+Beads were washed sequentially with 100% acetonitrile and 70% ethanol to remove SDS and other 1409 
+
+contaminants. Subsequently, beads were resuspended in digestion buffer (50 mM TEAB, pH 8.5) and 1410 
+
+proteins were enzymatically digested using a Trypsin/Lys -C mixture overnight at 37°C. Digestion was 1411 
+
+quenched by acidification with TFA to a final concentration of 1% and loaded onto Evotips (Evosep) 1412 
+
+for subsequent LC -MS/MS analysis. LC -MS/MS measurements and statistical analysis were performed 1413 
+
+using a liquid chromatograp hy -tandem mass spectrometry (LC -MS/MS) system comprising an Evosep 1414 
+
+One chromatographic system (Evosep) and a timsTOF Pro 2 mass spectrometer (Bruker Daltonics) as 1415 
+
+described previously (see section Plasma Proteomics of human cohorts) 1416 
+
+1417 
+
+Capillary Immunoblott ing 1418 
+
+For capillary immunoblotting, plasma samples were diluted with Sample Buffer (ProteinSimple, # 042 -1419 
+
+195) in ratio 1:1, mixed with a master mix containing dithiothreitol (DTT) and fluorescent molecular 1420 
+
+weight marker (EZ Standard Pack, 12 –230 kDa; Protein Simple), and denaturated at 95°C for 5 minutes. 1421 
+
+Proteins were separated and analyzed by capillary electrophoresis on Jess TM (ProteinSimple; San Jose, 1422 
+
+CA, United States) according to manufacturer’s protocol using the 12 –230 kDa cartridges. The 1423 
+
+following pri mary antibodies were utilized for immunodetection: rabbit anti -LC3B (1:50, Cell Signaling 1424 
+
+Technology, #2775), rabbit HnrnpD (1:50, Cell Signaling Technology, #12382) and rabbit CD9 (1:50, 1425 
+
+Cell Signaling Technology, #D8O1A). 1426 
+
+Anti -Rabbit detection module (Pr oteinSimple, San Jose, CA, United States) and anti -mouse detection 1427 
+
+module (ProteinSimple, San Jose, CA, United States) were used for detecting primary antibodies. 1428 
+
+1429 
+
+PBMC Stimulation experiment 1430 
+
+1431 
+
+Ethics and PBMC isolation 1432 
+
+The overall study design is describ ed elsewhere (Cohort#4 -Stress Less Study) ( Mackert et al., 2024 ). 1433 
+
+The study was carried out at the Department of Psychiatry and Psychotherapy, University Hospital 1434 
+
+Bonn, and the trial protocol was approved by the Ethics Committee of the University Hospital  Bonn in 1435 
+
+Germany (Venusberg Campus 1, 53127 Bonn, ID:319/20). Additionally, the study was registered with 1436 
+
+ClinicalTrials.gov (ClinicalTrials identifier: NCT04823806). For the isolation of PBMCs, we took 1437 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+blood draws from six healthy male participants at bas eline (without any supplementation started). Blood 1438 
+
+was collected in three 7.5 ml lithium heparin sampling tubes (Sarstedt, 11.608.001). 7.5 ml lithium 1439 
+
+heparin sampling tubes were centrifuged at 1610 x g for 10 min. The lithium heparin tubes were carefully 1440 
+
+loaded on Pancoll solution (PAN Biotech, P04 -60500) in Leucosep tubes (Greiner BioOne, 1441 
+
+2007473/2026886) and centrifuged at 684 x g for 30 min (brakeless running down). PBMCs were 1442 
+
+enriched by selecting the interphase of the Pancoll gradient. PBMCs of the i nterphase were washed three 1443 
+
+times with ice -cold PBS. 1444 
+
+1445 
+
+Stimulation 1446 
+
+PBMCs were isolated from 6 donors, each contributing 3 × 7.5 mL Li -heparin blood collection tubes 1447 
+
+(Sarstedt, 11.608.001), according to the standard PBMC isolation protocol described above. I solated 1448 
+
+cells were counted and initially cultured in complete RPMI growth medium (Thermo Fisher Scientific, 1449 
+
+61870010) containing 10 % FBS (PAN Biotech, P30 -3306) in 10 cm dishes. Prior to stimulation, cells 1450 
+
+were washed three times with RPMI without FBS, supplemented with NEAA (Thermo Fisher Scientific 1451 
+
+, 11140050) (stimulation medium), and seeded into 6 -well plates in stimulation medium. Cells were 1452 
+
+stimulated with lactate (Sigma Aldrich, 71718, 15 mM, ), β -hydroxybutyrate (BHB, 5 mM), lactoyl -1453 
+
+phenylalanine (Lac -Phe, 50 μM), cortisol (Sigma -Aldrich, H0888, CORT, 150 nM), or vehicle control. 1454 
+
+After 1 h of incubation, supernatants were harvested, centrifuged at 300 × g, transferred into fresh tubes, 1455 
+
+and stored at −80°C until downstream analysis. 1456 
+
+1457 
+
+Proteomics of supernatants 1458 
+
+Sample preparation for mass spectrometry analysis was performed using Protein Aggregation Capture 1459 
+
+(PAC) according to Batth et al. (2019), adapted for automated processing on an Agilent Bravo Liquid 1460 
+
+Handling System in 96 -well plate format. 1461 
+
+For each sample, 25 μL of supernatant in 1% SDS, 50 mM Tris -HCl was used as input. Samples were 1462 
+
+adjusted to a final volume of 50 μL containing 10 mM TCEP (tris(2 -carboxyethyl)phosphine) and 30 1463 
+
+mM CAA (chloroacetamide) for simultaneous reduction and alkylat ion. Samples were heated at 90°C 1464 
+
+for 10 minutes to ensure complete denaturation, reduction, and alkylation. 1465 
+
+MagReSyn Hydroxyl microparticles (ReSyn Biosciences) were used and equilibrated twice with 70% 1466 
+
+acetonitrile prior to use. The reduced and alkylated samples were added to the equilibrated 1467 
+
+microparticles, and acetonitrile was added to a final concentration of 70% to induce on -bead protein 1468 
+
+aggregation. Following a 10 -minute incubation, magnetic separation was performed. 1469 
+
+Beads were washed sequentially wit h 100% acetonitrile and 70% ethanol to remove SDS and other 1470 
+
+contaminants. Subsequently, beads were resuspended in digestion buffer (50 mM TEAB, pH 8.5) and 1471 
+
+proteins were enzymatically digested using a Trypsin/Lys -C mixture overnight at 37°C. Digestion was 1472 
+
+quenched by acidification with TFA to a final concentration of 1% and loaded onto Evotips (Evosep) 1473 
+
+for subsequent LC -MS/MS analysis. 1474 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+LC -MS/MS measurements were performed using a liquid chromatography -tandem mass spectrometry 1475 
+
+(LC -MS/MS) system comprising an  Evosep One chromatographic system (Evosep) and an Orbitrap 1476 
+
+Astral as described previously, but with slight variations (see section Plasma Proteomics of human 1477 
+
+cohorts). In total, 300 DIA fragment spectra were acquired with a window width of 2 m/z and a 1478 
+
+max imum injection time of 3 ms. All other parameters remained unchanged. 1479 
+
+Database searching and protein quantification were performed in Spectronaut as described above, using 1480 
+
+the UniProt Homo sapiens reference proteome (SwissProt). Protein intensities were log2 -transformed, 1481 
+
+and protein groups were retained if quantified in at least 50% of samples in at least one experimental 1482 
+
+group. No missing value imputation was performed. 1483 
+
+Statistical analysis was carried out in R using the limma package. Moderated t -tests were applied for 1484 
+
+comparisons between groups. P -values were adjusted for multiple testing using the Benjamini –1485 
+
+Hochberg false discovery rate (FDR) procedure; adjusted p -values < 0.05 were considered statistically 1486 
+
+significant. 1487 
+
+1488 
+
+Sta tistics and reproducibility 1489 
+
+For data processing, Rstudio along with R language (v4.3.2 or v.4.1., Rcore team, 2019) and GraphPad 1490 
+
+Prism (versions 9.0 or 10.0) were employed. 1491 
+
+Unless stated otherwise in the methods section of the respective measurement, miss ing values in 1492 
+
+repeated measures designs were analyzed using a mixed -effects model as implemented in GraphPad 1493 
+
+Prism. This mixed model uses a compound symmetry covariance matrix, and is fit using Restricted 1494 
+
+Maximum Likelihood (REML). In the absence of missin g values, this method gives the same P values 1495 
+
+and multiple comparisons tests as repeated measures ANOVA. In the presence of missing values 1496 
+
+(missing completely at random), the results can be interpreted like repeated measures ANOVA. 1497 
+
+1498 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+Data Availability 1499 
+
+The mass spectrometry proteomics data will be deposited to the ProteomeXchange Consortium via the 1500 
+
+PRIDE partner repository and made publicly available upon publication. Confidential access for 1501 
+
+reviewers can be provided upon request during peer review. 1502 
+
+All su pplementary tables can be found at https://doi.org/10.5281/zenodo.20381885 1503 
+
+Code Availability 1504 
+
+Analyses were performed using standard statistical libraries in R, as described in the Materials and 1505 
+
+Methods section. No custom software was developed for this st udy. 1506 
+
+1507 
+
+Acknowledgements 1508 
+
+We thank all lab members for suggestions and comments on the experiments and manuscript. We are 1509 
+
+grateful for the technical assistance provided by T. Schnitzler, C. Strauch -Heinz, M. Ebert and A. 1510 
+
+Gassen. 1511 
+
+Funding: 1512 
+
+SM was in part supported by Volkswagen Foundation (9A889, granted to NCG), YM was supported by 1513 
+
+German Research Foundation (DFG, 453645443, granted to NCG), SM and TE were supported by DFG 1514 
+
+(493623632). CS was supported by the National Scientific and Technical Research Cou ncil of Argentina 1515 
+
+(CONICET postdoctoral fellowship) and additionally received funding from the German Academic 1516 
+
+Exchange Service (DAAD Short -Term Research Grant). The project was supported by the Cluster of 1517 
+
+Excellence Immunosensation 2. NCG was supported by Stiftung Charité (BIH_PRO_674) and 1518 
+
+Volkswagen Foundation (9D793) . The project was supported by DFG (453645443) granted to MVS and 1519 
+
+NCG, (544161359) granted to MBM and NCG and (562802756) granted to NCG and BJ. EMK -A, 1520 
+
+MBM and JE were supported b y Leibniz Competition funds (Leibniz ScienceCampus NanoBrain, 1521 
+
+W71/2022). 1522 
+
+Author Contributions 1523 
+
+Conceptualization: TE, NCG 1524 
+
+Methodology: TE, TB, JS, BH, JE , HS , EMK -A, NP, MS, FM, NCG 1525 
+
+Software: TE, WB, SB, HH, JC 1526 
+
+Validation: TE, TB, WB, JE, SK, EMK -A, NCG 1527 
+
+Formal Analysis: TE, TB, WB, JE, SB, BS, FM, JC, NCG 1528 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+Investigation: TE, TB, JS, BH, JE, SK, WB, EJ, MLe, DEH, HH, MCS, PB, MB, NB, TF, EH, MH, 1529 
+
+HJ -B, SK -S, VK, MK, EK, AK, MLa, KL, CL -F, BL, AL, AR, SL, SM, MM, KP, JT, ET, AZ, HS, 1530 
+
+AP, MBM, BS, BM, JC, KG, E MK -A, NP, MS, FM, NCG 1531 
+
+Resources: AP, BS, JC, FM, EMK -A, NCG 1532 
+
+Data Curation: TE, TB, WB, JE, EK, SK, BS, JC, EMK -A, FM, NCG 1533 
+
+Writing - Original Draft: TE, TB, NCG 1534 
+
+Writing - Review & Editing: all authors 1535 
+
+Visualization: TE, TB, NCG 1536 
+
+Supervision: TE, JC, PK, EMK -A, NP, FM, NCG 1537 
+
+Project administration: TE, NP, FM, NCG 1538 
+
+Funding acquisition: TE, FM, MBM, BJ, EMK -A, NCG 1539 
+
+1540 
+
+Conflict of Interest 1541 
+
+The authors declare no competing interests. 1542 
+
+1543 
+
+1544 
+
+1545 
+
+1546 
+
+1547 
+
+1548 
+
+1549 
+
+1550 
+
+1551 
+
+1552 
+
+1553 
+
+1554 
+
+1555 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 20, 2026. ;https://doi.org/10.64898/2026.07.17.739102 doi: bioRxiv preprint
+
+Supplementary Data 1556 
+
+All supplementary tables can be found at https://doi.org/10.5281/zenodo.20381885 1557 
+
+Table S1 - Demographic information of TSST cohort 1558 
+
+Table S2 – Moderated t test results of the combined TSST cohort 1559 
+
+Table S3 - Moderated t test results of both groups of the TSST cohort separately 1560 
+
+Table S4 – GO analysis results oft he TSST cohort 1561 
+
+Table S5 – Moderated t test results comparing both groups in the TSST cohort 1562 
+
+Table S6 – Results from interaction test between PD patients and controls 1563 
+
+Table S7 – Log2 -transformed protein intensities of plas ma proteomics from the TSST cohort 1564 
+
+Table S8 - Demographic information of exercise cohort 1565 
+
+Table S9 – Log2 -transformed protein intensities of plasma proteomics of the exercise cohort 1566 
+
+Table S10 – Moderated t test and Ftest results of the exercise cohort, incl uding cluster annotations 1567 
+
+Table S11 – GO analysis results of the exercise cohort 1568 
+
+Table S12 - Demographic information of the bungee jump cohort 1569 
+
+Table S13 – Log2 -transformed protein intensities of plasma proteomics of the bungee jump cohort 1570 
+
+Table S14 – Moder ated t test and Ftest results of the bungee cohort, including cluster annotations 1571 
+
+Table S15 – GO analysis results of the bungee jump cohort 1572 
+
+Table S16 – List of stress core proteins 1573 
+
+Table S17 – Metabolomics results 1574 
+
+Table S18 - Moderated t test results of EV proteomics of the bungee jump cohort 1575 
+
+Table S19 – List of overlapping proteins between EVs and plasma 1576 
+
+Table S20 – Log2 -transformed protein intensities and moderated t test results of secretome proteomics 1577 
+
+Table S21 – Log2 -transformed protein intensities and moderated t test results of plasma proteomics 1578 
+
+from mice treated with GR -Protac or vehicle 1579 
+
+1580 
+
+1581 
+
+1582

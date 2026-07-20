@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-20",
+  "date": "2026-07-20",
+  "generated_at": "2026-07-20T21:09:54",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/20/biorxiv-10-64898-2026-07-17-739102-v1-stressor-identity-shapes-plasma-proteomic-and-metabolic-responses-in-humans",
+      "section": "quick",
+      "title_en": "Stressor identity shapes plasma proteomic and metabolic responses in humans",
+      "authors": "Ebert, T.",
+      "date": "2026-07-20",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.07.17.739102v1.full.pdf",
+      "score": "7.0",
+      "evidence": "身体应激诱导血浆代谢变化，类似于运动训练",
+      "tldr": "急性应激诱导快速生理适应，但不同应激方式如何影响人体循环分子图谱尚不清楚。本研究对心理、物理及混合应激（蹦极）进行纵向深度血浆蛋白质组和靶向代谢组分析。心理应激引起最小变化，物理应激触发快速蛋白质组重塑和代谢适应，混合应激产生最强最持久的分子反应。跨范式整合识别出富含免疫颗粒效应物和RNA结合蛋白的应激相关蛋白核心，提示调节性细胞外囊泡释放，且糖皮质激素信号不足以触发。该工作揭示了应激源类型作为人体循环分子反应的关键决定因素。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Acute stress triggers rapid physiological adaptations, yet how distinct stress modalities shape the human circulating molecular landscape remains unclear. We performed longitudinal deep plasma proteomics and targeted metabolomics across three paradigms: psychological stress, controlled physical stress, and combined psychological-physical stress induced by bungee jumping. Despite robust hypothalamic-pituitary-adrenal axis activation, psychological stress induced minimal plasma proteomic and metabolic changes, whereas physical stress triggered rapid, coordinated proteome remodeling accompanied by stressor-specific metabolic adaptations. Combined stress elicited the strongest and most persistent proteomic response, defining a graded molecular signature across stress modalities. Cross-paradigm integration identified a stress-associated protein core enriched for immune granule effectors, RNA-binding proteins, and vesicle-linked signatures, suggesting regulated extracellular release. Consistently, extracellular vesicle profiling in the mixed-stress paradigm supported vesicle-associated secretion, while functional experiments indicated that glucocorticoid signaling alone is insufficient to trigger release. Together, these findings reveal stressor identity as a key determinant of the human circulating molecular response.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

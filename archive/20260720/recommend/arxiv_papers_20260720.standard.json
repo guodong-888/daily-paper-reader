@@ -1,0 +1,52 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-20T21:07:45.707982+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-07-17-739102-v1",
+      "source": "biorxiv",
+      "title": "Stressor identity shapes plasma proteomic and metabolic responses in humans",
+      "abstract": "Acute stress triggers rapid physiological adaptations, yet how distinct stress modalities shape the human circulating molecular landscape remains unclear. We performed longitudinal deep plasma proteomics and targeted metabolomics across three paradigms: psychological stress, controlled physical stress, and combined psychological-physical stress induced by bungee jumping. Despite robust hypothalamic-pituitary-adrenal axis activation, psychological stress induced minimal plasma proteomic and metabolic changes, whereas physical stress triggered rapid, coordinated proteome remodeling accompanied by stressor-specific metabolic adaptations. Combined stress elicited the strongest and most persistent proteomic response, defining a graded molecular signature across stress modalities. Cross-paradigm integration identified a stress-associated protein core enriched for immune granule effectors, RNA-binding proteins, and vesicle-linked signatures, suggesting regulated extracellular release. Consistently, extracellular vesicle profiling in the mixed-stress paradigm supported vesicle-associated secretion, while functional experiments indicated that glucocorticoid signaling alone is insufficient to trigger release. Together, these findings reveal stressor identity as a key determinant of the human circulating molecular response.",
+      "authors": [
+        "Ebert, T."
+      ],
+      "primary_category": "molecular biology",
+      "categories": [
+        "molecular biology"
+      ],
+      "published": "2026-07-20T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.07.17.739102v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "physical stress induces plasma metabolic changes similar to exercise",
+      "llm_evidence_cn": "身体应激诱导血浆代谢变化，类似于运动训练",
+      "llm_evidence": "身体应激诱导血浆代谢变化，类似于运动训练",
+      "canonical_evidence": "身体应激诱导血浆代谢变化，类似于运动训练",
+      "llm_tldr_en": "This study profiles plasma proteomic and metabolic responses to controlled physical stress (bungee jumping), showing rapid, coordinated proteome remodeling and stressor-specific metabolic adaptations, providing insights into exercise-induced systemic metabolic changes.",
+      "llm_tldr_cn": "身体应激（如蹦极）可模拟运动训练引起的代谢变化。本文对心理、物理和联合应激下人体血浆蛋白质组和代谢组进行纵向分析，发现物理应激触发快速而协调的蛋白质组重塑，并伴随应激源特异性的代谢适应，而联合应激效应最强。该研究揭示了运动样应激的全身代谢特征，为理解运动训练如何改变代谢提供了参考，但未直接涉及皮瓣存活。",
+      "llm_tldr": "身体应激（如蹦极）可模拟运动训练引起的代谢变化。本文对心理、物理和联合应激下人体血浆蛋白质组和代谢组进行纵向分析，发现物理应激触发快速而协调的蛋白质组重塑，并伴随应激源特异性的代谢适应，而联合应激效应最强。该研究揭示了运动样应激的全身代谢特征，为理解运动训练如何改变代谢提供了参考，但未直接涉及皮瓣存活。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
