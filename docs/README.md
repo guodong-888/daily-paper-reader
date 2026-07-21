@@ -6,24 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-20
-- 运行时间：2026-07-20 21:09:48 UTC
+- 最新运行日期：2026-07-21
+- 运行时间：2026-07-21 21:16:12 UTC
 - 运行状态：成功
 - 本次总论文数：1
 - 精读区：0
 - 速读区：1
 
 ### 今日简报（AI）
-今日聚焦1篇高影响力研究，该论文揭示了不同压力源对人体血浆蛋白质组和代谢反应的差异化影响。最值得关注：压力源的身份（如心理vs生理）会显著改变血液中特定蛋白和代谢物的应答模式。建议普通读者关注后续针对个性化压力管理的生物标志物研究。
-- 详情：[/202607/20/README](/202607/20/README)
+1) 今日速读1篇论文，聚焦Gene III(R) L-Ergothioneine缓解运动性疲劳的作用机制。  
+2) 该化合物通过减轻氧化应激、炎症，并调控AMPK/PGC-1α信号通路来抗疲劳，值得运动营养和抗疲劳方向关注。  
+3) 普通读者可关注麦角硫因作为运动后恢复补充剂的潜在价值，未来可留意相关临床试验。
+- 详情：[/202607/21/README](/202607/21/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Stressor identity shapes plasma proteomic and metabolic responses in humans](/202607/20/biorxiv-10-64898-2026-07-17-739102-v1-stressor-identity-shapes-plasma-proteomic-and-metabolic-responses-in-humans)  
+1. [Gene III(R) L-Ergothioneine Ameliorates Exercise-Induced Fatigue by Attenuating Oxidative Stress, Inflammation, and Modulating the AMPK/PGC-1α Signaling Pathway](/202607/21/biorxiv-10-64898-2026-02-19-706732-v2-gene-iiir-l-ergothioneine-ameliorates-exercise-induced-fatigue-by-attenuating-oxidative-stress-inflammation-and-modulating-the-ampkpgc-1-signaling-pathway)  
    标签：评分：7.0/10、query:flap-ex-met
-   evidence：身体应激诱导血浆代谢变化，类似于运动训练
+   evidence：运动诱导的代谢变化和信号通路
 
 
 <div class="dpr-home-promo-card">

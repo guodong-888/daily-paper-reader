@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-21",
+  "date": "2026-07-21",
+  "generated_at": "2026-07-21T21:16:20",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/21/biorxiv-10-64898-2026-02-19-706732-v2-gene-iiir-l-ergothioneine-ameliorates-exercise-induced-fatigue-by-attenuating-oxidative-stress-inflammation-and-modulating-the-ampkpgc-1-signaling-pathway",
+      "section": "quick",
+      "title_en": "Gene III(R) L-Ergothioneine Ameliorates Exercise-Induced Fatigue by Attenuating Oxidative Stress, Inflammation, and Modulating the AMPK/PGC-1α Signaling Pathway",
+      "authors": "Ding, W., Cao, J., Guo, C., Liu, W., Li, X., Xiao, G.",
+      "date": "2026-07-17",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.02.19.706732v2.full.pdf",
+      "score": "7.0",
+      "evidence": "运动诱导的代谢变化和信号通路",
+      "tldr": "运动性疲劳与氧化应激、炎症和代谢紊乱密切相关。本研究以C57BL/6小鼠为模型，通过4周跑台训练并补充不同剂量Gene III(R) L-麦角硫因（EGT）后，发现中高剂量EGT能显著延长力竭时间，降低乳酸、LDH和BUN水平，抑制促炎因子IL-1β、IL-6和TNF-α，减少MDA并提高SOD和GSH-Px活性。机制上，EGT促进AMPK磷酸化和PGC-1α表达，上调Bcl-2/Bax比值，从而增强线粒体生物合成和抗凋亡能力。本研究证实EGT可通过抗氧化、抗炎及激活AMPK/PGC-1α通路有效缓解运动性疲劳，为抗疲劳营养补充剂开发提供依据。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "BackgroundExercise-induced fatigue is a complex physiological phenomenon involving oxidative stress, inflammation, and metabolic disturbances. Ergothioneine (EGT), a naturally occurring amino acid with potent antioxidant properties, has garnered interest for its potential health benefits. This study aimed to evaluate the anti-fatigue effects of Gene III(R) EGT in a mouse model of exhaustive exercise and to elucidate its underlying mechanisms.\n\nMethodsMale C57BL/6 mice were randomly divided into five groups: a control group (CTL), low-dose EGT (EGT-L, 10 mg/kg), medium-dose EGT (EGT-M, 30 mg/kg), high-dose EGT (EGT-H, 50 mg/kg), and a positive control group (Coenzyme Q10, 50 mg/kg). Mice were subjected to a 4-week treadmill training protocol, followed by an exhaustive running test. We measured exercise performance and collected blood and skeletal muscle samples at multiple time points to assess biochemical markers, inflammatory cytokines, antioxidant status, and key signaling proteins.\n\nResultsGene III(R) EGT supplementation, particularly at medium and high doses, significantly extended the time to exhaustion and running distance. Compared to the control group, EGT treatment significantly reduced post-exercise levels of lactic acid (LA), lactate dehydrogenase (LDH), and blood urea nitrogen (BUN). Furthermore, Gene III(R) EGT suppressed the exercise-induced increase in pro-inflammatory cytokines, including IL-1{beta}, IL-6, and TNF-. The anti-fatigue effect of EGT was also associated with a reduction in malondialdehyde (MDA) and an increase in the activities of superoxide dismutase (SOD) and glutathione peroxidase (GSH-Px). Mechanistically, EGT promoted the phosphorylation of AMP-activated protein kinase (AMPK) and the expression of peroxisome proliferator-activated receptor-gamma coactivator-1 alpha (PGC-1) in skeletal muscle, while also increasing the Bcl-2/Bax ratio, suggesting enhanced mitochondrial biogenesis and reduced apoptosis.\n\nConclusionsOur findings demonstrate that Gene III(R) EGT effectively enhances exercise performance and alleviates fatigue. The underlying mechanisms involve the mitigation of oxidative stress and inflammation, as well as the activation of the AMPK/PGC-1 signaling pathway to promote mitochondrial function and cellular protection. These results highlight the potential of Gene III(R) EGT as a nutritional supplement for combating exercise-induced fatigue.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
