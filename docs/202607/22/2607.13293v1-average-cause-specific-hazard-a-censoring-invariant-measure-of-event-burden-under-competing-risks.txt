@@ -1,0 +1,1437 @@
+Title: Average Cause-Specific Hazard: A Censoring-Invariant Measure of Event Burden Under Competing Risks
+
+URL Source: https://arxiv.org/pdf/2607.13293v1
+
+Published Time: Thu, 16 Jul 2026 00:25:02 GMT
+
+Number of Pages: 26
+
+Markdown Content:
+# AVERAGE CAUSE -S PECIFIC HAZARD : A C ENSORING -I NVARIANT 
+
+# MEASURE OF EVENT BURDEN UNDER COMPETING RISKS 
+
+Khondoker Nazmoon Nabi 
+
+Department of Biostatistics Harvard T.H. Chan School of Public Health Boston, Massachusetts 02115, USA 
+
+Xiang Meng 
+
+Department of Biostatistics Harvard T.H. Chan School of Public Health Boston, Massachusetts 02115, USA 
+
+Lu Tian 
+
+Department of Biomedical Data Science Stanford University Stanford, California 94305, USA 
+
+Jean M Connors 
+
+Department of Hematologic Oncology Dana Farber Cancer Institute Boston, Massachusetts 02215, USA 
+
+Deb Schrag 
+
+Department of Medicine Memorial Sloan Kettering Cancer Center New York, New York 10065, USA 
+
+Hajime Uno ∗
+
+Department of Data Science Dana Farber Cancer Institute Boston, Massachusetts 02215, USA 
+
+# ABSTRACT 
+
+Competing events are common in clinical and epidemiologic studies, including semi-competing risks in which a terminal event such as death may follow a nonfatal event but also competes with it beforehand. Standard summaries include the cumulative incidence function (CIF) and the incidence rate (IR), defined as the number of observed events divided by observed event-free person-time. With competing events, the naive IR generally depends on the censoring-time distribution unless intensities are constant. We propose the Average Cause-Specific Hazard (ACSH), a survival-weighted rate per event-free person-time that preserves the interpretation of an incidence rate and is defined purely from the event-time distribution, without involving the censoring-time distribution. We develop nonparametric estimation and inference for ACSH and, for two-sample comparisons, introduce ACSH differences and ratios that provide interpretable contrasts without requiring a strong model assumption between two groups. Simulation studies examine the finite-sample performance, and an analysis of the CANVAS trial illustrates the proposed methods. 
+
+Keywords: Cause-specific hazard; censoring; competing risks; cumulative incidence function; incidence rate; restricted mean event-free time. 
+
+# 1 Introduction 
+
+Competing events are ubiquitous in clinical and epidemiologic research. The occurrence of one event can preclude another or change how the latter should be interpreted. Competing risks may be classical, in which the possible event types are mutually exclusive, or semi-competing, in which a nonfatal event may occur before a terminal event but cannot occur afterward (Pintilie, 2006; Fine et al., 2001). Such data arise in oncology, cardiology, and geriatric research (Kim, 2024; Lau et al., 2009). The core challenge is to summarize event occurrence and treatment effects in ways that remain interpretable and well defined under censoring and competing events. 
+
+> ∗
+
+Email: huno@ds.dfci.harvard.edu arXiv:2607.13293v1 [stat.ME] 14 Jul 2026 Average Cause-Specific Hazard NABI ET AL .
+
+Competing risks data are typically summarized using cause-specific cumulative incidence functions (CIFs), which describe the probability of each event type over time (Aalen and Johansen, 1978; Lin, 1997; Putter et al., 2007). To summarize treatment effects, investigators often use the Fine–Gray model (Fine and Gray, 1999), reporting the subdistribution hazard ratio (sHR). Like the Cox proportional hazards model (Cox, 1972), the Fine–Gray model assumes that the ratio of subdistribution hazards is constant over time. When this assumption does not hold, the reported sHR can be difficult to interpret and may become sensitive to follow-up and censoring patterns (Hernán, 2010). A related issue, familiar from the Cox HR, is that a single sHR offers a convenient between-group summary but does not provide group-specific effect magnitudes on an absolute scale (Uno et al., 2014). Without accompanying group-specific risk or rate summaries, it is hard to assess whether the reported sHR reflects a clinically meaningful difference. Another traditional approach summarizes event occurrence using incidence rates (IRs). The most common competing-risks implementation is a “naive” cause-specific IR: the number of observed events of a given cause divided by the total event-free person-time accumulated over follow-up. This quantity is easy to compute, but when cause-specific intensities vary over time, its population target depends on the censoring distribution even under independent censoring, as we illustrate in Section 3. As a result, the naive cause-specific IR and the between-group contrasts built from it may not correspond to clearly defined estimands. These considerations motivate population quantities that preserve the interpretability of a person-time rate and are defined solely from the event-time distribution. In single-event settings, the average hazard with survival weights (AH) has been proposed for this purpose (Uno and Horiguchi, 2023; Uno et al., 2024; Qian et al., 2025; Horiguchi et al., 2026). AH is a weighted average of the instantaneous intensity on [0 , τ ] with event-free-survival weights; as a population quantity, it is the event rate per unit event-free person-time and does not involve the censoring-time distribution. AH-based contrasts (differences and ratios) retain a direct rate-scale interpretation and, unlike proportional hazards summaries, do not require a proportionality assumption between groups. In this paper we extend the AH framework to competing risks and introduce the Average Cause-Specific Hazard (ACSH). ACSH is a survival-weighted average of a cause-specific intensity per unit event-free person-time over a prespecified horizon [0 , τ ]. Interpreted in words, ACSH is the average rate at which the event of interest occurs among subjects still free of any event, expressed per unit event-free person-time. As a population quantity, ACSH is defined entirely in terms of the event-time distribution; the censoring distribution does not enter its definition, while ACSH itself preserves the familiar interpretation of an IR. This distinguishes ACSH from the naive cause-specific IR: the latter is a sample quantity whose population limit involves the censoring-time distribution whenever the cause-specific intensities are non-constant and censoring is present. Corresponding two-sample contrasts of ACSH, the difference and the ratio, provide model-free rate-scale alternatives to the ratio of “naive” cause-specific IRs and the Fine–Gray sHR. We retain from the AH framework the rate-scale definition, the influence-function representations that underlie variance estimation, and the delta-method construction of two-sample contrasts on natural and log scales. Our new contributions are (a) ACSH, a new rate-scale summary metric for competing risks data; (b) an extension to multiple non-terminal endpoints sharing a common terminal event; (c) a scalar Total ACSH summary and its between-group contrasts; and (d) a Wald-type global test across a prespecified set of endpoints or causes. Without competing events, ACSH reduces to the single-event AH of Uno and Horiguchi (2023). To motivate and illustrate the proposed methods, we analyze data from CANVAS (Cancer-Associated Venous Throm-boembolism Anticoagulation Strategies), a pragmatic randomized trial that compared direct oral anticoagulants (DOACs) with low-molecular-weight heparin (LMWH) among cancer patients with a newly diagnosed venous thromboembolism (VTE) (Schrag et al., 2023). The trial followed 671 patients for up to 6 months and evaluated two clinically important non-terminal endpoints, recurrent VTE and major bleeding, with death as a common competing terminal event. Figure 1 (top row) displays the cumulative incidence functions for both endpoints by treatment arm, describing absolute risk over time. Monthly piecewise-constant hazard estimates (Figure 1, bottom row) show that the cause-specific rates of both endpoints decline over the 6-month horizon, suggesting that the naive cause-specific IR does not target a censoring-invariant rate in this setting. We analyze CANVAS using ACSH-based one-sample summaries, two-sample contrasts, and a global Wald test across the two endpoints. The remainder of the paper proceeds as follows. Section 2 formalizes ACSH and develops its nonparametric estimation and inference. Section 3 reports simulation results. Section 4 presents the CANVAS analysis, and Section 5 gives concluding remarks. 2Average Cause-Specific Hazard NABI ET AL .
+
+Table 1: Summary measures for the Average Cause-Specific Hazard (ACSH) under competing risks.                                   
+
+> Summary measure Description Interpretation
+> Fk(τ)Cumulative Incidence Function (CIF) for cause kevaluated at τ
+> Absolute risk: probability of experiencing a type-k
+> event by time τ.
+> R(τ) = Rτ
+> 0S(u)du Restricted Mean Event-Free Time (RMEFT) up to τ
+> Average time free of any event accumulated over
+> [0 , τ ].
+> ηk(τ) = Fk(τ)/R (τ)Average Cause-Specific Hazard (ACSH) for cause kover [0 , τ ]
+> Average person-time incidence rate: the average num-ber of type-kevents per event-free person-time over
+> [0 , τ ].
+
+# 2 Methods 
+
+2.1 Setup and estimand 
+
+Let T ∈ [0 , ∞) denote the time to the first event of any type, and let J ∈ { 1, . . . , m } denote the corresponding event type. For cause k, let λk(t) be the cause-specific hazard, 
+
+λk(t) = lim 
+
+> ϵ→0
+
+Pr {t < T ≤ t + ϵ, J = k | T ≥ t}
+
+ϵ ,
+
+and Λk(t) = R t 
+
+> 0
+
+λk(u) du be the corresponding cumulative cause-specific hazard. Let S(t) = Pr( T > t ) denote the overall event-free survival function, that is, the probability of remaining free of any event up to time t. For a clinically meaningful horizon τ > 0, we also define the restricted mean event-free time (RMEFT) 
+
+R(τ ) = 
+
+Z τ
+
+> 0
+
+S(u) du. (1) This quantity represents the average time free of any event accumulated over [0 , τ ]. The cumulative incidence function (CIF) for cause k is 
+
+Fk(t) = Pr( T ≤ t, J = k) = 
+
+Z t
+
+> 0
+
+S(u) dΛk(u). (2) With all preparations above, motivated by the average hazard with survival weights proposed by Uno and Horiguchi (2023), we define the ACSH for cause k over [0 , τ ] as 
+
+ηk(τ ) = Fk(τ )
+
+R(τ ) . (3) Thus, ACSH converts the probability-scale summary Fk(τ ) into a rate-scale summary by dividing the cause-specific CIF by the average event-free time accumulated up to τ . Equivalently, from (2) and (1), 
+
+ηk(τ ) = 
+
+R τ 
+
+> 0
+
+λk(u)S(u) du 
+
+R τ 
+
+> 0
+
+S(u) du .
+
+As such, ACSH is a weighted average of the cause-specific hazard. In summary, ACSH is a restricted-time, event-free-probability-weighted rate summary. Table 1 summarizes the key quantities used throughout. 
+
+2.2 Nonparametric estimation and large-sample inference 
+
+In practice, the event time is oftentimes subject to right censoring. Let C denote the right-censoring time. We observe 
+
+X = min( T, C ), K = J I(T ≤ C),
+
+so that K = 0 indicates right-censoring and K = k ∈ { 1, . . . , m } indicates failure from cause k, where I(A) denotes the indicator function, equal to 1 if A is true and 0 otherwise. We assume independent right-censoring, C ⊥ (T, J ),
+
+and Pr( C > τ ) > 0 for the prespecified truncation time τ > 0. Observed data consist of n independent and identically distributed (i.i.d.) copies of (X, K ) : 
+
+{(Xi, K i), i = 1 , · · · , n } .
+
+3Average Cause-Specific Hazard NABI ET AL .
+
+For cause k, we estimate ACSH by 
+
+ˆηk(τ ) = ˆFk(τ )ˆR(τ )
+
+where 
+
+ˆFk(τ ) = 
+
+Z τ
+
+> 0
+
+ˆS(u−) dˆΛk(u), ˆR(τ ) = 
+
+Z τ
+
+> 0
+
+ˆS(u) du, 
+
+ˆS(t) is the Kaplan–Meier estimator of S(t) obtained by treating any event as a failure and 
+
+ˆΛk(t) = 
+
+Z t
+
+> 0
+
+d ¯Nk(u)¯Y (u)
+
+is the Nelson–Aalen estimator of the cause-specific cumulative hazard function with 
+
+¯Y (t) = 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+Yi(t), ¯Nk(t) = 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+Nki (t),
+
+and Yi(t) = I(Xi ≥ t) and Nki (t) = I(Xi ≤ t, K i = k), k = 1 , . . . , m, being the at-risk and counting processes for the ith observation, respectively. Under the regularity conditions stated in Appendix A, ˆFk(t) and ˆR(t) are consistent estimators of Fk(t) and R(t),respectively, for t ∈ [0 , τ ]. Consequently, 
+
+ˆηk(τ ) → ηk(τ )
+
+in probability, as n → ∞ . Let 
+
+ˆθ(τ ) =  log ˆ η1(τ ), . . . , log ˆ ηm(τ )⊤ and θ(τ ) =  log η1(τ ), . . . , log ηm(τ )⊤.
+
+We have √n{ˆθ(τ ) − θ(τ )} = 1
+
+√n
+
+> n
+
+X
+
+> i=1
+
+ψi(τ ) + op(1) → Nm
+
+ 0, Σ(τ ),
+
+in distribution, as n → ∞ , where ψi(τ ) is the influence function for the ith observation and Σ(τ ) = Var {ψi(τ )}.Specifically, ψi(τ ) = ( ψ1,i (τ ), · · · , ψ m,i (τ )) ⊤, where 
+
+ψk,i (τ ) = 
+
+Z τ
+
+> 0
+
+S(u)
+
+Fk(τ )
+
+dM ki (u)
+
+G(u) +
+
+Z τ
+
+> 0
+
+ Fk(u)
+
+Fk(τ ) − R(u)
+
+R(τ )
+
+ dM i(u)
+
+G(u) , (4) 
+
+Mki (t) = Nki (t) − R t 
+
+> 0
+
+Yi(u) dΛk(u), M i(t) = Pmk=1 Mki (t) and G(t) = Pr( X ≥ t). Its derivation is given in Appendix A. Thus, a consistent estimator of Σ(τ ) is 
+
+bΣ(τ ) = 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+ˆψi(τ )⊗2,
+
+where ˆψi(τ ) denotes the plug-in estimator of ψi(τ ), i.e., ˆψi(τ ) = ( ˆψ1,i (τ ), · · · , ˆψm,i (τ )) ⊤,
+
+ˆψk,i (τ ) = 
+
+Z τ
+
+> 0
+
+ˆS(u)ˆFk(τ )
+
+d ˆMki (u)ˆG(u) +
+
+Z τ
+
+> 0
+
+( ˆFk(u)ˆFk(τ ) − ˆR(u)ˆR(τ )
+
+)
+
+d ˆMi(u)ˆG(u) ,
+
+ˆMki (t) = Nki (t) − R t 
+
+> 0
+
+Yi(u)dˆΛk(u), ˆMi(t) = Pmk=1 ˆMki (t) and ˆG(u) = ¯Y (u). Let bσ2
+
+> k
+
+(τ ) denote the diagonal entry of bΣ(τ ) corresponding to cause k. The asymptotic variance of log ˆ ηk(τ ) can be estimated by bσ2
+
+> k
+
+(τ )/n, and the corresponding 100(1 − α)% confidence interval of ηk(τ ) is 
+
+
+
+ˆηk(τ )e−z1−α/ 2   
+
+> bσk(τ)
+> √n
+
+, ˆηk(τ )ez1−α/ 2  
+
+> bσk(τ)
+> √n
+
+
+
+.
+
+Remark 1. Noticing that Mki (t), k = 1 , · · · , m are mutually orthogonal martingales, for k, k ′ ∈ { 1, . . . , m } the 
+
+(k, k ′)th element σkk ′ (τ ) of Σ(τ ) can be further simplified to 
+
+> m
+
+X
+
+> ℓ=1
+
+Z τ
+
+> 0
+
+
+
+ξk,ℓ (u, τ ) − R(u)
+
+R(τ )
+
+  
+
+ξk′,ℓ (u, τ ) − R(u)
+
+R(τ )
+
+ dΛℓ(u)
+
+G(u) , (5) where 
+
+ξk,ℓ (u, τ ) = S(u)I(ℓ = k) + Fk(u)
+
+Fk(τ ) , k = 1 , . . . , m. 
+
+Thus, Σ(τ ) can also be estimated by the corresponding plug-in estimator. 4Average Cause-Specific Hazard NABI ET AL .
+
+2.3 Two-group comparisons 
+
+Let g ∈ { 0, 1} index two independent groups (e.g., treatment and control) with sample sizes n0 and n1, respectively. As described in (2) and (3), for group g, we may define the ACSH ηk,g (τ ) based on the cumulative cause-specific hazard function Λk,g (·) and the RMEFT Rg (τ ). We assume that observed data in group g consists of ng i.i.d observations 
+
+(Xg,i , K g,i )ng 
+
+> i=1
+
+and observations in group g = 0 are independent of those in group g = 1 . Within each group, we can obtain ˆθg (τ ) = (log ˆ η1,g (τ ), · · · , log ˆ ηm,g (τ )) ⊤
+
+to estimate 
+
+θg (τ ) = (log η1,g (τ ), · · · , log ηm,g (τ )) ⊤
+
+as in section 2.2 and the variance of ˆθg (τ ) can be estimated by 
+
+bΣg (τ ) = 1
+
+ngng
+
+X
+
+> i=1
+
+ˆψg,i (τ ) ˆψg,i (τ )⊤,
+
+where ˆψg,i (τ ) is the plug-in estimate of the subject-level influence function in group g.
+
+ACSH differences and ratios for a single cause For cause k, the between-group ACSH difference 
+
+Dk(τ ) = ηk, 1(τ ) − ηk, 0(τ )
+
+and ACSH ratio 
+
+Qk(τ ) = ηk, 1(τ )/η k, 0(τ )
+
+can be consistently estimated by 
+
+ˆDk(τ ) = ˆ ηk, 1(τ ) − ˆηk, 0(τ ) and ˆQk(τ ) = ˆηk, 1(τ )ˆηk, 0(τ ) ,
+
+respectively. Furthermore, the variance of estimated between-group difference, ˆDk(τ ), can be estimated by 
+
+> 1
+
+X
+
+> g=0
+
+n−1 
+
+> g
+
+ˆηk,g (τ )2 bσ2 
+
+> k,g
+
+(τ ),
+
+where bσ2 
+
+> k,g
+
+(τ ) is the kth diagonal element of bΣg (τ ). A Wald-type 100(1 − α)% confidence interval for Dk(τ ) is thus 
+
+ ˆDk(τ ) − z1−α/ 2
+
+vuut 1X
+
+> g=0
+
+ˆηk,g (τ )2 bσ2 
+
+> k,g
+
+(τ )
+
+ng
+
+, ˆDk(τ ) + z1−α/ 2
+
+vuut 1X
+
+> g=0
+
+ˆηk,g (τ )2 bσ2 
+
+> k,g
+
+(τ )
+
+ng
+
+ .
+
+For the ACSH ratio, the inference is conducted on the log scale. Specifically, log Qk(τ ) can be consistently estimated by log ˆQk(τ ), whose variance can be estimated by 
+
+> 1
+
+X
+
+> g=0
+
+n−1 
+
+> g
+
+bσ2 
+
+> k,g
+
+(τ ).
+
+A 100(1 − α)% confidence interval for Qk(τ ) is 
+
+"
+
+ˆQk(τ )e−z1−α/ 2   
+
+> rP1
+> g=0
+> bσ2
+> k,g (τ)
+> ng
+
+, ˆQk(τ )ez1−α/ 2  
+
+> rP1
+> g=0
+> bσ2
+> k,g (τ)
+> ng
+
+#
+
+.
+
+Both bDk(τ ) and bQk(τ ) can be used to test H0 : ηk, 1(τ ) = ηk, 0(τ ). Specifically, a Wald test can be based on either 
+
+ZD = bDk(τ )
+
+qP1 
+
+> g=0
+
+n−1 
+
+> g
+
+ˆηk,g (τ )2 ˆσ2 
+
+> k,g
+
+(τ )
+
+or 
+
+ZQ = log { bQk(τ )}
+
+qP1 
+
+> g=0
+
+n−1 
+
+> g
+
+ˆσ2 
+
+> k,g
+
+(τ )
+
+.
+
+The two tests are asymptotically equivalent. The null hypothesis is rejected at the two-sided significance level of α, if the Z-score is greater than z1−α/ 2 or less than zα/ 2.
+
+5Average Cause-Specific Hazard NABI ET AL .
+
+ACSH differences and ratios for multiple causes It is possible to simultaneously compare ACSH for multiple causes. A natural test statistic for global comparison is 
+
+b∆(τ ) = ˆθ1(τ ) − ˆθ0(τ ),
+
+whose variance can be estimated by 
+
+bV(τ ) = bΣ1(τ )
+
+n1
+
++ bΣ0(τ )
+
+n0
+
+.
+
+Under the null hypothesis H0 : θ1(τ ) = θ0(τ ),
+
+Tglobal = b∆(τ )⊤ bV(τ )−1 b∆(τ ) → χ2
+
+> m
+
+in distribution, as n → ∞ . This provides an omnibus test of whether any log-ACSH differs between two groups. A similar method can be used to compare ACSH for a selected subset of causes by focusing on the corresponding sub-vector of ˆ∆(τ ).
+
+2.4 Extension: multiple non-terminal endpoints with a terminal event 
+
+In some applications, an individual may experience multiple clinically distinct non-terminal endpoints during follow-up, whereas a terminal event such as death precludes any subsequent non-terminal event. Recurrent VTE and major bleeding in the CANVAS trial (Schrag et al., 2023) are examples of non-terminal events. Similarly, in cardiovascular studies, investigators often consider several nonfatal endpoints, such as heart failure, hospitalization, and heart transplantation. Because these non-terminal endpoints are not mutually exclusive, they cannot be fully represented as a single competing-risks outcome (T, J ) as in the preceding sections. Nevertheless, the ACSH framework extends naturally by analyzing each non-terminal endpoint through an endpoint-specific time-to-first-event construction and treating death as the only competing terminal event for that endpoint. Fix a non-terminal endpoint, e.g., VTE or major bleeding, indexed by ℓ ∈ { 1, . . . , ˜m}. Let Tℓ denote the time to event ℓ, D denote the time to death, and C denote the censoring time. The observed data can be organized as 
+
+{X1,i , K 1,i , · · · , X ˜m,i , K ˜m,i }ni=1 : n i.i.d. copies of {X1, K 1, · · · , X ˜m, K ˜m}, where 
+
+Xℓ = min( Tℓ, D, C ) and Kℓ =
+
+
+
+1, Tℓ ≤ min( D, C ),
+
+2, D < min( Tℓ, C ),
+
+0, C < min( Tℓ, D ).
+
+Importantly, occurrences of other non-terminal endpoints do not remove a subject from the risk set for time to event ℓ;they are neither competing nor censoring events for the endpoint-ℓ analysis. For event ℓ, define 
+
+F1,ℓ (t) = Pr( Tℓ ≤ t, T ℓ < D ), Sℓ(t) = Pr( Tℓ ∧ D > t ) and Rℓ(τ ) = 
+
+Z τ
+
+> 0
+
+Sℓ(u) du, 
+
+which is the restricted mean endpoint-ℓ-free time. Then, the event ℓ-specific ACSH is 
+
+ηℓ(τ ) = F1,ℓ (τ )
+
+Rℓ(τ ) , (6) which is the average rate of first occurrence of endpoint ℓ per unit time spent alive and event ℓ free over the time window 
+
+[0 , τ ].For each event ℓ, statistical inference on ηℓ(τ ) proceed exactly as in Sections 2.2 and 2.3, treating (Xℓ, K ℓ) as a two-cause competing-risks outcome: cause 1 = endpoint ℓ, cause 2 = death before endpoint ℓ, with right-censoring when Kℓ = 0 . Accordingly, one can obtain a consistent estimator of ηℓ(τ ), ˆηℓ(τ ) based on {Xℓ,i , K ℓ,i }ni=1 . Let 
+
+ˆθNT 
+
+(τ ) =  log ˆ η1(τ ), . . . , log ˆ η ˜m(τ )⊤
+
+and 
+
+θNT (τ ) =  log η1(τ ), . . . , log η ˜m(τ )⊤.
+
+As in Sections 2.2 and 2.3, we also have 
+
+√n{ˆθNT 
+
+(τ ) − θNT (τ )} = 1
+
+√n
+
+> n
+
+X
+
+> i=1
+
+ˆψNT  
+
+> i
+
+(τ ) + op(1) ,
+
+6Average Cause-Specific Hazard NABI ET AL .
+
+where ψNT  
+
+> i
+
+(τ ) = ( ψNT 1,i (τ ), · · · , ψ NT ˜m,i (τ )) ⊤,ψNT  
+
+> ℓ,i
+
+(τ ) = 
+
+Z τ
+
+> 0
+
+Sℓ(u)
+
+F1,ℓ (τ )
+
+dM 1,ℓ,i (u)
+
+Gℓ(u) +
+
+Z τ
+
+> 0
+
+ F1,ℓ (u)
+
+F1,ℓ (τ ) − Rℓ(u)
+
+Rℓ(τ )
+
+ dM ℓ,i (u)
+
+Gℓ(u) ,M1,ℓ,i (t) = I(Xℓ,i ≤ t, K ℓ,i = 1) −
+
+Z t∧Xℓ,i 
+
+> 0
+
+λ1,ℓ (u)du, Mℓ,i (t) = I(Xℓ,i ≤ t, K ℓ,i > 0) −
+
+Z t∧Xℓ,i 
+
+> 0
+
+λℓ(u)du, λ1,ℓ (t) = lim 
+
+> ϵ↓0
+
+P (Tℓ ∧ D < t + ϵ, T ℓ < D | Tℓ ∧ D ≥ t)
+
+ϵλℓ(t) = lim 
+
+> ϵ↓0
+
+P (Tℓ ∧ D < t + ϵ | Tℓ ∧ D ≥ t)
+
+ϵ
+
+and Gℓ(t) = Pr( Xℓ ≥ t). Therefore, as n → ∞ , √n{ˆθNT 
+
+(τ ) − θNT (τ )} converges in distribution to a multivariate Gaussian with mean zero and a variance-covariance matrix of ΣNT (τ ), which can be consistently estimated by 
+
+bΣNT 
+
+(τ ) = 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+ˆψNT  
+
+> i
+
+(τ ) ˆψNT  
+
+> i
+
+(τ )⊤,
+
+where ˆψNT  
+
+> i
+
+(τ ) =   ˆψNT 1,i (τ ), . . . , ˆψNT ˜m,i (τ )⊤ and ˆψNT  
+
+> ℓ,i
+
+(τ ) is a plug-in estimator of ψNT  
+
+> ℓ,i
+
+(τ ) by replacing all unknown quantities by their respective estimators. Note that ΣNT (τ ) does not have a similar simplification in (5) as the martingale central limit theorem is not applicable in this case. 
+
+Total ACSH summary and between-group comparisons With established large sample properties of ˆθNT 
+
+(τ ), an omnibus test for two-group comparison across multiple non-terminal events can then be conducted similarly as in Section 2.3. On the other hand, it is desirable to summarize the total disease burden due to a set of non-terminal events of interest and evaluate the treatment effect accordingly. To this end, let 
+
+ηtot (τ ) = 
+
+> ˜m
+
+X
+
+> ℓ=1
+
+ηℓ(τ ) = 1⊤ηNT (τ ), (7) where 1 denotes the ˜m-dimensional vector of ones. Because each component ACSH uses its own endpoint-specific denominator Rℓ(τ ), ηtot (τ ) is best viewed as a scalar summary on the ACSH scale rather than as a single common-denominator incidence rate. ηtot (τ ) summarizes multi-endpoint burden by combining endpoint-specific first-occurrence rates on the ACSH scale. This interpretation is more appropriate than the summary in Section 2.3 when the non-terminal endpoints are not mutually exclusive, because Section 2.3 only yields a summary for the first-composite event. Although these two summaries may coincide in simple settings such as independent exponential event times, they generally answer different scientific questions; see Appendix A for a simple illustration. To make statistical inference on ηtot (τ ), let ˆηNT (τ ) =  ˆη1(τ ), . . . , ˆηL∗ (τ )⊤. By the multivariate delta method, the variance of ˆηtot (τ ) is approximately 
+
+n−1 ηNT (τ )⊤ΣNT (τ )ηNT (τ ),
+
+which can be estimated by 
+
+n−1 ˆηNT (τ )⊤ bΣNT 
+
+(τ )ˆ ηNT (τ ).
+
+A Wald-type confidence interval for ηtot (τ ) follows immediately. For two-group comparison, define ˆηtot ,g (τ ) analogously within group g ∈ { 0, 1}. The between-group Total ACSH difference is 
+
+Dtot (τ ) = ηtot ,1(τ ) − ηtot ,0(τ ),
+
+which can be consistently estimated by 
+
+ˆDtot (τ ) = ˆ ηtot ,1(τ ) − ˆηtot ,0(τ ).
+
+By independence of the two groups and the delta method, 
+
+ˆDtot (τ ) − Dtot (τ )
+
+7Average Cause-Specific Hazard NABI ET AL .
+
+is approximately mean-zero normal with variance estimated by 
+
+bσ2tot (τ ) = 
+
+> 1
+
+X
+
+> g=0
+
+n−1 
+
+> g
+
+ˆηNT  
+
+> g
+
+(τ )⊤ bΣNT  
+
+> g
+
+(τ )ˆ ηNT  
+
+> g
+
+(τ ).
+
+A Wald-type confidence interval for Dtot (τ ) and the corresponding Wald test of H0 : ηtot ,1(τ ) = ηtot ,0(τ ), follow immediately. A ratio of total ACSH can be handled analogously. 
+
+# 3 Simulation Study 
+
+We conducted a simulation study to evaluate the finite-sample performance of the proposed ACSH estimator and to illustrate its advantage over the naive incidence rate (IR) in competing risks settings. Specifically, we examined operating characteristics under both constant-hazard and time-varying-hazard settings, focusing on bias, precision, standard error calibration, and confidence interval coverage. The non-exponential scenario was included to demonstrate that, when hazards vary over time, the naive IR’s population target depends on the censoring distribution, whereas ACSH remains well defined and interpretable on the event-free person-time scale. 
+
+3.1 Setup 
+
+We considered a semi-competing risks model with two non-fatal events of interest (Causes 1 and 2) and a terminal event, death, under independent right-censoring and a prespecified truncation horizon τ = 5 , For each simulated dataset, we estimated the cause-specific ACSH for causes 1 and 2 using the proposed inference procedure. As a comparator, we also computed the naive cause-specific incidence rate, defined as the number of observed events of a given cause divided by the total observed event-free person-time accumulated up to τ , i.e. 
+
+bηnaive  
+
+> ℓ
+
+(τ ) = 
+
+Pni=1 I(Xℓ,i ≤ τ, K ℓ,i = 1) 
+
+Pni=1 min( Xℓ,i , τ ) , ℓ = 1 , 2.
+
+The performance of estimation methods was evaluated in terms of relative bias, root mean squared error (RMSE), average estimated standard error (ASE), empirical standard error (ESE), and empirical coverage of nominal 95% Wald confidence intervals. We examined three data-generating scenarios. In Scenario (i) two independent latent event times and time to a terminal event (death) followed independent exponential distributions, 
+
+T1 ∼ Exp( λ1), T2 ∼ Exp( λ2) and D ∼ Exp( λD )
+
+with λ1 = 0 .15 , λ 2 = 0 .25 and λD = 0 .20 ; and censoring times followed C ∼ Exp( μ) with μ = 0 .10 . Consistent with the endpoint-specific construction of Section 2.4, each event of interest ℓ ∈ { 1, 2} is observed as its own two-cause competing-risks outcome with death: Xℓ = min( Tℓ, D, C ), and Kℓ = 1 , if Tℓ ≤ min( D, C ) (event ℓ), Kℓ = 2 , if 
+
+D < min( Tℓ, C ) (death), and Kℓ = 0 , otherwise (censored). Occurrences of the other event of interest do not remove a subject from the risk sets for endpoint ℓ. The true ACSH value for Causes ℓ was λℓ, because 
+
+F1,ℓ (τ ) = 
+
+Z τ
+
+> 0
+
+λℓe−(λℓ+λD )tdt, R ℓ(τ ) = 
+
+Z τ
+
+> 0
+
+e−(λℓ+λD )tdt and ηℓ(τ ) = F1,ℓ (τ )
+
+Rℓ(τ ) = λℓ.
+
+This simple setting serves as a benchmark, where the naive estimator is expected to perform well. In Scenarios (ii) and (iii), we introduced time-varying hazards by generating latent event times from Gamma distributions with a common shape parameter of 1.5 and scale parameters of 4.44 and 2.67 for Causes 1 and 2, respectively, with the terminal event (death) following D ∼ Exp( λD ), where λD = 0 .10 . The true ACSH value is 0.1195 for Cause 1 and 0.2206 for Cause 2 based on numerical integration. In Scenario (ii), all observations are followed up to τ without additional censoring. In Scenario (iii), there is additional censoring induced by an independent C ∼ Exp( μ) with 
+
+μ = 0 .10 . The comparison between Scenarios (ii) and (iii) isolates the role of random censoring and shows that the naive estimator becomes distorted in the presence of both time-varying hazards and random censoring. For all three scenarios, we considered sample sizes n ∈ { 300 , 1000 } and used R = 1 , 000 Monte Carlo replicates per configuration. To keep the presentation compact, Table 2 reports results for Cause 1 only; the full results, including Cause 2, are provided in Appendix B. 8Average Cause-Specific Hazard NABI ET AL .
+
+3.2 Results 
+
+Across all three scenarios, the proposed ACSH estimator performed well. Relative bias was negligible, the RMSE decreased at the expected rate as n increased from 300 to 1,000, ASE and ESE were closely aligned, indicating a good accuracy of the influence function-based variance estimator, and the empirical coverage of nominal 95% Wald confidence intervals remained close to the nominal level throughout (Table 2). The naive estimator behaved quite differently across the three scenarios. Under Scenario (i), with constant hazards and random censoring, the naive estimator targets the true ACSH: relative bias was negligible and coverage level of the corresponding confidence intervals remained close to 0.95. Under Scenario (ii), with time-varying hazards but no random censoring, the naive estimator and the proposed estimator are identical. The informative comparison arises in Scenario (iii), where time-varying hazards and random censoring present simultaneously. In this setting, the naive estimator exhibited a persistent negative relative bias of approximately −3.8% to −4.0% that did not diminish with increasing sample size, while the empirical coverage of its 95% confidence interval decreased to 0.900 at n = 1000 . In contrast, the ACSH estimator remained essentially unbiased. These observations are consistent with the fact that, under independent random censoring, the estimand of the naive estimator is 
+
+˜ηk(τ ) = 
+
+R τ 
+
+> 0
+
+GC (u) dF k(u)
+
+R τ 
+
+> 0
+
+S(u) GC (u) du =
+
+R τ 
+
+> 0
+
+S(u)GC (u)λk(u) du 
+
+R τ 
+
+> 0
+
+S(u)GC (u) du ,
+
+where GC (·) denotes the survival function of the censoring time. This ratio coincides with ηk(τ ) when either the cause-specific hazard λk(u) is constant over [0 , τ ] (Scenario (i)) or GC (u) ≡ 1 (Scenario (ii)), but differs from ηk(τ ),otherwise, consistent with the observed bias in Scenario (iii) (Uno and Horiguchi, 2023). In summary, the bias of the naive estimator in Scenario (iii) arises from the difference between the weighting functions 
+
+S(u)GC (u) and S(u). In the practically most relevant setting, where hazards vary over time and the data are subject to right censoring, the naive estimator becomes systematically biased and its confidence intervals exhibit undercoverage for the true ACSH. In contrast, the proposed ACSH estimator remains approximately unbiased with valid confidence interval, providing a robust approach for studying this censoring-invariant summary of cause-specific event occurrence per unit event-free person-time over a fixed follow-up horizon. The robustness of these conclusions was further examined in Appendix C. The confidence intervals for ACSH retain a near nominal coverage level under increasing and decreasing hazards, censoring fractions varying from 12% to 66%, and cause-specific cumulative incidence rates as low as 3%, whereas the inference based on the naive estimator may fail. 
+
+3.3 Additional simulation results for two-sample contrasts 
+
+The simulations in Sections 3.1–3.2 focused on one-sample performance of the proposed ACSH estimator and on its contrast with the naive IR. To complement these results, additional simulation results are provided in Appendix D. These supplementary results were obtained using a simulation framework calibrated to the observed CANVAS data and report the finite-sample performance of the endpoint-specific arm-wise ACSH estimates, their between-group differences and ratios, and the analogous quantities for the Total ACSH summary introduced in Section 2.4. Specifically, Appendix D reports performance measures for the arm-specific ACSH estimates in recurrent VTE and major bleeding and for the corresponding DOAC versus LMWH contrasts, together with the Total ACSH arm estimates and contrasts. These analyses were included to verify that the proposed large-sample inference procedure remains well calibrated not only for one-sample ACSH estimation but also for endpoint-specific two-sample comparisons and for the scalar Total ACSH summary in realistic sample sizes. Because these additional results are primarily confirmatory and do not change the main message of the paper, we defer the numerical details to Appendix D. In addition, Appendix E reports a simulation study with nonzero cross-endpoint correlation, in which the finite-sample validity of the estimators for covariance matrix ΣNT (including its off-diagonal entries) and the variance of Total ACSH is confirmed. 
+
+# 4 Example 
+
+4.1 Data from the CANVAS trial 
+
+As an illustrative application, we analyzed data from the CANVAS trial (Cancer-Associated Venous Thromboembolism Anticoagulation Strategies), a pragmatic, multicenter randomized clinical trial comparing direct oral anticoagulants (DOACs) with low-molecular-weight heparin (LMWH) in patients with cancer-associated venous thromboembolism 9Average Cause-Specific Hazard NABI ET AL .
+
+(VTE) (Schrag et al., 2023). The trial was conducted across 67 oncology practices in the United States between 2016 and 2020 and enrolled 671 adult patients with active cancer and a newly diagnosed VTE. Participants were randomized in a 1:1 ratio to receive either DOAC or LMWH and were followed for up to 6 months or until death. Consistent with the primary (as-treated) analysis population of the CANVAS trial, our analysis was based on the 638 randomized participants who initiated their assigned treatment. For the present analysis, we considered two clinically important non-terminal endpoints: recurrent VTE and major bleeding within 6 months. Death was treated as a terminal competing event for each endpoint-specific analysis. Thus, consistent with the framework in Section 2.4, recurrent VTE and major bleeding were not analyzed as mutually exclusive competing events with one another. Instead, each endpoint was analyzed separately using a time-to-first-event formulation, with death as the competing terminal event and loss to follow-up treated as censoring. 
+
+4.2 Endpoint-specific and joint ACSH analyses 
+
+We analyzed recurrent VTE and major bleeding as two distinct non-terminal endpoints, using the endpoint-specific framework described in Section 2.4. For each endpoint, time to first occurrence of that endpoint was analyzed with death treated as the competing terminal event. Thus, recurrent VTE and major bleeding were not treated as mutually exclusive competing events with one another; rather, each endpoint was evaluated separately, and joint inference was based on the covariance of the corresponding endpoint-specific ACSH estimators. Figure 1 (top row) shows the Aalen–Johansen estimates of the endpoint-specific cumulative incidence functions for the DOAC and LMWH groups over the 6-month follow-up period. By 6 months, the estimated cumulative incidence of recurrent VTE was slightly lower in the DOAC group than in the LMWH group, while the cumulative incidence of major bleeding was similar between the two arms. The CIF curves describe absolute risk over time and provide a probability-scale context for interpreting the ACSH-based rate summaries that follow. Table 3 summarizes the endpoint-specific ACSH estimates for the DOAC and LMWH groups over the 6-month follow-up period. For recurrent VTE, the estimated ACSH was 1.17 per 100 person-months of event-free follow-up (95% CI: 0.76, 1.82) in the DOAC group and 1.70 per 100 person-months (95% CI: 1.16, 2.48) in the LMWH group, corresponding to an ACSH difference of −0.52 per 100 person-months (95% CI: −1.35 , 0.30) and an ACSH ratio of 0.692 (95% CI: 0.388, 1.237). For major bleeding, the estimated ACSH was 1.06 per 100 person-months (95% CI: 0.66, 1.69) in the DOAC group and 1.11 per 100 person-months (95% CI: 0.70, 1.76) in the LMWH group, yielding an ACSH difference of −0.05 per 100 person-months (95% CI: −0.76 , 0.66) and an ACSH ratio of 0.955 (95% CI: 0.495, 1.844). For both endpoints, the point estimates favored the DOAC group, although the confidence intervals included the null. To assess treatment effects jointly across the two non-terminal endpoints, we applied the global Wald test described in Section 2.3. The resulting test statistic was Tglobal = 1 .55 on two degrees of freedom, corresponding to a p-value of 0.46. Thus, the data do not provide evidence of a joint between-group difference in the endpoint-specific ACSH values for recurrent VTE and major bleeding. As a secondary scalar summary, we also computed Total ACSH, defined as the sum of the endpoint-specific ACSH values. The estimated Total ACSH was 2.23 per 100 person-months of event-free follow-up (95% CI: 1.48, 2.98) in the DOAC group and 2.80 per 100 person-months (95% CI: 1.91, 3.70) in the LMWH group, corresponding to a difference of −0.57 per 100 person-months (95% CI: −1.74 , 0.60) and a ratio of 0.796 (95% CI: 0.501, 1.267). Because the component ACSHs use endpoint-specific denominators, Total ACSH is best interpreted as a scalar summary on the ACSH scale rather than as a single common-denominator incidence rate. For example, the LMWH Total ACSH of 2.80 per 100 person-months should not be read as 2.80 combined events per 100 person-months alive and free of all 
+
+endpoints; each component ACSH is defined on its own event-free person-time denominator, and Total ACSH is simply the sum of those component rates. In the present data, this summary was lower in the DOAC group, although the associated uncertainty remained substantial. 
+
+# 5 Remarks 
+
+We proposed the ACSH, ηk(τ ), as a nonparametric cause-specific rate-scale summary for competing risks data. As a population quantity, ACSH is defined solely from the event-time distribution and preserves the familiar interpretation of an incidence rate. ACSH is intended to complement, rather than replace, the CIF. CIF remains the natural summary for absolute risk over time, whereas ACSH provides a summary on the rate scale. Reporting both can therefore be useful: the CIF describes how likely an event is to occur by time τ , while ACSH describes how frequently it occurs per unit event-free time over 10 Average Cause-Specific Hazard NABI ET AL .
+
+the same horizon. In two-sample settings, ACSH differences and ratios provide interpretable contrasts without requiring proportional subdistribution hazards. A practical advantage of ACSH is that it can be estimated using standard nonparametric methods for competing risks data. Specifically, estimation requires only the Aalen–Johansen estimator for the CIF and the Kaplan–Meier estimator for the event-free survival function as building blocks. The corresponding influence-function representation yields large-sample inference for one-sample ACSH, two-sample ACSH contrasts, and Wald tests across multiple event types. The choice of the truncation time τ is important. As with other restricted-time summaries, ACSH should always be interpreted relative to the chosen horizon. In practice, τ should be selected based on the scientific question and the available follow-up, avoiding values so large that few subjects remain under observation. The extension to multiple non-terminal endpoints broadens the scope of the proposed framework. In such settings, each endpoint can be analyzed through an endpoint-specific time-to-first-event construction with death as the competing terminal event. This yields endpoint-specific ACSH estimands and permits joint inference across multiple non-terminal events. We also considered a Total ACSH obtained by summing endpoint-specific ACSH values. Because the component ACSHs generally involve different endpoint-specific denominators, this quantity is best viewed as a scalar summary on the ACSH scale rather than as a single common-denominator incidence rate. As reported in Appendix D, confidence intervals for Total ACSH and for its between-group contrast attain empirical coverage close to the nominal level in all settings investigated, supporting its use in practice. We emphasize that ACSH is built from the cause-specific hazard and is distinct from the subdistribution hazard. An analogous restricted-time rate-scale summary could be developed from the subdistribution hazard, with corresponding one-sample, two-sample, and regression-based inference procedures; its development is a natural direction for future work but is beyond the scope of this paper (Putter et al., 2020). Several limitations should be noted. Our development assumes independent right-censoring. If this assumption fails, the plug-in estimator is no longer consistent for ηk(τ ), and extensions to relax this assumption (for example, via inverse probability of censoring weighting) would be required. In addition, although ACSH is an interpretable scalar summary, it does not describe the full temporal pattern of treatment effects; for that reason, it is best interpreted alongside graphical summaries such as CIF curves. Future work could consider regression modeling for ACSH and weighted summaries across multiple non-fatal endpoints. The survACSH R package, which implements one-sample, two-sample, Total ACSH, and global Wald inference, will be made available to users upon request. 11 Average Cause-Specific Hazard NABI ET AL .
+
+Table 2: Cause 1 only. Monte Carlo operating characteristics of the proposed average cause-specific hazard (ACSH) estimator and the naive person-time incidence rate (Naive IR) under three data-generating scenarios: (i) exponential latent event times with independent exponential censoring, (ii) Gamma latent event times with no censoring, and (iii) Gamma latent event times with independent exponential censoring. Latent event times for Causes 1 and 2 were 
+
+T1 ∼ Exp(0 .15) and T2 ∼ Exp(0 .25) in Scenario (i), and independent Gamma(1 .5, 4.44) and Gamma(1 .5, 2.67) in Scenarios (ii)–(iii). When present, censoring followed C ∼ Exp(0 .10) . A terminal competing event (death) followed 
+
+Exp(0 .20) in Scenario (i) and Exp(0 .10) in Scenarios (ii)–(iii). Truncation time τ = 5 , sample sizes N ∈ { 300 , 1000 },and R = 1000 Monte Carlo replicates per configuration. True ACSH for Cause 1 is 0.15 in Scenario (i) and 0.1195 in Scenarios (ii)–(iii). Relative Bias denotes the Monte Carlo mean of (ˆθ − θ)/θ ; RMSE is the root mean squared error; ASE is the average estimated standard error; ESE is the empirical standard deviation of ˆθ across replicates; Coverage is the empirical coverage of nominal 95% Wald confidence intervals. 
+
+Scenario N Method Rel. Bias RMSE ASE ESE Coverage 
+
+(i) Exponential, censored 300 ACSH 0.0084 0.0160 0.0159 0.0159 0.954 300 Naive IR 0.0085 0.0158 0.0160 0.0157 0.959 1000 ACSH 0.0004 0.0086 0.0087 0.0086 0.960 1000 Naive IR 0.0003 0.0086 0.0087 0.0086 0.957 (ii) Gamma, no censoring 300 ACSH 0.0086 0.0106 0.0107 0.0106 0.945 300 Naive IR 0.0086 0.0106 0.0114 0.0106 0.966 1000 ACSH -0.0005 0.0057 0.0059 0.0057 0.958 1000 Naive IR -0.0005 0.0057 0.0062 0.0057 0.968 (iii) Gamma, censored 300 ACSH -0.0020 0.0128 0.0121 0.0128 0.930 300 Naive IR -0.0402 0.0130 0.0122 0.0121 0.921 1000 ACSH 0.0011 0.0066 0.0067 0.0066 0.951 1000 Naive IR -0.0380 0.0077 0.0067 0.0063 0.900 12 Average Cause-Specific Hazard NABI ET AL .0 1 2 3 4 5 60.00 0.02 0.04 0.06 0.08 0.10 
+
+Recurrent VTE       
+
+> Months from randomization Cumulative incidence
+> DOAC LMWH
+> 01234560.00 0.02 0.04 0.06 0.08 0.10
+
+Major Bleeding       
+
+> Months from randomization Cumulative incidence
+> DOAC LMWH
+> 01234560.0 0.5 1.0 1.5 2.0 2.5 3.0
+
+Recurrent VTE       
+
+> Months from randomization Monthly rate (per 100 person−months)  DOAC LMWH
+> 01234560.0 0.5 1.0 1.5 2.0 2.5 3.0
+
+Major Bleeding 
+
+> Months from randomization Monthly rate (per 100 person−months)  DOAC LMWH
+
+Figure 1: CANVAS trial summaries over the 6-month follow-up period by treatment arm. Top row: Aalen–Johansen cumulative incidence functions for recurrent VTE (left) and major bleeding (right), with death treated as the competing terminal event within each endpoint-specific analysis. Bottom row: monthly piecewise-constant cause-specific rate for each endpoint, expressed per 100 person-months and computed for each month m ∈ { 1, . . . , 6} as the number of cause-specific events in (m − 1, m ] divided by the total person-time accrued in the same interval; the rates decline over the follow-up horizon in both arms and for both endpoints, indicating time-varying cause-specific intensities. Abbreviations: 
+
+DOACs, direct oral anticoagulants; LMWH, low-molecular-weight heparin; VTE, venous thromboembolism. 13 Average Cause-Specific Hazard NABI ET AL .
+
+Table 3: Comparison of ACSH (expressed per 100 person-months of event-free follow-up) between DOACs and LMWH over 6 months among patients with cancer-associated VTE in the CANVAS trial. Values are reported as point estimates with corresponding 95% confidence intervals. Total ACSH denotes the sum of endpoint-specific ACSH estimates across recurrent VTE and major bleeding. Abbreviations: ACSH, average cause-specific hazard; DOACs, direct oral anticoagulants; LMWH, low-molecular-weight heparin; VTE, venous thromboembolism.                 
+
+> Outcome DOAC (ACSH, 95% CI) LMWH (ACSH, 95% CI) Difference (95% CI) Ratio (95% CI)
+> Recurrent VTE 1.17 (0.76, 1.82) 1.70 (1.16, 2.48) -0.52 (-1.35, 0.30) 0.692 (0.388, 1.237) Major Bleeding 1.06 (0.66, 1.69) 1.11 (0.70, 1.76) -0.05 (-0.76, 0.66) 0.955 (0.495, 1.844)
+> Total ACSH 2.23 (1.48, 2.98) 2.80 (1.91, 3.70) -0.57 (-1.74, 0.60) 0.796 (0.501, 1.267)
+
+Funding 
+
+Funding/Support: This work was supported by the National Institutes of Health under award numbers R01GM152499 from the National Institute of General Medical Sciences and R01HL089778 from the National Heart, Lung, and Blood Institute. This is a secondary analysis of the data from the AFT-28 study (CANVAS), which was funded through a Patient-Centered Outcomes Research Institute (PCORI) Award (CER-1503-29805). All statements in this publication, including its findings, are solely those of the authors and do not necessarily represent the views of the Patient-Centered Outcomes Research Institute (PCORI), its Board of Governors or Methodology Committee. PCORI, the study funder, oversaw research ethics for the CANVAS study, but had no role in the design and conduct of the study; collection, management, analysis, and interpretation of the data; preparation, review, or approval of the manuscript; or decision to submit the manuscript for publication. The Foundation of the Alliance for Clinical Trials in Oncology Foundation, the study sponsor, was responsible for the conduct and management of the study. 
+
+# References 
+
+Aalen, O. O. and Johansen, S. (1978). An empirical transition matrix for non-homogeneous Markov chains based on censored observations. Scandinavian Journal of Statistics 5, 141–150. Cox, D. R. (1972). Regression models and life-tables. Journal of the Royal Statistical Society, Series B 34, 187–220. Fine, J. P. and Gray, R. J. (1999). A proportional hazards model for the subdistribution of a competing risk. Journal of the American Statistical Association 94, 496–509. Fine, J. P., Jiang, H., and Chappell, R. (2001). On semi-competing risks data. Biometrika 88, 907–919. Hernán, M. A. (2010). The hazards of hazard ratios. Epidemiology 21, 13–15. Horiguchi, M., Tian, L., Hattori, S., and Uno, H. (2026). Design and analysis of randomized clinical trials with average hazard: Practical guidance and tools for implementation. Stat. Med. 45, e70624. Kim, H. T. (2024). Competing risks data in clinical oncology. Frontiers in Oncology 14, 1360266. Lau, B., Cole, S. R., and Gange, S. J. (2009). Competing risk regression models for epidemiologic data. American Journal of Epidemiology 170, 244–256. Lin, D. Y. (1997). Non-parametric inference for cumulative incidence functions in competing risks studies. Statistics in Medicine 16, 901–910. Pintilie, M. (2006). Competing risks: A practical perspective . Statistics in Practice. Wiley-Blackwell, Hoboken, NJ. Putter, H., Fiocco, M., and Geskus, R. B. (2007). Tutorial in biostatistics: competing risks and multi-state models. Stat. Med. 26, 2389–2430. Putter, H., Schumacher, M., and van Houwelingen, H. C. (2020). On the relation between the cause-specific hazard and the subdistribution rate for competing risks data: The Fine–Gray model revisited. Biometrical Journal 62, 790–807. Qian, Z., Tian, L., Horiguchi, M., and Uno, H. (2025). A novel stratified analysis method for testing and estimating overall treatment effects on time-to-event outcomes using average hazard with survival weight. Stat. Med. 44, e70056. Schrag, D., Uno, H., Rosovsky, R., Rutherford, C., Sanfilippo, K., and ... (2023). Direct oral anticoagulants vs Low-Molecular-Weight heparin and recurrent VTE in patients with cancer: A randomized clinical trial. JAMA 329, 
+
+1924–1933. 14 Average Cause-Specific Hazard NABI ET AL .
+
+Uno, H., Claggett, B., Tian, L., Inoue, E., Gallo, P., Miyata, T., Schrag, D., Takeuchi, M., Uyama, Y., Zhao, L., Skali, H., Solomon, S., Jacobus, S., Hughes, M., Packer, M., and Wei, L.-J. (2014). Moving beyond the hazard ratio in quantifying the between-group difference in survival analysis. Journal of Clinical Oncology 32, 2380–2385. Uno, H. and Horiguchi, M. (2023). Ratio and difference of average hazard with survival weight: New measures to quantify survival benefit of new therapy. Statistics in Medicine 42, 936–952. Uno, H., Tian, L., Horiguchi, M., Hattori, S., and Kehl, K. L. (2024). Regression models for average hazard. Biometrics 
+
+80, ujae037. Zhao, L., Claggett, B., Tian, L., Uno, H., Pfeffer, M. A., Solomon, S. D., Trippa, L., and Wei, L. J. (2016). On the restricted mean survival time curve in survival analysis. Biometrics 72, 215–221. 15 Average Cause-Specific Hazard NABI ET AL .
+
+# Appendix A Asymptotic Results 
+
+We summarize the regularity conditions and large-sample representations underlying the methods described in the main text (Section 2). 
+
+Assumptions Throughout, we assume that (C1) Independent right-censoring: C ⊥ (T, J ).(C2) Positivity on [0 , τ ]: G(t) = Pr( X ≥ t) > 0 for all t ∈ [0 , τ ] and R(τ ) > 0.(C3) Each cumulative cause-specific hazard Λk(t) is finite on [0 , τ ].(C4) The processes {Yi(t), N ki (t)} satisfy the usual conditions for multiplicative intensity models on [0 , τ ], in-cluding càdlàg paths and finite variation, ensuring that the Kaplan–Meier and Aalen–Johansen estimators are uniformly consistent and admit asymptotically linear representations on [0 , τ ]; see, e.g., Lin (1997). Under (C1)–(C4), ˆS(t) and ˆFk(t) are uniformly consistent on [0 , τ ], and hence 
+
+ˆR(τ ) p
+
+−→ R(τ ), ˆηk(τ ) p
+
+−→ ηk(τ ).
+
+The first order approximation to the CIF Estimator Let Mki (t) = Nki (t) − R t 
+
+> 0
+
+Yi(u) dΛk(u), M i(t) = Ni(t) −
+
+R t 
+
+> 0
+
+Yi(u) dΛ( u) and G(t) = Pr( X ≥ t). It follows from Lin (1997), we have 
+
+√n{ ˆFk(t) − Fk(t)} = 1
+
+√n
+
+> n
+
+X
+
+> i=1
+
+ψFk ,i (t) + op(1) ,
+
+where 
+
+ψFk ,i (t) = 
+
+Z t
+
+> 0
+
+S(u−) dM ki (u)
+
+G(u) +
+
+Z t
+
+> 0
+
+{Fk(u) − Fk(t)} dM i(u)
+
+G(u) . (8) 
+
+The first order approximation to the Restricted Mean Event-Free Time Estimator For R(τ ) = R τ 
+
+> 0
+
+S(u) du, and 
+
+ˆR(τ ) = R τ 
+
+> 0
+
+ˆS(u) du, Zhao et al. (2016) showed that 
+
+√n{ ˆR(τ ) − R(τ )} = 1
+
+√n
+
+> n
+
+X
+
+> i=1
+
+ψR,i (τ ) + op(1) ,
+
+where 
+
+ψR,i (τ ) = −
+
+Z τ
+
+> 0
+
+{R(τ ) − R(u)} dM i(u)
+
+G(u) . (9) 
+
+The first order approximation to the Log-ACSH Estimator Since 
+
+log ˆ ηk(τ ) = log ˆFk(τ ) − log ˆR(τ ),
+
+delta method yields 
+
+√n{log ˆ ηk(τ ) − log ηk(τ )} = 1
+
+√n
+
+> n
+
+X
+
+> i=1
+
+ψk,i (τ ) + op(1) ,
+
+where 
+
+ψk,i (τ ) = ψFk ,i (τ )
+
+Fk(τ ) − ψR,i (τ )
+
+R(τ )=
+
+Z t
+
+> 0
+
+S(u)
+
+Fk(τ )
+
+dM ki (u)
+
+G(u) +
+
+Z t
+
+> 0
+
+ Fk(u)
+
+Fk(τ ) − R(u)
+
+R(τ )
+
+ dM i(u)
+
+G(u) .
+
+Therefore, 
+
+√n{ˆθ(τ ) − θ(τ )} = 1
+
+√n
+
+> n
+
+X
+
+> i=1
+
+ψi(τ ) + op(1) → Nq
+
+ 0, Σ(τ ),
+
+in distribution, as n → ∞ , where ψi(τ ) =  ψ1,i (τ ), . . . , ψ m,i (τ )⊤ and Σ(τ ) = Var {ψi(τ )}.
+
+16 Average Cause-Specific Hazard NABI ET AL .
+
+Extension to Multiple Non-Terminal Endpoints For non-terminal event ℓ, (Xℓ, K ℓ) in Section 2.4 of the main text reduces to a two-cause competing-risk problem with cause 1 being event ℓ and cause 2 being death. Applying the preceding approximation results to the log-ACSH for endpoint ℓ yields that 
+
+√n log ˆ ηNT  
+
+> ℓ
+
+(τ ) − log ηNT  
+
+> ℓ
+
+(τ ) = 1
+
+√n
+
+> n
+
+X
+
+> i=1
+
+ψNT  
+
+> ℓ,i
+
+(τ ) + op(1) ,
+
+where 
+
+ψNT  
+
+> ℓ,i
+
+(τ ) = 
+
+Z τ
+
+> 0
+
+Sℓ(u)
+
+F1,ℓ (τ )
+
+dM 1,ℓ,i (u)
+
+Gℓ(u) +
+
+Z τ
+
+> 0
+
+ F1,ℓ (u)
+
+F1,ℓ (τ ) − Rℓ(u)
+
+Rℓ(τ )
+
+ dM ℓ,i (u)
+
+Gℓ(u) ,M1,ℓ,i (t) = I(Xℓ,i ≤ t, K ℓ,i = 1) −
+
+Z t∧Xℓ,i 
+
+> 0
+
+λ1,ℓ (u)du, Mℓ,i (t) = I(Xℓ,i ≤ t, K ℓ,i > 0) −
+
+Z t∧Xℓ,i 
+
+> 0
+
+λℓ(u)du, λ1,ℓ (t) = lim 
+
+> ϵ↓0
+
+P (Tℓ ∧ D < t + ϵ, T ℓ < D | Tℓ ∧ D ≥ t)
+
+ϵ ,λℓ(t) = lim 
+
+> ϵ↓0
+
+P (Tℓ ∧ D < t + ϵ | Tℓ ∧ D ≥ t)
+
+ϵ ,F1,ℓ (t) = P (Tℓ < D, T ℓ < t ), S ℓ(t) = P (Tℓ ∧ D > t ), R ℓ(τ ) = E{Tℓ ∧ D ∧ τ } and Gℓ(t) = Pr( Xℓ ≥ t).
+
+Joint asymptotic normality across endpoints then follows from the multivariate central limit theorem applied to 
+
+√n{ˆθNT 
+
+(τ ) − θNT (τ )} with influence function of the ith observation being ψNT  
+
+> i
+
+(τ ) =  ψ1,i (τ ), . . . , ψ ˜m,i (τ )⊤.
+
+Examples of ACSH interpretation To clarify the interpretation of ACSH, consider two independent latent event times corresponding to non-terminal events 
+
+T1 ∼ Exp( λ1), T2 ∼ Exp( λ2),
+
+and a event time corresponding to a terminal event 
+
+D ∼ Exp( λD ).
+
+For concreteness, let T1 denote time to recurrent VTE, T2 denote time to major bleeding, and D denote time to death. We assume that T1, T 2 and D are independent. 
+
+Terminal Events Now consider the standard competing risk setting (Section 2.3). In this setting, we define a single event time as the time to the first event (VTE, bleeding or death), i.e., 
+
+T = min( T1, T 2, D ),
+
+with the failure cause being the event occurred the first (VTE, major bleeding first or death). The event-free survival probability is 
+
+S(u) = Pr( T1 > u, T 2 > u, D > u ) = e−(λ1+λ2+λD )u
+
+and 
+
+R(τ ) = 
+
+Z τ
+
+> 0
+
+S(u) du = 1 − e−(λ1+λ2+λD )τ
+
+λ1 + λ2 + λD
+
+.
+
+The cumulative incidence for VTE as the first event is 
+
+F1(τ ) = Pr( T1 ≤ τ, T 1 < T 2, T 1 < D ) = λ1
+
+λ1 + λ2 + λD
+
+
+
+1 − e−(λ1+λ2+λD )τ 
+
+.
+
+Thus, 
+
+η1(τ ) = F1(τ )
+
+R(τ ) = λ1.
+
+Likewise, 
+
+η2(τ ) = λ2.
+
+17 Average Cause-Specific Hazard NABI ET AL .
+
+Non-terminal Events In this setting, we treat the recurrent VTE and death are two competing risks and the occurrence of major bleeding doesn’t affect the ACSH for VTE. In this case, the cumulative incidence of the VTE by τ is 
+
+F1,1(τ ) = Pr( T1 ≤ τ, T 1 < D ) = 
+
+Z τ
+
+> 0
+
+λ1e−(λ1+λD )u du = λ1
+
+λ1 + λD
+
+
+
+1 − e−(λ1+λD )τ 
+
+.
+
+The corresponding VTE-free survival probability is 
+
+S1(u) = Pr( T1 > u, D > u ) = e−(λ1+λD )u,
+
+and the restricted mean VTE-free time is 
+
+R1(τ ) = 
+
+Z τ
+
+> 0
+
+S1(u) du = 1 − e−(λ1+λD )τ
+
+λ1 + λD
+
+.
+
+Hence, 
+
+ηNT 1 (τ ) = F1,1(τ )
+
+R1(τ ) = λ1.
+
+Similarly, the ACSH corresponding to major bleeding ηNT 2 (τ ) = λ2. The total ACSH is defined as 
+
+ηNT tot (τ ) = ηNT 1 (τ ) + ηNT 2 (τ ) = λ1 + λ2,
+
+which is simply the sum of two cause-specific hazard rates. Thus, we have 
+
+ηg (τ ) = ηNT  
+
+> g
+
+(τ ), g ∈ { 0, 1}.
+
+However, despite the equivalence, the scientific interpretations differ. In the standard terminal event setting, T1 competes with T2 and D. In the non-terminal event setting, T1 only competes with D. When the non-terminal events are not mutually exclusive, the interpretation of λ1 + λ2 as overall disease burden in Section 2.4 is more appropriate. 18 Average Cause-Specific Hazard NABI ET AL .
+
+# Appendix B Simulation Results for Cause 2 
+
+Table S1 reports the Monte Carlo operating characteristics of the proposed average cause-specific hazard (ACSH) estimator and the naive person-time incidence rate (Naive IR) for Cause 2 under the three data-generating scenarios described in Section 3 of the main text. The simulation configuration is identical to that used for Cause 1 in the main text ( τ = 5 , N ∈ { 300 , 1000 }, R = 1000 Monte Carlo replicates per configuration), with true Cause 2 ACSH values of 0.25 in Scenario (i) and 0.2206 in Scenarios (ii)–(iii). The qualitative findings for Cause 2 mirror those for Cause 1 reported in the main text. ACSH is essentially unbiased across all three scenarios with coverage near the nominal 95% level (0.93–0.95), and ASE closely tracks ESE. The naive IR matches ACSH closely under Scenario (i) (exponential with censoring) and coincides with it numerically under Scenario (ii) (Gamma, no censoring), where the two estimators are algebraically identical. Under Scenario (iii) (Gamma with censoring), the naive IR exhibits a persistent negative relative bias (approximately −3.0% to −3.3% ) that does not attenuate with sample size, and its empirical coverage drops to about 0.90 at N = 1000 , again paralleling the Cause 1 results. Table S1: Monte Carlo operating characteristics of the proposed ACSH estimator and the naive person-time incidence rate for Cause 2 under the three data-generating scenarios described in Section 3 of the main text. Truncation time 
+
+τ = 5 , N ∈ { 300 , 1000 }, R = 1000 replicates per configuration. True Cause 2 ACSH is 0.25 in Scenario (i) and 0.2206 in Scenarios (ii)–(iii). Metric definitions follow Table 2 of the main text. 
+
+Scenario N Method Rel. Bias RMSE ASE ESE Coverage 
+
+(i) Exponential, censored 300 ACSH 0.0084 0.0230 0.0221 0.0229 0.933 300 Naive IR 0.0081 0.0229 0.0223 0.0228 0.938 1000 ACSH 0.0015 0.0125 0.0122 0.0125 0.944 1000 Naive IR 0.0012 0.0124 0.0121 0.0124 0.944 (ii) Gamma, no censoring 300 ACSH -0.0007 0.0160 0.0154 0.0160 0.948 300 Naive IR -0.0007 0.0160 0.0169 0.0160 0.961 1000 ACSH -0.0008 0.0085 0.0085 0.0085 0.947 1000 Naive IR -0.0008 0.0085 0.0093 0.0085 0.969 (iii) Gamma, censored 300 ACSH 0.0051 0.0176 0.0172 0.0176 0.950 300 Naive IR -0.0298 0.0181 0.0182 0.0169 0.939 1000 ACSH 0.0011 0.0094 0.0095 0.0094 0.949 1000 Naive IR -0.0332 0.0116 0.0099 0.0090 0.901 19 Average Cause-Specific Hazard NABI ET AL .
+
+# Appendix C Robustness of One-Sample ACSH Inference to Hazard Shape, Censoring Intensity, and Event Rarity 
+
+This appendix extends the main-text simulation study (Section 3.1 and 3.2, Table 2, Table S1) by varying design factors in the main study: the shape of the latent hazard (increasing versus decreasing), the intensity of independent censoring, and the rarity of the event of interest. The data-generating structure is otherwise unchanged—two non-terminal events of interest and a terminal competing event (death) with independent right-censoring, τ = 5 , N ∈ { 300 , 1, 000 }, and 
+
+R = 1 , 000 Monte Carlo replicates. For each scenario we report the operating characteristics of the proposed ACSH estimator and of the naive person-time incidence rate (Naive IR). Five scenarios are considered (see Tables S2 and S3). Two replace the Gamma latent event times of the main study with Weibull times having an increasing hazard (shape k = 2 ) or a decreasing hazard (shape k = 0 .75 ); two retain the Gamma latent times but under light (∼12%) or heavy (∼66%) exponential censoring; and one makes the occurence of the first event of interest rare with a cause-specific cumulative incidence rate near 3% at τ (true ACSH η1 ≈ 0.016 ). In all scenarios, time to death always follows Exp(0 .10) . True ACSH values, which do not depend on the censoring distribution, are obtained by numerical integration and are listed in the caption of Tables S2 and S3. Across all five scenarios the proposed ACSH estimator is essentially unbiased, with the average estimated standard error tracking the empirical standard error and coverage near the nominal 95% level (range 0.927 –0.965 ). The naive incidence rate, by contrast, degrades sharply whenever the latent hazard is non-constant and random censoring is present: its relative bias reaches −9% under the increasing Weibull hazard and −15% under heavy censoring, and its 
+
+95% Wald coverage falls to only 0.504 (increasing hazard, N = 1 , 000 ) and 0.317 (heavy censoring, N = 1 , 000 ). Under a decreasing hazard the bias of the naive estimator reverses the sign ( +3 .7% to +4 .1% ), and the coverage level of the associated 95% confidence interval is not satisfactory including the rare event case ( 0.883 ). These results confirm good operational characteristics of the proposed inference procedure for ACSH, and the failure of the naive incidence rate estimator in the presence of time-varying hazards and random censoring. One finite-sample caveat is worth noting. Under heavy censoring ( ∼66%) and small sample size ( N = 300 ), the influence function-based standard error estimator was undefined in 3 of 1000 replicates for Cause 2 because the risk set was exhausted before τ ; these replicates were excluded from the corresponding ACSH average standard error and coverage entries, and the issue does not arise for Cause 1 or N = 1 , 000 . This illustrates the practical guidance of Section 5 of the main text that τ should not exceed the horizon supported by the observed follow-up. The naive incidence rate always returns a finite value but, as shown here, may be severely biased in this regime. 20 Average Cause-Specific Hazard NABI ET AL .
+
+Table S2: Robustness simulation (Cause 1). Monte Carlo operating characteristics of the ACSH estimator and the naive person-time incidence rate (Naive IR) for Cause 1 under five data-generating scenarios varying hazard shape, censoring intensity, and event rarity. All scenarios include a terminal competing event (death, Exp(0 .10) ); τ = 5 ,
+
+N ∈ { 300 , 1000 }, R = 1000 replicates. True Cause 1 ACSH η1: Weibull, increasing hazard ( k = 2 ) 0.0755 ; Weibull, decreasing hazard ( k = 0 .75 ) 0.2044 ; Gamma, light censoring ( ∼12%) 0.1195 ; Gamma, heavy censoring ( ∼66%) 
+
+0.1195 ; Gamma, rare event of interest 0.0160 . Metric definitions follow Table 2 of the main text. 
+
+N Method Rel. Bias RMSE ASE ESE Coverage 
+
+Weibull, increasing hazard ( k = 2 )
+
+300 ACSH -0.0032 0.0094 0.0091 0.0094 0.950 300 Naive IR -0.0925 0.0110 0.0090 0.0085 0.864 1000 ACSH 0.0005 0.0049 0.0050 0.0049 0.965 1000 Naive IR -0.0889 0.0080 0.0049 0.0044 0.728 
+
+Weibull, decreasing hazard ( k = 0 .75 )
+
+300 ACSH 0.0023 0.0194 0.0192 0.0194 0.952 300 Naive IR 0.0395 0.0214 0.0185 0.0199 0.918 1000 ACSH 0.0020 0.0107 0.0106 0.0107 0.948 1000 Naive IR 0.0395 0.0136 0.0101 0.0110 0.856 
+
+Gamma, light censoring ( ∼12%) 
+
+300 ACSH 0.0060 0.0109 0.0111 0.0108 0.959 300 Naive IR -0.0058 0.0108 0.0116 0.0107 0.967 1000 ACSH 0.0004 0.0061 0.0061 0.0061 0.946 1000 Naive IR -0.0113 0.0062 0.0063 0.0060 0.951 
+
+Gamma, heavy censoring ( ∼66%) 
+
+300 ACSH -0.0094 0.0188 0.0180 0.0187 0.943 300 Naive IR -0.1534 0.0229 0.0145 0.0137 0.712 1000 ACSH 0.0032 0.0108 0.0102 0.0108 0.927 1000 Naive IR -0.1423 0.0188 0.0080 0.0081 0.426 
+
+Gamma, rare event of interest 
+
+300 ACSH -0.0069 0.0042 0.0042 0.0042 0.963 300 Naive IR -0.0536 0.0040 0.0040 0.0039 0.917 1000 ACSH -0.0045 0.0023 0.0023 0.0023 0.962 1000 Naive IR -0.0516 0.0023 0.0022 0.0022 0.917 21 Average Cause-Specific Hazard NABI ET AL .
+
+Table S3: Robustness simulation (Cause 2). Monte Carlo operating characteristics of the ACSH estimator and the naive person-time incidence rate (Naive IR) for Cause 2 under five data-generating scenarios varying hazard shape, censoring intensity, and event rarity. All scenarios include a terminal competing event (death, Exp(0 .10) ); τ = 5 ,
+
+N ∈ { 300 , 1000 }, R = 1000 replicates. True Cause 2 ACSH η2: Weibull, increasing hazard ( k = 2 ) 0.1839 ; Weibull, decreasing hazard ( k = 0 .75 ) 0.3101 ; Gamma, light censoring ( ∼12%) 0.2206 ; Gamma, heavy censoring ( ∼66%) 
+
+0.2206 ; Gamma, rare event of interest 0.2206 . Under heavy censoring at N = 300 , ACSH entries are evaluated on 
+
+997 /1000 replicates (see text). Metric definitions follow Table 2 of the main text. 
+
+N Method Rel. Bias RMSE ASE ESE Coverage 
+
+Weibull, increasing hazard ( k = 2 )
+
+300 ACSH -0.0058 0.0136 0.0135 0.0135 0.955 300 Naive IR -0.0927 0.0211 0.0151 0.0125 0.826 1000 ACSH 0.0003 0.0077 0.0075 0.0077 0.944 1000 Naive IR -0.0876 0.0176 0.0083 0.0071 0.504 
+
+Weibull, decreasing hazard ( k = 0 .75 )
+
+300 ACSH 0.0046 0.0272 0.0267 0.0272 0.949 300 Naive IR 0.0412 0.0308 0.0249 0.0280 0.903 1000 ACSH 0.0006 0.0150 0.0147 0.0150 0.946 1000 Naive IR 0.0372 0.0192 0.0136 0.0153 0.837 
+
+Gamma, light censoring ( ∼12%) 
+
+300 ACSH -0.0010 0.0164 0.0159 0.0164 0.943 300 Naive IR -0.0114 0.0164 0.0173 0.0162 0.964 1000 ACSH -0.0012 0.0086 0.0088 0.0086 0.961 1000 Naive IR -0.0117 0.0089 0.0095 0.0085 0.958 
+
+Gamma, heavy censoring ( ∼66%) 
+
+300 ACSH 0.0128 0.0271 0.0246 0.0269 0.928 300 Naive IR -0.1233 0.0337 0.0214 0.0199 0.730 1000 ACSH 0.0012 0.0141 0.0140 0.0141 0.951 1000 Naive IR -0.1283 0.0304 0.0117 0.0110 0.317 
+
+Gamma, rare event of interest 
+
+300 ACSH 0.0047 0.0179 0.0173 0.0179 0.937 300 Naive IR -0.0306 0.0183 0.0182 0.0171 0.934 1000 ACSH 0.0012 0.0098 0.0095 0.0098 0.948 1000 Naive IR -0.0333 0.0120 0.0099 0.0095 0.883 22 Average Cause-Specific Hazard NABI ET AL .
+
+# Appendix D Additional Simulation for Two-Sample Contrasts Based on the CANVAS Data 
+
+Because the main motivation for this work is two-sample comparison, Table S4 reports finite-sample performance not only for the Total ACSH summary but also for the endpoint-specific ACSH estimates and their two-sample contrasts (difference and ratio). Simulated samples of size N ∈ { 500 , 1000 , 3000 } were drawn from the observed CANVAS cohort (with replacement, preserving the observed DOAC:LMWH ratio); the largest sample size was included to stress-test the asymptotic approximations underlying the proposed variance estimator. In each simulation replicate we computed arm-specific ACSH for recurrent VTE and major bleeding, the corresponding differences (DOAC − LMWH) and ratios (DOAC / LMWH), and the analogous quantities for Total ACSH. The full-sample ACSH estimates were treated as reference values when evaluating relative bias and coverage. For recurrent VTE these were 0.0117 (DOAC) and 0.0170 (LMWH), with difference −0.0052 and ratio 0.692 ; for major bleeding, 0.0106 and 0.0111 , with difference 
+
+−0.0005 and ratio 0.955 ; and for Total ACSH, 0.0223 and 0.0280 , with difference −0.0057 and ratio 0.796 . Inference for ratio estimands was conducted on the log scale; reported RMSE, ASE, and ESE for ratio rows are therefore on the log scale, and coverage is based on log-scale Wald intervals. All results are based on R = 2000 simulation replicates. For the endpoint-specific arm ACSH estimates, relative bias is negligible in absolute terms at all three sample sizes, and empirical coverage is essentially at the nominal 95% level by N = 3000 (range 0.944 –0.953 ). The endpoint-specific differences and ratios behave similarly at N = 3000 (coverage 0.943 –0.944 ); the larger relative-bias magnitudes reported at smaller N for the major bleeding contrasts (up to −0.11 on the log-ratio scale and −0.084 on the difference scale) simply reflect that the reference difference is very close to zero, so small absolute biases translate into large relative biases. The Total ACSH summaries are likewise well calibrated. For the Total ACSH arm estimates, the between-arm difference, and the ratio, the average estimated standard error closely tracks the empirical standard error at all three sample sizes, and empirical coverage is near the nominal 0.95 level. For the Total ACSH ratio the coverages are 0.954 , 0.956 , and 
+
+0.945 at N = 500 , 1000 , and 3000 ; for the Total ACSH difference they are 0.956 , 0.956 , and 0.942 ; and for the arm-specific Total ACSH they range from 0.935 to 0.948 . Thus the delta-method variance used to build the Total summary—in which subject-level log-scale influence values for each endpoint are rescaled by the plug-in endpoint ACSH estimates, summed across endpoints, and re-expressed on the required scale—is well calibrated in the sample sizes considered here. Taken together, Table S4 indicates that the proposed large-sample inference procedure is well calibrated for the endpoint-specific ACSH estimates and their two-sample contrasts across the sample sizes examined, and that the Total ACSH contrasts are likewise well calibrated, with empirical coverage near the nominal level across the sample sizes examined. Because these simulated samples are drawn from the observed CANVAS cohort, the true within-subject dependence between the two endpoints is unknown; the next section therefore complements this analysis with a fully controlled data-generating process in which the cross-endpoint correlation is known by construction, isolating the calibration of the joint endpoint covariance and of the Total ACSH variance. 23 Average Cause-Specific Hazard NABI ET AL .
+
+Table S4: Additional simulation results based on simulated samples drawn from the observed CANVAS cohort (R = 2000 simulation replicates per N ). Rows are grouped by endpoint (recurrent VTE, major bleeding, and Total ACSH) and, within each group, report the arm-specific ACSH estimates (DOAC and LMWH), the between-arm difference (DOAC − LMWH, natural scale), and the DOAC / LMWH ratio (inference on the log scale). Reported metrics are relative bias, root mean squared error (RMSE), average estimated standard error (ASE), empirical standard error (ESE), and empirical coverage of nominal 95% Wald confidence intervals. For ratio rows the reported RMSE, ASE, and ESE are on the log scale. Estimand Contrast N Relative Bias RMSE ASE ESE Coverage 
+
+Recurrent VTE 
+
+ACSH DOAC 500 0.0072 0.0029 0.0029 0.0029 0.9505 ACSH DOAC 1000 -0.0083 0.0021 0.0021 0.0021 0.9530 ACSH DOAC 3000 0.0003 0.0012 0.0012 0.0012 0.9530 ACSH LMWH 500 0.0059 0.0037 0.0037 0.0037 0.9505 ACSH LMWH 1000 -0.0020 0.0026 0.0026 0.0026 0.9505 ACSH LMWH 3000 0.0012 0.0015 0.0015 0.0015 0.9440 Difference DOAC − LMWH 500 0.0030 0.0046 0.0047 0.0046 0.9575 Difference DOAC − LMWH 1000 0.0123 0.0033 0.0033 0.0033 0.9500 Difference DOAC − LMWH 3000 0.0032 0.0020 0.0019 0.0020 0.9425 Ratio DOAC / LMWH 500 0.0173 0.3368 0.3402 0.3368 0.9635 Ratio DOAC / LMWH 1000 0.0302 0.2423 0.2395 0.2421 0.9545 Ratio DOAC / LMWH 3000 0.0065 0.1413 0.1369 0.1414 0.9435 
+
+Major Bleeding 
+
+ACSH DOAC 500 0.0076 0.0029 0.0028 0.0029 0.9535 ACSH DOAC 1000 0.0021 0.0021 0.0020 0.0021 0.9465 ACSH DOAC 3000 -0.0036 0.0012 0.0012 0.0012 0.9495 ACSH LMWH 500 0.0035 0.0030 0.0029 0.0030 0.9530 ACSH LMWH 1000 0.0005 0.0021 0.0021 0.0021 0.9505 ACSH LMWH 3000 0.0007 0.0012 0.0012 0.0012 0.9465 Difference DOAC − LMWH 500 -0.0839 0.0042 0.0041 0.0042 0.9510 Difference DOAC − LMWH 1000 -0.0341 0.0030 0.0029 0.0030 0.9475 Difference DOAC − LMWH 3000 0.0925 0.0017 0.0017 0.0017 0.9440 Ratio DOAC / LMWH 500 -0.1071 0.4110 0.3896 0.4111 0.9570 Ratio DOAC / LMWH 1000 -0.0171 0.2810 0.2716 0.2810 0.9480 Ratio DOAC / LMWH 3000 0.0918 0.1592 0.1555 0.1592 0.9440 
+
+Total ACSH 
+
+Total ACSH DOAC 500 0.0074 0.0042 0.0043 0.0042 0.9480 Total ACSH DOAC 1000 -0.0034 0.0031 0.0030 0.0031 0.9350 Total ACSH DOAC 3000 -0.0015 0.0018 0.0018 0.0018 0.9475 Total ACSH LMWH 500 0.0049 0.0052 0.0051 0.0052 0.9460 Total ACSH LMWH 1000 -0.0010 0.0037 0.0036 0.0037 0.9390 Total ACSH LMWH 3000 0.0010 0.0022 0.0021 0.0022 0.9390 Difference DOAC − LMWH 500 -0.0046 0.0066 0.0067 0.0066 0.9555 Difference DOAC − LMWH 1000 0.0083 0.0048 0.0047 0.0048 0.9560 Difference DOAC − LMWH 3000 0.0109 0.0028 0.0027 0.0028 0.9415 Ratio DOAC / LMWH 500 -0.0077 0.2677 0.2692 0.2678 0.9535 Ratio DOAC / LMWH 1000 0.0153 0.1920 0.1902 0.1921 0.9555 Ratio DOAC / LMWH 3000 0.0121 0.1126 0.1094 0.1126 0.9445 24 Average Cause-Specific Hazard NABI ET AL .
+
+# Appendix E Controlled Simulation for the Total ACSH Variance under Known Cross-Endpoint Correlation 
+
+The two-sample resampling study of the previous section draws from the observed CANVAS cohort, so the true within-subject dependence between endpoints is not known and cannot be varied. This section reports a fully controlled, single-cohort simulation whose purpose is to validate the delta-method variance of the Total ACSH summary of Section 2.4 — a single-cohort quantity that does not reduce to independent two-sample inference. Because the Total ACSH combines the endpoint-specific estimators, its variance depends on the off-diagonal entries of the joint covariance 
+
+ΣNT across non-terminal endpoints; a data-generating process in which the cross-endpoint correlation is induced by construction therefore provides a direct check of whether that off-diagonal covariance is correctly estimated. The correlation strength is a controllable design factor. For each subject we draw a shared gamma frailty u with mean 1 and variance v, and latent non-terminal event times 
+
+T1 | u ∼ Exp( u b 1) and T2 | u ∼ Exp( u b 2) with b1 = 0 .10 and b2 = 0 .15 . A shared terminal event (death) time 
+
+D ∼ Exp(0 .10) and an independent censoring time C ∼ Exp(0 .08) are also drawn. Each endpoint ℓ ∈ { 1, 2} is then observed as its own two-cause competing-risks process: Xℓ = min( Tℓ, D, C ), with the event of interest recorded when 
+
+Tℓ ≤ min( D, C ), death recorded when D < min( Tℓ, C ), and censoring otherwise; occurrences of the other endpoint do not remove a subject from endpoint ℓ’s risk set. The shared frailty u and the shared death and censoring times jointly render ΣNT 12 ̸ = 0 . We consider two correlation regimes, moderate (v = 0 .5) and strong (v = 1 .0); the induced replicate-level correlation between log ˆ η1 and log ˆ η2 ranges from about 0.14 to 0.20 under moderate frailty and from about 0.17 
+
+to 0.29 under strong frailty, confirming that the off-diagonal term is a non-trivial validation target. The truncation time is τ = 5 , sample sizes are N ∈ { 500 , 1000 , 2000 }, and R = 1000 Monte Carlo replicates are used per configuration. Gold-standard ACSH truths, which do not depend on the censoring distribution, were obtained from a single large Monte Carlo draw ( 5 × 10 6) from the latent model: under moderate frailty (η1, η 2, η tot ) = (0 .0908 , 0.1313 , 0.2220) ,and under strong frailty (0 .0836 , 0.1174 , 0.2011) .In each replicate we fit the endpoint-specific ACSH estimators on the shared cohort and recover their subject-level influence values, aligned to the original subject order (the within-endpoint time-sort orders differ across endpoints). We then evaluate (a) the endpoint marginals and (b) the Total ACSH ˆηtot = ˆ η1 + ˆ η2 with the delta-method variance of Section 2.4 and a natural-scale Wald interval. The Total ACSH influence value P 
+
+> ℓ
+
+ˆηℓ ˆψℓ,i combines the two endpoints, so its variance incorporates the off-diagonal of ˆΣNT 
+
+.Table S5 reports the endpoint-specific marginal results and the operating characteristics of the Total ACSH summary. The endpoint-specific estimators were essentially unbiased, with ASE closely tracking ESE and empirical coverage near the nominal 95% level in both correlation regimes (0.935–0.958). The Total ACSH summary showed similar performance. Across N ∈ { 500 , 1000 , 2000 }, empirical coverage remained close to 95% in both regimes. Because the Total ACSH variance estimator incorporates the off-diagonal elements of ˆΣNT 
+
+, these results support the adequacy of the estimated cross-endpoint covariance and the corresponding delta-method inference. These findings are consistent with the CANVAS resampling results in the previous section. 25 Average Cause-Specific Hazard NABI ET AL .
+
+Table S5: Controlled correlated multi-endpoint simulation. Monte Carlo operating characteristics of the endpoint-specific ACSH estimators (Endpoint 1, Endpoint 2) and of the Total ACSH summary under two within-subject correlation regimes induced by a shared gamma frailty (moderate, v = 0 .5; strong, v = 1 .0). Data-generating process as described in the text; τ = 5 , N ∈ { 500 , 1000 , 2000 }, R = 1000 replicates. True values: moderate 
+
+(η1, η 2, η tot ) = (0 .0908 , 0.1313 , 0.2220) ; strong (0 .0836 , 0.1174 , 0.2011) . Metric definitions follow Table 2 of the main text. 
+
+Frailty Quantity N Rel. Bias RMSE ASE ESE Coverage 
+
+Moderate Endpoint 1 500 0.0031 0.0085 0.0082 0.0085 0.940 Endpoint 1 1000 0.0026 0.0059 0.0058 0.0059 0.944 Endpoint 1 2000 -0.0001 0.0042 0.0041 0.0042 0.946 Endpoint 2 500 0.0045 0.0106 0.0104 0.0106 0.935 Endpoint 2 1000 0.0004 0.0075 0.0073 0.0075 0.938 Endpoint 2 2000 0.0007 0.0052 0.0052 0.0052 0.948 Total ACSH 500 0.0039 0.0149 0.0142 0.0149 0.938 Total ACSH 1000 0.0013 0.0102 0.0100 0.0102 0.943 Total ACSH 2000 0.0003 0.0072 0.0071 0.0072 0.944 Strong Endpoint 1 500 -0.0003 0.0081 0.0079 0.0081 0.941 Endpoint 1 1000 -0.0041 0.0055 0.0056 0.0055 0.958 Endpoint 1 2000 -0.0002 0.0039 0.0039 0.0039 0.947 Endpoint 2 500 0.0062 0.0100 0.0098 0.0100 0.941 Endpoint 2 1000 -0.0010 0.0068 0.0069 0.0068 0.958 Endpoint 2 2000 0.0011 0.0050 0.0049 0.0050 0.952 Total ACSH 500 0.0035 0.0140 0.0140 0.0140 0.960 Total ACSH 1000 -0.0023 0.0098 0.0099 0.0098 0.948 Total ACSH 2000 0.0006 0.0072 0.0070 0.0072 0.941 26

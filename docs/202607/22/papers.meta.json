@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-22",
+  "date": "2026-07-22",
+  "generated_at": "2026-07-22T21:34:05",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/22/2607.13293v1-average-cause-specific-hazard-a-censoring-invariant-measure-of-event-burden-under-competing-risks",
+      "section": "quick",
+      "title_en": "Average Cause-Specific Hazard: A Censoring-Invariant Measure of Event Burden Under Competing Risks",
+      "authors": "Khondoker Nazmoon Nabi, Xiang Meng, Lu Tian, Jean M Connors, Deb Schrag, Hajime Uno",
+      "date": "2026-07-14",
+      "pdf": "https://arxiv.org/pdf/2607.13293v1",
+      "score": "6.0",
+      "evidence": "竞争风险生存分析方法，可应用于皮瓣存活研究",
+      "tldr": "竞争风险场景下，标准发病率受删失时间分布影响，导致事件负担度量有偏。本文提出平均原因别风险（ACSH），一种基于事件时间分布且不依赖删失时间的生存加权发生率。开发了非参数估计和两组比较方法，模拟与CANVAS试验验证其稳健性。ACSH提供了删失不变的竞争风险度量，增强了可解释性。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Competing events are common in clinical and epidemiologic studies, including semi-competing risks in which a terminal event such as death may follow a nonfatal event but also competes with it beforehand. Standard summaries include the cumulative incidence function (CIF) and the incidence rate (IR), defined as the number of observed events divided by observed event-free person-time. With competing events, the naive IR generally depends on the censoring-time distribution unless intensities are constant. We propose the Average Cause-Specific Hazard (ACSH), a survival-weighted rate per event-free person-time that preserves the interpretation of an incidence rate and is defined purely from the event-time distribution, without involving the censoring-time distribution. We develop nonparametric estimation and inference for ACSH and, for two-sample comparisons, introduce ACSH differences and ratios that provide interpretable contrasts without requiring a strong model assumption between two groups. Simulation studies examine the finite-sample performance, and an analysis of the CANVAS trial illustrates the proposed methods.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

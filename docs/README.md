@@ -6,26 +6,24 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-21
-- 运行时间：2026-07-21 21:16:12 UTC
+- 最新运行日期：2026-07-22
+- 运行时间：2026-07-22 21:33:59 UTC
 - 运行状态：成功
 - 本次总论文数：1
 - 精读区：0
 - 速读区：1
 
 ### 今日简报（AI）
-1) 今日速读1篇论文，聚焦Gene III(R) L-Ergothioneine缓解运动性疲劳的作用机制。  
-2) 该化合物通过减轻氧化应激、炎症，并调控AMPK/PGC-1α信号通路来抗疲劳，值得运动营养和抗疲劳方向关注。  
-3) 普通读者可关注麦角硫因作为运动后恢复补充剂的潜在价值，未来可留意相关临床试验。
-- 详情：[/202607/21/README](/202607/21/README)
+今天速读了一篇关于竞争风险下事件负担测量的方法学论文。该文提出“平均原因别风险”作为删失不敏感的新指标，可用于评估特定事件的贡献。建议从事生存分析或临床研究的读者尝试在竞争风险数据中应用这一稳健指标。
+- 详情：[/202607/22/README](/202607/22/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Gene III(R) L-Ergothioneine Ameliorates Exercise-Induced Fatigue by Attenuating Oxidative Stress, Inflammation, and Modulating the AMPK/PGC-1α Signaling Pathway](/202607/21/biorxiv-10-64898-2026-02-19-706732-v2-gene-iiir-l-ergothioneine-ameliorates-exercise-induced-fatigue-by-attenuating-oxidative-stress-inflammation-and-modulating-the-ampkpgc-1-signaling-pathway)  
-   标签：评分：7.0/10、query:flap-ex-met
-   evidence：运动诱导的代谢变化和信号通路
+1. [Average Cause-Specific Hazard: A Censoring-Invariant Measure of Event Burden Under Competing Risks](/202607/22/2607.13293v1-average-cause-specific-hazard-a-censoring-invariant-measure-of-event-burden-under-competing-risks)  
+   标签：评分：6.0/10、query:flap-ex-met
+   evidence：竞争风险生存分析方法，可应用于皮瓣存活研究
 
 
 <div class="dpr-home-promo-card">

@@ -1,0 +1,57 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-22T21:32:54.410142+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.13293v1",
+      "source": "arxiv",
+      "title": "Average Cause-Specific Hazard: A Censoring-Invariant Measure of Event Burden Under Competing Risks",
+      "abstract": "Competing events are common in clinical and epidemiologic studies, including semi-competing risks in which a terminal event such as death may follow a nonfatal event but also competes with it beforehand. Standard summaries include the cumulative incidence function (CIF) and the incidence rate (IR), defined as the number of observed events divided by observed event-free person-time. With competing events, the naive IR generally depends on the censoring-time distribution unless intensities are constant. We propose the Average Cause-Specific Hazard (ACSH), a survival-weighted rate per event-free person-time that preserves the interpretation of an incidence rate and is defined purely from the event-time distribution, without involving the censoring-time distribution. We develop nonparametric estimation and inference for ACSH and, for two-sample comparisons, introduce ACSH differences and ratios that provide interpretable contrasts without requiring a strong model assumption between two groups. Simulation studies examine the finite-sample performance, and an analysis of the CANVAS trial illustrates the proposed methods.",
+      "authors": [
+        "Khondoker Nazmoon Nabi",
+        "Xiang Meng",
+        "Lu Tian",
+        "Jean M Connors",
+        "Deb Schrag",
+        "Hajime Uno"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-07-14T22:04:05+00:00",
+      "link": "https://arxiv.org/pdf/2607.13293v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "competing risks survival analysis method applicable to flap survival studies",
+      "llm_evidence_cn": "竞争风险生存分析方法，可应用于皮瓣存活研究",
+      "llm_evidence": "竞争风险生存分析方法，可应用于皮瓣存活研究",
+      "canonical_evidence": "竞争风险生存分析方法，可应用于皮瓣存活研究",
+      "llm_tldr_en": "This paper proposes the Average Cause-Specific Hazard as a censoring-invariant measure for event burden under competing risks, useful for analyzing factors influencing survival outcomes.",
+      "llm_tldr_cn": "该研究提出平均原因别风险（ACSH）作为竞争风险下事件负担的不受删失影响的度量指标。该方法为皮瓣存活等生存分析提供了更稳健的工具，能够准确估计原因别风险而不依赖于删失分布。",
+      "llm_tldr": "该研究提出平均原因别风险（ACSH）作为竞争风险下事件负担的不受删失影响的度量指标。该方法为皮瓣存活等生存分析提供了更稳健的工具，能够准确估计原因别风险而不依赖于删失分布。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
