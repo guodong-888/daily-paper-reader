@@ -1,0 +1,105 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-23T20:12:23.048124+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-07-15-738540-v2",
+      "source": "biorxiv",
+      "title": "A high-throughput, 3D microtissue platform for multiparametric analysis of tissue remodeling.",
+      "abstract": "Extracellular matrix (ECM) remodeling and force generation are fundamental drivers of tissue morphogenesis and repair, yet scalable methods to quantitatively interrogate these dynamic mechanical processes remain limited. Here, we present a high-throughput screening platform that integrates engineered three-dimensional (3D) microtissues within a standardized 96-well format. We introduce a robust mold-casting fabrication process and a layer-by-layer surface modification strategy, that ensures long-term tissue stability and prevents detachment (95% tissue formation success; stable in culture for more than 10 days). This system enables simultaneous, longitudinal quantification of tissue closure, tissue contractility, and tissue compaction from a phase-contrast imaging modality. The computational data analysis tools that accompany this framework ensure reproducibility through deterministic computation and accelerate data extraction 80-fold relative to manual annotation. Using pharmacological compounds, we show that tissue closure dynamics, force generation, and compaction represent independent variables of ECM-driven tissue remodeling, challenging assumptions embedded in commonly used contraction-based assays. Furthermore, benchmarking against reported clinical drug responses demonstrates that the 3D platform better aligns with clinical outcomes (Kendall{tau} -b = 0.72, p=0.045, n =8/10) than a conventional two-dimensional scratch wound assay (Kendall{tau} -b = 0.52, p=0.25, n =4/10). Together, this work establishes a scalable assay for functional screening and quantitative assessment of tissue remodeling dynamics in three-dimensional systems.",
+      "authors": [
+        "Vasan, A.",
+        "Nguyen, Q.",
+        "Davis, E.",
+        "Karakan, M. C.",
+        "Westphal, E.",
+        "Shah, V.",
+        "Wong, W.",
+        "Lejeune, E.",
+        "Eyckmans, J."
+      ],
+      "primary_category": "bioengineering",
+      "categories": [
+        "bioengineering"
+      ],
+      "published": "2026-07-21T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.07.15.738540v2.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "high-throughput platform for tissue remodeling applicable to flap healing",
+      "llm_evidence_cn": "高通量组织重塑平台可应用于皮瓣愈合",
+      "llm_evidence": "高通量组织重塑平台可应用于皮瓣愈合",
+      "canonical_evidence": "高通量组织重塑平台可应用于皮瓣愈合",
+      "llm_tldr_en": "A high-throughput 96-well 3D microtissue platform enables longitudinal quantification of tissue closure, contractility, and compaction, useful for studying flap tissue remodeling.",
+      "llm_tldr_cn": "该研究开发了一种基于96孔板的高通量3D微组织平台，能够同时纵向量化组织闭合、收缩和压实等力学参数。采用模塑铸造和层层表面修饰技术，组织形成成功率95%，可稳定培养超过10天。该平台为研究皮瓣修复过程中的组织重塑动态提供了可扩展、标准化的工具，有助于筛选促进皮瓣愈合的干预措施。",
+      "llm_tldr": "该研究开发了一种基于96孔板的高通量3D微组织平台，能够同时纵向量化组织闭合、收缩和压实等力学参数。采用模塑铸造和层层表面修饰技术，组织形成成功率95%，可稳定培养超过10天。该平台为研究皮瓣修复过程中的组织重塑动态提供了可扩展、标准化的工具，有助于筛选促进皮瓣愈合的干预措施。",
+      "llm_tags": [
+        "query:flap-ex-met:composite"
+      ],
+      "matched_query_tag": "query:flap-ex-met:composite",
+      "matched_query_text": "Papers central to 运动与皮瓣代谢研究, especially work that connects or combines: exercise training effect on flap survival; factors influencing flap survival; metabolic changes during exercise and flap survival; mitochondrial function exercise and flap survival; exercise induced metabolic changes in skin flap; exercise preconditioning improves flap survival via metabolism; Does exercise preconditioning improve flap survival through metabolic reprogramming?; Metabolic adaptations from exercise training that enhance flap viability; How does exercise alter metabolism to enhance skin flap survival in humans and mice?.",
+      "matched_requirement_id": "req-composite-flap-ex-met",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-07-21-739741-v1",
+      "source": "biorxiv",
+      "title": "Tunable Laminar Perfusion Coordinates Endothelial and Perivascular Remodeling in Angiogenic Vasculature-on-Chip",
+      "abstract": "Perfusable vascular microphysiological systems are increasingly used to model angiogenesis, tissue crosstalk, and disease. However, many platforms still rely on oscillatory, discontinuous, or poorly controlled perfusion regimes, limiting the study of sustained flow-dependent vascular remodeling. Here, we establish a tunable, unidirectional laminar flow workflow for long-term perfusion of angiogenic vasculature-on-chip cultures and use it to investigate endothelial, perivascular, and immune cell responses to sustained flow. Using an AIM Biotech microfluidic platform containing 14-day-old human umbilical vein endothelial cell-derived angiogenic sprouts and pericytes, continuous perfusion enabled intraluminal transport of 1 m tracer beads through vessels, demonstrating stable flow across the vascular bed. Sustained laminar flow induced endothelial remodeling at both the mother vessel and sprout levels, with cellular alignment evident in both compartments. Quantitative analysis of the mother vessel further revealed Golgi polarization against the direction of flow. Sustained perfusion also increased pericyte recruitment to angiogenic sprouts and reduced endothelial proliferation within the mother vessel, consistent with flow-driven vascular maturation and quiescence. Live-cell imaging further captured directional endothelial migration against the flow, lumen remodeling, and dynamic pericyte behavior under continuous perfusion. In immune-cell assays performed under continuous-flow conditions, interactions with untreated endothelium were limited, whereas inflammatory activation increased immune-cell adhesion and crawling. These observations suggest that sustained flow supports a quiescent endothelial phenotype and demonstrate the suitability of the platform for studying inflammatory activation and immune-vascular communication under controlled hemodynamic conditions. Beyond its biological relevance, the workflow provides practical advantages for live-cell imaging, low medium consumption, and downstream perturbation studies. Moreover, the modular design of the platform makes it well suited for vascular-organ crosstalk applications. Collectively, these results establish laminar flow angiogenic vasculature-on-chip as an experimentally tractable model for studying vascular mechanobiology, vascular maturation, and dynamic cell interactions under defined hemodynamic conditions.",
+      "authors": [
+        "Nawara, T. J.",
+        "Meier, K.",
+        "Kuom, J.",
+        "Hollfinger, I.",
+        "Kraxner, J.",
+        "Koch, K. S.",
+        "Hastermann, M.",
+        "Jablonicka, L.",
+        "Vinet Barancourt, L.",
+        "Schwarzkopf, J. B.",
+        "Gerhardt, H."
+      ],
+      "primary_category": "bioengineering",
+      "categories": [
+        "bioengineering"
+      ],
+      "published": "2026-07-22T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.07.21.739741v1.full.pdf",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "vascular perfusion platform applicable to flap survival studies",
+      "llm_evidence_cn": "血管灌注平台可应用于皮瓣存活研究",
+      "llm_evidence": "血管灌注平台可应用于皮瓣存活研究",
+      "canonical_evidence": "血管灌注平台可应用于皮瓣存活研究",
+      "llm_tldr_en": "A tunable laminar perfusion microfluidic platform enables long-term culture of angiogenic vasculature, facilitating study of flow-dependent remodeling relevant to flap vascularization.",
+      "llm_tldr_cn": "该研究建立了一种可调节的单向层流灌注微流控平台，用于长期培养血管生成性血管结构，并研究持续流动下的内皮和血管周围重塑。该平台克服了传统振荡灌注的局限性，为模拟皮瓣存活中的血管生成和灌注调控提供了可复制的体外模型，有助于探索影响皮瓣存活的血管因素。",
+      "llm_tldr": "该研究建立了一种可调节的单向层流灌注微流控平台，用于长期培养血管生成性血管结构，并研究持续流动下的内皮和血管周围重塑。该平台克服了传统振荡灌注的局限性，为模拟皮瓣存活中的血管生成和灌注调控提供了可复制的体外模型，有助于探索影响皮瓣存活的血管因素。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

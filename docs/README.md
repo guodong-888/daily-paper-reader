@@ -6,24 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-22
-- 运行时间：2026-07-22 21:33:59 UTC
+- 最新运行日期：2026-07-23
+- 运行时间：2026-07-23 20:15:00 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：2
 - 精读区：0
-- 速读区：1
+- 速读区：2
 
 ### 今日简报（AI）
-今天速读了一篇关于竞争风险下事件负担测量的方法学论文。该文提出“平均原因别风险”作为删失不敏感的新指标，可用于评估特定事件的贡献。建议从事生存分析或临床研究的读者尝试在竞争风险数据中应用这一稳健指标。
-- 详情：[/202607/22/README](/202607/22/README)
+今天速读2篇高分论文，聚焦3D微组织与血管芯片技术。
+最值得关注的方向：三维微组织平台的多参数组织重塑分析，以及可调层流灌注协调血管生成的芯片模型。
+建议关注这些体外模型如何替代传统动物实验，加速药物筛选与组织工程研究。
+- 详情：[/202607/23/README](/202607/23/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Average Cause-Specific Hazard: A Censoring-Invariant Measure of Event Burden Under Competing Risks](/202607/22/2607.13293v1-average-cause-specific-hazard-a-censoring-invariant-measure-of-event-burden-under-competing-risks)  
+1. [A high-throughput, 3D microtissue platform for multiparametric analysis of tissue remodeling.](/202607/23/biorxiv-10-64898-2026-07-15-738540-v2-a-high-throughput-3d-microtissue-platform-for-multiparametric-analysis-of-tissue-remodeling)  
    标签：评分：6.0/10、query:flap-ex-met
-   evidence：竞争风险生存分析方法，可应用于皮瓣存活研究
+   evidence：高通量组织重塑平台可应用于皮瓣愈合
+2. [Tunable Laminar Perfusion Coordinates Endothelial and Perivascular Remodeling in Angiogenic Vasculature-on-Chip](/202607/23/biorxiv-10-64898-2026-07-21-739741-v1-tunable-laminar-perfusion-coordinates-endothelial-and-perivascular-remodeling-in-angiogenic-vasculature-on-chip)  
+   标签：评分：6.0/10、query:flap-ex-met
+   evidence：血管灌注平台可应用于皮瓣存活研究
 
 
 <div class="dpr-home-promo-card">

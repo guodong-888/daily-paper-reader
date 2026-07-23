@@ -1,0 +1,1722 @@
+Title: 2026.07.15.738540v2.full.pdf
+
+URL Source: https://www.biorxiv.org/content/10.64898/2026.07.15.738540v2.full.pdf
+
+Number of Pages: 46
+
+Markdown Content:
+1
+
+Title: A high-throughput, 3D microtissue platform for multiparametric analysis of tissue remodeling. 
+
+Authors : Anish Vasan 1†, Quan B Nguyen 3†, Emily Davis 1 , M Ça ğatay Karakan 1,2 , Elena Westphal 1 , Varun Shah 1 , Wilson Wong 1 , Emma Lejeune 3 , Jeroen Eyckmans 1,2 
+
+Affiliations : 
+
+> 1
+
+Department of Biomedical Engineering and the Biological Design Center, Boston University, Boston, MA, 02215, United States  
+
+> 2
+
+Wyss Institute for Biologically Inspired Engineering, Harvard University, Boston, MA, 02115, United States  
+
+> 3
+
+Department of Mechanical Engineering, Boston University 
+
+†These authors contributed equally to this work. 
+
+Corresponding authors contact information: 
+
+Email:  eyckmans@bu.edu 
+
+Address: Room 521, 610 Commonwealth Ave. Boston, MA 02215 
+
+Email:  elejeune@bu.edu 
+
+Address: EMA 209, 730 Commonwealth Ave. Boston, MA 02215 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+2
+
+ABSTRACT 1
+
+Extracellular matrix (ECM) remodeling and force generation are fundamental drivers of tissue 2
+
+morphogenesis and repair, yet scalable methods to  quantitatively  interrogate these dynamic 3
+
+mechanical processes remain limited. Here, we present a high-throughput screening platform that 4
+
+integrates engineered three-dimensional (3D) microtissues within a standardized 96-well format. 5
+
+We introduce a robust mold-casting fabrication process and a layer-by-layer surface modification 6
+
+strategy, that ensures long-term tissue stability and prevents detachment (95% tissue formation 7
+
+success; stable in culture for more than 10 days). This system enables simultaneous, longitudinal 8
+
+quantification of tissue closure, tissue contractility, and tissue compaction from a phase-contrast 9
+
+imaging modality. The computational data analysis tools that accompany this framework ensure 10 
+
+reproducibility through deterministic computation and accelerate data extraction 80-fold relative 11 
+
+to manual annotation. Using pharmacological compounds, we show that tissue closure dynamics, 12 
+
+force generation, and compaction represent independent variables of ECM-driven tissue 13 
+
+remodeling, challenging assumptions embedded in commonly used contraction-based assays. 14 
+
+Furthermore, benchmarking against reported clinical drug responses demonstrates that the 3D 15 
+
+platform better aligns with clinical outcomes (Kendall τ-b = 0.72, p= 0.045 , n =8/10) than a 16 
+
+conventional two-dimensional scratch wound assay (Kendall τ-b = 0.52, p= 0.25 , n =4/10). 17 
+
+Together, this work establishes a scalable assay for functional screening and quantitative 18 
+
+assessment of tissue remodeling dynamics in three-dimensional systems. 19 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+3
+
+20 
+
+I. INTRODUCTION 21 
+
+Tissue morphogenesis emerges from the coordinated interplay between cellular contractile 22 
+
+forces, extracellular matrix (ECM) assembly, and ECM remodeling, which together sculpt three-23 
+
+dimensional tissue architecture in development, repair, and disease. 1–3 The ECM is not a passive 24 
+
+scaffold, its biochemical composition and hierarchical organization regulate how cells generate 25 
+
+force while cell-generated forces reciprocally reorganize matrix architecture through protein 26 
+
+unfolding, matrix compaction and fiber realignment. 4–7 As a result, ECM remodeling operates 27 
+
+across multiple hierarchical scales, from molecular turnover of matrix components to tissue-scale 28 
+
+reorganization of matrix architecture and mechanics. 8–11 29 
+
+30 
+
+Although biochemical assays have provided important insight into pathways governing matrix 31 
+
+synthesis and degradation, tissue morphogenesis and repair ultimately arise from functional 32 
+
+remodeling processes, including tissue compaction, force generation, matrix organization, and 33 
+
+collective tissue movements that emerge from cell-matrix interactions. 12,13 Quantifying these 34 
+
+tissue-scale remodeling behaviors remain a major challenge in mechanobiology because existing 35 
+
+experimental models rarely combine dynamic measurements of functional remodeling with 36 
+
+experimental scalability. 14,15 37 
+
+38 
+
+A major obstacle is the persistent trade-off between physiological relevance and experimental 39 
+
+scalability. In vivo models retain physiological context but they are low-throughput and poorly 40 
+
+suited for controlled, multifactorial perturbation studies. 16 Conventional in vitro assays, 41 
+
+including widely used planar scratch-wound assays 17 and traction-based force measurement 42 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+4
+
+systems 18,19 , provide greater scalability but prevent matrix remodeling and tissue compaction that 43 
+
+are key features of 3D tissue repair. More complex 3D microtissue systems, organoid platforms, 44 
+
+and human skin equivalents and explants have advanced the study of tissue repair mechanics 20– 45 24 , but many remain limited in throughput, standardization, or integration with scalable screening 46 
+
+workflows. 47 
+
+48 
+
+Here, we present a scalable 3D microtissue platform for the quantitative analysis of functional 49 
+
+tissue remodeling. This system enables longitudinal measurements of tissue closure, contractile 50 
+
+force generation, and tissue compaction, within ANSI-standard 96-well plate formats. Flexible 51 
+
+micropillar force sensors are integrated with engineered microtissues anchored through an 52 
+
+optimized surface chemistry, while WoundCompute, an open-source automated image analysis 53 
+
+pipeline, automatically extracts multiparametric remodeling dynamics across large experimental 54 
+
+cohorts without manual intervention. By integrating reusable 3D-printed fabrication modules 55 
+
+with automated analysis, this framework enables quantitative dissection of functional tissue 56 
+
+remodeling processes that have been difficult to interrogate at scale. 57 
+
+58 
+
+To demonstrate the scalability and analytical power of this framework, we performed 59 
+
+multiparametric screening of compounds targeting cytoskeletal contractility, matrix remodeling, 60 
+
+and wound repair pathways. This analysis revealed that tissue closure, contractile force 61 
+
+generation, and tissue compaction are not intrinsically coupled outputs, as often implied by 62 
+
+conventional contraction-based assays, but instead represent differentially regulated axes of 63 
+
+functional tissue remodeling. Comparison with conventional 2D scratch assays further showed 64 
+
+that 3D microtissue responses more closely align with clinically observed therapeutic behaviors. 65 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+5
+
+Together, these results establish a scalable experimental framework for quantitatively dissecting 66 
+
+ECM-dependent functional tissue remodeling. 67 
+
+68 
+
+II. RESULTS 69 
+
+A 96-well microtissue platform for multiparametric analysis of tissue repair dynamics. 70 
+
+Previous work from our group demonstrated that engineered stromal microtissues repair injury 71 
+
+through coordinated tissue contraction, extracellular matrix assembly, and matrix compaction, 72 
+
+identifying these processes as key drivers of fibrous tissue repair. 6,7,25–27 However, these studies 73 
+
+were performed in low-throughput formats, which limited systematic perturbation and 74 
+
+longitudinal, multiparametric analysis. To quantitatively dissect these remodeling processes at 75 
+
+scale, we engineered a 96-well microtissue platform that integrates three-dimensional tissue 76 
+
+assembly and repair with simultaneous mechanical and structural readouts (Fig. 1). 77 
+
+78 
+
+The platform combines a scalable hardware design with an integrated imaging and analysis 79 
+
+workflow. Each well contains an array of four flexible polydimethylsiloxane (PDMS) 80 
+
+micropillars that support microtissue formation and enable mechanical readout (Fig. 1a, b; 81 
+
+Supplementary Fig. 1). To fabricate these devices reproducibly and at scale, we developed a 82 
+
+reusable mold-casting system with 12 modular 3D-printed assemblies, each holding eight PDMS 83 
+
+molds for casting individual micropillar devices directly into wells (Fig 1a, Supplementary Fig. 84 
+
+1a, b). After seeding normal human dermal fibroblasts (NHDFs) in a collagen type I matrix, 85 
+
+anisotropic microtissues suspended between opposing pillars self-assembled within 12–24 hours 86 
+
+(Fig. 1a). 25,28 To initiate repair-like tissue remodeling, we introduced a controlled laser ablation 87 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+6
+
+injury and monitored the resulting tissue dynamics using time-lapse phase-contrast microscopy 88 
+
+(Fig 1b). 27 89 
+
+90 
+
+The resulting image sequences were processed using WoundCompute, a computational platform 91 
+
+developed to extract longitudinal remodeling metrics from time-lapse microscopy data (Fig 1c, 92 
+
+d). WoundCompute segments both tissue and gap regions, enabling quantification of gap closure 93 
+
+kinetics and tissue compaction over time. In parallel, the software tracks deflection of the 94 
+
+spherical micropillar caps during remodeling, allowing tissue-generated forces to be calculated 95 
+
+from established force-displacement relationships 28–30 (Fig. 1c). Through parallelized processing, 96 
+
+WoundCompute converts large image sequences into a scalable analysis workflow suitable for 97 
+
+96-well experiments (Fig. 1d). Together, this approach generates multiparametric, longitudinal 98 
+
+datasets that capture dynamic tissue remodeling without requiring complex or multiplexed 99 
+
+imaging modalities. (Fig1 e – h). 100 
+
+101 
+
+Surface engineering enables scalable long-term microtissue culture. 102 
+
+To enable long-term measurements suitable for high-throughput screening, we next sought to 103 
+
+define the design parameters governing microtissue stability, reproducibility, and scalability. 104 
+
+Initial implementations adapted from published methods 25–27,29–31 exhibited higher rates of tissue 105 
+
+malformation (15%, Supplementary Fig 2a) and detachment within 48-96 hours (Fig. 2a), 106 
+
+limiting the utility of the 3D tissue model. We, therefore, systematically optimized two critical 107 
+
+design parameters: initial cell seeding density and device surface chemistry. While intermediate 108 
+
+seeding levels (4,000 cells/well) supported stable tissue formation, premature detachment 109 
+
+persisted beyond three days with a surface coating of 2% Pluronic F-127 (Fig. 2a). To improve 110 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+7
+
+tissue anchorage while preserving spatial control over adhesion, we selectively functionalized 111 
+
+spherical caps of the microtissue devices with polydopamine (PDA) to promote localized 112 
+
+collagen and cell attachment 32,33 , while using poly-l-lysine-grafted-polyethylene-glycol (PLL-g-113 
+
+PEG) 32,34 and Pluronic F-127 30 to passivate non-target regions. This engineered interface 114 
+
+increased successful tissue formation to more than 95% (Supplementary Fig. 2a) and extended 115 
+
+tissue longevity beyond ten days (Fig. 2b, Supplementary Fig. 2a, b), enabling high-throughput 116 
+
+measurements of ECM-driven tissue remodeling over longer timescales. 117 
+
+118 
+
+Platform reproducibility supports scalable microtissue screening. 119 
+
+To support larger-scale experiments with reliable parallel measurements, we quantified well-to-120 
+
+well variability and spatial artifacts across the 96-well platform (Fig. 2c-h). 35,36 Prior to injury, 121 
+
+engineered microtissues exhibited highly uniform tissue footprint across plates, with a coefficient 122 
+
+of variation (CV) of 7.57%, indicating consistent tissue formation (Supplementary Fig. 2c, d). 123 
+
+After injury, the primary functional endpoint, time to 50% gap closure (T 50 ), showed moderate 124 
+
+well-to-well variability (CV 17.58%) (Fig. 2c). Tissue footprint was highly uniform across plates 125 
+
+(CV 3.74%) (Fig 2e), whereas the change in average pillar force showed modest variability (CV 126 
+
+20.47%) (Fig 3-3e). Importantly, we detected no systematic positional biases or edge effects 127 
+
+across the plate (Fig. 2d, f, h). Together, these findings establish the platform as a reproducible 128 
+
+and scalable assay compatible with high throughput screening (HTS) workflows 35,36 , and show 129 
+
+that tissue formation, closure dynamics, and contractile forces can be measured consistently 130 
+
+across experimental replicates. 131 
+
+132 
+
+WoundCompute enables rapid, reproducible analysis of tissue repair dynamics. 133 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+8
+
+To enable analysis of large imaging datasets, we developed WoundCompute, an open-source 134 
+
+Python-based analysis framework with graphical user interface (GUI) functionality for 135 
+
+automated quantification of tissue repair dynamics. (see Appendix S1 for details; code available 136 
+
+at GitHub repositories:  WoundCompute , and  WoundComputeGUI ; image data associated with 137 this study available at  10.6019/S-BIAD2719 ). Automation was necessary due to the scale of data 138 
+
+collected; a single 48-hour experiment with 96 wells imaged every 30 minutes produced more 139 
+
+than 9,000 images, rendering manual annotation impractical and susceptible to user bias and 140 
+
+annotator fatigue (see Appendix S2 for details on our Published Microscopy Dataset). 141 
+
+WoundCompute accepts raw phase contrast microscopy images and applies an automated 142 
+
+segmentation pipeline to isolate the gap region, surrounding tissue, and micropillar cap positions. 143 
+
+These segmentation masks enable quantitative extraction of closure kinetics, tissue compaction, 144 
+
+and contractile force measurements. In addition to frame-by-frame analysis, the software 145 
+
+performs longitudinal time-series analysis to identify complete closure events and detect 146 
+
+structural collapse of microtissues (Fig. 3a, b). 147 
+
+The analysis pipeline processes individual images in approximately 12 seconds and, through 148 
+
+parallelization, achieves an 80-fold acceleration over manual annotation. This enables full 149 
+
+analysis of HTS experiments within approximately 3 hours 30 mins on a workstation equipped 150 
+
+with AMD Ryzen™ 9 5900X processor (12 core), and 64 GB of DDR4 RAM running Microsoft 151 
+
+Windows 11 (see Appendix S1 for details). By applying a fixed segmentation criterion uniformly 152 
+
+across all samples, WoundCompute eliminates user-dependent variability and ensures greater 153 
+
+reproducibility relative to manual annotation. 154 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+9
+
+Benchmarking against independent manual annotations by multiple users revealed strong 155 
+
+agreement between automated and manual measurements (Fig. 3c). Although most annotators 156 
+
+achieved high segmentation overlaps, with intersection-over-union (IoU) values above 0.8, inter-157 
+
+user variability underscored the subjectivity of manual labeling (Fig. 3d). Pairwise coefficient of 158 
+
+determination (R²) analysis further confirmed strong correlation between WoundCompute and 159 
+
+manual measurement trends, indicating that the automated pipeline faithfully preserves the 160 
+
+underlying biological trends captured by manual analysis. (Fig. 3e, f). 161 
+
+Notably, WoundCompute maintained segmentation fidelity during late-stage closure, a regime in 162 
+
+which manual annotation proved less reliable. Bland-Altman analysis 37 revealed that human 163 
+
+annotators systematically underestimated residual gap areas in small-gap regimes, while 164 
+
+automated segmentation maintained accuracy throughout closure progression (Fig. 3g) 165 
+
+Collectively, these findings establish WoundCompute as a rapid, reproducible, and consistent 166 
+
+analytical framework that complements the HTS microtissue platform. 167 
+
+168 
+
+Multiparametric phenotyping reveals independent variables of tissue remodeling. 169 
+
+Timelapse analysis captured a biphasic remodeling response consisting of a transient gap 170 
+
+expansion followed by progressive, complete repair within 24 hours (Fig. 1d). These dynamics 171 
+
+were accompanied by coordinated changes in tissue compaction, as the projected tissue footprint 172 
+
+decreased during early remodeling before stabilizing as closure progressed (Fig. 1e). In parallel, 173 
+
+micropillar deflection measurement revealed dynamic modulation of contractile forces 174 
+
+characterized by an initial loss of tension immediately post-injury, followed by force recovery 175 
+
+during closure that transiently overshot pre-injury baseline levels (Fig. 1f). 176 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+10 
+
+To determine whether this multivariable remodeling phenotype could resolve differential 177 
+
+biological responses to perturbations, we next performed a pharmacological screening of 27 178 
+
+compounds targeting cytoskeletal contractility, growth factor signaling, integrin-mediated 179 
+
+adhesion, and matrix degradation pathways in both neonatal and adult human dermal fibroblasts. 180 
+
+Hits were identified using a dual-cutoff threshold based on the strictly standardized mean 181 
+
+deviation (SSMD) of the time to 50% gap closure ( T 50 ) and the relative gap area. 38 The screen 182 
+
+revealed pronounced asymmetry in remodeling responses. PDGF-BB was the sole compound 183 
+
+that accelerated tissue closure, consistent with clinical reports and animal studies. 39,40 In contrast, 184 
+
+eight compounds significantly delayed closure, separating into four mechanistic categories 185 
+
+targeting tyrosine kinase signaling (Dasatinib, Nintedanib) 41 , cytoskeletal contractility (Y-27632, 186 
+
+Blebbistatin) 42 , integrin-mediated adhesion (Cilengitide) 43 , and matrix metalloproteinase 187 
+
+inhibitors (Marimastat) 44 . (Fig 4a) 188 
+
+Although several compounds produced comparable closure kinetics, inspection of tissue 189 
+
+compaction and contractile force trajectories suggested that similar closure outcomes arose from 190 
+
+distinct mechanical remodeling states. To systematically interrogate relationships between 191 
+
+remodeling metrics, we compared closure kinetics, tissue compaction, and contractile force 192 
+
+generation across all screened conditions. Hierarchical clustering of z-scored remodeling 193 
+
+parameters, including relative gap area at T 50, DMSO (gap closure), relative tissue footprint at T 50, 194  
+
+> DMSO
+
+(tissue compaction), and change in contractile force at T 50, DMSO normalized to pre-injury 195 
+
+baseline, revealed distinct phenotypic response classes (Fig. 4b). Correlation analyses across 196 
+
+screened conditions confirmed weak coupling between gap closure, compaction, and contractile 197 
+
+force (maximum Pearson |r| ≤ 0.4) (Fig. 4c, d). Principal component analysis (PCA) further 198 
+
+demonstrated that the variance across these phenotypic responses could not be captured by a 199 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+11 
+
+single dominant axis; the first principal component (PC1) accounted for only 48% of total 200 
+
+variance and the PC2 accounted for 30% of the variance (Fig. 4e). Evaluation of the PCA 201 
+
+loadings revealed that gap closure and contractile force were weakly coupled to one another, 202 
+
+while tissue compaction diverged along a distinct, partially opposed axis. These findings support 203 
+
+the concept that gap closure, tissue compaction, and contractile force represent independent 204 
+
+variables of mechanical tissue remodeling rather than intrinsically coupled outputs of repair. 205 
+
+Together, these analyses indicate that remodeling outcomes cannot be reliably inferred from any 206 
+
+single metric, highlighting the value of simultaneous multiparametric measurement. 207 
+
+3D microtissue closure aligns with clinical observations. 208 
+
+To determine whether the mechanically coupled 3D microenvironment better predicts clinically 209 
+
+observed therapeutic responses than conventional methods, we evaluated a panel of clinically 210 
+
+documented compounds in both our microtissue platform and standard two-dimensional scratch 211 
+
+assays (Fig. 5). The 3D microtissue platform detected inhibitory effects of clinically relevant 212 
+
+compounds, including dasatinib 41 , nintedanib 41 , cisplatin 45 , and semaglutide 46 , all of which failed 213 
+
+to produce measurable responses in the 2D assay (Fig. 5a-c). Both models correctly identified the 214 
+
+pro-reparative activity of PDGF-BB 39 , whereas neither assay detected reported benefits of 215 
+
+Metformin 47,48 .216 
+
+Importantly, the 2D assay did not identify any clinically relevant responses not captured by the 217 
+
+3D platform (Fig. 5c, d). Kendall τ-b and Spearman’s rank correlation analysis quantified 218 
+
+concordance between experimental outcomes and clinical observations (Fig. 5e, Supplementary 219 
+
+Fig 4). Closure responses measured in the 3D microtissue model demonstrated a marginally 220 
+
+statistically significant correlation with clinical findings (Kendall τ-b = 0.72, p=0.045 , Spearman 221 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+12 
+
+correlation of ρ=0.75 , p =0.045), whereas the 2D scratch assay did not reach statistical 222 
+
+significance (Kendall τ-b = 0.52, p=0.25 , Spearman correlation of ρ=0.55 , p =0.25 ). Together, 223 
+
+these results demonstrate that closure dynamics measured in 3D microtissues provide improved 224 
+
+functional alignment with clinically observed remodeling responses compared with conventional 225 
+
+planar assays. 226 
+
+III. DISCUSSION 227 
+
+Tissue repair is coordinated by dynamic interactions between cells, ECM, and mechanical forces, 228 
+
+yet most scalable assays reduce this process to a single endpoint: gap closure. This simplification 229 
+
+obscures how tissues remodel, transmit force, compact matrix, and recover structural continuity. 230 
+
+To address this gap, we developed a 96-well microtissue platform that combines micropillar-231 
+
+based force measurement with tissue-scale imaging to quantify stromal remodeling in a format 232 
+
+that is both mechanically informative and experimentally scalable. By integrating reusable 3D-233 
+
+printed modules, standard phase-contrast microscopy, and an open-source analysis pipeline, the 234 
+
+platform provides access to assessing tissue remodeling processes that are difficult to capture in 235 
+
+conventional 2D assays and impractical to measure at scale in existing 3D systems. 49–51 236 
+
+A key component of this workflow is WoundCompute, an open-source computational framework 237 
+
+for automated analysis of microtissue remodeling across large experimental datasets. Existing 238 
+
+image-analysis tools often require proprietary software, or have limited batch-processing 239 
+
+automation, insufficient documentation, and inaccessible source code, creating barriers to 240 
+
+reproducibility and adoption. 52–60 Moreover, supervised learning approaches introduce an 241 
+
+additional constraint i.e. when manual annotations are treated as ground truth, model accuracy is 242 
+
+inherently bounded by the consistency of human labeling. As shown in Appendix S1, identical 243 
+
+instructions can yield substantial annotator-to-annotator variation, therefore limiting 244 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+13 
+
+reproducibility across researchers and laboratories. 61–63 WoundCompute avoids this dependency 245 
+
+by using deterministic image-analysis routines, enabling reproducible, large-scale quantification 246 
+
+without manual intervention. 247 
+
+248 
+
+Multiparametric phenotyping revealed that closure, compaction, and contractile forces are related 249 
+
+but separable features of tissue repair. Hierarchical clustering of pharmacological perturbations 250 
+
+identified distinct remodeling signatures associated with contractile motor activity, adhesive 251 
+
+coupling, and proteolytic matrix remodeling. Inhibition of the non-muscle myosin II motor with 252 
+
+blebbistatin, which blocks ATPase activity downstream of both the Rho-kinase (ROCK) and 253 
+
+myosin light chain kinase (MLCK) pathways, simultaneously impaired closure, contractile force 254 
+
+generation, and tissue compaction. 64,25,29,42 This phenotype is consistent with disruption of the 255 
+
+common actomyosin machinery that drives both force generation and fibrillar matrix 256 
+
+densification. Dasatinib produced a similar reduction in contractile tissue force, compaction and 257 
+
+closure, but its interpretation is less straightforward. As a broad-spectrum tyrosine kinase 258 
+
+inhibitor targeting Src-family kinases, Abl, PDGFR, 65,66 it also suppresses ECM production, 259 
+
+including collagen synthesis 67 , making it difficult to attribute this phenotype to a single 260 
+
+molecular target. 261 
+
+In contrast, selective ROCK inhibition with Y-27632 impaired closure with reduced tissue 262 
+
+contractile force but increased tissue compaction. This phenotype suggests that relieving global 263 
+
+stress-fiber tension while preserving MLCK-dependent myosin activity allows local collagen 264 
+
+densification and cell packing to continue despite diminished tissue-scale forces. Alternatively, 265 
+
+increased compaction in the presence of impaired closure may reflect altered focal adhesion 266 
+
+turnover and matrix remodeling that are not captured by measurement of contractile force 267 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+14 
+
+alone. 68,69 Integrin inhibition with cilengitide impaired closure with minimal effects on 268 
+
+contractility or compaction, consistent with an adhesion-mediated failure to transmit mechanical 269 
+
+work effectively to the gap interface. 43,70 These results indicate that tissue contractility and 270 
+
+compaction cannot be interpreted as a proxy for closure. Rather, efficient tissue repair depends 271 
+
+on the coordinated regulation of force production, cell-matrix adhesion, and matrix 272 
+
+reorganization, rather than on maximizing any single mechanical output. 273 
+
+This distinction is important for interpreting therapeutic responses. Closure measured in 274 
+
+microtissues showed stronger agreement with reported clinical outcomes than conventional 275 
+
+planar scratch assays, likely because 3D stromal repair depends on cell–matrix coupling, matrix 276 
+
+remodeling, and tissue-scale force redistribution. 71 Planar assays primarily capture cell migration 277 
+
+across rigid substrates and lack the dynamic matrix remodeling and tissue-scale force 278 
+
+transmission that regulate stromal repair in vivo. 71,72 Consequently, pharmacological compounds 279 
+
+that modulate matrix remodeling, or mechanical coupling may show limited to no effect in 2D 280 
+
+systems. 71 The microtissue platform also captures an early phase of gap expansion following 281 
+
+injury. This transient widening likely reflects release of tissue prestress, elastic recoil and 282 
+
+clearance of the damaged matrix after disruption of mechanical continuity across the wound. 27 
+
+283 
+
+Quantifying this phase extends the assay beyond closure-only readouts and increases sensitivity 284 
+
+to both repair-promoting and repair-inhibiting responses. 285 
+
+A major limitation of the current model is its focus on fibroblast-driven stromal remodeling. 286 
+
+Fibroblasts are central regulators of matrix contraction, deposition, and repair mechanics, but in 287 
+
+vivo wound repair also depends on epithelial, immune, endothelial, and perivascular cell 288 
+
+populations that regulate inflammation, angiogenesis and barrier restoration. 73–75 As a result, the 289 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+15 
+
+remodeling signatures identified here should be interpreted as stromal mechanical phenotypes 290 
+
+rather than complete wound-healing programs. Incorporating these additional cell types into the 291 
+
+platform will be necessary to determine how multicellular signaling modifies force generation, 292 
+
+matrix remodeling, and closure dynamics. 293 
+
+The platform is well positioned for future studies that combine genetic perturbation with tunable 294 
+
+matrix composition to systematically define how specific ECM components regulate productive 295 
+
+repair and pathological remodeling. Coupling mechanical phenotyping with molecular profiling 296 
+
+would further enable multi-scale mapping of the regulatory networks governing tissue 297 
+
+remodeling. 76 By separately quantifying tissue closure, matrix compaction, and contractile force 298 
+
+generation, this platform establishes a generalizable experimental framework for phenotyping 299 
+
+functional tissue remodeling processes across diverse biological contexts. 300 
+
+301 
+
+IV. METHODS 302 
+
+Mold Fabrication and Assembly 303 
+
+To achieve both the high-fidelity resolution required for microscale pillar force-sensor 304 
+
+templating and the modularity necessary for scalable handling, we developed a hybrid 305 
+
+fabrication strategy combining two-photon polymerization (2PP) and stereolithography (SLA) 306 
+
+(Supplementary Fig. 1A). We utilized 2PP to fabricate a master mold containing inverse cavities 307 
+
+for a four-pillar array (1 mm x 0.6 mm) situated within a 1.12 × 1.5 mm microwell 308 
+
+(Supplementary Methods). Each pillar features a 150 μm diameter cylindrical base, a 200 μm 309 
+
+diameter spherical cap, and a total height of 450 μm (Fig. 1B). To scale production without 310 
+
+degrading the original master, we established a replica molding pipeline and fabricated a 4x5 311 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+16 
+
+configuration epoxy resin (SmoothCast 322, Smooth-On) replica (Supplementary Methods). 312 
+
+Multiple copies of the master mold were then fabricated in polydimethylsiloxane (PDMS, 1:10 313 
+
+Sylgard 184, Dow) to be used as our working PDMS stamps. To adapt these stamps for high-314 
+
+throughput formats, individual PDMS stamps were secured into custom SLA-printed holders 315 
+
+using a twist-lock cap mechanism. Assembling these discrete units onto SLA-printed racks 316 
+
+yielded an 8×12 mold array with standard 9 mm spacing. This assembly is then coated with 317 
+
+trichloro(1H,1H,2H,2H-perfluorooctyl) silane for further downstream use. 77,78 Because this 318 
+
+architecture is highly modular, individual stamps can be replaced and silanized again without 319 
+
+sacrificing the entire array, enabling the platform to be reused for more than 30 cycles with 320 
+
+minimal maintenance. 321 
+
+Plate fabrication 322 
+
+To mitigate edge effects driven by uneven evaporation, we utilized 96-well plates featuring a 323 
+
+PBS-fillable perimeter moat (Nunc Edge 2.0 96-well plate, Thermo Scientific, Cat No. 324 
+
+267578). 79 Within each well, PDMS devices were fabricated by vacuum-casting PDMS onto the 325 
+
+assembled 8×12 mold array, inserting the molds into the plate, and curing at 60 °C for at least 6 326 
+
+hours. 77,78 Once de-molded, the plate was sonicated with 70% ethanol in each well to clean the 327 
+
+fabricated devices, then air dried and stored for later use. 328 
+
+Surface treatment optimization 329 
+
+To direct microtissue attachment to the pillar caps while preventing spurious cell adhesion and 330 
+
+matrix assembly in the microwells, we systematically evaluated six surface treatment strategies 331 
+
+(Table 1). These strategies explored varying sequential combinations of a polydopamine (PDA) 332 
+
+adhesive layer (1 mg/mL in 1X TBS, pH 8.5), poly(L-lysine)-graft-poly(ethylene glycol) (PLL-333 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+17 
+
+g-PEG) (1 mg/mL in 10 mM HEPES Buffer, pH 7.4), and Pluronic F-127 (in water). The 334 
+
+optimized protocol (Strategy 6) consisting of global PDA coating, localized PLL-g-PEG 335 
+
+passivation below the caps, overnight aqueous incubation at 37 °C to minimize bubble formation 336 
+
+during tissue culture, and a final 2% Pluronic F-127 backfill yielded the most robust tissues and 337 
+
+was employed for all subsequent experiments. Within this protocol, the stable PDA/PLL-g-PEG 338 
+
+coating prevents fouling, while the F-127 backfill covers regions left exposed by the steric 339 
+
+hindrance of large PEG molecules. These functionalized wells were sterilized by a 70% ethanol 340 
+
+rinse followed by 15 minutes of ultraviolet irradiation prior to cell seeding. 341 
+
+SN  Strategy Name  Layer 1  Wash 
+
+(H 2O) 
+
+Layer 2  Wash (H 2O) 
+
+Equilibration  Layer 3  Wash (H 2O) 
+
+1 2% F -127  2% Pluronic F -127, 
+
+50 μL, 10 mins, 25° C 
+
+1X  Sterile water, 37° C, overnight 
+
+2 2% F-127+PDA  2% Pluronic F-127, 
+
+50 μL, 30 mins, 25° C 
+
+1X  1 mg/mL PDA, 50 μL, 30 mins, 25° C 
+
+6X  Sterile water, 37° C, overnight 
+
+3 PDA+2% F-127  1 mg/mL PDA, 50 μL, 30 mins, 25° C 
+
+6X  2% Pluronic F-127, 
+
+50 μL, 30 mins, 25° C 
+
+1X  Sterile water, 37° C, overnight 
+
+4 40% F-127+PDA  40% F-127, 
+
+0.65 μL, 30 mins, 4° C 
+
+No  First incubate plate, 37° C, 10 mins to gel F-127; add 1 mg/mL PDA, 
+
+50 μL, 30 mins, 37° C, layered over F-127 gel 
+
+6X 
+
+(cold) 
+
+Sterile water, 37° C, overnight 
+
+5 PDA+PLL-g-PEG  1 mg/mL PDA, 50 μL, 30 mins, 25° C 
+
+6X  1 mg/mL PLL-g-PEG, 
+
+0.65 μL, 1 hour, 25° C 
+
+3X  Sterile water, 37° C, overnight 
+
+6 PDA+PLL-g-PEG +2% F-127 
+
+1 mg/mL PDA, 50 μL, 30 mins, 25° C 
+
+6X  1 mg/mL PLL-g-PEG, 
+
+0.65 μL, 1 hour, 25° C 
+
+3X  Sterile water, 37° C, overnight 
+
+2% Pluronic F-127, 
+
+50 μL, 10 mins, 25° C
+
+1X 
+
+342 
+
+Cell culture 343 
+
+.CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint 18 
+
+Primary normal human dermal fibroblasts from neonatal foreskin (NHDF-Neo, Lonza) or from 344 
+
+adult skin (NHDF-Ad, Lonza) were expanded in fibroblast growth medium 2 (FGM2, Lonza) at 345 
+
+37° C, 5% CO 2 according to manufacturer instructions. Passages 2-6 were used in our 346 
+
+experiments. 347 
+
+Microtissue formation and tissue repair model 348 
+
+To generate 3D microtissues, cells were suspended in neutralized liquid rat tail type I collagen 349 
+
+(2.2 mg/mL, Corning) and seeded into each device in 0.9 μL volumes. To prevent premature 350 
+
+matrix polymerization during high-throughput array loading, plates were maintained on ice 351 
+
+throughout the seeding process. Seeding densities were titrated between 2,000 and 12,000 cells 352 
+
+per well for optimization and a standard density of 4,000 cells per well was established for all 353 
+
+subsequent experiments. Following loading, devices were inverted and incubated at 25 °C for 15 354 
+
+minutes, followed by 37 °C for 15 minutes to ensure uniform collagen polymerization. Finally, 355 
+
+each well was supplemented with FGM2 containing 50 μg/mL L-ascorbic acid-2-phosphate, and 356 
+
+cells were allowed to drive tissue assembly overnight at 37 °C. 357 
+
+To initiate tissue repair and remodeling, laser ablation was used to incite a full-thickness injury 358 
+
+as previously described 27 . Briefly, a single, precise injury was ablated in the center of each 3D 359 
+
+stromal tissue using a q-switched nanosecond-pulsed Nd:YAG laser (Minilite I, Continuum) 360 
+
+emitting at 1064 nm wavelength with 1 mJ of power. 361 
+
+Time-lapse microscopy 362 
+
+Phase contrast images of microtissues were first captured at 10X before ablation on an automated 363 
+
+Nikon Ti Eclipse microscope fitted with a Lumenera Infinity 8-2M camera and an environmental 364 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+19 
+
+chamber (37 °C, 5% CO 2 ). Microtissues were then ablated as described. Phase contrast, time-365 
+
+lapse images of ablated microtissues were then taken every 30 min for at least 24 hours. 366 
+
+WoundCompute processing, manual processing and measurements 367 
+
+WoundCompute is software designed to quantify wound area, tissue footprint, and pillar 368 
+
+positions automatically at every imaging timepoint; full details of the WoundCompute 369 
+
+segmentation and tracking pipeline are provided in Appendix S1. Briefly, individual micropillars 370 
+
+were segmented from phase contrast images using Otsu thresholding and morphological 371 
+
+operations (i.e., closing, dilation, erosion, and opening), with pillar cross-sections identified via 372 
+
+ellipse fitting and clustering. Pillar positions were tracked across frames using masked template 373 
+
+matching with normalized cross-correlation. Wound and tissue segmentation were performed 374 
+
+through a separate pipeline comprising Gabor filtering, median and Gaussian smoothing, and 375 
+
+Otsu thresholding, where the combined pillar mask defined an admissible region within which 376 
+
+the wound was identified as the largest connected component. The tissue mask was obtained by 377 
+
+inverting the thresholded image and retaining the largest connected component not touching the 378 
+
+image boundary. The pipeline is implemented as a modular, test-driven framework in which each 379 
+
+processing step is independently validated through unit tests. Pillar tracking accuracy was 380 
+
+validated by applying synthetic displacements of known magnitude, and the recovered synthetic 381 
+
+displacements were assessed against the known ground truth. Segmentation was evaluated by 382 
+
+comparing WoundCompute extracted wound and tissue area against manual annotations on a 383 
+
+subset of images, where manual segmentation served as a reference check rather than a ground-384 
+
+truth benchmark. WoundCompute runs on all three major operating systems (Microsoft 385 
+
+Windows, MacOS, and Linux) and is openly available under the MIT License. 386 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+20 
+
+For all manual validation, wound area and tissue footprint were measured every 2 hours in 387 
+
+ImageJ using the polygon selection tool. Pillar coordinates were tracked using the centroid of the 388 
+
+ellipse tool. Details on validation and variability between manual annotators are provided in 389 
+
+Appendix S1 390 
+
+To yield the relative wound area ( RWA ), the wound area was normalized to the initial 391 
+
+measurement recorded at the first timepoint post-injury. The tissue footprint was normalized to 392 
+
+the initial tissue footprint prior to injury to calculate the percent change in relative tissue 393 
+
+footprint ( RTF% ). 394 
+
+The change in average pillar force ( RPF ) was then calculated as previously described. 25,28,29 395 
+
+Briefly, the sum of pillar displacements ( d) at each time point were calculated by tracking the 396 
+
+shift in pillar centroids relative to their pre-injury positions (Appendix S1). We calculated the 397 
+
+change in force using Hooke’s law ( 𝐹𝐹 ≈ 𝑘𝑘 × 𝑑𝑑 ) using an effective spring constant ( k) of 2 398 
+
+μN μm −1 (Supplementary Fig. 6) for a typical Young’s modulus of 1.7 MPa for 1:10 PDMS 399 
+
+cured at 60 °C. 80 400 
+
+High-throughput screen 401 
+
+Microtissues were seeded in multi-well plates and allowed to self-assemble as previously 402 
+
+described. Small molecule targets or vehicle control (0.1% DMSO) were assigned to randomized 403 
+
+wells and added to the culture media immediately prior to injury. A comprehensive list of the 404 
+
+evaluated compounds and their corresponding working concentrations selected to be 5-10X of 405 
+
+the IC 50 is provided in Supplementary Table 1. Following treatment, time-lapse microscopy, 406 
+
+laser ablation, and automated quantification via WoundCompute were executed across all arrays 407 
+
+utilizing the established protocols. 408 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+21 
+
+Scratch Wound Assay 409 
+
+The scratch wound assay was performed as described in 17,81 . Briefly, human dermal fibroblasts 410 
+
+(NHDF-Neo or NHDF-Ad) were seeded in a 96 well plate at a density of 20,000 cells/well in 411 
+
+FGM2 media supplemented with 50 ug/mL L-ascorbic acid-2-phosphate. Cells were grown to 412 
+
+95% confluency at 37°C and 5% CO 2 . A linear scratch was created in each monolayer using an 413 
+
+Agilent BioTek AutoScratch device. Wells were washed twice with PBS to remove dislodged 414 
+
+cells and fresh media containing either vehicle (0.1% DMSO) or one of the small molecules with 415 
+
+reported clinical outcomes: Crenolanib (10 μM), Cisplatin (10 μM), Dasatinib (200 nM), 416 
+
+Lenvatinib (10 μM), Metformin HCl (10 μM), Methotrexate (10 μM), Nintedanib(200 nM), 417 
+
+PDGF-BB (10 ng/mL), Semaglutide (100 nM), Tirzepatide (100 nM). 418 
+
+Images of the wound were captured immediately following injury and every 30 minutes 419 
+
+thereafter for 48 hours using an Agilent BioTek Cytation 10 microscope (10X objective). The 420 
+
+wound area was quantified at each time point using Gen5 Image Prime software (Agilent 421 
+
+BioTek), and wound closure was normalized to the initial wound area. 422 
+
+Statistics 423 
+
+All standard statistical analyses were performed in Python 3 (SciPy and scikit-learn). Prior to 424 
+
+analysis, data distribution normality was assessed using the Shapiro-Wilk test, and variance 425 
+
+equality was confirmed via the F-test (for two groups) or the Brown-Forsythe test (for multiple 426 
+
+groups). Outliers were identified using the Grubbs’ test (α = 0.05) and excluded before normality 427 
+
+was re-evaluated. For comparisons between two independent groups, normally distributed data 428 
+
+were analyzed using an unpaired, two-tailed Student’s t-test (equal variance) or Welch’s t-test 429 
+
+(unequal variance). Non-normally distributed data were evaluated using the Mann-Whitney U430 
+
+test. Statistical significance was defined as P < 0.05. 431 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+22 
+
+432 
+
+For the high-throughput and scratch-wound screens, individual wells were filtered before 433 
+
+analysis using an interquartile-range outlier rule (values below Q1 − 1.5 × IQR or above Q3 + 434 
+
+1.5 × IQR at the baseline timepoint) together with WoundCompute tissue-breakage and manual 435 
+
+quality-control evaluations. 436 
+
+437 
+
+To quantify the effect of each compound in the high-throughput screen, the strictly standardized 438 
+
+mean difference (SSMD) 38,82 of the time to 50% relative wound area ( T 50 ) computed for each cell 439 
+
+type – condition pair against its same-plate DMSO control: 440 
+
+𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶 = 𝜇𝜇 𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶 − 𝜇𝜇 𝐷𝐷𝐷𝐷𝐷𝐷𝐷𝐷 �𝜎𝜎 𝐷𝐷𝐷𝐷𝐷𝐷𝐷𝐷 2 + 𝜎𝜎 𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶 2
+
+441 
+
+𝑤𝑤ℎ𝑒𝑒𝑒𝑒𝑒𝑒 𝜇𝜇 𝑖𝑖𝑖𝑖 𝑡𝑡ℎ𝑒𝑒 𝑚𝑚 𝑒𝑒 𝑚𝑚𝑚𝑚  𝑚𝑚𝑚𝑚𝑑𝑑  𝜎𝜎 2 𝑖𝑖𝑖𝑖 𝑡𝑡ℎ𝑒𝑒 𝑣𝑣 𝑚𝑚𝑒𝑒𝑖𝑖𝑚𝑚𝑚𝑚 𝑣𝑣 𝑒𝑒  𝑜𝑜𝑜𝑜 𝑇𝑇 50 442 
+
+Hits were identified on a dual-flashlight plot 83 , where we plotted the SSMD (y-axis) against the 443 
+
+percentage change in relative wound area evaluated at T 50 of DMSO-treated control tissues ( T 50, 444 
+
+> DMSO
+
+) (x-axis). Compounds with SSMD > ±1 and percentage change in relative wound area > 445 
+
+±50% at T 50, DMSO were classed as moderate to strong hits. Here, a positive SSMD indicates a 446 
+
+longer T50 (delayed wound closure) relative to the same-plate DMSO control, whereas a 447 
+
+negative SSMD indicates accelerated closure. 448 
+
+For comparative profiling across multiple parameters, standard scores (z-scores) for closure, 449 
+
+compaction and contraction were respectively calculated as the change in relative wound area (1-450 
+
+RWA ), the negative percent change in tissue footprint relative to the pre-injury baseline (-RTF% ), 451 
+
+and the change in pillar force relative to pre-injury pillar force ( PF ), all evaluated at T 50, DMSO .452 
+
+Each metric was standardized against the same-plate DMSO control distribution. The z-scores 453 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+23 
+
+for these metrics correspond to the Closure, Compaction, and Contraction axes and were 454 
+
+calculated as: 455 
+
+𝑧𝑧 = 𝑥𝑥 − 𝜇𝜇 𝐷𝐷𝐷𝐷𝐷𝐷𝐷𝐷 𝜎𝜎 𝐷𝐷𝐷𝐷𝐷𝐷𝐷𝐷 
+
+456 
+
+457 
+
+𝑤𝑤ℎ𝑒𝑒𝑒𝑒𝑒𝑒 𝑥𝑥 𝑖𝑖𝑖𝑖 𝑡𝑡ℎ𝑒𝑒 𝑣𝑣 𝑚𝑚 𝑣𝑣𝑣𝑣 𝑒𝑒  𝑜𝑜𝑜𝑜 𝑡𝑡ℎ𝑒𝑒 𝑚𝑚 𝑒𝑒𝑡𝑡𝑒𝑒𝑖𝑖𝑣𝑣  𝑚𝑚 𝑒𝑒 𝑚𝑚 𝑖𝑖𝑣𝑣𝑒𝑒𝑒𝑒𝑑𝑑  𝑜𝑜𝑒𝑒𝑜𝑜𝑚𝑚  𝑚𝑚  𝑤𝑤 𝑒𝑒𝑣𝑣𝑣𝑣 ,458 
+
+𝜇𝜇 𝐷𝐷𝐷𝐷𝐷𝐷𝐷𝐷 𝑖𝑖𝑖𝑖 𝑡𝑡ℎ𝑒𝑒 𝑚𝑚 𝑒𝑒 𝑚𝑚𝑚𝑚  𝑚𝑚𝑚𝑚𝑑𝑑  𝜎𝜎 𝐷𝐷𝐷𝐷𝐷𝐷𝐷𝐷 𝑖𝑖𝑖𝑖 𝑡𝑡ℎ𝑒𝑒  𝑖𝑖𝑡𝑡𝑚𝑚𝑚𝑚𝑑𝑑𝑚𝑚𝑒𝑒𝑑𝑑  𝑑𝑑 𝑒𝑒𝑣𝑣𝑖𝑖𝑚𝑚𝑡𝑡𝑖𝑖𝑜𝑜𝑚𝑚  𝑜𝑜𝑜𝑜 𝑡𝑡ℎ𝑒𝑒  𝑆𝑆𝑆𝑆𝑆𝑆 𝐷𝐷 𝑚𝑚 𝑒𝑒𝑡𝑡𝑒𝑒𝑖𝑖𝑣𝑣 459 
+
+Condition-level z-scores (mean over wells) were clustered hierarchically (Ward's linkage, 460 
+
+Euclidean distance; SciPy 84 ) to generate a phenotypic heatmap. Principal-component analysis 461 
+
+was performed on the condition-level z-score matrix (closure, compaction, contraction) using 462 
+
+scikit-learn (mean-centered and unit-variance scaled). Pearson and Spearman correlations among 463 
+
+the condition-mean z-scores were computed, with off-diagonal cells marked at p < 0.05. 464 
+
+For the by-condition analyses of 3D microtissue closure and scratch wound closure, each well's 465 
+
+relative wound-area trajectory was reduced to the time to 50% closure (T50) and expressed as 466 
+
+ΔT50 relative to the same -plate median DMSO T50; wells that did not reach 50% closure within 467 
+
+the imaging window were assigned that plate's maximum imaging time before normalization. 468 
+
+Finally, to benchmark clinical concordance, outcomes from both published clinical reports and 469 
+
+the in vitro data (based on the measured T 50 ) were discretized into a scoring system: For each 470 
+
+assay, a compound's rating was taken from the cell-type/condition with the strongest effect 471 
+
+(largest |SSMD| of T50): −1 (delayed) or +1 (accelerated) when |SSMD| ≥ 0.7, and 0 (no effect) 472 
+
+otherwise, with the SSMD oriented so that closure faster than the same-plate DMSO control is 473 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+24 
+
+positive (matching the clinical +1 = accelerated convention). (Supplementary Table 3 and 474 
+
+Supplementary Table 4). Agreement between the clinical and assay ratings (n = 10 conditions) 475 
+
+was quantified with Spearman's rank correlation ( ρ) and Kendall's τ-b. The significance of the 476 
+
+Spearman ρ and Kendall τ-b coefficients was assessed with a two-sided permutation test (9999 477 
+
+random permutations of the paired ratings, with a fixed random seed for reproducibility). 478 
+
+Agreement was additionally visualized as 3×3 confusion matrices of each in-vitro assay 479 
+
+(engineered microtissue and 2D scratch-wound) against the clinical calls. 480 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+25 
+
+FIGURES 481 
+
+.CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint 26 
+
+Fig. 1. A high-throughput 3D microtissue platform to assess functional tissue remodeling. 482 
+
+(a) Schematic representation of micropillar device fabrication in a 96-well plate followed by 483 
+
+surface treatment, cell seeding and tissue self-assembly around four PDMS micropillars per well 484 
+
+that report contractile force through their deflection. (b) Small molecule drug screening with 485 
+
+tissue treatment, injury and healing process that are tracked with timelapse, phase-contrast 486 
+
+microscopy. (c) Schematic representation of computational pipeline through WoundCompute 487 
+
+being applied on images collected longitudinally from each well. WoundCompute segments the 488 
+
+wound mask, tissue-footprint mask, and pillar locations, tracks them over time, and post-489 
+
+processes to classify each tissue closure and integrity. Orange outline marks the wound area. 490 
+
+Yellow outline marks the tissue footprint area. Cyan outlines mark the pillar positions. (d) 491 
+
+Schematic representation of high-throughput, parallelized processing workflow with 492 
+
+WoundCompute where images collected from each well across the duration of the experiment 493 
+
+are analyzed. (e) Representative images of an injured microtissue with cells from normal human 494 
+
+dermal fibroblasts from neonatal foreskin tracked and segmented by WoundCompute over time. 495 
+
+(before injury, injury at 0 h, 8 h, 16 h, 24 h) (f) Relative wound area (wound area normalized to 496 
+
+the initial wound area) tracked over 24 hours (N=2, n=87). (g) Percent change in relative tissue 497 
+
+footprint with respect to tissue footprint before injury tracked over 24 hours (N=2, n=86). (h) 498 
+
+Change in average pillar force with respect to pillar force required at steady state before injury 499 
+
+tracked over 24 hours (N=2, n=72). “Before injury” baseline is shaded green. (cyan = pillar 500 
+
+markers, yellow = tissue/wound outline). 501 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+27 
+
+Fig. 2. Parameter optimization for 502 
+
+robust ECM-remodeling assays. (a) 503 
+
+Kaplan-Meier plot representing tissue 504 
+
+survival with varied cell seeding 505 
+
+density (2000 - 12,000 cells/μL). Tissue 506 
+
+survival is defined as the number of 507 
+
+days a tissue remained attached to all 4 508 
+
+pillars. (N=1, n=12). Device surfaces 509 
+
+were treated with 2% F-127. (b) 510 
+
+Kaplan-Meier plot representing tissue 511 
+
+survival with 2% F-127 and PDA+PLL-512 
+
+g-PEG+2%-F127 surface treatments to 513 
+
+alter the cell-adhesive properties of 514 
+
+native PDMS. Tissue survival is 515 
+
+defined as the number of days a tissue 516 
+
+remained attached to all 4 pillars. F-517 
+
+127: Pluronic F-127, PDA: 518 
+
+Polydopamine-HCl, PLL-PEG: poly-l-519 
+
+lysine-g-polyethylene glycol block 520 
+
+copolymer. (N=1, n=12) (c) Heatmap 521 
+
+representing average time for each tissue to reach 50% wound area of the initial wound (T 50 ) in 522 
+
+each well (N=2, n=87). (d) T50 grouped by location (Outer wells: all wells located in Row A, H 523 
+
+and Columns 1, 12; Inner wells: wells 2B to 11G). ns: not significant, unpaired t-test. (N=2, 524 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+28 
+
+n=87) (e) Heatmap representing average tissue footprint in each well at T 50 (N=2, n=86). Tissue 525 
+
+footprint is represented from 0 to 1 mm 2 from white to green (f) Tissue area at T 50 grouped by 526 
+
+location (Outer wells: all wells located in Row A, H and Columns 1, 12; Inner wells: wells 2B to 527 
+
+11G). ns: not significant, unpaired t-test. (N=2, n=86) (g) Heatmap representing average pillar 528 
+
+force generated by a tissue in each well at T 50 (N=2, n=72). (h) Pillar force grouped by location 529 
+
+(Outer wells: all wells located in Row A, H and Columns 1, 12; Inner wells: wells 2B to 11G). 530 
+
+ns: not significant, unpaired t-test, (N=2, n=72). Empty wells are tissues/devices excluded from 531 
+
+the analysis due to failed tissue formation, user imaging error, or 1.5 × IQR outlier. 532 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+29 
+
+533 
+
+.CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint 30 
+
+Fig. 3. Automated extraction of tissue remodeling metrics using WoundCompute. (a) 534 
+
+Schematic representation of the WoundCompute pipeline. Raw images input into the system are 535 
+
+processed in parallel to filter and segment pillars, tissue boundaries, and wound boundaries. The 536 
+
+package outputs the x,y positions of each pillar, wound area and tissue area. The pillar positions 537 
+
+are used to calculate the pillar deflection and thereby calculate the tension in the tissues. (b) 538 
+
+Representative images of a raw image inputs from a single tissue over time and the segmented 539 
+
+output with pillars outlined in cyan, and yellow outline around the wound edge and tissue 540 
+
+footprint. Scale bar: 200 μm. (c) Representative images of WoundCompute and manual 541 
+
+annotators wound segmentation output. (d) Representative images with overlapping manual 542 
+
+annotators wound segmentations. Intersection over union data shows percent pixel by pixel 543 
+
+match between each manual annotator. Scale bar: 200 μm. (e) Absolute wound area (in μm 2 )544 
+
+distribution for WoundCompute and manual annotators. (f) Pairwise correlation matrix of wound 545 
+
+area values from WoundCompute and manual annotators. (g) Bland-Altman plot comparing 546 
+
+wound area measurements between WoundCompute and each manual annotator, with individual 547 
+
+points for each comparison, a linear regression through these points and a dotted line 548 
+
+representing the 95% limits of agreement. 549 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+31 
+
+550 
+
+Fig. 4. Multiparametric phenotyping of tissue remodeling. (a) Dual-flashlight plot with 551 
+
+strictly standardized mean difference (SSMD) of time to 50% wound closure vs percent change 552 
+
+in relative wound area at the time to 50% of the DMSO condition. Circles represent 553 
+
+pharmacological compounds tested on NHDFneo cells and squares represent compounds tested 554 
+
+on NHDFAd cells. Orange circles and blue squares represent hits that are above the designated 555 
+
+thresholds (SSMD ±1 and %RWA ±50%). (b) Hierarchically clustered heatmap of DMSO-556 
+
+referenced z-scores across the three readouts: closure (1-relative wound area at T 50, DMSO ), 557 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+32 
+
+compaction (-% change in tissue footprint) at T 50, DMSO , and the change in pillar force at T 50, DMSO 558 
+
+with respect to pre-injury pillar force. Dendrogram representing the hierarchical clustering using 559 
+
+Euclidean distance (Ward’s method) is displayed. Red/blue = increase/decrease relative to 560 
+
+vehicle (mean z-score at T₅₀ , DMSO. (c) Pearson linear correlation coefficients and 561 
+
+(d) Spearman rank correlation coefficients for the three quantified metrics across all tested 562 
+
+compounds and concentrations (n = 49). (e) PCA biplot of the condition z-score profiles (49 563 
+
+conditions). The direction and magnitude of the orange arrows represent the contribution of each 564 
+
+metric to the dataset's variance orange circles: NHDFneo and blue squares: NHDFAd cells. 565 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+33 
+
+566 
+
+Fig. 5. Benchmarking against planar scratch-wound assay. (a) 2D scratch wound assay with 567 
+
+per-condition change in time-to-50%-closure relative to each plate's median 568 
+
+.CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint 34 
+
+DMSO (T₅₀,condition − T₅₀,DMSO, h) (b) 3D microtissue repair assay with per-condition 569 
+
+change in time-to-50%-closure relative to each plate's median 570 
+
+DMSO (T₅₀,condition − T₅₀,DMSO, h). Data from individual tissues are plotted as blue and 571 
+
+orange dots representing NHDF-Neo and NHDF-Ad cells. (N=3) (c) Qualitative scoring of 572 
+
+wound closure outcomes in clinical data, microtissue assays, and conventional scratch wound 573 
+
+assays. Effects are categorized as delayed (–1), neutral (0), or accelerated (+1) wound closure. 574 
+
+Compound effects matching clinical reports were annotated with a green square and effects 575 
+
+contradicting clinical reports were annotated with red squares. (d) Classification of performance 576 
+
+of the 2D Scratch Wound Assay and 3D Micro-tissue Assay (right) when evaluated against the 577 
+
+ground truth established by clinical reports (n=10) as a confusion matrix. (e) Pairwise Kendall τ-578 
+
+b rank correlation coefficients between the 2D Scratch Wound Assay, 3D Micro-tissue Assay, 579 
+
+and Clinical Reports (Ground Truth) for this set of small molecules (n=10). 580 
+
+581 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+35 
+
+ACKNOWLEDGEMENTS 582 
+
+We would like to thank Dr. Christopher S. Chen for his insightful discussions; Dr. Christos 583 
+
+Michas for insightful discussions, help fabricating prototypes and training; Dr. Megan Griebel 584 
+
+for her insights and training; Soham Kulkarni for his technical assistance ; and Laurie Kelleher 585 
+
+and Amy B Michaels for administrative and technical support. Additionally, we would like to 586 
+
+thank the Biological Design Center and Photonics Center at Boston University for additional 587 
+
+technical support and instrumentation access. 588 
+
+589 
+
+FUNDING STATEMENTS 590 
+
+This work was supported by NSF (CMMI-2311640) and the Hevolution Foundation (HF-GRO-591 
+
+23-1199104-31). M.C.K was supported by NSF CELL-MET ERC (EEC-1647837). 592 
+
+593 
+
+AUTHOR DECLARATIONS 594 
+
+Conflict of Interest 595 
+
+The authors have no conflicts to disclose. 596 
+
+597 
+
+Ethics Approval 598 
+
+Ethics approval is not required. 599 
+
+600 
+
+Author Contributions 601 
+
+ASV, QBN, EL and JE conceived this study. ASV and QBN designed and analyzed the 602 
+
+experiments. ASV, QBN, ED, MÇK, EW, and VS, performed the experiments. ASV, QBN, EL 603 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+36 
+
+and JE wrote this manuscript with feedback from all authors. JE, EL and WW supervised and 604 
+
+funded this study. 605 
+
+DATA AVAILABILITY 606 
+
+The data that support the findings of this study are available on BioImage Archive ( 10.6019/S-607 
+
+BIAD2719 ). 608 
+
+CODE AVAILABILITY 609 
+
+WoundCompute source code is available at  https://github.com/elejeune11/woundcompute , and a 610 
+
+graphical interface for noncomputational users is available at 611 
+
+https://github.com/quan4444/woundcomputeGUI . Further documentation for both is provided in 612 
+
+the respective README files and in Appendix S1 (WoundCompute Software). WoundCompute 613 
+
+is archived on Zenodo ( 10.5281/zenodo.17127155 ). 614 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+37 
+
+REFERENCES 615 
+
+1. Rozario, T. & DeSimone, D. W. The Extracellular Matrix In Development and Morphogenesis: 616 A Dynamic View. Dev Biol 341 , 126–140 (2010). 617 
+
+2. Galardo, F. et al. Extracellular Matrix Origin Directs Morphogenesis and Gene Regulation in 618 Bioengineered Human Skin. Advanced Healthcare Materials n/a , e04765. 619 
+
+3. Tefft, J. B., Chen, C. S. & Eyckmans, J. Reconstituting the dynamics of endothelial cells and 620 fibroblasts in wound closure. APL Bioeng 5, 016102 (2021). 621 
+
+4. Muncie, J. M. & Weaver, V. M. The Physical and Biochemical Properties of the Extracellular 622 Matrix Regulate Cell Fate. Curr Top Dev Biol 130 , 1–37 (2018). 623 
+
+5. Davidson, C. D., Wang, W. Y., Zaimi, I., Jayco, D. K. P. & Baker, B. M. Cell force-mediated 624 matrix reorganization underlies multicellular network assembly. Sci Rep 9, 12 (2019). 625 
+
+6. Das, S. L. et al. Extracellular Matrix Alignment Directs Provisional Matrix Assembly and Three 626 Dimensional Fibrous Tissue Closure. Tissue Eng Part A 27 , 1447–1457 (2021). 627 
+
+7. Mailand, E., Li, B., Eyckmans, J., Bouklas, N. & Sakar, M. S. Surface and Bulk Stresses Drive 628 Morphological Changes in Fibrous Microtissues. Biophysical Journal 117 , 975–986 (2019). 629 
+
+8. Lu, P., Takai, K., Weaver, V. M. & Werb, Z. Extracellular Matrix Degradation and Remodeling 630 in Development and Disease. Cold Spring Harb Perspect Biol 3, a005058 (2011). 631 
+
+9. Discher, D. E., Janmey, P. & Wang, Y.-L. Tissue cells feel and respond to the stiffness of their 632 substrate. Science 310 , 1139–1143 (2005). 633 
+
+10. Engler, A. J., Sen, S., Sweeney, H. L. & Discher, D. E. Matrix elasticity directs stem cell 634 lineage specification. Cell 126 , 677–689 (2006). 635 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+38 
+
+11. Paszek, M. J. et al. Tensional homeostasis and the malignant phenotype. Cancer Cell 8,636 241–254 (2005). 637 
+
+12. Midwood, K. S., Williams, L. V. & Schwarzbauer, J. E. Tissue repair and the dynamics of 638 the extracellular matrix. The International Journal of Biochemistry & Cell Biology 36 , 1031– 639 1037 (2004). 640 
+
+13. Yamada, K. M., Doyle, A. D. & Lu, J. Cell–3D matrix interactions: recent advances and 641 opportunities. Trends in Cell Biology 32 , 883–895 (2022). 642 
+
+14. Holle, A. W. et al. Cell–Extracellular Matrix Mechanobiology: Forceful Tools and 643 Emerging Needs for Basic and Translational Research. Nano Lett. 18 , 1–8 (2018). 644 
+
+15. Eyckmans, J., Boudou, T., Yu, X. & Chen, C. S. A Hitchhiker’s Guide to Mechanobiology. 645 
+
+Developmental Cell 21 , 35–47 (2011). 646 
+
+16. Grubb, M. L. & Caliari, S. R. Fabrication approaches for high-throughput and biomimetic 647 disease modeling. Acta Biomaterialia 132 , 52–82 (2021). 648 
+
+17. Cory, G. Scratch-Wound Assay. in Cell Migration: Developmental Methods and Protocols 649 (eds Wells, C. M. & Parsons, M.) 25–30 (Humana Press, Totowa, NJ, 2011). doi:10.1007/978-650 1-61779-207-6_2. 651 
+
+18. Teo, J. L., Lim, C. T., Yap, A. S. & Saw, T. B. A Biologist’s Guide to Traction Force 652 Microscopy Using Polydimethylsiloxane Substrate for Two-Dimensional Cell Cultures. STAR 653 
+
+Protocols 1, 100098 (2020). 654 
+
+19. Dembo, M. & Wang, Y.-L. Stresses at the Cell-to-Substrate Interface during Locomotion 655 of Fibroblasts. Biophysical Journal 76 , 2307–2316 (1999). 656 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+39 
+
+20. Eyckmans, J. & Chen, C. S. 3D culture models of tissues under tension. Journal of Cell 657 
+
+Science 130 , 63–70 (2017). 658 
+
+21. Xu, W. et al. Application of a partial-thickness human ex vivo skin culture model in 659 cutaneous wound healing study. Laboratory Investigation 92 , 584–599 (2012). 660 
+
+22. Hsiung, N. et al. Organoid-based tissue engineering for advanced tissue repair and 661 reconstruction. Mater Today Bio 33 , 102093 (2025). 662 
+
+23. Daré, R. G., Lopes, L. B., Petri-Fink, A. & Rothen-Rutishauser, B. Advancing preclinical 663 research with reconstructed in vitro skin models mimicking non-healing wounds. 664 
+
+International Journal of Pharmaceutics: X 11 , 100518 (2026). 665 
+
+24. Yao, Y. et al. In vitro modelling of extracellular matrix changes during skin aging: from 666 static 2D to 3D dynamic microphysiological systems. Microsyst Nanoeng 12 , 70 (2026). 667 
+
+25. Sakar, M. S. et al. Cellular forces and matrix assembly coordinate fibrous tissue repair. 668 
+
+Nature Communications 7, 1–8 (2016). 669 
+
+26. Bose, P., Eyckmans, J., Nguyen, T. D., Chen, C. S. & Reich, D. H. Effects of Geometry on 670 the Mechanics and Alignment of Three-Dimensional Engineered Microtissues. ACS Biomater. 671 
+
+Sci. Eng. 5, 3843–3855 (2019). 672 
+
+27. Griebel, M., Vasan, A., Chen, C. & Eyckmans, J. Fibroblast clearance of damaged tissue 673 following laser ablation in engineered microtissues. APL Bioeng. 7, 016112 (2023). 674 
+
+28. Legant, W. R., Chen, C. S. & Vogel, V. Force-induced fibronectin assembly and matrix 675 remodeling in a 3D microtissue model of tissue morphogenesis. Integr Biol (Camb) 4, 1164– 676 1174 (2012). 677 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+40 
+
+29. Legant, W. R. et al. Microfabricated tissue gauges to measure and manipulate forces 678 from 3D microtissues. Proc Natl Acad Sci U S A 106 , 10097–10102 (2009). 679 
+
+30. Bose, P., Huang, C. Y., Eyckmans, J., Chen, C. S. & Reich, D. H. Fabrication and 680 Mechanical Properties Measurements of 3D Microtissues for the Study of Cell–Matrix 681 Interactions. in The Surfaceome: Methods and Protocols (eds Boheler, K. R. & Gundry, R. L.) 682 303–328 (Springer, New York, NY, 2018). doi:10.1007/978-1-4939-7553-2_18. 683 
+
+31. Asmani, M. et al. Fibrotic microtissue array to predict anti-fibrosis drug efficacy. Nat 684 
+
+Commun 9, 2066 (2018). 685 
+
+32. Ivanov, A. S., Pershina, L. V., Nikolaev, K. G. & Skorb, E. V. Recent Progress of Layer-by-686 layer Assembly, Free-Standing Film and Hydrogel Based on Polyelectrolytes. Macromolecular 687 
+
+Bioscience 21 , 2100117 (2021). 688 
+
+33. Lee, H., Dellatore, S. M., Miller, W. M. & Messersmith, P. B. Mussel-inspired surface 689 chemistry for multifunctional coatings. Science 318 , 426–430 (2007). 690 
+
+34. Huang, N.-P. et al. Poly(l-lysine)-g-poly(ethylene glycol) Layers on Metal Oxide Surfaces: 691 Surface-Analytical Characterization and Resistance to Serum and Fibrinogen Adsorption. 692 
+
+Langmuir 17 , 489–498 (2001). 693 
+
+35. Iversen, P. W. et al. HTS Assay Validation. in Assay Guidance Manual (eds Markossian, S. 694 et al.) (Eli Lilly & Company and the National Center for Advancing Translational Sciences, 695 Bethesda (MD), 2004). 696 
+
+36. Powell, D. J., Hertzberg, R. P. & Macarrόn, R. Design and Implementation of High -697 Throughput Screening Assays. in High Throughput Screening: Methods and Protocols (ed. 698 Janzen, W. P.) 1–32 (Springer, New York, NY, 2016). doi:10.1007/978-1-4939-3673-1_1. 699 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+41 
+
+37. Bland, J. M. & Altman, D. G. Statistical methods for assessing agreement between two 700 methods of clinical measurement. Lancet 1, 307–310 (1986). 701 
+
+38. Zhang, X. D. Integrating AUROC and SSMD for quality control in high-throughput 702 screening assays. SLAS Discov 36 , 100269 (2025). 703 
+
+39. Nagai, M. K. & Embil, J. M. Becaplermin: recombinant platelet derived growth factor, a 704 new treatment for healing diabetic foot ulcers. Expert Opin Biol Ther 2, 211–218 (2002). 705 
+
+40. Blume, P., Bowlby, M., Schmidt, B. M. & Donegan, R. Safety and efficacy of Becaplermin 706 gel in the treatment of diabetic foot ulcers. CWCMR 1, 11–14 (2014). 707 
+
+41. Nahm, W. J. & Falanga, V. The Adverse Impact of Tyrosine Kinase Inhibitors on Wound 708 Healing and Repair. Int Wound J 22 , e70513 (2025). 709 
+
+42. Liu, Z., Ho, C.-H. & Grinnell, F. The different roles of myosin IIA and myosin IIB in 710 contraction of 3D collagen matrices by human fibroblasts. Experimental Cell Research 326 ,711 295–306 (2014). 712 
+
+43. Schwartz, M. A. Integrins and Extracellular Matrix in Mechanotransduction. Cold Spring 713 
+
+Harb Perspect Biol 2, a005066 (2010). 714 
+
+44. Parks, W. C. Matrix metalloproteinases in repair. Wound Repair and Regeneration 7,715 423–432 (1999). 716 
+
+45. Fung, C. et al. Toxicities Associated with Cisplatin-Based Chemotherapy and 717 Radiotherapy in Long-Term Testicular Cancer Survivors. Adv Urol 2018 , 8671832 (2018). 718 
+
+46. Lewis, J. E. et al. Semaglutide and Postoperative Outcomes in Nondiabetic Patients 719 Following Body Contouring Surgery. Aesthet Surg J 45 , 381–386 (2025). 720 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+42 
+
+47. Maghsoodloo, D. et al. Topical metformin in wound healing: a comprehensive 721 systematic review of therapeutic outcomes. Arch Dermatol Res 317 , 760 (2025). 722 
+
+48. Tawfeek, H. M., Abou-Taleb, D. A. E., Badary, D. M., Ibrahim, M. & Abdellatif, A. A. H. 723 Pharmaceutical, clinical, and immunohistochemical studies of metformin hydrochloride 724 topical hydrogel for wound healing application. Arch Dermatol Res 312 , 113–121 (2020). 725 
+
+49. Bhatia, S. N. & Ingber, D. E. Microfluidic organs-on-chips. Nat Biotechnol 32 , 760–772 726 (2014). 727 
+
+50. Alver, C. G., Drabbe, E., Ishahak, M. & Agarwal, A. Roadblocks confronting widespread 728 dissemination and deployment of Organs on Chips. Nat Commun 15 , 5118 (2024). 729 
+
+51. Probst, C., Schneider, S. & Loskill, P. High-throughput organ-on-a-chip systems: Current 730 status and remaining challenges. Current Opinion in Biomedical Engineering 6, 33–41 (2018). 731 
+
+52. Rajabian, N. et al. Bioengineered Skeletal Muscle as a Model of Muscle Aging and 732 Regeneration. Tissue Eng Part A 27 , 74–86 (2021). 733 
+
+53. Zhao, Y. et al. Geometrically controlled cardiac microtissues promote vascularization 734 and reduce inflammation in vitro and in vivo . Cell Biomaterials 1, 100075 (2025). 735 
+
+54. Afshar, M. E. et al. A 96-well culture platform enables longitudinal analyses of 736 engineered human skeletal muscle microtissue strength. Sci Rep 10 , 6918 (2020). 737 
+
+55. Rivera-Arbeláez, J. M. et al. Contractility analysis of human engineered 3D heart tissues 738 by an automatic tracking technique using a standalone application. PLOS ONE 17 , e0266834 739 (2022). 740 
+
+56. Cappello, G. et al. Osmotic pressure induces unexpected relaxation of contractile 3D 741 microtissue. Eur. Phys. J. E 48 , 34 (2025). 742 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+43 
+
+57. Mousavi, A. et al. Heart-On-a-Chip with Integrated Ultrasoft Mechanosensors for 743 Continuous Measurement of Cell- and Tissue-Scale Contractile Stresses. Small 22 , e04493 744 (2026). 745 
+
+58. Oyunbaatar, N.-E., Shanmugasundaram, A. & Lee, D.-W. Contractile behaviors of cardiac 746 muscle cells on mushroom-shaped micropillar arrays. Colloids and Surfaces B: Biointerfaces 747 
+
+174 , 103–109 (2019). 748 
+
+59. DeFoe, A. et al. Digital light processing of hydrogel molds to guide cell mechanosensing 749 and the fabrication of meniscal tissue constructs. APL Bioeng. 9, 046111 (2025). 750 
+
+60. Zhou, D. W. et al. Force-FAK signaling coupling at individual focal adhesions coordinates 751 mechanosensing and microtissue repair. Nat Commun 12 , 2359 (2021). 752 
+
+61. Morsink, M. A. J. et al. A patient-specific engineered tissue model of BAG3-mediated 753 cardiomyopathy. J Tissue Eng 16 , 20417314251371296 (2025). 754 
+
+62. Kim, Y. et al. BeatProfiler: Multimodal In Vitro Analysis of Cardiac Function Enables 755 Machine Learning Classification of Diseases and Drugs. IEEE Open Journal of Engineering in 756 
+
+Medicine and Biology 5, 238–249 (2024). 757 
+
+63. Li, H. et al. Machine learning-assisted high-content imaging analysis of 3D MCF7 758 microtissues for estrogenic effect prediction. Sci Rep 14 , 2999 (2024). 759 
+
+64. Vicente-Manzanares, M., Ma, X., Adelstein, R. S. & Horwitz, A. R. Non-muscle myosin II 760 takes centre stage in cell adhesion and migration. Nat Rev Mol Cell Biol 10 , 778–790 (2009). 761 
+
+65. Lombardo, L. J. et al. Discovery of N-(2-Chloro-6-methyl- phenyl)-2-(6-(4-(2-762 hydroxyethyl)- piperazin-1-yl)-2-methylpyrimidin-4- ylamino)thiazole-5-carboxamide (BMS-763 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+44 
+
+354825), a Dual Src/Abl Kinase Inhibitor with Potent Antitumor Activity in Preclinical Assays. 764 
+
+J. Med. Chem. 47 , 6658–6661 (2004). 765 
+
+66. Haubeiss, S. et al. Dasatinib reverses Cancer-associated Fibroblasts (CAFs) from primary 766 Lung Carcinomas to a Phenotype comparable to that of normal Fibroblasts. Mol Cancer 9,767 168 (2010). 768 
+
+67. Akhmetshina, A. et al. Dual inhibition of c-abl and PDGF receptor signaling by dasatinib 769 and nilotinib for the treatment of dermal fibrosis. The FASEB Journal 22 , 2214–2222 (2008). 770 
+
+68. Totsukawa, G. et al. Distinct roles of MLCK and ROCK in the regulation of membrane 771 protrusions and focal adhesion dynamics during cell migration of fibroblasts. J Cell Biol 164 ,772 427–439 (2004). 773 
+
+69. Kassianidou, E., Hughes, J. H. & Kumar, S. Activation of ROCK and MLCK tunes regional 774 stress fiber formation and mechanics via preferential myosin light chain phosphorylation. 775 
+
+Mol Biol Cell 28 , 3832–3843 (2017). 776 
+
+70. Kenny, F. N. & Connelly, J. T. Integrin-mediated adhesion and mechano-sensing in 777 cutaneous wound healing. Cell Tissue Res 360 , 571–582 (2015). 778 
+
+71. Saraswathibhatla, A., Indana, D. & Chaudhuri, O. Cell–extracellular matrix 779 mechanotransduction in 3D. Nat Rev Mol Cell Biol 24 , 495–516 (2023). 780 
+
+72. Masson -Meyers, D. S. et al. Experimental models and methods for cutaneous wound 781 healing assessment. Int J Exp Pathol 101 , 21–37 (2020). 782 
+
+73. Gurtner, G. C., Werner, S., Barrandon, Y. & Longaker, M. T. Wound repair and 783 regeneration. Nature 2008 453:7193 453 , 314–321 (2008). 784 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+45 
+
+74. Salminen, A., Kaarniranta, K. & Kauppinen, A. Tissue fibroblasts are versatile immune 785 regulators: An evaluation of their impact on the aging process. Ageing Research Reviews 97 ,786 102296 (2024). 787 
+
+75. Brazil, J. C., Quiros, M., Nusrat, A. & Parkos, C. A. Innate immune cell–epithelial crosstalk 788 during wound repair. J Clin Invest 129 , 2983–2993. 789 
+
+76. Humphrey, J. D., Dufresne, E. R. & Schwartz, M. A. Mechanotransduction and 790 extracellular matrix homeostasis. Nat Rev Mol Cell Biol 15 , 802–812 (2014). 791 
+
+77. Chan, H. N. et al. Direct, one-step molding of 3D-printed structures for convenient 792 fabrication of truly 3D PDMS microfluidic chips. Microfluid Nanofluid 19 , 9–18 (2015). 793 
+
+78. Venzac, B. et al. PDMS Curing Inhibition on 3D-Printed Molds: Why? Also, How to Avoid 794 It? Anal Chem 93 , 7180–7187 (2021). 795 
+
+79. Mansoury, M., Hamed, M., Karmustaji, R., Al Hannan, F. & Safrany, S. T. The edge effect: 796 A global problem. The trouble with culturing cells in 96-well plates. Biochemistry and 797 
+
+Biophysics Reports 26 , 100987 (2021). 798 
+
+80. Johnston, I. D., McCluskey, D. K., Tan, C. K. L. & Tracey, M. C. Mechanical 799 characterization of bulk Sylgard 184 for microfluidics and microengineering. J. Micromech. 800 
+
+Microeng. 24 , 035017 (2014). 801 
+
+81. Liang, C.-C., Park, A. Y. & Guan, J.-L. In vitro scratch assay: a convenient and inexpensive 802 method for analysis of cell migration in vitro. Nat Protoc 2, 329–333 (2007). 803 
+
+82. Zhang, X. D. Illustration of SSMD, z score, SSMD*, z* score, and t statistic for hit 804 selection in RNAi high-throughput screens. J Biomol Screen 16 , 775–785 (2011). 805 
+
+> .CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint
+
+46 
+
+83. Zhang, X. D. Assessing the Size of Gene or RNAi Effects in Multifactor High-Throughput 806 Experiments. Pharmacogenomics 11 , 199–213 (2010). 807 
+
+84. Virtanen, P. et al. SciPy 1.0: fundamental algorithms for scientific computing in Python. 808 
+
+Nat Methods 17 , 261–272 (2020). 809 
+
+810 
+
+.CC-BY-NC-ND 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.15.738540 doi: bioRxiv preprint

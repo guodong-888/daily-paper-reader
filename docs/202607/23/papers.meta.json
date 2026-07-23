@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-23",
+  "date": "2026-07-23",
+  "generated_at": "2026-07-23T20:15:05",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/23/biorxiv-10-64898-2026-07-15-738540-v2-a-high-throughput-3d-microtissue-platform-for-multiparametric-analysis-of-tissue-remodeling",
+      "section": "quick",
+      "title_en": "A high-throughput, 3D microtissue platform for multiparametric analysis of tissue remodeling.",
+      "authors": "Vasan, A., Nguyen, Q., Davis, E., Karakan, M. C., Westphal, E., Shah, V., Wong, W., Lejeune, E., Eyckmans, J.",
+      "date": "2026-07-21",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.07.15.738540v2.full.pdf",
+      "score": "6.0",
+      "evidence": "高通量组织重塑平台可应用于皮瓣愈合",
+      "tldr": "细胞外基质重塑和力生成是组织形态发生和修复的核心，但缺乏高通量定量方法。本文开发了96孔板格式的3D微组织平台，采用模铸和层层表面修饰确保长期稳定，通过相位对比成像同时量化组织闭合、收缩力和压实。计算工具加速数据提取80倍，药物实验表明闭合、收缩和压实是独立变量，挑战传统实验假设。与临床数据对比，3D平台相关性优于2D划痕实验，为组织重塑的功能筛选提供可规模化工具。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Extracellular matrix (ECM) remodeling and force generation are fundamental drivers of tissue morphogenesis and repair, yet scalable methods to quantitatively interrogate these dynamic mechanical processes remain limited. Here, we present a high-throughput screening platform that integrates engineered three-dimensional (3D) microtissues within a standardized 96-well format. We introduce a robust mold-casting fabrication process and a layer-by-layer surface modification strategy, that ensures long-term tissue stability and prevents detachment (95% tissue formation success; stable in culture for more than 10 days). This system enables simultaneous, longitudinal quantification of tissue closure, tissue contractility, and tissue compaction from a phase-contrast imaging modality. The computational data analysis tools that accompany this framework ensure reproducibility through deterministic computation and accelerate data extraction 80-fold relative to manual annotation. Using pharmacological compounds, we show that tissue closure dynamics, force generation, and compaction represent independent variables of ECM-driven tissue remodeling, challenging assumptions embedded in commonly used contraction-based assays. Furthermore, benchmarking against reported clinical drug responses demonstrates that the 3D platform better aligns with clinical outcomes (Kendall{tau} -b = 0.72, p=0.045, n =8/10) than a conventional two-dimensional scratch wound assay (Kendall{tau} -b = 0.52, p=0.25, n =4/10). Together, this work establishes a scalable assay for functional screening and quantitative assessment of tissue remodeling dynamics in three-dimensional systems.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/23/biorxiv-10-64898-2026-07-21-739741-v1-tunable-laminar-perfusion-coordinates-endothelial-and-perivascular-remodeling-in-angiogenic-vasculature-on-chip",
+      "section": "quick",
+      "title_en": "Tunable Laminar Perfusion Coordinates Endothelial and Perivascular Remodeling in Angiogenic Vasculature-on-Chip",
+      "authors": "Nawara, T. J., Meier, K., Kuom, J., Hollfinger, I., Kraxner, J., Koch, K. S., Hastermann, M., Jablonicka, L., Vinet Barancourt, L., Schwarzkopf, J. B., Gerhardt, H.",
+      "date": "2026-07-22",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.07.21.739741v1.full.pdf",
+      "score": "6.0",
+      "evidence": "血管灌注平台可应用于皮瓣存活研究",
+      "tldr": "现有血管芯片灌注多为振荡或不连续，难以研究持续血流驱动的血管重塑。本研究建立可调单向层流灌注系统，用于长期培养含内皮芽和壁细胞的血管芯片。持续层流诱导内皮细胞逆流极化、壁细胞募集增加和内皮增殖减少，免疫细胞在炎症激活下粘附增强。该平台为研究血管力学生物学、成熟及动态细胞互作提供了可行模型。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Perfusable vascular microphysiological systems are increasingly used to model angiogenesis, tissue crosstalk, and disease. However, many platforms still rely on oscillatory, discontinuous, or poorly controlled perfusion regimes, limiting the study of sustained flow-dependent vascular remodeling. Here, we establish a tunable, unidirectional laminar flow workflow for long-term perfusion of angiogenic vasculature-on-chip cultures and use it to investigate endothelial, perivascular, and immune cell responses to sustained flow. Using an AIM Biotech microfluidic platform containing 14-day-old human umbilical vein endothelial cell-derived angiogenic sprouts and pericytes, continuous perfusion enabled intraluminal transport of 1 m tracer beads through vessels, demonstrating stable flow across the vascular bed. Sustained laminar flow induced endothelial remodeling at both the mother vessel and sprout levels, with cellular alignment evident in both compartments. Quantitative analysis of the mother vessel further revealed Golgi polarization against the direction of flow. Sustained perfusion also increased pericyte recruitment to angiogenic sprouts and reduced endothelial proliferation within the mother vessel, consistent with flow-driven vascular maturation and quiescence. Live-cell imaging further captured directional endothelial migration against the flow, lumen remodeling, and dynamic pericyte behavior under continuous perfusion. In immune-cell assays performed under continuous-flow conditions, interactions with untreated endothelium were limited, whereas inflammatory activation increased immune-cell adhesion and crawling. These observations suggest that sustained flow supports a quiescent endothelial phenotype and demonstrate the suitability of the platform for studying inflammatory activation and immune-vascular communication under controlled hemodynamic conditions. Beyond its biological relevance, the workflow provides practical advantages for live-cell imaging, low medium consumption, and downstream perturbation studies. Moreover, the modular design of the platform makes it well suited for vascular-organ crosstalk applications. Collectively, these results establish laminar flow angiogenic vasculature-on-chip as an experimentally tractable model for studying vascular mechanobiology, vascular maturation, and dynamic cell interactions under defined hemodynamic conditions.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

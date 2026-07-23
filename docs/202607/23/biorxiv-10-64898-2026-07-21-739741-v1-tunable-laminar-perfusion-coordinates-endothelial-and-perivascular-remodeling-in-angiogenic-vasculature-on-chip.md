@@ -1,0 +1,25 @@
+---
+title: Tunable Laminar Perfusion Coordinates Endothelial and Perivascular Remodeling in Angiogenic Vasculature-on-Chip
+title_zh: 可调层流灌注协调血管生成芯片中内皮和血管周围重塑
+authors: "Nawara, T. J., Meier, K., Kuom, J., Hollfinger, I., Kraxner, J., Koch, K. S., Hastermann, M., Jablonicka, L., Vinet Barancourt, L., Schwarzkopf, J. B., Gerhardt, H."
+date: 2026-07-22
+pdf: "https://www.biorxiv.org/content/10.64898/2026.07.21.739741v1.full.pdf"
+tags: ["query:flap-ex-met"]
+score: 6.0
+evidence: 血管灌注平台可应用于皮瓣存活研究
+tldr: 现有血管芯片灌注多为振荡或不连续，难以研究持续血流驱动的血管重塑。本研究建立可调单向层流灌注系统，用于长期培养含内皮芽和壁细胞的血管芯片。持续层流诱导内皮细胞逆流极化、壁细胞募集增加和内皮增殖减少，免疫细胞在炎症激活下粘附增强。该平台为研究血管力学生物学、成熟及动态细胞互作提供了可行模型。
+source: biorxiv
+selection_source: fresh_fetch
+figures_json: "[{\"url\": \"assets/figures/biorxiv/biorxiv-10-64898-2026-07-21-739741-v1/fig-001.webp\", \"caption\": \"\", \"page\": 0, \"index\": 1, \"width\": 1591, \"height\": 2442, \"label\": \"Figure\"}, {\"url\": \"assets/figures/biorxiv/biorxiv-10-64898-2026-07-21-739741-v1/fig-002.webp\", \"caption\": \"\", \"page\": 0, \"index\": 2, \"width\": 1637, \"height\": 2467, \"label\": \"Figure\"}, {\"url\": \"assets/figures/biorxiv/biorxiv-10-64898-2026-07-21-739741-v1/fig-003.webp\", \"caption\": \"\", \"page\": 0, \"index\": 3, \"width\": 1648, \"height\": 1906, \"label\": \"Figure\"}, {\"url\": \"assets/figures/biorxiv/biorxiv-10-64898-2026-07-21-739741-v1/fig-004.webp\", \"caption\": \"\", \"page\": 0, \"index\": 4, \"width\": 1616, \"height\": 2427, \"label\": \"Figure\"}, {\"url\": \"assets/figures/biorxiv/biorxiv-10-64898-2026-07-21-739741-v1/fig-005.webp\", \"caption\": \"\", \"page\": 0, \"index\": 5, \"width\": 1557, \"height\": 2402, \"label\": \"Figure\"}]"
+tables_json: "[{\"url\": \"assets/tables/biorxiv/biorxiv-10-64898-2026-07-21-739741-v1/table-001.webp\", \"caption\": \"\", \"page\": 0, \"index\": 1, \"width\": 1654, \"height\": 826, \"label\": \"Table\"}]"
+motivation: 现有血管芯片缺乏可控持续灌注，限制了对血流驱动血管重塑的研究。
+method: 建立可调单向层流灌注系统，长期培养含内皮芽和壁细胞的血管芯片。
+result: 持续层流诱导内皮逆流极化、壁细胞募集增加和内皮增殖减少，免疫细胞在炎症激活下粘附增强。
+conclusion: 该平台支持静息内皮表型，适用于研究炎症和免疫-血管通讯。
+---
+
+## 摘要
+可灌注的血管微生理系统越来越多地用于模拟血管生成、组织串扰和疾病。然而，许多平台仍依赖振荡、不连续或控制不佳的灌注方式，限制了对持续血流依赖性血管重塑的研究。在此，我们建立了一种可调的、单向层流工作流程，用于血管生成芯片培养物的长期灌注，并用于研究内皮细胞、血管周围细胞和免疫细胞对持续血流的反应。使用包含14天龄人脐静脉内皮细胞衍生的血管生成芽和周细胞的AIM Biotech微流控平台，连续灌注使1微米示踪珠通过血管内腔运输，显示出稳定的血流穿过血管床。持续层流诱导母血管和芽水平的内皮重塑，两个腔室中均可见细胞排列。母血管的定量分析进一步揭示了高尔基体逆血流方向极化。持续灌注还增加了周细胞向血管生成芽的募集，减少了母血管内的内皮增殖，这与血流驱动的血管成熟和静止一致。活细胞成像进一步捕捉到持续灌注下内皮细胞逆流定向迁移、管腔重塑和动态周细胞行为。在连续流动条件下进行的免疫细胞实验中，与未处理内皮的相互作用有限，而炎症激活增加了免疫细胞的粘附和爬行。这些观察表明，持续血流支持静止的内皮表型，并证明了该平台在受控血流动力学条件下研究炎症激活和免疫-血管通讯的适用性。除了生物学意义外，该工作流程在活细胞成像、低培养基消耗和下游扰动研究方面提供了实际优势。此外，平台的模块化设计使其非常适合血管-器官串扰应用。总体而言，这些结果确立了层流血管生成芯片作为在明确血流动力学条件下研究血管力生物学、血管成熟和动态细胞相互作用的实验易处理模型。
+
+## Abstract
+Perfusable vascular microphysiological systems are increasingly used to model angiogenesis, tissue crosstalk, and disease. However, many platforms still rely on oscillatory, discontinuous, or poorly controlled perfusion regimes, limiting the study of sustained flow-dependent vascular remodeling. Here, we establish a tunable, unidirectional laminar flow workflow for long-term perfusion of angiogenic vasculature-on-chip cultures and use it to investigate endothelial, perivascular, and immune cell responses to sustained flow. Using an AIM Biotech microfluidic platform containing 14-day-old human umbilical vein endothelial cell-derived angiogenic sprouts and pericytes, continuous perfusion enabled intraluminal transport of 1 m tracer beads through vessels, demonstrating stable flow across the vascular bed. Sustained laminar flow induced endothelial remodeling at both the mother vessel and sprout levels, with cellular alignment evident in both compartments. Quantitative analysis of the mother vessel further revealed Golgi polarization against the direction of flow. Sustained perfusion also increased pericyte recruitment to angiogenic sprouts and reduced endothelial proliferation within the mother vessel, consistent with flow-driven vascular maturation and quiescence. Live-cell imaging further captured directional endothelial migration against the flow, lumen remodeling, and dynamic pericyte behavior under continuous perfusion. In immune-cell assays performed under continuous-flow conditions, interactions with untreated endothelium were limited, whereas inflammatory activation increased immune-cell adhesion and crawling. These observations suggest that sustained flow supports a quiescent endothelial phenotype and demonstrate the suitability of the platform for studying inflammatory activation and immune-vascular communication under controlled hemodynamic conditions. Beyond its biological relevance, the workflow provides practical advantages for live-cell imaging, low medium consumption, and downstream perturbation studies. Moreover, the modular design of the platform makes it well suited for vascular-organ crosstalk applications. Collectively, these results establish laminar flow angiogenic vasculature-on-chip as an experimentally tractable model for studying vascular mechanobiology, vascular maturation, and dynamic cell interactions under defined hemodynamic conditions.
