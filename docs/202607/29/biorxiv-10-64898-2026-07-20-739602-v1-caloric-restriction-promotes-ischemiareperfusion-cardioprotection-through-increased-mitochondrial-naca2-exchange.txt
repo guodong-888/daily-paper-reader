@@ -1,0 +1,1634 @@
+Title: Caloric Restriction Promotes Ischemia/Reperfusion Cardioprotection Through Increased Mitochondrial Na+/Ca2+ Exchange
+
+URL Source: https://www.biorxiv.org/content/10.64898/2026.07.20.739602v1.full.pdf
+
+Number of Pages: 31
+
+Markdown Content:
+Caloric Restriction Promotes Ischemi a/Reperfusion 
+
+# Cardioprotection Through Increased Mitochondrial 
+
+# Na +/Ca 2+ Exchange 
+
+Maiara I.C. Queiroz 1, Camille C. Caldeira da Silva 1, Éverton Vogt 1, Marcos A.E. 
+
+Cruz 1, Julian D.C. Serna 1, Luiz R.G. Bechara 2, Julio C.B. Ferreira 2, Heberty T. 
+
+Facundo 3, Alicia J. Kowaltowski 1*
+
+> 1
+
+Departamento de Bioquímica, Instituto de Química, and Centro de 
+
+Metabolismo (CoMeta), Hospital Universitário, Universidade de São Paulo,  São 
+
+Paulo,  Brazil 
+
+> 2
+
+Instituto de Ciências Biomédicas, Universidade de São Paulo,  São Paulo, 
+
+Brazil 
+
+> 3
+
+Faculdade de Medicina, Universidade Federal do Cariri, Ceará, Brazil 
+
+*Correspondence: Alicia J. Kowaltowski (alicia@iq.usp.br)  - Av. Prof. Lineu 
+
+Prestes, 748, Cidade Universitária, 05508 -000, São Paulo, SP, Brazil, +55 11 
+
+30912922 
+
+ABSTRACT 
+
+Caloric restriction (CR) protects against cardiac ischemia/reperfusion (I/R) 
+
+injury, but the underlying mechanisms remain incompletely understood. Since 
+
+mitochondrial Ca 2+ overload is a major driver of cardiac damage during 
+
+reperfusion, we investigated if enhanced mitochondrial Ca 2+ efflux contributes 
+
+toward CR -induced cardioprotection. Rats were subjected to 16 weeks of ad 
+
+libitum (AL) feeding or 40% caloric restriction. CR significantly increased 
+
+mitochondrial Ca 2+ retention capacity when Na + ions were present , reduced H2O2
+
+production, and increased the expression of mitochondrial Ca 2+ extrusion 
+
+proteins NCLX and TMEM65. In cardiomyocytes exposed to serum from CR rats, 
+
+Ca 2+ retention capacity also increased markedly , as well and Ca 2+ efflux. 
+
+Following I/R, CR hearts exhibited improved functional recovery, accompanied 
+
+by enhanced retention and increase d mitochondrial Ca 2+ efflux activity, as well 
+
+as reduc ed H2O2 production compared to AL controls. Importantly, inhibition of 
+
+mitochondrial Na +/Ca 2+ exchange abolished the mitochondrial adaptation effects 
+
+of CR, eliminating its protection against damage in cardiomyocytes and perfused 
+
+hearts . These findings demonstrate that CR protects the heart from I/R injury by 
+
+enhancing Na +-dependent mitochondrial Ca2+ efflux, thereby preserving 
+
+mitochondrial function, limiting oxidative stress, and improving post -ischemic 
+
+cardiac recovery. 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+GRAPHICAL ABSTRACT 
+
+.CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint 1.  INTRODUCTION 
+
+Ischemic heart disease is a pathological condition characterized by the interruption 
+
+of blood flow to the heart , and remains one of the leading causes of mortality and 
+
+morbidity worldwide ( Lu et al., 2015; Virani et al., 2020; GBD, 2025 ; GDB, 2026 ). The 
+
+lack of blood supply results in a n imbalance between metabolic demand s and oxygen 
+
+delivery, causing tissue hypoxia. Restoration of blood flow, although essential for tissue 
+
+salvage, paradoxically initiates a series of deleterious events collectively known as 
+
+ischemia/reperfusion (I/R) injury (Jennings & Reimer, 1981 ; Del Re et al., 2019 ; Heusch, 
+
+2020 ). Reperfusion di srupts ion homeostasis, causing cytosolic Ca 2+ overload, 
+
+hypercontracture, and mitochondrial Ca 2+ accumulation (Duchen et al., 1993; Bompotis 
+
+et al., 2016) . These events, together with excessive reactive oxygen species (ROS) 
+
+generation (Cadenas, 2018) , promote opening of the mitochondrial permeability 
+
+transition pore (mPTP) and non -selective inner membrane permeabilization, leading to 
+
+dissipation of the inner membrane potential and loss of oxidative phosphorylation , as 
+
+well as the release of apoptogenic factors (Hurst et al., 2017; Vercesi et al., 2018; 
+
+Garbincius and Elrod, 2022) . Reoxygenation also promotes redox modifications in 
+
+proteins, lipids, and DNA, inducing ferroptotic and necrotic cell death (Cao et al., 2006; 
+
+Eltzschig and Eckle , 2011 ; Heusch, 2020 ). 
+
+The importance of mitochondrial Ca 2+ management in cardiac injury is well 
+
+established, as modulation of mitochondrial calcium transport profoundly affects cardiac 
+
+outcomes (Garbincius and Elrod, 2022) . Mitochondrial Ca 2+ uptake is mediated by the 
+
+mitochondrial calcium uniporter MCU (Baughman et al., 2011 ; De Stefani et al., 2011 ;
+
+Feno, et al., 2021 ), while Ca 2+ efflux in heart occurs predominantly through the 
+
+mitochondrial Na ⁺/Ca 2+ exchanger (mNCX) , whose molecular identity has recently 
+
+become the focus of debate . Although the NCLX protein is widely considered the main 
+
+mediator of mitochondrial Ca 2+ extrusion, new data suggest TMEM65 may contribute to 
+
+this process and could represent an essential component of the exchanger machinery 
+
+(Palty et al., 2010; Palty et al., 2012; Luongo et al., 2017; Garbincius et al., 2022; Vetralla 
+
+et al., 2025; Zhang et al., 2025; see a pondered discussion by Garbincius and Elrod, 
+
+2025 ). 
+
+Genetic studies emphasize the importance of mitochondrial Ca 2+ transport in 
+
+myocard ia l infarction , demonstrating that MCU deletion can attenuate I/R injury (Pan et 
+
+al., 2013) . Conversely, loss of NCLX causes rapid cardiac dysfunction and death, while 
+
+enhanced mitochondrial Ca 2+ extrusion protects against ischemic injury (Luongo et al., 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+2017; Garbincius et al., 2022) , indicating that limiting mitochondrial Ca 2+ over load 
+
+protects the ischemic heart .
+
+Caloric restriction (CR) is also known to protect against cardiac injury induced by I/R ,
+
+and previous studies indicate it acts by modulating mitochondrial function, improving 
+
+redox balance, and limiting the production of oxidants (Lanza et al., 2012; David et al., 
+
+2018; Guo et al., 2023). During CR, antioxidant defense systems are activated, 
+
+decreasing intracellular oxidant levels across multiple tissues ( Cerqueira et al., 2011; 
+
+Lanza et al., 2012). In addition, we found that CR protects against Ca 2+ -induced mPTP 
+
+opening in brain and liver (Amigo et al., 2017; Menezes -Filho et al., 2017) , although this 
+
+effect was not initially observed in the heart (Serna et al., 2020). This apparent tissue -
+
+specific discrepancy may reflect differen ces in experimental conditions, as mPTP 
+
+induction was only verified using mitochondria isolated under control conditions, and 
+
+changes could become evident specifically under pathological states such as I/R .
+
+Alternatively, protection against Ca 2+ overload in heart may depend less on mitochondrial 
+
+Ca 2+ uptake and more on efflux mechanisms , which are inactive in the sodium -free media 
+
+commonly used in studies with isolated mitochondria. 
+
+Based on these observations, we hypothesized that CR may confer protection 
+
+against cardiac I/R injury by enhancing mitochondrial Ca 2+ extrusion, thereby limiting 
+
+mitochondrial Ca 2+ overload and preventing mPTP opening , possibly by enhancing 
+
+mNCX activity. To test this hypothesis, we quantitatively examined the effects of CR on 
+
+mitochondrial Ca 2+ transport activity and I/R injury using complementary animal and cell 
+
+models of CR. 
+
+2.  MATERIALS AND METHODS 
+
+2.1.  Rat Caloric Restriction and Preparation of Ser a
+
+Eight -week -old male Sprague -Dawley rats were divided into two groups: ad 
+
+libitum -fed (AL) rats receiving the AIN -93G diet and caloric restriction (CR) rats receiving 
+
+40% less AIN -93G diet supplemented with micronutrients to maintain equivalent vitamin 
+
+and mineral intake (Cerqueira and Kowaltowski, 2010) , resulting in lower weight gain 
+
+(Figure S1 ). Dietary intake in AL animals was quantified weekly, and CR amounts 
+
+adjusted accordingly . Male rats only were used in keeping with local animal ethics 
+
+guidelines (CEUA IQ USP approval protocol # 309 ) with the aim to reduce total numbers 
+
+of anim als used, in the absence of evidence of specific sex -related effects. Animals had 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+free access to water throughout the study. For serum preparation, rats were euthanized 
+
+after 16 weeks of dietary intervention. Blood and hearts were collected, and serum was 
+
+obtained by centrifugation at 300 x g for 20 min and stored at -80°C. Immediately before 
+
+use, serum aliquots were thawed and heat -inactivated at 56°C for 30 min. 
+
+2.2.  Cardiac Ischemia/Reperfusion and Functional Assessment 
+
+After 16 weeks of the dietary intervention, a nimals were anesthetized with 
+
+ketamine (100 mg/kg) , xylazine (10 mg/kg) , and acepromazin e (6 mg/kg ) plus sodium 
+
+heparin (1000 units/kg) before euthanasia, and the aorta was rapidly cannulated for 
+
+perfusion using a Langendorff heart perfusion system. Hearts were perfused for 20 min 
+
+before undergoing 40 min of global ischemia. The perfusion solution consisted of Krebs 
+
+buffer containing (in mM): 118 NaCl, 25 NaHCO 3, 1.2 KH ₂PO ₄, 4.7 KCl, 1.2 MgSO ₄, 1.25 
+
+CaCl ₂, 10 glucose, and 10 HEPES, pH 7.4, at 37°C, supplemented with either or CGP -
+
+37157 (CGP) to inhibit mNCX or an equal volume of the dilutant DMSO (control) . A water -
+
+filled balloon connected to a pressure transducer was inserted into the left ventricle 
+
+through the left atrium to monitor cardiac hemodynamic function using the PowerLab 
+
+system (AD Instruments). Reperfusion was performed for 30 min. At the end of the 
+
+protocol, hearts were collected for further analyses such as mitochondrial isolation . The 
+
+followi ng hemodynamic parameters were evaluated: left ventricular systolic pressure 
+
+(LVSP), left ventricular end -diastolic pressure (LVEDP), left ventricular developed 
+
+pressure (LVDP = LVSP − LVEDP), maximal rate of pressure development (dP/dtmax), 
+
+maximal rate o f pressure decline (dP/dtmin), and rate -pressure product (RPP = LVDP × 
+
+heart rate). 
+
+2.3.  Mitochondrial Isolation and Sample Preparation 
+
+Cardiac tissue was minced into small pieces, washed twice with ice -cold PBS, 
+
+and homogenized using a pre -chilled glass Potter homogenizer (20 strokes) in isolation 
+
+buffer containing 300 mM sucrose, 10 mM K ⁺-HEPES (pH 7.2), 1 mM K ⁺-EGTA, and 1 
+
+mg/mL BSA. Nuclei and cell debris were removed by centrifugation at 800 x g for 3 min. 
+
+The supernatant was then centrifuged at 9,300 x g for 10 min to pellet mitochondria. The 
+
+mitochondrial pellet was resuspended in isolation buffer and used immediately (David et 
+
+al., 2018). 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+2.4.  HL -1 Cardiomyocyte Cell Culture s
+
+HL -1 cardiomyocytes were maintained in T -75 flasks at 37°C in a humidified 
+
+atmosphere containing 5% CO ₂. Cells were cultured in Claycomb medium (JRH 
+
+Biosciences) supplemented with 0.1 mM norepinephrine (Sigma -Aldrich), 100 U/mL 
+
+penicillin, 100 μg/mL streptomycin, 2 mM glutamine, and 10% fetal bovine serum. 
+
+Experiments were initiated when cells reached 100% confluence. Intact cell experiments 
+
+were performed in standard buffer (pH 7.4) containing (in mmol/L): 137 NaCl, 5 HEPES, 
+
+22 glucose, 20 taurine, 5 creat ine, 5.4 KCl, 1 MgCl ₂, 5 pyruvate, and 1 CaCl ₂.
+
+2.5.  Caloric Restriction versus Ad Libitum Model in Cardiac Cells 
+
+After establishment of cell cultures, Claycomb medium supplemented with fetal 
+
+bovine serum was replaced with medium containing 10% heat -inactivated rat serum 
+
+obtained from AL or CR animals, prepared as described above (Cerqueira et al., 2012; 
+
+Cerqueira et al., 2016; de Cabo et al., 2003). Cells were incubated for 24 h before 
+
+experiments were performed. 
+
+2.6.  Simulated Ischemia/Reperfusion in Cardiomyocytes 
+
+Simulated ischemia/reperfusion was induced in cardiac HL -1 cells (~1.5 × 10⁵ 
+
+cells/mL) by metabolic inhibition using 500 μM KCN and 2 mM 2 -deoxyglucose in 
+
+glucose - and pyruvate -free standard buffer for 50 min , followed by removal of KCN and 
+
+re -introduction of substrates, as previously described (Facundo et al., 2006; Facundo et 
+
+al., 2007). Cells were pretreated with experimental drugs for 24 h before simulated 
+
+ischemia. Simulated reperfusion was induced by replacing the ischemic medium with 
+
+control buffer c ontaining glucose and pyruvate for 90 min , imitating many of the 
+
+mitochondrial effects of I/R seen in heart (Facundo et al., 2006; Facundo et al., 2007) .
+
+Cell death was measured using 7.5 μM propidium iodide staining .
+
+2.7.  Mitochondrial H 2O2 Detection 
+
+H2O2 release from isolated mitochondria was measured using the Amplex Red 
+
+assay. Amplex Red (1 μM ; Molecular Probes), in the presence of horseradish peroxidase 
+
+(HRP, 1 U/mL), is converted into the fluorescent product resorufin in a 1:1 stoichiometric 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+reaction with H2O2. Fluorescence was monitored using an Hitachi F4500 
+
+spectrofluorometer at 37°C with continuous stirring (Ex = 563 nm, Em = 587 nm). 
+
+2.8.  Mitochondrial Ca 2+ Uptake Measurement s
+
+Mitochondrial Ca 2+ uptake was assessed in digitonin -permeabilized cells or 
+
+isolated cardiac mitochondria using 0.1 μM Calcium Green -5N (Molecular Probes). 
+
+Fluorescence was monitored in a Hitachi F4500 spectrofluorometer (Ex = 506 nm, Em = 
+
+531 nm, slit width = 5 nm) at 37°C. Since Calcium Green -5N binds extramitochondrial 
+
+Ca 2+ reversibly, mitochondrial calcium uptake results in decreased fluorescence intensity 
+
+(Amigo et al., 2017; Serna et al., 2022 a). Sequential Ca 2+ pulses were added until 
+
+mitochondria no longer exhibited evidence of calcium uptake. Total calcium retention 
+
+capac ity was calculated as the sum of all calcium additions. 
+
+2.9.  Mitochondrial Ca 2+ Extrusion Activity 
+
+Na +-dependent and -independent mitochondrial Ca 2+ release activity was 
+
+evaluated in digitonin -permeabilized cells and isolated cardiac mitochondria using 
+
+Calcium Green -5N fluorescence, following protocols previously established by our group 
+
+(Serna et al., 2022 b). 
+
+2.10.  Western Blots 
+
+Cells or isolated mitochondria were lysed over ice in the presence of RIPA buffer 
+
+containing protease and phosphatase inhibitor cocktails, and total protein levels were 
+
+quantified using the Pierce BCA Protein Assay kit. Lysates were prepared in sample 
+
+buffer (2% SDS, 10% glycerol, 0.06 2 M Tris pH 6.8, 0.002% bromophenol blue, 5% 2 -
+
+mercaptoethanol), 40 μg of total protein was loaded onto 10% SDS/PAGE, and electro -
+
+transferred to PVDF membranes with 0.2 μm. Membranes were blocked with 5% BSA in 
+
+TTBS (20 m M Tris pH 7.5, 150 m M NaCl, and 0.1% Tween 20) for 1 h at room 
+
+temperature before incubation with Total OXPHOS Human WB Antibody Cocktail 
+
+(Abcam, Cambridge, UK:110411, 1:1000), MCU ( Cell Signaling : 14997 , 1:1000), MUCB 
+
+(Sigma : HPA048776 , 1:500), MICU1 ( Sigma: HPA037480 , 1:1000), MICU2 ( Sigma :
+
+HPA045511 , 1: 500 ), MICU3 (Sigma: HPA024771 , 1: 250 ), EMRE /SMDT1 (Sigma: 
+
+HPA060340 , 1: 500 ), NCLX /SLC24A6 (Proteintech: 21430 -1AP , 1: 10 00), or TMEM65 
+
+(Abcam: Ab236861 , 1:1000) antibodies ; primary antibodies were incubated at 4°C 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+overnight. Fluorescent secondary anti -mouse or anti -rabbit antibodies (1:10 000) were 
+
+incubated for 1 h at room temperature prior to 660 nm fluorescence detection using 
+
+Odyssay ® CLx (Li -Cor) . Quantification of band densitometry was performed using the 
+
+ImageLab software. Since no single protein is a reliable housekeeping control in 
+
+metabolic contexts , protein expression values obtained were normalized per pixel of total 
+
+protein in each well, as evidenced by Ponceau S dye (Sigma , See Supplementary 
+
+material f or full images ). 
+
+2.11. Data Analysis 
+
+Results are presented as mean s ± SD. Statistical analyses were performed using 
+
+GraphPad Prism ® 8 t test and one -way ANOVA multiple comparations , while 
+
+representative graphs were generated using Origin 2025. Langendorff analysis was 
+
+conducted using LabChart Reader software. Calcium efflux analyses were performed 
+
+using the Mitochondrial Calcium Efflux Calculator software generated inhouse for this 
+
+purpose (https://github.com/hebertyfacundo/NCLXapp ) and Microsoft Excel. Outliers 
+
+were identified using Grubbs' test (α = 0.05). Statistical significance was considered at p 
+
+≤ 0.05. 
+
+3.  RESULTS 
+
+3.1.  Caloric Restriction Prevents Cardiac Dysfunction Following 
+
+Ischemia/Reperfusion 
+
+To determine whether weight gain limitation promoted by caloric restriction (CR ,
+
+Figure S1 ) protects against ischemia/reperfusion (I/R) -induced cardiac injury, hearts 
+
+from ad libitum -fed (AL , in red ) and CR ( in blue ) animals were Langendorff -perfused and 
+
+subjected to ex vivo global I/R (Figure 1A ). Reperfusion markedly increased left 
+
+ventricular end -diastolic pressure (LVEDP) in AL hearts, whereas CR hearts maintained 
+
+LVEDP values close to baseline, indicating substantial preservation of diastolic function 
+
+(Figure 1B ), and thus marked cardioprotection . Left ventricular systolic pressure (LVSP) 
+
+did not differ significantly between groups (Figure 1C ). Left ventricular developed 
+
+pressure (LVDP) was preserved in CR hearts after I/R, but largely decreased in AL 
+
+hearts after reperfusion (Figure 1D ). Similarly, the rate -pressure product (RPP), an 
+
+indicator of cardiac mechanical performance , remained near baseline in CR hearts , but 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+declined significantly in AL hearts (Figure 1 E). Together, these findings demonstrate that 
+
+CR markedly preserves cardiac function following I/R. 
+
+3.2.  CR Increases Mitochondria l Ca 2+ Retention Capacity and Decreases H2O2
+
+Mitochondrial permeability transition pore (mPTP) opening , limiting mitochondrial 
+
+Ca 2+ retention capacity, is a major contributor to cardiac injury during I/R ( Duche n et al., 
+
+1993; Griffiths and Halestrap, 1995 ; Di Lisa et al., 2003; Patel et al., 2024 ). To investigate 
+
+mitochondrial mechanisms underlying CR -induced cardioprotection, cardiac 
+
+mitochondria were isolated from AL and CR animals after 16 weeks of dietary 
+
+intervention, and their ability to accumulate and retain Ca 2+ was assessed by monitoring 
+
+extramitochondrial Ca 2+ with the membrane -impermeable fluorescent probe Calcium 
+
+Green (Figure 2A ). During the assay, isolated mitochondria were challenged with 
+
+sequential pulses of 50 μM Ca 2+ every 200 seconds. Each Ca 2+ addition produced a 
+
+transient increase in fluorescence, reflecting elevated extramitochondrial Ca 2+ , followed 
+
+by a progressive decline as mitochondria accumulated the ion. This process continued 
+
+until the mitochondrial calcium retention capacity (CRC) was exceeded, triggering mPTP 
+
+opening and the abrupt release of accumulated Ca 2+ back into the medium, detected as 
+
+an increase in Calcium Green fluorescence at the end of the time scan (Chinopoulos et 
+
+al., 2003; Serna et al., 2020 ). 
+
+Interestingly, CR and AL mitochondria displayed similar Ca 2+ uptake profiles 
+
+when measurements were performed in the absence of Na ⁺ (Figure 2A , quantified in 
+
+Figure 2 D), in keeping with prior data (Serna et al., 202 0). In contrast, in the presence 
+
+of Na ⁺, which stimulates mitochondrial Na ⁺/Ca 2+ exchange (mNCX), CRC was lower in 
+
+AL than in CR mitochondria ( Figure 2B,D ). Importantly, inhibition of mNCX with CGP -
+
+37157 (CGP; Figure 2C,D ) abolished this difference, restoring CRC in CR mitochondria 
+
+to levels comparable to those of AL mitochondria. These findings suggest that the 
+
+enhanced CRC and prevention of mPTP observed in CR mitochondria results from 
+
+increased Na ⁺/Ca 2+ exchange (mNCX) activity. 
+
+In order to directly measure mNCX activity, a Ca 2+ extrusion protocol was 
+
+designed ( Figure 2E ; Serna et al., 2022 b). Mitochondria were first loaded with a single 
+
+Ca 2+ pulse and allowed to complete Ca 2+ uptake. Efflux was then initiated by adding the 
+
+MCU inhibitor ruthenium red (R uR) to prevent further Ca 2+ uptake, in the presence or 
+
+absence of Na ⁺ ions or the mNCX inhibitor CGP. Ca 2+ efflux rates were determined from 
+
+the increase in extramitochondrial fluorescence ( Figure 2E , inset) and quantified in 
+
+Figure 2F . Ca 2+ extrusion by cardiac mitochondria was largely Na ⁺-dependent , as 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+expected (Luongo et al., 2017 ), and showed a trend toward higher efflux rates in CR 
+
+mitochondria compared with AL. Changes in mitochondrial Ca² ⁺ transport observed 
+
+between AL and CR animals were not attributable to differences in oxidative 
+
+phosphorylation, as basal oxygen consumption (Figure 2G ) and other respiratory 
+
+parameters (Figure S 2) were indistinguishable between groups . In contrast, steady -
+
+st ate H 2O2 produ ction, a key promoter of protein thiol oxidation and mPTP opening 
+
+(Vercesi et al., 2018), was significantly lower in CR mitochondria compared to AL (Figure 
+
+2H ), in keeping with prior studies (Colom et al., 2007) . Together, these findings i ndicate 
+
+that , without altering respiratory function , CR selectively remodels rat heart mitochondrial 
+
+Ca 2+ handling and redox status, creating resilience to ward mPTP opening .
+
+3.3.  Serum From CR Animals Increases Ca 2+ Retention and Efflux in 
+
+Cardiomyocytes 
+
+In prior studies ( Cerqueira et al., 2016; Munhoz et al., 2023 ), we found that m any 
+
+of the metabolic adaptations observed in tissues from CR animals were reproduced in 
+
+cultured cells exposed to serum collected from these animals, indicating that circulating 
+
+factors induced by CR are sufficient to acutely confer much of the phenotype. This 
+
+experimental approach reduces animal use and also minimizes the biological variability 
+
+inherent to individual animals , while allowing mechanistic studies under controlled 
+
+conditions. To determine whether enhanced mitochondrial Ca 2+ transport is similarly 
+
+transferable, HL -1 cardiomyocytes were incubated for 24 h with serum from either AL or 
+
+CR mice prior to assessment of mitochondrial Ca 2+ handling in digitonin -permeabilized 
+
+cells (see Methods; Serna et al., 2022 b; Figure 3 A). 
+
+Consistent with results obtained in heart s, mitochondria from cardiomyocytes in 
+
+CR serum displayed a greater CRC than those exposed to AL serum under basal 
+
+conditions ( Figure 3B -E). This difference was most pronounced in the presence of 
+
+added Na ⁺ (although it should be noted that traces of contaminating sodium may be 
+
+present in permeabilized cell preparations) . I nhibition of mNCX with CGP abolished the 
+
+increase in CRC induced by CR serum ( Figure 3D,E ), indicating that enhanced Na ⁺-
+
+dependent Ca 2+ extrusion underlies improved CRC and mPTP prevention in CR sera -
+
+incubated cells .
+
+To directly assess mNCX activity, mitochondrial Ca 2+ efflux was measured as 
+
+described for figure 2 . Cells treated with CR serum exhibited faster Ca 2+ extrusion than 
+
+AL -treated cells ( Figure 3F,G ) only in the presence of added Na +. CGP eliminated this 
+
+difference, confirming that CR serum enhances mNCX -mediated Ca 2+ efflux in 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+cardiomyocyte mitochondria . No differences were observed in oxygen consumption 
+
+rates measured under different conditions using extracellular flux analysis, with or 
+
+without pharmacological modulation of MCU or mNCX (Figure S 3). Together, these 
+
+findings demonstrate that circulating factors induced by CR are sufficient to recapitulate 
+
+enhanced mitochondrial Ca 2+ extrusion and retention observed in vivo , supporting a 
+
+central role for mNCX activation in CR -induced cardioprotective mitochondrial 
+
+remodeling. 
+
+3.4.  CR Increases NCLX and TMEM65 Protein Expression 
+
+To investigate whether alterations in the amounts of mitochondrial calcium 
+
+transport proteins could explain the functional changes observed, proteins involved in 
+
+oxidative phosphorylation, mitochondrial calcium uptake and extrusion were quantified 
+
+in cells and heart mitochondria . No significant differences were detected in electron 
+
+transport chain proteins in either model (Figure S 4), consistent with the absence of 
+
+changes in mitochondrial bioenergetics. Likewise, no differences were observed in the 
+
+express ion of MCU complex components (MCU, MICU1, MICU2, MICU3, MCUB, and 
+
+EMRE) in either isolated mitochondria (Figure 4A -J) or cardiomyocytes (Figure 4 K-R;
+
+EMRE was undetectable in the cardiomyocytes ). Conversely , in isolated cardiac 
+
+mitochondria, TMEM65 expression was significantly increased, while NCLX (both the 64 
+
+KDa and 50 KDa bands ) showed a strong trend toward increased expression (p = 0.05; 
+
+Figure s 4H,I ). In cardiomyocytes, both NCLX dimer and TMEM65 protein expression 
+
+was markedly increased (Figure 4 Q,R ). This demonstrates that CR and CR serum 
+
+treatment specifically enhance protein quantities of mNCX components. 
+
+3.5.  Inhibition of mNCX Abolishes the Protective Effects of CR in 
+
+Cardiomyocytes 
+
+Given the marked increase in mNCX activity and the expression of its associated 
+
+proteins (NCLX and TMEM65 ) in cardiomyocytes exposed to CR serum, together with 
+
+the established role of mNCX in determining susceptibility to I/R injury (Luongo et al., 
+
+2017; Garbincius et al., 2022 ), we investigated if enhanced mitochondrial Ca 2+ extrusion 
+
+underlies CR -mediated cardioprotection . To do so, simulated I/R (see Methods) was 
+
+induced in cardiomyocytes pretreated with serum from AL or CR animals (Figure 5 ).
+
+Cells exposed to CR serum exhibited a strong reduction in cell death compared with AL 
+
+serum -treated controls ( Figure 5A,B ), confirming that circulating factors induced by CR 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+are sufficient to confer protection. Importantly, pharmacological inhibition of Ca 2+ 
+
+extrusion with CGP completely abolished this protective effect, increasing cell death to 
+
+levels comparable to those observed in AL -treated cells. These findings demonstrate 
+
+that enhanced mitochondrial Ca 2+ extrusion through the NCLX/TMEM65 pathway is 
+
+required for the cardioprotective effect conferred by CR serum, identifying increased 
+
+mNCX activity as a key mechanistic mediator of CR -induced resistance to simulated I/R 
+
+injury in these cells. 
+
+3.6.  CR Primes Mitochondrial Na +/Ca 2+ Exchange Activity After 
+
+Ischemia/Reperfusion in Hearts 
+
+The results presented thus far demonstrate that CR serum enhances detected 
+
+mNCX activity in cardiomyocytes, accompanied by increased expression of both NCLX 
+
+and TMEM65. Importantly, pharmacological inhibition of mNCX abolished the 
+
+cardioprotective effects conferred by CR serum in cardiomyocytes , indicating that 
+
+enhanced mitochondrial Ca 2+ extrusion is required. Consistent with these findings, 
+
+cardiac mitochondria isolated from CR animals exhibited greater Na ⁺-dependent calcium 
+
+retention capacity, increased TMEM65 expression, and a trend toward higher NCLX 
+
+expression and mNCX activity. Together, these observations, combined with the 
+
+established cardioprotective role of mNCX (Luongo et al., 2017; Garbincius et al., 2022 ),
+
+led us to hypothesize that CR primes cardiac mitochondria in vivo to extrude matrix Ca 2+ 
+
+more effici ently during I/R , ther eby limiting mitochondrial calcium overload and reducing 
+
+injury. 
+
+To test this, mitochondria were isolated from AL and CR hearts following I/R in a 
+
+Langendorff perfusion system (Figure 6 ). Under these conditions, CR mitochondria 
+
+exhibited significantly greater CRC than AL mitochondria, particularly in the presence of 
+
+Na ⁺ (Figure 6A -D). Additionally , mitochondrial Ca 2+ efflux rates were almost tripled in 
+
+the CR group compared to AL controls ( Figure 6E,F ). These differences were not 
+
+attributable to altered respiratory capacity, as basal oxygen consumption was 
+
+unchanged between groups ( Figure 6G ). However, respiratory control ratios (RCR , the 
+
+ratio of oxygen consumption rates in the presence of oxidative phosphorylation to its 
+
+absence ) were higher in CR mitochondria following extramitochondrial Ca 2+ chelation 
+
+with EGTA or stimulation of mNCX activity by Na +, whereas pharmacological inhibition 
+
+of NCLX with CGP markedly impaired oxidative phosphorylation efficiency , equalizing 
+
+CR and AL samples (Figure S 5). This result is consistent with enhanced mNCX activity 
+
+in the CR group , protecting against loss of RCR s. Finally, H2O2 release was significantly 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+lower in CR mitochondria compared to AL after I/R (Figure 6H ). T his redox advantage 
+
+was lost when mitochondrial Ca 2+ transport was experimentally manipulated by inhibiting 
+
+the MCU with RuR or mNCX with CPG, indicating the protective redox effect of CR was 
+
+Ca 2+ -dependent . Together, these findings indicate that CR preserves mitochondrial 
+
+calcium homeostasis after I/R through enhanced mNCX -dependent Ca 2+ extrusion, 
+
+thereby limiting redox imbalance and maintaining mitochondrial function. 
+
+3.7.  Inhibition of mNCX During I/R Reverses Preservation of Mitochondrial Ca 2+ 
+
+Homeostasis by CR 
+
+If the preservation of mitochondrial calcium retention capacity and redox balance 
+
+following I/R in CR hearts depends on enhanced mitochondrial Na ⁺/Ca 2+ exchange, then 
+
+inhibition of this pathway during heart perfusion should abolish the protective effects of 
+
+the diet. To test this, AL and CR hearts were subjected to I/R in the presence of CGP in 
+
+the heart perfusion buffer . Mitochondria isolated from inhibitor -treated CR hearts lost 
+
+their enhanced CRC , including under Na ⁺-stimulated conditions (Figure 7A -D). 
+
+Likewise, mitochondrial Ca 2+ efflux was reduced to levels comparable to those observed 
+
+in AL hearts ( Figure 7E,F ), although Na +-induced enhanced extrusion was present, 
+
+indicating CPG added during the perfusion was effectively washed out . Basal respiration 
+
+remained unchanged ( Figure 7G ), and the improvement in oxidative phosphorylation 
+
+efficiency (respiratory control ratios) previously observed in CR mitochondria was 
+
+abolished by CGP treatment during perfusion (Figure S 6E). Furthermore, inhibition of 
+
+mNCX during perfusion increased H2O2 release from in CR mitochondria to levels equal 
+
+to those of AL controls (Figure 7H ). These findin gs demonstrate that enhanced 
+
+mitochondrial Na ⁺/Ca 2+ exchange during I/R is required to preserve mitochondrial 
+
+calcium homeostasis, oxidative phosphorylation, and redox balance in hearts from CR 
+
+animals. 
+
+3.8.  Inhibition of mNCX Abolishes the Cardioprotective Effects of C R
+
+Results so far suggest that CR primes heart mitochondria for enhanced Na +-
+
+dependent Ca 2+ efflux during I/R, preventing mPTP. We ne xt sought to verify if these 
+
+mitochondrial alterations were the cause for functional cardioprotection promoted by CR 
+
+during I/R in hearts . We found that h earts from CR animals perfused with CGP exhibited 
+
+a marked increase in LVEDP during reperfusion ( Figure 8A,B ), reaching results similar 
+
+to those seen in AL hearts, and indicating impaired diastolic relaxation and loss of the 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+protection observed in untreated CR hearts. Consistent with this finding, while LVSP 
+
+remained similar among all groups ( Figure 8C ), both LVDP ( Figure 8D ) and RPP 
+
+(Figure 8E ) were significantly reduced by CGP in CR hearts , demonstrating impaired 
+
+recovery of cardiac contractile performance. Together, these findings demonstrate that 
+
+inhibition of the mNCX pathway abolishes both mitochondrial and functional benefits of 
+
+CR , establishing enhanced mitochondrial Ca 2+ extrusion as a key mediator of CR -
+
+induced cardio protection against I/R injury. 
+
+4.  DI SCUSSION 
+
+Ischemic heart disease remains one of the leading causes of cardiovascular 
+
+morbidity and mortality worldwide (GDB, 2025; Virani et al., 2020 ). Cardiac injury can be 
+
+markedly attenuated by dietary restriction interventions in rodent models , including 
+
+intermittent fasting and caloric restriction (Ahmet et al., 2005; Shinmura et al., 2011 ). 
+
+Notably, the protective effects of CR extend beyond reducing the incidence of coronary 
+
+disease risk , as it also increases myocardial resistance to experimental global 
+
+ischemia/reperfusion injury (Shinmura et al., 2011 ). Indeed, we find that hearts from rats 
+
+subjected to three months of CR are strongly protected against global ischemia ( Figure 
+
+1), exhibiting post -ischemic functional recovery that was nearly indistinguishable from 
+
+that of non -ischemic hearts. In contrast, hearts from ad libitum -fed animals developed 
+
+marked contractile dysfunction following the same insult. Th is suggest s that CR induces 
+
+cellular adaptations within the myocardium itself, potentially by increasing mitochondrial 
+
+resistance to permeability transition pore (mPTP) opening, a Ca 2+ - and redox -sensitive 
+
+event that is a cen tral determinant of I/R -induced cardiac injury ( Guo et al., 2023; 
+
+Halestrap et al., 2004; Bernardi and Di Lisa, 2015 ). 
+
+Consistent with this hypothesis, CR has been extensively shown to improve 
+
+mitochondrial redox homeostasis and reduce oxidative stress across multiple tissues 
+
+(Sohal and Weindruch, 1996; López -Lluch et al., 2006; Madeo et al., 2014 ). Moreover, 
+
+our group previously demonstrated that CR modulates mitochondrial Ca 2+ transport and 
+
+resistance to mPTP opening in the brain , liver , and kidney (Amigo et al., 2017; Menezes -
+
+Filho et al., 2017 ; Serna et al., 2022 ). Based on these findings, we hypothesized that CR 
+
+could protect the heart by modulating mitochondrial Ca 2+ handling, increasing the 
+
+threshold for mPTP opening during I/R .
+
+Interestingly, we found that CR markedly increased Ca 2+ uptake capacity in 
+
+cardiac mitochondria before mPTP induction, an effect abolished by the mNCX inhibitor 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+CGP ( Figure 2 ). Although basal mNCX activity was not significantly altered between 
+
+groups, mitochondria from CR hearts exhibited increased expression of the mNCX 
+
+regulatory component TMEM65 ( Figure 4 ), suggesting that CR primes the exchanger 
+
+for enhanced activity under conditions of Ca 2+ overload. Indeed, mitochondrial Ca² ⁺
+
+retention capacity was identical in CR and AL mitochondria in the absence of Na ⁺ or in 
+
+the presence of CGP ( Figure 2 ), demonstrating that the enhanced Ca 2+ retention 
+
+induced by CR is dependent on mNCX activity. Additionally, mNCX activity following I/R 
+
+was markedly higher in CR mitochondria than in AL controls ( Figure 6), further 
+
+demonstrating that CR primes the exchanger for enhanced activity under conditions of 
+
+stress. Also c onsistent with this finding, the elevated H 2O2 release observed in AL 
+
+mitochondria after I/R was completely abolished by pharmacological modulation of 
+
+mitochondrial Ca 2+ transport (Figure 6 ), indicating that differences in redox state were 
+
+directly driven by altered mitochondrial Ca 2+ fluxes. Interestingly, prior results have 
+
+demonstrated that hypoxia also increases mNCX activity in the heart (Hernansanz -
+
+Agustín et al., 2020). 
+
+The increase in mNCX activity and resistance to Ca 2+ -induced mPTP opening 
+
+was not only observed in mitochondria isolated from CR hearts, but was also reproduced 
+
+in cardiomyocytes incubated for 24 h with serum from CR animals ( Figure 3 ), which 
+
+exhibited increased NCLX and TMEM65 protein levels ( Figure 4 ). These findings 
+
+demonstrate that key mitochondrial adaptations induced by CR can be rapidly 
+
+reproduced by exposure to circulating factors, consistent with previous observations that 
+
+several CR phenotypes can be recapitulated by serum treatment in cultured cells 
+
+(Cerqueira et al., 2016; de Cabo et al., 200 3; Munhoz et al., 2023 ). This greatly broadens 
+
+the translational potential of these mechanisms, suggesting that the benefits of CR may 
+
+be achievable without prolonged dietary restriction itself. 
+
+Most importantly, the cardioprotective effects observed in both experimental 
+
+models (cultured cardiomyocytes subjected to simulated I/R , Figure 5 , and isolated 
+
+perfused hearts exposed to I/R , Figure 8 ) were completely abolished by pharmacological 
+
+inhibition of mNCX with CGP. Th is demonstrate s that enhanced mitochondrial Na ⁺/ Ca 2+ 
+
+exchange is not only associated with CR -induced cardioprotection, but is an essential 
+
+mechanistic mediator of its protective effects against ischemic injury. This conclusion is 
+
+compatible with genetic studies showing that cardiac -specific deletion of NCLX results in 
+
+mitochondrial Ca 2+ overload, energetic collapse, and rapid heart failure and mortality 
+
+(Luongo et al., 2017), while disruption of TMEM65 impairs mitochondrial Ca 2+ extrusion 
+
+and compromises car diac function (Garbincius et al., 2025; Zhang et al., 2025). 
+
+Conversely, increasing mitochondrial Ca 2+ efflux by overexpression of NCLX has been 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+shown to attenuate pathological cardiac remodeling and improve cardiac function in 
+
+experimental heart failure (Garbincius et al., 2022) . Collectively, these findings, together 
+
+with our results, identify preservation of the TMEM65/NCLX complex and mNCX as a 
+
+critical determinant of the cardioprotective phenotype induced by CR , and highlight 
+
+enhancement of mitochondrial Ca 2+ extrusion as a promising therapeutic strategy to limit 
+
+ischemia/reperfusion injury. 
+
+5.  CONCLUSION 
+
+CR protects the heart against IR injury by preserving mitochondrial Ca 2+ 
+
+homeostasis. This protection is associated with enhanced Na +-dependent mitochondrial 
+
+Ca 2+ efflux, resulting in improved mitochondrial function, reduced oxidative stress, 
+
+delayed mPTP opening, and preserved cardiac performance after reperfusion. 
+
+Importantly, pharmacological inhibition of the mNCX abolished these benefits, 
+
+demonstrating a central role for mitochondrial Ca 2+ extrusion in CR -induced 
+
+cardioprotection. 
+
+ACKNOWLEDGEMENTS 
+
+This work was supported mainly by  Fundação de Amparo à Pesquisa do Estado 
+
+de São Paulo  (FAPESP) grant s 20/06970 -5 and 13/07937 -8, Conselho Nacional de 
+
+Pesquisa e Desenvolvimento  (CNPq),  Coordenação de Aperfeiçoamento de Pessoal de 
+
+Nível Superior  (CAPES) line 01,  Instituto Nacional de Ciência e Tecnologia em 
+
+Metodologias Quantitativas e de Precisão em Biomedicina Redox  grant #408213/2024 -
+
+8 and the  Centro de Pesquisa, Inovação e Difusão de Processos Redox em Biomedicina 
+
+- CEPID Redoxoma grant 2013/07937 -8.  MICQ is supported by a FAPESP fellowship 
+
+(24/07592 -5). We thank Sirley M . de Oliveira and Camille C. C. da Silva for excellent 
+
+technical assistance , Marcos V. Caetano, Manuel A. H. Lopes , and Lucas R. P. Camara 
+
+for experimental help , as well as the expert animal facilities team lead by Silvania Neves 
+
+and José Galeote Molero Leme de Oliveira .
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+REFERENCES 
+
+Ahmet, I., Tae, H. J., de Cabo, R., Lakatta, E. G. & Talan, M. I. (2011).  Effects of calorie 
+
+restriction on cardioprotection and cardiovascular health. Journal of Molecular 
+
+and Cellular Cardiology , 51, 263 -271. doi:10.1016/j.yjmcc.2011.04.015 
+
+Amigo, I., Menezes -Filho, S. L., Luévano -Martínez, L. A., Chausse, B. & Kowaltowski, 
+
+A. J. (2017).  Caloric restriction increases brain mitochondrial calcium retention 
+
+capacity and protects against excitotoxicity. Aging Cell , 16, 73 -81. 
+
+doi:10.1111/acel.12527 
+
+Baughman, J. M., Perocchi, F., Girgis, H. S., Plovanich, M., Belcher -Timme, C. A., 
+
+Sancak, Y., Bao, X. R., Strittmatter, L., Goldberger, O., Bogorad, R. L., 
+
+Koteliansky, V. & Mootha, V. K. (2011). Integrative genomics identifies MCU as 
+
+an essential component of the mitochondrial calcium uniporter. Nature , 476, 341 -
+
+345. doi: 10.1038/nature10234. 
+
+Bernardi , P. & Di Lisa , F. (2015). The mitochondrial permeability transition pore: 
+
+molecular nature and role as a target in cardioprotection. Journal of Mol ecular 
+
+and Cell ular Cardiology , 78 , 100 -10 6. doi: 10.1016/j.yjmcc.2014.09.023. 
+
+Bompotis , G. C., Deftereos , S., Angelidis , C., Choidis , E., Panagopoulou , V., Kaoukis ,
+
+A., Vassilikos , V. P., Cleman , M. W. & Giannopoulos , G. (2016) Altered Calcium 
+
+Handling in Reperfusion Injury. Med icinal Chem istry , 12 , 114 -130. doi: 
+
+10.2174/1573406411666150928112420. 
+
+Cadenas S. (2018) ROS and redox signaling in myocardial ischemia -reperfusion injury 
+
+and cardioprotection. Free Radical Biology and Medicine , 117 , 76 -89. doi: 
+
+10.1016/j.freeradbiomed.2018.01.024. 
+
+Cao, C. M., Yan, W. Y., Liu, J., WL Kam, K., Zhan, S. Z., Sham, J. S. K. & Wong, T. M. 
+
+(2006). Attenuation of mitochondrial, but not cytosolic, Ca 2+ overload reduces 
+
+myocardial injury induced by ischemia and reperfusion.  Acta Pharmacologica 
+
+Sinica , 27, 911 -918.  doi:10.1111/j.1745 -7254.2006.00391.x 
+
+Cerqueira, F. M. & Kowaltowski, A. J. (2010).  Commonly adopted caloric restriction 
+
+protocols often involve malnutrition.  Ageing Research Reviews , 9,  424 -430. 
+
+doi:10.1016/j.arr.2010.05.002 
+
+Cerqueira, F. M., da Cunha, F. M., Caldeira da Silva, C. C., Chausse, B., Romano, R. 
+
+L., Garcia, C. C., Colepicolo, P., Medeiros, M. H. & Kowaltowski, A. J. (2011). 
+
+Long -term intermittent feeding, but not caloric restriction, leads to redox 
+
+imbalance, insulin receptor nitration, and glucose intolerance. Free Radical 
+
+Biology and Medicine , 51, 1454 -1460. doi: 
+
+10.1016/j.freeradbiomed.2011.07.006. 
+
+Cerqueira, F. M., Cunha, F. M., Laurindo, F. R. M. & Kowaltowski, A. J. (2012). Calorie 
+
+restriction increases cerebral mitochondrial respiratory capacity in a NO •-
+
+mediated mechanism: Impact on neuronal survival. Free Radical Biology and 
+
+Medicine , 52, 1236 -1241. doi:10.1016/j.freeradbiomed.2012.01.011 
+
+Cerqueira, F. M., Chausse, B., Baranovski , B. M., Liesa, M., Lewis, E. C., Shirihai, O. S. 
+
+& Kowaltowski, A. J. (2016). Diluted serum from calorie -restricted animals 
+
+promotes mitochondrial β -cell adaptations and protect against glucolipotoxicity. 
+
+The FEBS Journal , 283 , 822 -833. doi:10.1111/febs.13632 
+
+Chinopoulos , C., Starkov , A. A. & Fiskum , G. (2003). Cyclosporin A-insensitive 
+
+permeability transition in brain mitochondria: inhibition by 2 -aminoethoxydiphenyl 
+
+borate. Journal of Biol ogical Chem istry , 278 , 27382 -2738 9. doi :
+
+10.1074/jbc.M303808200. 
+
+Colom, B., Oliver, J., Roca, P. & Garcia -Palmer, F.J. (2007) Caloric restriction and 
+
+gender modulate cardiac muscle mitochondrial H 2O2 production and oxidative 
+
+damage.  Cardiovascular Research , 74, 456 -465. doi: 
+
+10.1016/j.cardiores.2007.02.001. 
+
+David, C. E. B., Lucas, A. M. B., Araújo, M. T. S., Coelho, B. N., Neto, J. B. S., Portela, 
+
+B. R. C., Varela, A. L. N., Kowaltowski, A. J. & Facundo, H. T. (2018).  Calorie 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+restriction attenuates hypertrophy -induced redox imbalance and mitochondrial 
+
+ATP -sensitive K + channel repression. Journal of Nutritional Biochemistry , 62, 87 -
+
+94. Doi:10.1016/j.jnutbio.2018.08.008 
+
+de Cabo, R., Fürer -Galbán, S., Anson, R. M., Gilman, C., Gorospe, M. & Lane, M. A. 
+
+(2003). An in vitro model of caloric restriction. Experimental Gerontology , 38, 631 -
+
+639. doi:10.1016/S0531 -5565(03)00055 -X
+
+De Stefani, D., Raffaello, A., Teardo, E., Szabò, I.  & Rizzuto, R. (2011).  A forty -kilodalton 
+
+protein of the inner membrane is the mitochondrial calcium uniporter. Nature ,
+
+476, 336 -40. doi: 10.1038/nature10230 
+
+Del Re , D. P., Amgalan , D., Linkermann , A., Liu , Q. & Kitsis , R. N. (2019) . Fundamental 
+
+-mechanisms of regulated cell death and implications for heart disease. 
+
+Physiol ogical Rev iews, 99 , 1765 -1817. doi: 10.1152/physrev.00022.2018. 
+
+Di Lisa , F., Canton , M., Menabò , R., Dodoni , G. & Bernardi , P. (2003). Mitochondria and 
+
+reperfusion injury. The role of permeability transition. Basic Res earch in 
+
+Cardiol ogy , 98 , 235 -241. doi: 10.1007/s00395 -003 -0415 -x
+
+Duchen , M. R., McGuinness , O., Brown , L. A. & Crompton , M. (1993). On the 
+
+involvement of a cyclosporin A sensitive mitochondrial pore in myocardial 
+
+reperfusion injury. Cardiovasc ular Res earch , 27 , 1790 -179 4. doi: 
+
+10.1093/cvr/27.10.1790. 
+
+Eltzschig, H. K., & Eckle, T. (2011). Ischemia and reperfusion -from mechanism to 
+
+translation.  Nature Medicine , 17, 1391 -1401.  doi:10.1038/nm.2507 
+
+Facundo, H. T. F., Carreira, R. S., de Paula, J. G., Santos, C. C. X., Ferranti, R., 
+
+Laurindo, F. R. M. & Kowaltowski, A. J. (2006).  Ischemic preconditioning requires 
+
+increases in reactive oxygen release independent of mitochondrial K + channel 
+
+activity. Free Radical Biology and Medicine , 40, 469 -479. 
+
+doi:10.1016/j.freeradbiomed.2005.08.041 
+
+Facundo, H. T. F., de Paula, J. G. & Kowaltowski, A. J. (2007). Mitochondrial ATP -
+
+sensitive K + channels are redox -sensitive pathways that control reactive oxygen 
+
+species production. Free Radical Biology and Medicine , 42, 1039 -1048. 
+
+doi:10.1016/j.freeradbiomed.2007.01.001 
+
+Feno, S., Rizzuto, R., Raffaello, A. & Vecellio Reane, D. (2021). The molecular 
+
+complexity of the Mitochondrial Calcium Uniporter. Cell Calcium , 93 , 102322. doi: 
+
+10.1016/j.ceca.2020.102322 
+
+Garbincius, J. F., Luongo, T. S., Jadiya, P., Hildebrand, A. N., Kolmetzky, D. W., 
+
+Mangold, A. S., Roy, R., Ibetti, J., Nwokedi, M., Koch, W. J. & Elrod, J. W. (2022). 
+
+Enhanced NCLX -dependent mitochondrial Ca2+ efflux attenuates pathological 
+
+remodeling in heart failure. Journal of Molecular and Cellular Cardiology , 167, 52 -
+
+66. doi:10.1016/j.yjmcc.2022.03.001 
+
+Garbincius, J. F. & Elrod, J. W. (2022). Mitochondrial calcium exchange in physiology 
+
+and disease. Physiological Reviews , 102, 893 -992. doi: 
+
+10.1152/physrev.00041.2020 
+
+Garbincius, J. F., Salik, O., Cohen, H. M., Choya -Foces, C., Mangold, A. S., Makhoul, A. 
+
+D., Schmidt, A. E., Khalil, D. Y., Doolittle, J. J., Wilkinson, A. S., Murray, E. K., 
+
+Lazaropoulos, M. P., Hildebrand, A. N., Tomar, D. & Elrod, J. W. (2025). TMEM65 
+
+regulates and is required for NCLX -dependent mitochondrial calcium efflux. 
+
+Nature Metabolism , 7, 714 -729. doi:10.1038/s42255 -025 -01250 -9
+
+Garbincius , J. F. & Elrod , J. W. (2025). Mitochondrial sodium -calcium exchange -Can 
+
+TMEM65 do it alone? Cell Metab olism. 37 , 1927 -1928. doi: 
+
+10.1016/j.cmet.2025.09.005 
+
+GBD 2023 Causes of Death Collaborators. (2025). Global burden of 292 causes of death 
+
+in 204 countries and territories and 660 subnational locations, 1990 -2023: a 
+
+systematic analysis for the Global Burden of Disease Study 2023. The Lancet ,
+
+406, 1811 -1872. doi:10.1016/S0140 -6736(25)01917 -8
+
+GBD 2023 IHD & Dietary Risk Factors Collaborators. (2026) Global, regional and 
+
+national burden of ischemic heart disease attributable to suboptimal diet, 1990 -
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+2023: a Global Burden of Disease study. Nature Medicine , 32, 1454 -1478. 
+
+doi:10.1038/s41591 -026 -04250 -8
+
+Griffiths , E. J. & Halestrap , A. P. (1995). Mitochondrial non -specific pores remain closed 
+
+during cardiac ischaemia, but open upon reperfusion. Biochem istry Journal , 307 ,
+
+93 -98. doi: 10.1042/bj3070093 
+
+Guo, Z., Wang, M., Ying, X., Yuan, J., Wang, C., Zhang, W., Tian, S. & Yan, X. (2023). 
+
+Caloric restriction increases the resistance of aged heart to myocardial 
+
+ischemia/reperfusion injury via modulating AMPK –SIRT1 –PGC1a energy 
+
+metabolism pathway. Scientific Reports , 13, 2045. doi:10.1038/s41598 -023 -
+
+27611 -6
+
+Halestrap , A. P., Clarke , S. J. & Javadov , S. A. (2004). Mitochondrial permeability 
+
+transition pore opening during myocardial reperfusion -a target for 
+
+cardioprotection.  Cardiovasc ular  Res earch , 61 , 372 -385. doi: 10.1016/S0008 -
+
+6363(03)00533 -9
+
+Hernansanz -Agustín, P., Choya -Foces, C., Carregal -Romero, S., Ramos, E., Oliva, T., 
+
+Villa -Piña, T., Moreno, L., Izquierdo -Álvarez, A., Cabrera -García, J. D., Cortés, 
+
+A, Lechuga -Vieco AV, Jadiya P, Navarro E, Parada E, Palomino -Antolín A, Tello 
+
+D., Acín -Pér ez, R., Rodríguez -Aguilera, J. C., Navas, P., Cogolludo, Á., López -
+
+Montero I, Martínez -Del -Pozo Á, Egea J, López MG, Elrod JW, Ruíz -Cabello J, 
+
+Bogdanova, A., Enríquez, J. A. & Martínez -Ruiz, A. (2020).  Na(+) controls 
+
+hypoxic signalling by the mitochondrial respiratory chain. Nature , 586, 287 -291. 
+
+doi: 10.1038/s41586 -020 -2551 -y. 
+
+Heusch, G. (2020). Myocardial ischaemia –reperfusion injury and cardioprotection in 
+
+perspective. Nature Reviews Cardiology, 17 , 773 -789. doi:10.1038/s41569 -020 -
+
+0403 -y
+
+Hurst , S., Hoek , J. & Sheu , S. S. (2017). Mitochondrial Ca 2+ and regulation of the 
+
+permeability transition pore. Journal of Bioenerg etics and Biomembr anes , 49 , 27 -
+
+47. doi: 10.1007/s10863 -016 -9672 -x
+
+Jennings, R. B. & Reimer, K. A. (1980). Lethal myocardial ischemic injury . Am erican 
+
+Journal of Pathology, 102 , 241 -55 
+
+Lanza, I. R., Zabielski, P., Klaus, K. A., Morse, D. M., Heppelmann, C. J., Bergen, H. R., 
+
+Dasari, S., Walrand, S., Short, K. R., Johnson, M. L., Robinson, M. M., Schimke, 
+
+J. M., Jakaitis, D. R., Asmann, Y. W., Sun, Z. & Nair, K. S. (2012). Chronic caloric 
+
+restriction preserves mitochondrial function in senescence without increasing 
+
+mitochondrial biogenesis. Cell Metabolism , 16, 777 -788. 
+
+doi:10.1016/j.cmet.2012.11.003 
+
+López -Lluch , G., Hunt , N., Jones , B., Zhu , M., Jamieson , H., Hilmer , S., Cascajo , M. V.,
+
+Allard , J., Ingram , D. K., Navas , P. & de Cabo , R. (2006). Calorie restriction 
+
+induces mitochondrial biogenesis and bioenergetic efficiency. Proceedings of the 
+
+National Academy of Sciences , 103 , 1768 -17 73. doi: 10.1073/pnas.0510452103 
+
+Lu, L., Liu, M., Sun, R. R., Zheng, Y. & Zhang, P. (2015). Myocardial Infarction: 
+
+Symptoms and Treatments. Cell Biochemistry and Biophysics , 72, 865 -867. 
+
+doi:10.1007/s12013 -015 -0553 -4
+
+Luongo, T. S., Lambert, J. P., Gross, P., Nwokedi, M., Lombardi, A. A., Shanmughapriya, 
+
+S., Carpenter, A. C., Kolmetzky, D., Gao, E., van Berlo, J. H., Tsai, E. J., 
+
+Molkentin, J. D., Chen, X., Madesh, M., Houser, S. R. & Elrod, J. W. (2017). The 
+
+mitochondr ial Na +/Ca 2+ exchanger is essential for Ca 2+ homeostasis and viability. 
+
+Nature , 545, 93 –97. doi:10.1038/nature22082 
+
+Madeo , F., Pietrocola , F., Eisenberg , T. & Kroemer , G. (2014). Caloric restriction 
+
+mimetics: towards a molecular definition.  Nat ure  Rev iews  Drug Discov ery , 13 ,
+
+727 -740. doi: 10.1038/nrd4391 
+
+Menezes -Filho, S. L., Amigo, I., Prado, F. M., Ferreira, N. C., Koike, M. K., Pinto, I. F. 
+
+D., Miyamoto, S., Montero, E. F. S., Medeiros, M. H. G. & Kowaltowski, A. J. 
+
+(2017).  Caloric restriction protects livers from ischemia/reperfusion damage by 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+preventing Ca 2+ -induced mitochondrial permeability transition.  Free Radical 
+
+Biology and Medicine , 110, 219 -227.  doi:10.1016/j.freeradbiomed.2017.06.013 
+
+Munhoz , A. C., Serna , J. D. C., Vilas -Boas , E. A., Caldeira da Silva , C. C., Santos , T. G.,
+
+Mosele , F. C., Felisbino , S. L., Martins , V. R. & Kowaltowski , A. J.  (2023). 
+
+Adiponectin reverses β -Cell damage and impaired insulin secretion induced by 
+
+obesity. Aging Cell , 22 , e13827. doi: 10.1111/acel.13827 
+
+Palty, R., Silverman, W. F., Hershfinkel , M., Caporale, T., Sensi, S. L., Parnis, J., Nolte, 
+
+C., Fishman, D., Shoshan -Barmatz, V., Herrmann, S., Khananshvili, D. & Sekler, 
+
+I. (2010). NCLX is an essential component of mitochondrial Na +/Ca 2+ exchange. 
+
+Proceedings of the National Academy of Sciences , 107, 436 -441. 
+
+doi:10.1073/pnas.0908099107 
+
+Palty, R., Hershfinkel, M. & Sekler, I. (2012) . Molecular identity and functional properties 
+
+of the mitochondrial Na +/Ca 2+ exchanger. Journal of Biol ogical Chem istry , 287, 
+
+31650 -31657. doi : 10.1074/jbc.R112.355867 
+
+Pan, X., Liu, J., Nguyen, T., Liu, C., Sun, J., Teng, Y., Fergusson, M. M., Rovira, I. I., 
+
+Allen, M., Springer, D. A., Aponte, A. M., Gucek, M., Balaban, R. S., Murphy, E. 
+
+& Finkel, T. (2013). The physiological role of mitochondrial calcium revealed by 
+
+mice lacking the mitochondrial calcium uniporter. Nature Cell Biology , 15, 1464 -
+
+72. doi: 10.1038/ncb2868 
+
+Patel , P., Mendoza , A., Ramirez , D., Robichaux , D., Molkentin , J. D. & Karch , J. (2024). 
+
+The adenine nucleotide translocase family underlies cardiac ischemia -
+
+reperfusion injury through the mitochondrial permeability pore independently of 
+
+cyclophilin D. Sci ence Adv ance s, 10 , eadp7444. doi: 10.1126/sciadv.adp7444 
+
+Serna, J. D. C., Caldeira da Silva, C. C. & Kowaltowski, A. J. (2020).  Functional changes 
+
+induced by caloric restriction in cardiac and skeletal muscle mitochondria.  Journal 
+
+of Bioenergetics and Biomembranes , 52, 269 -277. doi:10.1007/s10863 -020 -
+
+09838 -4
+
+Serna, J. D. C., Amaral, A. G., Caldeira da Silva, C. C., Munhoz, A. C., Vilas -Boas, E. 
+
+A., Menezes -Filho, S. L. & Kowaltowski, A. J. (2022 a).  Regulation of kidney 
+
+mitochondrial function by caloric restriction. American Journal of Physiology 
+
+Renal Physiology , 323, F92 –F106. doi:10.1152/ajprenal.00461.2021 
+
+Serna, J. D. C, Ramos V. M., Cabral -Costa, J. V., Vilas -Boas, E. A., Amaral A. G., 
+
+Ohya, G., Caldeira da Silva, C. C. & Kowaltowski, A. (2022 b). Measuring 
+
+mitochondrial Ca 2+  efflux.  Bioenergetics Communications , 2022, 1–22. 
+
+doi:10.26124/bec:2022 -0007 
+
+Shinmura, K., Tamaki, K., Sano, M., Nakashima -Kamimura, N., Wolf, A. M., Amo, T., 
+
+Ohta, S., Katsumata, Y., Fukuda, K., Ishiwata, K., Suematsu, M. & Adachi, T. 
+
+(2011).  Caloric restriction primes mitochondria for ischemic stress by 
+
+deacetylating specific mitochondrial proteins of the electron transport chain. 
+
+Circulation Research , 109, 396 -406. doi: 10.1161/CIRCRESAHA.111.243097 
+
+Sohal , R. S. & Weindruch , R. (1996). Oxidative stress, caloric restriction, and aging. 
+
+Science , 273 , 59 -63. doi: 10.1126/science.273.5271.59 
+
+Vetralla , M., Wischhof , L., Kahsay , A., Cadenelli , V., Scifo , E., Xie , B., Sbrissa , M.,
+
+Habert , M. S., Ehninger , D., Rizzuto , R., Bano , D. & De Stefani , D. (2025). 
+
+TMEM65 -dependent Ca 2+ extrusion safeguards mitochondrial homeostasis. 
+
+Nat ure Commun ication , 17 , 923. doi: 10.1038/s41467 -025 -67647 -y
+
+Vercesi , A. E., Castilho , R. F., Kowaltowski , A. J., de Oliveira , H. C. F., de Souza -Pinto ,
+
+N. C., Figueira , T. R. & Busanello , E. N. B. (2018) Mitochondrial calcium transport 
+
+and the redox nature of the calcium -induced membrane permeability transition. 
+
+Free Radical Biology and Medicine, 129 , 1-24. doi: 
+
+10.1016/j.freeradbiomed.2018.08.034 
+
+Virani, S. S., Alonso, A., Benjamin, E. J., Bittencourt, M. S., Callaway, C. W., Carson, A. 
+
+P., Chamberlain, A. M., Chang, A. R., Cheng, S., Delling, F. N., Djousse, L., 
+
+Elkind, M. S. V., Ferguson, J. F., Fornage, M., Khan, S. S., Kissela, B. M., 
+
+Knutson, K. L., Kwan, T. W., Lackland, D. T., Lewis, T. T., Lichtman, J. H., 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+Longenecker, C. T., Loop, M. S., Lutsey, P. L., Martin, S. S., Matsushita, K., 
+
+Moran, A. E., Mussolino, M. E., Perak, A. M., Rosamond, W. D., Roth, G. A., 
+
+Sampson, U. K. A., Satou, G. M., Schroeder, E. B., Shah, S. H., Shay, C. M., 
+
+Spartano, N. L., Stokes, A., Tirschwell, D. L., VanWagner, L. B. & Tsao, C. W. 
+
+(2020). Heart disease and stroke statistics -2020 update a report from the 
+
+American Heart Association. Circulation , 141, E139 -E596. 
+
+doi:10.1161/CIR.0000000000000757 
+
+Zhang, J. L., Chang, Y. C., Lai, P. H., Yeh, H. I., Tsai, C. W., Huang, Y. L., Liu, T. Y., 
+
+Lee, I. C., Foulon, N., Xu, Y., Rao, B., Shih, H. M., Tu, Y. C., Reyes, A. v., Xu, S. 
+
+L., Feng, L. & Tsai, M. F. (2025). TMEM65 functions as the mitochondrial 
+
+Na +/Ca 2+ exchanger. Nature Cell Biology , 27, 1301 -1310. doi:10.1038/s41556 -
+
+025 -01721 -x
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+FIGURE LEGENDS 
+
+Figure 1. Caloric restriction prevents cardiac damage after ischemia and 
+
+reperfusion. (A) Schemic of the heart perfusion protocol . (B) LVEDP (Left Ventricular 
+
+End -Diastolic Pressure). (C) LVSP (Left Ventricular Systolic Pressure). (D) LVDP (Left 
+
+Ventricular Developed Pressure). (E) RPP (Rate Pressure Product). Statistical 
+
+significance s were determined by one -way ANOVA. Data are expressed as averages ± 
+
+SE of 4 different experiments. * = p < 0.05. 
+
+Figure 2. Caloric restriction increases Na +-sensitive Ca 2+ retention capacity and 
+
+decreases H 2O2 release . (A -C) Representative graphs of calcium uptake traces using 
+
+malate pus glutamate as substrates and Calcium Green -5N as an extramitochondrial 
+
+probe , as described in the Methods . Ca 2+ boluses ( 50 μM ) were added every 200 
+
+seconds, generating the upward peaks , followed by mitochondrial uptake, decreasing 
+
+fluorescence until retention capacity was reached . (A) Basal conditions, (B) presence of 
+
+20 mM NaCl, (C) 20 mM NaCl plus 5 M CGP. (D) Calcium uptake quantification s from 
+
+traces such as those in panels A-C. (E) Representative trace of calcium efflux 
+
+assessment as described in Methods ; 50 μM Ca 2+ , 0.5 uM RuR, 5 μM CGP and 20 mM 
+
+NaCl were added as indicated . The insert is a magnified region where data were 
+
+quantified . (F) Calcium efflux quantification. (G) Basal oxygen consumption, measured 
+
+as described in Methods . (H) Basal mitochondrial H2O2 release , measured as described 
+
+in Methods . Statistical significance was determined by one -way ANOVA. Data are 
+
+expressed as averages ± SD of 5 different experiments , and individual symbols 
+
+represent biological replicates . P values are indicated in the graph when < 0.05 .
+
+Figure 3. Cells treated with serum from CR animals display increased 
+
+mitochondrial calcium retention and efflux. (A) Experimental schematic . (B -D)
+
+Representative graphs of basal, NaCl, NaCl + CGP calcium uptake in permeabilized 
+
+cells (see Methods) under conditions similar to Figure 2. (E) Calcium uptake 
+
+quantification. ( F) Representative calcium efflux trace ; the insert is a magnification . ( G)
+
+Calcium efflux quantification. Statistical significance was determined by one -way 
+
+ANOVA. Data are expressed as averages ± SD of 5 different experiments , and individual 
+
+symbols represent biological replicates . P values under 0.05 are indicated in the graph .
+
+Figure 4. C R increases the amount of NCLX and TMEM65 proteins in hearts and 
+
+cardiomyocytes . (A and J) Representative w estern blot images of mitochondrial 
+
+calcium transport proteins (MCU, MICU1, MICU2, MICU3, MCUB, EMRE, NCLX , and 
+
+TMEM65) in mitochondria and cells. (B -I and K -Q) Protein quantification (MCU, MICU1, 
+
+MICU2, MICU3, MCUB, EMRE, NCLX and TMEM65) normalized per Ponceau (see 
+
+supplementary materials for the membrane staining images) . Statistical significance was 
+
+determined by one -way ANOVA. Data are expressed as averages ± SD of 5 different 
+
+experiments , and individual symbols represent biological replicates . P values < 0.05 are 
+
+indic ated in the graph .
+
+Figure 5. Serum from calorie -restricted animals prevents cell death induced by 
+
+cyanide/glycemia -simulated ischemia/reperfusion. (A) Graph representing death 
+
+promoted by simulated ischemia and reperfusion (see Methods) . (B) Quantification of 
+
+cell death after ischemia and reperfusion. Data represent mean ± SD , and individual 
+
+symbols represent biological replicates. O ne -way ANOVA statistical test s were used ,
+
+and p values < 0.05 are indicated in the graphs .
+
+Figure 6. C R increas es calcium efflux and decrease s H2O2 production after I/R . (A -
+
+C) Representative graphs of basal, NaCl, NaCl + CGP calcium uptake using the 
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+substrates malate + glutamate, calcium green -5N of mitochondria isolated after I/R (see 
+
+Methods) . (D) Calcium uptake quantification. (E) Representative graph calcium efflux. 
+
+(F) Calcium efflux quantification. (G) Basal respiration. (H) H 2O2 release under basal 
+
+conditions and in the presence of 0.5 μM RuR or 5 μM CGP . Statistical significance was 
+
+determined by one -way ANOVA. Data are expressed as averages ± SD , and individual 
+
+symbols represent biological replicates . P values < 0.05 are indicated in the graph .
+
+Figure 7. The inhibition of the Na +/Ca 2+ exchanger during I/R in hearts causes CR 
+
+to lose its effect on mNCX . (A -C) Representative graphs of basal, NaCl, NaCl + CGP 
+
+calcium uptake using the substrates malate + glutamate, calcium green -5N of 
+
+mitochondria from hearts submitted to I/R in the presence of CGP (see Methods). (D) 
+
+Calcium uptake quantification , (E) Representative calcium efflux graph , (F) Calcium 
+
+efflux quantification , (G) Basal respiration , and (H) H 2O2 release . Statistical significance 
+
+was determined by one -way ANOVA , with no significant differences between CR and AL 
+
+samples . Data are expressed as averages ± SD , and individual symbols represent 
+
+biological replicates .
+
+Figure 8. Inhibition of mNCX during I/R in the heart causes CR to lose its protective 
+
+effect. (A) Representative perfusion, ischemia , and reperfusion traces (AL, CR, 
+
+CR+CGP) , (B) LVEDP (Left Ventricular End -Diastolic Pressure) , (C) LVSP (Left 
+
+Ventricular Systolic Pressure).(D) LVDP (Left Ventricular Developed Pressure). (E) RPP 
+
+(Rate Pressure Product). Statistical significance was determined by one -way ANOVA. 
+
+Data are expressed as averages ± SE of 4 different experiments. *P < 0.05 ; **p < 0.01 .
+
+> .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint
+
+FIGURES 
+
+Figure 1 
+
+.CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint Figure 2 
+
+.CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint Figure 3 
+
+.CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint .CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint Figure 4 
+
+Figure 5 
+
+.CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint Figure 6 
+
+.CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint Figure 7 
+
+.CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint Figure 8 
+
+.CC-BY 4.0 International license made available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is The copyright holder for this preprint this version posted July 21, 2026. ;https://doi.org/10.64898/2026.07.20.739602 doi: bioRxiv preprint

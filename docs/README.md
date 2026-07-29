@@ -6,22 +6,24 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-28
-- 运行时间：2026-07-28 21:03:34 UTC
+- 最新运行日期：2026-07-29
+- 运行时间：2026-07-29 21:41:01 UTC
 - 运行状态：成功
-- 本次总论文数：0
+- 本次总论文数：1
 - 精读区：0
-- 速读区：0
+- 速读区：1
 
 ### 今日简报（AI）
-> 今日无新推荐，系统未产出可展示论文。
-- 详情：[/202607/28/README](/202607/28/README)
+速读1篇热量限制与心脏保护机制的研究。关键发现：热量限制通过增强线粒体钠钙交换减轻缺血再灌注损伤。建议关注均衡饮食与限食对心血管健康的潜在价值。
+- 详情：[/202607/29/README](/202607/29/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-- 本次无速读推荐。
+1. [Caloric Restriction Promotes Ischemia/Reperfusion Cardioprotection Through Increased Mitochondrial Na+/Ca2+ Exchange](/202607/29/biorxiv-10-64898-2026-07-20-739602-v1-caloric-restriction-promotes-ischemiareperfusion-cardioprotection-through-increased-mitochondrial-naca2-exchange)  
+   标签：评分：7.0/10、query:flap-ex-met
+   evidence：热量限制通过线粒体功能改善保护缺血再灌注损伤
 
 
 <div class="dpr-home-promo-card">
