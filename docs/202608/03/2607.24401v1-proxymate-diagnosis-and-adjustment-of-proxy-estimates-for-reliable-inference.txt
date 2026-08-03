@@ -1,0 +1,1233 @@
+Title: proxymate: Diagnosis and Adjustment of Proxy Estimates for Reliable Inference
+
+URL Source: https://arxiv.org/pdf/2607.24401v1
+
+Published Time: Tue, 28 Jul 2026 01:58:59 GMT
+
+Number of Pages: 15
+
+Markdown Content:
+# proxymate : Diagnosis and Adjustment of Proxy Estimates for Reliable Inference 
+
+# Alexandra N. M. Darmon 
+
+alexdarmon@meta.com Meta 
+
+# Deeksha Sinha ∗
+
+deekshasinha@meta.com Meta 
+
+# Steven Wilkins-Reeves ∗
+
+stevewr@meta.com Meta 
+
+# Caner Gocmen 
+
+caner@meta.com Meta 
+
+## Abstract 
+
+Proxy outcomes (such as short-term behavioral signals, model pre-dictions, or surrogate endpoints) are frequently used in place of primary outcomes that are too slow to mature, rare, or challeng-ing to measure directly. But valid inference on a proxy does not guarantee valid inference on the primary estimate as proxy-based estimates can be systematically biased in ways that are difficult to predict, leading to improperly calibrated confidence intervals. We present proxymate , a framework and open-source Python package for proxy validation and adjustment. proxymate organizes into four levels: The Representativity Level (population validity), the Unit Level (measurement quality), the Estimate Level (decision validity), and the Domain Level (cross-domain transportability). Within each level, proxymate provides diagnostic checks, and tar-geted adjustment strategies that map specific failures to appropriate corrections. At Meta, proxymate has been adopted by many different use cases, spanning experimentation, prevalence estimation, and mon-itoring use cases, all facing different proxy challenges (limited human review time, long maturation window of outcomes, low detectability) and showcasing the modularity of the framework. Across all products, proxymate assessed and corrected millions of proxy, primary unit comparisons. It has facilitated launches across multiple work streams including enabling quick decision making on thousands of experiments. 
+
+## CCS Concepts 
+
+• Mathematics of computing → Experimentation ; Statistical inference ; Statistical paradigms ; Hypothesis testing and confidence interval computation ; Multivariate statistics ; • Computing method-ologies → Machine learning .
+
+## Keywords 
+
+proxy estimates, surrogate endpoints, prediction-powered infer-ence, meta-analysis, calibration  
+
+> ∗Both authors contributed equally to this research. Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than the author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org.
+> Conference’17, Washington, DC, USA
+> ©2026 Copyright held by the owner/author(s). Publication rights licensed to ACM. ACM ISBN 978-x-xxxx-xxxx-x/YYYY/MM https://doi.org/10.1145/nnnnnnn.nnnnnnn
+
+ACM Reference Format: 
+
+Alexandra N. M. Darmon, Deeksha Sinha, Steven Wilkins-Reeves, and Caner Gocmen. 2026. proxymate : Diagnosis and Adjustment of Proxy Estimates for Reliable Inference. In . ACM, New York, NY, USA, 15 pages. https: //doi.org/10.1145/nnnnnnn.nnnnnnn 
+
+## 1 Introduction 
+
+In many scientific and industrial settings, the primary outcome of interest is difficult to measure. Outcomes may be delayed (e.g., 60-day attribution [ 38 ]), require time consuming human labeling (e.g., identifying content that violates an online platform’s policies [ 29 ]), or be observable only for a small, non-representative fraction of the population. As a result, practitioners frequently substitute a more readily available proxy outcome and make decisions based on inference computed on that proxy. The use of proxies has been first explored, adopting the term surrogate endpoints, in medicine [ 10 , 34 ]. A surrogate in this con-text is a more readily available and perhaps less noisy outcome used in place of the primary outcome. When no single surrogate is sufficient, a surrogate index, a combination of weak surrogates may be constructed; more commonly used in social sciences where the presence of a single strong surrogate for the desired outcome may not exist [ 4 ]. Proxy metrics in online experimentation often serve a similar role [17]. Even when a proxy is strongly correlated with the primary out-come, proxy-based point estimates can be systematically biased for the primary estimand and their confidence intervals miscali-brated. Two failure modes recur in practice. First, unit-level diag-nostics computed on a labeled sample (calibration, accuracy, dis-crimination) can look adequate while the labeled sample itself is non-representative of the target population, so aggregate estimates on the full population are biased in ways the unit-level checks do not surface. Second, standard adjustment methods (e.g., Prediction-Powered Inference (PPI) [ 2], regression calibration, isotonic recal-ibration) inherit the assumptions of the sample they are fit on: applied without first verifying representativity or cross-domain stability, they can leave the bias intact or amplify it. The gap is not the individual adjustment methods, but the absence of a diagnostic layer that determines whether and which adjustment is warranted before it is applied. Despite extensive methodological work, a persistent practical gap remains in effectively using proxy outcomes. Existing literature focuses on either adjustment (correcting a proxy’s flaws) or valida-tion (diagnosing whether a proxy is adequate, though the literature in this second area is more limited [ 44 ]), but rarely connects the two. Furthermore, most surrogate validation frameworks assume a controlled experimental setting with a specific treatment, mak-ing them inapplicable to generic measurement scenarios such as arXiv:2607.24401v1 [stat.ML] 27 Jul 2026 Conference’17, July 2017, Washington, DC, USA Darmon et al. 
+
+population-level estimation or observational monitoring. No exist-ing framework spans unit-level quality, aggregate-level decision validity, and cross-domain transportability while also addressing the representativity of the labeled sample. This paper introduces proxymate 1, a framework and open-source Python package for proxy metric validation and adjustment. While proxymate builds on established diagnostic methods (e.g., SMD for balance [ 5], ECE for calibration [ 16 , 28 ], 𝐼 2 for heterogene-ity [ 19 ]) and established adjustment methods (e.g., PPI [ 2 ], Platt scaling [ 33 ], regression calibration [ 11 ]), the individual checks are not our contribution. Our contributions are the framework that connects them, the open-source package, and its application at Meta: (1) A four-level validation framework. We organize proxy validation and correction into four levels: the Representativ-ity Level (population validity), the Unit Level (measurement quality), the Estimate Level (decision validity), and the Do-main Level (cross-domain transportability). Each level corre-sponds to a distinct statistical question, data structure, and set of diagnostics and adjustments (Section 3). (2) A theoretical diagnostic-to-adjustment bridge. For each level, we map theoretically specific failure modes to the adjustment whose assumptions are satisfied, formally closing the gap between diagnosing a proxy problem and delivering a corrected proxy in production. (3) Empirical application at scale. Through multiple produc-tion applications of proxymate at Meta, we demonstrate its value in identifying proxy failures, choosing among candi-date proxies and performing guided adjustment. We share practical lessons about proxy adoptions or failures in pro-duction. (4) An open-source package . The package exposes modular validation checks, configurable planners, custom estimators for aggregate metrics such as Average Treatment Effects, and structured validation reports that can be consumed pro-grammatically or rendered for practitioners. At Meta, proxymate has been used across several production ap-plications spanning experimentation, prevalence monitoring, and ML model training (six of which have been detailed in Table 2). These applications collectively span four distinct primary-outcome bottlenecks (long maturation windows, restricted measurement, low detectability, low sensitivity), and exercise every component of the framework: Representativity Level validation in three, Unit Level in all six, Estimate Level in five, Domain Level in three, and Es-timate Level adjustment in one. In four applications, a validated (or adjusted-then-validated) proxy was used, enabling ongoing experi-ment volume of approximately 7,500 experiments annually across the four (dominated by ∼7,000 Long Attribution Window (LAW) conversion experiments and ∼300 Nonpayment experiments, with the remaining two applications accounting for the balance). In the remaining two, all candidate proxies were rejected, preventing use of a personalization model trained on biased outcomes and redirect-ing proxy development toward an ensemble approach. Across all products where proxymate was applied, it assessed and corrected millions of proxy–primary unit comparisons. Sections 4.3 and 4.4 
+
+> 1Open-source at https://github.com/facebookresearch/proxymate
+
+present two case studies in detail: a long-term outcome proxy vali-dated across 22 experiments, and a scam classifier evaluated against time consuming human labels for prevalence estimation. 
+
+## 1.1 Related Work 
+
+Surrogate endpoints and proxy inference. The surrogate endpoint problem originates in biostatistics [ 9 , 10 , 34 ] and was extended to the social sciences via Athey et al.’s surrogate index [ 4 ] and Tripuraneni et al.’s proxy selection criteria [ 44 ]. proxymate comple-ments selection by validating a given proxy across multiple levels of aggregation. 
+
+Prediction-powered inference and post-prediction adjustment. 
+
+Prediction-Powered Inference (PPI) [ 2, 3 ] debiases model-based estimates with valid CIs; Wang et al. [ 50 ] and Ji et al. [ 21 ] broaden this into post-prediction inference; Wilkins-Reeves et al. [ 52 ] model residual proxy bias as a cross-domain random effect. These are ad-justment mechanisms; proxymate provides the diagnostic layer that determines whether and which adjustment to apply, and we prove that PPI applied to an already-adequate proxy strictly in-creases MSE (Theorem 1). We also draw on established diagnostics from the calibration [ 16 , 28 , 33 ], covariate shift [ 5 , 40 ], and meta-analysis [14, 19] literature. 
+
+Existing software. Causal-inference packages (DoWhy [ 39 ], EconML) focus on treatment effect estimation; ppi_py implements PPI without diagnostic checks; experimentation platforms (Growth-Book, Statsig) lack formal proxy validation. proxymate fills this gap with a unified diagnose-then-correct workflow across four levels. We present a more comprehensive discussion of the related fields of literature in Appendix D. 
+
+## 2 Problem Setup and Definitions 
+
+We introduce our data setup. Let 𝑌 𝑖 denote the primary outcome of unit 𝑖 , let 𝑌 ∗ 
+
+> 𝑖
+
+denote the unit’s proxy outcome, and let 𝑋 𝑖 de-note any auxiliary covariates. We also let an optional covariate 
+
+𝐾 𝑖 ∈ { 1, . . . , 𝐾 } denote the domain index of unit 𝑖 . We use the term domain to denote a distinct data-generating process, arising from structural shifts such as temporal drift, geographic expan-sion, or distinct interventions. This is a deliberate distinction from 
+
+segments , which are subpopulations defined by conditioning on covariates within a single domain (which may be indicated through the auxiliary covariates 𝑋 𝑖 ). We assume that within each domain 𝑘 (i.e. for units with 𝐾 𝑖 = 𝑘 )the unit-level data are independently distributed such that 𝑂 𝑖 =
+
+(𝑌 𝑖 , 𝑌 ∗ 
+
+> 𝑖
+
+, 𝑋 𝑖 ) ∼ 𝑃 𝑘 , where 𝑃 𝑘 is the population distribution within domain 𝑘 . Typically, domains 𝑘 = 1, . . . , 𝐾 − 1 form a labelled 
+
+historical dataset where 𝑌 𝑖 is observed, whereas domain 𝐾 is an unlabelled target domain where 𝑌 𝑖 is not available. We are interested in estimating a parameter 𝜃 𝐾 , a functional of the target population distribution 𝑃 𝐾 , 𝜃 𝐾 = Ψ(𝑃 𝐾 ) (for instance 𝜃 𝐾 = E𝑃 𝐾 [𝑔 (𝑌 )] for some unit-level function 𝑔 , such as 𝑔 (𝑌 ) = 𝑌 for a mean or 𝑔 (𝑌 ) =
+
+1{𝑌 = 1} for a prevalence). The corresponding proxy-side quantity is 𝜃 ∗ 
+
+> 𝑘
+
+= Ψ∗ (𝑃 ∗ 
+
+> 𝑘
+
+) where Ψ∗ is a functional of the proxy population distribution; in many settings Ψ∗ = Ψ though this is not required. proxymate : Diagnosis and Adjustment of Proxy Estimates for Reliable Inference Conference’17, July 2017, Washington, DC, USA 
+
+Notational convention (probability vs. distribution). Uppercase 𝑃 
+
+with a subscript (e.g., 𝑃 𝑘 ) denotes a probability distribution (pop-ulation measure); the corresponding lowercase 𝑝 𝑘 (𝑥 ) denote its density (or PMF). We reserve P𝑘 (·) for the probability of an event 
+
+under the measure 𝑃 𝑘 , e.g., P𝑘 (𝑌 = 1 | 𝑋 = 𝑥 ) or P𝑘 (𝜃 ∈ CI ).Expectations under a distribution 𝑃 𝑘 are written E𝑃 𝑘 [·] . We drop the subscript 𝑘 when there is no ambiguity about the domain. The core challenge is that ˆ𝜃 ∗ 
+
+> 𝐾
+
+is generally a biased estimator of 𝜃 𝐾 , from two sources: (i) measurement error , where 𝑌 ∗ is an imperfect representation of 𝑌 at the unit level; and (ii) distribution shift , where 𝑃 𝐾 differs from the historical 𝑃 1, . . . , 𝑃 𝐾 −1, so the proxy-primary relationship observed historically may not hold in the target domain. 
+
+## 2.1 Validation data 
+
+Proxy validation relies on the historical domains 𝑘 = 1, . . . , 𝐾 − 1,where both the primary outcome 𝑌 and the proxy outcome 𝑌 ∗ are observed. Within each historical domain 𝑘 , we refer to the data containing paired (𝑌, 𝑌 ∗, 𝑋 ) observations as the validation data 
+
+V𝑘 ∼ 𝑃 𝑘 . In the simplest case, V𝑘 is the full domain population 𝑃 𝑘 
+
+itself, or a random sample from it. In general, the outcomes 𝑌, 𝑌 ∗
+
+may undergo some missingness and may not be observed from all units. If there is a non-uniform missingness, a first step is required to weight the population with respect to the target population of interest. The representativity of V𝑘 within domain 𝑘 is a separate con-cern from whether the proxy-primary relationship generalizes from historical domains to the target domain 𝐾 . The former is a within-domain population validity issue addressed by the Representativity Level ; the latter is a cross-domain transportability question ad-dressed by the Domain Level .
+
+## 3 The proxymate Framework 
+
+Proxymate decomposes proxy diagnosis and adjustment into four levels. The first (Representativity) level addresses population valid-ity : whether the validation data on which all checks are computed should be reweighted before use. The remaining three levels ad-dress proxy quality at increasing levels of aggregation. Unit Level 
+
+diagnoses whether the proxy tracks the primary at the individual 
+
+level. Estimate Level diagnoses whether the proxy estimate gives the same aggregate answer as the primary estimate within a sin-gle domain. Domain Level diagnoses whether the proxy-primary relationship is stable across domains .Each level pairs a diagnostic question with the family of ad-justments whose assumptions the diagnostics test. Further, each level plays a distinct role: collapsing Unit and Estimate would ob-scure that individual errors can systematically compound in ag-gregation, while collapsing Estimate and Domain would conflate within-domain bias with cross-domain instability. 
+
+Segment-level validation. A proxy that passes on the overall pop-ulation may fail for specific segments (subpopulations defined by conditioning on covariates within a single domain). Proxymate 
+
+supports running all Unit and Estimate Level checks per segment, and segment-level results can be aggregated into a Domain Level 
+
+meta-analysis to assess stability across subpopulations. 
+
+Figure 1: The proxymate framework overview. 
+
+Diagnosis and Correction. Blind adjustment can inflate MSE (The-orem 1 in Appendix B) or amplify bias under model misspecification; the diagnostic layer selects an adjustment only when its assump-tions hold. Table 1 summarises the diagnostic-to-adjustment map. 
+
+## 3.1 Representativity Level : Population Validity 
+
+Should we weight the validation data, and if so, which weights? 
+
+Proxy validation in each domain 𝑘 relies on validation data V𝑘 
+
+containing paired observations (𝑌 𝑖 , 𝑌 ∗ 
+
+> 𝑖
+
+, 𝑋 𝑖 ). As defined in Section 2, 
+
+V𝑘 may be the full domain population 𝑃 𝑘 itself, a random sample from it, or a separate process. The key requirement is that after the outcomes (𝑌 𝑖 , 𝑌 ∗ 
+
+> 𝑖
+
+) are representative of the target population 
+
+𝑃 𝑘 after weighting. If no correction is needed the Representativ-ity Level is skipped, but when it is violated (e.g., a review queue over-representing flagged content) all downstream diagnostics are computed on the wrong distribution and may not reflect true proxy quality. IW reweighting is a sample-level correction: it makes any estimate computed on V𝑘 , primary or proxy, target the population 
+
+𝑃 𝑘 rather than the biased sub-sample. 
+
+Importance-weighted estimation. When the outcomes are not representative of 𝑃 𝑘 , importance weighting provides a principled correction. One approach leverages a covariate shift assumption ,involves (𝑌 𝑖 , 𝑌 ∗ 
+
+> 𝑖
+
+)| 𝑋 𝑖 = 𝑥 regardless of whether (𝑌 𝑖 , 𝑌 ∗ 
+
+> 𝑖
+
+) are observed. This allows for correction based on estimating the importance weights conditional on 𝑥 . Let 𝑅 𝑖 = 1 denote that the primary out-come 𝑌 𝑖 is observed for unit 𝑖 (i.e., unit 𝑖 belongs to the validation set V𝑘 ), and 𝑅 𝑖 = 0 otherwise (the primary is missing, though the proxy 𝑌 ∗ 
+
+> 𝑖
+
+may still be available, though this may also be general-ized to where 𝑌 ∗ 
+
+> 𝑖
+
+also has it’s own missingness indicator 𝑅 ∗ 
+
+> 𝑖
+
+). Then 
+
+𝜃 𝑘 = E𝑃 𝑘 [𝑔 (𝑌 )] can be recovered from V𝑘 by reweighting [ 20 , 40 ]: 
+
+E𝑃 𝑘 [𝑔 (𝑌 )] = E𝑃 𝑘 [𝑤 (𝑋 ) · 𝑔 (𝑌 )| 𝑅 = 1] where 𝑤 (𝑋 ) = 𝑝 𝑘 (𝑋 )   
+
+> 𝑝 𝑘 (𝑋 |𝑅 =1)
+
+are the importance weights. Throughout, the unit-level function 𝑔 (iden-tity for a mean, indicator for a prevalence, etc.) is used consistently in both the body and appendix. The resulting weighted estimator is unbiased when the weights are correctly specified, but its variance increases with the variability of the weights. 
+
+Known vs. modeled weights. The reliability of the correction de-pends on how the weights are obtained. Known weights arise from Conference’17, July 2017, Washington, DC, USA Darmon et al. 
+
+design-based sampling, where inclusion probabilities are set by the practitioner (e.g., stratified sampling with known rates, or a review queue with known selection criteria). These weights are correct by construction. Modeled weights arise when the selection mecha-nism is unknown and must be estimated from observed covariates, typically via a propensity model [ 37 ]. Modeled weights can exhibit high variance when the validation sample and domain population diverge substantially, a phenomenon quantified by the effective sample size (ESS) [23]. 
+
+3.1.1 Diagnostics. proxymate provides five representativity checks (Table 3 in Appendix A). Sample representativity: Is V𝑘 drawn from the same covariate distribution as 𝑃 𝑘 ? This is measured by standardized mean differences (SMD) [ 5, 30 ] and the two-sample Kolmogorov-Smirnov (KS) statistic per covariate; an SMD below 0.1 is considered negligible imbalance [ 5 ]. Effective sample size: Are the importance weights stable? This is measured by Kish’s ESS [ 23 ]. 
+
+Weight extremity: Are any weights dominant? This is measured by the max/min ratio and coefficient of variation. Weighting ef-fectiveness: Does importance weighting (IW) actually reduce the covariate gap? This is measured by the reduction in SMD after reweighting. Coverage: What fraction of units in 𝑃 𝑘 are repre-sented in V𝑘 ? This is measured by |V 𝑘 |/| 𝑃 𝑘 |.
+
+3.1.2 Adjustments. The Representativity Level produces one of three outcomes: 
+
+• No Gap: the data is representative and no weighting is needed. 
+
+• IW Adjustment: a gap is detected and importance weights are applied to all downstream checks. All Unit Level checks, 
+
+Estimate Level aggregations, and per-domain estimates en-tering the Domain Level meta-analysis inherit the corrected distribution. 
+
+• Gap is too severe: the gap is too severe for weighting to correct, and the framework flags the validation as unreli-able for the full domain population, recommending fallback strategies (targeted label acquisition, narrowing the target population, sensitivity analysis, or segment-restricted val-idation described in Appendix B.8). Case Study B (Section 4.4) illustrates a scenario where the Representativity Level 
+
+detects a severe gap that IW cannot fully correct. 
+
+## 3.2 Unit Level : Measurement Quality 
+
+Does the proxy track the primary at the individual level? The Unit Level evaluates the unit-level discrepancy between 𝑌 𝑖 and 𝑌 ∗ 
+
+> 𝑖
+
+using the validation data V𝑘 within a historical domain 𝑘 .
+
+3.2.1 Diagnostics. The Unit Level evaluates six complementary properties of unit-level proxy quality. Accuracy: Does the proxy have a systematic bias? This is tested via Welch’s t-test [ 51 ] on 
+
+E[𝑌 ∗ − 𝑌 ], with optional importance weights. Precision: How noisy is the proxy? This is measured by 𝑅 2, RMSE, and Pearson correlation [ 32 ]. Agreement: Do values agree on the identity line? This is measured using Bland-Altman [ 7], directional concordance and Lin’s Concordance Correlation Coefficient (CCC) [ 26 ] which decomposes as CCC = 𝜌 ·𝐶 𝑏 , separating correlation from location/s-cale mismatch. Calibration: Do predicted probabilities match ob-served frequencies (essential for prevalence estimation)? This is measured by Expected Calibration Error (ECE) [ 28 ] and the Brier score [ 8]. Discrimination: Does the proxy correctly rank units? This is measured by Kendall’s 𝜏 [22 ] for continuous outcomes and Receiver Operating Characteristic - Area Under the Curve (ROC AUC) [ 18 ] for binary. Note that this is independent of calibration. 
+
+Distributional fidelity: Do the marginal distributions match? This is measured by KS test [ 25 ], Total Variation (TV) distance, and Wasserstein-1 [ 48 ]. A complete list of the Unit Level checks can be found in Table 4 in Appendix A. 
+
+3.2.2 Adjustments. When Unit Level diagnostics reveal failures, 
+
+proxymate maps each failure mode to a targeted adjustment: 
+
+• Systematic bias (accuracy failure): Additive bias adjustment subtracts the estimated mean difference E[𝑌 ∗−𝑌 ] from proxy scores. 
+
+• Miscalibration (calibration failure): Platt scaling [ 33 ] fits a logistic regression P(𝑌 = 1 | 𝑌 ∗) = 𝑠 (𝑎𝑌 ∗ + 𝑏 ), where 
+
+𝑠 (𝑧 ) = 1/( 1 + 𝑒 −𝑧 ) is the logistic sigmoid, appropriate when miscalibration is approximately monotone. Isotonic regres-sion [ 54 ] fits a non-parametric monotone function and is more flexible but requires a larger labeled sample. For prox-ies that must be calibrated across subgroups (e.g., different content types or user segments), multicalibration methods such as MCGrad [ 43 ] provide scalable post-hoc calibration that ensures calibration holds within data-driven subgroups, not just globally. 
+
+• Poor discrimination : This cannot be fixed by post-hoc adjustment and requires proxy replacement or model re-training. 
+
+## 3.3 Estimate Level : Decision Validity 
+
+Does the proxy lead to the same aggregate conclusion as the pri-mary within a single domain? The Estimate Level assesses whether the proxy is reliable for aggregate inference (point estimates and confidence intervals) within a single domain. Even if a proxy is well-calibrated at the unit level, individual errors can compound or cancel in aggregation in unpredictable ways. A proxy that is noisy but unbiased at the unit level may produce reliable aggregate estimates; a proxy that is accurate on average may still produce bi-ased aggregates if its errors correlate with treatment assignment or covariates. When the Representativity Level has identified a gap, all aggregate estimates at this level are computed using the importance-weighted validation data V𝑘 .The Estimate Level checks are computed over 𝐵 bootstrapped samples from the domain. Let ˆ𝜃 𝑗 𝑘 and ˆ𝜃 ∗𝑗 𝑘 denote the primary and proxy aggregate estimates computed over a bootstrapped sample indexed 𝑗 in a given domain 𝑘 . We suppress the index 𝑘 when it is evident from the context. 
+
+3.3.1 Diagnostics. Aggregate bias: Is the proxy aggregate close to the primary? This is measured by the relative absolute error 
+
+| ˆ𝜃 𝑗 − ˆ𝜃 ∗𝑗 |/| ˆ𝜃 𝑗 |. Inferential validity: Does the proxy CI contain the primary estimate? Sign agreement: Do primary and proxy have the same sign? This is performed as a binary directional check. A complete list of the Estimate Level checks can be found in Table 5 in Appendix A. 
+
+3.3.2 Adjustments. proxymate : Diagnosis and Adjustment of Proxy Estimates for Reliable Inference Conference’17, July 2017, Washington, DC, USA 
+
+• Aggregate bias (bias failure): Prediction-Powered Inference (PPI) [ 2 ] corrects the proxy estimate using the validation data. Let ˆ𝜃 ∗ 
+
+> all
+
+denote the proxy estimate computed on the full domain population (where only 𝑌 ∗ is observed), and let ˆ𝜃 V
+
+and ˆ𝜃 ∗V denote the primary and proxy estimates computed on the validation data V𝑘 (where both 𝑌 and 𝑌 ∗ are observed). The PPI estimator is: 
+
+ˆ𝜃 PPI  
+
+> 𝑘
+
+= ˆ𝜃 ∗ 
+
+> all
+
++
+
+ ˆ𝜃 V𝑘 − ˆ𝜃 ∗V𝑘 
+
+
+
+The adjustment term ( ˆ𝜃 V𝑘 − ˆ𝜃 ∗V𝑘 ) estimates the systematic bias of the proxy from the validation data and removes it, while the full-population proxy term ˆ𝜃 ∗ 
+
+> all
+
+provides variance reduction. Under the assumption that V𝑘 is representative of 𝑃 𝑘 (or has been reweighted to be via the Representativity Level ), the PPI estimator is unbiased for the primary estimand and its confidence interval achieves nominal coverage (see Angelopoulos et al. [2]). 
+
+• CI miscalibration (coverage failure): The PPI confidence interval formulas explicitly account for the uncertainty in the bias adjustment, yielding valid coverage even when the proxy’s native CI is overconfident. 
+
+## 3.4 Domain Level : Cross-Domain 
+
+## Transportability 
+
+Does the proxy-primary relationship hold across many domains? The 
+
+Domain Level tests stability of the proxy-primary bias 𝜙 𝑘 := 𝜃 ∗ 
+
+> 𝑘
+
+− 𝜃 𝑘 
+
+across 𝑘 = 1, . . . , 𝐾 − 1 historical contexts. We model the population estimands as 𝜃 𝑘 = 𝛾 0 + 𝛾 1 𝜃 ∗ 
+
+> 𝑘
+
++ 𝜀 𝑘 with 𝜀 𝑘 iid 
+
+∼ N ( 0, 𝜏 2) [ 14 , 19 ], fit via inverse-variance-weighted meta-regression [ 52 ]. Naive OLS on the noisy estimates is inconsistent due to attenuation from (𝜎 ∗ 
+
+> 𝑘
+
+)2). Per-domain sampling variances can be estimated when unit-level data are available for each domain; when unavailable, proxymate 
+
+falls back to unweighted OLS. The domain-level inverse-variance weights 𝑤 𝑘 = 1/𝜎 2 
+
+> 𝑘
+
+are distinct from the unit-level IW weights 𝑤 (𝑋 )
+
+at the Representativity Level and never co-occur; ˆ𝜏 2 estimation via DerSimonian-Laird or REML is in Appendix B.6. 
+
+3.4.1 Diagnostics. Aggregate association: Does a large proxy effect predict a large primary effect? This is measured by precision-weighted 𝑅 2, generalizing Buyse’s 𝑅 2 
+
+> trial
+
+[ 10 ] to arbitrary estimands. 
+
+Heterogeneity: Is the relationship stable across domains? This is measured by Cochran’s Q [ 13 ], 𝐼 2 [ 19 ], and 𝜏 2 [ 14 ]. High het-erogeneity means the relationship may not transport to the target domain. Prediction accuracy: Can we predict the primary in a held-out domain? This is measured by Leave-one-out (LOO) cross-validation MSE on the precision-weighted regression. proxymate 
+
+also reports effect sensitivity ( 𝛾 1 ≈ 1?) and directional alignment ( sign ( ˆ𝜃 𝑌 ) = sign ( ˆ𝜃 ∗  
+
+> 𝑌 ∗
+
+)?). A complete list of the Domain Level checks can be found in Table 6 in Appendix A. 
+
+3.4.2 Adjustments. 
+
+• Systematic cross-domain bias (intercept 𝛾 0 ≠ 0 or slope 
+
+𝛾 1 ≠ 1): Regression calibration fits the linear mapping from proxy to primary estimates across historical domains and uses it to predict the primary estimate in the target domain. The calibrated estimate is: 
+
+ˆ𝜃 cal  
+
+> 𝐾
+
+= ˆ𝛾 0 + ˆ𝛾 1 ˆ𝜃 ∗
+
+> 𝐾
+
+Wilkins-Reeves et al. [ 52 ] show that under the random-effects meta-analytic model, the calibrated confidence in-terval achieves nominal coverage for the primary estimand 
+
+𝜃 𝐾 as 𝐾 → ∞ , with width determined by both the proxy’s sampling error and the residual cross-domain heterogeneity. 
+
+• Estimate -level adjustment [ 52 ]: A complementary ap-proach models the residual proxy bias directly as 𝜙 𝑘 ∼N ( 𝜌, 𝛾 2), where 𝜌 is the mean bias across historical domains and 𝛾 2 is its between-domain variance. Note that 𝛾 2 (vari-ance of the bias 𝜙 𝑘 ) is a different quantity from 𝜏 2 (variance of the primary 𝜃 𝑘 around the regression line [ 52 ]); the two heterogeneity parameters live in the two adjustment for-mulations respectively and are not interchangeable. Both parameters are estimated by method of moments from the within-domain differences 𝑑 𝑘 = ˆ𝜃 ∗ 
+
+> 𝑘
+
+− ˆ𝜃 𝑘 .This approach has two advantages over regression calibra-tion: (i) it requires only aggregate estimates and covariances from historical domains (no individual-level data), making it applicable when only summary statistics are retained; (ii) it can be layered on top of any proxy estimator (including PPI-corrected ones), adjusting for whatever residual bias remains after the initial adjustment. For small 𝐾 , a domain bootstrap procedure propagates uncertainty in ( ˆ𝜌, ˆ𝛾 2) into the interval width. proxymate integrates both regression calibration and estimate-level adjustment as Domain Level adjustments. 
+
+• High heterogeneity (unstable relationship): When the rela-tionship varies unpredictably across domains, point predic-tion is unreliable. The residual variance cannot be corrected using the above two proposed adjustments In practice, regression calibration and the estimate-level adjust-ment can be applied sequentially: first calibrate the slope and inter-cept, then inflate the interval for residual heterogeneity. 
+
+3.4.3 Domain Level Limitations. The meta-analytic model requires a sufficient number of historical domains for reliable heterogeneity estimation. With fewer than 5 domains, Domain Level diagnostics are unreliable and the framework flags them accordingly. For point estimates of ( ˆ𝛾 0, ˆ𝛾 1, ˆ𝜏 2), the method-of-moments (DerSimonian– Laird) estimator is typically stable with 10 or more domains. For 
+
+interval coverage , however, the plug-in variance under-represents finite-𝐾 estimation uncertainty (Bridge B.6), and we recommend a cluster/domain bootstrap over the 𝐾 − 1 historical domains, as in [52], whenever 𝐾 ≲ 30 
+
+## 3.5 Extensions 
+
+proxymate also includes a validation planner that maps recurring proxy challenges (long maturation primary, restricted labels, low detectability, low sensitivity) to recommended check subsets. Fur-ther, each check is accompanied by configurable default thresholds which determines the passing criteria for the proxy. These thresh-olds are based on established conventions (such as SMD < 0.1 [ 5], 
+
+𝐼 2 < 25% [ 19 ]) and practitioner experience (Appendix C.2). A team making a high-stakes policy decision should tighten thresholds, while a team running exploratory analysis may relax them. Conference’17, July 2017, Washington, DC, USA Darmon et al. 
+
+Table 1: Diagnostic-to-adjustment bridge. Each row maps a failure mode to the diagnostic that detects it, the adjustment that addresses it, and the formal guarantee.                                                          
+
+> Failure Mode Level Diagnosed By Corrected By Guarantee
+> Labeling gap Representativity SMD, ESS IW reweighting Bridge B.1; [20, 40] Systematic unit bias Unit T-test, MAPE Additive bias adjustment Bridge B.2 Miscalibration Unit ECE, Brier Platt / Isotonic / MCGrad Bridge B.3; [ 33 ,43 ,54] Poor discrimination Unit ROC AUC, Kendall’s 𝜏 Proxy replacement None Aggregate bias Estimate Rel. abs. error, bootstrap cov. PPI [2] CI miscalibration Estimate Bootstrap coverage rate PPI intervals [2] No bias Estimate Coverage ≈nominal No adjustment Theorem 1 Residual bias after adjustment Domain LOO overlap rate Est.-level adj. [52] Cross-domain bias Domain 𝑅 2, slope, LOO error Regression calibration [52] High heterogeneity Domain 𝐼 2,𝜏 2Widen pred. intervals [52] Model misspecification Domain LOO error, 𝑅 2low Warn; report bounds –
+
+## 4 Applying proxymate at Meta 
+
+We now discuss how proxymate is used at Meta and the learnings from implementing proxymate to several applications. 2
+
+## 4.1 System and Workflow 
+
+proxymate is implemented as a modular Python library. All valida-tion checks inherit from a generic abstract base class parameterized by result and input types. New checks can be added by subclassing this base without modifying the orchestrator. The data handler provides a uniform interface for using in-memory data (Pandas dataframes). The comprehensive list of diagnostics available in the package is presented in Tables 3 - 6. The validation planner de-scribed in Section 3 (details in Appendix C.2) is implemented as a configurable routing table; practitioners can also select checks man-ually or programmatically. Artificial Intelligence based tools were used to assist in development of the package. Figure 1 illustrates the end-to-end proxymate workflow. Appendix C walks through it in detail. 
+
+## 4.2 Application overview 
+
+The proxymate framework has been used for multiple production measurement workflows at Meta. Table 2 summarizes proxymate ’s use across six production applications at Meta, grouped by mea-surement context. The applications span four distinct primary-outcome bottlenecks : Long maturation primary, Restricted Labels, Low detectability and Low sensitivity, and collectively exercise every component of the framework (Section 3): Representativity Level validation in three, Unit Level in all six, Estimate Level in five, 
+
+Domain Level in three, and Estimate Level adjustment in one. Table 2 illustrates proxymate ’s bidirectional role. In four appli-cations a validated proxy was used, unlocking strategic decision making and enabling ongoing experiment volume of ∼ 7,000 Long Attribution Window (LAW) conversion experiments annually. In the remaining two, all candidate proxies were rejected, preventing 
+
+> 2Reported percentages, counts, and per-arm statistics in this section and its case studies have been perturbed to preserve confidentiality; relative magnitudes and qualitative conclusions are preserved.
+
+biased downstream use in Ads quality (a personalization model that would otherwise have been trained on biased outcomes) and redi-recting proxy development toward an ensemble approach in Scams. Sections 4.3 and 4.4 walk through one validated case (Nonpayment) and one rejected case (Scams) in detail. 
+
+## 4.3 Case Study A: Long-term Outcome Prediction 
+
+Problem and setup. A financial risk team at Meta uses a nonpay-ment outcome that matures 60+ days post-treatment which is too slow for experiment decisions. An ML model was built to predict the matured outcome immediately, creating a candidate proxy for experiment decisions [ 38 ]. proxymate was used to validate the ML model as a proxy for experimental decision making. 
+
+Results. We applied proxymate across 22 historical experiments (𝐾 = 27 test versions) to validate the average treatment effect esti-mated through the ML model against the average treatment effect of the long maturity nonpayment outcome. Across all 27 compar-isons, the proxy showed strong Unit Level agreement (directional concordance) with the primary while Unit Level precision checks (𝑅 2, RMSE, Pearson 𝑟 ) failed. This is expected for a 60-day horizon with heavy-tailed revenues, where unit-level noise is intrinsic. Eval-uating at the Estimate and Domain Levels (§3) then tests whether this noise compromises aggregate inference. The scatter plot be-tween the treatment effects calculated through the primary and proxy (Figure 2) shows strong aggregate association ( 𝑅 2 = 0.82 )and near-one effect sensitivity ( 𝛾 1 = 0.98 ). Further, 23 of 27 arms are directionally aligned ( 85% ). Residual heterogeneity is negligible (𝐼 2 ≈ 0, ˆ𝜏 2 ≈ 0; Cochran’s 𝑄 = 22 .6 on 25 degrees of freedom, with p-value 𝑝 = 0.60 ). Deviations from the fit are indistinguish-able from within-arm sampling noise. LOO prediction accuracy nonetheless fails (MAE = 0.84 ; median per-arm SE = 0.41 ), reflect-ing intrinsic noise in the 60 -day primary rather than instability in the proxy–primary relationship. Based on these results, the proxy was deemed to be safe for direction-based decision making i.e. is the proxymate : Diagnosis and Adjustment of Proxy Estimates for Reliable Inference Conference’17, July 2017, Washington, DC, USA 
+
+Table 2: Impact of proxymate at Meta across six deployed applications. 
+
+Application Nonpayment Mobile perf LAW conversions Account type Scams Ads quality 
+
+Long-term nonpayment Mobile app performance Long-attribution-window (LAW) conversions User account type measure-ment Scams on a messaging platform Ads quality measurement 
+
+Measurement Context 
+
+Experimentation Experimentation Experimentation Prevalence monitoring Prevalence monitoring ML model training 
+
+Proxy chal-lenge(s) 
+
+Long maturation primary Low detectability, Restricted labels Long maturation primary Low sensitivity, Restricted labels Restricted labels Low sensitivity, Restricted labels 
+
+Problem descrip-tion 
+
+Net-of-nonpayment rev-enue (primary outcome) matures only 60+ days post-treatment, blocking quicker experiment readouts. End-user A/B testing is not permitted on app, so the primary outcome (e.g., startup time) is unobtain-able; employee A/B metrics have detectability and repre-sentativity gaps. LAW conversions (primary outcome) mature in 21 days versus a 7-day readout tar-get; experiments historically ignored LAW impact, caus-ing production regressions. The account type label (primary outcome) is human-labeled, unavailable on most units, and the labeled subset is non-uniform, and weighted prevalence estimates need defensible validation. The scam label (primary out-come) is human-labeled and unavailable on most units; we compare proxy options (one human-labeled, two LLM-based) for population-level prevalence. Ads quality signal (pri-mary outcome) is unavail-able at user level due to anonymization; user-level outcomes are needed for heterogeneous-effect per-sonalization models. 
+
+proxymate components applied 
+
+Representativity validation 
+
+✓ ✓ ✓
+
+Unit level valida-tion 
+
+✓ ✓ ✓ ✓ ✓ ✓
+
+Estimate level validation 
+
+✓ ✓ ✓ ✓ ✓
+
+Domain level validation 
+
+✓ ✓ ✓
+
+Estimate level adjustment 
+
+✓
+
+Data Scale 100K–100M rows each for 
+
+∼100 experiments 
+
+∼500K rows each for 3 experiments 
+
+∼35K units across 70 experi-ments 1–10M rows per time period across 50–100 time periods 10–50K rows ∼10K rows consisting of (experiment, date, user segment) combinations 
+
+Impact on proxy use 
+
+Proxy validated Proxy adjusted and vali-dated Proxy validated Proxy validated All proxy candidates re-jected All proxy candidates re-jected 
+
+Downstream im-pact from proxy use / validation 
+
+Validated proxy now powers all ∼300 annual experiments in the workstream and has led to significant organi-zational impact through multiple landed decisions. Validated proxy now drives 
+
+∼200 experiments annually and several launch decisions with estimated multiple billion incremental user sessions. Availability of a valid proxy enables measurement of LAW conversions impact in ∼7,000 experiments annually. Validated weighting methodology now used for account type trend reporting to company lead-ership. Validation identified seg-ments with varying proxy quality motivating an en-semble approach for further proxy development. Prevented deployment of a personalization model trained on biased proxy outcomes. 
+
+treatment effect positive or not but not for measuring magnitude of the treatment effect. 
+
+Impact. The validated proxy replaced the 60-day wait with a tiered decision policy: use its direction for go/no-go, apply the estimate-level adjustment when a calibrated prediction interval is needed, and defer to the mature estimate for precise effect sizes. It now supports ∼300 experiments annually and has enabled multiple landed decisions. 
+
+## 4.4 Case Study B: Scam Prevalence 
+
+Problem and setup. To estimate scam prevalence on a messaging platform, expert review (primary) is available only for a small la-beled sample drawn from a review queue, which over-represents flagged content and under-represents benign content, while an ML classifier (proxy) scores all content. The dataset has >1M target accounts; ∼42K have paired expert and proxy labels. We evaluate three proxy candidates: Proxy A (scaled human review), Proxy B and C (two LLM classifiers). This use case exercises the Representa-tivity , Unit , and Estimate Levels .
+
+Results. The Representativity Level flags a data-quality problem. Proxy A passes sample representativity (SMD within bounds) but fails effective sample size: the IW weights are highly variable, in-dicating the labeled sample is concentrated in a small covariate region, so IW cannot fully recover population-level estimates (Ap-pendix B.8). At the Unit Level , Proxy A agrees strongly with expert review on the unweighted sample. After IW reweighting to the tar-get population, classification sensitivity (true positive rate) drops sharply: 17.3% for Proxy A, 31.6% for B, 30.1% for C. The proxies per-form well on over-represented flagged accounts but poorly on the broader population. None of the proxies pass Unit Level validation. At the Estimate Level , the naive expert-review prevalence is 31.9%; the IW-corrected estimate is 3.0% (roughly 11 × lower, best-available under covariate shift, not ground truth). PPI applied to Proxy A yields 10.7%, down 3.3 pp from its naive proxy estimate of 13.9%, still ∼3.5 × the IW-corrected primary. Unlike Case A, the aggregate checks do not rescue the proxy from its Unit Level failure, so the framework rejects all three candidates. 
+
+Impact. Two corrections operate at different points in the pipeline and should not be conflated. IW is a sample-level correction from the 
+
+Representativity Level : it reweights the biased labeled sample so any estimate computed on it (primary or proxy) targets the population rather than the labeled subset, moving the primary prevalence from 31.9% labeled to 3.0% population. PPI is a proxy-level correction from the Estimate Level : it debiases the proxy against the primary within Conference’17, July 2017, Washington, DC, USA Darmon et al. 
+
+Figure 2: Case Study A: Scatter plot capturing the Domain Level validation across 22 experiments (27 arms) comparing the treatment effect measured through primary and proxy. 
+
+the labeled sample (13.9% to 10.7% for Proxy A) but assumes the labeled sample already represents the population. Applied without the Representativity Level ’s diagnostic, PPI would report Proxy A at ∼10.7% as the population estimate, still ∼3× the IW-corrected value. proxymate ’s contribution is the ordering: representativity first flags the sample as unreliable via ESS failure; Unit Level then rejects all three candidates after reweighting, motivating building a proxy using an ensemble approach rather than a single validated proxy. 
+
+## 4.5 Learnings 
+
+Applying proxymate across the applications at Meta (such as the ones in Table 2) surfaced several recurring patterns about how proxy validation operates in practice and where it delivers value. Validation requires paired proxy and primary signals jointly ob-served in the same population, but in practice the proxy is often not logged ahead of time, the primary matures only after a fresh cohort accrues, and the two frequently live in distinct data systems whose join keys must be reconstructed. Once assembled, the methodology itself runs as a single notebook execution. A second integration constraint shapes proxy selection: validated proxies must compose with the existing experimentation or reporting stack, and several applications accordingly chose a proxy that did not maximize statis-tical quality but fit cleanly into existing decision-rule infrastructure. This was an important production tradeoff: the best statistical proxy was not always the best deployable proxy. In multiple applications the validation layer’s primary contri-bution was to reject candidate proxies that would otherwise have entered downstream decision pipelines. Each rejection triggers a tractable next step, such as building a new proxy or changing the sampling design. Mature applications run proxymate repeatedly across succes-sive proxy metric versions or for ongoing monitoring. The data and sampling infrastructure assembled for the first pass should be treated as a persistent asset. 
+
+proxymate ’s modular structure allows for easy application spe-cific development. Estimate Level checks can be reused to build custom sensitivity analyses (e.g., comparing a weighted estimate 
+
+Í𝑖 ∈𝑁 𝑤 𝑖 𝑌 𝑖 to a perturbed one Í𝑖 ∈𝑁 ∗ 𝑤 ∗ 
+
+> 𝑖
+
+𝑌 𝑖 where a subset of labels is dropped), even when the underlying weighting logic sits outside the package. 
+
+## 5 Conclusion 
+
+We presented proxymate , a four-level framework for proxy esti-mate validation that spans population validity ( Representativity Level ), unit-level measurement quality ( Unit Level ), aggregate-level decision validity ( Estimate Level ), and cross-domain transportabil-ity ( Domain Level ). Beyond assembling existing diagnostics into a pipeline, the paper contributes: (i) the four-level framework itself, applicable uniformly to A/B surrogates, prevalence classifiers, and monitoring proxies; (ii) a diagnostic-to-adjustment bridge that maps each failure mode to a principled adjustment, formalised through Theorem 1, and Bridges B.1–B.7; and (iii) empirical validation across six production applications at Meta, with two case studies (long-term outcome prediction and prevalence estimation) demonstrating that proxymate identifies proxy failures that would otherwise lead to incorrect decisions. Lastly (iv) a modular open-source package for practitioners. 
+
+Limitations. proxymate validates one proxy against one primary outcome at a time and establishes statistical agreement rather than causal mechanisms. Future directions include sequential validation via confidence sequences, multi-outcome validation, and automated proxy selection using proxymate diagnostics as an objective. 
+
+## 6 Acknowledgments 
+
+We would like to thank Christine Agarwal, Aude Hofleitner, Thomas Leeper, Udi Weinsberg for their inputs in conceptualizing Prox-ymate . Further, we express our gratitude to Inbar Kaslasi for her help in building the Proxymate platform. 
+
+## References                
+
+> [1] Anastasios N. Angelopoulos and Stephen Bates. 2023. A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification. Founda-tions and Trends in Machine Learning (2023). [2] Anastasios N. Angelopoulos, Stephen Bates, Clara Fannjiang, Michael I. Jordan, and Tijana Zrnic. 2023. Prediction-Powered Inference. Science 382, 6671 (2023), 669–674. [3] Anastasios N. Angelopoulos, John C. Duchi, and Tijana Zrnic. 2023. PPI++: Efficient Prediction-Powered Inference. arXiv preprint arXiv:2311.01453 (2023). [4] Susan Athey, Raj Chetty, Guido W. Imbens, and Hyunseung Kang. 2019. The Surrogate Index: Combining Short-Term Proxies to Estimate Long-Term Treatment Effects More Rapidly and Precisely . Working Paper. NBER. [5] Peter C. Austin. 2011. An Introduction to Propensity Score Methods for Reducing the Effects of Confounding in Observational Studies. Multivariate Behavioral Research 46, 3 (2011), 399–424. [6] Aurélien Bibaut, Winston Chou, Simon Ejdemyr, and Nathan Kallus. 2024. Learn-ing the Covariance of Treatment Effects Across Many Weak Experiments. In
+> Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining . 153–162.
+
+proxymate : Diagnosis and Adjustment of Proxy Estimates for Reliable Inference Conference’17, July 2017, Washington, DC, USA 
+
+[7] J. Martin Bland and Douglas G. Altman. 1986. Statistical Methods for Assessing Agreement Between Two Methods of Clinical Measurement. The Lancet 327, 8476 (1986), 307–310. [8] Glenn W. Brier. 1950. Verification of Forecasts Expressed in Terms of Probability. 
+
+Monthly Weather Review 78, 1 (1950), 1–3. [9] Marc Buyse and Geert Molenberghs. 1998. Criteria for the Validation of Surrogate Endpoints in Randomized Experiments. Biometrics 54, 4 (1998), 1014–1029. [10] Marc Buyse, Geert Molenberghs, Tomasz Burzykowski, Didier Renard, and He-lena Geys. 2000. The Validation of Surrogate Endpoints in Meta-Analyses of Randomized Experiments. Biostatistics 1, 1 (2000), 49–67. [11] Raymond J. Carroll, David Ruppert, Leonard A. Stefanski, and Ciprian M. Crainiceanu. 2006. Measurement Error in Nonlinear Models: A Modern Perspective 
+
+(2nd ed.). Chapman and Hall/CRC. [12] Xingran Chen, Tyler McCormick, Bhramar Mukherjee, and Zhenke Wu. 2025. A Unified Framework for Inference with General Missingness Patterns and Machine Learning Imputation. arXiv preprint arXiv:2508.15162 (2025). [13] William G. Cochran. 1954. The Combination of Estimates from Different Experi-ments. Biometrics 10, 1 (1954), 101–129. [14] Rebecca DerSimonian and Nan Laird. 1986. Meta-Analysis in Clinical Trials. 
+
+Controlled Clinical Trials 7, 3 (1986), 177–188. [15] George Forman. 2008. Quantifying Counts and Costs via Classification. Data Mining and Knowledge Discovery 17, 2 (2008), 164–206. [16] Chuan Guo, Geoff Pleiss, Yu Sun, and Kilian Q. Weinberger. 2017. On Calibration of Modern Neural Networks. In Proceedings of the 34th International Conference on Machine Learning (ICML) . 1321–1330. [17] Somit Gupta, Liudmila Ulanova, Siddharth Bhardwaj, Pavel Dmitriev, Peter Raff, and Aleksander Fabijan. 2019. Top Challenges from the First Practical Online Controlled Experiments Summit. ACM SIGKDD Explorations Newsletter 21, 1 (2019), 20–35. [18] James A. Hanley and Barbara J. McNeil. 1982. The Meaning and Use of the Area Under a Receiver Operating Characteristic (ROC) Curve. Radiology 143, 1 (1982), 29–36. [19] Julian P. T. Higgins, Simon G. Thompson, Jonathan J. Deeks, and Douglas G. Altman. 2003. Measuring Inconsistency in Meta-Analyses. BMJ 327, 7414 (2003), 557–560. [20] D. G. Horvitz and D. J. Thompson. 1952. A Generalization of Sampling Without Replacement from a Finite Universe. J. Amer. Statist. Assoc. 47, 260 (1952), 663– 685. [21] Wenlong Ji, Lihua Lei, and Tijana Zrnic. 2025. Predictions as Surrogates: Re-visiting Surrogate Outcomes in the Age of AI. arXiv preprint arXiv:2501.09731 
+
+(2025). [22] Maurice G. Kendall. 1938. A New Measure of Rank Correlation. Biometrika 30, 1/2 (1938), 81–93. [23] Leslie Kish. 1965. Survey Sampling . John Wiley & Sons. [24] Dan M. Kluger, Kerri Lu, Tijana Zrnic, Sherrie Wang, and Stephen Bates. 2025. Prediction-Powered Inference with Imputed Covariates and Nonuniform Sam-pling. arXiv preprint arXiv:2501.18577 (2025). [25] A. N. Kolmogorov. 1933. Sulla Determinazione Empirica di una Legge di Dis-tribuzione. Giornale dell’Istituto Italiano degli Attuari 4 (1933), 83–91. [26] Lawrence I-Kuei Lin. 1989. A Concordance Correlation Coefficient to Evaluate Reproducibility. Biometrics 45, 1 (1989), 255–268. [27] Reagan Mozer. 2026. PPI is the Difference Estimator: Recognizing the Survey Sampling Roots of Prediction-Powered Inference. arXiv preprint arXiv:2603.19160 
+
+(2026). [28] Mahdi Pakdaman Naeini, Gregory Cooper, and Milos Hauskrecht. 2015. Obtaining Well Calibrated Probabilities Using Bayesian Binning. In Proceedings of the AAAI Conference on Artificial Intelligence . 2901–2907. [29] Viet-An Nguyen, Peibei Shi, Jagdish Ramakrishnan, Udi Weinsberg, Henry C. Lin, Steve Metz, Neil Chandra, Jane Jing, and Dimitris Kalimeris. 2020. CLARA: Confi-dence of Labels and Raters. In Proceedings of the 26th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining . 2542–2552. [30] Sharon-Lise T. Normand, Mary Beth Landrum, Edward Guadagnoli, John Z. Ayanian, Thomas J. Ryan, Paul D. Cleary, and Barbara J. McNeil. 2001. Validat-ing Recommendations for Coronary Angiography Following Acute Myocardial Infarction in the Elderly. Journal of Clinical Epidemiology 54, 4 (2001), 387–398. [31] Judea Pearl and Elias Bareinboim. 2016. Causal Inference and the Data-Fusion Problem. Proceedings of the National Academy of Sciences 113, 27 (2016), 7345– 7352. [32] Karl Pearson. 1895. Notes on Regression and Inheritance in the Case of Two Parents. Proceedings of the Royal Society of London 58 (1895), 240–242. [33] John C. Platt. 1999. Probabilistic Outputs for Support Vector Machines and Comparisons to Regularized Likelihood Methods. In Advances in Large Margin Classifiers . Vol. 10. 61–74. [34] Ross L. Prentice. 1989. Surrogate Endpoints in Clinical Trials: Definition and Operational Criteria. Statistics in Medicine 8, 4 (1989), 431–440. [35] Walter J. Rogan and Beth Gladen. 1978. Estimating Prevalence from the Results of a Screening Test. American Journal of Epidemiology 107, 1 (1978), 71–76. [36] Paul R. Rosenbaum. 2002. Observational Studies (2nd ed.). Springer. 
+
+Table 3: Representativity Level checks (5 checks). 
+
+Check Question Statistic 
+
+Coverage What fraction is covered? | V 𝑘 |/| 𝑃 𝑘 |
+
+Sample Representativity Is V𝑘 representative of 
+
+𝑃 𝑘 ?Max SMD, KS Effective Sample Size Are weights stable? Kish’s ESS Weight Extremity Any dominant weights? Max/min, CV Weighting Effectiveness Does IW reduce gap? Gap reduction 
+
+Abbreviations: V𝑘 = validation (labeled) data in domain 𝑘 ; 𝑃 𝑘 = population distribution in domain 𝑘 ; | V 𝑘 | and |𝑃 𝑘 | is number of units in the validation data and underlying population in domain 𝑘 respectively; SMD = standardized mean difference between V𝑘 and 𝑃 𝑘 per covariate; Max SMD = maximum SMD across all covariates; KS = two-sample Kolmogorov–Smirnov statistic per covariate; ESS = Kish’s effective sample size, (Í𝑖 𝑤 𝑖 )2/Í𝑖 𝑤 2 
+
+> 𝑖
+
+; CV = coefficient of variation of the weights; IW = importance weighting; Gap reduction statistic is the reduction in Max SMD after reweighting. [37] Paul R. Rosenbaum and Donald B. Rubin. 1983. The Central Role of the Propensity Score in Observational Studies for Causal Effects. Biometrika 70, 1 (1983), 41–55. [38] Tal Sarig, Aurélien Bibaut, and Simon Ejdemyr. 2025. Mind the Gap: Utilizing Delayed Labels to Improve Proxy Metric Validation. arXiv preprint (2025). [39] Amit Sharma and Emre Kiciman. 2020. DoWhy: An End-to-End Library for Causal Inference. arXiv preprint arXiv:2011.04216 (2020). [40] Hidetoshi Shimodaira. 2000. Improving Predictive Inference Under Covariate Shift by Weighting the Log-Likelihood Function. Journal of Statistical Planning and Inference 90, 2 (2000), 227–244. [41] Masashi Sugiyama, Shinichi Nakajima, Hisashi Kashima, Paul Buenau, and Mo-toaki Kawanabe. 2007. Direct Importance Estimation with Model Selection and Its Application to Covariate Shift Adaptation. In Advances in Neural Information Processing Systems , Vol. 20. [42] Masashi Sugiyama, Taiji Suzuki, and Takafumi Kanamori. 2012. Density Ratio Estimation in Machine Learning . Cambridge University Press. [43] Niek Tax, Lorenzo Perini, Fridolin Linder, Daniel Haimovich, Dima Karamshuk, Nastaran Okati, Milan Vojnovic, and Pavlos Athanasios Apostolopoulos. 2026. MCGrad: Multicalibration at Web Scale. In Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining V. 1 . 2470–2481. [44] Nilesh Tripuraneni, Lee Richardson, Alexander D’Amour, Jacopo Soriano, and Steve Yadlowsky. 2024. Choosing a Proxy Metric from Past Experiments. arXiv preprint arXiv:2309.07893 (2024). [45] Lars van der Laan and Mark J. van der Laan. 2026. Calibeating Prediction-Powered Inference. arXiv preprint arXiv:2604.21260 (2026). [46] Tyler J. VanderWeele. 2013. Surrogate Measures and Consistent Surrogates. 
+
+Biometrics 69, 3 (2013), 561–569. [47] Areti Angeliki Veroniki, Dan Jackson, Wolfgang Viechtbauer, Ralf Bender, Jack Bowden, Guido Knapp, Oliver Kuss, Julian P. T. Higgins, Dean Langan, and Georgia Salanti. 2016. Methods to Estimate the Between-Study Variance and Its Uncertainty in Meta-Analysis. Research Synthesis Methods 7, 1 (2016), 55–79. [48] Cedric Villani. 2009. Optimal Transport: Old and New . Springer. [49] Vladimir Vovk, Alex Gammerman, and Glenn Shafer. 2005. Algorithmic Learning in a Random World . Springer. [50] Siruo Wang, Tyler H. McCormick, and Jeffrey T. Leek. 2020. Methods for Correct-ing Inference Based on Outcomes Predicted by Machine Learning. Proceedings of the National Academy of Sciences 117, 48 (2020), 30266–30275. [51] Bernard L. Welch. 1947. The Generalization of “Student’s” Problem When Several Different Population Variances Are Involved. Biometrika 34, 1/2 (1947), 28–35. [52] Steve Wilkins-Reeves, Alexandra Darmon, and Deeksha Sinha. 2026. Estimate-Level Adjustment for Inference with Proxies Under Random Distribution Shifts. 
+
+Submitted to KDD ’26 Research Track. arXiv preprint (forthcoming) (2026). [53] Siqi Wu and Paul Resnick. 2024. Calibrate-Extrapolate: Rethinking Prevalence Estimation with Black Box Classifiers. In Proceedings of the International AAAI Conference on Web and Social Media , Vol. 18. 1634–1647. [54] Bianca Zadrozny and Charles Elkan. 2002. Transforming Classifier Scores into Accurate Multiclass Probability Estimates. In Proceedings of the 8th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining . 694–699. [55] Alessandro Zito, Dylan Greaves, Jacopo Soriano, and Lee Richardson. 2025. Pareto Optimal Proxy Metrics. arXiv preprint arXiv:2307.01000 (2025). 
+
+## A Complete Check Inventory 
+
+Tables 3–6 list all 46 checks implemented in proxymate .Conference’17, July 2017, Washington, DC, USA Darmon et al. 
+
+Table 4: Unit Level checks (27 checks). 
+
+Check Question Statistic 
+
+Accuracy 
+
+T-Test Mean diff. = 0? 𝑡 -statistic MAPE Avg. % error? |𝑌 ∗ − 𝑌 |/| 𝑌 |
+
+Precision 
+
+𝑅 2 Variance explained? 𝑅 2
+
+RMSE Typical error? √MSE Pearson 𝑟 Linear association? 𝑟 
+
+Agreement 
+
+Lin’s CCC Identity line? CCC Bland-Altman Limits of agreement? bias ± LoA Dir. Concordance Sign agreement? % concordant 
+
+Calibration 
+
+ECE Well-calibrated? ECE Brier Score MSE of probs? Brier Brier Skill vs. base rate? BSS Calib. Ratio Pred/obs mean? ¯𝑌 ∗/ ¯𝑌 
+
+Kuiper/ECCE Calibration deviation? ECCE 
+
+Discrimination 
+
+ROC AUC Rank probability? AUC PR AUC Prec-recall AUC? PR-AUC Kendall 𝜏 Rank correlation? 𝜏 
+
+Spearman 𝜌 Monotonic assoc.? 𝜌 
+
+Classif. Accuracy Overall accuracy? (𝑇 𝑃 +𝑇 𝑁 )/ 𝑁 
+
+Classif. Precision Precision? 𝑇 𝑃 /( 𝑇 𝑃 +𝐹 𝑃 )
+
+Sensitivity Recall / TPR? TPR Specificity TNR? TNR NPV Neg. pred. value? 𝑇 𝑁 /( 𝑇 𝑁 +𝐹 𝑁 )
+
+MCC Matthews corr.? MCC Confusion Matrix Full confusion? 2×2 table 
+
+Distributional 
+
+KS Distance Max CDF diff? sup |𝐹 −𝐺 |
+
+TV Distance Total variation? TV Wasserstein-1 Earth mover’s? 𝑊 1  
+
+> Abbreviations: MAPE = mean absolute percentage error; RMSE = root MSE; CCC = concordance correlation coefficient; LoA = limits of agreement; ECE = ex-pected calibration error; BSS = Brier skill score; ECCE = expected calibration classification error; AUC = area under curve; PR-AUC = precision-recall AUC; TPR = true positive rate; TNR = true negative rate; NPV = negative predictive value; MCC = Matthews correlation coefficient; KS = Kolmogorov–Smirnov; TV = total variation;
+
+𝑊 1 = Wasserstein-1 distance. 
+
+## B Assumptions and Guarantees for Supported Adjustments 
+
+This appendix formalizes the “diagnostic-to-adjustment bridge” summarized in Table 1. Each bridge result has two parts: (i) an assumption that the diagnostic is intended to check (or approxi-mate), and (ii) a guarantee that the corresponding adjustment is valid when the assumption holds. Throughout this appendix, 𝑃 corresponds to the domain popu-lation 𝑃 𝑘 of the main body and 𝑄 corresponds to the conditional distribution 𝑃 𝑘 (· | 𝑅 𝑖 = 1), i.e., the law of observations for units whose primary outcome 𝑌 𝑖 is observed. Expectations under 𝑃 and 𝑄 
+
+are denoted E𝑃 [·] and E𝑄 [·] , and P(·) , Q(·) denotes the probability of an event (Section 2 convention). 
+
+Table 5: Estimate Level checks (8 checks). 
+
+Check Question Statistic 
+
+Aggregate Bias Proxy close to primary? Rel. abs. error Inferential Val. Proxy CI covers primary? Bootstrap cov. CI Coverage Coverage across resamples? Empirical cov. CI Overlap CIs overlap? Overlap coeff. Relative Precision Proxy as precise? SE ratio Sign Agreement Same direction? Binary Effect Size Agr. Within each other’s CI? Bidir. coverage Unbiasedness Bootstrap mean centered? Bias/SE   
+
+> Abbreviations. Rel. abs. error
+
+= | ˆ𝜃 𝑘 − ˆ𝜃 ∗ 
+
+> 𝑘
+
+|/| ˆ𝜃 𝑘 |; CI = confidence interval; Bidir. coverage = both CIs contain each other’s point estimate; SE = standard error; Overlap coeff. = Jaccard-style overlap of the primary and proxy CIs. Bootstrap. 
+
+𝐵 nonparametric resamples of the labeled rows, given percentile (e.g., 95% )CI. Bootstrap cov. = indicator that the resampled ˆ𝜃 ∗  
+
+> 𝑘 CI contains
+
+ˆ𝜃 𝑘 ; Empirical cov. = fraction of 𝐵 resamples whose recomputed CI contains ˆ𝜃 𝑘 ; Bias/SE =
+
+| ¯𝜃 ∗ 
+
+> boot
+
+− ˆ𝜃 ∗ 
+
+> 𝑘
+
+|/ cSE ( ˆ𝜃 ∗ 
+
+> 𝑘
+
+).
+
+Table 6: Domain Level checks (6 checks). 
+
+Check Question Statistic 
+
+Aggregate Assoc. Large proxy → large pri-mary? 
+
+𝑅 2
+
+Effect Sensitivity One-to-one? Slope 𝛾 1
+
+Dir. Alignment Same direction? Concordance Prediction Acc. Predict out-of-sample? LOO MSE/MAE Heterogeneity Stable across domains? 𝐼 2, 𝜏 2, Q Residual Autocorr. Independent residuals? Durbin-Watson   
+
+> Abbreviations: Aggregate Assoc. = aggregate association; Dir. Alignment = direc-tional alignment; Prediction Acc. = prediction accuracy; LOO = leave-one-out cross-validation; MSE = mean squared error; MAE = mean absolute error;
+
+𝑅 2 = co-efficient of determination (proportion of variance in the primary explained by the proxy across domains); 𝛾 1 = slope of the primary-on-proxy meta-regression; 
+
+𝐼 2 = proportion of total variance attributable to between-domain heterogeneity; 
+
+𝜏 2 = between-domain variance in the units of the effect; Q = Cochran’s 𝑄 statis-tic; Durbin-Watson = Durbin-Watson autocorrelation statistic. 
+
+We consider generic estimands of the form 
+
+𝜃 := E𝑃 [𝑔 (𝑌 )] and 𝜃 ∗ := E𝑃 [𝑔 (𝑌 ∗)] ,
+
+where 𝑔 is a measurable function (e.g., identity for means, indica-tor for prevalence, or any per-unit contribution to an aggregate estimand). When required, we assume integrability so these expec-tations exist. 
+
+## B.1 Bridge 1: Representativity diagnostics → IW Reweighting 
+
+Assumption (Selection on observables / covariate shift). The la-beled sample 𝑄 satisfies: (1) Conditional invariance: 
+
+P(𝑌, 𝑌 ∗ | 𝑋 ) = Q(𝑌, 𝑌 ∗ | 𝑋 ). (1) (2) Positivity: if 𝑝 (𝑥 ) > 0 then 𝑞 (𝑥 ) > 0.Define the importance weight 
+
+𝑤 (𝑥 ) := 𝑝 (𝑥 )
+
+𝑞 (𝑥 ) .proxymate : Diagnosis and Adjustment of Proxy Estimates for Reliable Inference Conference’17, July 2017, Washington, DC, USA 
+
+Proposition 1 (IW identity). Under (1) and positivity, for any integrable function 𝑔 (𝑂 ),
+
+E𝑃 [𝑔 (𝑂 )] = E𝑄 
+
+𝑤 (𝑋 ) 𝑔 (𝑂 ) .
+
+Proof. By the law of iterated expectation and (1), 
+
+E𝑄 [𝑤 (𝑋 )𝑔 (𝑂 )] =
+
+∫
+
+𝑤 (𝑥 ) E𝑄 [𝑔 (𝑂 ) | 𝑋 = 𝑥 ] 𝑞 (𝑥 ) 𝑑𝑥 
+
+=
+
+∫
+
+E𝑃 [𝑔 (𝑂 ) | 𝑋 = 𝑥 ] 𝑝 (𝑥 ) 𝑑𝑥 
+
+= E𝑃 [𝑔 (𝑂 )] .
+
+□
+
+Interpretation (why SMD/ESS are part of the bridge). Representa-tivity diagnostics such as standardized mean differences (SMD) and two-sample tests on 𝑋 are aimed at assessing whether the covariate density 𝑞 (𝑥 ) plausibly matches 𝑝 (𝑥 ), and whether reweighting to align 𝑞 (𝑥 ) to 𝑝 (𝑥 ) is feasible. Weight stability diagnostics (e.g., Kish effective sample size) assess whether the variance inflation induced by 𝑤 (𝑋 ) is acceptable; when the effective sample size is small, IW estimators have high variance and are sensitive to model misspec-ification and finite-sample noise, motivating caution or fallback strategies (targeted labeling, narrowing target, sensitivity analysis). 
+
+## B.2 Bridge 2: Systematic Unit Bias Diagnostics 
+
+## → Additive Bias Correction 
+
+Assumption (additive proxy bias). Suppose the proxy admits a constant additive bias 
+
+E𝑃 [𝑌 ∗ − 𝑌 ] = 𝑏, (2) for some finite 𝑏 (possibly domain-specific). The stronger unit-level decomposition 𝑌 ∗ = 𝑌 + 𝑏 + 𝜀 with E[𝜀 ] = 0 is sufficient but not necessary for the mean-estimand correction below. 
+
+Proposition 2 (Additive bias correction for mean esti-mands). Assume (2) . Let 𝑏 = E𝑃 [𝑌 ∗ − 𝑌 ] and define the corrected proxy ˜𝑌 ∗ := 𝑌 ∗ − 𝑏 . Then 
+
+E𝑃 [ ˜𝑌 ∗] = E𝑃 [𝑌 ].
+
+If 𝑏 is estimated from representative paired data (or IW-reweighted paired data), then the plug-in correction ˜𝑌 ∗ := 𝑌 ∗ − ˆ𝑏 yields an asymptotically unbiased estimator of E𝑃 [𝑌 ].
+
+Proof. By linearity of expectation, 
+
+E𝑃 [ ˜𝑌 ∗] = E𝑃 [𝑌 ∗ − 𝑏 ] = E𝑃 [𝑌 ∗] − E𝑃 [𝑌 ∗ − 𝑌 ] = E𝑃 [𝑌 ].
+
+Consistency/unbiasedness of ˆ𝑏 follows from standard laws of large numbers under representative sampling (or Proposition 1 under IW). □
+
+Bridge logic. Unit -level bias diagnostics (e.g., 𝑡 -tests of E[𝑌 ∗ −
+
+𝑌 ] = 0) are designed to detect violations of 𝑏 ≈ 0. When violated, Proposition 2 shows the additive correction targets exactly this failure mode. 
+
+## B.3 Bridge 3: Miscalibration Diagnostics →
+
+## Calibration Adjustments 
+
+Let 𝑌 ∈ { 0, 1} and let 𝑆 be a proxy score (often 𝑆 = 𝑌 ∗) intended to approximate P(𝑌 = 1 | ·) . Define the calibration function 
+
+𝑚 (𝑠 ) := P(𝑌 = 1 | 𝑆 = 𝑠 ).
+
+Proposition 3 (Perfect calibration via the true calibra-tion map). The transformed score ˜𝑆 := 𝑚 (𝑆 ) is calibrated: 
+
+E[𝑌 | ˜𝑆 ] = ˜𝑆 a.s. 
+
+Proof. Using iterated expectations, 
+
+E[𝑌 | 𝑚 (𝑆 )] = EE[𝑌 | 𝑆 ] | 𝑚 (𝑆 ) = E[𝑚 (𝑆 ) | 𝑚 (𝑆 )] = 𝑚 (𝑆 ).
+
+□
+
+Model-based calibration (Platt scaling). If 𝑚 (𝑠 ) = 𝜎 (𝑎𝑠 + 𝑏 ) for some 𝑎, 𝑏 and logistic sigmoid 𝜎 (·) , then fitting ( ˆ𝑎, ˆ𝑏 ) by maximum likelihood yields ˆ𝑚 (𝑠 ) = 𝜎 ( ˆ𝑎𝑠 + ˆ𝑏 ) which is consistent for 𝑚 (𝑠 )
+
+under standard regularity conditions; combined with Proposition 3, this implies asymptotically vanishing calibration error. 
+
+Nonparametric calibration (isotonic regression). If 𝑚 (𝑠 ) is mono-tone nondecreasing, isotonic regression estimates ˆ𝑚 that is 𝐿 2-consistent for 𝑚 under mild conditions, implying calibration error converges to zero as sample size grows. 
+
+Bridge logic. Calibration diagnostics (ECE, Brier score) detect 
+
+𝑚 (𝑠 ) ≠ 𝑠 in aggregate. The corresponding adjustments (Platt/iso-tonic/multicalibration) aim to estimate 𝑚 within an appropriate function class; Proposition 3 provides the target guarantee: replac-ing 𝑆 by ˆ𝑚 (𝑆 ) yields calibrated probabilities in the limit when 
+
+ˆ𝑚 → 𝑚 .
+
+## B.4 Bridge 4: Estimate Level Bias/Coverage Diagnostics → PPI 
+
+Assume the proxy is available for all 𝑁 target units, and we have a labeled set 𝐿 of size 𝑛 with paired (𝑌 𝑖 , 𝑌 ∗ 
+
+> 𝑖
+
+) drawn representatively from the target population (or made representative via IW). We write 𝑔 for the unit level function throughout. Define 
+
+𝜃 := E𝑃 [𝑔 (𝑌 )] , 𝜃 ∗ := E𝑃 [𝑔 (𝑌 ∗)] , Δ := 𝑔 (𝑌 ) − 𝑔 (𝑌 ∗).
+
+The prediction-powered inference (PPI) estimator is 
+
+ˆ𝜃 PPI := 1
+
+𝑁 
+
+> 𝑁
+
+∑︁ 
+
+> 𝑗 =1
+
+𝑔 (𝑌 ∗ 
+
+> 𝑗
+
+) + 1
+
+𝑛 ∑︁ 𝑖 ∈𝐿 
+
+ 𝑔 (𝑌 𝑖 ) − 𝑔 (𝑌 ∗ 
+
+> 𝑖
+
+) = ˆ𝜃 ∗ 
+
+> all
+
++ ˆΔ𝐿 . (3) 
+
+Proposition 4 (Unbiasedness of PPI). If 𝐿 is representative of 𝑃 
+
+for the joint law of (𝑌, 𝑌 ∗) (or IW-corrected to be), then E[ ˆ𝜃 PPI ] = 𝜃 .
+
+Proof. Taking expectations in (3), 
+
+E[ ˆ𝜃 PPI ] = E[𝑔 (𝑌 ∗)] + E[𝑔 (𝑌 ) − 𝑔 (𝑌 ∗)] = E[𝑔 (𝑌 )] = 𝜃 . 
+
+□
+
+Proposition 5 (Asymptotic variance and Wald intervals). 
+
+If ˆ𝜃 ∗ 
+
+> all
+
+and ˆΔ𝐿 are computed on independent samples (e.g., via sample splitting) then 
+
+Var ( ˆ𝜃 PPI ) = 𝜎 2
+
+> ∗
+
+𝑁 + 𝜎 2
+
+> Δ
+
+𝑛 ,Conference’17, July 2017, Washington, DC, USA Darmon et al. 
+
+where 𝜎 2 
+
+> ∗
+
+= Var (𝑔 (𝑌 ∗)) and 𝜎 2 
+
+> Δ
+
+= Var (Δ). Plug-in estimates yield asymptotically valid Wald confidence intervals by the CLT. 
+
+Proof. By independence, Var ( ˆ𝜃 PPI ) = Var ( ˆ𝜃 ∗
+
+> all
+
+) + Var ( ˆΔ𝐿 ) =
+
+𝜎 2 
+
+> ∗
+
+/𝑁 + 𝜎 2
+
+> Δ
+
+/𝑛 . The CLT and Slutsky’s theorem yield Wald validity. 
+
+□
+
+Bridge logic. Estimate -level diagnostics flag (i) aggregate bias 
+
+𝜃 ∗ − 𝜃 ≠ 0 and/or (ii) CI miscalibration (e.g., poor coverage when treating proxy-based intervals as intervals for 𝜃 ). Proposition 4 shows PPI corrects the bias term, and Proposition 5 shows the corrected interval must widen by the additional 𝜎 2
+
+> Δ
+
+/𝑛 uncertainty term. 
+
+## B.5 Bridge 5: “No Bias” Diagnostics → Skip Adjustment (Gating Rule) 
+
+Let ˆ𝜃 ∗ 
+
+> 𝐾
+
+be a proxy estimator with bias 𝜙 = 𝜃 ∗ 
+
+> 𝐾
+
+− 𝜃 𝐾 and vari-ance 𝜎 2 
+
+> ∗
+
+/𝑁 , and let ˆ𝜃 PPI  
+
+> 𝐾
+
+be the PPI-corrected estimator using a labeled sample of size 𝑛 under the assumptions of Proposition 4 and Proposition 5, with adjustment variance 𝜎 2
+
+> Δ
+
+/𝑛 where 𝜎 2 
+
+> Δ
+
+=
+
+Var (𝑔 (𝑌 ) − 𝑔 (𝑌 ∗)) .
+
+Theorem 1 (Unnecessary adjustment inflates MSE). 
+
+MSE ( ˆ𝜃 PPI  
+
+> 𝐾
+
+) < MSE ( ˆ𝜃 ∗ 
+
+> 𝐾
+
+) ⇐⇒ |𝜙 | > 𝜎 Δ/√𝑛. 
+
+In particular, when the proxy is unbiased ( 𝜙 = 0), PPI strictly increases MSE by 𝜎 2
+
+> Δ
+
+/𝑛 .
+
+Proof. MSE ( ˆ𝜃 ∗ 
+
+> 𝐾
+
+) = 𝜙 2 + 𝜎 2 
+
+> ∗
+
+/𝑁 . Under the sample-splitting as-sumption of Bridge B.4 (the two sums in ˆ𝜃 PPI are computed on independent samples, or 𝑛 ≪ 𝑁 so the covariance term is negligi-ble), MSE ( ˆ𝜃 PPI  
+
+> 𝐾
+
+) = 𝜎 2 
+
+> ∗
+
+/𝑁 +𝜎 2
+
+> Δ
+
+/𝑛 since PPI is unbiased. The difference is 𝜙 2 − 𝜎 2
+
+> Δ
+
+/𝑛 . □
+
+The break-even condition |𝜙 | > 𝜎 Δ/√𝑛 has a practical reading: for small labeled samples (small 𝑛 ), the threshold is high, so the adjustment is only worthwhile when the bias is substantial. 
+
+Bridge logic. Estimate -level diagnostics (aggregate bias, bootstrap coverage) estimate 𝜙 and compare it to the 𝜎 Δ/√𝑛 threshold. When the diagnostics imply 𝜙 ≈ 0 (e.g., near-nominal coverage for proxy intervals interpreted as intervals for 𝜃 , or small measured aggregate bias), PPI is skipped: applying it would inject variance without reducing bias. 
+
+## B.6 Bridge 6: Domain Level Diagnostics →
+
+## Regression Calibration and Heterogeneity Inflation 
+
+Assume we observe ( ˆ𝜃 𝑘 , ˆ𝜃 ∗ 
+
+> 𝑘
+
+) in historical domains 𝑘 = 1, . . . , 𝐾 − 1,with (approximate) sampling variances 𝜎 2 
+
+> 𝑘
+
+and (𝜎 ∗ 
+
+> 𝑘
+
+)2 (matching the notation of [2]). Assume a random-effects calibration model: 
+
+𝜃 𝑘 = 𝛾 0 + 𝛾 1𝜃 ∗ 
+
+> 𝑘
+
++ 𝜀 𝑘 , 𝜀 𝑘 𝑖𝑖𝑑 
+
+∼ N ( 0, 𝜏 2). (4) In the target domain 𝐾 , only ˆ𝜃 ∗ 
+
+> 𝐾
+
+is observed. The predictive interval 𝐼 cal  
+
+> 𝐾, 1−𝛼
+
+for 𝜃 𝐾 is stated as in . The deriva-tion follows the random-effects model (4) above: conditional on 
+
+𝜃 ∗ 
+
+> 𝐾
+
+, 𝜃 𝐾 has additive random effect 𝜀 𝐾 with variance 𝜏 2; the ob-served proxy estimate ˆ𝜃 ∗ 
+
+> 𝐾
+
+contributes sampling variance (𝜎 ∗ 
+
+> 𝐾
+
+)2,which scaled by 𝛾 1 becomes 𝛾 21 (𝜎 ∗ 
+
+> 𝐾
+
+)2. The estimator of (𝛾 0, 𝛾 1) is the inverse-variance-weighted meta-regression of [ 14 ]: weights 1/𝜎 2
+
+> 𝑘
+
+(or 1/( 𝜎 2 
+
+> 𝑘
+
++ ˆ𝜏 2) for the random-effects variant) on the outcome side, with the regressor treated as observed with known variance (𝜎 ∗ 
+
+> 𝑘
+
+)2.This estimator is consistent for (𝛾 0, 𝛾 1) under the joint asymptotic regime 𝐾 → ∞ with max 𝑘 (𝜎 ∗ 
+
+> 𝑘
+
+)2 → 0 (attenuation from measure-ment error in the regressor vanishes in the limit); a plain OLS fit to 
+
+( ˆ𝜃 𝑘 , ˆ𝜃 ∗ 
+
+> 𝑘
+
+) is not consistent and should not be used with this coverage claim. Under this regime, plug-in ( ˆ𝛾 0, ˆ𝛾 1, ˆ𝜏 2) with Slutsky’s theorem yield the asymptotic coverage stated in [ 52 ]. Finite-𝐾 caveat: the plug-in variance omits the 𝑂 𝑝 (1/𝐾 ) uncertainty in ( ˆ𝛾 0, ˆ𝛾 1, ˆ𝜏 2), so the interval is narrower than nominal at small 𝐾 ; a cluster/domain bootstrap over the 𝐾 − 1 historical domains (as in Wilkins-Reeves et al. [52]) is recommended when 𝐾 is small. 
+
+Bridge logic. Domain -level diagnostics play distinct roles: 
+
+• Association/sensitivity diagnostics (e.g., 𝑅 2, slope 𝛾 1 near 1, intercept near 0) target whether a linear calibration map is plausible. 
+
+• Heterogeneity diagnostics ( 𝐼 2, 𝜏 2, 𝑄 ) target whether 𝜏 2 is non-negligible. When 𝜏 2 > 0, intervals that ignore 𝜏 2 are overconfident. 
+
+• Prediction accuracy (e.g., LOO error) targets model adequacy; large LOO error suggests misspecification, in which case one should warn and/or revert to conservative bounds rather than apply regression calibration blindly. 
+
+Estimation of Between-Domain Variance. The between-domain variance 𝜏 2 can be estimated by method of moments or by maxi-mum likelihood. proxymate uses the DerSimonian-Laird moment estimator [ 14 ], which sets Cochran’s 𝑄 equal to its expectation under the random-effects model and solves for 𝜏 2:
+
+ˆ𝜏 2 
+
+> DL
+
+= max 0, 𝑄 − ( 𝐾 − 1)
+
+Í𝑘 𝑤 𝑘 − Í𝑘 𝑤 2 
+
+> 𝑘
+
+/Í𝑘 𝑤 𝑘 
+
+!
+
+, 𝑄 = 
+
+> 𝐾 −1
+
+∑︁ 
+
+> 𝑘 =1
+
+𝑤 𝑘 ( ˆ𝜃 𝑘 − ¯𝜃 𝑤 )2
+
+where 𝑤 𝑘 = 1/𝜎 2 
+
+> 𝑘
+
+are the inverse-variance weights and ¯𝜃 𝑤 =
+
+Í𝑘 𝑤 𝑘 ˆ𝜃 𝑘 /Í𝑘 𝑤 𝑘 is the fixed-effects weighted mean. This estimator is closed-form and requires no iteration, but truncates at zero and does not use the full distributional information. The alternative is restricted maximum likelihood (REML), which maximizes the marginal likelihood of the data under the assumption 
+
+ˆ𝜃 𝑘 ∼ N ( 𝜃, 𝜎 2 
+
+> 𝑘
+
++ 𝜏 2):
+
+ℓREML (𝜏 2) = − 12 
+
+> 𝐾 −1
+
+∑︁ 
+
+> 𝑘 =1
+
+"
+
+log (𝜎 2 
+
+> 𝑘
+
++ 𝜏 2) + ( ˆ𝜃 𝑘 − ¯𝜃 𝑤 ∗ )2
+
+𝜎 2 
+
+> 𝑘
+
++ 𝜏 2
+
+#
+
+− 12 log  
+
+> 𝐾 −1
+
+∑︁ 
+
+> 𝑘 =1
+
+𝑤 ∗
+
+> 𝑘
+
+!
+
+where 𝑤 ∗ 
+
+> 𝑘
+
+= 1/( 𝜎 2 
+
+> 𝑘
+
++ 𝜏 2) and ¯𝜃 𝑤 ∗ is the random-effects weighted mean. The final term is the restriction term that distinguishes REML from profile ML (it is − 12 log |𝑋 ⊤ Σ−1𝑋 | with the design matrix 𝑋 
+
+a column of ones); dropping it recovers the profile ML likelihood, which is known to be downward-biased for 𝜏 2 at small 𝐾 . REML requires iterative optimization but produces less biased estimates of 𝜏 2, particularly when 𝐾 is small. For 𝐾 > 20 , both estimators give similar results; for 𝐾 < 10 , REML is preferred [47]. proxymate : Diagnosis and Adjustment of Proxy Estimates for Reliable Inference Conference’17, July 2017, Washington, DC, USA 
+
+## B.7 Bridge 7: Discrimination Failure → Proxy Replacement (Limits of Post-hoc Fixes) 
+
+Let 𝑆 be a score and ˜𝑆 = ℎ(𝑆 ) where ℎ is strictly monotone (so that 
+
+ℎ never creates ties between distinct values of 𝑆 ; weakly monotone 
+
+ℎ can collapse distinct scores into ties, in which case AUC changes by an amount that depends on the tie-handling convention). Rank-based discrimination measures depend only on pairwise ordering. 
+
+Proposition 6 (Monotone recalibration cannot improve rank discrimination). If ℎ is strictly monotone, then ROC AUC is invariant: 
+
+AUC ( ˜𝑆 ) = AUC (𝑆 ).
+
+More generally, any rank correlation (Spearman 𝜌 , Kendall 𝜏 ) between 
+
+𝑆 and 𝑌 is invariant under strictly monotone transforms. 
+
+Proof. ROC AUC equals P(𝑆 1 > 𝑆 0) for independent draws 
+
+(𝑆 1 | 𝑌 = 1) and (𝑆 0 | 𝑌 = 0). If ℎ is strictly monotone, 𝑆 1 > 𝑆 0 ⇔
+
+ℎ(𝑆 1) > ℎ(𝑆 0), hence the probability (and thus AUC) is unchanged. Rank correlations follow from the same order-preservation argu-ment. □
+
+Bridge logic. If discrimination diagnostics fail (low AUC/low rank correlation), post-hoc calibration or additive shifts cannot fix the fundamental ranking information loss; the appropriate action is proxy replacement (retraining, new features, different model), not post-hoc adjustment. 
+
+## B.8 When Weighting Fails to Correct Representativity Issues 
+
+If the ESS is too low or the weighting effectiveness check fails, importance weighting alone cannot recover valid population-level estimates. proxymate flags this condition and recommends one of four fallback strategies: (1) Targeted label acquisition: acquire additional labels in under-represented regions of the covariate space to improve cover-age and reduce weight variability. (2) Narrow the target population: redefine the target 𝑇 to the proxy population 𝑃 (or the well-covered subset), accepting that validation results apply only to the narrower scope. (3) Sensitivity analysis: report bounds on the estimand under varying assumptions about the unobserved population, rather than a single point estimate. (4) Segment-restricted estimates: report validated estimates only for segments where the labeled sample is representative, with explicit scope limitations. 
+
+## C Extended proxymate Workflow 
+
+Figure 1 shows the end-to-end proxymate pipeline. A practitioner supplies data in one of four canonical forms (Section C.1); the Plan-ner routes the request to the applicable subset of the four levels based on what data is available (Section C.2); each level runs a 
+
+diagnose-then-adjust loop that produces diagnostic verdicts and, where needed, targeted corrections (Section C.3); the pipeline emits a validation report summarising all diagnostics and recommended adjustments (Section C.4). Corrections at each level feed forward into subsequent levels, so a representativity gap detected on the in-put propagates its importance weights into all downstream checks. 
+
+Table 7: Executable validation levels by data-input case. ‘ ✓’indicates a level that can be run; ‘–’ indicates the required data is not available.                                    
+
+> Case Domains Unit data Estimator Repr. Unit Est. Dom.
+> 1single yes –✓✓––2single yes custom ✓✓✓–3many no ––––✓
+> 4many yes custom ✓✓✓✓
+
+## C.1 Data Input 
+
+The four levels of proxymate are not always all executable: which ones apply depends on what data the practitioner supplies. Figure 1 summarises four canonical data-input cases, distinguished by (i) whether one or many domains are available and (ii) whether the practitioner provides unit-level data with a (custom) estimator or only pre-computed aggregate estimates. (1) Case 1: Single domain, unit-level data, no estimator. 
+
+The practitioner supplies paired (𝑌 𝑖 , 𝑌 ∗ 
+
+> 𝑖
+
+, 𝑋 𝑖 ) observations for a single domain without a custom estimator. The Represen-tativity , Unit , and Estimate Levels are all executable; the Do-main Level is not (a single domain provides no cross-domain variation to meta-analyze). (2) Case 2: Single domain, unit-level data, custom estima-tor. As Case 1, but the practitioner supplies a custom esti-mator (e.g., AverageTreatmentEffectEstimator for ATEs, a quantile estimator, or any subclass of DfBasedEstimator-Base ). The same three levels are executable, with aggregation performed via the supplied estimator. (3) Case 3: Many domains, aggregate summaries only. The practitioner supplies per-domain aggregate estimates {( ˆ𝜃 𝑘 , ˆ𝜃 ∗ 
+
+> 𝑘
+
+, ˆ𝜎 𝑘 , ˆ𝜎 𝑌 ∗,𝑘 )} 𝐾 −1
+
+> 𝑘 =1
+
+without unit-level data (common when historical experi-ments retained only summary statistics). Only the Domain Level is executable, since Representativity , Unit , and Estimate Levels all require paired unit-level (𝑌 𝑖 , 𝑌 ∗ 
+
+> 𝑖
+
+) observations. (4) Case 4: Many domains, unit-level data, custom esti-mator. The full case: paired unit-level data for multiple historical domains plus a custom estimator. All four levels are executable, and per-domain estimates feed forward into the Domain Level meta-analysis. This is the input for cross-domain validation with proxy adjustment (Case Study A, Section 4.3). Table 7 summarises which levels are executable in each case. 
+
+## C.2 Validation Planner 
+
+A common barrier to proxy validation is deciding which checks to run. The answer depends on two inputs: the proxy challenge (why a proxy is needed) and the data level (what paired data is available). 
+
+proxymate identifies four recurring proxy challenges: (1) Long maturation primary : the outcome takes weeks or months to mature. (2) Restricted labels : ground truth requires time-consuming hu-man review and the labeled sample may not be representa-tive. (3) Low detectability : the outcome is rare or high-variance. Conference’17, July 2017, Washington, DC, USA Darmon et al. 
+
+Table 8: Validation planner routing table. Each proxy chal-lenge maps to recommended checks; challenges can be com-bined.         
+
+> Proxy Challenge Recommended Checks
+> Long maturation primary Association ( 𝑅 2), effect sensitivity ( 𝛾 1), di-rectional alignment, heterogeneity ( 𝐼 2,𝜏 2), prediction accuracy (LOO) Restricted labels Coverage, sample repr. (SMD), ESS, weight extremity, calibration (ECE), discrimination (AUC), aggregate bias Low detectability Precision ( 𝑅 2, RMSE), agreement (CCC), in-ferential validity, aggregate bias Low sensitivity Discrimination (AUC, 𝜏 ), accuracy (t-test), directional alignment, effect sensitivity
+
+(4) Low sensitivity : the metric is too blunt to detect small effects. Each challenge maps to a different subset of levels and checks (Ta-ble 8). For example, the long maturation primary challenge routes primarily to Domain Level checks (association, heterogeneity, pre-diction accuracy), since the key question is whether the proxy– primary relationship is stable across historical experiments. The restricted labels challenge instead emphasizes Representativity and 
+
+Unit Level checks (calibration, discrimination), since the labeled sample is often biased by the review pipeline. Challenges can be combined (e.g., long maturation primary with low sensitivity). The validation planner encodes this routing and, given a chal-lenge and data level, returns the recommended set of checks grouped by validation level. Practitioners may also bypass the planner and select checks manually. The planner is a convenience, not a con-straint: it lowers the barrier for non-expert users while preserving full flexibility for teams with domain-specific requirements. 
+
+## C.3 Proxymate Levels: Diagnose-then-Adjust Loop 
+
+At each level selected by the Planner, proxymate runs a two-step 
+
+diagnose-then-adjust loop (Figure 1). The diagnose step evaluates the level’s checks and returns pass/fail verdicts. If all checks pass, no adjustment is applied and the level’s output is a clean verdict. If any check fails, the adjust step applies a targeted correction whose assumptions match the specific failure mode (Table 1), and the level is then re-validated on the corrected data. The four levels split into two groups reflecting the data they operate on. 
+
+Within-domain stage (Representativity, Unit, Estimate). For each historical domain 𝑘 with paired unit-level data (𝑌 𝑖 , 𝑌 ∗ 
+
+> 𝑖
+
+, 𝑋 𝑖 ), the three within-domain levels run sequentially. Representativity first checks whether the labeled sample is representative of the domain pop-ulation; if a gap is detected, the resulting importance weights are applied to all downstream levels. Unit Level evaluates measurement quality on the (possibly reweighted) paired data. Estimate Level 
+
+then assesses aggregate decision validity. Corrections feed forward: representativity weights flow into Unit and Estimate checks, and unit-level corrections (e.g., recalibrated proxy scores) propagate into aggregate estimation. 
+
+Cross-domain stage (Domain). Per-domain validated estimates 
+
+{( ˆ𝜃 𝑘 , ˆ𝜃 ∗ 
+
+> 𝑘
+
+)} 𝐾 −1 
+
+> 𝑘 =1
+
+from the within-domain stage (or provided directly as aggregate summaries under Case 3) feed into the Domain Level ,which assesses whether the proxy–primary relationship is stable enough to transport to the target domain 𝐾 . The same diagnose-then-adjust cycle applies: if cross-domain diagnostics pass, the proxy estimate is used directly; if they fail, regression calibration or estimate-level adjustment is applied to produce a calibrated prediction interval for 𝜃 𝐾 .
+
+## C.4 Output 
+
+The pipeline produces a validation report summarising, for each level executed: the diagnostic check results (raw statistic, projected score, pass/fail), the adjustments applied (if any), and the resulting corrected proxy estimates with confidence intervals. When the 
+
+Domain Level is executed, the report additionally includes the target-domain calibrated estimate ˆ𝜃 cal  
+
+> 𝐾
+
+and its predictive interval. The report is designed to be consumed programmatically (as a structured object, for pipeline integration) or as a human-readable summary (for one-off validation). 
+
+## D Extended Related Work 
+
+Surrogate endpoints and indices. The foundational work on proxy validation originates in biostatistics. Prentice [ 34 ] formalized the surrogate endpoint problem and proposed an operational criterion: a surrogate is valid if it fully captures the treatment effect on the primary outcome. This condition relies on strong causal assump-tions rarely satisfied in practice. Buyse and Molenberghs [ 9 , 10 ] ex-tended this to a meta-analytic framework, validating surrogates via 
+
+𝑅 2
+
+> trial
+
+, the proportion of treatment effect variance explained by the surrogate across multiple trials. VanderWeele [ 46 ] distinguished be-tween statistical and causal surrogacy. In the social sciences, Athey et al. [ 4 ] introduced the surrogate index for combining multiple weak surrogates into a strong one, focusing on short-term outcomes as proxies for longer-term effects. proxymate complements these works by validating a given proxy across multiple levels of aggre-gation and aligning the validation criteria with the downstream application. 
+
+Prediction-powered inference. Angelopoulos et al. [ 2] introduced Prediction-Powered Inference (PPI), which uses a small labeled dataset to correct the bias of a model evaluated on a large unlabeled dataset, providing valid confidence intervals. PPI++ [ 3] extends this with power-tuning for efficiency gains. Ji et al. [ 21 ] revisit the connection between predictions-as-surrogates and the classical surrogate outcome framework. Kluger et al. [ 24 ] extend PPI to set-tings with imputed covariates and nonuniform sampling, partially addressing representativity concerns. These methods are comple-mentary to proxymate : PPI provides an adjustment mechanism (used in our adjustment module), while proxymate provides the diagnostic layer that determines whether and which adjustment to apply. 
+
+Calibration and post-hoc adjustment. Classifier calibration, ensur-ing predicted probabilities match empirical frequencies, is central to proxymate : Diagnosis and Adjustment of Proxy Estimates for Reliable Inference Conference’17, July 2017, Washington, DC, USA 
+
+proxy quality at the unit level. Platt [ 33 ] introduced sigmoid scaling, while Zadrozny and Elkan [ 54 ] proposed histogram and isotonic cal-ibration. Guo et al. [ 16 ] demonstrated that modern neural networks are frequently miscalibrated and popularized temperature scaling. Naeini et al. [ 28 ] formalized the expected calibration error (ECE) as a standard diagnostic and [ 43 ] provides open source software for multicalibration. proxymate uses ECE and related calibration diagnostics at the Unit Level , and maps calibration failures to ap-propriate adjustment methods (Platt scaling, isotonic regression, or temperature scaling depending on model complexity and data availability). 
+
+Estimate-level adjustment for proxy inference. Wilkins-Reeves et al. [ 52 ] introduce an estimate-level framework that models residual proxy bias as a random effect across domains. This adjustment inflates proxy-based confidence intervals to achieve calibrated cov-erage under random distribution shifts, using only aggregate sum-maries (no individual-level data required). Crucially, the adjustment is modular: it can be layered on top of any proxy adjustment method (including PPI), accounting for residual biases not addressed by those adjustments. proxymate integrates this estimate-level adjust-ment as an adjustment strategy for cross-domain transportability and for within-domain aggregate inference when historical domains are available. 
+
+Proxy selection and learning. Zito et al. [ 55 ] propose Pareto-optimal proxy metrics that balance multiple criteria. Tripuraneni et al. [ 44 ] formalize proxy selection for experimentation, providing cri-teria for when a proxy is “good enough” to support decision-making. Bibaut et al. [ 6] study learning the covariance of treatment effects across many weak experiments. proxymate is complementary: it validates a given proxy rather than selecting among candidates, though its multi-level diagnostics can inform selection decisions and incorporate Tripuraneni’s criteria. 
+
+Covariate shift and representativity. The covariate shift litera-ture [ 40 –42 ] addresses distribution mismatch between training and deployment populations via density ratio estimation and reweight-ing. Rosenbaum [ 36 ] and Austin [ 5 ] provide foundational treat-ments of propensity score methods and standardized mean dif-ferences (SMD) for assessing covariate balance. proxymate opera-tionalizes these ideas by integrating representativity diagnostics directly into the validation pipeline: before assessing proxy quality, we first verify that the labeled sample on which quality is evaluated is representative of the target population, using SMD and density ratio diagnostics to flag and optionally correct for selection bias. 
+
+Prevalence estimation with classifiers. A body of work addresses population-level inference from classifier outputs. Rogan and Gladen [ 35 ] provided early methods for prevalence estimation using sensitivity and specificity. Forman [ 15 ] developed quantification learning methods that estimate class proportions without requiring calibrated individual predictions. Wu and Resnick [ 53 ] propose calibrate/extrapolate methods for prevalence estimation with black-box classifiers. Nguyen et al. [ 29 ] develop the CLARA framework for confidence of labels and raters for noisy label problems. These methods address specific instances of the proxy validation problem; 
+
+proxymate provides the diagnostic scaffolding to determine which adjustment is appropriate in a given setting. 
+
+Transportability and meta-analysis. Pearl and Bareinboim [ 31 ]formalize transportability as a binary verdict based on causal graph structure; proxymate replaces this with continuous diagnostics based on the heterogeneity machinery of DerSimonian and Laird [ 14 ](𝜏 2) and Higgins et al. [ 19 ] ( 𝐼 2). When heterogeneity is detected, 
+
+proxymate applies the estimate-level adjustment of Wilkins-Reeves et al. [52] to inflate confidence intervals appropriately. 
+
+Conformal prediction and distribution-free inference. Conformal prediction [ 49 ] and conformal risk control [ 1] provide distribution-free coverage guarantees under exchangeability. These methods construct prediction sets with guaranteed marginal coverage, which could complement proxy validation by providing unit-level uncer-tainty quantification. Measurement invariance testing from psy-chometrics assesses whether a measurement instrument functions equivalently across groups, conceptually related to our cross-domain transportability checks. proxymate does not currently integrate conformal methods but they represent a natural extension for distribution-free calibration diagnostics. 
+
+Post-prediction inference. Wang et al. [ 50 ] formalized the “post-prediction inference” problem (using ML-predicted outcomes in downstream statistical analyses) and developed adjustment meth-ods based on modeling the relationship between predictions and true outcomes. Chen et al. [ 12 ] provide a unified framework for in-ference under general missingness patterns with machine learning imputation. Mozer [ 27 ] connects PPI to classical survey sampling estimators, showing that PPI is a difference estimator. These works address specific adjustment mechanisms; proxymate provides the diagnostic wrapper that determines when and how to apply them. 
+
+Existing software. Despite the extensive literature, no existing Python package provides an end-to-end proxy validation workflow. Causal inference packages such as DoWhy [ 39 ] and EconML focus on treatment effect estimation, not proxy validation. The ppi_py 
+
+package implements PPI but does not provide diagnostic checks. The ppi_aipw package [ 45 ] adds calibration to PPI but does not address representativity or multi-level validation. Experimentation platforms (GrowthBook, Statsig) offer metric monitoring but lack formal proxy validation. proxymate fills this gap by providing a unified diagnose-then-correct workflow spanning four levels of proxy quality.

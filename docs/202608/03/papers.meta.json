@@ -1,0 +1,69 @@
+{
+  "label": "2026-08-03",
+  "date": "2026-08-03",
+  "generated_at": "2026-08-03T21:24:33",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202608/03/2607.29421v1-longitudinal-adaptive-experimental-design-for-learning-multiple-target-estimands-with-semiparametric-efficient-inference",
+      "section": "quick",
+      "title_en": "Longitudinal Adaptive Experimental Design for Learning Multiple Target Estimands with Semiparametric Efficient Inference",
+      "authors": "Wenxin Zhang, Mark van der Laan",
+      "date": "2026-07-31",
+      "pdf": "https://arxiv.org/pdf/2607.29421v1",
+      "score": "7.0",
+      "evidence": "纵向自适应设计可优化运动训练对皮瓣存活影响的试验",
+      "tldr": "现有自适应实验设计多聚焦单阶段治疗，对纵向多阶段场景研究不足。本文提出通用半参数效率框架，设计效率导向准则以优化单一或多个目标参数，发现最优随机化需后向递归求解。进而提出纵向自适应设计以序贯逼近最优设计，并开发自适应设计似然纵向定向最大似然估计器，实现无参数模型假设下的渐近正态与半参数有效推断。模拟显示所提方法较非自适应设计大幅降方差且接近最优设计。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Adaptive designs are increasingly used in clinical trials and digital experiments to improve estimation efficiency by updating treatment randomization probabilities as data accumulate. While most existing work focuses on settings with a single-stage treatment, adaptive designs for longitudinal studies with multi-stage, time-varying treatments remain relatively underexplored. In this work, we develop a general semiparametric efficiency framework for designing longitudinal adaptive experiments to optimize the estimation efficiency of a broad class of target estimands of interest. An efficiency-oriented design criterion is proposed to accommodate both single-estimand targets and joint optimization across multiple estimands. We demonstrate that optimal randomization at earlier stages depends on later-stage allocations, yielding a backward-recursive strategy for deriving the oracle design, and propose a longitudinal adaptive design to sequentially learn and target the oracle design using accumulating data. We further develop an adaptive-design-likelihood-based longitudinal targeted maximum likelihood estimator (ADL-LTMLE) for asymptotically normal and semiparametric efficient estimation of statistical estimands from dependent data collected from adaptive experiments, without relying on parametric model assumptions. Applying the framework to time-to-treatment-initiation effects that compare initiating treatment at a given stage with delaying initiation until a subsequent stage, we show that designs optimized for a particular stage-specific effect can substantially compromise estimation efficiency for effects defined at other stages, highlighting the design trade-offs addressed by our framework. Simulation studies show the proposed design and estimation approaches achieve substantial variance reductions relative to non-adaptive designs, with performance close to that of the oracle design.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/03/2607.23626v1-segmentation-robustness-and-predictive-utility-in-glioblastoma-radiomics-evidence-for-a-trade-off-in-survival-modelling",
+      "section": "quick",
+      "title_en": "Segmentation Robustness and Predictive Utility in Glioblastoma Radiomics: Evidence for a Trade-off in Survival Modelling",
+      "authors": "Mariya Miteva, Maria Nisheva-Pavlova",
+      "date": "2026-07-26",
+      "pdf": "https://arxiv.org/pdf/2607.23626v1",
+      "score": "6.0",
+      "evidence": "影像组学稳健性与预测效用的权衡方法可用于皮瓣存活成像预测",
+      "tldr": "针对胶质母细胞瘤MRI放射组学特征因分割变异性而限制临床转化的问题，基于UPENN-GBM队列提取4752个特征，用ICC评估鲁棒性。结果显示48.1%特征鲁棒，但加入放射组学特征未优于临床基线，鲁棒性筛选无性能提升。研究表明鲁棒性不能单独作为特征选择标准，需寻求与预测效用的平衡。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Radiomic biomarkers derived from magnetic resonance imaging (MRI) have been widely investigated as non-invasive tools for tumor characterization and prognostic modeling in glioblastoma (GBM). However, their clinical translation remains limited, in part due to sensitivity to tumor segmentation variability. In this study, we systematically investigate the relationship between feature robustness and predictive utility in GBM survival modeling using the University of Pennsylvania Glioblastoma Imaging, Genomics, and Radiomics (UPENN-GBM) cohort. A total of 4,752 radiomic features were obtained from multiparametric MRI across three tumor subregions: enhancing tumor (ET), peritumoral edema (ED), and necrotic core (NC). Feature robustness was quantified using the intraclass correlation coefficient (ICC) based on the automatic and expert-refined segmentation versions. Among features with valid ICC estimates, 48.1% were classified as robust. Survival prediction was evaluated using cross-validation with Coxnet, Random Survival Forest, and Gradient Boosting Survival Analysis models. In this cohort, radiomic feature inclusion showed no consistent improvement over the clinical baseline, and robustness filtering produced no detectable performance gain. Model-selected features were less robust than the overall feature pool, indicating a lack of enrichment for robustness. These findings suggest that robustness alone is not a reliable criterion for feature selection in radiomics-based survival modelling.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/03/2607.24401v1-proxymate-diagnosis-and-adjustment-of-proxy-estimates-for-reliable-inference",
+      "section": "quick",
+      "title_en": "proxymate: Diagnosis and Adjustment of Proxy Estimates for Reliable Inference",
+      "authors": "Alexandra N. M. Darmon, Deeksha Sinha, Steve Wilkins-Reeves, Caner Gocmen",
+      "date": "2026-07-27",
+      "pdf": "https://arxiv.org/pdf/2607.24401v1",
+      "score": "6.0",
+      "evidence": "代理结果校正可验证皮瓣存活中的代谢标志物等替代终点",
+      "tldr": "代理结果常替代主要结果，但基于代理的推断可能产生系统性偏差，导致置信区间校准不佳。为此提出proxymate框架，涵盖代表性、单元、估计和领域四个层级，提供诊断检查和针对性的调整策略。在Meta多个产品中应用，评估和纠正了数百万对代理-主单元比较，支持数千实验的快速决策。该开源工具提升了代理结果的可靠性。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Proxy outcomes (such as short-term behavioral signals, model predictions, or surrogate endpoints) are frequently used in place of primary outcomes that are too slow to mature, rare, or challenging to measure directly. But valid inference on a proxy does not guarantee valid inference on the primary estimate as proxy-based estimates can be systematically biased in ways that are difficult to predict, leading to improperly calibrated confidence intervals.   We present proxymate, a framework and open-source Python package for proxy validation and adjustment. proxymate organizes into four levels: The Representativity Level (population validity), the Unit Level (measurement quality), the Estimate Level (decision validity), and the Domain Level (cross-domain transportability). Within each level, proxymate provides diagnostic checks, and targeted adjustment strategies that map specific failures to appropriate corrections.   At Meta, proxymate has been adopted by many different use cases, spanning experimentation, prevalence estimation, and monitoring use cases, all facing different proxy challenges (limited human review time, long maturation window of outcomes, low detectability) and showcasing the modularity of the framework. Across all products, proxymate assessed and corrected millions of proxy, primary unit comparisons. It has facilitated launches across multiple work streams including enabling quick decision making on thousands of experiments.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/03/2607.24405v1-k-survival-means",
+      "section": "quick",
+      "title_en": "K-Survival Means",
+      "authors": "Abdallah Alabdallah",
+      "date": "2026-07-27",
+      "pdf": "https://arxiv.org/pdf/2607.24405v1",
+      "score": "6.0",
+      "evidence": "生存聚类方法可识别皮瓣结局亚组",
+      "tldr": "现有生存数据聚类方法未能在聚类过程中直接利用生存结果。本文提出K-SurvMeans，将K-Means扩展至生存分析，通过最大化簇间生存差异来优化簇中心，并采用粒子群算法处理非可微目标。进一步在低维潜空间优化以缓解维数灾难。实验表明，该方法在多个公开数据集上生成的簇具有更显著的生存分布分离，优于深度学习方法。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "In this work, we propose K-SurvMeans, a novel extension of K-Means for clustering survival data. The method explicitly uses the survival outcome in the clustering process to optimize cluster centers, thereby maximizing pairwise survival differences between clusters. The objective function encourages the clusters to be well-separated from the survival perspective. Since the resulting optimization problem is non-differentiable, we employ the Particle Swarm algorithm for the Optimization process.   To further improve flexibility and mitigate the curse of dimensionality, we extend the framework to operate in a learned low-dimensional latent space obtained via a dimensionality reduction. This allows the method to capture better-separated clusters and enhance optimization efficiency by reducing the search space.   Experiments on multiple publicly available benchmark survival datasets demonstrate that K-SurvMeans consistently yields clusters with improved separation in survival distributions compared to existing deep learning-based survival clustering methods.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

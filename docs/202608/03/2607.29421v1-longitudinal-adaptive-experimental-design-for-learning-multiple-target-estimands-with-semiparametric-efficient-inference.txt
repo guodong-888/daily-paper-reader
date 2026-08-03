@@ -1,0 +1,2197 @@
+Title: Longitudinal Adaptive Experimental Design for Learning Multiple Target Estimands with Semiparametric Efficient Inference
+
+URL Source: https://arxiv.org/pdf/2607.29421v1
+
+Published Time: Mon, 03 Aug 2026 00:56:01 GMT
+
+Number of Pages: 44
+
+Markdown Content:
+# Longitudinal Adaptive Experimental Design for Learning Multiple Target Estimands with Semiparametric Efficient Inference 
+
+Wenxin Zhang, Mark van der Laan ∗
+
+Division of Biostatistics, University of California, Berkeley August 3, 2026 
+
+Abstract 
+
+Adaptive designs are increasingly used in clinical trials and digital experiments to improve estimation efficiency by updating treatment randomization probabilities as data accumulate. While most existing work focuses on settings with a single-stage treatment, adaptive designs for longitudinal studies with multi-stage, time-varying treatments remain relatively underexplored. In this work, we develop a general semi-parametric efficiency framework for designing longitudinal adaptive experiments to optimize the estimation efficiency of a broad class of target estimands of interest. An efficiency-oriented design criterion is proposed to accommodate both single-estimand targets and joint optimization across multiple estimands. We demonstrate that op-timal randomization at earlier stages depends on later-stage allocations, yielding a backward-recursive strategy for deriving the oracle design, and propose a longitudinal adaptive design to sequentially learn and target the oracle design using accumulating data. We further develop an adaptive-design-likelihood-based longitudinal targeted maximum likelihood estimator (ADL-LTMLE) for asymptotically normal and semi-parametric efficient estimation of statistical estimands from dependent data collected from adaptive experiments, without relying on parametric model assumptions. Apply-ing the framework to time-to-treatment-initiation effects that compare initiating treat-ment at a given stage with delaying initiation until a subsequent stage, we show that designs optimized for a particular stage-specific effect can substantially compromise estimation efficiency for effects defined at other stages, highlighting the design trade-offs addressed by our framework. Simulation studies show the proposed design and estimation approaches achieve substantial variance reductions relative to non-adaptive designs, with performance close to that of the oracle design. 
+
+Key words and phrases: covariate-adjusted response-adaptive design, longitudinal data, semiparametric efficiency, targeted maximum likelihood estimation 
+
+> ∗
+
+This work was supported by the National Institutes of Health under Grant R01AI074345. The content is solely the responsibility of the authors and does not necessarily represent the official views of the NIH. 
+
+1arXiv:2607.29421v1 [stat.ME] 31 Jul 2026 1. Introduction 
+
+Adaptive designs are increasingly used in clinical trials and digital experiments (Chow and Chang, 2008; Robertson et al., 2023; Larsen et al., 2024), allowing treatment randomization probabilities to adapt in response to accumulating data. Dating back to Thompson (1933), a central class of such methods is Response-Adaptive Randomization (RAR), in which treat-ment assignment probabilities are updated using treatment and outcome information from previously enrolled participants, with objectives ranging from improving efficiency to reduc-ing assignment to inferior treatments (Wei and Durham, 1978; Hu and Zhang, 2004; Hu and Rosenberger, 2006; Robertson et al., 2023). Covariate-Adjusted Response-Adaptive (CARA) designs generalize RAR by incorporating baseline covariates into the randomization mech-anism (Rosenberger et al., 2001; Hu and Rosenberger, 2006; Zhang et al., 2007; van der Laan, 2008; Rosenberger and Sverdlov, 2008; Atkinson et al., 2011; Hu et al., 2015). These adaptive designs are also related to developments in the multi-armed and contextual bandit literature, which studies sequential decision-making strategies with the objective of regret minimization (Bubeck et al., 2012; Lattimore and Szepesv´ ari, 2020). However, relatively few studies have investigated adaptive experimental designs in lon-gitudinal settings. Existing work in this area primarily primarily considers settings with longitudinally observed responses or covariates but a single treatment decision, where in-termediate information is used to adapt the randomization for that decision (Huang et al., 2013; Huang and Zhu, 2016; Biswas and Dewanji, 2004; Huang et al., 2009; Yang et al., 2024; Zhang et al., 2024; Gao et al., 2024). Nevertheless, these approaches do not consider adaptive designs in more complex longitudinal settings involving multi-stage, time-varying treatments. Such settings are canonical in the causal inference literature (Robins, 1986; Murphy, 2003; Bang and Robins, 2005; van der Laan and Gruber, 2011; van der Laan and Rose, 2018) and arise commonly in clinical decision-making, precision medicine, and sequen-tial multiple assignment randomized trials (Lavori and Dawson, 2000; Murphy, 2005; Lei 2et al., 2012; Kosorok and Laber, 2019; Kosorok et al., 2021). In these scenarios, partic-ipants are followed over multiple stages, intermediate covariates or responses are revealed sequentially, and treatment at each stage is assigned based on a participant’s evolving history until the final outcome is observed. This longitudinal structure fundamentally differs from experiments with a single treatment stage and calls for adaptive randomization strategies that explicitly account for the sequential nature of treatment assignment and information accrual. While prior work has considered adaptive experiments or bandit algorithms with time-varying treatments to improve participants’ outcomes (van der Laan, 2008; Hu and Kallus, 2020; Wang et al., 2022; Ghosh et al., 2024), principled approaches to optimizing the estimation efficiency of statistical estimands remain relatively underdeveloped in these longitudinal settings. In this paper, we develop a semiparametric efficiency framework for constructing lon-gitudinal adaptive experiments with stage-wise treatment randomization mechanisms that efficiently learn one or multiple target estimands. We further propose a general framework for semiparametric efficient estimation of statistical estimands from dependent data collected under longitudinal adaptive experiments, which applies to both the efficiency-oriented de-signs in this work and broader classes of adaptive experiments. The contributions of this work are as follows. (i) We propose a general efficiency-oriented design criterion for longitudinal experiments that targets the estimation efficiency of one or multiple estimands within a unified formulation. (ii) For a broad class of longitudinal target estimands, we characterize the oracle design that optimizes the proposed criterion and uncover its forward-looking structure: optimal randomization at earlier stages depends on optimal allocations at later stages. This structure yields a backward-recursive strategy for deriving explicit stage-specific oracle randomization probabilities. (iii) We develop a covariate-adjusted response-adaptive (CARA) design that sequentially updates stage-wise randomization probabilities by learning and targeting the oracle design using accumulating 3data. (iv) Finally, we propose an adaptive-design-likelihood longitudinal targeted maxi-mum likelihood estimator (ADL-LTMLE) that enables asymptotically normal and efficient estimation of target estimands in the multi-stage adaptive experiments with time-varying treatments. Our approach builds on the literature on targeted maximum likelihood estima-tion (TMLE) for adaptively collected data (van der Laan, 2008; Chambaz and van der Laan, 2011; Chambaz et al., 2017; Malenica et al., 2021, 2024; Zhang et al., 2024), and recent work that establishes semiparametric efficiency of the ADL-TMLE approach under adaptive experiments (Zhang and van der Laan, 2025). We illustrate the framework through longitudinal adaptive experiments for estimating multiple treatment-initiation effects. Simulations show that the proposed adaptive design yields substantial variance reduction relative to non-adaptive designs, especially when com-bined with the efficient ADL-LTMLE approach, with its performance close to that of the oracle design. Overall, this work contributes a general maximal-information-type framework for the de-sign and analysis of adaptive experiments with longitudinal, time-varying treatments. The framework accommodates a wide range of target estimands and their joint collections, includ-ing estimands of causal effects and mean outcomes under dynamic or stochastic treatment rules, and recovers single-stage adaptive designs as a special case. The remainder of the paper is organized as follows. Section 2 describes the statistical setup. Section 3 introduces the proposed efficiency-oriented design criterion, and develops a backward-recursive strategy for characterizing oracle designs for either a single target es-timand or multiple target estimands and constructing the corresponding longitudinal adap-tive designs. Section 4 develops semiparametric efficient adaptive-design-likelihood-based longitudinal TMLE methods for estimating target statistical estimands and providing in-ference based on data collected from longitudinal adaptive experiments. Section 5 presents treatment-initiation effects as an illustrative application of the general framework and de-4rives oracle and adaptive designs for their efficient joint estimation. Section 6 reports the simulation studies. Section 7 concludes with a discussion. 
+
+# 2. Statistical Setup 
+
+2.1 Data Structure 
+
+Consider a longitudinal data structure O = ( L1, A 1, . . . , L K , A K , L K+1 ≡ Y ) over K + 1 follow-up stages for each participant. At each stage k ∈ [K] := {1, . . . , K }, Lk ∈ L k denotes covariates (which can also be intermediate responses for k > 1), Ak ∈ A k denotes the cate-gorical treatment assigned at stage k. The final outcome Y ∈ Y , also denoted by LK+1 , is a bounded outcome observed at stage K + 1, which we assume without loss of generality that 
+
+Y = [0 , 1]. Let ¯Ak := ( A1, . . . , A k) and ¯Lk := ( L1, . . . , L k) denote the treatment and covari-ate histories up to stage k, and define Hk := ( ¯Ak−1, ¯Lk) ∈ H k as the participant’s observed history immediately before treatment Ak. Let Q1 denote the marginal distribution of baseline covariates L1, and for k = 1 , . . . , K , let Qk+1 denote the conditional distribution of Lk+1 given (Ak, H k). We collect these distributions into Q := ( Q1, . . . , Q K+1 ). Let g := ( g1, . . . , g K )denote a collection of stage-wise treatment randomization mechanisms, where each gk : Hk ×Ak → [0 , 1] maps a history-treatment pair ( hk, a k) to the conditional probability of assigning treatment ak given history hk. We write gk(ak | hk) as shorthand for P (Ak = ak | Hk = hk)under the randomization mechanism gk. We consider the nonparametric statistical model 
+
+M = {PQ,g : Q ∈ Q , g ∈ G} , where each PQ,g admits the following likelihood factorization: 
+
+pQ,g(o) = q1(l1)
+
+> K
+
+Y
+
+> k=1
+
+gk(ak | hk) qk+1 (lk+1 | ak, h k), (1) which defines the joint density of the longitudinal data O under PQ,g. Here, Q denotes the nonparametric model for Q = ( Q1, . . . , Q K+1 ), and G denotes the class of admissible 5treatment randomization functions. 
+
+2.2 Longitudinal Adaptive Experiment 
+
+Consider a sequential longitudinal adaptive experiment with participants indexed by i =1, . . . , n , where each participant is followed for K + 1 stages. For each participant i, we observe longitudinal data Oi = ( L1,i , A 1,i , . . . , L K,i , A K,i , Y i), where Lk,i denotes time-varying covariates at stage k, Ak,i ∈ A k denotes the categorical treatment assigned at stage k,and Yi ≡ LK+1 ,i is the final outcome. Define the accumulated data up to participant i by ¯Oi := {O1, . . . , O i}, where ¯O0 := ∅. Let Fi = σ(O1, . . . , O i) denote the filtration generated by the sequentially observed data. Before participant i is enrolled, the experimenter uses the accumulated data ¯Oi−1 to con-struct a collection of stage-wise randomization mechanisms gi = ( g1,i , . . . , g K,i ). Conditional on ¯Oi−1, treatment at stage k for participant i is assigned according to the known ran-domization mechanism gk,i (· | Hk,i ). These mechanisms govern the participant’s treatment assignments sequentially across stages throughout longitudinal follow-up. This formulation also includes cohort-wise adaptation as a special case. Specifically, if participants are en-rolled in cohorts, the same collection of randomization mechanisms gi may be applied to all participants within a cohort and updated only between cohorts. Let g1: n := ( g1, . . . , gn) denote the known adaptive design sequence applied to the n
+
+participants. For a given ( Q, g1: n), we write PQ,g1: n for the joint distribution of ( O1, . . . , O n). The likelihood of ( o1, . . . , o n) is given by 
+
+pQ,g1: n (o1, . . . , o n) =
+
+> n
+
+Y
+
+> i=1
+
+"
+
+q1(l1,i )
+
+> K
+
+Y
+
+> k=1
+
+n
+
+gk,i (ak,i | hk,i ) qk+1 (lk+1 ,i | ak,i , h k,i )
+
+o#
+
+.
+
+63. A General Framework for Efficiency-Oriented Lon-gitudinal Adaptive Design 
+
+3.1 Oracle Longitudinal Design for Estimation Efficiency 
+
+Let ψ(Q) denote a pathwise differentiable target estimand of interest. We introduce a semi-parametric efficiency framework for defining an efficiency-oriented design criterion. Specifi-cally, for a fixed design g, define 
+
+C(Q, g) := V ar PQ,g {D(PQ,g)( O)} , (2) where D(PQ,g) denotes the efficient influence curve (EIC) of ψ(Q) under the observed-data distribution PQ,g. Under standard regularity conditions, the pathwise derivative of ψ(Q)along any regular parametric submodel can be represented as the inner product of its score with an influence function. By the Riesz representation theorem, the EIC is the unique ele-ment of the tangent space that represents this derivative and has the smallest L2(PQ,g) norm among all influence functions. Consequently, (2) is the semiparametric efficiency bound that characterizes the smallest asymptotic variance attainable by a regular asymptotically linear estimator of ψ(Q) (van der Laan and Robins, 2003). While the collection of randomization mechanisms g = ( g1, . . . , g K ) does not alter the definition of ψ(Q), it determines the induced observed-data distribution PQ,g and, conse-quently, the statistical information available for estimating ψ(Q). This motivates the oracle maximal-information longitudinal design, defined as 
+
+g⋆(Q) := arg min  
+
+> g∈G
+
+C(Q, g). (3) For many longitudinal target estimands, the EIC admits a stage-wise decomposition 
+
+D(PQ,g) = PKk=0 Dk(PQ,g), where D0(PQ,g) is the mean-zero baseline component associated 7with the marginal law of L1. For each k ∈ [K], Dk(PQ,g)( O) is the component associated with the conditional law of Lk+1 given ( Hk, A k); it is measurable with respect to ( Hk, A k, L k+1 )and satisfies EPQ,g {Dk(PQ,g)( O) | Hk, A k} = 0. These stage-specific components form mar-tingale increments and are mutually orthogonal in L2(PQ,g). Consequently, the variance of the EIC decomposes as V ar PQ,g {D(PQ,g)( O)} = PKk=0 EPQ,g
+
+{Dk(PQ,g)( O)}2 . Thus, the semiparametric efficiency bound separates into stage-specific contributions through which the longitudinal treatment mechanisms affect the total estimation variance. 
+
+3.2 Backward-Recursive Structure of the Oracle Design 
+
+We consider a broad class of longitudinal target estimands whose stage-specific EIC compo-nents have the following representation: 
+
+Dk(PQ,g)( O) = Φk(Q)( O)
+
+Qks=1 gs(As | Hs), k = 1 , . . . , K, (4) where we require that each Φ k(Q) is an estimand-specific function that does not depend on the experimental mechanism g.This representation characterizes a general class of statistical estimands supported by the proposed design optimization framework, including many classical causal estimands in longitudinal settings such as mean outcomes under static, dynamic, or stochastic treatment rules and their linear combinations (see, e.g., Robins (1986); van der Laan and Robins (2003); Murphy (2003); van der Laan and Luedtke (2015); Wang et al. (2025)). Importantly, for this class of estimands, the stage-wise EIC components exhibit a nested dependence on the longitudinal treatment mechanisms, as indicated by the following simpli-fied indexing: 
+
+D1(Φ 1, g 1), D2(Φ 2, g 1, g 2), . . . , DK (Φ K , g 1, . . . , g K ).
+
+8Specifically, conditional on the realized history Hk available before treatment assignment at stage k, the randomization mechanism gk affects the variance contribution of Dk and all subsequent components Dk+1 , . . . , D K , where the latter contributions further depend on the future treatment mechanisms gk+1 , . . . , g K .This nested dependence gives rise to a forward-looking, backward-recursive optimization of the longitudinal design. The recursion starts by optimizing the terminal randomization mechanism gK and then proceeds backward through gK−1, . . . , g 1, so that each earlier-stage randomization mechanism accounts for its downstream contribution to the variance through the subsequent data trajectories it induces. The procedure is as follows. First, at the final stage K, let σ2 
+
+> K
+
+(aK | hK ) = E {ΦK (Q)( O)}2 | HK = hK , A K = aK
+
+.Conditional on HK = hK , minimizing the final-stage variance contribution of DK yields the allocation: 
+
+g⋆K (aK | hK ) = σK (aK | hK )
+
+X 
+
+> a′
+> K∈A K
+
+σK (a′ 
+
+> K
+
+| hK ). (5) Intuitively, the oracle design assigns greater probability to treatment arms associated with larger current and future uncertainty conditional on the current history. Collecting more observations under these arms reduces their contribution to the overall uncertainty and improves the efficiency of estimating the target estimand. Proceeding backward, for k = K − 1, . . . , 1, define 
+
+σ2
+
+> k
+
+(ak | hk) = E {Φk(Q)( O)}2 | Hk = hk, A k = ak
+
+
+
++ E
+
+ X
+
+> ak+1 ∈A k+1
+
+σ2
+
+> k+1
+
+(ak+1 | Hk+1 )
+
+g⋆k+1 (ak+1 | Hk+1 ) Hk = hk, A k = ak
+
+ , (6) which aggregates the conditional variance contributions of Dk, . . . , D K under the future oracle mechanisms ( g⋆k+1 , . . . , g ⋆K ). 9The resulting stage-k oracle allocation is given by: 
+
+g⋆k(ak | hk) = σk(ak | hk)
+
+X 
+
+> a′
+> k∈A k
+
+σk(a′ 
+
+> k
+
+| hk), k = K, . . . , 1. (7) The final collection g⋆ := ( g⋆ 
+
+> 1
+
+, . . . , g ⋆K ) thus constitutes the oracle longitudinal design across all stages. 
+
+3.3 Oracle Longitudinal Design for Multiple Target Estimands 
+
+With rich data trajectories involving time-varying treatments and responses, longitudinal studies create opportunities to address a wide range of scientific questions through multiple target estimands of interest. However, they also give rise to complex trade-offs in experimen-tal design, as a design optimized for one estimand may provide less favorable data support for estimating others. This challenge is particularly substantial in longitudinal experiments, where efficiency losses due to limited support may propagate multiplicatively through the stage-wise dependence of the longitudinal data. This motivates a joint design criterion that explicitly accounts for the trade-offs in estimation efficiency across multiple target estimands. Consider a collection of target estimands of interest {ψj (Q) : j ∈ [J]}. We define the joint efficiency-oriented criterion 
+
+Cw(Q, g) := X
+
+> j∈[J]
+
+wj V ar PQ,g
+
+Dj (PQ,g)( O) , (8) where Dj (PQ,g) denotes the EIC corresponding to ψj (Q) under PQ,g, and the user-specified nonnegative weights {wj : j ∈ [J]} satisfying PJj=1 wj = 1 determine the relative emphasis placed on the estimation efficiency of each target estimand. When the EIC of each target estimand admits the stage-wise representation in (4), the optimization for the joint criterion also preserves the same backward-recursive structure. 10 Specifically, for each estimand ψj , let σ2,j k (ak | hk) denote the conditional second-moment contribution of its stage-k and subsequent EIC components under the common future oracle mechanisms. Define Σ 2
+
+> k
+
+(ak | hk) = P 
+
+> j∈[J]
+
+wj σ2,j k (ak | hk). The oracle allocation conditional on the history of stage k is then g⋆k(ak | hk) = Σk (ak |hk )
+
+X 
+
+> a′
+> k∈A k
+
+Σk(a′ 
+
+> k
+
+| hk) for k = K, . . . , 1. Thus, the joint criterion retains the same stage-wise allocation form, while aggregating uncertainty across the target estimands according to user-specified weights that reflect their relative estimation priorities. More generally, let D(PQ,g) = D1(PQ,g), . . . , D J (PQ,g) ⊤ denote the vector-valued EIC, and consider CΩ(Q, g) = tr Ω V ar PQ,g {D(PQ,g)( O)} as a design criterion, where 
+
+V ar PQ,g {D(PQ,g)( O)} is the covariance matrix of the EICs and Ω is a user-specified sym-metric positive-semidefinite matrix. In particular, let Ω := B⊤ΛB, where B ∈ RR×J is a pre-specified contrast matrix whose rows define R linear combinations of the J target estimands, and let Λ = diag( λ1, . . . , λ R) be a diagonal matrix of nonnegative weights. This criterion rep-resents a weighted sum of the semiparametric efficiency bounds for the user-specified linear combinations of the estimands. The backward-recursive optimization procedure continues to apply. 
+
+3.4 Efficiency-Oriented Longitudinal Adaptive Design 
+
+However, oracle designs depend on unknown features of the data-generating distribution and therefore cannot be implemented a priori . This motivates a longitudinal adaptive design that estimates the relevant quantities sequentially from accumulating data and updates the stage-specific randomization mechanisms accordingly. Specifically, before enrolling participant i, we can use the accumulated observations ¯Oi−1
+
+to estimate {σ2
+
+> k
+
+(ak | Hk) : k ∈ [K]} for a single target estimand, or {Σ2
+
+> k
+
+(ak | Hk) : k ∈ [K]}
+
+for multiple target estimands. Substituting these estimates into the backward-recursive solution yields the estimated oracle mechanisms {ˆg⋆k,i (· | Hk) : k ∈ [K]}. The stage-specific 11 treatment mechanisms for participant i are then given by gk,i (· | Hk) = ˆ g⋆k,i (· | Hk) for k ∈
+
+[K]. By doing so, the longitudinal adaptive design updates the randomization mechanisms as information accumulates, thereby steering the distribution of the accruing data toward that under the oracle design with the intended efficiency objective. 
+
+3.5 Inference After Longitudinal Adaptive Experiments 
+
+While adaptive experiments are attractive because they can steer the randomization mech-anisms toward the design objective, the resulting dependence across participants invalidates standard inferential procedures developed for i.i.d. data, particularly when inference is con-ducted without parametric assumptions. In longitudinal experiments, statistical inference is further complicated by the sequential dependence among time-varying covariates, treat-ments, and outcomes within each participant. In the next section, we provide a targeted maximum likelihood estimation (TMLE) framework to address these challenges. 
+
+# 4. Adaptive-Design-Likelihood-Based Longitudinal TMLE 
+
+We develop an adaptive-design-likelihood-based longitudinal TMLE (ADL-LTMLE) approach for semiparametric efficient inference under longitudinal adaptive experiments, building on recent advances in adaptive-design-likelihood-based TMLE (ADL-TMLE) framework (Zhang and van der Laan, 2025). This framework relates semiparametric efficiency bound under an adaptive experiment to the corresponding bound under an i.i.d. reference distribution in-duced by the average of the distributions generated under the adaptive design. It thereby yields an asymptotically normal and semiparametric efficient estimator for adaptively col-lected data without relying on parametric model assumptions. This framework applies to a broad class of longitudinal target estimands, including those defined under dynamic or stochastic treatment rules and other estimands that admit anal-ogous TMLE procedures based on martingale and semiparametric efficiency theory. More 12 generally, it applies to target estimands of the form ψ(Q) for data likelihoods factorizing as 
+
+p(o1, . . . , o n) = Qni=1 q(oi)gi(oi), where q is the density of some Q ∈ Q that defines the target estimand. Thus, the framework is not restricted to a particular type of adaptive experiment or to the estimands used to guide the adaptive design, provided that the observed data offer sufficient support for the target estimand of interest. For the rest of this section, we use ψd(Q), the mean outcome under a dynamic treatment rule d, as a representative example of the proposed framework in longitudinal settings. We first formalize this estimand and introduce the proposed ADL-LTMLE procedure, and then establish its asymptotic normality and semiparametric efficiency, with proofs provided in the Supplementary Material. 
+
+4.1 Expected Outcome under a Dynamic Treatment Rule 
+
+A dynamic treatment rule is a sequence of decision rules d = ( d1, . . . , d K ), where each 
+
+dk : Hk → A k maps the observed history Hk to a treatment at stage k. For each k ∈ [K], let 
+
+Ld 
+
+> k+1: K+1
+
+=  Ld
+
+> k+1
+
+, . . . , L d
+
+> K+1
+
+ denote the counterfactual trajectory of covariates/outcomes from stage k + 1 onward under rule d, with Ld 
+
+> K+1
+
+= Y d. The causal estimand of interest is Ψ d := E  Y d , the mean counterfactual outcome under rule d. Let P dQ0 denote the intervention distribution induced by Q0 when treatment is assigned by rule d, and define ¯Gd
+
+> k,n
+
+(hk) = 1
+
+> n
+
+Pni=1 
+
+Qks=1 gs,i {ds(hs) | hs} as the average cumulative probability of following 
+
+d across participants in the adaptive experiment. 
+
+Assumption 1 (Identification) . For a treatment rule d = ( d1, . . . , d K ), suppose that: (i) Consistency: if As,i = ds(Hs,i ) for every s ≤ k, then Lk+1 ,i = Ld
+
+> k+1 ,i
+
+;(ii) Sequential randomization: for every k ∈ [K], Ld 
+
+> k+1: K+1
+
+⊥⊥ Ak,i | Hk,i , ¯Oi−1, where ¯Oi−1
+
+denotes accumulated data before participant i is enrolled; (iii) Positivity: ∀k ∈ [K], ¯Gd
+
+> k,n
+
+(hk) > 0 for P dQ0 -almost every history hk.13 Here, consistency links the observed and counterfactual variables along the target treat-ment rule, sequential randomization removes treatment confounding conditional on the ob-served history and prior experimental data, and positivity ensures that the adaptive experi-ment provides support for the treatment trajectory required to evaluate d.To state the identification formula, we set md
+
+> K+1
+
+(∅, H K+1 ) ≡ Y throughout and, for 
+
+k = K, . . . , 1, define 
+
+md 
+
+> k
+
+(ak, h k) = EQ
+
+md
+
+> k+1
+
+{dk+1 (Hk+1 ), H k+1 } | Ak = ak, H k = hk
+
+ ,
+
+with the convention that md
+
+> k+1
+
+{dk+1 (Hk+1 ), H k+1 } ≡ Y when k = K. Under the conditions above, the longitudinal g-computation formula (Robins, 1986) identifies Ψ d through 
+
+ψd(Q) := EQ
+
+md 
+
+> 1
+
+{d1(H1), H 1} ,
+
+which serves as the observed-data target estimand for statistical estimation. The EIC of 
+
+ψd(Q) at PQ,g is 
+
+Dd(PQ,g)( O)= md 
+
+> 1
+
+{d1(H1), H 1} − ψd(Q)+
+
+> K
+
+X
+
+> k=1
+
+Qks=1 I{As = ds(Hs)}
+
+Qks=1 gs{ds(Hs) | Hs}
+
+md
+
+> k+1
+
+{dk+1 (Hk+1 ), H k+1 } − md 
+
+> k
+
+(Ak, H k) .
+
+4.2 ADL-LTMLE Procedure 
+
+The ADL-LTMLE is constructed recursively as follows. First, we initialize the final pseudo-outcome by md,∗
+
+> n,K +1
+
+{dK+1 (HK+1 ), H K+1 } ≡ Y . Then, for each k = K, . . . , 1, we proceed as follows. At stage k, we use the targeted regression md,∗ 
+
+> n,k +1
+
+obtained at stage k + 1 to construct an estimate md
+
+> n,k
+
+(ak, h k) by regressing md,∗
+
+> n,k +1
+
+{dk+1 (Hk+1 ), H k+1 } on Ak and Hk.14 We then perform a targeting step at stage k. Using the average-reference cumulative treatment probability ¯Gd 
+
+> k,n
+
+defined above, let Hd
+
+> k,n
+
+(O) =    
+
+> Qks=1 I{As=ds(Hs)}
+> ¯Gd
+> k,n (Hk)
+
+. We fluctuate md
+
+> n,k
+
+along a logistic model: logit md
+
+> n,k,ϵ
+
+(Ak, H k) = logit md
+
+> n,k
+
+(Ak, H k) + ϵH d
+
+> k,n
+
+(O), (9) where we use md,∗
+
+> n,k +1
+
+{dk+1 (Hk+1 ), H k+1 } as the outcome. Let ˆ ϵk,n denote the estimated fluctuation parameter and set md,∗ 
+
+> n,k
+
+= md 
+
+> n,k, ˆϵk,n
+
+. The targeted prediction md,∗
+
+> n,k
+
+{dk(Hk), H k}
+
+then becomes the pseudo-outcome for estimating the regression at stage k − 1. After completing the recursion, let md,∗ 
+
+> n
+
+=
+
+
+
+md,∗
+
+> n, 1
+
+, . . . , m d,∗
+
+> n,K
+
+
+
+denote the resulting collec-tion of targeted sequential regressions, and let Q∗ 
+
+> 1,n
+
+denote the empirical distribution of L1.We use Q∗ 
+
+> n
+
+=  Q∗
+
+> 1,n
+
+, Q ∗
+
+> 2,n
+
+, . . . , Q ∗
+
+> K+1 ,n
+
+ to denote the longitudinal distribution that induces the sequential regressions md,∗ 
+
+> n
+
+, which solves 1
+
+> n
+
+Pni=1 Dd(PQ∗ 
+
+> n,gn
+
+)( Oi) = 0. The resulting ADL-LTMLE is 
+
+ψd(Q∗
+
+> n
+
+) := 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+md,∗
+
+> n, 1
+
+{d1(H1,i ), H 1,i }.
+
+4.3 Asymptotic Normality 
+
+We now state the asymptotic normality of the ADL-LTMLE. For any integrable func-tion f , we use PQ0,gi f = E{f (Oi) | Fi−1} to denote the conditional expectation un-der the participant-specific randomization mechanism gi, given the previously observed data. Define an i.i.d. reference law by the average of the participant-specific observed-data laws across participants in the adaptive experiment, i.e., ¯PQ,g1: n := 1
+
+> n
+
+Pni=1 PQ,gi ,which serves as the reference law for characterizing the semiparametric efficiency bound for regular estimators under adaptive experiments and for constructing the ADL-LTMLE. Moreover, we write ¯PQ,g1: n = PQ,¯gn as shorthand, where ¯ gn = (¯ g1,n , . . . , ¯gK,n ) denotes the longitudinal treatment mechanism induced by the average-reference law. In particu-lar, ¯ gk,n (ak | hk) := ¯Gk,n (¯ ak ,¯hk )¯Gk−1,n (¯ ak−1,¯hk−1) , where ¯Gk,n (¯ ak, ¯hk) := 1
+
+> n
+
+Pni=1 
+
+Qks=1 gs,i (as | hs), and 15 ¯G0,n := 1. Further details are provided in Section S1 of the Supplementary Material. Let Q∞ and ¯ g∞ denote fixed limits of Q∗ 
+
+> n
+
+and ¯ gn, respectively, and define G¯g∞,d 
+
+> k
+
+(hk) := 
+
+Qks=1 ¯gs, ∞{ds(hs) | hs}. Beyond the positivity and variance stabilization assumptions below, we additionally impose entropy and convergence conditions governing the relevant function classes and the asymptotic behavior of Q∗ 
+
+> n
+
+and ¯ gn; their formal statements are provided in Assumptions S1–S3 of the Supplementary Material. 
+
+Assumption 2 (Strong Positivity of Average Cumulative Treatment Probabilities) . There exists ζ > 0 such that, for every n, min k∈[K] inf hk ∈H k
+
+¯Gd
+
+> k,n
+
+(hk) ≥ ζ, and min k∈[K] inf hk ∈H k G¯g∞,d 
+
+> k
+
+(hk) ≥
+
+ζ.
+
+Assumption 3 (Variance Stabilization) . There exists a constant σ2 
+
+> d
+
+> 0 such that 
+
+> 1
+> n
+
+Pni=1 Var PQ0,gi
+
+Dd(PQ∞,¯g∞ )( O) p
+
+→ σ2
+
+> d
+
+.
+
+Theorem 1 (Asymptotic Normality of the ADL-LTMLE) . Suppose Assumptions 2, 3, S1, S2, and S3 hold. Then 
+
+√n ψd(Q∗
+
+> n
+
+) − ψd(Q0) d
+
+→ N (0 , σ 2
+
+> d
+
+).
+
+Let ˆ σ2 
+
+> d,n
+
+be a consistent estimate of σ2
+
+> d
+
+. The standard error of ψd(Q∗
+
+> n
+
+) is given by ˆσd,n /√n. The (1 − α) Wald confidence interval is ψd(Q∗
+
+> n
+
+) ± z1−α/ 2 ˆσd,n /√n, where z1−α/ 2 is the (1 − α/ 2)-quantile of the standard normal distribution. 
+
+4.4 Semiparametric Efficiency 
+
+We further establish the semiparametric efficiency of the ADL-LTMLE following the effi-ciency result of Zhang and van der Laan (2025), which relates the semiparametric efficiency notion for the adaptive experiment PQ,g1: n to that of a limiting i.i.d. reference experiment with law PQ,¯g∞ .16 For any Q = ( Q1, . . . , Q K+1 ) ∈ Q , define the tangent space 
+
+H(Q, ¯g∞) = 
+
+
+
+h =
+
+> K+1
+
+X
+
+> k=1
+
+hk ∈ L2(PQ,¯g∞ ) : 
+
+EQ{h1(L1)} = 0 ,EQ{hk+1 (Lk+1 , A k, H k) | Ak, H k} = 0 , k ∈ [K]
+
+
+
+,
+
+equipped with the inner product ⟨h, eh⟩H(Q,¯g∞) = PQ,¯g∞ (heh). 
+
+Assumption 4 (Reference-Law Norm Stability) . For every h ∈ H (Q0, ¯g∞), PQ0,¯gn h2 p
+
+→
+
+PQ0,¯g∞ h2.
+
+Theorem 2 (Semiparametric Efficiency of the ADL-LTMLE) . Suppose Assumptions 2, 3, 4, S1, S2, and S3 hold, and Q∞ = Q0. Then the ADL-LTMLE is regular and efficient, 
+
+√n ψd(Q∗
+
+> n
+
+) − ψd(Q0) d
+
+→ N  0, P Q0,¯g∞
+
+Dd(PQ0,¯g∞ )2 ,
+
+i.e., the asymptotic variance of √n{ψd(Q∗
+
+> n
+
+)−ψd(Q0)} equals the minimum attainable asymp-totic variance among all regular estimators. 
+
+# 5. Application to Multiple Time-to-Treatment-Initiation Effects 
+
+This section illustrates the general framework developed in Sections 3 using a class of time-to-treatment-initiation effects as a motivating example. These effects compare initiating treatment at a given stage with delaying initiation until the subsequent stage. Such compar-isons reflect clinically relevant decision problems in many settings, such as cancer and HIV treatments (see, e.g., Cone et al. (2020); Zhao et al. (2022); Zhang et al. (2025)). 17 Time-to-Treatment-Initiation Effects. Consider a class of treatment rules that vary in the timing of treatment initiation: 
+
+dτ = (0 , . . . , 0
+
+| {z } 
+
+> τ−1
+
+, 1, . . . , 1
+
+| {z } 
+
+> K−τ+1
+
+), dK+1 = (0 , . . . , 0) ,
+
+and consider the τ -specific causal estimand Ψ τ (Q) = E(Y dτ
+
+) − E(Y dτ +1 
+
+), which compares initiating treatment at stage τ with delaying initiation until stage τ + 1. For τ = K, this compares initiating treatment at the final stage K with never initiating treatment. Under the identification conditions in Assumption 1, the target estimands of interest are 
+
+ψτ (Q) = E
+
+h
+
+mdτ 
+
+> 1
+
+{dτ 
+
+> 1
+
+(H1), H 1} − mdτ +1  
+
+> 1
+
+{dτ +1 1 (H1), H 1}
+
+i
+
+, τ ∈ [K].
+
+Longitudinal Adaptive Design. For a treatment rule d, define the stage-k sequential-regression residual ∆ d 
+
+> k
+
+(O) = md
+
+> k+1
+
+{dk+1 (Hk+1 ), H k+1 }− md 
+
+> k
+
+(Ak, H k), where md
+
+> k+1
+
+{dk+1 (Hk+1 ), H k+1 } ≡ 
+
+Y when k = K. The EIC of ψτ admits the decomposition Dτ (PQ,g) = Dτ 
+
+> 0
+
+(PQ,g) + 
+
+PKk=1 Dτk (PQ,g), where Dτ 
+
+> 0
+
+= mdτ 
+
+> 1
+
+{dτ 
+
+> 1
+
+(H1), H 1}− mdτ +1  
+
+> 1
+
+{dτ +1 1 (H1), H 1}− ψτ , and Dτk (PQ,g)( O) =    
+
+> Φτk(Q)( O)
+> Qks=1 gs(As|Hs)
+
+, with Φ τk(Q)( O) = I( ¯Ak = dτ
+
+> 1: k
+
+)∆ dτ 
+
+> k
+
+(O) − I( ¯Ak = dτ +1 1: k )∆ dτ +1  
+
+> k
+
+(O).
+
+This illustrates that this class of estimands admits the general stage-wise representation required for applying the design optimization framework in Section 3.2. Specifically, for each stage k and action a, let {στa,k (hk)}2 denote the conditional variance of the downstream EIC components from Dτk to DτK after separating out gk(a | hk)−1. Conditional on Hk = hk,the component of the efficiency bound depending on gk is {στ     
+
+> 1,k (hk)}2
+> gk(1 |hk)
+
++ {στ     
+
+> 0,k (hk)}2
+> gk(0 |hk)
+
+. Using the backward-recursive strategy to optimize the longitudinal design, the oracle randomization scheme at stage k = τ is 
+
+g∗
+
+> k
+
+(1 | hk) = στ
+
+> 1,k
+
+(hk)
+
+στ
+
+> 0,k
+
+(hk) + στ
+
+> 1,k
+
+(hk), g∗
+
+> k
+
+(0 | hk) = στ
+
+> 0,k
+
+(hk)
+
+στ
+
+> 0,k
+
+(hk) + στ
+
+> 1,k
+
+(hk). (10) 18 By contrast, for stages k̸ = τ , the oracle design becomes degenerate: 
+
+g∗
+
+> k
+
+(1 | Hk) ≡ 0 for k < τ, g∗
+
+> k
+
+(1 | Hk) ≡ 1 for k > τ. 
+
+Intuitively, the oracle design keeps all participants on the treatment history shared by the two regimes before stage τ , randomizes at the stage where the regimes diverge according to the variance-minimizing allocation determined by the relative action-specific conditional variability, and assigns the common treatment prescribed by both regimes for later stages. As a result, it maximally preserves the longitudinal support needed to learn both treatment rules while randomizing treatment at the stage where they diverge according to the optimal allocation defined by the efficiency criterion for estimating their contrast. However, when the goal is to learn multiple target estimands concurrently, such as the collection of treatment-initiation effects {ψτ : τ ∈ [K]}, an oracle design optimized for one estimand may substantially reduce the information available for others. These trade-offs are particularly substantial in longitudinal settings, where treatment is assigned sequentially and each stage-specific randomization decision directly shapes the data trajectories at sub-sequent stages. Consequently, favoring the optimal design for one estimand can irreversibly restrict the trajectories needed to estimate estimands that rely on sufficient data support at other stages, leading to limited support, inflated variance, or even loss of identification. This tension is explicit in the treatment-initiation-effect example, where estimand-specific oracle designs concentrate randomization at different stages and thereby impose competing demands on longitudinal data support. The joint optimization and the corresponding adap-tive design framework in Section 3.3 therefore provide a principled approach to navigating these trade-offs. 19 6. Simulation Studies 
+
+We conduct simulation studies to evaluate the proposed longitudinal designs and estimators in the illustrative example of learning multiple treatment-initiation effects ( ψ1, . . . , ψ K ). Specifically, we assess the efficiency gains of the proposed adaptive designs developed in Section 3 relative to fixed non-adaptive randomization and the oracle design, as well as the finite-sample performance of the proposed estimators. 
+
+Setup. In the primary simulations, n = 2000 participants are enrolled sequentially in T = 5 equally sized cohorts of 400 participants. We consider longitudinal settings with either two or three treatment stages ( K = 2 and K = 3), with discrete time-varying covariates and a continuous outcome. The complete data-generating mechanisms are provided in Section S2 of the Supplementary Material. For each setting, we consider three user-specified weight vectors w = ( w1, . . . , w K ) in the joint efficiency criterion. For K = 2, we use (1 /2, 1/2), (1 /3, 2/3), and (2 /3, 1/3); for K = 3, we use (1 /3, 1/3, 1/3), (1 /6, 1/3, 1/2) and (1 /2, 1/3, 1/6). We compare the following three designs: (a) a fixed non-adaptive design that assigns treatment with probability 0 .5 at every stage; (b) an oracle design defined by recursively com-puting the optimal stage-specific randomization probabilities using the true data-generating mechanism; and (c) the proposed adaptive design, which starts from equal randomization and then estimates and tracks the oracle design using the accrued data. 
+
+Estimation. For each Monte Carlo replicate and design, we estimate the collection of treatment-initiation effects {ψτ : τ ∈ [K]} using the ADL-LTMLE developed in Section 4, with the outcome rescaled to [0 , 1] using the observed minimum and maximum and the re-sulting estimates transformed back to the original scale. In the primary simulations, the initial sequential outcome regressions are estimated using empirical means within strata de-fined by the observed covariate and treatment histories available before each treatment stage. 20 As a comparator, we also implement an adaptive-design LTMLE (AD-LTMLE) based on the participant-specific randomization mechanisms gi, which solves 1
+
+> n
+
+Pni=1 Dτ  PQ∗
+
+> n,gi
+
+ (Oi) = 0. This estimator is asymptotically normal under standard conditions for adaptive experiments, but it may exhibit greater finite-sample variability and require stronger design-stability con-ditions than the ADL-LTMLE based on the design ¯ gn induced by the average-reference law ¯PQ,g1: n (Zhang and van der Laan, 2025). The variance estimators for the ADL-LTMLE and AD-LTMLE are 1
+
+> n
+
+PTt=1  
+
+> nt
+> n
+
+dVar i∈I t Dτ  PQ∗
+
+> n,¯gn
+
+ and 1
+
+> n
+
+PTt=1  
+
+> nt
+> n
+
+dVar i∈I t Dτ  PQ∗
+
+> n,gi
+
+ , respec-tively, where It denotes the set of participant indices in cohort t. Under the non-adaptive and oracle designs, where the randomization strategy is fixed, the two estimators coincide with the standard i.i.d. LTMLE (van der Laan and Gruber, 2011). We also evaluate two one-step estimators constructed using ¯ gn and gi, respectively, as analogues of ADL-LTMLE and AD-LTMLE, with more details provided in the Supplementary Material. 
+
+Results. Tables 1 and 2 summarize the results over 500 Monte Carlo replicates for K = 2 and K = 3, respectively. The columns Var j report the empirical variances of the estimators of ψj , whereas TarVar reports the corresponding weighted average of these variances using the weight vector specified in the same row. The columns Cov j report the empirical coverage of 95% Wald confidence intervals, whereas OCov j report the coverage obtained by using the Monte Carlo standard deviation of the point estimates to construct the confidence intervals. For K = 2, the proposed adaptive design yields substantial efficiency gains relative to the fixed design under both estimators. For w = (1 /2, 1/2), the values of TarVar under the fixed design, adaptive design with AD-LTMLE, adaptive design with ADL-LTMLE, and the oracle design are 0 .029, 0 .022, 0 .019, and 0 .017, respectively. For the other weights, the correspond-ing values are 0 .026, 0 .019, 0 .017, and 0 .015 for w = (1 /3, 2/3), and 0 .033, 0 .025, 0 .021, and 0.019 for w = (2 /3, 1/3). Thus, even when paired with the AD-LTMLE, the adaptive design reduces TarVar by approximately 24%–26% relative to the fixed design. Under the same adaptive design, the ADL-LTMLE further reduces TarVar, resulting in overall reductions of 21 approximately 34%–36% relative to the fixed design and bringing performance closer to that of the oracle design, which yields variance reduction by approximately 41%–42%. The efficiency gains of the proposed designs are more substantial for K = 3. For 
+
+w = (1 /3, 1/3, 1/3), the TarVar values under the fixed design, adaptive design with AD-LTMLE, adaptive design with ADL-LTMLE, and oracle design are 0 .056, 0 .031, 0 .026, and 0 .022, respectively. The corresponding values are 0 .062, 0 .032, 0 .024, and 0 .021 for 
+
+w = (1 /6, 1/3, 1/2), and 0 .050, 0 .029, 0 .024, and 0 .021 for w = (1 /2, 1/3, 1/6). Pairing the proposed adaptive design with the AD-LTMLE therefore reduces TarVar by approximately 42%–48% relative to the fixed design. The ADL-LTMLE provides a further variance reduc-tion under the same adaptive design, yielding overall reductions of approximately 52%–61%. The resulting performance is close to the corresponding oracle benchmark, which reduces TarVar by approximately 58%–66%. The results also show that changing the weight vector shifts estimation efficiency toward the estimands assigned larger weights. For K = 2, under the oracle design, increasing the weight on ψ2 from w = (2 /3, 1/3) to w = (1 /3, 2/3) reduces Var 2 from 0 .012 to 0 .010, while Var 1 increases slightly from 0 .023 to 0 .024. The trade-offs are more pronounced for K = 3. Shifting from equal weights to w = (1 /6, 1/3, 1/2) prioritizes ψ3 and reduces Var 3 from 0 .020 to 0 .017 in the oracle design, while Var 1 increases from 0 .020 to 0 .026. Conversely, shifting from equal weights to w = (1 /2, 1/3, 1/6) prioritizes ψ1 and reduces Var 1 from 0 .020 to 0 .016, while Var 3 increases from 0 .020 to 0 .025. The adaptive designs follow the same qualitative pattern and achieve performance close to that of the oracle design. Supplementary Tables S3–S6 summarize sensitivity analyses with respect to the sample size and the model specification. For both K = 2 and K = 3, TarVar decreases substantially as the total sample size increases from 1,000 to 2,000 and then to 4,000. While misspecifica-tion of the outcome regressions increases variance, coverage remains near the nominal level across model specifications and sample sizes, supporting the robustness of ADL-LTMLE to 22 outcome-regression misspecification. Table 1: Simulation results for different longitudinal designs and estimators for K = 2. We report the empirical variance of the estimates of ψ1 (Var 1) and ψ2 (Var 2), the weighted sum of variances using user-specified weight w (TarVar), the empirical 95% coverage probabilities (Cov 1, Cov 2), and the corresponding oracle coverage probabilities (OCov 1, OCov 2). 
+
+w Design Estimator TarVar Var 1 Var 2 Cov 1(%) Cov 2(%) OCov 1(%) OCov 2(%) (1 /2, 1/2) Non-adaptive LTMLE 0.029 0.040 0.018 95.0 97.0 95.4 95.6 Adaptive AD-LTMLE 0.022 0.030 0.013 92.6 94.4 94.8 94.2 Adaptive ADL-LTMLE 0.019 0.026 0.012 93.0 94.6 94.2 95.4 Oracle LTMLE 0.017 0.024 0.011 94.2 94.6 95.0 95.0 (1 /3, 2/3) Non-adaptive LTMLE 0.026 0.040 0.018 95.0 97.0 95.4 95.6 Adaptive AD-LTMLE 0.019 0.032 0.013 92.0 96.0 94.2 96.6 Adaptive ADL-LTMLE 0.017 0.028 0.012 92.6 95.6 95.0 96.0 Oracle LTMLE 0.015 0.024 0.010 94.8 95.6 95.4 95.6 (2 /3, 1/3) Non-adaptive LTMLE 0.033 0.040 0.018 95.0 97.0 95.4 95.6 Adaptive AD-LTMLE 0.025 0.030 0.014 92.2 94.4 95.4 95.2 Adaptive ADL-LTMLE 0.021 0.026 0.012 93.2 94.8 95.4 95.6 Oracle LTMLE 0.019 0.023 0.012 94.6 94.6 95.2 94.8 
+
+Table 2: Simulation results for different designs amd estimators for K = 3. We report the empirical variance of the estimates of ψ1 (Var 1), ψ2 (Var 2), and ψ3 (Var 3), the weighted sum of variances using user-specified weight w (TarVar), the empirical 95% coverage probabilities (Cov 1, Cov 2, Cov 3), and the corresponding oracle coverage probabilities (OCov 1, OCov 2, OCov 3).                                                                                                                                                       
+
+> wDesign Estimator TarVar Var 1Var 2Var 3Cov 1(%) Cov 2(%) Cov 3(%) OCov 1(%) OCov 2(%) OCov 3(%) (1 /3,1/3,1/3) Non-adaptive LTMLE 0.056 0.026 0.079 0.063 94.2 94.6 96.2 94.0 94.2 95.4 Adaptive AD-LTMLE 0.031 0.022 0.039 0.033 95.2 94.6 94.6 95.4 94.8 94.0 Adaptive ADL-LTMLE 0.026 0.020 0.031 0.026 95.2 94.4 95.2 95.2 95.0 95.4 Oracle LTMLE 0.022 0.020 0.025 0.020 95.0 94.8 96.4 94.8 94.0 94.6 (1 /6,1/3,1/2) Non-adaptive LTMLE 0.062 0.026 0.079 0.063 94.2 94.6 96.2 94.0 94.2 95.4 Adaptive AD-LTMLE 0.032 0.027 0.038 0.030 94.4 95.4 94.2 94.4 95.4 94.8 Adaptive ADL-LTMLE 0.024 0.024 0.028 0.022 94.4 95.6 95.2 94.8 95.0 94.8 Oracle LTMLE 0.021 0.026 0.024 0.017 95.8 95.8 97.2 95.4 94.4 96.2 (1 /2,1/3,1/6) Non-adaptive LTMLE 0.050 0.026 0.079 0.063 94.2 94.6 96.2 94.0 94.2 95.4 Adaptive AD-LTMLE 0.029 0.019 0.039 0.038 95.0 93.4 93.0 95.0 93.6 94.4 Adaptive ADL-LTMLE 0.024 0.017 0.031 0.029 94.8 94.2 94.6 95.4 94.4 95.4 Oracle LTMLE 0.021 0.016 0.026 0.025 96.2 95.6 95.2 95.0 95.0 94.4
+
+23 7. Conclusions 
+
+In this work, we develop a general framework for constructing longitudinal adaptive experi-ments aimed at learning one or more statistical estimands with semiparametric efficient in-ference. We characterize oracle longitudinal designs that minimize semiparametric efficiency bounds using backward-recursive solutions of treatment randomization schemes across treat-ment stages, and propose an extended design optimization criterion that balances estimation efficiency of multiple estimands and navigates their trade-offs. This approach applies broadly to the identification of oracle designs and the construction of adaptive designs for a wide class of target estimands, including various timing-of-treatment-initiation effects, treatment-specific means at multiple time points, and mean outcomes under dynamic or stochastic treatment rules. We further establish an asymptotically normal, semiparametric efficient ADL-LTMLE framework for asymptotically normal and semiparametric efficient estimation of statistical estimands from dependent data collected from adaptive experiments, with-out relying on parametric model assumptions. Simulation studies show that the proposed longitudinal designs achieve substantial efficiency gains over non-adaptive designs with the performance close to that of the unknown oracle design, especially when combined with the efficient ADL-LTMLE. Overall, this work contributes a general efficiency-oriented framework for the design and estimation of adaptive experiments in longitudinal settings involving multi-stage, time-varying treatments. Future work may explore applications of the proposed framework to other statistical learning objectives and extend it to a broader range of experimental set-tings and application domains. 24 Supplementary Material S1. Theoretical Analyses of ADL-LTMLE 
+
+This section provides theoretical analyses of ADL-LTMLE. We first characterize the treat-ment randomization mechanisms induced the reference distribution used to construct the estimator, then establish its asymptotic normality and semiparametric efficiency. 
+
+S1.1 Stage-wise Treatment Distribution under the Reference Dis-tribution 
+
+Recall that ¯PQ,g1: n := 1
+
+> n
+
+Pni=1 PQ,gi , where gi = ( g1,i , . . . , g K,i ) denotes the collection of randomization mechanisms used to generate participant i’s treatment sequence. Here, Q =(Q1, Q 2, . . . , Q K+1 ) collects the stage-wise nuisance components, with densities denoted by 
+
+q1, . . . , q K+1 . The density of ¯PQ,g1: n is ¯pQ,g1: n (o) = 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+"
+
+q1(l1)
+
+> K
+
+Y
+
+> k=1
+
+gk,i (ak | hk)qk+1 (lk+1 | ak, h k)
+
+#
+
+.
+
+For any fixed longitudinal treatment mechanism g = ( g1, . . . , g K ), define its cumulative treatment probability through stage k by Gg 
+
+> k
+
+(¯ ak | hk) := Qks=1 gs(as | hs). For participant i,write 
+
+Gk,i (¯ ak | hk) := Ggi 
+
+> k
+
+(¯ ak | hk) = 
+
+> k
+
+Y
+
+> s=1
+
+gs,i (as | hs).
+
+For any 1 ≤ k ≤ K, the joint density of ( ¯Lk, ¯Ak) under ¯PQ,g1: n , obtained by marginalizing over future variables, is 
+
+p ¯P (¯lk, ¯ak) = 
+
+"
+
+q1(l1)
+
+> k
+
+Y
+
+> s=2
+
+qs(ls | as−1, h s−1)
+
+# " 
+
+1
+
+n
+
+> n
+
+X
+
+> i=1
+
+Gk,i (¯ ak | hk)
+
+#
+
+.
+
+25 Similarly, 
+
+p ¯P (¯lk, ¯ak−1) = 
+
+"
+
+q1(l1)
+
+> k
+
+Y
+
+> s=2
+
+qs(ls | as−1, h s−1)
+
+# " 
+
+1
+
+n
+
+> n
+
+X
+
+> i=1
+
+Gk−1,i (¯ ak−1 | hk−1)
+
+#
+
+for 2 ≤ k ≤ K. For k = 1, p ¯P (¯lk, ¯ak−1) reduces to p ¯P (¯lk), which equals q1(l1). Define the cumulative treatment probability under the finite-sample average-reference distribution by ¯Gk,n (¯ ak | hk) := 1
+
+> n
+
+Pni=1 Gk,i (¯ ak | hk). Therefore, the stage-wise treatment distribution induced by the average-reference law for every k ∈ [K] is ¯gk,n (ak | hk) = p ¯P (¯lk, ¯ak)
+
+p ¯P (¯lk, ¯ak−1) = ¯Gk,n (¯ ak | hk)¯Gk−1,n (¯ ak−1 | hk−1). (S1.1) In particular, ¯ g1,n (a1 | h1) = 1
+
+> n
+
+Pni=1 g1,i (a1 | h1). Let ¯ gn := (¯ g1,n , . . . , ¯gK,n ). By construction, 
+
+G¯gn 
+
+> k
+
+(¯ ak | hk) = ¯Gk,n (¯ ak | hk) = 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+Ggi 
+
+> k
+
+(¯ ak | hk).
+
+Thus, the cumulative treatment probability induced by the average-reference distribution ¯PQ,g1: n is the average of the participant-specific cumulative treatment probabilities. For notational convenience in the following sections, we therefore write PQ,¯gn := ¯PQ,g1: n , which infers a fixed reference experiment consists of independent observations drawn from PQ,¯gn
+
+where each participant has stage-wise treatments sequentially generated according to the fixed mechanism ¯ gn.
+
+S1.2 Asymptotic Normality 
+
+We use the example of the mean outcome under a longitudinal dynamic treatment rule 
+
+d = ( d1, . . . , d K ) as the target estimand of interest, which falls within the broader ADL-TMLE framework of Zhang and van der Laan (2025) that considers general target parameters of the form Ψ( Q) for data likelihoods factorizing as p(o1, . . . , o n) = Qni=1 q(oi)gi(oi), where 26 q is the density of some Q ∈ Q that defines the target estimand. Let ψd(PQ,g) = EPQ,g (Y d) denote the mean counterfactual outcome under d. Since the estimand is only defined on PQ,g through Q, we also express the estimand by ψd(Q). 
+
+Theorem 3 (Decomposition of the ADL-LTMLE) .
+
+ψd(Q∗
+
+> n
+
+) − ψd(Q0) = M d
+
+> 1,n
+
+(Q∞, ¯g∞) + M d
+
+> 2,n
+
+(Q∗
+
+> n
+
+, Q∞, ¯gn) + M d
+
+> 3,n
+
+(Q∞, ¯gn, ¯g∞),
+
+where 
+
+M d
+
+> 1,n
+
+(Q∞, ¯g∞) := 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+Dd(PQ∞,¯g∞ )( Oi) − PQ0,gi Dd(PQ∞,¯g∞ ) ,M d
+
+> 2,n
+
+(Q∗
+
+> n
+
+, Q∞, ¯gn) := 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+( Dd(PQ∗ 
+
+> n,¯gn
+
+)( Oi) − PQ0,gi Dd(PQ∗ 
+
+> n,¯gn
+
+)
+
+− Dd(PQ∞,¯gn )( Oi) − PQ0,gi Dd(PQ∞,¯gn ) )
+
+,
+
+and 
+
+M d
+
+> 3,n
+
+(Q∞, ¯gn, ¯g∞) := 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+( Dd(PQ∞,¯gn )( Oi) − PQ0,gi Dd(PQ∞,¯gn )
+
+− Dd(PQ∞,¯g∞ )( Oi) − PQ0,gi Dd(PQ∞,¯g∞ ) )
+
+.
+
+Proof. Define the sequential regressions recursively by setting 
+
+md
+
+> K+1
+
+{dK+1 (HK+1 ), H K+1 } = Y, 
+
+and, for k = 1 , . . . , K ,
+
+md 
+
+> k
+
+(ak, h k) = EQ
+
+md
+
+> k+1
+
+{dk+1 (Hk+1 ), H k+1 } | Ak = ak, H k = hk
+
+ .
+
+For any longitudinal treatment mechanism g, define Gg,d 
+
+> k
+
+(Hk) := Qks=1 gs{ds(Hs) | Hs}.27 For participant i, we write Gd
+
+> k,i
+
+(Hk) := Ggi,d 
+
+> k
+
+(Hk). The corresponding cumulative prob-ability under the finite-sample average-reference mechanism is ¯Gd
+
+> k,n
+
+(Hk) := G¯gn,d 
+
+> k
+
+(Hk) = 
+
+> 1
+> n
+
+Pni=1 Gd
+
+> k,i
+
+(Hk). The treatment-rule-specific EIC evaluated under any fixed PQ,g is 
+
+Dd(PQ,g)( O) = md 
+
+> 1
+
+{d1(H1), H 1} − ψd(Q)+
+
+> K
+
+X
+
+> k=1
+
+I{ ¯Ak = ¯dk}
+
+¯Gd
+
+> k,n
+
+(Hk)
+
+md
+
+> k+1
+
+{dk+1 (Hk+1 ), H k+1 } − md 
+
+> k
+
+(Ak, H k) .
+
+Under the event I{ ¯Ak = ¯dk} = 1, the term md 
+
+> k
+
+(Ak, H k) equals md 
+
+> k
+
+{dk(Hk), H k}.For participant i, define the cumulative probability of following d through stage k under that participant’s randomization mechanism by Gd
+
+> k,i
+
+(Hk) = Qks=1 gs,i {ds(Hs) | Hs}. We also define the stage-k residual under Q by ∆ d 
+
+> k
+
+(Q) := md
+
+> k+1
+
+{dk+1 (Hk+1 ), H k+1 }− md 
+
+> k
+
+{dk(Hk), H k}.
+
+For each i, applying von Mises expansion with respect to PQ,¯gn and PQ0,gi yields 
+
+ψd(PQ,¯gn ) − ψd(PQ0,gi ) = 
+
+Z
+
+Dd(PQ,¯gn )( o) d{PQ,¯gn − PQ0,gi }(o)+ Rd 
+
+> i
+
+(Q, Q0; ¯ gn, gi).
+
+For the mean outcome under a longitudinal dynamic treatment rule d, the remainder takes the form 
+
+Rd 
+
+> i
+
+(Q, Q0; ¯ gn, gi) = 
+
+> K
+
+X
+
+> k=1
+
+EdQ0
+
+"Gd
+
+> k,i
+
+(Hk) − ¯Gd
+
+> k,n
+
+(Hk)¯Gd
+
+> k,n
+
+(Hk) ∆d 
+
+> k
+
+(Q)
+
+#
+
+,
+
+where Gd
+
+> k,i
+
+(Hk) = Qks=1 gs,i {ds(Hs) | Hs}, ¯Gd
+
+> k,n
+
+(Hk) = 1
+
+> n
+
+Pni=1 Gd
+
+> k,i
+
+(Hk), and ∆ d 
+
+> k
+
+(Q) = 
+
+md
+
+> k+1
+
+{dk+1 (Hk+1 ), H k+1 } − md 
+
+> k
+
+{dk(Hk), H k}.
+
+Here, EdQ0 denotes expectation under the distribution that sets treatment according to 
+
+d while keeping the longitudinal covariate and outcome law at Q0. By averaging over 28 i = 1 , . . . , n , we obtain 
+
+ψd(Q) − ψd(Q0) = 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+Z
+
+Dd(PQ,¯gn )( o) d{PQ,¯gn − PQ0,gi }(o)+ 1
+
+n
+
+> n
+
+X
+
+> i=1
+> K
+
+X
+
+> k=1
+
+EdQ0
+
+"Gd
+
+> k,i
+
+(Hk) − ¯Gd
+
+> k,n
+
+(Hk)¯Gd
+
+> k,n
+
+(Hk) ∆d 
+
+> k
+
+(Q)
+
+#
+
+= 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+Z
+
+Dd(PQ,¯gn )( o) d{PQ,¯gn − PQ0,gi }(o)= −PQ0,¯gn Dd(PQ,¯gn ),
+
+where the second equality holds since ¯Gd
+
+> k,n
+
+(Hk) = 1
+
+> n
+
+Pni=1 Gd
+
+> k,i
+
+(Hk), and the last equality uses the fact that PQ,gDd(PQ,g) = 0 for any PQ,g.Since an ADL-LTMLE for estimating ψd(Q0) updates an initial estimate Qn to obtain a 
+
+Q∗ 
+
+> n
+
+that solves 1
+
+> n
+
+Pni=1 Dd(PQ∗ 
+
+> n,¯gn
+
+)( Oi) = 0, we have 
+
+ψd(Q∗
+
+> n
+
+) − ψd(Q0) = 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+Dd(PQ∗ 
+
+> n,¯gn
+
+) − PQ0,¯gn Dd(PQ∗ 
+
+> n,¯gn
+
+).
+
+The final decomposition follows from some algebra that adds and subtracts other corre-sponding terms. 
+
+Theorem 4 (Asymptotic Normality of M d
+
+> 1,n
+
+). Suppose Assumptions 2 and 3 hold, then 
+
+√nM d
+
+> 1,n
+
+(Q∞, ¯g∞) d
+
+→ N (0 , σ 2
+
+> d
+
+).
+
+Proof. Note that M d
+
+> 1,n
+
+(Q∞, ¯g∞) is an average of martingale differences sequences. Under Assumption 2, Dd(PQ∞,¯g∞ ) is uniformly bounded, therefore satisfying the conditional Lin-deberg condition, i.e., for every ϵ > 0, 1
+
+> n
+
+Pni=1 E Z2
+
+> n,i
+
+I {| Zn,i | > ϵ √n} | ¯O(i − 1)  p
+
+→ 0, where 
+
+Zn,i = D(PQ∞,¯g∞ )( Oi) − PQ0,gi D(PQ∞,¯g∞ ). Combined with the variance stabilization assumption stated in Assumption 3, one can directly apply Martingale Central Limit Theorem (see, e.g., Hall and Heyde (2014)) and obtain the asymptotic normality. Now we establish equicontinuity conditions for M d 
+
+> 2,n
+
+and M d
+
+> 3,n
+
+.29 For Q = ( Q1, . . . , Q K+1 ) ∈ Q , define the collection of sequential regression functions as-sociated with rule d by md(Q) =  md 
+
+> 1
+
+(Q), . . . , m d 
+
+> K
+
+(Q), and let Md = md(Q) : Q ∈ Q 
+
+equipped with the supremum norm defined by md 
+
+> ∞
+
+= max k∈[K] md 
+
+> k∞
+
+. Let G denote the fixed class of treatment mechanisms satisfying Assumption 2, equipped with ∥g∥∞ =max k∈[K] sup ak ,h k |gk(ak | hk)|. For a class of functions H, let N∞(u, H) denote its u-covering number under the corresponding supremum norm, and define the entropy integral J∞(ϵ, H) := 
+
+R ϵ
+
+> 0
+
+plog [1 + N∞(u, H)] du .
+
+Assumption S1 (Entropy Conditions) . J∞(ϵ, Md) and J∞(ϵ, G) are finite and converge to zero as ϵ → 0. 
+
+Assumption S2 (Convergence of Q∗
+
+> n
+
+). Define ρ(x) = ex − x − 1 and eDd(PQ,¯gn )( Oi) = 
+
+md 
+
+> 1
+
+(Q)( Oi) + PKk=1 Dd 
+
+> k
+
+(PQ,¯gn )( Oi) for any Q ∈ Q . Let 
+
+sd 
+
+> 2,n
+
+:= 
+
+(
+
+1
+
+n
+
+> n
+
+X
+
+> i=1
+
+E
+
+"
+
+ρ Dd(PQ∗ 
+
+> n,¯gn
+
+)( Oi) − Dd(PQ∞,¯gn )( Oi)
+
+c2
+
+!
+
+Fi−1
+
+#) 1/2
+
+,
+
+where c2 = 8 K/ζ + 8 K2/ζ 2. Assume that sd 
+
+> 2,n
+
+= OP (δ2,n ) for some δ2,n → 0. 
+
+Assumption S3 (Convergence of ¯ gn). Define 
+
+sd 
+
+> 3,n
+
+:= 
+
+(
+
+1
+
+n
+
+> n
+
+X
+
+> i=1
+
+E
+
+"
+
+ρ Dd(PQ∞,¯gn )( Oi) − Dd(PQ∞,¯g∞ )( Oi)
+
+c3
+
+!
+
+Fi−1
+
+#) 1/2
+
+,
+
+where c3 = 4 K(K + 1) /ζ 2. Assume that sd 
+
+> 3,n
+
+= OP (δ3,n ) for some δ3,n → 0. We also refer to the following lemma of a general martingale equicontinuity result of Zhang et al. (2024). 
+
+Lemma 1. Let Mnf = 1
+
+> n
+
+Pni=1 [f (Oi) − E{f (Oi) | F i−1}]. Let Θ be a index set and let 
+
+{fθ : θ ∈ Θ} be a uniformly bounded class satisfying ∥fθ − fθ′ ∥∞ ≤ L∥θ − θ′∥∞. Define the entropy integral as J∞(ϵ, Θ) = R ϵ
+
+> 0
+
+plog {1 + N∞(u, Θ) } du. Suppose that J∞(ϵ, Θ) < ∞
+
+30 is finite and that J∞(ϵ, Θ) → 0 as ϵ → 0. Let M = sup θ∈Θ ∥θ∥∞, Z = 8 LM , and define 
+
+sn(fn) = 
+
+n 1
+
+> n
+
+Pni=1 E
+
+h
+
+ρ
+
+|fn(Oi)|
+
+> Z
+
+
+
+Fi−1
+
+io 1/2
+
+, where ρ(x) = ex − x − 1.If sn(fn) = OP (δn) for some δn → 0, then Mnfn = oP (n−1/2).
+
+Theorem 5 (Equicontinuity of M d 
+
+> 2,n
+
+and M d
+
+> 3,n
+
+). Suppose Assumptions 2, S1, S2, and S3 hold. Then M d 
+
+> 2,n
+
+= oP (n−1/2), M d 
+
+> 3,n
+
+= oP (n−1/2).Proof. For M d
+
+> 2,n
+
+, define Θ d 
+
+> 2
+
+= Md × G , and, for θ2 = ( md, ¯g) ∈ Θd 
+
+> 2
+
+, define ∥θ2∥∞ =max ∥md∥∞, ∥¯g∥∞ .
+
+Let eDd(PQ,¯g) = md 
+
+> 1
+
+(Q)+ PKk=1 Dd 
+
+> k
+
+(PQ,¯g), and define f d 
+
+> 2,θ 2
+
+(O) = eDd(PQ,¯g)( O)− eDd(PQ∞,¯g)( O).
+
+Thus, M d 
+
+> 2,n
+
+= 1
+
+> n
+
+Pni=1 
+
+h
+
+f d
+
+> 2,θ d
+> 2,n
+
+(Oi) − PQ0,gi f d
+
+> 2,θ d
+> 2,n
+
+i
+
+, which is a martingale process indexed by 
+
+θd 
+
+> 2,n
+
+=  md(Q∗
+
+> n
+
+), ¯gn
+
+. A direct calculation of the longitudinal EIC under Assumption 2 yields 
+
+f d 
+
+> 2,θ 2
+
+− f d 
+
+> 2,θ ′
+> 2∞
+
+≤ L2 ∥θ2 − θ′
+
+> 2
+
+∥∞, where L2 = Kζ + K2 
+
+> ζ2
+
+.For M d
+
+> 3,n
+
+, define Θ d 
+
+> 3
+
+= G and f d
+
+> 3,¯g
+
+(O) = Dd(PQ∞,¯g)( O). We have that 
+
+M d 
+
+> 3,n
+
+= 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+{f d 
+
+> 3,¯gn
+
+− f d 
+
+> 3,¯g∞
+
+}(Oi) − PQ0,gi {f d 
+
+> 3,¯gn
+
+− f d 
+
+> 3,¯g∞
+
+} ,
+
+where f d 
+
+> 3,¯g
+
+− f d  
+
+> 3,¯g′∞
+
+≤ L3 ∥¯g − ¯g′∥∞, where L3 = K(K+1) 2ζ2 .
+
+Moreover, since N∞(u, Θd 
+
+> 2
+
+) ≤ N∞(u, Md)N∞(u, G), and N∞(u, Θd 
+
+> 3
+
+) = N∞(u, G), As-sumption S1 implies the required entropy conditions. Since both outcome regressions and treatment probabilities are bounded by 1, we have c2 = 8Kζ + 8K2 
+
+> ζ2
+
+and c3 = 4K(K+1)  
+
+> ζ2
+
+.Finally, Assumptions S2 and S3 provide the required convergence in Lemma 1. Applying the general martingale equicontinuity result separately to the two processes yields M d 
+
+> 2,n
+
+=
+
+oP (n−1/2) and M d 
+
+> 3,n
+
+= oP (n−1/2). Combining Theorems 3, 4, and 5 yields the asymptotic normality of ADL-LTMLE 1: 
+
+√n ψd(Q∗
+
+> n
+
+) − ψd(Q0) d
+
+→ N (0 , σ 2
+
+> d
+
+). 31 S1.3 Semiparametric Efficiency 
+
+The semiparametric efficiency analysis of the ADL-LTMLE builds directly on the ADL-TMLE framework of Zhang and van der Laan (2025), which establishes efficiency through local asymptotic normality and the convolution theorem van der Vaart et al. (1996). Write q(o) = q1(l1) QKk=1 qk+1 (lk+1 | ak, h k) and gi(o) = QKk=1 gk,i (ak | hk). Then the longi-tudinal adaptive likelihood has the general factorization pn 
+
+> Q,g1: n
+
+(o1, . . . , o n) = Qni=1 q(oi)gi(oi).
+
+Define a submodel {Qhϵ : ϵ} through Q0 by 
+
+dQ h
+
+> 1,ϵ
+
+(l1) = {1 + ϵh 1(l1)}dQ 0,1(l1)and 
+
+dQ hk+1 ,ϵ (lk+1 | ak, h k) = {1 + ϵh k+1 (lk+1 , a k, h k)} dQ 0,k +1 (lk+1 | ak, h k)for k ∈ [K]. Let P n  
+
+> Qhϵ,g1: n
+
+denote the joint law of ( O1, . . . , O n) under Qhϵ and g1: n. Its density is fac-torized by 
+
+pn  
+
+> Qhϵ,g1: n
+
+(o1, . . . , o n)=
+
+> n
+
+Y
+
+> i=1
+
+"
+
+qh
+
+> 1,ϵ
+
+(l1,i )
+
+> K
+
+Y
+
+> k=1
+
+gk,i (ak,i | hk,i , Fi−1)qhk+1 ,ϵ (lk+1 ,i | ak,i , h k,i )
+
+#
+
+.
+
+Proposition 1 (Local Asymptotic Normality) . Under Assumption 4, for every bounded score direction h and fixed t ∈ R,
+
+log 
+
+dP n
+
+> Qht/ √n,g1: n
+
+dP n
+
+> Q0,g1: n
+
+= t∆n,h − t2
+
+2 PQ0,¯g∞ h2 + oP (1) ,
+
+where ∆n,h = 1√n
+
+Pni=1 h(Oi) d
+
+→ N (0 , P Q0,¯g∞ h2).Proof of Proposition 1. For participant i, write h1,i = h1(L1,i ) and, for k ∈ [K], hk+1 ,i =
+
+hk+1 (Lk+1 ,i , A k,i , H k,i ). Therefore, h(Oi) = PK+1  
+
+> k=1
+
+hk,i .32 The log-likelihood ratio can be as log 
+
+dP n
+
+> Qht/ √n,g1: n
+
+dP n
+
+> Q0,g1: n
+
+=
+
+> n
+
+X
+
+> i=1
+> K+1
+
+X
+
+> k=1
+
+log 
+
+
+
+1 + t
+
+√nhk,i 
+
+
+
+.
+
+Applying Taylor expansion, we have log 
+
+dP n
+
+> Qht/ √n,g1: n
+
+dP n
+
+> Q0,g1: n
+
+= t
+
+√n
+
+> n
+
+X
+
+> i=1
+> K+1
+
+X
+
+> k=1
+
+hk,i − t2
+
+2n
+
+> n
+
+X
+
+> i=1
+> K+1
+
+X
+
+> k=1
+
+h2 
+
+> k,i
+
++ o(1) .
+
+Define PQ0,gi f = E{f (Oi) | F i−1}. Since the longitudinal score components are conditionally orthogonal, we have PQ0,gi h = 0 and PQ0,gi (hkhs) = 0 for k̸ = s. Consequently, PQ0,gi h2 =
+
+PK+1  
+
+> k=1
+
+PQ0,gi h2
+
+> k
+
+.Define Zi,h = PK+1  
+
+> k=1
+
+h2
+
+> k,i
+
+−PQ0,gi
+
+PK+1  
+
+> k=1
+
+h2
+
+> k
+
+
+
+. The variables Zi,h form a bounded martingale-difference sequence. Therefore, 1
+
+> n
+
+Pni=1 Zi,h = oP (1). Under Assumption 4, 1
+
+> n
+
+Pni=1 
+
+PK+1  
+
+> k=1
+
+h2 
+
+> k,i
+
+=
+
+PQ0,¯gn h2 + oP (1) p
+
+→ PQ0,¯g∞ h2. Since the conditional Lindeberg condition holds with h
+
+bounded, the martingale CLT gives ∆ n,h d
+
+→ N (0 , P Q0,¯g∞ h2), which proves the proposi-tion. For the submodel {Qhϵ : ϵ} defined above, let ˙ψdQ0 (h) := ddϵ ψd(Qhϵ ) ϵ=0 denote the path-wise derivative of ψd at Q0 in the score direction h. Under the fixed longitudinal ref-erence law PQ0,¯g∞ , the pathwise derivative satisfies ˙ψdQ0 (h) = PQ0,¯g∞
+
+ Dd(PQ0,¯g∞ )h, for any h ∈ H (Q0, ¯g∞). Thus, Dd(PQ0,¯g∞ ) is the canonical gradient in the limiting refer-ence experiment PQ0,¯g∞ . The corresponding semiparametric efficiency bound is therefore 
+
+PQ0,¯g∞
+
+h Dd(PQ0,¯g∞ )2i
+
+.When Q∞ = Q0, the difference ψd(Q∗
+
+> n
+
+)−ψd(Q0) has 1
+
+> n
+
+Pni=1 
+
+Dd(PQ0,¯g∞ )( Oi) − PQ0,gi Dd(PQ0,¯g∞ )
+
+as the leading term. Since PQ0,gi Dd(PQ0,¯g∞ ) = 0 and Assumption 4 hold, we have 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+V ar PQ0,gi Dd(PQ0,¯g∞ ) = PQ0,¯gn
+
+h Dd(PQ0,¯g∞ )2i p
+
+→ PQ0,¯g∞
+
+h Dd(PQ0,¯g∞ )2i
+
+.
+
+Thus, the limiting variance of ADL-LTMLE equals the squared norm of the canonical gra-33 dient under the limiting reference law. The regularity arguments developed for the ADL-TMLE in Zhang and van der Laan (2025) directly applies to the present longitudinal experiment using the corresponding lon-gitudinal stage-wise score. By the convolution theorem (van der Vaart et al., 1996), the asymptotic distribution of any regular estimator is the convolution of a normal distribution 
+
+N
+
+
+
+0, P Q0,¯g∞
+
+hDd(PQ0,¯g∞ ) 2i 
+
+with an independent noise distribution. Since the ADL-LTMLE is regular and attains this Gaussian limit without additional noise, it is semipara-metric efficient. 
+
+# S2. Data-generating mechanisms 
+
+Two-stage setting ( K = 2 ). For the two-stage setting, the observed data are O =(L1, A 1, L 2, A 2, Y ), where L1, L 2 ∈ { 0, 1} and Y is continuous. The baseline covariate is generated as L1 ∼ Bernoulli(0 .5). Conditional on ( L1, A 1), the intermediate covariate L2
+
+satisfies P (L2 = 1 | L1 = 0 , A 1 = 0) = 0 .2, P (L2 = 1 | L1 = 0 , A 1 = 1) = 0 .8, P (L2 = 1 |
+
+L1 = 1 , A 1 = 0) = 0 .7, and P (L2 = 1 | L1 = 1 , A 1 = 1) = 0 .3.
+
+The outcome Y is generated as Y | (L1, A 1, L 2, A 2) ∼ N (μ(L1, A 1, L 2, A 2), σ 2(L1, A 1, A 2)), with μ(L1, A 1, L 2, A 2) = 8+2 L1 +1 .5L2 +(4+2(1 −L1)) A1 +(2+3 L1)A2 −1.5A1A2 +1 .5L2A2.
+
+The standard deviation σ(L1, A 1, A 2) is set to 0 .5 when ( L1, A 1, A 2) = (0 , 0, 0), to 4 when (L1, A 1, A 2) = (0 , 0, 1) or (1 , 1, 1), to 1 when ( L1, A 1, A 2) = (1 , 0, 0), and to 1 otherwise. 
+
+Three-stage setting ( K = 3 ). For the three-stage setting, the observed data are O =(L1, A 1, L 2, A 2, L 3, A 3, Y ), where L1, L 2, L 3 ∈ { 0, 1} and Y is continuous. The baseline co-variate is generated as L1 ∼ Bernoulli(0 .5). Conditional on ( L1, A 1), P (L2 = 1 | L1, A 1) = min {0.9, max(0 .1, 0.3 + 0 .1L1 + 0 .2A1)} . Given ( L1, A 1, L 2, A 2), P (L3 = 1 | L1, A 1, L 2, A 2) = min {0.9, max (0 .1, 0.3 + 0 .1L2 + 0 .1A2 + 0 .05 A1)} .
+
+The outcome regression of Y is generated as Y | (L1, A 1, L 2, A 2, L 3, A 3) ∼ N (μ, σ 2), with 
+
+μ = 10 + 2 L1 + 2 L2 + 2 L3 + 3 A1 + 2 A2 + A3 − A1A2 − 0.5A2A3, and the standard deviation 34 σ equal to 4 when ( A1, A 2, A 3) = (0 , 0, 1), equal to 2 when ( A1, A 2, A 3) = (0 , 1, 1), and equal to 1 otherwise. 
+
+# S3. Additional Simulation Results 
+
+We also implemented one-step estimators under the simulation scenarios in Section 6, as analogues of the ADL-LTMLE and AD-LTMLE estimators. Specifically, they are defined by: ˆψτn, one-step = ψτn, init (Qn)+ 1
+
+> n
+
+Pni=1 Dτ (PQn,¯gn ) ( Oi) and ˆψτ, † 
+
+> n, one-step
+
+= ψτn, init (Qn)+ 1
+
+> n
+
+Pni=1 Dτ (PQn,gi ) ( Oi), respectively, where Qn denotes the initial estimate of Q. The two estimators coincide under a fixed design. The results are reported in Tables S1 and Tables S2 for K = 2 and K = 3, respectively, which show performance similar to that of the corresponding LTMLE-based estimators. Table S1: Simulation results for K = 2 using one-step estimators. Performance of one-step estimators under different longitudinal designs. We report the empirical variance of the estimates of ψ1 (Var 1) and ψ2 (Var 2), the weighted sum of variances using normalized user-specified weight 
+
+w (TarVar), the empirical 95% coverage probabilities (Cov 1, Cov 2), and the corresponding oracle coverage probabilities (OCov 1, OCov 2) across 500 Monte Carlo runs. 
+
+w Design Estimator TarVar Var 1 Var 2 Cov 1(%) Cov 2(%) OCov 1(%) OCov 2(%) (1 /2, 1/2) Non-adaptive ˆψτn, one −step 0.029 0.040 0.018 95.0 97.0 95.4 95.6 Adaptive ˆψτ, † 
+
+> n, one −step
+
+0.022 0.030 0.013 92.8 94.4 94.8 94.4 Adaptive ˆψτn, one −step 0.019 0.026 0.012 93.0 94.6 94.2 95.4 Oracle ˆψτn, one −step 0.017 0.024 0.011 94.2 94.6 95.0 95.0 (1 /3, 2/3) Non-adaptive ˆψτn, one −step 0.026 0.040 0.018 95.0 97.0 95.4 95.6 Adaptive ˆψτ, † 
+
+> n, one −step
+
+0.019 0.032 0.013 91.6 95.8 94.4 96.6 Adaptive ˆψτn, one −step 0.017 0.028 0.012 92.6 95.6 95.0 96.0 Oracle ˆψτn, one −step 0.015 0.024 0.010 94.8 95.6 95.4 95.6 (2 /3, 1/3) Non-adaptive ˆψτn, one −step 0.033 0.040 0.018 95.0 97.0 95.4 95.6 Adaptive ˆψτ, † 
+
+> n, one −step
+
+0.025 0.030 0.014 92.2 94.4 95.4 95.2 Adaptive ˆψτn, one −step 0.021 0.026 0.012 93.2 94.8 95.4 95.6 Oracle ˆψτn, one −step 0.019 0.023 0.012 94.6 94.6 95.2 94.8 
+
+Next, we conduct sensitivity analyses for the ADL-LTMLE approach. We vary the total and cohort-wise sample size, and report results using both the correctly specified strata-35 Table S2: Simulation results for K = 3 (one-step estimator). Performance of one-step estimators under different longitudinal designs. We report the weighted sum of variances using normalized user-specified weight w (TarVar), the empirical variance of the estimates of ψ1 (Var 1), ψ2 (Var 2), and ψ3 (Var 3), the empirical 95% coverage probabilities (Cov 1, Cov 2, Cov 3), and the corresponding oracle coverage probabilities (OCov 1, OCov 2, OCov 3) across 500 Monte Carlo runs. 
+
+w Design Estimator TarVar Var 1 Var 2 Var 3 Cov 1(%) Cov 2(%) Cov 3(%) OCov 1(%) OCov 2(%) OCov 3(%) (1 /3, 1/3, 1/3) Non-adaptive ˆψτn, one-step 0.056 0.026 0.079 0.063 94.2 94.6 96.2 94.0 94.2 95.4 Adaptive ˆψτ, † 
+
+> n, one-step
+
+0.031 0.022 0.039 0.033 95.2 94.6 94.6 95.4 94.6 93.6 Adaptive ˆψτn, one-step 0.026 0.020 0.031 0.026 95.2 94.4 95.2 95.2 95.0 95.4 Oracle ˆψτn, one-step 0.022 0.020 0.025 0.020 95.0 94.8 96.4 94.8 94.0 94.6 (1 /6, 1/3, 1/2) Non-adaptive ˆψτn, one-step 0.062 0.026 0.079 0.063 94.2 94.6 96.2 94.0 94.2 95.4 Adaptive ˆψτ, † 
+
+> n, one-step
+
+0.032 0.027 0.038 0.029 94.6 95.2 94.4 94.6 95.0 94.6 Adaptive ˆψτn, one-step 0.024 0.024 0.028 0.022 94.4 95.6 95.2 94.8 95.0 94.8 Oracle ˆψτn, one-step 0.021 0.026 0.024 0.017 95.8 95.8 97.2 95.4 94.4 96.2 (1 /2, 1/3, 1/6) Non-adaptive ˆψτn, one-step 0.050 0.026 0.079 0.063 94.2 94.6 96.2 94.0 94.2 95.4 Adaptive ˆψτ, † 
+
+> n, one-step
+
+0.029 0.019 0.039 0.038 95.0 93.4 93.2 95.0 93.2 93.8 Adaptive ˆψτn, one-step 0.024 0.017 0.031 0.029 94.8 94.2 94.6 95.4 94.4 95.4 Oracle ˆψτn, one-step 0.021 0.016 0.026 0.025 96.2 95.6 95.2 95.0 95.0 94.4 
+
+specific mean estimator and misspecified working outcome-regression models. Results across Tables S3-S6 show that TarVar decreases substantially as the total sample size increases for both K = 2 and K = 3. While misspecified outcome regressions increase variance, coverage remains near nominal level across different sample sizes, supporting the robustness of ADL-LTMLE to model misspecification. 36 Table S3: Complete results of ADL-LTMLE using the correct strata-specific mean estimates ( K =2). The settings vary total sample size n and cohort size b.
+
+w Setting TarVar Var 1 Var 2 Cov 1(%) Cov 2(%) OCov 1(%) OCov 2(%) (1 /2, 1/2) n = 1000 , b = 200 0.036 0.049 0.024 94.6 95.4 95.4 96.0 (1 /2, 1/2) n = 2000 , b = 200 0.017 0.022 0.011 94.8 95.8 94.4 95.8 (1 /2, 1/2) n = 2000 , b = 400 0.019 0.026 0.012 93.0 94.6 94.2 95.4 (1 /2, 1/2) n = 4000 , b = 800 0.008 0.011 0.006 95.8 96.4 95.0 96.0 (1 /3, 2/3) n = 1000 , b = 200 0.033 0.051 0.023 93.6 94.8 94.2 95.2 (1 /3, 2/3) n = 2000 , b = 200 0.015 0.023 0.011 95.2 95.0 94.2 95.0 (1 /3, 2/3) n = 2000 , b = 400 0.017 0.028 0.012 92.6 95.6 95.0 96.0 (1 /3, 2/3) n = 4000 , b = 800 0.007 0.012 0.005 96.6 94.2 96.0 94.0 (2 /3, 1/3) n = 1000 , b = 200 0.039 0.046 0.025 94.6 94.8 95.4 95.2 (2 /3, 1/3) n = 2000 , b = 200 0.018 0.021 0.012 95.0 95.6 94.6 95.8 (2 /3, 1/3) n = 2000 , b = 400 0.021 0.026 0.012 93.2 94.8 95.4 95.6 (2 /3, 1/3) n = 4000 , b = 800 0.009 0.011 0.006 96.6 97.2 95.6 97.4 
+
+Table S4: Complete results of ADL-LTMLE using the misspecified working outcome regression 
+
+Y ∼ L1 + A1 + L2 + A2, instead of the correct outcome model ( K = 2). The settings vary total sample size n and cohort size b.
+
+w Setting TarVar Var 1 Var 2 Cov 1(%) Cov 2(%) OCov 1(%) OCov 2(%) (1 /2, 1/2) n = 1000 , b = 200 0.041 0.049 0.033 94.4 93.4 95.0 94.2 (1 /2, 1/2) n = 2000 , b = 200 0.019 0.022 0.017 94.8 95.6 94.6 95.4 (1 /2, 1/2) n = 2000 , b = 400 0.021 0.026 0.017 92.8 95.0 94.6 95.6 (1 /2, 1/2) n = 4000 , b = 800 0.010 0.011 0.008 95.2 95.0 95.0 96.0 (1 /3, 2/3) n = 1000 , b = 200 0.038 0.052 0.031 93.8 93.6 95.0 94.2 (1 /3, 2/3) n = 2000 , b = 200 0.018 0.023 0.015 94.6 94.6 94.4 94.8 (1 /3, 2/3) n = 2000 , b = 400 0.019 0.028 0.014 92.8 95.0 95.4 95.0 (1 /3, 2/3) n = 4000 , b = 800 0.009 0.012 0.007 96.0 94.8 95.6 95.6 (2 /3, 1/3) n = 1000 , b = 200 0.043 0.047 0.037 94.6 94.0 94.8 94.6 (2 /3, 1/3) n = 2000 , b = 200 0.020 0.021 0.019 94.4 94.8 94.2 95.8 (2 /3, 1/3) n = 2000 , b = 400 0.024 0.026 0.018 94.0 94.2 95.4 95.2 (2 /3, 1/3) n = 4000 , b = 800 0.010 0.011 0.009 96.4 95.4 95.2 96.2 
+
+37 Table S5: Complete results of ADL-LTMLE using the correct strata-specific mean estimates ( K =3). The settings vary total sample size n and cohort size b.
+
+w Setting TarVar Var 1 Var 2 Var 3 Cov 1(%) Cov 2(%) Cov 3(%) OCov 1(%) OCov 2(%) OCov 3(%) (1 /3, 1/3, 1/3) n = 1000 , b = 200 0.052 0.042 0.061 0.055 93.4 94.8 92.4 95.0 95.8 95.2 (1 /3, 1/3, 1/3) n = 2000 , b = 200 0.025 0.020 0.029 0.025 94.2 95.0 93.6 95.0 95.4 95.2 (1 /3, 1/3, 1/3) n = 2000 , b = 400 0.026 0.020 0.031 0.026 95.2 94.4 95.2 95.2 95.0 95.4 (1 /3, 1/3, 1/3) n = 4000 , b = 800 0.013 0.010 0.015 0.012 95.0 95.2 94.6 95.4 95.0 94.6 (1 /6, 1/3, 1/2) n = 1000 , b = 200 0.052 0.049 0.060 0.048 93.4 92.8 92.2 94.6 93.2 93.8 (1 /6, 1/3, 1/2) n = 2000 , b = 200 0.024 0.024 0.027 0.021 93.4 94.8 94.2 93.4 94.8 94.6 (1 /6, 1/3, 1/2) n = 2000 , b = 400 0.024 0.024 0.028 0.022 94.4 95.6 95.2 94.8 95.0 94.8 (1 /6, 1/3, 1/2) n = 4000 , b = 800 0.012 0.012 0.014 0.011 94.6 97.0 95.8 95.0 96.8 96.2 (1 /2, 1/3, 1/6) n = 1000 , b = 200 0.048 0.035 0.062 0.059 95.8 96.4 93.4 95.8 96.4 94.8 (1 /2, 1/3, 1/6) n = 2000 , b = 200 0.023 0.017 0.029 0.029 94.8 94.8 94.6 95.2 94.2 95.8 (1 /2, 1/3, 1/6) n = 2000 , b = 400 0.024 0.017 0.031 0.029 94.8 94.2 94.6 95.4 94.4 95.4 (1 /2, 1/3, 1/6) n = 4000 , b = 800 0.012 0.009 0.015 0.014 94.8 96.4 94.8 95.4 95.8 95.0 
+
+38 Table S6: Complete results of ADL-LTMLE using the misspecified working outcome regression 
+
+Y ∼ L1 + A1 + A2 + A3, instead of the correct outcome model ( K = 3). The settings vary total sample size n and cohort size b.
+
+w Setting TarVar Var 1 Var 2 Var 3 Cov 1(%) Cov 2(%) Cov 3(%) OCov 1(%) OCov 2(%) OCov 3(%) (1 /3, 1/3, 1/3) n = 1000 , b = 200 0.065 0.048 0.069 0.078 94.0 95.6 94.6 94.8 96.0 95.8 (1 /3, 1/3, 1/3) n = 2000 , b = 200 0.032 0.024 0.032 0.040 94.6 94.8 94.2 95.4 95.4 94.6 (1 /3, 1/3, 1/3) n = 2000 , b = 400 0.034 0.025 0.036 0.041 94.2 94.8 93.0 94.4 95.4 94.0 (1 /3, 1/3, 1/3) n = 4000 , b = 800 0.017 0.013 0.018 0.019 93.0 94.2 95.8 95.6 95.4 96.2 (1 /6, 1/3, 1/2) n = 1000 , b = 200 0.066 0.057 0.068 0.067 95.6 95.2 95.0 95.6 95.6 94.6 (1 /6, 1/3, 1/2) n = 2000 , b = 200 0.032 0.029 0.032 0.033 93.8 94.6 94.4 94.6 95.0 94.8 (1 /6, 1/3, 1/2) n = 2000 , b = 400 0.034 0.031 0.035 0.034 93.0 94.8 93.6 94.2 95.4 94.0 (1 /6, 1/3, 1/2) n = 4000 , b = 800 0.017 0.015 0.017 0.017 93.0 95.4 96.2 94.0 96.2 96.2 (1 /2, 1/3, 1/6) n = 1000 , b = 200 0.056 0.039 0.068 0.084 96.0 96.8 94.6 96.0 96.2 95.0 (1 /2, 1/3, 1/6) n = 2000 , b = 200 0.028 0.019 0.031 0.046 95.0 95.6 94.4 94.8 95.0 94.4 (1 /2, 1/3, 1/6) n = 2000 , b = 400 0.031 0.021 0.037 0.047 94.4 93.8 93.6 95.2 94.2 93.8 (1 /2, 1/3, 1/6) n = 4000 , b = 800 0.015 0.011 0.018 0.022 93.6 95.6 94.6 93.8 95.4 95.0 
+
+# References 
+
+Atkinson, A. C., A. Biswas, and L. Pronzato (2011). Covariate-balanced response-adaptive designs for clinical trials with continuous responses that target allocation probabilities. Technical Report NI11042-DAE, Isaac Newton Institute for Mathematical Sciences, Cam-bridge, UK. Bang, H. and J. M. Robins (2005). Doubly robust estimation in missing data and causal inference models. Biometrics 61 (4), 962–973. Biswas, A. and A. Dewanji (2004). A randomized longitudinal play-the-winner design for repeated binary data. Australian & New Zealand Journal of Statistics 46 (4), 675–684. 39 Bubeck, S., N. Cesa-Bianchi, et al. (2012). Regret analysis of stochastic and nonstochastic multi-armed bandit problems. Foundations and Trends in Machine Learning 5 (1), 1–122. Chambaz, A. and M. J. van der Laan (2011). Targeting the optimal design in randomized clinical trials with binary outcomes and no covariate: simulation study. The International Journal of Biostatistics 7 (1). Chambaz, A., W. Zheng, and M. J. van der Laan (2017). Targeted sequential design for targeted learning inference of the optimal treatment rule and its mean reward. The Annals of Statistics 45 (6), 2537–2564. Chow, S.-C. and M. Chang (2008). Adaptive design methods in clinical trials–a review. 
+
+Orphanet Journal of Rare Diseases 3 (1), 11. Cone, E. B., M. Marchese, M. Paciotti, D.-D. Nguyen, J. Nabi, A. P. Cole, G. Molina, R. L. Molina, C. A. Minami, L. A. Mucci, et al. (2020). Assessment of time-to-treatment initiation and survival in a cohort of patients with common cancers. JAMA network open 3 (12), e2030072–e2030072. Gao, J., F. Hu, and W. Ma (2024). Response-adaptive randomization procedure in clinical trials with surrogate endpoints. Statistics in Medicine 43 (30), 5911–5921. Ghosh, R., B. Chakraborty, I. Nahum-Shani, M. E. Patrick, and P. Ghosh (2024). Optimal adaptive smart designs with binary outcomes. Biometrics 80 (4), ujae140. Hall, P. and C. C. Heyde (2014). Martingale limit theory and its application . Academic press. Hu, F. and W. F. Rosenberger (2006). The Theory of Response-Adaptive Randomization in Clinical Trials . John Wiley & Sons. Hu, F. and L.-X. Zhang (2004). Asymptotic properties of doubly adaptive biased coin designs for multitreatment clinical trials. The Annals of Statistics 32 (1), 268–301. 40 Hu, J., H. Zhu, and F. Hu (2015). A unified family of covariate-adjusted response-adaptive designs based on efficiency and ethics. Journal of the American Statistical Associa-tion 110 (509), 357–367. Hu, Y. and N. Kallus (2020). Dtr bandit: Learning to make response-adaptive decisions with low regret. arXiv preprint arXiv:2005.02791 .Huang, T., Z. Liu, and F. Hu (2013). Longitudinal covariate-adjusted response-adaptive randomized designs. Journal of Statistical Planning and Inference 143 (10), 1816–1827. Huang, T. and H. Zhu (2016). Longitudinal covariate-adjusted response–adaptive random-ization: Impact of missing data. Huang, X., J. Ning, Y. Li, E. Estey, J.-P. Issa, and D. A. Berry (2009). Using short-term response information to facilitate adaptive randomization for survival clinical trials. 
+
+Statistics in Medicine 28 (12), 1680–1689. Kosorok, M. R. and E. B. Laber (2019). Precision medicine. Annual review of statistics and its application 6 (1), 263–286. Kosorok, M. R., E. B. Laber, D. S. Small, and D. Zeng (2021). Introduction to the theory and methods special issue on precision medicine and individualized policy discovery. Larsen, N., J. Stallrich, S. Sengupta, A. Deng, R. Kohavi, and N. T. Stevens (2024). Sta-tistical challenges in online controlled experiments: A review of a/b testing methodology. 
+
+The American Statistician 78 (2), 135–149. Lattimore, T. and C. Szepesv´ ari (2020). Bandit Algorithms . Cambridge University Press. Lavori, P. W. and R. Dawson (2000). A design for testing clinical strategies: biased adaptive within-subject randomization. Journal of the Royal Statistical Society: Series A (Statistics in Society) 163 (1), 29–38. 41 Lei, H., I. Nahum-Shani, K. Lynch, D. Oslin, and S. A. Murphy (2012). A ”smart” design for building individualized treatment sequences. Annual review of clinical psychology 8 (2012), 21–48. Malenica, I., A. Bibaut, and M. J. van der Laan (2021). Adaptive sequential design for a single time-series. arXiv preprint arXiv:2102.00102 .Malenica, I., J. R. Coyle, M. J. van der Laan, and M. L. Petersen (2024, 01). Adaptive sequential surveillance with network and temporal dependence. Biometrics 80 (1), ujad007. Murphy, S. A. (2003). Optimal dynamic treatment regimes. Journal of the Royal Statistical Society Series B: Statistical Methodology 65 (2), 331–355. Murphy, S. A. (2005). An experimental design for the development of adaptive treatment strategies. Statistics in medicine 24 (10), 1455–1481. Robertson, D. S., K. M. Lee, B. C. L´ opez-Kolkovska, and S. S. Villar (2023). Response-adaptive randomization in clinical trials: From myths to practical considerations. Statis-tical Science 38 (2), 185–208. Robins, J. (1986). A new approach to causal inference in mortality studies with a sustained exposure period—application to control of the healthy worker survivor effect. Mathematical Modelling 7 (9-12), 1393–1512. Rosenberger, W. F. and O. Sverdlov (2008). Handling covariates in the design of clinical trials. Statistical Science 23 (3), 404–419. Rosenberger, W. F., A. Vidyashankar, and D. K. Agarwal (2001). Covariate-adjusted response-adaptive designs for binary response. Journal of Biopharmaceutical Statis-tics 11 (4), 227–236. Thompson, W. R. (1933). On the likelihood that one unknown probability exceeds another in view of the evidence of two samples. Biometrika 25 (3-4), 285–294. 42 van der Laan, M. J. (2008). The construction and analysis of adaptive group sequential designs. U.C. Berkeley Division of Biostatistics. Working Paper 232. https://biostats.bepress.com/ucbbiostat/paper232. van der Laan, M. J. and S. Gruber (2011). Targeted minimum loss based estimation of causal effects of multiple time point interventions. International Journal of Biostatistics 8 (1). van der Laan, M. J. and A. R. Luedtke (2015). Targeted learning of the mean outcome under an optimal dynamic treatment rule. Journal of Causal Inference 3 (1), 61–95. van der Laan, M. J. and J. M. Robins (2003). Unified methods for censored longitudinal data and causality . Springer. van der Laan, M. J. and S. Rose (2018). Targeted Learning in Data Science . Springer. van der Vaart, A. W., J. A. Wellner, A. W. van der Vaart, and J. A. Wellner (1996). Weak convergence and empirical processes: With applications to statistics . Springer. Wang, J., L. Wu, and A. S. Wahed (2022). Adaptive randomization in a two-stage sequential multiple assignment randomized trial. Biostatistics 23 (4), 1182–1199. Wang, Z., L. v. d. Laan, M. Petersen, T. Gerds, K. Kvist, and M. v. d. Laan (2025). Targeted maximum likelihood based estimation for longitudinal mediation analysis. Journal of Causal Inference 13 (1), 20230013. Wei, L. and S. Durham (1978). The randomized play-the-winner rule in medical trials. 
+
+Journal of the American Statistical Association 73 (364), 840–843. Yang, J., D. Eckles, P. Dhillon, and S. Aral (2024). Targeting for long-term outcomes. 
+
+Management Science 70 (6), 3841–3855. Zhang, J., R. Venchiarutti, X. Wang, and Q. He (2025). Optimal timing of cancer treatments: a call for emerging evidence from clinical trials and real-world studies: Clinical studies. 
+
+British Journal of Cancer 132 (12), 1085–1090. 43 Zhang, L.-X., F. Hu, S. H. Cheung, and W. S. Chan (2007). Asymptotic properties of covariate-adjusted response-adaptive designs. The Annals of Statistics 35 (3), 1166–1182. Zhang, W., A. Hudson, M. Petersen, and M. van der Laan (2024). An online meta-level adaptive-design framework with targeted learning inference: Applications to evaluating and utilizing surrogate outcomes in adaptive designs. arXiv preprint arXiv:2408.02667 .Zhang, W. and M. van der Laan (2025). Efficient statistical estimation for sequential adaptive experiments with implications for adaptive designs. arXiv preprint arXiv:2508.09135 .Zhao, B., H. Ding, W. Song, M. Kang, X. Dong, X. Li, L. Wang, J. Liu, Z. Chu, L. Wang, et al. (2022). Antiretroviral therapy initiation within 7 and 8–30 days post-hiv diagnosis demonstrates similar benefits in resource-limited settings. Aids 36 (12), 1741–1743. 44
