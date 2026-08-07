@@ -1,16 +1,56 @@
 {
   "mode": "standard",
-  "generated_at": "2026-08-07T01:54:49.487261+00:00",
+  "generated_at": "2026-08-07T21:09:27.803984+00:00",
   "stats": {
     "mode": "standard",
     "tag_count": 1,
     "deep_divecandidates": 0,
     "deep_cap": 6,
     "deep_selected": 0,
-    "quick_candidates": 0,
+    "quick_candidates": 1,
     "quick_skim_target": 11,
-    "quick_selected": 0
+    "quick_selected": 1
   },
   "deep_dive": [],
-  "quick_skim": []
+  "quick_skim": [
+    {
+      "id": "2607.28804v1",
+      "source": "arxiv",
+      "title": "Bayesian Mediation Analysis for Individualized Treatment Rules",
+      "abstract": "The value of an individualized treatment rule (ITR), defined as the expected outcome under treatment assignment according to the rule, is useful for assessing average clinical benefit but does not explain how the benefit of a rule is generated. We propose a causal mediation framework for decomposing the value contrast between a prespecified candidate ITR and a clinically meaningful reference rule into direct and indirect components. Using rule-specific nested potential outcomes, we define natural direct and indirect rule effects that quantify the extent to which the improvement in value arises through pathways operating directly on the outcome versus through a specified mediator. We give identification conditions under which these components are identified by a rule-level mediation g-formula. For estimation, we adapt Bayesian causal mediation forests to obtain posterior inference for the value contrast and its path-specific components. Our simulations demonstrate that the proposed estimator achieved near-nominal credible interval coverage with decreasing bias and root mean squared error as sample size increased in settings with varying direct and mediated contributions. We further illustrate the method using data from the TRIUMPH trial, decomposing the cognitive benefit of a lifestyle intervention rule through candidate neurovascular, cardiorespiratory, and behavioral mediators. The proposed framework complements optimal ITR learning with explanation using mediation, providing a natural approach for mechanistic evaluation of ITRs.",
+      "authors": [
+        "Emmanuel M. Rockwell",
+        "Patrick J. Smith",
+        "Michael R. Kosorok",
+        "Nikki L. B. Freeman"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "stat.ML"
+      ],
+      "published": "2026-07-30T19:59:18+00:00",
+      "link": "https://arxiv.org/pdf/2607.28804v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "causal mediation framework for decomposing treatment effects, directly applicable to testing metabolic reprogramming as mediator of exercise preconditioning on flap survival",
+      "llm_evidence_cn": "提供因果中介分析框架，适用于检验代谢重编程是否介导运动预处理对皮瓣存活的影响",
+      "llm_evidence": "提供因果中介分析框架，适用于检验代谢重编程是否介导运动预处理对皮瓣存活的影响",
+      "canonical_evidence": "提供因果中介分析框架，适用于检验代谢重编程是否介导运动预处理对皮瓣存活的影响",
+      "llm_tldr_en": "This paper proposes Bayesian mediation analysis for ITRs, decomposing value contrast into direct and indirect effects via nested potential outcomes to quantify mediator pathways, enabling mechanism-based evaluation.",
+      "llm_tldr_cn": "针对个体化治疗规则价值差异缺乏机制解释的问题，本文提出一种贝叶斯因果中介分析框架，利用规则特异嵌套潜在结果将候选规则与参考规则的获益差异分解为直接与间接成分。方法给出可识别条件，能通过指定中介变量量化直接作用与间接作用，从而解释治疗获益的产生路径。该框架为研究干预通过何种机制影响结局这类因果问题提供了通用统计工具。",
+      "llm_tldr": "针对个体化治疗规则价值差异缺乏机制解释的问题，本文提出一种贝叶斯因果中介分析框架，利用规则特异嵌套潜在结果将候选规则与参考规则的获益差异分解为直接与间接成分。方法给出可识别条件，能通过指定中介变量量化直接作用与间接作用，从而解释治疗获益的产生路径。该框架为研究干预通过何种机制影响结局这类因果问题提供了通用统计工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "Does exercise preconditioning improve flap survival through metabolic reprogramming?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
 }

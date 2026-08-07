@@ -1,8 +1,24 @@
 {
   "label": "2026-08-07",
   "date": "2026-08-07",
-  "generated_at": "2026-08-07T01:54:49",
-  "count": 0,
-  "papers": [],
+  "generated_at": "2026-08-07T21:10:33",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202608/07/2607.28804v1-bayesian-mediation-analysis-for-individualized-treatment-rules",
+      "section": "quick",
+      "title_en": "Bayesian Mediation Analysis for Individualized Treatment Rules",
+      "authors": "Emmanuel M. Rockwell, Patrick J. Smith, Michael R. Kosorok, Nikki L. B. Freeman",
+      "date": "2026-07-30",
+      "pdf": "https://arxiv.org/pdf/2607.28804v1",
+      "score": "7.0",
+      "evidence": "提供因果中介分析框架，适用于检验代谢重编程是否介导运动预处理对皮瓣存活的影响",
+      "tldr": "个性化治疗规则（ITR）的价值虽能评估平均临床获益，却难以解释获益的产生机制。针对这一问题，本文提出一种因果中介分析框架，将候选ITR与参考规则的价值差分解为直接效应和间接效应，并给出规则级中介g公式的识别条件。估计采用贝叶斯因果中介森林，实现后验推断。模拟证实其偏差和均方误差随样本量减小且覆盖接近名义水平；基于TRIUMPH试验，进一步分解了生活方式干预的认知获益路径。该工作为ITR学习提供了机制解释，促进了决策的可解释性。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "The value of an individualized treatment rule (ITR), defined as the expected outcome under treatment assignment according to the rule, is useful for assessing average clinical benefit but does not explain how the benefit of a rule is generated. We propose a causal mediation framework for decomposing the value contrast between a prespecified candidate ITR and a clinically meaningful reference rule into direct and indirect components. Using rule-specific nested potential outcomes, we define natural direct and indirect rule effects that quantify the extent to which the improvement in value arises through pathways operating directly on the outcome versus through a specified mediator. We give identification conditions under which these components are identified by a rule-level mediation g-formula. For estimation, we adapt Bayesian causal mediation forests to obtain posterior inference for the value contrast and its path-specific components. Our simulations demonstrate that the proposed estimator achieved near-nominal credible interval coverage with decreasing bias and root mean squared error as sample size increased in settings with varying direct and mediated contributions. We further illustrate the method using data from the TRIUMPH trial, decomposing the cognitive benefit of a lifestyle intervention rule through candidate neurovascular, cardiorespiratory, and behavioral mediators. The proposed framework complements optimal ITR learning with explanation using mediation, providing a natural approach for mechanistic evaluation of ITRs.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
   "errors": []
 }

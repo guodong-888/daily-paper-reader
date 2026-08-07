@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-07 <!--dpr-date:20260807-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/07/2607.28804v1-bayesian-mediation-analysis-for-individualized-treatment-rules" data-sidebar-item="{&quot;title&quot;: &quot;Bayesian Mediation Analysis for Individualized Treatment Rules&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.28804v1-bayesian-mediation-analysis-for-individualized-treatment-rules&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;提供因果中介分析框架，适用于检验代谢重编程是否介导运动预处理对皮瓣存活的影响&quot;}">Bayesian Mediation Analysis for Individualized Treatment Rules</a>
   * 2026-08-03 <!--dpr-date:20260803-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/03/2607.29421v1-longitudinal-adaptive-experimental-design-for-learning-multiple-target-estimands-with-semiparametric-efficient-inference" data-sidebar-item="{&quot;title&quot;: &quot;Longitudinal Adaptive Experimental Design for Learning Multiple Target Estimands with Semiparametric Efficient Inference&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.29421v1-longitudinal-adaptive-experimental-design-for-learning-multiple-target-estimands-with-semiparametric-efficient-inference&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;纵向自适应设计可优化运动训练对皮瓣存活影响的试验&quot;}">Longitudinal Adaptive Experimental Design for Learning Multiple Target Estimands with Semiparametric Efficient Inference</a>

@@ -1,0 +1,821 @@
+Title: Bayesian Mediation Analysis for Individualized Treatment Rules
+
+URL Source: https://arxiv.org/pdf/2607.28804v1
+
+Published Time: Mon, 03 Aug 2026 00:10:08 GMT
+
+Number of Pages: 21
+
+Markdown Content:
+> Biostatistics , 2026, pp. 1–21 DOI added during production Published: Date added during production
+> Paper
+
+# Bayesian Mediation Analysis for Individualized Treatment Rules 
+
+# Emmanuel M. Rockwell, 1, ∗ Patrick J. Smith, 2 Michael R. Kosorok 1
+
+# and Nikki L. B. Freeman 3
+
+> 1
+
+Department of Biostatistics, University of North Carolina at Chapel Hill, 135 Dauer Drive, 3103 McGavran-Greenberg Hall CB 7420, Chapel Hill, 27510, NC, United States 
+
+> 2
+
+Department of Psychiatry, University of North Carolina at Chapel Hill, 333 S. Columbia Street, Suite 304 MacNider Hall, Chapel Hill, 27514, NC, United States 
+
+> 3
+
+Department of Biostatistics and Bioinformatics, Duke University, 2424 Erwin Road, Suite 1102 Duke University Medical Center, Durham, 27710, NC, United States 
+
+> ∗Corresponding author. erockwell@unc.edu
+
+# Abstract 
+
+The value of an individualized treatment rule (ITR), defined as the expected outcome under treatment assignment according to the rule, is useful for assessing average clinical benefit but does not explain how the benefit of a rule is generated. We propose a causal mediation framework for decomposing the value contrast between a prespecified candidate ITR and a clinically meaningful reference rule into direct and indirect components. Using rule-specific nested potential outcomes, we define natural direct and indirect rule effects that quantify the extent to which the improvement in value arises through pathways operating directly on the outcome versus through a specified mediator. We give identification conditions under which these components are identified by a rule-level mediation g-formula. For estimation, we adapt Bayesian causal mediation forests to obtain posterior inference for the value contrast and its path-specific components. Our simulations demonstrate that the proposed estimator achieved near-nominal credible interval coverage with decreasing bias and root mean squared error as sample size increased in settings with varying direct and mediated contributions. We further illustrate the method using data from the TRIUMPH trial, decomposing the cognitive benefit of a lifestyle intervention rule through candidate neurovascular, cardiorespiratory, and behavioral mediators. The proposed framework complements optimal ITR learning with explanation using mediation, providing a natural approach for mechanistic evaluation of ITRs. 
+
+Keywords: Precision medicine, individualized treatment rules, Bayesian statistics, Bayesian causal mediation forests 
+
+# 1. Introduction 
+
+A central aim of personalized medicine is the development of individualized treatment rules (ITRs) which assign treatment as a function of baseline patient covariates to maximize a       
+
+> Received: Date Month Year. Revised received: Date Month Year. Accepted: Date Month Year
+> ©The Author(s) 2026. Copyright and licence statements to be updated by the publisher during production. arXiv:2607.28804v1 [stat.ME] 30 Jul 2026
+
+2 • Biostatistics, YEAR, Volume XX, Issue x 
+
+prespecified clinical benefit (Kosorok and Moodie, 2015; Mirnezami et al., 2012; Chakraborty and Moodie, 2013; Li et al., 2023). Throughout, we use the term individualized treatment rule while acknowledging that related fields may use the term treatment policy. Advances in statistical precision medicine have developed useful methods for estimating optimal treatment rules (Murphy, 2003; Schulte et al., 2014; Zhao et al., 2012; Qian and Murphy, 2011). While these approaches may yield rules that improve outcomes on average, they often offer limited insight into the underlying mechanisms through which a treatment affects outcomes. Nonetheless, in many scientific applications and clinical contexts, investigators are not only interested in whether a rule performs well, but how benefit is generated through underlying biological or behavioral pathways. In these settings, good decision rules are not sufficient on their own. To justify clinical implementation and generate new scientific understanding, investigators must also understand the mechanisms through which a rule improves outcomes. The TRIUMPH trial investigated the effect of intensive lifestyle intervention (versus standardized education and physician advice) on resistant hypertension, with secondary outcomes measuring cognitive performance. Investigators found that the intervention resulted in clinically meaningful reductions in blood pressure and improvement in cognitive outcomes, but that treatment response was highly heterogeneous. For example, Avorgbedor et al. (2023) found that baseline systemic inflammation significantly moderated the cognitive benefit of lifestyle intervention, with larger improvements among participants with greater pre-intervention inflammation. This heterogeneity in response motivates the use of ITRs to determine which patients are most likely to benefit from intensive lifestyle intervention. However, estimating an optimal ITR only addresses the question of who to treat with which intervention. Equally important from mechanistic and translational perspectives is why an ITR’s recommended treatment improves outcomes among the selected patients. For example, the benefit of lifestyle intervention may operate through changes in blood pressure, weight, vascular function, inflammation, physical activity, or other behavioral and biological pathways, and the relative importance of these pathways may vary across the same patient characteristics used to assign treatment. In this work, we develop a causal mediation framework to evaluate the value of a prespecified individualized treatment rule and to decompose its benefit into direct and indirect components. Mechanistic evaluation of a treatment rule can also extend beyond the sample from which the rule was learned. While a complete account of the pathways through which an ITR generates benefit is not necessarily a prerequisite for clinical adoption, this understanding can nonetheless aid interpretation and help clinicians and patients reason about why a rule works. Mechanistic insight may also inform transportability. When a rule’s benefit operates largely through a particular mediator, its performance in a new population depends in part on that mediator’s distribution in that setting. Decomposing the rule’s value into pathway-specific components can help distinguish whether benefit is primarily attributable to treatment effects operating through specified mediators, the direct pathway, or both. Such information may refine mechanistic hypotheses, support clinical interpretation, and inform expectations about external validity. The remainder of the paper is organized as follows. Section 2 reviews relevant background on ITRs, causal mediation analysis, and Bayesian estimation of mediation estimands. In Section 3, we formalize notation, make foundational causal identification assumptions, define the direct and indirect components of the value function, and introduce the causal model. Section 4 presents the estimation strategy using g-formula representations. Sections 5 and 6 report the results of the simulation study and a motivating application utilizing data from the TRIUMPH trial, which explores the effect of lifestyle interventions on cognitive function. The trial collects metabolic, vascular, and behavioral data from patients both at baseline and post-randomization generating a natural environment for exploring potential mediators of cognitive benefit. In Section 7, we conclude with a discussion of possible extensions, including dynamic treatment regimes and longitudinal mediation. Biostatistics, YEAR, Volume XX, Issue x • 3
+
+# 2. Background 
+
+A common goal of precision medicine is estimating ITRs, which tailor treatments to the unique health status of an individual by regarding patient heterogeneity as an informative feature rather than a nuisance (Kosorok and Laber, 2019). It is reasonable to expect that the covariates along which ITRs differentiate patient decisions may reflect variation in the biological or behavioral processes through which treatment affects the outcome. As a result, personalized medicine is closely related to subgroup analysis and heterogeneous treatment effect estimation, which also seeks to characterize variation in treatment response across patients (Wager and Athey, 2015; Hahn et al., 2017; Rekkas et al., 2020; Caron et al., 2022; Han, 2023; Hern´ an and Robins, 2016). However, identifying covariates that predict treatment benefit is distinct from explaining the causal mechanisms through which that benefit arises. Thus, although ITRs assign treatment based on heterogeneity in patient response, additional causal structure is needed to determine whether a rule improves outcomes directly via treatment, through intermediate biological or behavioral processes, or through both. Mediation analysis studies how the effect of an exposure on an outcome operates both directly and through specified intermediate variables known as mediators. This typically involves decomposing the treatment effect into a direct effect, the component of the treatment effect measuring the influence of the exposure on the outcome holding other factors fixed at the control level (i.e., not operating through mediating variables), and an indirect effect, the component operating through the mediator of interest (MacKinnon, 2012; VanderWeele, 2016; Imai et al., 2010a). Foundational work in mediation analysis was rooted in linear structural equation models (LSEMs) (Baron and Kenny, 1986; MacKinnon et al., 2007; Lee et al., 2019). More recent developments place mediation analysis within a causal framework (Robins and Greenland, 1992; Pearl, 2001), formalizing natural direct and indirect effects in terms of causal pathways and specifying identification conditions for estimating these effects (Tchetgen and Shpitser, 2012; Avin et al., 2005; Malinsky et al., 2019). This work has expanded to accommodate multiple mediators, complex outcomes, intricate interaction structures, intermediate confounders, and Bayesian estimation strategies (Mioˇ cevi´ c et al., 2018; Roy et al., 2022; Sun and Song, 2024; Valeri and VanderWeele, 2013; D´ ıaz et al., 2021; Chen et al., 2024). A treatment effect is defined as a contrast between potential outcomes Yi(1) and Yi(0), only one of which is observed for any given unit (Holland, 1986). Mediation estimands introduce additional counterfactual structure. Natural direct and indirect effects are defined through nested counterfactual outcomes. Note that the outcome under one treatment level and mediator under another cannot be jointly observed, even under randomization. Their identification therefore requires assumptions linking these counterfactual quantities to the observed data distribution. Although identification results in mediation analysis are often stated nonparametrically, estimation typically requires modeling several nuisance functions, including the conditional distribution of the mediator and the conditional mean of the outcome given treatment, mediator, and baseline covariates (Imai et al., 2010a; Tchetgen and Shpitser, 2012). Flexible modeling is attractive because it can accommodate nonlinearities and complex interactions within the covariate structure when estimating these nuisance functions. Furthermore, causal estimation requires additional care because regularized prediction methods can introduce bias in causal contrasts through phenomena such as regularization-induced confounding (Hahn et al., 2017). These considerations have motivated Bayesian and machine learning approaches that are useful for flexibly modeling the nuisance functions that arise in mediation (Chipman et al., 2010; Hill et al., 2020; Hahn et al., 2017). One foundational approach includes using Bayesian additive regression trees (BART), which provide a powerful nonparametric method for regularized conditional mean modeling with uncertainty quantification (Chipman et al., 2010; Hill et al., 2020), and have been widely adopted in causal inference for estimating heterogeneous treatment effects (Hahn et al., 2017; Wager and Athey, 2015; Dorie et al., 2022; Caron et al., 2022). Recent work has adapted these ideas to mediation settings. Specifically, Linero and Zhang (2025) 4 • Biostatistics, YEAR, Volume XX, Issue x 
+
+proposed Bayesian causal mediation forests (BCMFs), a BART-based framework for estimating average causal mediation effects. To date, most mediation methodology has focused on decomposing the average treatment effect of a fixed exposure into direct and indirect components (MacKinnon, 2012; Ge et al., 2023). In contrast, most work on ITRs has focused on characterizing and optimizing the value of a rule, typically defined as the expected outcome under the given rule. However, to our knowledge, no existing method has explored how to decompose the value of a prespecified treatment rule relative to a clinically meaningful reference rule into direct and indirect mechanistic components. The goal of this research is to quantify how much of the improvement delivered by a rule relative to a reference rule (such as the standard of care) arises from its direct influence on the outcome versus its effect on mediating variables, thereby extending mediation analysis to evaluate individualized treatment rules. 
+
+# 3. Method Framework 
+
+Our objective is to determine how much of the value contrast V (d) − V (r) is attributable to pathways operating through a mediator given a candidate ITR d and a clinically meaningful reference rule r. We formalize this question by defining rule-specific estimands, identification assumptions, and the g-formula representation for the direct and indirect components of this value contrast. 
+
+## 3.1. Setting and notation 
+
+Because both mediation and ITRs require estimation of counterfactual quantities, we will adopt the potential outcomes framework commonly used in causal inference (Rubin, 1974, 2004, 2005). Capital letters denote random variables. Variables without a subscript are vectors, and variables with a subscript are scalar-valued. Let X ∈ X denote a vector of baseline covariates, A ∈ A = {0, 1} denote a binary treatment, 
+
+M ∈ M ⊆ R denote a post-treatment mediating variable, and Y ∈ Y ⊆ R denote the outcome of interest. For each individual i, we write Mi(a) for the potential value of the mediator under treatment a ∈ { 0, 1}, and Yi(a, m ) for the potential value of the outcome under treatment a and mediator level m.Let D denote a class of measurable binary treatment rules and suppose d : X → { 0, 1} ∈ D is an individualized treatment rule of interest mapping from the space of covariates to the space of available treatment recommendations. Further suppose r : X 7 → { 0, 1} is a reference rule. This rule serves as a baseline against which we evaluate d. Therefore, some appropriate choices for r
+
+include the standard of care, the rule that treats no one, or the rule that treats everyone. Given two rules d, r ∈ D , we define rule-specific mediator and outcome counterfactuals as 
+
+M ri (Xi) ≡ Mi{r(Xi)} and Y d,r i (Xi) ≡ Yi {d(Xi), M ri (Xi)}. The value of an ITR d is defined as the mean outcome under the rule, 
+
+V (d) ≡ E[Y {d(X), M (d(X)) }] = E
+
+h
+
+Y d,d (X)
+
+i
+
+,
+
+which we interpret as the average clinical benefit obtained by treating the entire population according to rule d. Our goal is to decompose the value contrast V (d)−V (r) between a candidate rule d and a reference rule r into components that reflect distinct causal pathways through the mediator. This value contrast encodes the average improvement we would see in the outcome if we treated the entire population under d rather than under r. If r is a clinically well-understood rule, then a decomposition of the value contrast will help isolate the underlying causal pathways along which the new rule d is realizing a benefit over r.In this paper, we treat d and r as prespecified rules to be evaluated. The candidate rule d
+
+may be derived from clinical knowledge or a policy learning procedure. If d is estimated using Biostatistics, YEAR, Volume XX, Issue x • 5
+
+the same data used for evaluation, additional sample-splitting or inferential adjustment would be needed to account for estimation uncertainty. 
+
+## 3.2. Mediation Estimands 
+
+Figure 1 is a directed acyclic graph illustrating a causal mechanism between X, A, M , and Y .The direct pathway is colored blue, and the mediated pathway is colored red.        
+
+> X
+> M
+> Y
+> A
+> Figure 1 Directed acyclic graph showing relationships among X,A,M, and Y. Red arrows denote the indirect (mediated) path and the blue arrow denotes the direct path.
+
+Classical mediation analysis decomposes the average treatment effect into a natural direct effect and a natural indirect effect. We define the natural direct effect as the effect of changing treatment from 0 to 1 while holding the mediator fixed at the value it would have taken under the control (Robins and Greenland, 1992; Pearl, 2001; Hernan and Robins, 2020). We take care to distinguish the term natural direct effect as opposed to controlled direct effect, which is the effect of changing the treatment level while keeping the mediator fixed at the same level for everyone. While controlled direct effects are useful in prescriptive settings (e.g., modifying a relationship to match policy objectives), natural direct effects are better suited for descriptive settings (Pearl, 2001). Mathematically, we can write the natural direct effect as 
+
+ζ(a) = E [Yi{1, M i(a)} − Yi{0, M i(a)}]We define the natural indirect effect as the effect of changing the mediator from the value it would take under treatment 0 to the value it would take under treatment 1 while holding treatment itself fixed. The natural indirect effect isolates the treatment effect operating through the mediator pathway. Note that “controlled” indirect effects cannot be defined using the direct formulation, because the quantity E[Yi(a, m ) − Yi(a, m ′)] can be non-zero even when the treatment has no effect on the mediator (Pearl, 2001; Cinelli et al., 2025). Therefore, the descriptive setting of “natural” effects using nested potential outcomes is the preferred formulation of the two that correctly describes the quantity of interest. Mathematically, we can write the natural indirect effect as 
+
+η(a) = E [Yi{a, M i(1) } − Yi{a, M i(0) }] .
+
+so that the total effect satisfies E{Yi(1 , M i(1)) − Yi(0 , M i(0)) } = ζ(0) + η(1) = ζ(1) + η(0). Rather than decomposing the average treatment effect, here our goal is to decompose the value contrast of a proposed rule. Let d(x) ∈ { 0, 1} be the rule of interest and let r(x) be a reference 6 • Biostatistics, YEAR, Volume XX, Issue x 
+
+rule. Using the rule-specific potential outcomes introduced above, we define the following four outcomes: 
+
+• Y d,d (X) = Y (d(X), M {d(X)}) is the outcome under rule d such that both the treatment and mediator are assigned according to A = d(X). 
+
+• Y r,r (X) = Y (r(X), M {r(X)}) is the outcome under the reference rule along both pathways. 
+
+• Y d,r (X) = Y (d(X), M {r(X)}) is the cross-world counterfactual outcome where the direct path is assigned d(X) and the indirect path is assigned r(X). 
+
+• Y r,d (X) = Y (r(X), M {d(X)}) is the cross-world counterfactual outcome where the direct path is assigned r(X) and the indirect path is assigned d(X). We refer to Y (1 , M (0)) and Y (0 , M (1)) and their rule-level analogues as cross-world counterfactuals because they combine the outcome response under one treatment assignment with the mediator value that would have arisen under another treatment assignment (Hernan and Robins, 2020). Unlike ordinary potential outcomes such as Y (1) and Y (0), these cross-world counterfactuals cannot be empirically confirmed by an experimental intervention as they cannot occur simultaneously in the same individual. Nonetheless, these quantities are used in natural direct and indirect effect decompositions because they provide a formal way to separate the component of an effect operating through a mediator from the component operating directly on the outcome. This choice targets a natural effect or path-specific effect interpretation (Tchetgen and Shpitser, 2012; Shpitser and Sherman, 2018). Other mediation estimands, including interventional direct and indirect effects and separable effects, avoid cross-world counterfactuals by targeting different hypothetical interventions or decompositions (Robins and Richardson, 2010; Robins et al., 2022). We focus on the natural rule-level decomposition because it directly partitions the rule value contrast into components corresponding to the direct and indirect pathways in Figure 1. As we will later discuss, they can be estimated using the g-formula by introducing an additional independence assumption for identification. These rule-level expected outcomes allow us to decompose the rule contrast V (d) − V (r) into two components by introducing four contrasts: ∆(d) 
+
+> D
+
+(d, r ) = E
+
+n
+
+Y d,d (X) − Y r,d (X)
+
+o
+
+,
+
+∆(r) 
+
+> D
+
+(d, r ) = E
+
+n
+
+Y d,r (X) − Y r,r (X)
+
+o
+
+,
+
+∆(d) 
+
+> I
+
+(d, r ) = E
+
+n
+
+Y d,d (X) − Y d,r (X)
+
+o
+
+, and ∆(r) 
+
+> I
+
+(d, r ) = E
+
+n
+
+Y r,d (X) − Y r,r (X)
+
+o
+
+.
+
+We refer to ∆ (d) 
+
+> D
+
+(d, r ) and ∆ (r) 
+
+> D
+
+(d, r ) as the natural direct rule effect , capturing the increase in value changing from rule r to d only along the pathway from treatment to outcome while holding the treatment along the mediator path constant. Analogously, ∆ (d) 
+
+> I
+
+(d, r ) and ∆ (r) 
+
+> I
+
+(d, r ) is the 
+
+natural indirect rule effect , capturing the component of the value contrast attributable to the mediated pathway through M {d(X)}. Then, by construction, there are two possible sequential decompositions of the value contrast given as 
+
+V (d) − V (r) = ∆ (r) 
+
+> D
+
+(d, r ) + ∆ (d) 
+
+> I
+
+(d, r ) = ∆ (d) 
+
+> D
+
+(d, r ) + ∆ (r) 
+
+> I
+
+(d, r ).
+
+For the remainder of the paper, I will use the decomposition V (d) − V (r) = ∆ (r) 
+
+> D
+
+(d, r ) + ∆(d) 
+
+> I
+
+(d, r ) and simplify notation by writing ∆ (r) 
+
+> D
+
+(d, r ) ≡ ∆D (d, r ) and ∆ (d) 
+
+> I
+
+(d, r ) ≡ ∆I (d, r ). 
+
+## 3.3. Identification assumptions 
+
+The challenge posed by natural mediation estimands is stronger than the usual missing data problem for treatment effects. For an ordinary treatment effect, each individual has potential Biostatistics, YEAR, Volume XX, Issue x • 7
+
+outcomes Y (1) and Y (0), only one of which is observed. This is the fundamental problem of causal inference asserted by Paul Holland (Holland, 1986). In contrast, cross-world quantities such as Y {1, M (0) } and Y {0, M (1) } do not generally correspond to an intervention that could be directly implemented in a randomized trial. Identification of these quantities therefore requires assumptions that connect the nested counterfactuals to the observed data distribution. Identification of the proposed rule-level mediation estimands relies on standard assumptions from the causal mediation literature (Rubin, 2005). We adopt consistency, exchangeability, and positivity conditions as working assumptions (Robins and Greenland, 1992; Imai et al., 2010b). Under the assumptions below, these rule-level mediation estimands are causally identified by the mediation g-formula: 
+
+A1. (Consistency) When Ai = a is observed, then Mi = Mi(a). Additionally, when Ai = a
+
+and Mi = m are observed, then Yi = Yi(a, m ). 
+
+A2. (Treatment Exchangeability) For all a, a ′ ∈ { 0, 1}, m ∈ M , and x ∈ X ,
+
+{Yi(a′, m ), M i(a)} ⊥ Ai | Xi = x. 
+
+A3. (Cross-world Exchangeability) For all a, a ′ ∈ { 0, 1}, m ∈ M , and x ∈ X ,
+
+Yi(a′, m ) ⊥ Mi(a) | Xi = x. 
+
+A4. (Positivity) For all x ∈ X , 0 < P (Ai = a | Xi = x) < 1 such that a ∈ { 0, 1} and the mediator support under each treatment level overlaps sufficiently to evaluate the cross-world means appearing in the mediation g-formula. Together assumptions A1-A4 enable identification of the distribution of {Yi(a, M i(a′)) : a, a ′ ∈{0, 1}} via the g-formula. That is, for any pair of rules d, r ∈ D ,
+
+E{Y d,r (X)} =
+
+Z
+
+> X
+
+Z
+
+> M
+
+E(Y | A = d(x), M = m, X = x)
+
+× fM |A,X {m | A = r(x), X = x}dmdx. 
+
+In particular, the marginal distributions of Y d,d (X), Y r,r (X), Y d,r (X) and Y r,d (X) are identified for any pair of rules ( d, r ) that map to {0, 1}, and hence so are V (d), V (r) and the decomposition V (d) − V (r) = ∆ D (d, r ) + ∆ I (d, r ). The proof of this statement is provided in the appendix. Throughout, we view these assumptions as idealized working conditions. However, in applications, we recommend sensitivity analyses to violations of A2 and A3 (VanderWeele, 2010; Valeri and VanderWeele, 2013). 
+
+# 4. Estimation of Effects 
+
+The identifying conditions of Section 3.3 show that estimation of the rule-level mediation components requires models for the mediator distribution fM |A,X and the outcome regression 
+
+E(Y | M, A, X ). We estimate these components using Bayesian causal mediation forests (BCMF) developed by Linero and Zhang (2025), an extension of Bayesian additive regression trees (BART) (Chipman et al., 2010; Hill et al., 2020; Hahn et al., 2017; Linero, 2022) adapted to mediation analysis. While other mediation estimation methods are suitable for this task, we choose BCMFs due to their flexibility in modeling nonlinearities and interactions, as well as their ability to quantify uncertainty. 
+
+## 4.1. Bayesian tree ensemble estimation 
+
+To estimate the rule-level mediation components ∆ D (d, r ) and ∆ I (d, r ), we extend Bayesian causal mediation forests (BCMFs) (Linero and Zhang, 2025; Ting and Linero, 2025), a Bayesian 8 • Biostatistics, YEAR, Volume XX, Issue x 
+
+tree ensemble approach that flexibly models the mediator and outcome regressions needed for g-formula estimation. Let 
+
+Mi(a) | Xi = m(a, X i) + εMi ,Yi(a, m ) | Xi = y(m, a, X i) + εYi ,
+
+where m(·) and y(·) are unknown regression functions and εMi and εYi are normally distributed errors with mean zero. Following the BCMF framework, we model m(·) and y(·) using BART, with separate models for the mediator and outcome regressions and weakly informative priors on the tree structures and leaf parameters. Following Linero and Zhang (2025), we make two adjustments to standard BART priors that are critical in the mediation setting. 
+
+## 4.2. Regularization-induced confounding 
+
+Regularization-induced confounding (RIC) is a well-known challenge of using BART-based models for causal inference. In predictive settings, shrinkage can reduce variance and improve out-of-sample performance. In causal settings, however, the same regularization can bias causal contrasts when a treatment or mediator is associated with covariates that are also prognostic for the outcome (Hahn et al., 2017). In mediation analysis, this concern arises most directly in the outcome regression, where the effect of the mediator must be separated from baseline covariates that predict both the mediator and the outcome. Linero and Zhang (2025) attribute RIC to what they call prior dogmatism, where default BART priors favor relatively simple response surfaces, which can implicitly favor models in which the covariates play a limited confounding role in the relationship between mediator and outcome. In mediation analysis the concern is twofold. First, the treatment A is associated with covariates that also predict the mediator and the outcome. Second, and most directly, the mediator M is not randomized, so its effect on Y must be separated from baseline covariates that predict both M and Y . We address these in turn by including an estimated propensity score and a set of clever covariates, following Linero and Zhang (2025). 
+
+4.2.1. Propensity scores 
+
+To address the first concern, we include an estimate of the propensity score 
+
+π(Xi) = P (Ai = 1 | Xi)estimated from the treatment and covariates alone, as a predictor in both the mediator model and the outcome model (Hahn et al., 2017). Supplying ˆ π(Xi) as a one-dimensional summary of the covariates helps ensure the treatment’s effects on the mediator and on the outcome are not influenced by confounding that the regularization would otherwise leave in. 
+
+4.2.2. Clever covariates 
+
+To mitigate the second form of regularization bias, we follow Linero and Zhang (2025) by including what are known as clever covariates in the outcome regression. Originally introduced as a tool in targeted maximum likelihood estimation, clever covariates in BCMFs are predictions of the mediator mean at each treatment level (van der Laan and Rubin, 2006; Linero and Zhang, 2025). To use clever covariates in practice, we first fit the mediator model to obtain posterior predictions of the conditional means 
+
+ma(Xi) = E{Mi | Ai = a, X i}, a ∈ { 0, 1},
+
+and then include ( ˆ m0(Xi), ˆm1(Xi)) as additional predictors in the BART model for Yi(a, m ). These clever covariates summarize how X shifts the mediator under each treatment arm, helping to separate the prognostic structure from the treatment structure in the outcome regression. Biostatistics, YEAR, Volume XX, Issue x • 9
+
+Empirically, this leads to reduced bias and more stable posterior inference for mediation effects in highly nonlinear, confounded settings. 
+
+4.2.3. Stratification on treatment 
+
+Rather than treating Ai as one predictor among many in a single BART ensemble, we fit separate BART models for each arm, stratifying on A to account for treatment interactions with 
+
+X when modeling M and treatment interactions with X and M when modeling Y . Stratification captures treatment interactions with X when modeling M , and treatment interactions with X
+
+and M when modeling Y . This yields treatment-specific BART response surfaces sy (m, 1, x ) and 
+
+sy (m, 0, x ) for the outcome and sm(1 , x ) and sm(0 , x ) for the mediator. This technique is well suited to estimating average mediation effects (Linero and Zhang, 2025), though if heterogeneous effects are of primary interest, the varying-coefficient parameterization that regularizes the effects directly may be preferable (Ting and Linero, 2025). 
+
+4.2.4. Randomization 
+
+When treatment is randomized, treatment exchangeability is satisfied by design, so adjustment for X is not needed to remove confounding of the relationship between treatment and mediator or treatment and outcome. However, randomization of A does not remove confounding of the relationship between the mediator and outcome, because the mediator is measured after treatment and not itself randomized. The outcome regression must therefore still adjust flexibly for baseline covariates that may jointly predict M and Y . In observational studies, treatment exchangeability would additionally require that all confounders of the relationship between treatment and outcome, and treatment and mediator be measured and appropriately adjusted for. 
+
+## 4.3. G-formula for rule-level effects 
+
+Let θ index the collection of unknown model parameters of the BART models for the mediator and outcome. In other words, θ denotes all decision trees in the BART models so that θ governs the conditional distributions of M and Y . Then fθ (Yi = y | Mi = m, A i = a, X i = x) is the conditional density of the outcome and fθ (Mi = m | Ai = a, X i = x) that of the mediator. Under assumptions A1-A4, the marginal distribution of the cross-world counterfactuals Yi{a, M i(a′)} :
+
+a, a ′ ∈ { 0, 1} is identified by the g-formula representation 
+
+fθ (Yi{a, M i(a′)} = y | Xi = x)=
+
+Z
+
+fθ (Yi = y | Mi = m, A i = a, X i = x)
+
+× fθ (Mi = m | Ai = a′, X i = x)dm 
+
+for all x ∈ X and a, a ′ ∈ { 0, 1} (Imai et al., 2010a). To average over the covariates we place a prior on the covariate distribution FX , following Linero and Zhang (2025). Two choices are the empirical distribution, which fixes the weights at ωi = 1 /n , and the Bayesian bootstrap (Rubin, 1981), which treats them as random with 
+
+ω = ( ω1, . . . , ω n) ∼ Dirichlet(1 , . . . , 1) independently of the remaining parameters. In both cases 
+
+ωi ≥ 0 and Pni=1 ωi = 1. Then, we can estimate the counterfactual expectation for a given treatment combination as 
+
+Eθ [Yi{a, M (a′)}] = 
+
+> N
+
+X
+
+> i=1
+
+ωi
+
+Z
+
+yf θ (Yi = y | Mi = m, A i = a, X i)
+
+× fθ (Mi = m | Ai = a′, X i)dm dy. 
+
+The estimand of interest, however, is not a static contrast at fixed treatment levels but a rule-level counterfactual mean, in which treatments are assigned by decision rules rather than held 10 • Biostatistics, YEAR, Volume XX, Issue x 
+
+at constant values. Then, for a fixed rule pair ( d, r ) with d, r ∈ D , the rule-level counterfactual mean is 
+
+Eθ [Y d,r (X)] = Eθ [Yi{d(X), M (r(X)) }]=
+
+> N
+
+X
+
+> i=1
+
+ωi
+
+Z
+
+sy (Yi = y | Mi = m, A i = d(Xi), X i)
+
+× fθ (Mi = m | Ai = r(Xi), X i)dm (1) Repeating this procedure for Y d,d (X), Y r,r (X), Y d,r (X), and Y r,d (X) yields posterior draws of V (d), V (r), and the corresponding direct and indirect rule-effect components. While (1) doesn’t have a closed form when sy and sm are estimated using BART, we can approximate it by simulating many pseudodatasets. These pseudodatasets include the modeled estimate of the mediator under both treatment levels. To explain this process, let F − 
+
+> M
+
+( · | A = a, X i) denote the generalized inverse CDF of the mediator distribution at the current posterior draw of θ. For each replicate k = 1 , . . . , K , we draw a single uniform random variable Uik ∼ Uniform(0 , 1) per individual and use it to define 
+
+M ∗
+
+> ik
+
+(a) = F −
+
+> M
+
+ Uik | A = a, X i
+
+, a ∈ { 0, 1}.
+
+Because the same Uik is used at both treatment levels, the draws M ∗
+
+> ik
+
+(0) and M ∗
+
+> ik
+
+(1) are comonotone and are highly correlated (Puccetti and Wang, 2015). This aids estimation because cross-world differences such as sy {M ∗
+
+> ik
+
+(d), ·, X i}− sy {M ∗
+
+> ik
+
+(r), ·, X i} have the same noise, thereby decreasing the Monte Carlo variance. Then, with our estimates of M ∗
+
+> ik
+
+(a′), we obtain estimates of the direct and indirect rule components ∆ D (d, r ) and ∆ I (d, r )∆D (d, r ) = 1
+
+K
+
+> K
+
+X
+
+> k=1
+> N
+
+X
+
+> i=1
+
+ωi
+
+
+
+sy
+
+M ∗
+
+> ik
+
+{r(Xi)}, d (Xi), X i
+
+ − sy
+
+M ∗
+
+> ik
+
+{r(Xi)}, r (Xi), X i
+
+
+
+∆I (d, r ) = 1
+
+K
+
+> K
+
+X
+
+> k=1
+> N
+
+X
+
+> i=1
+
+ωi
+
+
+
+sy
+
+M ∗
+
+> ik
+
+{d(Xi)}, r (Xi), X i
+
+ − sy
+
+M ∗
+
+> ik
+
+{r(Xi)}, r (Xi), X i
+
+
+
+.Biostatistics, YEAR, Volume XX, Issue x • 11 Algorithm 1 Monte Carlo g-formula for rule-level mediation 
+
+Require: θ, K, and X1, . . . , X N 
+
+> 1:
+
+for k = 1 , . . . , K do  
+
+> 2:
+
+for i = 1 , . . . , N do  
+
+> 3:
+
+Sample Uik ∼ Uniform(0 , 1)  
+
+> 4:
+
+Set M ∗
+
+> ik
+
+{d(Xi)} = F − 
+
+> M
+
+(Uik | A = d(Xi), X i) 
+
+> 5:
+
+Set M ∗
+
+> ik
+
+{r(Xi)} = F − 
+
+> M
+
+(Uik | A = r(Xi), X i) 
+
+> 6:
+
+end for  
+
+> 7:
+
+end for  
+
+> 8:
+
+Compute the four rule-level counterfactual mean estimates 
+
+bE[Y d,d (X)] = 1
+
+K
+
+> K
+
+X
+
+> k=1
+> N
+
+X
+
+> i=1
+
+ωisy
+
+ M ∗
+
+> ik
+
+{d(Xi)}, d (Xi), X i
+
+ ,
+
+bE[Y d,r (X)] = 1
+
+K
+
+> K
+
+X
+
+> k=1
+> N
+
+X
+
+> i=1
+
+ωisy
+
+ M ∗
+
+> ik
+
+{r(Xi)}, d (Xi), X i
+
+ ,
+
+bE[Y r,d (X)] = 1
+
+K
+
+> K
+
+X
+
+> k=1
+> N
+
+X
+
+> i=1
+
+ωisy
+
+ M ∗
+
+> ik
+
+{d(Xi)}, r (Xi), X i
+
+ ,
+
+bE[Y r,r (X)] = 1
+
+K
+
+> K
+
+X
+
+> k=1
+> N
+
+X
+
+> i=1
+
+ωisy
+
+ M ∗
+
+> ik
+
+{r(Xi)}, r (Xi), X i
+
+ . 
+
+> 9:
+
+Return ˆ∆D (d, r ) = bE[Y d,r (X)] − bE[Y r,r (X)] and ˆ∆I (d, r ) = bE[Y d,d (X)] − bE[Y d,r (X)]. Repeating Algorithm 1 over posterior draws and bootstrap weights ω yields posterior samples for V (d), V (r), ∆ D (d, r ), and ∆ I (d, r ). In practice, the uniform construction in Algorithm 1 makes the Monte Carlo approximation highly stable, so that modest values of K are typically sufficient. 
+
+# 5. Simulation Study 
+
+We consider five simulation scenarios under varying shares of direct and indirect influence on the outcome. These scenarios are: all direct (100% direct and 0% indirect), primarily direct (75/25), balanced (50/50), primarily indirect (25/75), and all indirect (0/100). The simulation will be assessed by the method’s ability to recover both the raw direct and indirect rule effects as well as their proportions relative to the estimate of the total effect. 
+
+## 5.1. Data Generation 
+
+We generated data with p = 6 baseline covariates, a binary treatment assignment, acontinuous mediator, and a continuous outcome. Covariates X = ( X1, . . . , X 6)⊤ were drawn from a multivariate normal distribution M V N (μ, Σ) with μ = 0 and an AR(1) covariance structure such that Σ jk = ρ|j−k| where ρ = 0 .1, reflecting mild pairwise correlation among covariates. To reflect the environment of a randomized controlled trial and satisfy exchangeability assumptions, treatment was assigned independently of X. The three levels of sample sizes are 
+
+N ∈ { 400 , 800 , 1200 }.The mediator was generated from a treatment model M | A, X ∼ N ormal (μM , σ 2 
+
+> M
+
+) where 
+
+μM = β0 + X⊤β + ( βA + X⊤βAX )A. Similarly, the outcome was generated from Y | A, M, X ∼
+
+N ormal (μY , σ 2 
+
+> Y
+
+) where μY = θ0 + X⊤θ + ( θA + X⊤θAX )A + θM M + γ(X21 − 1). The quadratic 12 • Biostatistics, YEAR, Volume XX, Issue x                                                                                                                                                                                                   
+
+> Total b∆Db∆I
+> nBias RMSE Cov Width Bias RMSE Cov Width Bias RMSE Cov Width
+> Scenario 1 (100% Direct and 0% Indirect)
+> 400 0.01 0.13 0.97 0.51 0.00 0.06 0.97 0.30 0.01 0.09 0.99 0.42 800 0.00 0.08 0.97 0.35 0.00 0.04 0.97 0.19 0.01 0.07 0.96 0.31 1200 0.00 0.07 0.95 0.28 0.00 0.04 0.96 0.15 0.00 0.06 0.96 0.25
+> Scenario 2 (75% Direct and 25% Indirect)
+> 400 0.01 0.13 0.95 0.51 0.02 0.06 0.98 0.28 0.00 0.10 0.99 0.43 800 0.00 0.08 0.97 0.35 0.01 0.04 0.98 0.18 0.00 0.07 0.97 0.31 1200 0.00 0.07 0.96 0.28 0.01 0.03 0.97 0.14 -0.01 0.06 0.97 0.25
+> Scenario 3 (50% Direct and 50% Indirect)
+> 400 0.01 0.13 0.96 0.51 0.02 0.06 0.98 0.27 -0.01 0.10 0.99 0.44 800 0.00 0.08 0.97 0.35 0.01 0.04 0.98 0.17 -0.01 0.08 0.97 0.32 1200 0.00 0.07 0.97 0.28 0.01 0.03 0.98 0.13 -0.01 0.06 0.95 0.26
+> Scenario 4 (25% Direct and 75% Indirect)
+> 400 0.01 0.13 0.96 0.51 0.03 0.06 0.95 0.27 -0.02 0.11 0.97 0.45 800 0.00 0.09 0.96 0.35 0.01 0.04 0.98 0.17 -0.01 0.08 0.98 0.32 1200 0.00 0.07 0.96 0.28 0.01 0.03 0.96 0.13 -0.01 0.06 0.96 0.26
+> Scenario 5 (0% Direct and 100% Indirect)
+> 400 0.01 0.13 0.95 0.51 0.04 0.07 0.95 0.28 -0.03 0.11 0.98 0.47 800 0.01 0.09 0.97 0.36 0.02 0.04 0.99 0.18 -0.01 0.08 0.97 0.34 1200 0.00 0.07 0.96 0.29 0.01 0.03 0.96 0.13 -0.01 0.07 0.95 0.27
+
+Table 1 Simulation performance of the BCMF estimator across scenarios and sample sizes ( S = 200 replicates per cell). For each estimand, we report Monte Carlo bias (Bias), root mean squared error (RMSE), empirical 95% credible interval coverage (Cov), and mean 95% credible interval width (Width). The total effect oracle is fixed at Total ∗ = 0 .500 across all scenarios; the direct/indirect oracle split varies as shown. 
+
+term γ(X21 − 1) introduces nonlinearity meant to reflect realistic clinical measures such as sleep duration. We compared an active treatment rule d to a reference rule r. The rule d was a threshold rule that assigns treatment when a weighted linear index of four covariates exceeds a threshold 
+
+d(X) = I(X1 + 0 .8X2 + 0 .2X3 + 0 .1X4 ≥ 0.25) .
+
+Weights are designed to be beneficial but imperfect, reflecting the type of rule one might realistically recover using precision medicine techniques such as Q-learning or outcome weighted learning. Therefore, the chosen rule approximates, without itself being, the optimal oracle rule under the given data generating process. The reference rule treats no one, assigning treatment value A = 0 to all subjects. 
+
+## 5.2. Simulation Performance 
+
+We ran S = 200 independent replicates for each combination of the five scenarios and three sample sizes. Within each replicate, a dataset of size n was generated, and the value for the reference rule and rule of interest were estimated. Furthermore, the value contrasts of the two rules were derived, decomposed into indirect and direct effects, and compared to the scenario-specific oracle value. It should be noted that decompositions are sensitive to the choice of the reference rule and the rule of interest by construction. Because the decomposition reflects how a particular rule reallocates treatment, two rules over the same population can produce different splits of the direct and indirect effect. In the extreme, a rule that never treats anyone whose treatment would shift the mediator yields no indirect effect, even when a mediated pathway is present in the population. Biostatistics, YEAR, Volume XX, Issue x • 13  
+
+> Figure 2 95% confidence interval coverage, bias, RMSE, and interval width for all mediation scenarios and sample sizes
+
+Simulation performance was assessed in terms of bias, root mean squared error (RMSE), empirical 95% credible interval coverage of the oracle, and credible interval width. These results are reported in Table 1 and visualized in Figure 2. Across all scenarios and sample sizes, the simulations achieved nominal coverage for all estimands. At smaller sample sizes, the direct rule effect tended to demonstrate a slight bias upward and the indirect rule effect a slight bias downward in more heavily mediated scenarios. The magnitude of this bias decreased as the sample size increased. Similarly, the RMSE was 14 • Biostatistics, YEAR, Volume XX, Issue x    
+
+> Figure 3 Proportion of estimated direct and indirect effect for the n= 1200 case. Solid lines represent the estimated share, while the dotted line denotes the oracle share.
+
+larger for both the direct and indirect rule effects in more heavily mediated scenarios, but decreased to values similar to those of less heavily mediated scenarios as the sample size increased. Finally, the 95% credible interval width was similar across all scenarios for all estimands, with interval width decreasing with sample size as expected. Notably, the interval width is slightly wider for the indirect rule effect than for the direct rule effect across all scenarios and sample sizes. In addition to recovering the raw estimates of the direct and indirect rule effects, one may also be interested in recovering the proportions of direct and indirect effects relative to the estimated total effect. Figure 3 shows the estimated proportion of direct and indirect shares relative to the oracle value as a dashed line for the n = 1200 case. As we can see, in finite samples, there is a small attenuation of the indirect effect, which in this case is about a 2% smaller than the true value. 
+
+# 6. Real Data Analysis - TRIUMPH Trial 
+
+We applied our mediation framework to the data from the Treating Resistant Hypertension Using Lifestyle Modification (TRIUMPH) trial, a randomized controlled trial comparing an intensive lifestyle program combining diet, behavioral weight management, and supervised aerobic exercise (C-LIFE) against a standardized education and physician advice (SEPA) control (Blumenthal et al., 2015). Patients ( N = 140) were randomized 2:1 to C-LIFE versus SEPA over a four-month intervention period. Although the parent trial was designed to assess blood pressure outcomes, ancillary measurements collected cognitive executive function as an exploratory outcome of interest. Supporting analyses further examined the relationship between cognitive function and candidate vascular, metabolic, and behavioral mechanisms (Smith et al., 2022b), making TRIUMPH a useful setting for illustrating mediation analysis for individualized treatment rules. The motivating scientific question is not only whether C-LIFE improves cognitive outcomes, but also whether an individualized rule that recommends C-LIFE to high risk participants produces its cognitive benefit through specific causal mechanisms. Prior TRIUMPH analyses suggest that cognitive response to lifestyle modification may be modified with respect to baseline inflammatory and vascular risk profiles (Avorgbedor et al., 2023; Smith et al., 2022b). In addition, TRIUMPH collected several post-treatment measures plausibly related to cognitive benefit, Biostatistics, YEAR, Volume XX, Issue x • 15 
+
+including cerebrovascular oxygenation, aerobic fitness, and sleep quality (Smith et al., 2022a, 2023). We use the proposed decomposition to ask whether the value improvement of a candidate treatment rule over a reference rule that assigns SEPA to everyone is explained by any one of these candidate mediators. Let A ∈ { 0, 1} denote randomized assignment to SEPA (0) or C-LIFE (1), X denote baseline covariates, M denote a candidate mediator measured at four months, and Y denote cognitive executive function measured at four months (with higher values indicating improvement). The estimands of interest are ∆D (d, r ) = E[Y d,r (X)] − E[Y r,r (X)] and ∆I (d, r ) = E[Y d,d (X)] − E[Y d,r (X)] ,
+
+where r is the reference rule ( r(X) ≡ 0) and d is a clinically motivated treatment rule. We restricted to participants with complete data for the outcome, candidate mediator, and all 12 baseline covariates. Depending on the choice of mediator, this yielded between n=113 and n=120 participants. Baseline covariates included age, sex, education, waist-to-hip ratio, baseline ambulatory SBP, baseline ambulatory DBP, baseline peak VO2, baseline CRP, metabolic risk z-score (a composite of BP, lipids, and adiposity), baseline executive function, baseline processing speed, and baseline memory. The value of a rule is the expected executive function score that would be observed if treatment were assigned according to that rule. The total value improvement can be represented as 
+
+E[Y d,d (X)] − E[Y r,r (X)], which compares the expected outcome under the candidate ITR with the expected outcome under the reference rule. Because each mediator is analyzed separately, the direct component should be interpreted as all pathways not operating through that mediator, including pathways through other measured or unmeasured mechanisms. The ITR of interest d assigns C-LIFE to patients with high vascular and inflammatory burden. The rule uses a composite score that thresholds a linear combination of high baseline CRP (50%), low aerobic fitness (30%), and high ambulatory SBP (20%), each standardized with zero mean and unit variance within the analysis sample. Patients scoring above 0 (corresponding to an above-average composite risk) are recommended C-LIFE. The remainder receives SEPA. The choice of variable and weighting reflects the TRIUMPH literature’s ranking of effect modifiers (Avorgbedor et al., 2023; Smith et al., 2022b; Blumenthal et al., 2015), rendering an empirically derived rule. This rule should be interpreted as an empirically motivated rule informed by literature rather than as an estimated optimal rule. The zero threshold corresponds to above average composite risk in the analysis sample. Consequently, the rule assigned approximately 43-46% of participants to C-LIFE across the complete case samples for each mediator. This allocation proportion is a consequence of the chosen threshold and should not be interpreted as a general requirement that an ITR allocate treatment to half of the target population. 
+
+## 6.1. Mediation Scenarios 
+
+As mentioned earlier, we evaluated three candidate mediators: change in oxygenated hemoglobin during cognitive challenges assessed using functional near-infrared spectroscopy (fNIRS), change in aerobic fitness assessed using VO2 max, and change in sleep quality. These mediators were chosen to represent three distinct neurovascular, metabolic/cardio-respiratory, and behavioral mechanisms through which the treatment may affect the outcome (Smith et al., 2022a; Avorgbedor et al., 2023; Smith et al., 2023). Each mediator was analyzed separately. Consequently, the direct component in a given analysis should be interpreted as the component not operating through that specific mediator. It may still include pathways through other measured or unmeasured mediators. Appropriate mediators must occur post-treatment and pre-outcome in order to lie on the causal pathway between A and Y . Within the TRIUMPH trial, all three mediators were collected as 16 • Biostatistics, YEAR, Volume XX, Issue x 
+
+fNIRS oxygenation Aerobic fitness Sleep quality Sample 
+
+n 116 120 113 C-LIFE / SEPA 82 / 34 85 / 35 81 / 32 Percent assigned to rule (%) 45.7 42.5 46.0 
+
+ITR outcomes 
+
+Value under rule, ˆV (d) 65 .8∗ 65 .8∗ 64 .8∗
+
+Value under reference, ˆV (r) 62 .1∗ 62 .1∗ 60 .3∗
+
+Effect decomposition 
+
+Total benefit, ˆV (d) − ˆV (r) 3.66 ∗ 3.76 ∗ 4.52 ∗
+
+Direct effect, b∆D (d, r ) 3.43 3.48 ∗ 4.41 ∗
+
+Indirect effect, b∆I (d, r ) 0.23 0.28 0.11 
+
+Mediated share (%) 
+
+Direct share 96 .5∗ 93 .1∗ 97 .7∗
+
+Indirect share 3.5 7.0 2.3 
+
+> Table 2 Mediation decomposition of the ITR benefit on executive function for three candidate mediating mechanisms: cerebral oxygenation, aerobic fitness, and sleep quality. All estimates are posterior means. Asterisks denote that the posterior 95% credible interval excludes zero.
+
+a change from baseline (post-treatment) at a four-month assessment. Cognitive benefit was also observed at this four-month follow-up, raising potential concerns about simultaneity and reverse causality. However, while oxygenated hemoglobin and VO2 max are measured at the same visit as cognitive benefit, they reflect a biologically antecedent state. Additionally, sleep quality is a self-reported measure recording the quality of sleep over the preceding month. Therefore, sleep is a retrospective measure that resolves the simultaneity problem. 
+
+## 6.2. Results 
+
+Table 2 reports posterior mean estimates for each analysis. Across the three complete-case samples, the rule assigned approximately 43-46% of participants to C-LIFE. The estimated value under the rule exceeded the value under the reference rule for all three mediators, with estimated total benefits ranging from 3.66 to 4.52 points on the executive function scale. For the given rule of interest, the benefit of the rule of interest over the treat-none rule is primarily realized via the direct pathway, with shares of 96.5%, 93.1%, and 97.7% for oxygenated hemoglobin, aerobic fitness, and sleep quality, respectively. In contrast, the estimated indirect components were small: 3.5% for oxygenated hemoglobin, 7.0% for aerobic fitness, and 2.3% for sleep quality. Therefore, the decomposition suggested that most of the estimated rule benefit was not mediated by any single candidate mediator considered here, as the estimated indirect components for cerebral oxygenation, aerobic fitness, and sleep quality were small. The corresponding credible intervals included zero, indicating that we cannot conclude that there was a significant contribution along the mediated pathway for any of the three candidate mediators. However, this pattern should not be interpreted as evidence that lifestyle modification has no mechanistic effects, as the analysis is relative to the choice of ITRs d and r. Furthermore, because each mediator was considered separately, the direct component includes all pathways not operating through the specific mediator under analysis, including pathways through other physiological or behavioral mechanisms. It is also important to note that while the rule d realized an increase in value relative to r across all three scenarios, this margin was small relative Biostatistics, YEAR, Volume XX, Issue x • 17 
+
+to the value delivered by r. The total value improvement of d relative to r is the quantity being decomposed. When this total improvement is small, there is limited benefit to explain mechanistically. Consequently, even a mediator that accounts for a nontrivial share of the total improvement may correspond to a small absolute indirect effect. The small magnitude of the total effect could partly be due to the fact that r is not a true “treat-none” rule as it assigned SEPA to everyone. Assuming SEPA has a positive value, the increase in value relative to a rule that truly assigns no intervention would be higher. In other settings, we would hope that the chosen ITR would realize a greater benefit over the rule that treats no one. Overall, the TRIUMPH application illustrates how mediation for ITRs can move beyond estimating the value of an individualized rule to ask how that value is produced. In this example, the estimated cognitive benefit of the rule appeared to be driven primarily by pathways other than the three individual mediators considered. Future applications with larger samples and stronger rule contrasts may be better positioned to identify mechanistic pathways underlying ITR value. 
+
+# 7. Discussion 
+
+In this paper, we propose a mediation framework for individualized treatment rules that decomposes a contrast of the value function into direct and indirect components. Unlike classical mediation analysis, which focuses on decomposing a fixed treatment effect, our approach targets mechanistic explanations of why a candidate rule outperforms a reference rule. We formalize rule-level potential outcomes {Y d,d (X), Y r,r (X), Y d,r (X), Y r,d (X)}, showing that the corresponding decomposition is identified under standard identifiability assumptions, and propose a Bayesian estimation strategy that adapts Bayesian causal mediation forests for ITR evaluation. The key methodological innovation is the replacement of fixed treatment levels by rule-induced actions, coupled with a Monte Carlo implementation that produces posterior samples of V (d), 
+
+V (r), ∆ D (d, r ), and ∆ I (d, r ). The use of stratification on A and clever covariates follows prior BCMF recommendations to stabilize inference in the presence of complex confounding and nonlinear interactions. From an applied perspective, the proposed estimation strategy yields an interpretable decomposition of the value improvement delivered by an ITR relative to a clinically meaningful baseline. Several limitations and practical considerations remain. First, the interpretation of the decomposition hinges on assumptions A2-A3 of no unmeasured confounding, which cannot be verified in observational settings. Because of this, in practice, sensitivity analyses are essential. Second, positivity is critical for rule evaluation. If a rule assigns actions in the covariate space with little or no support in the observed data, inference will rely on extrapolation, and credible intervals may understate uncertainty. Third, when d is learned from the same dataset used to evaluate mediation, additional variability and potential optimism may arise. However, this can be alleviated using cross-validation or a sample splitting paradigm. Future work may extend the framework to dynamic treatment regimes, multiple mediators, and heterogeneous mediation. This approach advances precision medicine by complementing rule optimization with pathway-based explainability that can inform underlying mechanistic understanding. 
+
+REFERENCES 
+
+C. Avin, I. Shpitser, and J. Pearl. Identifiability of path-specific effects. In Proceedings of the 19th International Joint Conference on Artificial Intelligence , IJCAI’05, page 357–363, San Francisco, CA, USA, 2005. Morgan Kaufmann Publishers Inc. F. Avorgbedor, J. A. Blumenthal, A. Hinderliter, K. Ingle, P.-H. Lin, L. Craighead, C. Tyson, W. Kraus, A. Sherwood, and P. J. Smith. Inflammation moderates the effects of lifestyle 18 • Biostatistics, YEAR, Volume XX, Issue x 
+
+modification on neurocognition among individuals with resistant hypertension. J. Clin. Hypertens. (Greenwich) , 25(1):106–110, Jan. 2023. R. M. Baron and D. A. Kenny. The moderator-mediator variable distinction in social psychological research: conceptual, strategic, and statistical considerations. J. Pers. Soc. Psychol. , 51(6):1173–1182, Dec. 1986. J. A. Blumenthal, A. Sherwood, P. J. Smith, S. Mabe, L. Watkins, P.-H. Lin, L. W. Craighead, M. Babyak, C. Tyson, K. Young, M. Ashworth, W. Kraus, L. Liao, and A. Hinderliter. Lifestyle modification for resistant hypertension: The TRIUMPH randomized clinical trial. 
+
+Am. Heart J. , 170(5):986–994.e5, Nov. 2015. A. Caron, G. Baio, and I. Manolopoulou. Shrinkage bayesian causal forests for heterogeneous treatment effects estimation. J. Comput. Graph. Stat. , 31(4):1202–1214, Oct. 2022. B. Chakraborty and E. Moodie. Statistical methods for dynamic treatment regimes: Reinforcement learning, causal inference, and personalized medicine . Statistics for Biology and Health. Springer, New York, NY, 2013 edition, June 2013. X. Chen, L. Hu, and F. Li. A flexible bayesian g-formula for causal survival analyses with time-dependent confounding. arXiv [stat.ME] , Feb. 2024. H. A. Chipman, E. I. George, and R. E. McCulloch. BART: Bayesian additive regression trees. 
+
+The Annals of Applied Statistics , 4(1):266–298, Mar. 2010. C. Cinelli, A. Feller, G. Imbens, E. Kennedy, S. Magliacane, and J. Zubizarreta. Challenges in statistics: A dozen challenges in causality and causal inference. arXiv [stat.ME] , Aug. 2025. V. Dorie, G. Perrett, J. L. Hill, and B. Goodrich. Stan and BART for causal inference: Estimating heterogeneous treatment effects using the power of stan and the flexibility of machine learning. 
+
+Entropy (Basel) , 24(12):1782, Dec. 2022. I. D´ ıaz, N. S. Hejazi, K. E. Rudolph, and M. J. van der Laan. Nonparametric efficient causal mediation with intermediate confounders. Biometrika , 108(3):627–641, 2021. L. Ge, J. Wang, C. Shi, Z. Wu, and R. Song. A reinforcement learning framework for dynamic mediation analysis. In A. Krause, E. Brunskill, K. Cho, B. Engelhardt, S. Sabato, and J. Scarlett, editors, Proceedings of the 40th International Conference on Machine Learning ,volume 202 of Proceedings of Machine Learning Research , pages 11050–11097. PMLR, 2023. P. R. Hahn, J. S. Murray, and C. Carvalho. Bayesian regression tree models for causal inference: regularization, confounding, and heterogeneous effects. arXiv [stat.ME] , June 2017. S. Han. Optimal dynamic treatment regimes and partial welfare ordering. J. Am. Stat. Assoc. ,pages 1–11, Sept. 2023. M. A. Hernan and J. M. Robins. Causal Inference: What If . Chapman & Hall/CRC, Philadelphia, PA, 2020. M. A. Hern´ an and J. M. Robins. Using big data to emulate a target trial when a randomized trial is not available. Am. J. Epidemiol. , 183(8):758–764, Apr. 2016. J. Hill, A. Linero, and J. Murray. Bayesian additive regression trees: A review and look forward. 
+
+Annu. Rev. Stat. Appl. , 7(1):251–278, Mar. 2020. P. W. Holland. Statistics and causal inference. J. Am. Stat. Assoc. , 81(396):945–960, Dec. 1986. K. Imai, L. Keele, and D. Tingley. A general approach to causal mediation analysis. Psychol. Methods , 15(4):309–334, Dec. 2010a. K. Imai, L. Keele, and T. Yamamoto. Identification, inference and sensitivity analysis for causal mediation effects. Stat. Sci. , 25(1):51–71, Feb. 2010b. M. R. Kosorok and E. B. Laber. Precision medicine. Annu. Rev. Stat. Appl. , 6(1):263–286, Mar. 2019. M. R. Kosorok and E. E. M. Moodie. Adaptive treatment strategies in practice. https:// epubs.siam.org/doi/book/10.1137/1.9781611974188 , 2015. Accessed: 2025-11-22. H. Lee, R. D. Herbert, and J. H. McAuley. Mediation analysis. JAMA , 321(7):697–698, Feb. 2019. Biostatistics, YEAR, Volume XX, Issue x • 19 
+
+Z. Li, J. Chen, E. Laber, F. Liu, and R. Baumgartner. Optimal treatment regimes: A review and empirical comparison. Int. Stat. Rev. , 91(3):427–463, Dec. 2023. A. R. Linero. SoftBart: Soft bayesian additive regression trees. arXiv [stat.ME] , Oct. 2022. A. R. Linero and Q. Zhang. Mediation analysis using bayesian tree ensembles. Psychol. Methods ,30(1):60–82, Feb. 2025. D. MacKinnon. Introduction to statistical mediation analysis . Routledge, 2012. D. P. MacKinnon, A. J. Fairchild, and M. S. Fritz. Mediation analysis. Annu. Rev. Psychol. , 58 (1):593–614, Jan. 2007. D. Malinsky, I. Shpitser, and T. Richardson. A potential outcomes calculus for identifying conditional path-specific effects. In K. Chaudhuri and M. Sugiyama, editors, Proceedings of the Twenty-Second International Conference on Artificial Intelligence and Statistics ,volume 89 of Proceedings of Machine Learning Research , pages 3080–3088. PMLR, 2019. M. Mioˇ cevi´ c, O. Gonzalez, M. J. Valente, and D. P. MacKinnon. A tutorial in bayesian potential outcomes mediation analysis. Struct. Equ. Modeling , 25(1):121–136, 2018. R. Mirnezami, J. Nicholson, and A. Darzi. Preparing for precision medicine. N. Engl. J. Med. ,366(6):489–491, Feb. 2012. S. A. Murphy. Optimal dynamic treatment regimes: Dynamic Treatment Regimes . J. R. Stat. Soc. Series B Stat. Methodol. , 65(2):331–355, May 2003. J. Pearl. Direct and indirect effects. In Proceedings of the Seventeenth conference on Uncertainty in artificial intelligence , UAI’01, pages 411–420, San Francisco, CA, USA, Aug. 2001. Morgan Kaufmann Publishers Inc. G. Puccetti and R. Wang. Extremal dependence concepts. Stat. Sci. , 30(4):485–517, Nov. 2015. M. Qian and S. A. Murphy. Performance guarantees for individualized treatment rules. Annals of statistics , 39(2):1180, 2011. A. Rekkas, J. K. Paulus, G. Raman, J. B. Wong, E. W. Steyerberg, P. R. Rijnbeek, D. M. Kent, and D. van Klaveren. Predictive approaches to heterogeneous treatment effects: a scoping review. BMC Med. Res. Methodol. , 20(1):264, Oct. 2020. J. M. Robins and S. Greenland. Identifiability and exchangeability for direct and indirect effects. 
+
+Epidemiology , 3(2):143–155, Mar. 1992. J. M. Robins and T. S. Richardson. Alternative graphical causal models and the identification of direct effects. Causality and psychopathology: Finding the determinants of disorders and their cures , 84:103–158, 2010. J. M. Robins, T. S. Richardson, and I. Shpitser. An interventionist approach to mediation analysis. In Probabilistic and Causal Inference , pages 713–764. ACM, New York, NY, USA, Feb. 2022. S. Roy, M. J. Daniels, B. J. Kelly, and J. Roy. A bayesian nonparametric approach for causal inference with multiple mediators. arXiv [stat.ME] , Aug. 2022. D. B. Rubin. Estimating causal effects of treatments in randomized and nonrandomized studies. 
+
+J. Educ. Psychol. , 66(5):688–701, Oct. 1974. D. B. Rubin. The bayesian bootstrap. The annals of statistics , pages 130–134, 1981. D. B. Rubin. Direct and indirect causal effects via potential outcomes. Scand. Stat. Theory Appl. , 31(2):161–170, June 2004. D. B. Rubin. Causal inference using potential outcomes: Design, modeling, decisions. J. Am. Stat. Assoc. , 100(469):322–331, Mar. 2005. P. J. Schulte, A. A. Tsiatis, E. B. Laber, and M. Davidian. Q- and a-learning methods for estimating optimal dynamic treatment regimes. Stat. Sci. , 29(4):640–661, Nov. 2014. I. Shpitser and E. Sherman. Identification of personalized effects associated with causal pathways. 
+
+Uncertain. Artif. Intell. , 2018:198, Aug. 2018. P. J. Smith, A. Sherwood, A. L. Hinderliter, S. Mabe, C. Tyson, F. Avorgbedor, L. L. Watkins, P.-H. Lin, W. E. Kraus, and J. A. Blumenthal. Cerebrovascular function, vascular risk, and lifestyle patterns in resistant hypertension. J. Alzheimers. Dis. , 87(1):345–357, 2022a. 20 • Biostatistics, YEAR, Volume XX, Issue x 
+
+P. J. Smith, A. Sherwood, A. L. Hinderliter, S. Mabe, L. L. Watkins, L. Craighead, K. Ingle, C. Tyson, F. Avorgbedor, P.-H. Lin, W. E. Kraus, L. Liao, and J. A. Blumenthal. Lifestyle modification and cognitive function among individuals with resistant hypertension: cognitive outcomes from the TRIUMPH trial. J. Hypertens. , 40(7):1359–1368, July 2022b. P. J. Smith, A. Sherwood, F. Avorgbedor, K. K. Ingle, W. E. Kraus, A. E. Hinderliter, and J. A. Blumenthal. Sleep quality, metabolic function, physical activity, and neurocognition among individuals with resistant hypertension. J. Alzheimers. Dis. , 93(3):995–1006, May 2023. R. Sun and X. Song. Heterogeneous mediation analysis for cox proportional hazards model with multiple mediators. Stat. Med. , 43(29):5497–5512, Dec. 2024. E. J. T. Tchetgen and I. Shpitser. Semiparametric theory for causal mediation analysis: efficiency bounds, multiple robustness, and sensitivity analysis. Ann. Stat. , 40(3):1816–1845, June 2012. A. Ting and A. R. Linero. Estimating heterogeneous causal mediation effects with bayesian decision tree ensembles. J. Am. Stat. Assoc. , pages 1–20, Apr. 2025. L. Valeri and T. J. VanderWeele. Mediation analysis allowing for exposure-mediator interactions and causal interpretation: theoretical assumptions and implementation with SAS and SPSS macros. Psychological methods , 18(2):137, 2013. M. J. van der Laan and D. Rubin. Targeted maximum likelihood learning. U.C. Berkeley Division of Biostatistics Working Paper Series , 2006. T. J. VanderWeele. Bias formulas for sensitivity analysis for direct and indirect effects. 
+
+Epidemiology , 21(4):540–551, July 2010. T. J. VanderWeele. Mediation analysis: A practitioner’s guide. Annu. Rev. Public Health , 37 (1):17–32, Mar. 2016. S. Wager and S. Athey. Estimation and inference of heterogeneous treatment effects using random forests. arXiv [stat.ME] , Oct. 2015. Y.-Q. Zhao, D. Zeng, A. J. Rush, and M. R. Kosorok. Estimating individualized treatment rules using outcome weighted learning. J. Am. Stat. Assoc. , 107(449):1106–1118, Sept. 2012. 
+
+# A. Identification of Rule Mediation Estimands 
+
+Lemma 1 (Identification of rule mediation estimands) Suppose assumptions A1-A4 hold. Then for any pair of rules d, r ∈ D , the cross-world rule-level mean is identified by the mediation g-formula, 
+
+E{Y d,r (X)} =
+
+Z
+
+> X
+
+Z
+
+> M
+
+E(Y | A = d(x), M = m, X = x)
+
+× fM |A,X {m | A = r(x), X = x} dm dF X (x).
+
+In particular, taking ( d, r ) equal to ( d, d ), ( r, r ), ( d, r ), and ( r, d ) identifies V (d), V (r), and the two cross-world means E{Y d,r (X)} and E{Y r,d (X)}. Consequently the decomposition V (d) − V (r) = ∆ D (d, r ) + ∆ I (d, r ) and each of its components are identified from the observed data distribution. 
+
+Proof Fix d, r ∈ D and x ∈ X . Positivity (A4) guarantees that the regression E(Y | A =
+
+d(x), M = m, X = x) and the conditional density fM |A,X {m | A = r(x), X = x} are well defined on the relevant support. Write 
+
+μ(x) ≡ E{Y d,r (X) | X = x} = E[Y {d(x), M (r(x)) } | X = x].
+
+Iterating the expectation over the potential mediator M (r(x)), 
+
+μ(x) = 
+
+Z
+
+> M
+
+EY {d(x), m } | M (r(x)) = m, X = xdF M (r(x)) |X (m | x).Biostatistics, YEAR, Volume XX, Issue x • 21 
+
+By cross-world exchangeability (A3), Y {d(x), m } ⊥ M (r(x)) | X = x, so the inner conditional expectation does not depend on the event {M (r(x)) = m} and can be expressed as 
+
+E [Y {d(x), m } | M (r(x)) = m, X = x] = E [Y {d(x), m } | X = x] .
+
+For the outcome term, treatment exchangeability (A2) gives Y {d(x), m } ⊥ A | X = x, and therefore 
+
+E[Y {d(x), m } | X = x] = E[Y {d(x), m } | A = d(x), X = x].
+
+Furthermore, the joint independence of A2 along with A3 yields Y {d(x), m } ⊥ M (d(x)) | A =
+
+d(x), X = x. Since M = M (d(x)) on the event A = d(x) by consistency (A1), 
+
+EY {d(x), m } | A = d(x), X = x = E Y | A = d(x), M = m, X = x.
+
+For the mediator term, A2 gives M (r(x)) ⊥ A | X = x, and consistency (A1) gives M = M (r(x)) on A = r(x), so 
+
+dF M (r(x)) |X (m | x) = fM |A,X {m | A = r(x), X = x} dm. 
+
+Substituting the last three equations into μ(x) and integrating over the marginal distribution of 
+
+X gives the stated g-formula. The remaining claims follow by noting the results hold without loss of generality to the choice of ( d, r ) and noting that ∆ D (d, r ) and ∆ I (d, r ) are differences of the identified means. □
