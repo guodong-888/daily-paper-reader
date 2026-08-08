@@ -1,0 +1,285 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-08T20:27:00.392185+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 7,
+    "quick_skim_target": 11,
+    "quick_selected": 7
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.06253v1",
+      "source": "arxiv",
+      "title": "MetaboLLM: a metabolomics-specialized large language model for biochemical knowledge integration and predictive metabolite graph construction",
+      "abstract": "Metabolomics knowledge is distributed across heterogeneous resources and remains difficult to translate into predictive representations. We developed MetaboLLM, a metabolomics-specialized large language model adapted through continual pretraining, supervised fine-tuning, and structured retrieval, together with MetaboLLM-GIN, which converts generated biochemical descriptions into metabolite graphs for patient-level prediction using a graph isomorphism network. Across four backbone families, MetaboLLM outperformed corresponding base and medically adapted models on metabolomics knowledge, relational, and description tasks, and transferred to an external public benchmark. MetaboLLM-GIN achieved the highest AUC for stress hyperglycemia prediction after coronary artery bypass grafting (0.8616) and postmenopausal hormone-regimen classification (0.8123), outperforming conventional models, alternative graph constructions, and graphs generated from unadapted or non-retrieval LLM configurations. Model interpretation further produced biologically meaningful findings in both applications. These results show that domain-specialized language models can organize heterogeneous biochemical knowledge into predictive and interpretable metabolite graph representations.",
+      "authors": [
+        "Dohyun Ku",
+        "Min Gu Kwak",
+        "Francisco J. Pasquel",
+        "Jing Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-06T16:42:34+00:00",
+      "link": "https://arxiv.org/pdf/2608.06253v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Metabolomics-specialized LLM for biochemical knowledge integration and predictive metabolite graphs; supports metabolic analysis in exercise and flap survival studies.",
+      "llm_evidence_cn": "代谢组学专用大语言模型，支持生化知识整合与代谢物图预测，可用于运动与皮瓣存活的代谢分析",
+      "llm_evidence": "代谢组学专用大语言模型，支持生化知识整合与代谢物图预测，可用于运动与皮瓣存活的代谢分析",
+      "canonical_evidence": "代谢组学专用大语言模型，支持生化知识整合与代谢物图预测，可用于运动与皮瓣存活的代谢分析",
+      "llm_tldr_en": "A metabolomics-specialized LLM for biochemical knowledge integration and predictive metabolite graphs. Outperforms base and medical models on metabolomics tasks and transfers externally. Supports metabolic analysis in exercise and flap survival research.",
+      "llm_tldr_cn": "代谢组学知识分散于异构资源，难以转化为预测表征。论文提出代谢组学专用大语言模型MetaboLLM，通过持续预训练、监督微调和结构化检索整合生化知识，并利用MetaboLLM-GIN将生成的描述转为代谢物图用于患者层面预测。实验显示其在代谢组学知识、关系与描述任务上优于基线和医学适配模型，并可迁移到外部基准。该工具可支持运动与皮瓣存活研究中代谢变化的深入分析。",
+      "llm_tldr": "代谢组学知识分散于异构资源，难以转化为预测表征。论文提出代谢组学专用大语言模型MetaboLLM，通过持续预训练、监督微调和结构化检索整合生化知识，并利用MetaboLLM-GIN将生成的描述转为代谢物图用于患者层面预测。实验显示其在代谢组学知识、关系与描述任务上优于基线和医学适配模型，并可迁移到外部基准。该工具可支持运动与皮瓣存活研究中代谢变化的深入分析。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.29090v1",
+      "source": "arxiv",
+      "title": "What Is Missing in Surgical Risk Stratification and Outcome Prediction: A Scoping Review of End-to-End Machine Learning Approaches",
+      "abstract": "Postoperative adverse events, including mortality and morbidity, remain a major global burden, many of which are preventable through early identification of high-risk patients and targeted perioperative care. Accurate risk stratification is therefore essential. With the growing availability of large-scale electronic health records (EHRs), machine learning (ML) provides a data-driven approach to model complex clinical patterns. However, existing studies vary widely in design, and methodological practices remain fragmented. This scoping review characterizes ML pipelines for surgical risk stratification and outcome prediction using EHR data. We reviewed 190 studies covering the ML workflow, including data preprocessing, algorithm selection, model evaluation, and explainability. Most studies relied on single-center private datasets with limited data modalities, while the scarcity of open-access surgical datasets constrained reproducibility and generalizability. Reporting of key preprocessing steps, including missing data handling, feature selection, and class imbalance, was often incomplete. Conventional ML models and simple neural networks predominated, whereas deep learning and multimodal approaches remained uncommon. Benchmark datasets and standardized evaluation protocols were largely absent, hindering cross-study comparisons. Only about one-third of studies incorporated explainability methods. This review identifies methodological gaps limiting clinically robust postoperative ML tools and provides a structured reference to support more rigorous, reproducible, and clinically meaningful ML development for perioperative care.",
+      "authors": [
+        "Yizhi Dong",
+        "Yuhe Ke",
+        "Hairil Rizal Abdullah",
+        "Yucheng Xing",
+        "Kevan Kai Bing Teo",
+        "Ling Huang",
+        "Mengling Feng"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-31T07:16:50+00:00",
+      "link": "https://arxiv.org/pdf/2607.29090v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "scoping review of end-to-end ML pipelines for surgical risk stratification and outcome prediction relevant to flap survival risk factors",
+      "llm_evidence_cn": "外科风险分层与结局预测的端到端机器学习范围综述，与皮瓣存活风险因素相关",
+      "llm_evidence": "外科风险分层与结局预测的端到端机器学习范围综述，与皮瓣存活风险因素相关",
+      "canonical_evidence": "外科风险分层与结局预测的端到端机器学习范围综述，与皮瓣存活风险因素相关",
+      "llm_tldr_en": "This scoping review characterizes machine-learning workflows for surgical risk stratification and outcome prediction from EHR data, summarizing common practices and gaps across 190 studies; it offers a methodological reference for building outcome-prediction models relevant to flap survival.",
+      "llm_tldr_cn": "该范围综述梳理了基于电子健康记录的外科风险分层与结局预测的机器学习流程，纳入190项研究进行分析。它总结了数据准备、模型构建和验证等环节的常见做法与缺失，并指出了现有方法学的不一致。对于皮瓣存活的风险因素建模，该综述可作为选择端到端机器学习方案的重要参考。",
+      "llm_tldr": "该范围综述梳理了基于电子健康记录的外科风险分层与结局预测的机器学习流程，纳入190项研究进行分析。它总结了数据准备、模型构建和验证等环节的常见做法与缺失，并指出了现有方法学的不一致。对于皮瓣存活的风险因素建模，该综述可作为选择端到端机器学习方案的重要参考。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.06288v1",
+      "source": "arxiv",
+      "title": "Surv-IPTB: An Attention-Based Model for Estimating Individual Probability of Treatment Benefit with Survival Data",
+      "abstract": "This work presents a novel attention-based framework for estimating the Individual Probability of Treatment Benefit (IPTB) in survival analysis contexts. The proposed model, called Surv-IPTB, directly quantifies the probability that a specific patient will experience extended survival time under treatment versus control. We reformulate IPTB estimation as a binary classification problem, leveraging pairwise patient comparisons across treatment and control cohorts. The framework incorporates a principled handling of right-censored observations through imprecise probability representations, where uncertain treatment effects are characterized by interval-valued probabilities. An attention mechanism with learnable query-key transformations enables flexible, data-driven aggregation of pairwise comparisons, while simultaneously learning soft class probabilities for censored cases. Through extensive experiments on synthetic datasets with complex nonlinear structures, including spiral, bell-shaped, and circular feature spaces, we demonstrate that our approach maintains robust performance across varying censoring rates and treatment effect strengths. The model consistently outperforms meta-learner baselines (T-learner and S-learner) equipped with random survival forests, Cox proportional hazards, and Beran estimators, particularly in challenging nonlinear scenarios where conventional methods exhibit significant degradation. The results establish the proposed attention-based framework as a scalable and statistically principled solution for personalized treatment benefit assessment in survival settings. The code implementing the model is publicly available.",
+      "authors": [
+        "Lev V. Utkin",
+        "Stanislav K. Kogan",
+        "Andrei V. Konstantinov"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "published": "2026-08-06T17:13:44+00:00",
+      "link": "https://arxiv.org/pdf/2608.06288v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "attention-based model for individualized treatment benefit with survival endpoints applicable to exercise-flap survival studies",
+      "llm_evidence_cn": "基于注意力的个体治疗获益生存模型，可应用于运动-皮瓣存活研究",
+      "llm_evidence": "基于注意力的个体治疗获益生存模型，可应用于运动-皮瓣存活研究",
+      "canonical_evidence": "基于注意力的个体治疗获益生存模型，可应用于运动-皮瓣存活研究",
+      "llm_tldr_en": "An attention-based survival model (Surv-IPTB) estimates each patient's probability of extended survival under treatment versus control, handling censoring via imprecise probabilities and pairwise comparisons; it can serve as a tool to evaluate exercise training benefits on flap survival.",
+      "llm_tldr_cn": "针对生存数据中个体治疗获益估计问题，该文提出基于注意力的Surv-IPTB模型。它将获益估计转化为成对分类任务，并结合不精确概率处理右删失观测，从而得到区间化的个体治疗效应。该模型能直接量化某患者相对于对照组接受治疗后存活时间延长的概率。对于运动训练影响皮瓣生存的研究，这一方法可用于分析运动干预的个体化获益。",
+      "llm_tldr": "针对生存数据中个体治疗获益估计问题，该文提出基于注意力的Surv-IPTB模型。它将获益估计转化为成对分类任务，并结合不精确概率处理右删失观测，从而得到区间化的个体治疗效应。该模型能直接量化某患者相对于对照组接受治疗后存活时间延长的概率。对于运动训练影响皮瓣生存的研究，这一方法可用于分析运动干预的个体化获益。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "exercise training effect on flap survival",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.29295v1",
+      "source": "arxiv",
+      "title": "Bayesian fusion forests for heterogeneous treatment effects on survival from randomised and real-world data",
+      "abstract": "We develop the Bayesian fusion forest, a nonparametric framework to estimate heterogeneous treatment effects on survival outcomes by combining a randomised controlled trial and real-world data. The framework relaxes the unconfoundedness assumption on the real-world data by assuming instead that the treatment effect transports across the two sources. Our method opens up right- and interval-censored outcomes to data fusion. We model the survival time with an accelerated failure time decomposition into a shared baseline prognosis, a source-specific deviation, a treatment effect, and a confounding function. The confounding function absorbs the confounding bias in the real-world data. Each component receives a Bayesian tree ensemble prior. The shared baseline prognosis borrows strength across sources, while the deviation captures between-source heterogeneity. A hierarchical Dirichlet process mixture models the error distribution nonparametrically. A simulation study shows efficiency gains over a trial-only analysis across varying levels of confounding and between-source heterogeneity. We combine the ACTG 175 trial with the Multicenter AIDS Cohort Study to estimate the effect of combination antiretroviral therapy for HIV. The fusion identifies a benefit for nearly every patient whereas the trial alone is inconclusive.",
+      "authors": [
+        "Tijn Jacobs",
+        "Stéphanie L. van der Pas",
+        "Wessel N. van Wieringen"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "stat.ML"
+      ],
+      "published": "2026-07-31T11:12:55+00:00",
+      "link": "https://arxiv.org/pdf/2607.29295v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "General nonparametric method for estimating heterogeneous treatment effects on survival outcomes, applicable to exercise training effect on flap survival.",
+      "llm_evidence_cn": "用于估计生存结局异质性处理效应的非参数方法，可应用于运动训练对皮瓣存活的影响分析。",
+      "llm_evidence": "用于估计生存结局异质性处理效应的非参数方法，可应用于运动训练对皮瓣存活的影响分析。",
+      "canonical_evidence": "用于估计生存结局异质性处理效应的非参数方法，可应用于运动训练对皮瓣存活的影响分析。",
+      "llm_tldr_en": "Bayesian fusion forest estimates heterogeneous treatment effects on survival by combining randomized and real-world data, relaxing unconfoundedness via a confounding function. It extends to right/interval censoring and could be applied to study exercise training effects on flap survival.",
+      "llm_tldr_cn": "随机对照试验与真实世界数据结合评估生存结局的异质性处理效应是临床研究难点，现有方法常依赖不可检验的无混淆假设。本文提出贝叶斯融合森林，将生存时间分解为共享基线预后、来源偏倚、处理效应和混淆函数，借助贝叶斯加性回归树进行非参数估计，并支持右删失与区间删失数据。通过融合两类数据源，该方法能在放宽无混淆假设下得到更稳健的处理效应估计。该框架为评估运动训练对皮瓣存活的影响提供了可迁移的因果推断工具。",
+      "llm_tldr": "随机对照试验与真实世界数据结合评估生存结局的异质性处理效应是临床研究难点，现有方法常依赖不可检验的无混淆假设。本文提出贝叶斯融合森林，将生存时间分解为共享基线预后、来源偏倚、处理效应和混淆函数，借助贝叶斯加性回归树进行非参数估计，并支持右删失与区间删失数据。通过融合两类数据源，该方法能在放宽无混淆假设下得到更稳健的处理效应估计。该框架为评估运动训练对皮瓣存活的影响提供了可迁移的因果推断工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "exercise training effect on flap survival",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.00789v1",
+      "source": "arxiv",
+      "title": "Bayesian hierarchical bootstrap framework for causal subgroup estimation with a time-to-event outcome",
+      "abstract": "Causal estimation of treatment effects within prespecified subgroups, such as biomarker-defined strata, disease phenotypes, or demographic groups are often of clinical interest. Bayesian approaches are attractive for subgroup effect estimation because flexible priors can represent complex treatment heterogeneity and propagate posterior uncertainty. Frequentist methods for prespecified causal subgroup analysis with time-to-event outcomes are also available, including propensity-score weighting approaches that emphasize subgroup-level covariate balance. In the posterior g-formula, subgroup survival estimands also depend on the subgroup-specific distribution of baseline covariates, which may be unstable when some subgroups are small or unevenly represented. Right censoring separately reduces information for the outcome-model component of the estimand, increasing overall uncertainty in subgroup causal survival contrasts. We extend the hierarchical Bayesian bootstrap (HBB) to subgroup causal inference with right-censored time-to-event outcomes. The HBB places a nonparametric hierarchical prior on subgroup-specific baseline covariate distributions, enabling principled borrowing of information across related subgroups while preserving subgroup-specific structure. We combine this distributional regularization with a Bayesian accelerated failure time model and right censoring to perform a posterior g-formula that propagates uncertainty from both the survival model and the subgroup covariate distribution. The resulting framework stabilizes subgroup causal survival estimands in sparse strata without imposing parametric assumptions on the covariate distribution. Simulation studies examine performance across varying degrees of subgroup sparsity and censoring and compare the proposed approach to the popular Bayesian additive regression tree for heterogeneous survival effects.",
+      "authors": [
+        "Mengyao Shi",
+        "Amanda Ricciuto",
+        "Mark Deneau",
+        "Kuan Liu"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-08-01T17:45:34+00:00",
+      "link": "https://arxiv.org/pdf/2608.00789v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Causal subgroup estimation for time-to-event outcomes, applicable to flap survival factor analysis",
+      "llm_evidence_cn": "时间-事件结局因果亚组估计，可用于皮瓣存活因素分析",
+      "llm_evidence": "时间-事件结局因果亚组估计，可用于皮瓣存活因素分析",
+      "canonical_evidence": "时间-事件结局因果亚组估计，可用于皮瓣存活因素分析",
+      "llm_tldr_en": "A Bayesian hierarchical bootstrap framework for causal subgroup estimation with time-to-event outcomes, addressing unstable subgroup-specific covariate distributions. Transferable to analyzing factors influencing flap survival.",
+      "llm_tldr_cn": "在临床研究中，时间-事件结局的因果亚组估计常因子组样本小或协变量分布不稳定而不可靠。论文提出贝叶斯分层自助法框架，利用灵活先验刻画治疗异质性，并有效处理子组特定基线协变量分布不稳定的问题，从而提升亚组估计的稳健性。该框架可迁移到皮瓣存活研究，用于识别影响皮瓣存活的因素，并为运动干预等治疗效应的因果推断提供统计支持。",
+      "llm_tldr": "在临床研究中，时间-事件结局的因果亚组估计常因子组样本小或协变量分布不稳定而不可靠。论文提出贝叶斯分层自助法框架，利用灵活先验刻画治疗异质性，并有效处理子组特定基线协变量分布不稳定的问题，从而提升亚组估计的稳健性。该框架可迁移到皮瓣存活研究，用于识别影响皮瓣存活的因素，并为运动干预等治疗效应的因果推断提供统计支持。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.03200v1",
+      "source": "arxiv",
+      "title": "Generalized propensity score weighting for functional causal inference framework",
+      "abstract": "Estimating causal effects in observational studies requires adjustment for confounding, a task that becomes challenging when the exposure is a function observed over a continuous domain rather than a scalar variable. We develop a functional propensity score weighting framework that achieves covariate balance by removing dependence between time-varying treatments and observed confounders, thereby enabling estimation of marginal causal effects in settings with functional treatments, covariates, and outcomes. We propose a dual formulation of the weight estimation problem that yields a smooth unconstrained optimization and improves computational scalability. The proposed framework extends naturally to settings with time-varying covariates and to longitudinal outcomes via a function-on-function marginal structural model, allowing estimation of causal effect surfaces. The proposed method improves covariate balance, estimation accuracy, and computational efficiency compared to the existing approach and retains these properties when extended to functional covariates and outcomes. We apply the method to data from the UK Biobank to estimate the causal effect of body mass index trajectories on the risk of Type 2 Diabetes and on subsequent glycated hemoglobin trajectories, a functional measure of metabolic status.",
+      "authors": [
+        "Simone Ciardulli",
+        "Nicole Fontana",
+        "Simone Vantini",
+        "Francesca Ieva"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "stat.AP"
+      ],
+      "published": "2026-08-04T06:42:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.03200v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Functional causal inference framework with propensity score weighting; directly applicable to estimating exercise training effects on flap survival",
+      "llm_evidence_cn": "函数型因果推断框架，可用于估计运动训练对皮瓣存活的因果效应",
+      "llm_evidence": "函数型因果推断框架，可用于估计运动训练对皮瓣存活的因果效应",
+      "canonical_evidence": "函数型因果推断框架，可用于估计运动训练对皮瓣存活的因果效应",
+      "llm_tldr_en": "Develops a functional propensity score weighting framework with dual formulation for estimating causal effects of time-varying functional treatments, enabling analysis of exercise training on outcomes like flap survival.",
+      "llm_tldr_cn": "在观察性研究中，当暴露为随时间变化的函数型变量（如运动训练剂量）时，传统因果推断难以平衡协变量并估计边际效应。作者提出一种泛化倾向性评分加权框架，利用对偶优化构造平滑无约束问题，消除时变处理与混杂因素之间的依赖。实验显示该方法计算可扩展性强，并能自然扩展到时变协变量与结局。该框架可直接用于评估运动训练对皮瓣存活的影响，为因果问题提供方法支撑。",
+      "llm_tldr": "在观察性研究中，当暴露为随时间变化的函数型变量（如运动训练剂量）时，传统因果推断难以平衡协变量并估计边际效应。作者提出一种泛化倾向性评分加权框架，利用对偶优化构造平滑无约束问题，消除时变处理与混杂因素之间的依赖。实验显示该方法计算可扩展性强，并能自然扩展到时变协变量与结局。该框架可直接用于评估运动训练对皮瓣存活的影响，为因果问题提供方法支撑。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "exercise training effect on flap survival",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.04414v1",
+      "source": "arxiv",
+      "title": "Best for which estimand? A known-truth benchmark of longitudinal-matching and target-trial-emulation methods for time-varying treatments",
+      "abstract": "On a non-collapsible survival mechanism, longitudinal-matching and target-trial-emulation methods are not competing estimators of one truth but answers to different causal questions, so a benchmark that scores them against a single \"true hazard ratio\" fabricates bias. We provide the direct comparison of relative efficiency, variance estimation, and model sensitivity that reviews find lacking. On a deliberately non-collapsible continuous-time Cox mechanism with known truth, the dominant families (sequential Cox, sequential stratification, risk-set matching, and inverse-probability-of-treatment-weighted (IPTW) marginal structural models) target numerically distinct causal estimands (marginal, conditional, two average-treatment-effect-on-the-treated, and intention-to-treat versus per-protocol). First, we quantify the phantom bias a shared marginal truth fabricates: 0.32-0.33 log-cumulative-hazard-ratio units for the matching estimators and 0.15 for the conditional method; the associational naive time-dependent Cox sits 0.76 away, a total discrepancy compounding the estimand gap with confounding. Second, a rank reversal: the recommended method flips with the target estimand, and a low-variance off-target estimator can still win on mean-squared error. Third, a cross-family variance result: the cluster-robust sandwich is closer to nominal for the trial-stacking estimator (0.90) but under-covers the matching estimators (0.77-0.82), which a prespecified n=500 bootstrap sub-study brings to 0.95-0.96. Fourth, model sensitivity: omitting a confounder induces 0.45-0.50 log-hazard-ratio bias and undercoverage, and intention-to-treat and per-protocol effects diverge as switching increases; a heart-transplant analysis illustrates these. On a second mechanism three of four findings replicate, the rank reversal attenuating and model sensitivity proving calibration-dependent.",
+      "authors": [
+        "M. Ehsan Karim"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "stat.AP"
+      ],
+      "published": "2026-08-05T03:50:46+00:00",
+      "link": "https://arxiv.org/pdf/2608.04414v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Benchmarks causal methods for time-varying treatments; applicable to longitudinal exercise interventions and flap survival.",
+      "llm_evidence_cn": "时间变化治疗因果方法基准，可用于运动干预与皮瓣存活的纵向分析",
+      "llm_evidence": "时间变化治疗因果方法基准，可用于运动干预与皮瓣存活的纵向分析",
+      "canonical_evidence": "时间变化治疗因果方法基准，可用于运动干预与皮瓣存活的纵向分析",
+      "llm_tldr_en": "Known-truth benchmark of longitudinal-matching and target-trial-emulation methods for time-varying treatments. They answer different causal questions, so comparing to one hazard ratio is biased. Informs estimand choice for exercise and flap survival research.",
+      "llm_tldr_cn": "在时间变化治疗的非可压缩生存机制下，纵向匹配与目标试验模拟方法并非同一真值的竞争估计，而是回答不同的因果问题。论文通过已知真值基准比较了它们的相对效率、方差估计和模型敏感性，为方法选择提供依据。该基准可指导运动等时间变化干预对皮瓣存活影响的因果分析，帮助研究者匹配正确的估计目标。",
+      "llm_tldr": "在时间变化治疗的非可压缩生存机制下，纵向匹配与目标试验模拟方法并非同一真值的竞争估计，而是回答不同的因果问题。论文通过已知真值基准比较了它们的相对效率、方差估计和模型敏感性，为方法选择提供依据。该基准可指导运动等时间变化干预对皮瓣存活影响的因果分析，帮助研究者匹配正确的估计目标。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

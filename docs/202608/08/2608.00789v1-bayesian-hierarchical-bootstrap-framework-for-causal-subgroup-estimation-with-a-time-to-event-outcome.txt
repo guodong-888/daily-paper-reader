@@ -1,0 +1,683 @@
+Title: Bayesian hierarchical bootstrap framework for causal subgroup estimation with a time-to-event outcome
+
+URL Source: https://arxiv.org/pdf/2608.00789v1
+
+Published Time: Tue, 04 Aug 2026 00:49:41 GMT
+
+Number of Pages: 24
+
+Markdown Content:
+# Bayesian hierarchical bootstrap framework for causal subgroup estimation with a time-to-event outcome 
+
+## Mengyao Shi ∗
+
+## , Amanda Ricciuto †
+
+## , Mark Deneau ‡
+
+## , Kuan Liu §
+
+Abstract 
+
+Causal estimation of treatment effects within prespecified subgroups, such as biomarker-defined strata, disease phenotypes, or demographic groups are often of clinical interest. Bayesian approaches are attractive for subgroup effect estimation because flexible priors can represent complex treatment heterogeneity and prop-agate posterior uncertainty. Frequentist methods for prespecified causal subgroup analysis with time-to-event outcomes are also available, including propensity-score weighting approaches that emphasize subgroup-level covariate balance [1]. In posterior g-formula, subgroup survival estimands also depend on the subgroup specific distribution of baseline covariates, which may be unstable when some subgroups are small or unevenly rep-resented. Right censoring separately reduces information for the outcome-model component of the estimand, increasing overall uncertainty in subgroup causal survival contrasts. We extend the hierarchical Bayesian bootstrap (HBB) to subgroup causal inference with right-censored time-to-event outcomes. The HBB places a nonparametric hierarchical prior on subgroup specific baseline covariate distributions, enabling principled bor-rowing of information across related subgroups while preserving subgroup specific structure. We combine this distributional regularization with a Bayesian accelerated failure time model and right censoring to perform posterior g-formula that propagates uncertainty from both the survival model and the subgroup covariate distribution. The resulting framework stabilizes subgroup causal survival estimands in sparse strata with-out imposing parametric assumptions on the covariate distribution. Simulation studies examine performance across varying degrees of subgroup sparsity and censoring and compare the proposed approach to the popular Bayesian additive regression tree for heterogeneous survival effects. 
+
+Keywords: time-to-event data, heterogeneous treatment effect, informative censoring, causal inference, non-parametric Bayesian estimation, Bayesian additive regression trees 
+
+> ∗
+
+Dalla Lana School of Public Health, University of Toronto, Ontario, Canada. 
+
+> †
+
+Division of Gastroenterology, Hepatology Nutrition, The Hospital for Sick Children, Ontario, Canada. 
+
+> ‡
+
+University of Utah and Intermountain Healthcare Primary Children’s Hospital, Utah, United States. 
+
+> §
+
+Institute of Health Policy, Management and Evaluation, University of Toronto, Ontario, Canada. 
+
+1arXiv:2608.00789v1 [stat.ME] 1 Aug 2026 1 Introduction 
+
+It is increasingly recognized in causal inference that treatment effects may vary across individuals and prespec-ified subgroups, such that population-level effects can coexist with heterogeneous subgroup-specific effects. In clinical studies, there is often interest in estimating treatment effects within prespecified subgroups defined by characteristics such as sex, age group, or baseline disease status. Under standard identification assumptions, these subgroup effects are typically defined through standardization, which highlights that reliable inference requires not only flexible outcome modeling but also stable estimation of the subgroup specific covariate distributions. The g-formula [2, 3, 4] provides a formal framework for identifying subgroup causal estimands in time-to-event settings by expressing counterfactual survival quantities as expectations over the subgroup-specific distribution of baseline covariates. This representation makes explicit that valid subgroup causal inference involves two distinct components: the estimation of the conditional survival response function and the characterization of the covariate distribution within each subgroup. Recent Bayesian causal inference methods have enabled flexible modeling of conditional outcome distributions for estimating marginal and heterogeneous treatment effects. Specifically, Bayesian additive regression trees (BART) were used in early work to estimate marginal treatment effects [5] and were subsequently extended to estimate individual and conditional average treatment effects [6, 7]. Closely related approaches based on Bayesian causal forests further adapted tree-based priors to treatment effect learning by incorporating regularization informed by treatment assignment mechanisms [8, 9]. Beyond tree-based priors, a broad class of Bayesian nonparametric models, including Dirichlet process mixtures and their extensions, has been developed for posterior inference on causal estimands in complex data structures and causal settings, including zero-inflated outcomes [10], missing data [11], mediation analysis [12], survival outcomes with competing risks [13], and causal quantile effects [14]. Bayesian causal methods developed for time-to-event outcomes are particularly relevant to the present work. Flexible Bayesian survival models, including accelerated failure time (AFT) formulations based on causal BART, have been developed to estimate heterogeneous treatment effects on survival outcomes under relatively weak parametric assumptions, while accommodating complex covariate effects, interactions, and departures from pro-portional hazards [15, 16, 17]. This line of work demonstrates the potential of flexible Bayesian survival models to estimate complex outcome surfaces and variation in treatment response. However, the primary source of regularization in these approaches is the conditional survival response surface. Subgroup causal survival estimands are obtained through g-computation by averaging model-based counterfactual survival predictions over subgroup-specific covariate distributions, which are commonly represented using empir-ical plug-in distributions [15]. When the empirical subgroup covariate distribution is treated as fixed, posterior uncertainty in that distribution is not explicitly represented or regularized. This limitation may be particularly consequential in survival settings because censoring reduces the information available for estimating the condi-tional survival model, which can compound instability in subgroup contrasts when subgroup sample sizes are small or covariate support is limited. Thus, in implementations that condition on fixed empirical subgroup covariate distributions, uncertainty in the outcome model is represented, whereas uncertainty in the subgroup covariate distribution remains unmodeled. 2Recent work has proposed hierarchical Bayesian frameworks that address this challenge by borrowing informa-tion across related subgroups, with the aim of improving stability when empirical subgroup distributions are estimated from limited data [18]. Specifically, the hierarchical Bayesian bootstrap (HBB) treats subgroup co-variate distributions as inferential quantities that can share information across subgroups, rather than as fixed empirical distributions estimated independently within each subgroup, thereby providing a means of stabilizing subgroup-specific causal effect estimation under the g-formula [18]. Because the g-formula expresses subgroup causal estimands as expectations over subgroup-specific covariate dis-tributions [19], it is natural to address instability by introducing structure at the distributional level. Hierarchical Bayesian modeling enables partial pooling across subgroups while preserving subgroup-specific characteristics. The HBB applies this principle by extending Rubin’s Bayesian bootstrap to stratified settings, with subgroup-specific distributions partially pooled toward a shared population-level distribution. Subgroups with substantial support behave similarly to standard Bayesian bootstrap estimators, whereas small or sparsely supported sub-groups receive stronger borrowing. This partial pooling can reduce variability in sparsely represented subgroups without imposing a parametric model for the covariate distribution. From the perspective of subgroup causal inference, HBB directly targets the distributional component required by the g-formula. When subgroup causal estimands are expressed as averages of counterfactual survival responses over subgroup distributions, uncertainty in those distributions contributes materially to uncertainty in the estimand itself. HBB provides a Bayesian representation of uncertainty in the subgroup covariate distributions and propagates this uncertainty through g-formula. In settings with small or imbalanced strata, this additional structure may reduce the instability that arises when subgroup distributions are represented using fixed empirical plug-in distributions. These considera-tions are also relevant in time-to-event analysis. Censoring reduces the information available for estimating the conditional survival distribution and therefore increases uncertainty in subgroup survival contrasts. Extending HBB ideas to survival outcomes therefore offers a framework that may improve the stability of subgroup causal survival inference relative to approaches that regularize only the outcome model, particularly when subgroup covariate distributions are estimated from limited data. Despite these developments, HBB has not yet been extended to time-to-event causal inference, where censoring introduces an additional source of uncertainty. Many existing Bayesian survival methods provide flexible outcome modeling while conditioning on empirical subgroup covariate distributions, whereas existing HBB frameworks regularize subgroup distributions but have been developed primarily for non-survival outcomes. To our knowledge, no existing framework jointly combines flexible Bayesian survival modeling with hierarchical regularization of subgroup covariate distributions and propagation of uncertainty from both components of the g-formula. The present work advances this line of research by extending HBB to subgroup causal effect estimation with survival data under an AFT framework. The proposed framework accommodates censoring in a principled manner, ensuring that the reduction in effective information is reflected in both posterior uncertainty and borrowing behavior. Our work provides a unified approach to subgroup causal survival inference that integrates hierarchical distributional borrowing with flexible survival modeling in a way that has not been addressed by existing methods. 3Baseline covariates  
+
+> X
+> Subgroup
+> G
+> Treatment
+> A
+> Event time
+> T∗
+> Censoring time
+> C
+
+Figure 1: Assumed causal structure for subgroup treatment-effect estimation with a right-censored event time. 
+
+# 2 Causal framework for subgroup effect estimation 
+
+## 2.1 Causal estimand and assumptions 
+
+For subject i = 1 , . . . , n , Ai ∈ { 0, 1} denotes the treatment received at baseline, Xi the measured baseline covariates, and Gi ∈ { 1, . . . , K } membership in one of K prespecified subgroups. Let T ∗ 
+
+> i
+
+(a) be the potential event time under treatment a ∈ { 0, 1}. The event time under the observed treatment is therefore T ∗ 
+
+> i
+
+= T ∗ 
+
+> i
+
+(Ai).With Ci denoting the censoring time, the observed follow-up consists of Yi = min {T ∗ 
+
+> i
+
+, C i} and ∆i = I(T ∗ 
+
+> i
+
+≤ Ci).Subgroup membership is a baseline characteristic used to define the populations in which treatment effects are evaluated; it is not itself a target of intervention. The causal structure in Figure 1 allows treatment assignment and the time event distribution to vary across subgroups, as indicated by the paths G → A and G → T ∗. The censoring process may also depend on treatment and baseline characteristics, while occurring after treatment initiation. For treatment level a and subgroup g, the target estimand is the potential survival probability at time 
+
+t,
+
+Sag (t) = Pr {T ∗ 
+
+> i
+
+(a) > t | Gi = g} . (1) Comparing S1 
+
+> g
+
+(t) with S0 
+
+> g
+
+(t) characterizes how the treatment effect varies across prespecified subgroups. Identi-fication of this estimand rests on four assumptions. 
+
+Assumption 1. Consistency. For an individual who receives treatment a, the observed event time agrees with the corresponding potential event time: Ai = a ⇒ T ∗ 
+
+> i
+
+= T ∗ 
+
+> i
+
+(a).
+
+Assumption 2. Conditional exchangeability. Within levels of the measured baseline covariates and subgroup membership, treatment assignment is independent of the potential event time; that is, T ∗ 
+
+> i
+
+(a) ⊥⊥ Ai | Xi, G i for a ∈ { 0, 1}.
+
+Assumption 3. Positivity within subgroups. Each treatment level has a positive probability of being ob-served for every covariate profile represented in subgroup g: Pr( Ai = a | Xi = X, G i = g) > 0
+
+for all X in the support of Xi | Gi = g.
+
+Assumption 4. Conditionally independent censoring and censoring positivity. Conditional on treat-ment, measured baseline covariates, and subgroup membership, the event and censoring times are independent, T ∗ 
+
+> i
+
+⊥⊥ Ci | Ai, X i, G i. Follow-up also remains possible over the time range of interest, so that Pr( Ci ≥ t | Ai = a, X i = X, G i = g) > 0.4The first three assumptions link the potential survival probability to the observed conditional event time distri-bution. Standardizing this distribution over the baseline covariate distribution in subgroup g gives 
+
+Sag (t) = 
+
+∫
+
+ST ∗ (t | A = a, X = x, G = g) dF g (x), (2) where Fg is the distribution of X among individuals with G = g. The fourth assumption permits the conditional survival function in Equation (2) to be estimated from the right censored observations where the observed events contribute through the time event density and the censored follow-up contributes through the corresponding survival probability. 
+
+## 2.2 HBB for Subgroup Causal Survival Estimation 
+
+The potential survival probability in (2) involves two components: the conditional survival function and the subgroup-specific covariate distribution Fg . Bayesian survival models account for uncertainty in the conditional survival function, whereas posterior g-computation often averages survival predictions over a fixed empirical esti-mate of Fg . This approximation may be unstable when a subgroup is small or has limited covariate support. We instead place a hierarchical nonparametric prior on Fg , allowing covariate information to be shared across sub-groups while preserving subgroup-specific variation. The AFT model supplies the conditional survival predictions, and HBB regularizes the distribution used to average them. Following the hierarchical construction of [18], we assign Fg | αg , F 0 ∼ DP( αg F0), F0 | γ, F ∗ ∼ DP( γF ∗),
+
+where F0 provides the shared distributional support and αg controls the extent to which subgroup g borrows from it. Here, DP denotes a Dirichlet process. Under the Bayesian bootstrap specification obtained by setting 
+
+γ = 0 , the posterior baseline distribution is supported on the observed covariate values, and Fg | F0, α g , X g ∼
+
+DP 
+
+(
+
+αg F0 + ∑ 
+
+> i∈S g
+
+δXi
+
+)
+
+, where Sg = {i : Gi = g} and ng = |S g |. Writing the baseline distribution as 
+
+E{Fg (·) | π, α g , X g } == αg
+
+αg + ng
+
+F0(·) + 1
+
+αg + ng
+
+∑
+
+> i∈Sg
+
+δXi (·) (3) 
+
+=
+
+> n
+
+∑
+
+> i=1
+
+αg πi + I(i ∈ Sg )
+
+αg + ng
+
+δXi (·). (4) The concentration parameter controls how strongly Fg is pulled toward the shared distribution. Following the hyperparameter guidance of [18], we set αg = nM/n g , where n is the total sample size and M is a user-specified reference size for estimating the covariate distribution within a subgroup. Under the approximation πi ≈ 1/n , the relative posterior weight assigned to an observation from subgroup g, compared with an observation supported only through the shared distribution, is 
+
+ρg = αg πi + 1 
+
+αg πi
+
+≈ 1 + ng
+
+M . (5) when ng is small relative to M , this ratio is close to one, so observations within and outside the target subgroup 5receive more similar weights and borrowing is stronger. As ng increases relative to M , observations from the target subgroup receive greater relative weight and the HBB approaches a subgroup-specific Bayesian bootstrap. 
+
+ρg = nαg + 1 = ng 
+
+> M
+
++ 1 for an atom observed within subgroup g compared with one supported only through the shared distribution. Consequently, subgroups with ng ≪ M borrow more heavily, whereas the HBB approaches a subgroup-specific Bayesian bootstrap as ng becomes large relative to M .We specify an AFT model for the latent event time. The conditional survival function in Equation (2) is estimated using the AFT model 
+
+log T ∗ 
+
+> i
+
+= mθ (Ai, X i, G i) + εi, (6) where mθ allows the time event distribution and treatment response to vary with the measured covariates and subgroup membership. Under Assumption 4. , the contribution of subject i to the time event likelihood, after omitting terms involving only the censoring distribution, is proportional to 
+
+Li(θ) ∝ { fT ∗ (Yi | Ai, X i, G i; θ)}∆i {ST ∗ (Yi | Ai, X i, G i; θ)}1−∆i . (7) Together with the AFT specification, this likelihood provides posterior inference for the conditional time event distribution. This likelihood yields valid inference for the time event model under Assumption 4. For any posterior draw θ, the conditional survival functional admits the explicit form 
+
+ST ∗ (t | A = a, X = x, G = g; θ) = = Pr  
+
+> θ
+
+(T ∗ > t | a, x, g )= Pr 
+
+> θ
+
+(ε > log t − mθ (a, x, g ))
+
+= 1 − Fε,θ 
+
+( log t − mθ (a, x, g )).
+
+(8) where Fε,θ denotes the distribution function of the AFT error term. 
+
+Posterior Computation Posterior computation retains the distributional sampling steps of the original HBB and combines them with posterior survival predictions from the right-censored AFT model. The shared and subgroup-specific covariate distributions are sampled directly from their Dirichlet posteriors, after which the AFT draws are used to evaluate the subgroup causal survival estimands. At each Monte Carlo iteration m = 1 , . . . , M , the following steps are performed. First, we obtain a posterior draw of the shared baseline covariate distribution. Under the HBB specification with 
+
+γ = 0 , this is achieved by drawing (π(m)1 , . . . , π (m) 
+
+> n
+
+) ∼ Dirichlet(1 , . . . , 1) , and forming the random probability measure F (m)0 (·) = ∑ni=1 π(m) 
+
+> i
+
+δXi (·).
+
+Second, conditional on π(m), we draw the subgroup-specific weights as 
+
+ω(m) 
+
+> g
+
+∼ Dirichlet 
+
+(
+
+αg π(m)1 + I(1 ∈ S g ), . . . , α g π(m) 
+
+> n
+
++ I(n ∈ S g )
+
+)
+
+, (9) and form F (m) 
+
+> g
+
+= ∑ni=1 ω(m) 
+
+> gi
+
+δXi . These weights are sampled directly and do not require an additional Markov chain. 6Third, we draw θ(m) from the posterior distribution of the AFT model fitted to the right-censored outcome. Because the time event model and the HBB distribution are specified as separate components, the AFT and Dirichlet draws can be generated independently and paired within each Monte Carlo iteration. The conditional survival probabilities are evaluated using Equation (8). Finally, the AFT predictions are averaged using the sampled HBB weights. For subgroup g, treatment level a,and time t, the resulting posterior draw is 
+
+Sa, (m) 
+
+> g
+
+(t) = 
+
+> n
+
+∑
+
+> i=1
+
+ω(m) 
+
+> gi
+
+ST ∗
+
+(
+
+t | A = a, X i, G = g; θ(m))
+
+. (10) The corresponding subgroup contrast is ∆(m) 
+
+> g
+
+(t) = S1,(m) 
+
+> g
+
+(t) − S0,(m) 
+
+> g
+
+(t).Repeating these steps for m = 1 , . . . , M produces posterior draws of the subgroup survival probabilities and their contrasts. Posterior means and credible intervals are obtained by summarizing these draws. Variation in 
+
+θ(m) reflects uncertainty in the right-censored AFT model, while variation in ω(m) 
+
+> g
+
+carries uncertainty in the subgroup-specific covariate distribution. 
+
+# 3 Simulation study 
+
+## 3.1 Design 
+
+We conducted a simulation study to examine how the representation of the subgroup covariate distribution affects Bayesian estimation of subgroup causal survival probabilities. The comparison included the empirical plug-in estimator (EMP), the within-subgroup Bayesian bootstrap (BB), the hierarchical Bayesian bootstrap (HBB), and a nonparametric AFT-BART estimator. EMP, BB, and HBB used the same working AFT outcome model and differed only in the distribution over which the conditional survival probabilities were averaged. The AFT-BART estimator provided a more flexible outcome-model comparison. Each simulated data set contained n = 300 individuals from four prespecified subgroups. To vary the amount of in-formation available within each subgroup, we considered allocation probabilities (0 .35 , 0.30 , 0.20 , 0.15) , (0 .25 , 0.25 , 0.25 , 0.25) ,and (0 .38 , 0.38 , 0.12 , 0.12) . These settings range from moderate imbalance to equal allocation and a design in which observations are concentrated in the first two subgroups. They allow the consequences of borrowing to be examined as the amount of subgroup-specific information changes. The baseline covariates consisted of Xi = ( L1i, L 2i, L 3i). The first two covariates followed standard normal distributions in all subgroups. We varied the distribution of L3i to create two forms of covariate support. In the Gaussian setting, L3i followed the same standard normal distribution in every subgroup. In the Gamma setting, its distribution varied across subgroups, with shape parameters (8 .0, 5.67 , 3.33 , 1.0) . The latter setting produces increasing differences in location and skewness across subgroups, with the most distinct distribution occurring in the fourth subgroup. Together, these settings distinguish borrowing among similar covariate distributions from borrowing when the target subgroup has less population level support. Treatment was generated from a logistic model conditional on Xi and Gi, allowing both the covariate composi-7tion and treatment prevalence to differ across subgroups. Potential event times were generated from a Weibull AFT model with covariate effects, subgroup intercepts, and moderately varying subgroup treatment effects. An unobserved heterogeneity variable Ui, generated independently of (Ai, X i, G i), was also included in the time event model. It did not affect treatment assignment and it induces unmeasured heterogeneity. The primary setting used conditionally independent right censoring. Censoring times were generated from a Weibull AFT model depending on the observed baseline covariates but not on Ui. Thus, although follow-up varied across covariate profiles, the event and censoring times remained independent after conditioning on the variables included in Assumption 4. We also considered a second setting in which Ui affected both processes and treatment had a subgroup-specific effect on censoring. The shared dependence on Ui, rather than the treatment dependence of censoring itself, induced residual association between the event and censoring times after condition-ing on (Ai, X i, G i). Thus, this setting evaluates the effect of a departure from conditional independent censoring and it does not represent a censoring mechanism accommodated by the proposed method. For each data set, we estimated the subgroup-specific survival probability difference S1 
+
+> g
+
+(t∗)−S0 
+
+> g
+
+(t∗) at t∗ = 2 . The true value was calcu-lated from the data-generating time event distribution within each subgroup, including the variation induced by 
+
+Ui. The R code used to reproduce the simulation study is available at https://github.com/mengyaoshi00-code/ Bayesian-hierarchical-bootstrap-framework-for-causal-subgroup-estimation-with-time-to-event-outcomes .
+
+## 3.2 Estimators and comparative performance measures 
+
+The same Bayesian Weibull AFT model was fitted for EMP, BB, and HBB. It included the observed baseline covariates, subgroup-specific intercepts, and subgroup-specific treatment effects. Right-censored observations contributed through the survival probability. Since Ui was not observed, it was not included in the fitted outcome model. This AFT model used consistently across these three estimators. Posterior treatment-specific survival probabilities were standardized using the three representations of the sub-group covariate distribution introduced in Section 2.2. EMP assigned equal weight to the observed covariate values in the target subgroup. BB replaced these fixed weights with subgroup-specific Bayesian bootstrap draws but retained support only on observations from that subgroup. HBB allowed the target subgroup distribution to place mass on covariate values observed elsewhere in the sample through the hierarchical weights. We used the calibration described in Section 2.2, with the reference subgroup size fixed at 15 , so that smaller subgroups borrowed more strongly from the shared distribution. The AFT-BART estimator was fitted separately within the two treatment groups. For each posterior draw, treatment-specific survival probabilities were predicted under both treatment levels and averaged within the target subgroup. This estimator does not use the HBB represen-tation and was included to compare the proposed approach with a more flexible model for the conditional time event distribution. Each comparative estimators was evaluated over 1,000 simulated data sets using bias, root mean squared error, average width of the 95% credible interval, and empirical coverage. We also report the mean squared error relative to HBB, with values greater than one indicating a lower mean squared error for HBB. The complete data-generating coefficients, prior specifications, computational settings, and results under the alternative censoring 8mechanism are provided in Supplementary Material 1. 
+
+## 3.3 Main Results 
+
+Table 1: Simulation results under non-informative censoring across three subgroup allocation scenarios and two covariate settings. Results are based on S = 1 ,000 replications with N = 300 subjects and K = 4 subgroups. Strata 1 and 4 represent the largest and smallest subgroups under the decreasing and front-heavy scenarios, respectively. The true subgroup treatment effects are τg ∈ { 0.38 , 0.36 , 0.34 , 0.32 } on the log-time scale. The target estimands are the subgroup-specific survival probability differences S1 
+
+> g
+
+(t∗) − S0 
+
+> g
+
+(t∗) at t∗ = 2 .
+
+Gaussian Mixture Gamma Mixture Scenario Method Rel. MSE Bias RMSE Width Cov. nv Rel. MSE Bias RMSE Width Cov. nv
+
+Decreasing 
+
+(0 .35 , 0.30 ,
+
+0.20 , 0.15) 
+
+Stratum 1 (largest, τ1 = 0 .38 )
+
+EMP 1.003 −0.011 0.028 0.115 0.958 105 0.885 −0.003 0.012 0.053 0.963 104 BB 1.003 −0.011 0.028 0.116 0.956 105 0.885 −0.003 0.012 0.053 0.963 104 HBB 1.000 −0.012 0.028 0.113 0.951 105 1.000 0.001 0.013 0.057 0.969 104 AFT-BART-NP 6.110 0.018 0.069 0.235 0.906 105 15.272 0.020 0.051 0.153 0.870 104 
+
+Stratum 4 (smallest, τ4 = 0 .32 )
+
+EMP 0.876 0.013 0.028 0.125 0.972 45 2.162 0.013 0.028 0.115 0.966 45 BB 0.876 0.013 0.028 0.126 0.974 45 2.163 0.013 0.028 0.116 0.966 45 HBB 1.000 0.017 0.030 0.123 0.952 45 1.000 −0.003 0.019 0.086 0.970 45 AFT-BART-NP 8.490 0.019 0.087 0.327 0.933 45 19.614 0.024 0.085 0.304 0.924 45 Equal 
+
+(0 .25 , 0.25 ,
+
+0.25 , 0.25) 
+
+Stratum 1 ( τ1 = 0 .38 )
+
+EMP 1.006 −0.014 0.030 0.124 0.961 76 0.733 −0.003 0.013 0.056 0.961 75 BB 1.006 −0.014 0.030 0.125 0.962 76 0.733 −0.003 0.013 0.057 0.963 75 HBB 1.000 −0.015 0.030 0.120 0.952 76 1.000 0.004 0.015 0.064 0.969 75 AFT-BART-NP 6.485 0.017 0.075 0.272 0.930 76 13.755 0.023 0.055 0.177 0.904 75 
+
+Stratum 4 ( τ4 = 0 .32 )
+
+EMP 0.893 0.013 0.027 0.113 0.971 75 1.517 0.010 0.025 0.103 0.969 75 BB 0.893 0.013 0.027 0.114 0.972 75 1.517 0.010 0.025 0.104 0.971 75 HBB 1.000 0.015 0.028 0.113 0.954 75 1.000 0.003 0.020 0.089 0.972 75 AFT-BART-NP 6.993 0.021 0.075 0.257 0.910 75 13.267 0.018 0.073 0.240 0.906 75 Front-heavy 
+
+(0 .38 , 0.38 ,
+
+0.12 , 0.12) 
+
+Stratum 1 (large, τ1 = 0 .38 )
+
+EMP 1.006 −0.011 0.028 0.114 0.953 114 0.966 −0.003 0.012 0.051 0.958 114 BB 1.006 −0.011 0.028 0.114 0.956 114 0.966 −0.003 0.012 0.052 0.956 114 HBB 1.000 −0.011 0.028 0.111 0.950 114 1.000 −0.001 0.012 0.054 0.967 114 AFT-BART-NP 5.908 0.022 0.068 0.227 0.899 114 15.119 0.019 0.048 0.148 0.886 114 
+
+Stratum 4 (small, τ4 = 0 .32 )
+
+EMP 0.928 0.015 0.030 0.131 0.972 36 2.112 0.012 0.027 0.121 0.981 36 BB 0.929 0.015 0.030 0.133 0.973 36 2.113 0.012 0.027 0.122 0.981 36 HBB 1.000 0.018 0.031 0.126 0.952 36 1.000 −0.008 0.018 0.081 0.959 36 AFT-BART-NP 9.749 0.025 0.096 0.364 0.941 36 24.961 0.019 0.092 0.334 0.931 36 Table 1 reports results for strata 1 and 4 to contrast subgroups with different amounts and forms of covariate information. Under the decreasing and front-heavy allocations, stratum 1 is one of the largest subgroups, whereas stratum 4 is the smallest. The equal allocation provides a useful comparison in which the two strata have similar sample sizes. Their covariate distributions are the same in the Gaussian setting but differ in the Gamma setting, where stratum 4 has the more strongly skewed distribution. EMP and BB produced nearly indistinguishable results throughout the simulation. The main comparison is therefore between these subgroup-restricted approaches and HBB, which extends the support of the covariate distribution through cross-subgroup borrowing. In the Gaussian setting, HBB performed similarly to EMP and BB in the larger subgroups, where the subgroup-specific covariate distribution was already well represented. In the smaller subgroups, HBB generally produced slightly narrower intervals, but this gain in precision was offset by somewhat greater bias. As a result, its MSE 9was not lower than that of the subgroup-restricted estimators. This pattern is consistent with the limited value of borrowing when the covariate distributions have the same, relatively simple form across subgroups. The advantage of HBB was more apparent in the Gamma setting. For the smaller subgroups, HBB generally had lower bias and RMSE than EMP and BB, together with narrower intervals and coverage close to the nominal level. The improvement became more pronounced as the subgroup size decreased. Under the front-heavy allocation, for example, the MSE of EMP and BB in the smallest subgroup was more than twice that of HBB. In this setting, the empirical subgroup distribution contained relatively few observations from the more skewed regions of the covariate distribution. By assigning positive weight to covariate values observed elsewhere in the sample, HBB provided a more stable distribution for standardization. The same borrowing was less useful in the larger Gamma subgroups. Here, EMP and BB generally had lower MSE than HBB, indicating that borrowing can incur a modest cost when the target subgroup already contains sufficient information about its covariate distribution. Together, the Gaussian and Gamma results suggest that the benefit of HBB is concentrated in subgroups for which the empirical covariate support is both sparse and difficult to estimate. The method offers less improvement when the subgroup distribution is already adequately represented. AFT-BART-NP had higher RMSE and substantially wider credible intervals than the three parametric estimators throughout the settings shown in Table 1. Its coverage was also generally farther from the nominal level. Although the nonparametric model allows greater flexibility in the conditional time event distribution, that flexibility was accompanied by considerably greater posterior uncertainty at the sample sizes considered here. 
+
+## 3.4 Sensitivity Analysis under Informative Censoring 
+
+We supplemented the primary simulation with an informative censoring sensitivity analysis to assess whether the advantage of distributional borrowing persisted when incomplete follow-up depended on unobserved event risk. Unlike the primary design, an unobserved variable Ui affected both the event and censoring times, inducing dependence that remained after conditioning on the variables available to the fitted models. The true subgroup contrasts accounted for Ui, whereas the same estimators used in the primary analysis were fitted without it. This design fills an evaluation gap left by the primary simulation by examining whether the benefit of regularizing the subgroup covariate distribution depends on the assumed censoring mechanism. It provides a stress test under a plausible departure from Assumption 4. Further specifications are provided in Supplementary Section 2. Table 2 reports performance under the same allocation and covariate distribution settings used in the primary analysis. The relative performance of the estimators depended more strongly on the covariate distribution than on subgroup size alone. Under the Gaussian design, HBB performed similarly to the subgroup-restricted estimators and did not reduce MSE, including in stratum 4. The same was true for the larger Gamma subgroup, where the empirical covariate distribution was already adequately represented. A different pattern emerged for stratum 4 under the Gamma design. Here, HBB consistently reduced absolute bias and RMSE and produced narrower intervals across all three allocation schemes. The MSE of EMP and BB ranged from approximately 1.5 to 2.4 times that of HBB, with the largest difference under the front-heavy allocation. The advantage remained under equal allocation, indicating that it reflected the difficulty of representing the 10 Table 2: Simulation results under informative censoring across three subgroup allocation scenarios and two covariate settings. Results are based on S = 1 ,000 replications with N = 300 subjects and K = 4 subgroups. Strata 1 and 4 represent the largest and smallest subgroups under the decreasing and front-heavy scenarios, respectively. The true subgroup treatment effects are τg ∈ { 0.38 , 0.36 , 0.34 , 0.32 } on the log-time scale. The target estimands are the subgroup-specific survival probability differences S1 
+
+> g
+
+(t∗) − S0 
+
+> g
+
+(t∗) at t∗ = 2 .
+
+Gaussian Mixture Gamma Mixture Scenario Method Rel. MSE Bias RMSE Width Cov. nv Rel. MSE Bias RMSE Width Cov. nv
+
+Decreasing 
+
+(0 .35 , 0.30 ,
+
+0.20 , 0.15) 
+
+Stratum 1 (largest, τ1 = 0 .38 )
+
+EMP 1.013 −0.007 0.028 0.122 0.968 105 0.813 0.0002 0.013 0.057 0.975 104 BB 1.013 −0.007 0.028 0.123 0.966 105 0.813 0.0002 0.013 0.058 0.975 104 HBB 1.000 −0.007 0.028 0.119 0.966 105 1.000 0.004 0.015 0.060 0.968 104 AFT-BART-NP 6.118 0.014 0.068 0.243 0.923 105 11.768 0.014 0.050 0.157 0.880 104 
+
+Stratum 4 (smallest, τ4 = 0 .32 )
+
+EMP 0.871 0.017 0.031 0.141 0.975 45 2.292 0.015 0.030 0.125 0.964 45 BB 0.871 0.017 0.031 0.143 0.976 45 2.292 0.016 0.030 0.126 0.964 45 HBB 1.000 0.021 0.034 0.140 0.961 45 1.000 −0.000037 0.020 0.095 0.981 45 AFT-BART-NP 7.964 0.028 0.095 0.355 0.934 45 22.226 0.031 0.093 0.327 0.919 45 Equal 
+
+(0 .25 , 0.25 ,
+
+0.25 , 0.25) 
+
+Stratum 1 ( τ1 = 0 .38 )
+
+EMP 1.033 −0.009 0.030 0.133 0.973 76 0.651 0.0000479 0.014 0.062 0.979 75 BB 1.033 −0.009 0.030 0.134 0.973 76 0.651 0.0000454 0.014 0.062 0.981 75 HBB 1.000 −0.010 0.030 0.127 0.968 76 1.000 0.007 0.017 0.069 0.957 75 AFT-BART-NP 6.496 0.013 0.075 0.282 0.936 76 10.008 0.016 0.053 0.183 0.912 75 
+
+Stratum 4 ( τ4 = 0 .32 )
+
+EMP 0.877 0.016 0.030 0.129 0.957 75 1.528 0.013 0.026 0.113 0.974 75 BB 0.877 0.016 0.030 0.130 0.960 75 1.528 0.013 0.026 0.113 0.973 75 HBB 1.000 0.019 0.032 0.129 0.941 75 1.000 0.006 0.021 0.099 0.984 75 AFT-BART-NP 6.302 0.029 0.081 0.278 0.911 75 13.453 0.024 0.079 0.257 0.889 75 Front-heavy 
+
+(0 .38 , 0.38 ,
+
+0.12 , 0.12) 
+
+Stratum 1 (large, τ1 = 0 .38 )
+
+EMP 1.019 −0.006 0.028 0.120 0.953 114 0.904 −0.001 0.012 0.055 0.969 114 BB 1.018 −0.006 0.028 0.121 0.956 114 0.905 −0.001 0.013 0.056 0.967 114 HBB 1.000 −0.007 0.028 0.118 0.954 114 1.000 0.002 0.013 0.057 0.970 114 AFT-BART-NP 5.898 0.019 0.068 0.233 0.918 114 12.624 0.013 0.047 0.152 0.901 114 
+
+Stratum 4 (small, τ4 = 0 .32 )
+
+EMP 0.913 0.017 0.032 0.148 0.982 36 2.373 0.014 0.028 0.131 0.983 36 BB 0.913 0.017 0.032 0.150 0.981 36 2.375 0.014 0.028 0.132 0.983 36 HBB 1.000 0.021 0.034 0.145 0.964 36 1.000 −0.006 0.018 0.091 0.971 36 AFT-BART-NP 9.373 0.033 0.103 0.394 0.938 36 29.504 0.025 0.100 0.359 0.916 36 11 skewed covariate distribution rather than small subgroup size alone. EMP and BB otherwise remained nearly indistinguishable, while AFT-BART-NP produced higher RMSE and wider intervals throughout the settings considered. Coverage for the parametric estimators generally remained close to the nominal level. Compared with the primary analysis, informative censoring generally increased RMSE and interval width but did not completely change where HBB provided an advantage. The sensitivity analysis shows that the improvement from distributional regularization in the more challenging subgroup was not confined to the conditional independent censoring design, while the deterioration in absolute performance clarifies the remaining need for methods that explicitly address informative censoring. 
+
+# 4 Application to the PSC study 
+
+The data used in this study were derived from the Pediatric PSC Consortium, an international research registry involving multiple sites across North America, Europe, and other regions[20]. The registry includes patients diagnosed with primary sclerosing cholangitis (PSC) with disease onset before 18 years of age. Clinical data were collected through detailed medical record review at each participating site, including laboratory measurements, imaging results, and treatment information. PSC diagnosis was established based on cholestatic biochemical profiles together with characteristic imaging or histopathological findings, consistent with established clinical criteria. Coexisting conditions, including inflam-matory bowel disease (IBD) and features of autoimmune hepatitis (AIH) were recorded through medical chart review. Pharmacy data were also collected, including treatment with ursodiol, concurrent vancomycin use, and other relevant medications. For the present analysis, we included 260 patients with complete data on baseline covariates, treatment status, and longitudinal follow-up; 182 received ursodiol and 78 did not. In PSC, gamma-glutamyl transferase (GGT) is a widely used biomarker of bile duct injury and disease activity, and reductions in GGT have been associated with improved clinical outcomes in prior studies [21]. The Pediatric PSC Consortium data have previously been used to compare ursodiol, vancomycin, and no treatment through propensity-score matching followed by analyses within clinically defined risk strata [21]. The present study addresses the same underlying clinical question from a different analytic perspective. Rather than forming matched treatment groups and subsequently comparing outcomes within separate strata, we estimate treatment-specific survival probabilities under ursodiol and no ursodiol across the prespecified age and SCOPE risk subgroups. The analysis incorporates right-censored follow-up, adjusts for concurrent vancomycin use and other baseline covariates, and standardizes the conditional survival estimates to the covariate distribution of each subgroup. It complements the earlier matched analysis by characterizing how the estimated treatment contrast evolves over time within the clinically defined subgroups. Motivated by this clinical relevance and prior work within this cohort, we defined the primary outcome as time to GGT normalization [22]( < 50 U/L). In this study, subgroup specific effects were evaluated across prespecified age groups and baseline SCOPE risk strata. Age was categorized as 0–10 years, 11–15 years, and older than 15 years. Baseline disease severity was summarized using the Sclerosing Cholangitis Outcomes in Pediatrics (SCOPE) 12 index [21], a validated prognostic tool that assigns an integer score from 0 to 11 based on five clinical parameters: total bilirubin, serum albumin, platelet count, GGT, and the presence or absence of large-duct cholangiographic involvement. SCOPE scores of 0–3, 4–5, and 6–11 were categorized as low-, medium-, and high-risk groups respectively. The adjusted analysis included baseline IBD status, PSC-AIH overlap, baseline log-transformed GGT, and concurrent vancomycin use, since vancomycin is used in a subset of pediatric PSC patients and may independently influence biochemical trajectories. Treatment with ursodiol was associated with an increase in the probability of GGT normalization across the prespecified age and SCOPE risk subgroups, with a clear time-dependent pattern. At 1 month, the estimated risk differences were smaller, while larger effects were observed by 6 months and remained relatively stable at 9 months. This trend was consistent across both the overall estimates and subgroup specific results. Across age groups and SCOPE risk strata, although the magnitude varies modestly between subgroups, the direc-tion of the effect remains positive. As shown in Figure Supplementary S1, most subgroup estimates increase from 1 to 6 months, with limited additional change between 6 and 9 months. The uncertainty intervals overlap substan-tially across subgroups and all extend below zero, indicating that while the direction of the effect is consistently positive, estimates carry considerable uncertainty, particularly in smaller subgroups. The wide credible intervals likely reflect limited subgroup sample sizes and uncertainty associated with adjustment for baseline covariates. When SCOPE risk was incorporated as a heterogeneity variable, high-risk patients tended to have slightly larger estimated benefits within each age group, whereas low-risk patients generally showed smaller effects. However, these differences were modest, and the credible intervals overlapped substantially across subgroups. Therefore, the current data do not provide strong evidence that treatment response differs meaningfully by age group or SCOPE risk category. Overall, the estimated benefit of ursodiol became more apparent by 6 months and remained relatively stable thereafter, with a consistently positive direction across subgroups. Baseline GGT distributions differed between the ursodiol-treated and untreated groups (Figure 2). The treated group showed a slightly higher peak density at moderate GGT values and a secondary mass at lower values, while the untreated group exhibited a broader right tail. This distributional difference motivates the covariate-adjusted framework used in the primary analysis, as direct comparisons of treatment outcomes without adjustment for baseline GGT and other prognostic factors could be misleading. The unadjusted Kaplan–Meier curves showed earlier observed GGT normalization among patients who received ursodiol than among untreated patients (Supplementary Figure S4). The adjusted posterior survival curves in Figure 3 showed a similar direction across the prespecified age and SCOPE risk groups. Because these curves represent the probability of remaining without GGT normalization, the lower curves under ursodiol correspond to a greater cumulative probability of normalization during follow-up. On the cumulative probability scale, the estimated absolute benefit of ursodiol was relatively small at 1 month, generally increased by 6 months, and changed little between 6 and 9 months (Table 3). At 6 months, ursodiol was associated with an approximately 4 to 10 percentage point increase in the probability of GGT normalization across the subgroups. Clinically, this pattern suggests that the difference in biochemical response emerged mainly during the first several months of treatment and was subsequently maintained, rather than continuing to widen 13 Table 3: Baseline characteristics by ursodiol treatment group 
+
+Variable Overall (n = 260) No Urso (n = 78) Urso (n = 182) p-value Sex 0.444 Female 111 (43%) 30 (38%) 81 (45%) Male 149 (57%) 48 (62%) 101 (55%) 
+
+IBD 192 (74%) 69 (88%) 123 (68%) < 0.001 
+
+Age group < 0.001 
+
+0–10 63 (24%) 7 (9.0%) 56 (31%) 11–15 100 (38%) 36 (46%) 64 (35%) 15+ 97 (37%) 35 (45%) 62 (34%) 
+
+SCOPE risk 0.019 Low 99 (38%) 30 (38%) 69 (38%) Medium 101 (39%) 38 (49%) 63 (35%) High 60 (23%) 10 (13%) 50 (27%) 
+
+SCOPE index 4 [3, 5] 4 [3, 5] 4 [3, 6] 0.091 
+
+Vancomycin (concurrent) 43 (17%) 21 (27%) 22 (12%) 0.006 
+
+GGT (U/L) 204 [97, 393] 205 [101, 425] 204 [96, 375] 0.870 
+
+Bilirubin (mg/dL) 0.60 [0.40, 1.21] 0.50 [0.30, 0.90] 0.65 [0.40, 1.50] 0.007 
+
+ALT (U/L) 100.50 [48, 213.50] 100.50 [41, 221] 101.50 [49, 208] 0.905 
+
+ALP (U/L) 305.50 [196, 516] 293 [159, 470] 316 [207, 535] 0.273 
+
+Platelet ( ×10 3/μ L) 302.50 [225, 405] 327.50 [260, 430] 292 [221, 388] 0.062 
+
+Follow-up time (years) 2.29 [0.49, 4.70] 2.14 [0.67, 3.59] 2.37 [0.30, 5.60] 0.292 
+
+GGT normalization 74 (28%) 9 (12%) 65 (36%) < 0.001 
+
+> Values are presented as n (%) or median [Q1, Q3].
+> p-values are from Pearson’s chi-squared test or Wilcoxon rank-sum test.
+
+Figure 2: Baseline GGT distribution by ursodiol treatment group. Density curves are shown on the log (GGT + 1) 
+
+scale for the treated (URSO, blue) and untreated (No URSO, pink) groups. 14 Figure 3: HBB-standardized posterior survival curves under URSO and no URSO later in follow-up. The continuous trajectories in Supplementary Figure S1 showed the same early increase and subsequent flattening. The posterior mean contrasts favored ursodiol in every age and SCOPE risk group, with posterior probabilities of benefit ranging from approximately 0.88 to 0.93. Within each age group, the estimates tended to be larger among patients with higher baseline SCOPE risk, suggesting that patients with more severe disease may experience a somewhat greater absolute improvement in GGT normalization. However, the differences between risk groups were modest relative to the uncertainty in their estimated magnitude. The results therefore support a broadly consistent direction of benefit across the prespecified subgroups more strongly than they support a distinct response for any single age or SCOPE risk category. Posterior probabilities over the full follow-up period are presented in Supplementary Figure S2. Using this framework, treatment effects are summarized through absolute differences in the probability of GGT normalization. These findings extend earlier stratified analyses by describing the ursodiol contrast across age and SCOPE risk groups within an adjusted causal survival framework. Although the posterior estimates showed a generally positive direction and a modest gradient toward greater benefit in higher-risk groups, uncertainty in the relative magnitude of these subgroup effects remains substantial. The current evidence offers limited support for distinguishing treatment response by age or SCOPE risk and does not justify subgroup-specific recommendations for ursodiol use. Further evaluation in larger, prospectively collected cohorts will be important for assessing the reproducibility of the observed severity gradient and separating the contributions of ursodiol from those of co-administered therapies. 15 Table 4: Subgroup-specific posterior g-computation estimates of absolute treatment benefit under ursodiol versus no ursodiol. 
+
+Age group SCOPE risk Time (months) Risk difference 95% CrI Pr(RD > 0) [95% interval] 0–10 Low 1 0.024 [−0.020, 0.068] 0.892 [0.873, 0.911] 
+
+6 0.046 [−0.036, 0.130] 0.892 [0.872, 0.912] 
+
+9 0.052 [−0.040, 0.145] 0.892 [0.872, 0.910] 0–10 Medium 1 0.041 [−0.019, 0.110] 0.907 [0.890, 0.925] 
+
+6 0.071 [−0.032, 0.182] 0.907 [0.889, 0.924] 
+
+9 0.078 [−0.035, 0.197] 0.907 [0.889, 0.925] 0–10 High 1 0.057 [−0.031, 0.148] 0.902 [0.884, 0.920] 
+
+6 0.086 [−0.044, 0.224] 0.902 [0.882, 0.920] 
+
+9 0.090 [−0.047, 0.237] 0.902 [0.882, 0.919] 11–15 Low 1 0.021 [−0.018, 0.062] 0.883 [0.864, 0.904] 
+
+6 0.040 [−0.033, 0.120] 0.883 [0.862, 0.903] 
+
+9 0.046 [−0.039, 0.136] 0.883 [0.864, 0.901] 11–15 Medium 1 0.035 [−0.021, 0.093] 0.914 [0.896, 0.930] 
+
+6 0.064 [−0.034, 0.160] 0.914 [0.897, 0.930] 
+
+9 0.071 [−0.037, 0.177] 0.914 [0.897, 0.930] 11–15 High 1 0.080 [−0.032, 0.197] 0.926 [0.909, 0.942] 
+
+6 0.100 [−0.036, 0.251] 0.926 [0.910, 0.942] 
+
+9 0.098 [−0.036, 0.261] 0.926 [0.909, 0.941] 15+ Low 1 0.036 [−0.019, 0.098] 0.896 [0.876, 0.915] 
+
+6 0.064 [−0.033, 0.171] 0.896 [0.878, 0.914] 
+
+9 0.070 [−0.037, 0.190] 0.896 [0.877, 0.915] 15+ Medium 1 0.036 [−0.014, 0.098] 0.913 [0.894, 0.930] 
+
+6 0.065 [−0.026, 0.168] 0.913 [0.895, 0.929] 
+
+9 0.072 [−0.030, 0.187] 0.913 [0.896, 0.930] 15+ High 1 0.065 [−0.029, 0.164] 0.923 [0.906, 0.940] 
+
+6 0.092 [−0.039, 0.240] 0.923 [0.906, 0.940] 
+
+9 0.093 [−0.039, 0.241] 0.923 [0.906, 0.940] 
+
+16 5 Discussion 
+
+We developed an extension of the hierarchical Bayesian bootstrap for population-level subgroup causal inference with right censored time-to-event outcomes. The proposed framework combines a conditional AFT survival model with hierarchical regularization of the subgroup covariate distributions used for g-formula standardization that propagating uncertainty from the conditional event-time distribution and the subgroup-specific standardization distribution into subgroup-specific survival probabilities and causal contrasts. It is complementary to existing flexible Bayesian survival models, which primarily regularize the conditional event-time response surface [18, 15]. The simulation results suggest that HBB is most useful when a target subgroup’s covariate distribution is sparsely or irregularly represented and the other subgroups provide commensurate covariate information. Little improve-ment should be expected when the empirical subgroup distribution is already well represented, and incompatible borrowing may introduce bias. The clearest gains of HBB occurred in the smaller subgroup under the Gamma simulated covariates distribution, where the skewed covariate distribution was difficult to represent using the target subgroup observations alone. HBB reduced estimation error by assigning positive posterior mass to covari-ate profiles observed in other subgroups. The persistence of this improvement under equal subgroup allocation suggests that the value of borrowing was determined not only by subgroup size but also by the adequacy of empirical covariate support. Nevertheless, reductions in interval width should be interpreted as improved preci-sion only when accompanied by adequate empirical coverage. EMP and BB yielded similar results because both standardized over covariate profiles observed within the target subgroup; the additional random weighting under BB contributed relatively little uncertainty compared with the event-time model in the settings considered. HBB also performed similarly to EMP and BB when the subgroup covariate distribution was adequately represented, as in stratum 1 and under the Gaussian design. In these settings, additional borrowing provided little benefit and could result in a modest efficiency cost. AFT-BART-NP produced greater estimation error and wider credible intervals in the scenarios considered. This result does not establish a general advantage of parametric AFT models. Flexible Bayesian AFT models remain valuable when nonlinear covariate effects, treatment–covariate interactions, or departures from a parametric error distribution are plausible [15]. Their wider intervals may reflect the uncertainty associated with this additional flexibility, particularly at the available sample sizes. The comparison may also favor the parametric model when the simulated event time mechanism is close to its assumptions. In our setting, borrowing across subgroups requires partial exchangeability of their covariate distributions. The current borrowing structure does not distinguish among potential source subgroups according to their similarity to the target subgroup. In the current construction, the concentration parameter αg controls the overall amount of information borrowed by subgroup g, while the shared distribution F0 determines where that information comes from. Because F0 is constructed from the pooled sample, the contribution of a source subgroup is driven primarily by its sample size rather than its covariate similarity to the target. In the proposed work, a fixed calibration of αg = nM/n g is used for the concentration parameter. A full Bayesian specification is possible by assigning a hyperprior to the reference size M , or directly to the pooling fraction λg = αg /(αg + ng ), and propagating uncertainty in the pooling strength through the posterior g-formula. Gamma hyperpriors and auxiliary variable 17 updates for concentration parameters are well established for Dirichlet-process and hierarchical Dirichlet-process models [23, 24]. Furthermore, borrowing across subgroups can reduce variance at the cost of biasing the finite-sample estimate toward an incompatible distribution. This consideration motivates routine borrowing diagnostics to assess borrowing compatibility. Applied analyses should consider assessing the posterior amount of informa-tion borrowed by each target subgroup, the contribution of each source subgroup, sensitivity to the concentration parameters, and results under a no-borrowing specification. A more adaptive extension could replace the single pooled base distribution with a target-specific mixture F0g = ∑  
+
+> h̸=g
+
+ωgh Fh, where the weights depend on jointly estimated similarities between the target and source covariate distributions. Distributional-discrepancy and ro-bust dynamic-borrowing methods provide possible extensions for favoring commensurate sources and discounting conflicting information [25, 26]. One limitation of the proposed work is the reliance on the conditional AFT model. Distributional borrowing cannot correct misspecification of Sa(t | x, g ). Posterior predictive checks and sensitivity analyses under alternative event-time distributions should performed. Flexible Bayesian AFT models is a potential approach but as we have shown in the simulation study, it may be inefficient with small sample size [15]. Another direction is to combine HBB standardization with an augmented estimator involving the treatment and censoring mechanisms. Doubly robust estimators of treatment-specific survival distributions provide a foundation for such an extension [27, 28]. The present likelihood also relies on conditionally independent censoring. If failure and censoring remain dependent after conditioning on observed information, identification requires additional assumptions, such as a joint event–censoring model or a sensitivity parameter governing their residual dependence. In the presence of competing events, an extension could standardize treatment-specific cumulative incidence functions [29, 30]. Future work could develop similarity adaptive borrowing structures and combine HBB with more flexible time event models when the AFT specification is uncertain. Extensions to informative censoring, competing risks, and time-varying treatments would require additional models for those processes while retaining the HBB component for the covariate distributions used in causal standardization. 18 References 
+
+[1] Siyun Yang, Ruiwen Zhou, Fan Li, and Laine E Thomas. Propensity score weighting methods for causal subgroup analysis with time-to-event outcomes. Statistical Methods in Medical Research , 32:1919–1935, 2023. [2] James Robins. A new approach to causal inference in mortality studies with a sustained exposure period— application to control of the healthy worker survivor effect. Mathematical Modelling , 7(9):1393–1512, 1986. [3] James Robins. A graphical approach to the identification and estimation of causal parameters in mortality studies with sustained exposure periods. Journal of Chronic Diseases , 40:139S–161S, 1987. [4] J.M. Robins. Addendum to “a new approach to causal inference in mortality studies with a sustained exposure period—application to control of the healthy worker survivor effect”. Computers & Mathematics with Applications , 14(9):923–945, 1987. [5] Jennifer L. Hill. Bayesian nonparametric modeling for causal inference. Journal of Computational and Graphical Statistics , 20(1):217–240, 2011. [6] Bret Zeldow, Vincent Lo Re III, and Jason Roy. A semiparametric modeling approach using bayesian additive regression trees with an application to evaluate heterogeneous treatment effects. The Annals of Applied Statistics , 13, 2019. [7] P. Richard Hahn, Jared S. Murray, and Carlos M. Carvalho. Bayesian regression tree models for causal inference: Regularization, confounding, and heterogeneous effects (with discussion). Bayesian Analysis , 15, 2020. [8] Alberto Caron, Gianluca Baio, and Ioanna Manolopoulou. Shrinkage bayesian causal forests for heteroge-neous treatment effects estimation. Journal of Computational and Graphical Statistics , 31:1202–1214, 2022. [9] Jennifer E. Starling, Jared S. Murray, Patricia A. Lohr, Abigail R. A. Aiken, Carlos M. Carvalho, and James G. Scott. Targeted smooth bayesian causal forests: An analysis of heterogeneous treatment effects for simultaneous vs. interval medical abortion regimens over gestation. The Annals of Applied Statistics , 15, 2021. [10] Arman Oganisian, Nandita Mitra, and Jason A. Roy. A bayesian nonparametric model for zero‐inflated outcomes: Prediction, clustering, and causal estimation. Biometrics , 77:125–135, 2020. [11] Jason Roy, Kirsten J. Lum, Bret Zeldow, Jordan D. Dworkin, Vincent Lo Re, and Michael J. Daniels. Bayesian nonparametric generative models for causal inference with missing at random covariates. Biometrics ,74:1193–1202, 2018. [12] Chanmin Kim, Michael J. Daniels, Bess H. Marcus, and Jason A. Roy. A framework for bayesian nonpara-metric inference for causal effects of mediation. Biometrics , 73:401–409, 2016. 19 [13] Yanxun Xu, Daniel Scharfstein, Peter Müller, and Michael Daniels. A bayesian nonparametric approach for evaluating the causal effect of treatment in randomized trials with semi-competing risks. Biostatistics ,23:34–49, 2020. [14] Dandan Xu, Michael J. Daniels, and Almut G. Winterstein. A bayesian nonparametric approach to causal inference on quantiles. Biometrics , 74:986–996, 2018. [15] Nicholas C Henderson, Thomas A Louis, Gary L Rosner, and Ravi Varadhan. Individualized treatment effects with censored data via fully nonparametric bayesian accelerated failure time models. Biostatistics ,21(1):50–68, January 2020. [16] Liangyuan Hu, Jiayi Ji, and Fan Li. Estimating heterogeneous survival treatment effect in observational data using machine learning. Statistics in Medicine , 40(21):4691–4713, June 2021. [17] Liangyuan Hu, Jiayi Ji, and Fan Li. Estimating heterogeneous survival treatment effect in observational data using machine learning. Statistics in Medicine , 40:4691 – 4713, 2020. [18] Arman Oganisian, Nandita Mitra, and Jason A. Roy. Hierarchical bayesian bootstrap for heterogeneous treatment effect estimation. The International Journal of Biostatistics , 20(1):93–106, 2024. [19] Xinyuan Chen, Liangyuan Hu, and Fan Li. A flexible bayesian g-formula for causal survival analyses with time-dependent confounding. Lifetime Data Analysis , 31(2):394–421, April 2025. [20] Mark R. Deneau, Wael El‐Matary, Pamela L. Valentino, Reham Abdou, Khaled Alqoaer, Mansi Amin, Achiya Z. Amir, Marcus Auth, Fateh Bazerbachi, Annemarie Broderick, Albert Chan, Jillian Cotter, Sylvia Doan, Mounif El‐Youssef, Federica Ferrari, Katryn N. Furuya, Madeleine Gottrand, Frederic Gottrand, Nitika Gupta, Matjaz Homan, Binita M. Kamath, Kyung Mo Kim, Kaija‐Leena Kolho, Anastasia Konidari, Bart Koot, Raffaele Iorio, Oren Ledder, Cara Mack, Mercedes Martinez, Tamir Miloh, Parvathi Mohan, Niamh O’Cathain, Alexandra Papadopoulou, Amanda Ricciuto, Lawrence Saubermann, Pushpa Sathya, Eyal Shteyer, Vratislav Smolka, Atushi Tanaka, Raghu Varier, Veena Venkat, Bernadette Vitola, Miriam B. Vos, Marek Woynarowski, Jason Yap, and M. Kyle Jensen. The natural history of primary sclerosing cholangitis in 781 children: A multicenter, international collaboration. Hepatology , 66:518–527, 2017. [21] Mark R. Deneau, Cara Mack, Douglas Mogul, Emily R. Perito, Pamela L. Valentino, Achiya Z. Amir, Matthew DiGuglielmo, Laura G. Draijer, Wael El‐Matary, Katryn N. Furuya, Nitika Gupta, Jessica T. Hochberg, Simon Horslen, M. Kyle Jensen, Maureen M. Jonas, Nanda Kerkar, Bart G.P. Koot, Trevor J. Laborda, Christine K. Lee, Kathleen M. Loomes, Mercedes Martinez, Alexander Miethke, Tamir Miloh, Saeed Mohammad, Nadia Ovchinsky, Girish Rao, Amanda Ricciuto, Pushpa Sathya, Kathleen B. Schwarz, Uzma Shah, Ruchi Singh, Bernadette Vitola, Andréanne Zizzo, and Stephen L. Guthery. Oral vancomycin, ursodeoxycholic acid, or no therapy for pediatric primary sclerosing cholangitis: A matched analysis. Hepa-tology , 73:1061–1073, 2021. 20 [22] Mark R. Deneau, Cara Mack, Reham Abdou, Mansi Amin, Achiya Amir, Marcus Auth, Fateh Bazerbachi, Anne Marie Broderick, Albert Chan, Matthew DiGuglielmo, Wael El‐Matary, Mounif El‐Youssef, Feder-ica Ferrari, Katryn N. Furuya, Frederic Gottrand, Nitika Gupta, Matjaž Homan, M.K. Jensen, Binita M. Kamath, Kyung Mo Kim, Kaija‐Leena Kolho, Anastasia Konidari, Bart Koot, Raffaele Iorio, Mercedes Mar-tinez, Parvathi Mohan, Sirish Palle, Alexandra Papadopoulou, Amanda Ricciuto, Lawrence Saubermann, Pushpa Sathya, Eyal Shteyer, Vratislav Smolka, Atsushi Tanaka, Pamela L. Valentino, Raghu Varier, Veena Venkat, Bernadette Vitola, Miriam B. Vos, Marek Woynarowski, Jason Yap, and Tamir Miloh. Gamma glu-tamyltransferase reduction is associated with favorable outcomes in pediatric primary sclerosing cholangitis. 
+
+Hepatology Communications , 2:1369–1378, 2018. [23] Michael D. Escobar and Mike West. Bayesian density estimation and inference using mixtures. Journal of the American Statistical Association , 90(430):577–588, 1995. [24] Yee Whye Teh, Michael I. Jordan, Matthew J. Beal, and David M. Blei. Hierarchical dirichlet processes. 
+
+Journal of the American Statistical Association , 101(476):1566–1581, 2006. [25] Haiyan Zheng and James MS Wason. Borrowing of information across patient subgroups in a basket trial based on distributional discrepancy. Biostatistics , 23(1):120–135, 2022. [26] Liyun Jiang, Lei Nie, and Ying Yuan. Elastic priors to dynamically borrow information from historical data in clinical trials. Biometrics , 79(1):49–60, 2023. [27] Xiaofei Bai, Anastasios A Tsiatis, and Sean M O’Brien. Doubly-robust estimators of treatment-specific survival distributions in observational studies with stratified sampling. Biometrics , 69(4):830–839, 2013. [28] Mireille E Schnitzer, Judith J Lok, and Ronald J Bosch. Double robust and efficient estimation of a prognostic model for events in the presence of dependent censoring. Biostatistics , 17(1):165–177, 2016. [29] Mats J Stensrud, Jessica G Young, Vanessa Didelez, James M Robins, and Miguel A Hernán. Separable effects for causal inference in the presence of competing events. Journal of the American Statistical Association ,117(537):175–183, 2022. [30] Yanxun Xu, Daniel Scharfstein, Peter Müller, and Michael Daniels. A bayesian nonparametric approach for evaluating the causal effect of treatment in randomized trials with semi-competing risks. Biostatistics ,23(1):34–49, 2022. 21 Supplementary Materials 
+
+## Conditional independence factorization 
+
+Under the assumption that the potential event time T ∗ 
+
+> i
+
+and censoring time Ci are conditionally independent given 
+
+(Ai, X i, G i), the observed survival function factorizes as 
+
+Pr( Yi ≥ t | Ai = a, X i = x, G i = g) = Pr( T ∗ 
+
+> i
+
+≥ t, C i ≥ t | Ai = a, X i = x, G i = g)= Pr( T ∗ 
+
+> i
+
+≥ t | Ai = a, X i = x, G i = g)
+
+× Pr( Ci ≥ t | Ai = a, X i = x, G i = g).
+
+(11) 
+
+## HBB posterior weights 
+
+Given the hierarchical Bayesian bootstrap prior Fg | αg , F 0 ∼ DP( αg F0 + ∑ 
+
+> i∈Sg
+
+δXi ) with F0(·) = ∑ni=1 πi δXi (·),the posterior mean of Fg is 
+
+E{Fg (·) | π, α g , X g } = αg
+
+αg + ng
+
+F0(·) + 1
+
+αg + ng
+
+∑
+
+> i∈Sg
+
+δXi (·)= αg
+
+αg + ngn∑
+
+> i=1
+
+πi δXi (·) + 1
+
+αg + ng
+
+∑
+
+> i∈Sg
+
+δXi (·)= 1
+
+αg + ng
+
+∑
+
+> i / ∈Sg
+
+αg πi δXi (·) + ∑
+
+> i∈Sg
+
+(αg πi + 1) δXi (·)
+
+
+
+=
+
+> n
+
+∑
+
+> i=1
+
+αg πi + I(i ∈ Sg )
+
+αg + ng
+
+︸ ︷︷ ︸
+
+=: ωgi 
+
+δXi (·).
+
+(12) Equation (2) gives the posterior mean weight assigned to each observed covariate value. Posterior computation uses the corresponding random Dirichlet weights rather than fixing the weights at these posterior means, thereby propagating uncertainty in Fg through the standardization step. 
+
+## Posterior g-computation 
+
+For each posterior draw, combining the sampled HBB weights from (12) with the conditional survival function gives 
+
+Sag (t) = 
+
+∫
+
+ST ∗ (t | A = a, X = x, G = g) dF g (x)=
+
+> n
+
+∑
+
+> i=1
+
+ωgi ST ∗ (t | a, X i, g )=
+
+> n
+
+∑
+
+> i=1
+
+ωgi [1 − Fε,θ (log t − mθ (a, X i, g ))] .
+
+(13) 22 Proof of the g-formula identification 
+
+By the law of total expectation, 
+
+Sag (t) = Pr (T ∗ 
+
+> i
+
+(a) > t | Gi = g)
+
+= E[Pr (T ∗ 
+
+> i
+
+(a) > t | Xi, G i = g) ∣ ∣ Gi = g] . (14) By conditional exchangeability (Assumption 2) and positivity (Assumption 3), 
+
+Pr (T ∗ 
+
+> i
+
+(a) > t | Xi, G i = g) = Pr (T ∗ 
+
+> i
+
+(a) > t | Ai = a, X i, G i = g). (15) By consistency (Assumption 1), 
+
+Pr (T ∗ 
+
+> i
+
+(a) > t | Ai = a, X i, G i = g) = Pr (T ∗ 
+
+> i
+
+> t | Ai = a, X i, G i = g). (16) Substituting (15)–(16) into (14) yields the identification formula used for subgroup standardization. □
+
+These derivations establish the posterior computation used in the main analysis. The next section examines how the estimators behave when the conditional independent censoring assumption is violated. 
+
+## Additional specifications for the informative censoring sensitivity analysis 
+
+The main text reports the motivation and results of the informative censoring sensitivity analysis. This section provides additional details of the data-generating and estimation procedures. All simulation components not described below were unchanged from the primary analysis. The shared latent variable was generated as Ui ∼ N (0 , 1) , independently of treatment, the observed covariates, and subgroup membership. It entered the event-time and censoring-time linear predictors with coefficients 0.15 and 0.80, respectively. Treatment shifted the censoring-time linear predictor by (−0.50 , −0.75 , −1.00 , −1.50) 
+
+across the four subgroups. Thus, the dependence remaining after adjustment arose from the shared Ui, rather than from the observed treatment or subgroup effects on censoring. The true subgroup survival contrasts were evaluated from the data-generating event-time model by averaging over both the subgroup covariate distribution and the distribution of Ui. Including Ui in this calculation ensures that the simulation truth corresponds to the marginal subgroup estimand, even though Ui is unavailable to the fitted models. A Weibull AFT model was fitted to each of the event and censoring processes. For an observed event, the likelihood contained the event-time density and the probability of remaining uncensored to the observed time; for a censored observation, it contained the event-time survival probability and the censoring-time density. Using the notation introduced in the main text, the contribution was 
+
+Li ∝ { fT ∗ (Yi | Ai, X i, G i)SC (Yi | Ai, X i, G i)}∆i {ST ∗ (Yi | Ai, X i, G i)fC (Yi | Ai, X i, G i)}1−∆i .
+
+23 Although both likelihood components were estimated, neither included Ui, and they were not connected through a shared latent structure. The fitted likelihood therefore described the marginal event and censoring distributions without accounting for their residual dependence. The HBB reference size was fixed at M = 15 , consistent with the primary simulation. The same prior specifications, posterior sampling settings, and implementations of EMP, BB, HBB, and AFT-BART-NP were used in both analyses. 24

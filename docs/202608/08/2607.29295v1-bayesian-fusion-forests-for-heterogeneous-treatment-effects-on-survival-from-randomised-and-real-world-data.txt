@@ -1,0 +1,1155 @@
+Title: Bayesian fusion forests for heterogeneous treatment effects on survival from randomised and real-world data
+
+URL Source: https://arxiv.org/pdf/2607.29295v1
+
+Published Time: Mon, 03 Aug 2026 00:47:02 GMT
+
+Number of Pages: 40
+
+Markdown Content:
+# Bayesian fusion forests for heterogeneous treatment effects on survival from randomised and real-world data 
+
+Tijn Jacobs ∗ St´ ephanie L. van der Pas † Wessel N. van Wieringen ‡
+
+August 3, 2026 
+
+Abstract 
+
+We develop the Bayesian fusion forest , a nonparametric framework to estimate het-erogeneous treatment effects on survival outcomes by combining a randomised controlled trial and real-world data. The framework relaxes the unconfoundedness assumption on the real-world data by assuming instead that the treatment effect transports across the two sources. Our method opens up right- and interval-censored outcomes to data fusion. We model the survival time with an accelerated failure time decomposition into a shared baseline prognosis, a source-specific deviation, a treatment effect, and a confounding function. The confounding function absorbs the confounding bias in the real-world data. Each component receives a Bayesian tree ensemble prior. The shared baseline prognosis borrows strength across sources, while the deviation captures between-source heterogeneity. A hierarchical Dirichlet process mixture models the error distribution nonparametrically. A simulation study shows efficiency gains over a trial-only analysis across varying levels of confounding and between-source heterogeneity. We combine the ACTG 175 trial with the Multicenter AIDS Cohort Study to estimate the effect of combination antiretroviral therapy for HIV. The fusion identifies a benefit for nearly every patient whereas the trial alone is inconclusive. 
+
+Keywords: Bayesian additive regression trees; data fusion; heterogeneous treatment effects; real-world evidence; survival analysis; unmeasured confounding. 
+
+# 1 Introduction 
+
+Heterogeneous treatment effects are central to precision medicine. Randomised controlled trials (RCTs) are the gold standard for causal effect estimation, but they are underpowered for subgroup effects and often have limited follow-up (Rothwell, 2005). Real-world data (RWD) from registries and cohorts are larger and often follow patients for longer (Sherman et al., 2016). However, unmeasured confounding can bias treatment effect estimates from observational data. We aim to combine the strengths of the two data sources: the trial identifies the treatment effect and the real-world data contribute power and longer follow-up. Our motivating example is HIV antiretroviral therapy. The treatment effect varies with baseline CD4 count, viral load, and age. We fuse the ACTG 175 trial (Hammer et al., 1996) with the Multicenter AIDS Cohort Study (Kaslow et al., 1987). The cohort followed participants over more than 25 years with periodic visits. 
+
+> ∗
+
+Department of Mathematics, Vrije Universiteit Amsterdam. t.jacobs@vu.nl 
+
+> †
+
+Department of Mathematics, Vrije Universiteit Amsterdam. s.l.vander.pas@vu.nl 
+
+> ‡
+
+Department of Epidemiology and Data Science, Amsterdam University Medical Centre; and Department of Mathematics, Vrije Universiteit Amsterdam. w.n.van.wieringen@vu.nl 
+
+1arXiv:2607.29295v1 [stat.ME] 31 Jul 2026 The fusion of a trial with real-world data poses three challenges for survival outcomes. The first is unmeasured confounding in the real-world data. Treatment is not randomised, and assignment may depend on factors the measured covariates do not fully capture. The no-unmeasured-confounders assumption is untestable and often violated in practice (VanderWeele and Ding, 2017). The second is heterogeneity between the two data sources. Even when the treatment effect transports across sources, the baseline prognosis often does not. The trial and observational populations typically differ in eligibility, follow-up, and case mix. A naive analysis confounds this baseline difference with the treatment effect. This heterogeneity is not confined to the baseline prognoses: differences in measurement protocol and follow-up quality also reshape the error distribution across sources. The third is censoring. Right censoring arises when the event has not occurred by the end of follow-up, so the time to event is known only to exceed the censoring time. The real-world data may also be interval-censored, with events recorded only at periodic visits. The Bayesian fusion forest addresses the three challenges in a single nonparametric model. For the first challenge, a confounding function absorbs the unmeasured confounding in the real-world data. For the second challenge, a shared baseline prognosis with a source-specific deviation captures the heterogeneity between the sources, and a source-specific error distribution captures heterogeneity beyond the mean. For the third challenge, an accelerated failure time formulation accommodates right- and interval-censored event times. Existing methods meet some of these challenges but none meets all three. We will now provide more context on the challenges and solutions. For the first challenge, the confounding function measures the confounding bias in the real-world data. It was introduced as a sensitivity-analysis device within a single study (Robins et al., 2000). The confounding function can be estimated by combining a randomised and an observational study. Kallus et al. (2018) learn a parametric confounding function from the RCT and debias the observational treatment effect. Yang et al. (2025) develop a semiparametric-efficient estimator that jointly estimates the treatment effect and the confounding function, and derive a test for unmeasured confounding. The elastic integrative estimator of Yang et al. (2023) uses that test to decide whether to borrow from the real-world data, and discards it when confounding is detected. Two frequentist methods extend the approach to survival outcomes. Ye et al. (2025) work under an accelerated failure time model with right censoring and high-dimensional covariates, and treat the confounding function as a sparse component selected jointly with the treatment effect. Mao et al. (2025) target the conditional restricted mean survival time under right censoring. Neither accommodates interval censoring, the third challenge. Here, we extend the confounding function framework to an accelerated failure time model with interval censoring, so that challenges one and three are both addressed. We target the acceleration factor: a causally interpretable estimand on the survival-time scale. Bayesian methods address the second challenge of between-source heterogeneity by borrowing information through the prior or the likelihood. The power prior of Chen and Ibrahim (2000) raises the external likelihood to a fractional power that controls the borrowing. The meta-analytic-predictive prior of Neuenschwander et al. (2010) makes the borrowing hierarchical and adaptive to between-source heterogeneity. Later variants tie the borrowing to the between-source discrepancy through commensurate priors (Hobbs et al., 2012). These methods all target a marginal or control-arm effect. More recent literature targets heterogeneous effects directly. Zhou and Ji (2021) pool trial and external outcome surfaces with Bayesian additive regression trees, but do not allow for unmeasured confounding in the external source. Dimitriou et al. (2026) develop a multi-task Gaussian process with a data-adaptive borrowing parameter. None of these Bayesian methods targets heterogeneous treatment effects on survival outcomes under unmeasured confounding. We encode the borrowing in the priors: a mean-zero deviation centres 2the prior on equality of the two baseline prognoses, and the confounding function is shrunk towards a covariate-independent bias. We impose a Bayesian additive regression tree (BART) prior (Chipman et al., 2010) on each component of our model, a popular tool in causal machine learning (Hill, 2011). BART has theoretical guarantees (Roˇ ckov´ a and van der Pas, 2020) and strong empirical performance in both estimation accuracy and uncertainty quantification (Dorie et al., 2019; Thal and Finucane, 2023; Kabata et al., 2026). The uncertainty quantification is intrinsic to the model and follows directly from the posterior distribution. BART captures nonlinear and interaction effects without requiring us to specify them. The regularisation of BART is governed by a small number of interpretable hyperparameters, which lets us tune the prior of each model component to its substantive role. The error distribution deserves the same flexibility: it plausibly differs between the two data sources, but the two laws are unlikely to be unrelated. We pair the trees with a nonparametric error distribution: a hierarchical Dirichlet process mixture lets the error law differ between the sources in shape and scale while sharing mixture components. Machine-learning predictors such as (deep) neural networks or gradient-boosted trees offer comparable flexibility, but they target prediction rather than causal effect estimation and provide no mechanism for data fusion. We benchmark our framework against four such methods in the simulation study, and improve on all of them in both accuracy and calibration. 
+
+# 2 Methodology 
+
+2.1 Causal framework 
+
+We consider data from two sources: a randomised controlled trial (RCT) and a real-world data study (RWD). The data-source indicator S ∈ { 0, 1} takes the value S = 1 for RCT observations and S = 0 for RWD observations. The RCT contributes n1 independent observations and the RWD contributes n0 independent observations. We observe a vector of pre-treatment covariates 
+
+X ∈ Rp and a binary treatment A ∈ { 0, 1} for each individual. We denote the random variables without the subject index i in general. The outcome of interest is the nonnegative survival time 
+
+T , subject to censoring. We allow two types of censoring: right censoring, and interval censoring. For each subject, we observe a pair ( L, R ) with 0 ≤ L ≤ R ≤ ∞ satisfying T ∈ [L, R ], together with a censoring-type indicator δ ∈ { 0, 1, 2}. The indicator δ distinguishes three observation types, each defined by a relation between the pair ( L, R ) and the survival time T . For exact observation ( δ = 1), L = R = T , so the survival time is observed directly. For right censoring (δ = 0), L = C and R = ∞ for a censoring time C, so T is known only to exceed C. For interval censoring ( δ = 2), 0 ≤ L < R < ∞, so T is known only to lie in the bounded interval [ L, R ]. The standard right-censored setup is recovered when δ ∈ { 0, 1} for every subject. The two sources may carry different censoring types: in our application the trial is right-censored while the cohort is interval-censored. We write C for the inspection and censoring process underlying ( L, R, δ ), and refer to Sun (2006) for details. We adopt the potential-outcomes framework (Rubin, 1974). For a ∈ { 0, 1}, the potential survival time T (a), the censoring process C(a), and the observation (L(a), R (a), δ (a)) are the quantities that would be observed if treatment were set to a.We estimate the conditional average treatment effect (CATE): 
+
+τ (x) = E[log T (1) − log T (0) | X = x]. (1) The CATE describes how the treatment effect varies across covariates. The corresponding estimand on the multiplicative time scale is the acceleration factor exp {τ (x)} (Pang et al., 2021). We choose this estimand for its interpretation and its causal properties. The acceleration 3factor admits a direct interpretation on the survival-time scale: at every quantile of the survival distribution, treatment rescales the survival time by a constant multiplicative factor. This time-scaling is more intuitive in a clinical setting than the relative change in event rate conveyed by a hazard ratio (Swindell, 2009). The acceleration factor also enjoys causal properties that the hazard ratio lacks. Brathovde et al. (2026) show that the observed acceleration factor identifies its causal counterpart under exchangeability and consistency. This identification continues to hold under unmeasured frailty and treatment-effect heterogeneity. The hazard ratio loses its causal interpretation in those same settings, because conditioning on survival induces a built-in selection bias (Hern´ an, 2010). Moreover, the acceleration factor is collapsible: the marginal and conditional acceleration factors coincide when the treatment effect is homogeneous, regardless of the distribution of unmeasured baseline risk (Crowther et al., 2023). We impose the following assumptions on the causal structure and the censoring mechanism. 
+
+Assumption 1 (Consistency) . If A = a then T = T (a) and C = C(a) for each a ∈ { 0, 1}.
+
+Assumption 2 (Unconfoundedness of the RCT) . T (a) ⊥⊥ A | X, S = 1 for each 
+
+a ∈ { 0, 1}.
+
+Assumption 3 (Positivity) . 0 < P(A = 1 | X = x, S = s) < 1 for each s ∈ { 0, 1} and all x in the support of X | S = s.
+
+Assumption 4 (Cross-source transportability) . E[log T (1) − log T (0) | X, S = 1] =
+
+E[log T (1) − log T (0) | X, S = 0] .
+
+Assumption 5 (Conditionally non-informative censoring) . T (a) ⊥⊥ C (a) | X, A, S for each a ∈ { 0, 1}.
+
+Assumptions 1, 3 and 5 are standard in causal inference. Consistency requires a well-defined treatment and no interference between subjects. Together with the construction of ( L, R, δ )from the survival time and the censoring process, consistency extends to the observed data: on 
+
+{A = a} the observed triple equals its potential counterpart. Positivity requires each covariate profile to have a positive probability of either treatment within its source. It holds by design in the trial and is an overlap condition on the real-world data (Dahabreh et al., 2019). Assumption 5 is the conditional version of non-informative censoring standard in survival analysis (Sun, 2006). The censoring and inspection processes may depend on covariates, treatment and source but not on the survival time beyond these. Assumptions 2 and 4 carry the substantive content of our approach. Our identification strategy relaxes unconfoundedness in the RWD and retains transportability of the CATE across sources. Assumption 2 holds by design in a randomised trial. Treatment in the RWD may depend on confounders not contained in X. The resulting bias is absorbed by the confounding function c(x) introduced in the next section. We assume the CATE to be time-invariant by not explicitly letting it depend on time. Other approaches that combine evidence from multiple sources take the opposite route: they allow source-specific CATEs but require unconfoundedness within each source (Stuart et al., 2011; Dahabreh et al., 2019; Shyr et al., 2025). The two relaxations cannot coexist in our setting. Without unconfoundedness of the RWD, the CATE and c(x) are not separately identifiable unless the CATE transports across sources. We therefore allow for confounding in the real-world data at the explicit cost of retaining Assumption 4. We make this interplay explicit in Propositions 1 and 2 in the next section. 42.2 Accelerated failure time decomposition 
+
+We model the conditional log survival time jointly across the trial and the real-world data. In the real-world data, the treated-versus-control contrast generally differs from the causal treatment effect. Treatment assignment may depend on confounders outside X, which bias the observed contrast. We define the confounding function c(x) (Robins et al., 2000) as: 
+
+c(x) = E[log T | X = x, A = 1 , S = 0] − E[log T | X = x, A = 0 , S = 0] − τ (x). (2) The confounding function captures the difference between the RWD treated-versus-control contrast and the true causal effect. The source indicator S ties the two sources into one model. Intuitively, a baseline prognosis and the causal effect enter in both sources, while the confounding bias enters only in the real-world data. Proposition 1 makes this intuition precise. Proposition 2 shows how the decomposition translates to identification results. 
+
+Proposition 1 (Accelerated failure time decomposition) . Under Assumptions 1–4, the condi-tional log survival time satisfies: 
+
+E[log T | A, X, S ] = m0(X, S ) + τ (X) A + (1 − S) A c (X), (3) 
+
+where m0(X, S ) := E[log T | A = 0 , X, S ] is the baseline log survival time. 
+
+The baseline prognosis m0(X, S ) is the survival a patient would have without treatment, which can differ between the two sources. The confounding term carries the factor (1 − S), so it acts only in the real-world data. 
+
+Proposition 2 (Identification) . Under Assumptions 1–4: 
+
+(i) The CATE is identified from the RCT alone: 
+
+τ (x) = E[log T | X = x, A = 1 , S = 1] − E[log T | X = x, A = 0 , S = 1] . (4) (ii) Given τ , the confounding function is identified from the RWD. 
+
+(iii) Neither τ nor c is identified from the RWD alone; the RWD identifies only the composite 
+
+τ (x) + c(x).
+
+Proofs of Propositions 1 and 2 are in Supplementary Materials S.1. The same identification results hold for the acceleration factor exp {τ (x)} by continuity of the exponential. Similar identification results appear in Yang et al. (2025) and Ye et al. (2025) for a propensity-residualised contrast. Propositions 1 and 2 concern the population conditional means E[log T | A, X, S ] of the log transformed survival time. Assumptions 1–4 identify the causal quantities from these conditional means. Assumption 5 on the censoring mechanism plays a separate role: it lets us recover the conditional means from the censored observations ( L, R, δ ). The censoring assumption enters the likelihood and the data augmentation in the sampler, not the causal identification argument. This separation enables us to handle interval censoring in addition to right censoring in the sequel. The non-identification in part (iii) is structural rather than statistical. Larger real-world samples cannot resolve it. Separating τ from c requires external information that identifies one of the two functions. The trial supplies it through part (i). We model the log survival time with the accelerated failure time (AFT) specification implied by the decomposition: log T = m0(X, S ) + τ (X) A + (1 − S) A c (X) + ε. (5) 5We assume the errors are independent across subjects and have mean zero. We impose no parametric form on their distribution and allow it to differ across sources through a hierarchical prior. The regression functions m0, τ and c retain the causal meanings established above. We assign each function a separate Bayesian tree ensemble prior. 
+
+2.3 Nonparametric error distribution 
+
+Four requirements guide our model for the error ε in (5). The first requirement is flexibility in shape. Log survival times often show skewness or multimodality. Censoring makes the fit particularly sensitive to the assumed shape. An overly restrictive error model may induce bias in the estimates. The second requirement is that the error distribution may differ between the sources. Randomised trials and real-world data sources typically differ in measurement protocol, follow-up quality and the prevalence of extreme outcomes. These differences plausibly enter the error distribution rather than the structural mean. The third requirement is that the two source-specific distributions remain linked. They are unlikely to be entirely unrelated. A model that treats them as fully independent forfeits useful pooling. The loss is greatest when one source is small. The fourth requirement is a mean-zero error in each source so that m0, τ and c keep their conditional-mean interpretation. Existing data-fusion methods typically assume a single shared error law for both sources, often a Gaussian. Such a law fails the first two requirements. We meet all four with a hierarchical Dirichlet process mixture of normals (HDPM). The prior is source-specific: ε | S = s ∼ Fs, where Fs is the distribution of the error term in source s. We let 
+
+F0 and F1 differ flexibly while sharing a common set of mixture components across sources. Conditional on the source indicator S = s, we model the error as a location mixture of Gaussians with source-specific scale σs > 0 and mixing measure Gs:
+
+ε | S = s, G s, σ s ∼ 
+
+> ∫
+
+1
+
+σs
+
+ϕ 
+
+> (
+
+w − θσs
+
+> )
+
+dG s(θ). (6) Here ϕ is the standard normal density and θ is the location of a mixture component. The right-hand side gives the density of Fs, evaluated at the argument w. Gaussian-mixture priors of this form have been used for AFT residuals in single-source BART models (Henderson et al., 2020). The mixing measures share a latent structure through the hierarchical Dirichlet process (Teh et al., 2006) with a top-level random measure G∗:
+
+G∗ ∼ DP( γ, H ), G∗ 
+
+> s
+
+| G∗, M s ∼ DP( Ms, G ∗), s ∈ { 0, 1}, (7) with base distribution H = N (0 , σ 2 
+
+> θ
+
+), top-level concentration parameter γ, and source-specific concentration parameters Ms. The top-level measure is discrete and admits a stick-breaking representation: 
+
+G∗ =
+
+> ∞∑
+> k=1
+
+βk δθ∗ 
+
+> k
+
+, θ∗
+
+> k
+> iid
+
+∼ H, βk = uk
+
+> ∏
+> l<k
+
+(1 − ul), uk iid 
+
+∼ Beta(1 , γ ). (8) Each source-specific measure G∗ 
+
+> s
+
+is supported on the same atoms {θ∗
+
+> k
+
+}k≥1 as G∗, with its own weight vector πs = ( πsk )k≥1. The shape of each error distribution Fs is therefore parameterised by a shared set of mixture components and a source-specific weighting over them. It remains to enforce the fourth requirement of a mean-zero error in each source. We follow Yang et al. (2010) and obtain centred mixing measures by subtracting the source-specific mean of the unconstrained measure: 
+
+μs =
+
+> ∫
+
+θ dG ∗ 
+
+> s
+
+(θ) = 
+
+> ∞∑
+> k=1
+
+πsk θ∗
+
+> k
+
+, Gs =
+
+> ∞∑
+> k=1
+
+πsk δθ∗  
+
+> k−μs
+
+. (9) 6By construction E[ε | S = s, G s, σ s] = 0. The unconstrained atoms θ∗ 
+
+> k
+
+remain shared across sources, while the centred atoms θ∗ 
+
+> k
+
+− μs are source-specific through the shifts μ0 and μ1. We place a scaled-inverse-χ2 prior σ2 
+
+> s
+
+∼ νλ/χ 2 
+
+> ν
+
+on the per-source residual scales, with degrees of freedom ν and scale λ. We set ν = 3 following the BART default and calibrate λ to the empirical residual variance (Chipman et al., 2010). 
+
+2.4 Overview of BART 
+
+We build each regression function in our model on Bayesian additive regression trees (BART) and adopt the standard formulation of Chipman et al. (2010). Three properties motivate this choice. BART captures nonlinear and interaction effects without requiring us to specify them. Its regularisation is governed by a small number of interpretable hyperparameters, which lets us tune the prior of each component to its substantive role in the next section. Its conjugate structure yields efficient Gibbs updates that extend to censored outcomes. BART places a flexible nonparametric prior over an unknown function f : Rp → R. The prior represents f as a sum of J regression trees: 
+
+f (x) = 
+
+> J∑
+> j=1
+
+g(x; Tj , Hj ), (10) where each Tj is a binary tree with bj terminal nodes. Each interior splitting rule has the form 
+
+{xℓ ≤ x∗} for some covariate index ℓ and splitting value x∗. We write Hj = {hj, 1, . . . , h j,b j } for the step heights at those terminal nodes. The function g(x; Tj , Hj ) routes x through the splits of Tj to a terminal node r and returns the step height hj,r at that node. The prior on ( T1, H1), . . . , (TJ , HJ ) is independent across trees. It decomposes into a prior on the tree-structure Tj and a prior on the step heights Hj given the tree structure Tj . The structure of each Tj follows the recursive splitting process of Chipman et al. (1998). A node at depth 
+
+d is non-terminal with probability α(1 + d)−β . The hyperparameters α and β regularise tree depth. Conditional on the tree, the splitting variable xℓ at each interior node is drawn uniformly from the available covariates. The splitting value x∗ is drawn uniformly from its observed values. The step heights receive independent conjugate normal priors hj,r | T j ∼ N (0 , σ 2
+
+> h
+
+) with 
+
+σh = k/ (2 √J) and k > 0 the step-height scale. A horseshoe prior on the step heights is a more suitable alternative in high-dimensional settings (Jacobs et al., 2025). Chipman et al. (2010) centre and rescale the response, then choose k so that the implied prior on f assigns circa 95% of its mass to the observed response range. We denote the BART prior with these hyperparameters by BART( J, k, α, β ). The four arguments are the number of trees J, the step-height scale k, and the tree-structure hyperparameters α and β.
+
+2.5 The Bayesian fusion forest 
+
+We place a separate Bayesian additive regression tree prior on each component of the decom-position (3): the baseline prognosis m0, the treatment effect τ , and the confounding function 
+
+c. Each component carries an independent causal meaning (Proposition 1), so each prior acts directly on an interpretable quantity. An undifferentiated BART on the full conditional mean 
+
+E[log T | A, X, S ] would reach the priors on τ and c only indirectly. The induced prior on a contrast then depends on incidental features such as the dimension and distribution of X (Hahn et al., 2020). It also cannot encode the between-source borrowing and the confounding shrinkage that the problem calls for. The decomposition sacrifices nothing in expressiveness, since any conditional mean of the form (3) stays in the support. It only changes which functions the prior deems likely. This separate-forest construction generalises the prognostic-treatment split of 7the Bayesian causal forest (Hahn et al., 2020) to two data sources and an explicit confounding function. We tune each prior through its tree-structure hyperparameters and its ensemble size. We order the regularisation along a ladder, from the flexible baseline prognosis to the strongly regularised confounding function. Two considerations order the ladder: the information the data carry about each regression function and the complexity we expect of that function. The baseline prognosis enters the mean of every observation and may be complex, so it receives the most flexible prior. The treatment effect is identified from the trial contrast alone (Proposition 2) and typically varies with few effect modifiers, so we shrink it towards a homogeneous effect (Hahn et al., 2020). This shrinkage also reduces the risk of spurious effect heterogeneity. The confounding function is estimated only from the difference between the real-world contrast and the treatment effect. The confounding bias stems from covariates we do not observe, so we shrink the confounding function towards uniformity. The baseline prognosis m0(X, S ) is the first component, and it may differ between the two sources. We split it into a shared component and a source-specific deviation: 
+
+m0(X, S ) = msh 0 (X) + (1 − S) d(X), (11) where msh 0 is shared across both sources and the deviation d is active only in the real-world data. The deviation d is the difference between the two source-specific baselines. We place a separate BART prior on msh 0 and on d, and we give d a mean-zero prior. The prior then centres on equality of the two source baselines, which encodes a preference for borrowing. A single BART on m0(X, S ) with S as a covariate cannot encode this preference. Two independent baselines would imply a needlessly diffuse prior on their difference. The shared-plus-deviation form instead places the prior directly on the between-source difference and tunes the borrowing through the deviation scale kd. We read this split as a meta-analytic-predictive prior on the prognostic function (Neuenschwander et al., 2010). A small kd shrinks the deviation towards zero for strong borrowing, and a large kd lets the real-world baseline depart (Supplementary Materials S.2). We let msh 0 be the most flexible forest in the model. We use the tree-structure hyperparameters (αsh , β sh ) = (0 .95 , 2) and Jsh = 200 trees, so the shared baseline can accommodate complex disease-intrinsic structure. We use the same ( αd, β d) = (0 .95 , 2) for d but only Jd = 50 trees. The smaller ensemble suffices because d only absorbs residual differences in protocol and patient population. The deviation keeps the same permissive tree-structure prior, so it can track covariate-dependent differences between the sources. The treatment effect τ is the second component, and we regularise it more strongly than the baseline. We place a depth-penalised BART prior on τ to discourage higher-order interactions in X. We set βτ = 3 and keep ατ = 0 .95, so the prior mass concentrates on trees of depth one or two. We reduce the ensemble to Jτ = 100 trees, which further strengthens the regularisation. At the no-split extreme the treatment forest reduces to a constant, a homogeneous treatment effect. The prior thus shrinks the conditional average treatment effect towards homogeneity. The confounding function c is the third component, and we regularise it most strongly of all. We regularise it through both the root-split probability and the depth penalty. We set the base splitting probability αc = 0 .25 and the depth parameter βc = 3, and use Jc = 50 trees. The low base probability discourages splits at the root. The depth penalty discourages deep interactions when splits do occur. The settings ( αc, β c) = (0 .25 , 3) express a strong prior preference for confounding that varies little with the covariates, close to a uniform bias. We standardise the log survival time before fitting by the centring and scaling constants of a preliminary log-normal AFT fit. This rescales the response to a unit-variance scale. Each forest 8carries its own prior step-height scale kf , indexed by f ∈ { sh , d, τ, c } for the shared baseline msh 0 ,the deviation d, the treatment effect τ , and the confounding function c. The step-height scales calibrate the prior magnitude of each ensemble to the scale of the standardised response. We set 
+
+kf = 1 for every forest by default. We halve it for the treatment effect, kτ = 1 /2, which shrinks the magnitude of τ on top of the structural regularisation already placed on it. We tune further by cross-validation. We summarise the full hierarchical model, which we refer to as the Bayesian fusion forest :log Ti = msh 0 (Xi) + (1 − Si) d(Xi) + Ai τ (Xi) + (1 − Si) Ai c(Xi) + εi,msh 0 ∼ BART(200 , k sh , 0.95 , 2) ,d ∼ BART(50 , k d, 0.95 , 2) ,τ ∼ BART(100 , k τ , 0.95 , 3) ,c ∼ BART(50 , k c, 0.25 , 3) ,εi | Si = s, G s, σ s ∼
+
+> ∫
+
+σ−1 
+
+> s
+
+ϕ 
+
+> (w−θσs
+> )
+
+dG s(θ),Gs = ∑ 
+
+> k
+
+πsk δθ∗  
+
+> k−μs
+
+, s ∈ { 0, 1},G∗ 
+
+> s
+
+| G∗, M s ∼ DP( Ms, G ∗), s ∈ { 0, 1},G∗ | γ ∼ DP( γ, H ), H = N (0 , σ 2 
+
+> θ
+
+),γ ∼ Gamma( aγ , b γ ),Ms ∼ Gamma( aM , b M ), s ∈ { 0, 1},σ2 
+
+> s
+
+∼ νλ/χ 2 
+
+> ν
+
+, s ∈ { 0, 1}.
+
+We calibrate the base-measure variance σ2 
+
+> θ
+
+rather than assign it a prior. Supplementary Materials S.3 give the hyperparameter values. 
+
+2.6 Posterior inference 
+
+We sample from the posterior via a blocked Gibbs sampler. We update the BART forests msh 0 , d,
+
+τ , and c in turn against the partial residual. The partial residual subtracts the other forests and the current draw of the residual mixture from the augmented outcome. Each update reduces to a standard BART update on a Gaussian working response (Chipman et al., 2010). We augment the censored observations (Tanner and Wong, 1987). The HDPM error block is updated by a separate Gibbs step over its cluster assignments, atoms, mixture weights, and concentration parameters. We give the full sampler in the Supplementary Materials. We compute average treatment effects by marginalising the conditional effect τ (·) against a target covariate distribution. We take the target to be the union of the two source studies, with covariate distribution FX = π0F 0 
+
+> X
+
++ π1F 1 
+
+> X
+
+. Here F sX is the covariate distribution within source 
+
+s ∈ { 0, 1} and π = ( π0, π 1) lies on the unit simplex. The posterior of the marginal effect carries uncertainty from three sources: the posterior over τ , the within-source covariate distributions F sX ,and the mixing fractions π. We propagate all three jointly by a hierarchical Bayesian bootstrap. The choice of π encodes the analyst’s target population. Natural deterministic choices include the empirical fractions πs = ns/n and equal weighting π = (1 /2, 1/2). The source-specific limits 
+
+π = (1 , 0) and π = (0 , 1) target the population of the RWD and RCT respectively. We may instead place a Dirichlet prior π ∼ Dirichlet( α) on the mixing fractions, with concentration parameter α = ( α0, α 1). This propagates uncertainty about the target composition. The choice 
+
+α = ( n0, n 1) centres the prior on the empirical fractions and approximately recovers a pooled Bayesian bootstrap. We recommend this as the default. The choice α = (1 , 1) gives a flat 9prior on the simplex. We draw mixing fractions π(b) ∼ Dirichlet( α) for each posterior draw 
+
+τ (b)(·) of the conditional effect. We draw within-source weights w(s,b ) ∼ Dirichlet( 1ns ) over the observations of source s independently for s ∈ { 0, 1}. The corresponding draw of the average treatment effect is: ¯τ (b) = ∑
+
+> s∈{ 0,1}
+
+π(b)
+
+> s
+> ∑
+> i:Si=s
+
+w(s,b ) 
+
+> i
+
+τ (b)(Xi). (12) The within-source weights are the Bayesian bootstrap (Rubin, 1981) applied to each F sX .We can summarise each fitted forest by projecting it on a lower-dimensional model. The posterior draws of msh 0 , d, τ , and c retain the causal meaning established in Proposition 1. We can therefore summarise any one of them in isolation. We project a fitted forest onto a simple second-stage model since a full posterior over a nonparametric surface is hard to communicate. This follows the posterior-summarisation approach of Woody et al. (2021) and the two-stage logic of the Virtual Twins method (Foster et al., 2011). The first stage is the fitted forest. The second is a low-complexity model fit to the posterior-mean surface of that forest, such as a single regression tree or a linear projection. We propagate posterior uncertainty by fixing the second-stage structure at its posterior-mean fit and recomputing its parameters on every posterior draw. 
+
+# 3 Simulation study 
+
+We compare the Bayesian fusion forest on the combined data sources with an accelerated failure time Bayesian causal forest (Jacobs, 2026) on the RCT and RWD alone. The causal forest is the single-source counterpart of the Bayesian fusion forest, so the comparison isolates the value of combining the sources rather than differences in model class. The trial-only fit is unbiased but limited by the trial’s size. The real-world-only fit uses the larger sample but is exposed to confounding. The Bayesian fusion forest must improve on both to justify combining the sources. We assess its robustness to unmeasured confounding and to between-source heterogeneity, benchmark it against flexible machine-learning methods, and study its behaviour as the covariate dimension grows. There are currently very few methods to reasonably compare the Bayesian fusion forest to. In particular, we found no data fusion method for right- and interval-censored outcomes. The closest alternatives are flexible machine-learning methods for survival prediction. We compare with four such methods: an accelerated failure time deep neural network (Norman et al., 2024), gradient boosting under an accelerated failure time loss (Barnwal et al., 2022), and Buckley– James boosting over extreme learning machines and over regression trees (Kong and Zhang, 2023). These methods share three structural limitations. The first limitation is that they target prediction rather than causal effect estimation. The second limitation is that they provide no mechanism for combining a randomised and a confounded source. The third limitation is that most of them lack support for interval censoring. We make several adaptations to render the methods suitable for comparison with the Bayesian fusion forest. We embed each method in an S- and a T-learner to obtain treatment-effect estimates (K¨ unzel et al., 2019). We fit each learner on the trial alone and on a naive pool of both sources. 
+
+3.1 Simulation setup 
+
+The general setup is common to all three experiments below. The trial contributes n1 = 150 observations and the real-world data n0 = 350. We draw p = 10 covariates X ∼ N (0 , Σ) in both 10 sources, with an AR(1) correlation Σ ij = ρ|i−j|, ρ = 0 .3. Five covariates are active and five are noise. We generate the outcome: log TRCT = m0(x) + A τ (x) + εRCT ,
+
+log TRWD = m0(x) + λd d(x) + A τ (x) + λu A U + εRWD , (13) with components: 
+
+m0(x) = 2 x1 − x2x3 + 12 x24, τ (x) = 12 + x1 − 12 x22, d(x) = x4 − 12 x5. (14) The function τ is the true CATE on the log-time scale. We randomise treatment in the trial, A ∼ Bernoulli(1 /2), and let real-world treatment depend on an unmeasured confounder 
+
+U ∼ Uniform(0 , 1) through A ∼ Bernoulli {expit( x1 + U )}. The confounder enters the outcome only in the treated arm. The factor λd controls the between-source heterogeneity in baseline prognosis and λu the strength of the unmeasured confounding. We model the trial error as 
+
+εRCT ∼ N (0 , σ 2) with σ = 3 /4, and draw the real-world error from a standardised Gumbel law: 
+
+εRWD = 
+
+> √6
+> π
+
+γE − G with G ∼ Gumbel(0 , √6/π ), which has mean zero, unit variance, and is skewed. Trial and real-world event times are conditionally log-normal and Weibull, respectively. We right-censor the trial by an exponential censoring time tuned to circa 35% censoring. We interval-censor the real-world data at eight inspection times. Events after the last inspection are right-censored, circa 20% of the real-world observations. The two censoring types mirror the application. We fit the Bayesian fusion forest to the combined data with default parameters. We run 1000 Monte Carlo replications. Each fit draws 5000 posterior samples after 5000 burn-in iterations. We report the root mean squared error, bias, 95% credible-interval coverage, and posterior variance of the estimated CATE. We investigate the performance of the Bayesian fusion forest in three separate simulation setups. 1) Unmeasured confounding and between-source heterogeneity. We investigate how the bias and RMSE of the Bayesian fusion forest behave as the unmeasured confounding and the between-source heterogeneity grow. We vary the confounding strength λu ∈ { 0, 0.5, 1, 1.5, 2}
+
+at fixed λd = 1, and the heterogeneity λd ∈ { 0, 0.5, 1, 1.5, 2} at fixed λu = 1. 2) Comparison with machine-learning methods. We compare the Bayesian fusion forest with the four machine-learning methods in each of the four learner–source configurations. We tune each method by cross-validation and obtain confidence intervals from 100 bootstrap resamples. We fix λd = λu = 1. Not all methods handle interval censoring, so for this experiment we right-censor the real-world data at circa 35% and every method sees the same data. 3) Increasing covariate dimension. We investigate how the precision gained by borrowing from the real-world data trades off against the cost of searching a larger covariate space, and whether fusion remains worthwhile in higher covariate space dimensions. We hold the sample sizes fixed and grow the number of covariates from p = 5 to p = 500 at λd = λu = 1. Only five covariates carry signal, so the remaining covariates are pure noise and the problem grows sparser. We draw the covariates in independent blocks of ten with the AR(1) correlation 
+
+ρ = 0 .3 within each block. We also fit an oracle variant given only the five active covariates. It marks the best performance attainable when the active covariates are known. We additionally test the gain from modelling the error distribution nonparametrically. We compare the hierarchical Dirichlet process mixture with a single Gaussian and a pooled Dirichlet 11 0.4 0.6 0.8 1.0 1.2                   
+
+> λuRMSE 00.5 11.5 2−0.6 −0.4 −0.2 0.0 0.2 0.4 0.6
+> λuBias 00.5 11.5 20.80 0.85 0.90 0.95 1.00
+> λuCoverage 00.5 11.5 20.4 0.6 0.8 1.0 1.2 1.4
+> λuPosterior variance 00.5 11.5 2Fusion RCT−only RWD−only
+
+Figure 1: CATE metrics under varying unmeasured confounding strength λu, with the RWD prognostic deviation held at λd = 1. From top-left to bottom-right: pointwise RMSE, mean bias, 95% credible-interval coverage, and posterior variance of ˆ τ (x), averaged over the evaluation set and across simulation replicates. Dashed reference lines indicate zero bias and nominal coverage. process mixture, both of which force the two sources to share one error law. The nonpara-metric model is robust across error laws and improves on both alternatives (Supplementary Materials S.4). 
+
+3.2 Simulation results 
+
+We first vary the confounding strength λu and hold the between-source heterogeneity fixed at 
+
+λd = 1. Figure 1 reports the results. The real-world-only estimate is unbiased at λu = 0. Its bias then grows roughly linearly with λu, to circa 0 .4 at λu = 2. The trial-only estimate is unaffected by λu. The Bayesian fusion forest stays essentially unbiased across the whole range. The Bayesian fusion forest also attains a lower RMSE than the trial-only baseline at every level. Coverage is near nominal for the fusion and trial-only estimates. The real-world-only estimate loses coverage as its bias grows. The fusion posterior variance is roughly half that of the trial-only baseline throughout. This reflects the precision gained by borrowing from the larger real-world sample. We report the results for varying between-source heterogeneity λd at fixed confounding λu = 1 in Supplementary Materials S.4. All three estimators are essentially flat in λd. The fusion and trial-only estimates stay unbiased and at nominal coverage. The real-world-only estimate keeps the bias from the fixed confounding. RMSE and posterior variance are stable across λd.We compare the Bayesian fusion forest with the machine-learning methods at λd = λu = 1. Table 1 reports all four methods in all four configurations. The Bayesian fusion forest attains the lowest root mean squared error of every method and configuration, and it is the only method whose intervals reach nominal coverage at a competitive width. The alternatives that cover do so with intervals between 1 .2 and 2 .1 times as wide, and those with narrower intervals cover between 0 .00 and 0 .48. Pooling the two sources without a confounding function transfers the confounding bias: within every family the pooled fits shift the bias upward relative to their trial-only counterparts. The deep neural network attains the lowest error of the alternatives in three of the four configurations. It is therefore the strongest of the four, and we compare against 12 Table 1: Comparison with the machine-learning alternatives at λd = λu = 1: a deep neural network (DNN), gradient boosting under an accelerated failure time loss (XGBoost), and Buckley– James boosting over extreme learning machines (BJ-ELM) and regression trees (BJ-trees), each fitted as an S- and a T-learner on the trial alone and on a naive pool of both sources. Both sources are right-censored at circa 35%. Coverage and width refer to 95% intervals: posterior for the Bayesian fusion forest and percentile bootstrap over 100 resamples otherwise. Averages over 1000 replications. The lowest root mean squared error and the bias closest to zero are in bold. The BJ-trees S-learner never selects the treatment indicator, so its estimated effect and intervals are identically zero.                                                                                         
+
+> Method Source Learner RMSE Bias Coverage Width Bayesian fusion forest Both —0.676 −0.026 0.964 2.82 DNN Trial S1.115 −0.185 0.375 0.95 T1.250 −0.247 0.913 3.73 Pool S1.107 0.105 0.444 0.99 T1.350 0.137 0.991 4.92 XGBoost Trial S1.161 −0.038 0.158 0.40 T1.593 −0.075 0.937 4.95 Pool S1.114 0.151 0.269 0.64 T1.120 0.306 0.905 3.27 BJ-ELM Trial S1.281 −0.068 0.445 1.42 T1.662 0.393 0.952 5.97 Pool S1.282 0.309 0.300 0.90 T1.175 0.472 0.896 3.34 BJ-trees Trial S1.209 −0.040 0.000 0.00 T1.354 −0.054 0.460 1.73 Pool S1.222 0.028 0.000 0.00 T1.013 0.343 0.475 1.25
+
+it alone in the remainder of the paper. The S-learners show undercoverage, a consequence of their narrow bootstrap intervals. The T-learners recover coverage, but only by widening their intervals, and the pooled deep network overcovers outright. We give the full results across the (λd, λ u) grid in Supplementary Materials S.4. We finally examine robustness to the covariate dimension. Figure 2 reports the CATE metrics against p. The Bayesian fusion forest stays essentially unbiased across the whole range, as does the trial-only baseline, while the real-world-only estimate retains its confounding bias. All estimators lose precision as p grows, but at very different rates. The trial-only posterior variance increases several-fold, whereas the fusion variance grows only mildly, and the fusion attains the lowest RMSE of the feasible estimators at every p. The fusion holds near-nominal coverage throughout, while the trial-only intervals turn conservative as their variance increases. The efficiency of the fusion relative to the trial-only baseline confirms that the gain persists. The RMSE ratio rises from 0 .68 at p = 10 to 0 .81 at p = 500, yet stays below one throughout. The posterior-variance ratio stays near one-half (Supplementary Materials S.4). Because both estimators are unbiased, this advantage is essentially a variance effect. The fusion borrows the larger real-world sample to control a variance the trial alone cannot. These results show that the Bayesian fusion forest is robust to both nuisances. The Bayesian fusion forest corrects for the unmeasured confounding in the real-world data and stays unbiased as the confounding strengthens. It accommodates the prognostic heterogeneity between the sources and is unaffected as the heterogeneity grows. It also exploits the larger real-world sample 13 0.4 0.6 0.8 1.0            
+
+> p
+> RMSE 550 500 −0.3 −0.2 −0.1 0.0 0.1 0.2 0.3
+> p
+> Bias 550 500 0.80 0.85 0.90 0.95
+> p
+> Coverage 550 500 0.0 0.5 1.0 1.5 2.0
+> p
+> Posterior variance 550 500 Fusion Fusion−oracle RCT−only RWD−only
+
+Figure 2: CATE metrics as the number of covariates p grows from 5 to 500, with n1 = 150, 
+
+n0 = 350, and λd = λu = 1; five covariates are active and the remaining p − 5 are noise. From top-left to bottom-right: RMSE, bias, 95% credible-interval coverage, and posterior variance of ˆτ (x). The fusion oracle is the Bayesian fusion forest given only the five active covariates, and traces the achievable floor. Dashed reference lines mark zero bias and nominal coverage. and achieves lower RMSE and posterior variance than the trial-only baseline at every grid point. 14 0.00 0.25 0.50 0.75 1.00 0 10 20 Time (years) Survival probability RCT - ZDV mono RCT - Combination RWD - ZDV mono RWD - Combination Figure 3: Kaplan–Meier curves of event-free survival, by data source (RCT, RWD) and treatment group (ZDV monotherapy and combination). The main panel spans the full cohort follow-up of circa 25 years; the inset zooms to the shorter trial window. The real-world data curves are approximate due to interval censoring. 
+
+# 4 Application: survival after HIV 
+
+We study the effect of a combination antiretroviral therapy versus zidovudine (ZDV) monotherapy on event-free survival in HIV. We combine the AIDS Clinical Trials Group Protocol 175 (ACTG 175) (Hammer et al., 1996) with the Multicenter AIDS Cohort Study (MACS) (Kaslow et al., 1987). Treatment in ACTG 175 is randomised. We pool the three combination regimens in ACTG 175 into one comparator and contrast it with ZDV monotherapy. We restrict both sources to a common population: men with baseline CD4 count of 200 to 500 cells/mm 3. This alignment makes the fusion credible, since the two sources then approximate one population. We adjust for six baseline covariates: age, CD4, CD8, calendar year, race, and years of prior antiretroviral therapy. We summarise the aligned cohort in Supplementary Materials S.5. The aligned cohort contains 1771 trial patients and 373 real-world data patients. The trial follows patients for a maximum of circa three years: too short to reach median event-free survival. The MACS study follows them for circa 25 years and reaches a median event-free survival of five to six years. This longer follow-up adds robustness for the late treatment effect where the trial is uninformative. MACS records outcomes at annual visits. The data give event times only to the calendar year, so the events are interval-censored at annual resolution. Figure 3 shows the Kaplan–Meier survival curves. We fit a Bayesian fusion forest to the combined data with default parameter settings. We compare it with an AFT Bayesian causal forest fitted to the trial alone. We compute the average effect with a source-specific Bayesian bootstrap. The source weights follow a Dirichlet prior proportional to the sample sizes. The fusion estimate of the average acceleration factor is 1.65 (95% credible interval [1 .43; 1 .90]). The trial-only baseline is close at 1 .70 (95% credible interval [1 .51; 1 .92]). Combination therapy thus stretches the event-free survival time scale by a factor of 1 .65 relative to monotherapy. Equivalently, the median event-free survival time under combination therapy is 1 .65 times the median under monotherapy. The Bayesian fusion forest estimates each patient’s effect with lower posterior variance than the trial alone. Figure 4 shows the subject-level acceleration factor for every patient, ordered by 15 1.0 1.5 2.0 2.5 3.0 Acceleration factor Patients (ordered by posterior mean) RCT RWD Figure 4: Subject-level acceleration factor for every patient in the trial-aligned cohort, from the Bayesian fusion forest, ordered by posterior mean. Vertical bars are pointwise 95% credible intervals; colour indicates the data source (RCT, RWD); the dashed line at 1 marks no effect. posterior mean. The estimates lie above one, so combination helps almost everyone. The size of the gain differs across patients. The fusion intervals are far narrower than the trial-only intervals. The average 95% credible-interval width falls from 3 .16 to 1 .21 on the acceleration-factor scale, a reduction of 62% (Supplementary Materials S.5). The fusion sharpens the individual estimates. This contrasts with the average effects presented above: the fusion interval there is slightly wider, because the Bayesian bootstrap propagates uncertainty about the target population’s covariate distribution. We also fit the flexible machine-learning predictors of the simulation study to this cohort. None of them targets a causal contrast, and none offers a mechanism for combining a randomised with a confounded source. We fit a deep accelerated failure time network, gradient-boosted trees, and Buckley–James boosting over extreme learning machines and over regression trees, each as an S- and a T-learner, on the trial alone and on a naive pool of both sources. Across the sixteen resulting configurations the share of patients declared at least 95% certain to benefit ranges from 0.0% to 100%, and no principled rule selects among them. Interval width cannot decide between the methods here, because the cohort supplies no ground truth: a narrow interval may reflect genuine precision or mere overconfidence. We report the comparison in full in Supplementary Materials S.5.2. The Bayesian fusion forest instead gives a single coherent answer, with calibrated intervals and a posterior probability of benefit for every patient. We investigate which patient characteristics drive the variation in benefit. We summarise the treatment-effect forest τ by the posterior projection, with a single regression tree as the second-stage model (CART; Breiman et al., 1984). Figure 5 shows a depth-three tree on the six covariates. It splits on CD8 count and race. The other covariates do not enter. The acceleration factor rises with CD8, from circa 1 .5 in the lowest group to circa 1 .8 in the highest. White patients gain slightly more than non-white within each CD8 band. Every leaf exceeds 1 .4, so all subgroups benefit. The treatment benefit is largest at high CD8. We inspect the posterior probability of treatment benefit P(τ (xi) > 0 | data) for each patient (Henderson et al., 2020). We bin the patients by posterior probability of benefit and report the fraction in each bin. We compute it over the trial population, under the fusion and trial-only fits, so the columns are comparable (Table 2). We find strong evidence of benefit for almost 16 CD8 CD8 CD8 race race race                  
+
+> 1.45 [1 .05; 1 .92]
+> n= 124 1.51 [1 .19; 1 .87]
+> n= 381 1.60 [1 .31; 1 .92]
+> n= 330 1.65 [1 .25; 2 .13]
+> n= 107 1.72 [1 .43; 2 .07]
+> n= 425 1.76 [1 .33; 2 .32]
+> n= 178 1.83 [1 .51; 2 .22]
+> n= 599
+> ≤800 >800
+> ≤650
+> >650
+> ≤1065 >1065 non-white white non-white white non-white white
+
+Figure 5: Regression-tree summary of the acceleration factor exp {τ (x)} from the Bayesian fusion forest. We fit the tree to the posterior-mean log-time CATE on the six baseline covariates. Each leaf gives the within-leaf average acceleration factor, as a posterior mean and 95% credible interval. Table 2: Posterior probability of benefit over the trial population. Higher bins give stronger evidence of benefit, the lowest evidence of harm. Entries are fractions of patients. 
+
+P(τ (xi) > 0 | data) Fusion Trial-only (0 .99 , 1] 0.767 0.180 (0 .95 , 0.99] 0.206 0.198 (0 .75 , 0.95] 0.028 0.364 (0 .25 , 0.75] 0.000 0.245 [0 , 0.25] 0.000 0.014 
+
+every patient. The trial alone is far less certain, with only 38% above 0 .95 and a quarter of patients inconclusive. The Bayesian fusion forest gains this certainty at the conditional level even though its average effect is slightly smaller. We investigate the between-source heterogeneity in baseline prognosis. We summarise the deviation forest d(x) by a projection on a linear model. The deviation forest measures how the baseline prognosis differs between the trial and the real-world data. We project d(·) onto the covariates by least squares and present the results in Table 3. The gap is dominated by a constant shift. The intercept is 1 .70 (95% credible interval [1 .31; 2 .10]), so the observational baseline sits well above the trial. Among the covariates, only prior antiretroviral years moves the gap, by 0 .27 (95% credible interval [ −0.01; 0 .55]). Age, CD4, CD8, calendar year, and race have coefficients near zero, with intervals covering zero. The baseline prognosis therefore differs mainly through a large average shift. This shift likely reflects population and measurement differences which the six covariates do not capture. Combination therapy prolongs event-free survival by a factor of circa 1 .65. We identify benefit for nearly every patient, far more than the trial alone. This near-universal advantage echoes earlier ACTG 175 analyses. The original trial (Hammer et al., 1996) and later re-analyses on survival-type endpoints (Lee and Kim, 2026) all favour combination therapy over monotherapy. The Buckley–James Q-learner (Lee and Kim, 2026) likewise recommends it for over 96% of participants. We found that the treatment effect varies with CD8 count and race. This agrees with evidence that the benefit of combination therapy varies with baseline risk (Kennedy et al., 2023). The baseline prognosis differs between the sources, mainly through a large average shift and in part through its dependence on prior antiretroviral exposure. The fusion delivers this certainty with calibrated uncertainty. 17 Table 3: Linear projection of the deviation forest d(x) onto the covariates: posterior mean coefficient and 95% credible interval on the log-transformed time scale. The CD4 and CD8 coefficients are reported per 100 cells/mm 3.                
+
+> Term Coefficient 95% credible interval Intercept 1.701 [1 .312; 2 .099] Age, y −0.003 [−0.020; 0 .015] CD4, per 100 cells/mm 30.061 [−0.064; 0 .189] CD8, per 100 cells/mm 30.005 [−0.019; 0 .032] Calendar year −0.032 [−0.256; 0 .194] Race 0.071 [−0.304; 0 .443] Prior ART, y 0.269 [−0.008; 0 .550]
+
+# 5 Discussion 
+
+We combined a randomised trial with real-world data to estimate heterogeneous treatment effects on survival outcomes, without assuming the real-world source is unconfounded. The simulation study and the HIV application demonstrate its advantages over a single-source analysis. The Bayesian fusion forest remains unbiased under varying levels of unmeasured confounding. It reduces the posterior variance of a trial-only analysis. In the application, we recovered a benefit of combination therapy that the survival curves of the real-world data alone did not reveal. We established benefit for nearly every patient where the trial alone was inconclusive. The model handled the right-censored trial and the interval-censored cohort jointly. Our framework implicitly assumes the acceleration factor exp {τ (X)} is time-invariant: treatment rescales the survival time by a factor that depends on the covariates but not on time. This assumption may be inappropriate when treatment effects unfold over time, such as delayed-onset benefits or waning effects. Flexible parametric AFT models relax this assumption by letting the acceleration factor vary with time (Crowther et al., 2023). The causal interpretation of time-dependent acceleration factors has been formalised (Brathovde et al., 2026). A natural extension replaces τ (X) with a generalised Bayesian tree ensemble τ (X, t ). 
+
+# Data availability 
+
+The software implementation is available on GitHub at https://github.com/tijn-jacobs/Fu sionForests . The same repository also holds the code for the simulation studies and the data analysis. A release on the Comprehensive R Archive Network is planned. The ACTG 175 trial data are available in the speff2trial R package (Juraska et al., 2022). The MACS data can be requested through the MWCCS cohort website. 
+
+# Funding 
+
+This project has received funding from the European Research Council (ERC) under the European Union’s Horizon Europe program under Grant agreement No. 101074802. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or the European Research Council Executive Agency. Neither the European Union nor the granting authority can be held responsible for them. This work used the Dutch 18 national e-infrastructure with the support of the SURF Cooperative using grant no. EINF-18803. 
+
+# Acknowledgements 
+
+The authors used generative artificial intelligence tools in support of developing and debugging the accompanying software. All such output was reviewed and verified by the authors, who take full responsibility for the content of this work. 
+
+# Conflict of interest 
+
+None declared. 
+
+# References 
+
+Antoniak, C. E. (1974). Mixtures of Dirichlet processes with applications to Bayesian nonpara-metric problems. The Annals of Statistics , 2(6):1152–1174. Barnwal, A., Cho, H., and Hocking, T. (2022). Survival regression with accelerated failure time model in XGBoost. Journal of Computational and Graphical Statistics , 31(4):1292–1302. Brathovde, M., Putter, H., Valberg, M., and Post, R. A. J. (2026). The causal interpretation of acceleration factors. arXiv:2409.01983. Breiman, L., Friedman, J. H., Olshen, R. A., and Stone, C. J. (1984). Classification and Regression Trees . Chapman and Hall/CRC, 1 edition. Chen, M.-H. and Ibrahim, J. G. (2000). Power prior distributions for regression models. Statistical Science , 15(1):46–60. Chipman, H. A., George, E. I., and McCulloch, R. E. (1998). Bayesian CART model search. 
+
+Journal of the American Statistical Association , 93(443):935–948. Chipman, H. A., George, E. I., and McCulloch, R. E. (2010). BART: Bayesian additive regression trees. The Annals of Applied Statistics , 4(1):266–298. Crowther, M. J., Royston, P., and Clements, M. (2023). A flexible parametric accelerated failure time model and the extension to time-dependent acceleration factors. Biostatistics ,24(3):811–831. Dahabreh, I. J., Robertson, S. E., Tchetgen, E. J., Stuart, E. A., and Hern´ an, M. A. (2019). Gen-eralizing causal inferences from individuals in randomized trials to all trial-eligible individuals. 
+
+Biometrics , 75(2):685–694. Dimitriou, E., Fong, E., Tarp, J. M., Diaz-Ordaz, K., and Lehmann, B. (2026). Causal-ICM: A data fusion framework for heterogeneous treatment effect estimation with multi-task Gaussian processes. In Proceedings of Machine Learning Research , volume 323, pages 1–29. Dorie, V., Hill, J., Shalit, U., Scott, M., and Cervone, D. (2019). Automated versus do-it-yourself methods for causal inference: Lessons learned from a data analysis competition. Statistical Science , 34(1):43–68. 19 Escobar, M. D. and West, M. (1995). Bayesian density estimation and inference using mixtures. 
+
+Journal of the American Statistical Association , 90(430):577–588. Foster, J. C., Taylor, J. M. G., and Ruberg, S. J. (2011). Subgroup identification from randomized clinical trial data. Statistics in Medicine , 30(24):2867–2880. Hahn, P. R., Murray, J. S., and Carvalho, C. M. (2020). Bayesian regression tree models for causal inference: Regularization, confounding, and heterogeneous effects. Bayesian Analysis ,15(3):965–1056. Hammer, S. M., Katzenstein, D. A., Hughes, M. D., Gundacker, H., Schooley, R. T., Haubrich, R., Henry, W., Lederman, M., Phair, J., Niu, M., Hirsch, M., and Merigan, T. (1996). A trial comparing nucleoside monotherapy with combination therapy in HIV-infected adults with CD4 cell counts from 200 to 500 per cubic millimeter. New England Journal of Medicine ,335(15):1081–1090. Hastie, T. and Tibshirani, R. (2000). Bayesian backfitting (with comments and a rejoinder by the authors). Statistical Science , 15(3):196–223. Henderson, N. C., Louis, T. A., Rosner, G. L., and Varadhan, R. (2020). Individualized treatment effects with censored data via fully nonparametric Bayesian accelerated failure time models. 
+
+Biostatistics , 21(1):50–68. Hern´ an, M. A. (2010). The hazards of hazard ratios. Epidemiology , 21(1):13–15. Hill, J. L. (2011). Bayesian nonparametric modeling for causal inference. Journal of Computa-tional and Graphical Statistics , 20(1):217–240. Hobbs, B. P., Sargent, D. J., and Carlin, B. P. (2012). Commensurate priors for incorporating historical information in clinical trials using general and generalized linear models. Bayesian Analysis , 7(3):639–674. Hupf, B., Bunn, V., Lin, J., and Dong, C. (2021). Bayesian semiparametric meta-analytic-predictive prior for historical control borrowing in clinical trials. Statistics in Medicine ,40(14):3385–3399. Ishwaran, H. and James, L. F. (2001). Gibbs sampling methods for stick-breaking priors. Journal of the American Statistical Association , 96(453):161–173. Jacobs, T. (2026). ShrinkageTrees: An R Package for Bayesian Tree Ensembles for Survival Analysis and Causal Inference. Jacobs, T., van Wieringen, W. N., and van der Pas, S. L. (2025). Horseshoe forests for high-dimensional causal survival analysis. Accepted for publication in Bayesian Analysis. Juraska, M., Gilbert, P. B., Lu, X., Zhang, M., Davidian, M., and Tsiatis, A. A. (2022). speff2trial: Semiparametric Efficient Estimation for a Two-Sample Treatment Effect . R package version 1.0.5. Kabata, D., Henderson, N. C., and Varadhan, R. (2026). Quantifying uncertainty of individualized treatment effects in right-censored survival data: A comparison of Bayesian additive regression trees and causal survival forest. Health Services and Outcomes Research Methodology , 26:87– 107. Kallus, N., Puli, A. M., and Shalit, U. (2018). Removing hidden confounding by experimental grounding. In Proceedings of the 32nd International Conference on Neural Information Processing Systems , NIPS’18, page 10911–10920, Red Hook, NY, USA. Curran Associates Inc. 20 Kapelner, A. and Bleich, J. (2016). bartMachine: Machine learning with Bayesian additive regression trees. Journal of Statistical Software , 70(4):1–40. Kaslow, R. A., Ostrow, D. G., Detels, R., Phair, J. P., Polk, B. F., Rinaldo, C. R., and for the Multicenter AIDS Cohort Study (1987). The Multicenter AIDS Cohort Study: rationale, organization, and selected characteristics of the participants. American Journal of Epidemiology , 126(2):310–318. Kennedy, E. H., Balakrishnan, S., and Wasserman, L. A. (2023). Semiparametric counterfactual density estimation. Biometrika , 110(4):875–896. Kong, J. and Zhang, S. (2023). Buckley–James boosting model based on extreme learning machine and random survival forests. Biometrical Journal , 65(5):e2200153. K¨ unzel, S. R., Sekhon, J. S., Bickel, P. J., and Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the National Academy of Sciences , 116(10):4156–4165. Lee, J. and Kim, J.-M. (2026). Counterfactual survival Q-learning via Buckley–James boosting, with applications to ACTG 175 and CALGB 8923. Journal of the Royal Statistical Society Series C: Applied Statistics . Advance access. Mao, G., Yang, S., and Wang, X. (2025). Statistical inference for heterogeneous treatment effect with right-censored data from synthesizing randomized clinical trials and real-world data. 
+
+Biometrics , 81(4):ujaf131. Neuenschwander, B., Capkun-Niggli, G., Branson, M., and Spiegelhalter, D. J. (2010). Summa-rizing historical information on controls in clinical trials. Clinical Trials , 7(1):5–18. Norman, P. A., Li, W., Jiang, W., and Chen, B. E. (2024). deepAFT: A nonlinear accelerated failure time model with artificial neural network. Statistics in Medicine , 43(19):3689–3701. Pang, M., Platt, R. W., Schuster, T., and Abrahamowicz, M. (2021). Flexible extension of the accelerated failure time model to account for nonlinear and time-dependent effects of covariates on the hazard. Statistical Methods in Medical Research , 30(11):2526–2542. Robins, J. M., Rotnitzky, A., and Scharfstein, D. O. (2000). Sensitivity analysis for selection bias and unmeasured confounding in missing data and causal inference models. In Halloran, M. E. and Berry, D., editors, Statistical Models in Epidemiology, the Environment, and Clinical Trials , pages 1–94, New York, NY. Springer New York. Roˇ ckov´ a, V. and van der Pas, S. (2020). Posterior concentration for Bayesian regression trees and forests. The Annals of Statistics , 48(4):2108–2131. Rothwell, P. M. (2005). Subgroup analysis in randomised controlled trials: importance, indica-tions, and interpretation. The Lancet , 365(9454):176–186. Rubin, D. B. (1974). Estimating causal effects of treatments in randomized and nonrandomized studies. Journal of Educational Psychology , 66(5):688–701. Rubin, D. B. (1981). The Bayesian bootstrap. The Annals of Statistics , 9(1):130–134. Schmidli, H., Gsteiger, S., Roychoudhury, S., O’Hagan, A., Spiegelhalter, D., and Neuenschwan-der, B. (2014). Robust meta-analytic-predictive priors in clinical trials with historical control information. Biometrics , 70(4):1023–1032. Sethuraman, J. (1994). A constructive definition of Dirichlet priors. Statistica Sinica , 4(2):639– 650. 21 Sherman, R. E., Anderson, S. A., Dal Pan, G. J., Gray, G. W., Gross, T., Hunter, N. L., LaVange, L., Marinac-Dabic, D., Marks, P. W., Robb, M. A., Shuren, J., Temple, R., Woodcock, J., Yue, L. Q., and Califf, R. M. (2016). Real-world evidence – what is it and what can it tell us? 
+
+New England Journal of Medicine , 375(23):2293–2297. Shyr, C., Ren, B., Patil, P., and Parmigiani, G. (2025). Multi-study R-learner for estimating heterogeneous treatment effects across studies using statistical machine learning. Biostatistics ,26(1):kxaf040. Stuart, E. A., Cole, S. R., Bradshaw, C. P., and Leaf, P. J. (2011). The use of propensity scores to assess the generalizability of results from randomized trials. Journal of the Royal Statistical Society Series A: Statistics in Society , 174(2):369–386. Sun, J. (2006). The Statistical Analysis of Interval-Censored Failure Time Data . Statistics for Biology and Health. Springer, New York. Swindell, W. R. (2009). Accelerated failure time models provide a useful statistical framework for aging research. Experimental Gerontology , 44(3):190–200. Tanner, M. A. and Wong, W. H. (1987). The calculation of posterior distributions by data augmentation. Journal of the American Statistical Association , 82(398):528–540. Teh, Y. W., Jordan, M. I., Beal, M. J., and Blei, D. M. (2006). Hierarchical Dirichlet processes. 
+
+Journal of the American Statistical Association , 101(476):1566–1581. Thal, D. R. C. and Finucane, M. M. (2023). Causal methods madness: Lessons learned from the 2022 ACIC competition to estimate health policy impacts. Observational Studies , 9(3):3–27. VanderWeele, T. J. and Ding, P. (2017). Sensitivity analysis in observational research: Introducing the E-value. Annals of Internal Medicine , 167(4):268–274. Woody, S., Carvalho, C. M., and Murray, J. S. (2021). Model interpretation through lower-dimensional posterior summarization. Journal of Computational and Graphical Statistics ,30(1):144–161. Yamato, H. (1984). Characteristic functions of means of distributions chosen from a Dirichlet process. The Annals of Probability , 12(1):262–267. Yang, M., Dunson, D. B., and Baird, D. (2010). Semiparametric Bayes hierarchical models with mean and variance constraints. Computational Statistics and Data Analysis , 54(9):2172–2186. Yang, S., Gao, C., Zeng, D., and Wang, X. (2023). Elastic integrative analysis of randomised trial and real-world data for treatment heterogeneity estimation. Journal of the Royal Statistical Society: Series B (Statistical Methodology) , 85(3):575–596. Yang, S., Liu, S., Zeng, D., and Wang, X. (2025). Data fusion methods for the heterogeneity of treatment effect and confounding function. Bernoulli , 31(4):2987–3012. Ye, X., Yang, S., Wang, X., and Liu, Y. (2025). Integrative analysis of high-dimensional RCT and RWD subject to censoring and hidden confounding. Lifetime Data Analysis , 31:473–497. Zhou, T. and Ji, Y. (2021). Incorporating external data into the analysis of clinical trials via Bayesian additive regression trees. Statistics in Medicine , 40(28):6421–6442. 22 Supplementary Materials S.1 Proofs 
+
+S.1.1 Proof of Proposition 1 
+
+We show: 
+
+E[log T | A, X, S ] = m0(X, S ) + τ (X) A + (1 − S) A c (X), (S1) at each of the four values of ( A, S ): The left-hand side is the conditional mean of the observed log T . The right-hand side decomposes that mean into causal quantities: a source-specific baseline m0(X, S ), the treatment effect τ (X), and the confounding bias c(X). We use two elementary arguments throughout the proof. By consistency (Assumption 1), we replace the observed outcome by the relevant potential outcome on the event where treatment is fixed: log T = log T (a) on {A = a}. By RCT unconfoundedness (Assumption 2), we have 
+
+T (a) ⊥⊥ A | X, S = 1. Inside the RCT subpopulation {S = 1 }, the conditional distribution of 
+
+T (a) given X is unchanged by further conditioning on {A = a}. The two conditional expectations coincide: E[log T (a) | A = a, X, S = 1] = E[log T (a) | X, S = 1]. Together, the two arguments yield, for each a ∈ { 0, 1}:
+
+E[log T | A = a, X, S = 1] = E[log T (a) | X, S = 1] . (S2) 
+
+Case A = 0 , S ∈ { 0, 1}. The two treated-arm terms in (S1), τ (X) A and (1 − S) A c (X), vanish. The right-hand side reduces to m0(X, S ). The left-hand side equals m0(X, S ) by the definition 
+
+m0(X, S ) := E[log T | A = 0 , X, S ]. 
+
+Case A = 1 , S = 1 (RCT). We apply (S2) at a = 1 to obtain: 
+
+E[log T | A = 1 , X, S = 1] = E[log T (1) | X, S = 1] . (S3) We split log T (1) = log T (0) + [log T (1) − log T (0)] inside the expectation: 
+
+E[log T (1) | X, S = 1] = E[log T (0) | X, S = 1] + E[log T (1) − log T (0) | X, S = 1] . (S4) The first term equals m0(X, 1) by (S2) at a = 0: 
+
+E[log T (0) | X, S = 1] = E[log T | A = 0 , X, S = 1] = m0(X, 1) . (S5) By cross-source transportability (Assumption 4), the conditional log-treatment effect does not depend on S. The contrast on the right of (S4) therefore equals the population CATE 
+
+τ (X) = E[log T (1) − log T (0) | X] defined in the manuscript: 
+
+E[log T (1) − log T (0) | X, S = 1] = E[log T (1) − log T (0) | X] = τ (X). (S6) We combine the three results: E[log T | A = 1 , X, S = 1] = m0(X, 1) + τ (X). This matches the right-hand side of (S1) at ( A, S ) = (1 , 1). The confounding-function term (1 − S) A c (X)vanishes when S = 1. 
+
+Case A = 1 , S = 0 (RWD). We recall the definition of the confounding function from the manuscript: 
+
+c(x) = E[log T | X = x, A = 1 , S = 0] − E[log T | X = x, A = 0 , S = 0] − τ (x). (S7) 23 We rearrange: 
+
+E[log T | A = 1 , X, S = 0] = m0(X, 0) + τ (X) + c(X), (S8) which equals the right-hand side of (S1) at ( A, S ) = (1 , 0). This case uses none of the manuscript’s causal-framework assumptions directly. They enter only through τ : they identify τ as the causal CATE rather than an unrelated function of X. That identification is the content of Proposition 2(i), proved below. 
+
+S.1.2 Proof of Proposition 2 
+
+We use positivity (Assumption 3 of the manuscript) throughout the proof. It guarantees that the conditional expectations below are well-defined for almost every x in the relevant support. 
+
+Part (i): identification of τ from the RCT. We evaluate (S1) at the two values of A within the RCT slice {S = 1 }. The confounding-function term (1 − S) A c (X) vanishes when S = 1: 
+
+E[log T | A = 1 , X, S = 1] = m0(X, 1) + τ (X), (S9) 
+
+E[log T | A = 0 , X, S = 1] = m0(X, 1) . (S10) The difference of the two conditional means cancels m0(X, 1) and leaves τ (X): 
+
+τ (X) = E[log T | A = 1 , X, S = 1] − E[log T | A = 0 , X, S = 1] . (S11) Both conditional means on the right are functionals of the joint distribution of the observed outcomes (log T, A, X ) | S = 1. This identifies τ from the RCT alone. The identification rests on two assumptions. By RCT unconfoundedness (Assumption 2 of the manuscript), the observed RCT contrast at X = x equals the conditional treatment effect within the RCT population. By cross-source transportability (Assumption 4 of the manuscript), this RCT-population effect coincides with the population CATE. Neither the RWD data nor the confounding function c enters (S11). 
+
+Part (ii): identification of c from the RWD, given τ . The confounding function is defined in (S7) as: 
+
+c(X) = E[log T | A = 1 , X, S = 0] − E[log T | A = 0 , X, S = 0] − τ (X). (S12) The first two terms are functionals of the RWD data distribution. If τ is already identified, then (S12) identifies c. Part (i) supplies such a τ from the RCT. This is the identification strategy underlying the confounding-function approach to combining randomised and observational data (Kallus et al., 2018; Yang et al., 2025). 
+
+Part (iii): the RWD alone does not identify τ and c separately. We show that distinct parameter pairs ( τ, c ) produce the same RWD distribution. The decomposition (S1) restricted to {S = 0 }
+
+yields two equations in three unknown functions m0(·, 0), τ , and c:
+
+E[log T | A = 0 , X, S = 0] = m0(X, 0) , (S13) 
+
+E[log T | A = 1 , X, S = 0] = m0(X, 0) + τ (X) + c(X). (S14) The first equation identifies m0(·, 0). The second equation identifies the composite τ + c but cannot separate its two components. We make the ambiguity explicit. Fix any function g : X → R and set ˜ τ (x) := τ (x) + g(x) and ˜c(x) := c(x) − g(x). The sum is preserved: ˜ τ (x) + ˜ c(x) = τ (x) + c(x) for every x. Substitution 24 of (˜ τ , ˜c) for ( τ, c ) into (S14) reproduces the same RWD conditional means. The two parameter pairs are observationally equivalent on the RWD slice. Two natural choices of g illustrate the ambiguity. Take g ≡ − τ . Then ˜ τ ≡ 0 and ˜ c ≡ τ + c:the entire RWD contrast is attributed to confounding bias, with no causal effect. Take g ≡ c.Then ˜ τ ≡ τ + c and ˜ c ≡ 0: the entire RWD contrast is attributed to a causal effect, under the false premise that the RWD is unconfounded. The two interpretations are indistinguishable from the RWD data alone. The non-identification is structural rather than statistical. Larger RWD samples cannot resolve it. External information that identifies one of the two functions is required. 25 S.2 The hierarchical m0 prior as a meta-analytic-predictive prior 
+
+The meta-analytic-predictive (MAP) prior of Neuenschwander et al. (2010) is a hierarchical Bayesian construction for borrowing strength between studies. We argue that the main-text specification (11) of m0(X, S ) is a function-valued, heterogeneous MAP prior. The symmetric form of this prior is the canonical MAP construction. The main text uses its two-study instance, anchored at the RCT, which we derive below. The MAP prior assumes a Gaussian hierarchical structure across K studies with study-specific parameters θ1, . . . , θ K :
+
+θk | θ∗, σ 2 
+
+> d
+
+∼ N (θ∗, σ 2
+
+> d
+
+), k = 1 , . . . , K, (S15) 
+
+θ∗ ∼ p(θ∗), (S16) 
+
+σd ∼ p(σd). (S17) The shared mean θ∗ is the borrowing target. The heterogeneity variance σ2 
+
+> d
+
+controls how strongly each θk is shrunk towards θ∗. Small σd enforces near-equality of the θk, i.e. strong borrowing. Large σd allows the θk to drift apart, i.e. weak borrowing. The hierarchical structure lets the data determine the degree of borrowing through the posterior of σd.We restrict the MAP prior to two studies before extending it to functions. Write θs = θ∗ + ds
+
+with ds ∼ N (0 , σ 2
+
+> d
+
+) for the RWD ( s = 0) and the RCT ( s = 1). The model carries three latent quantities, θ∗, d0, and d1, but the two studies determine only the two parameters θ0 and θ1. The overall level of θ∗ is therefore not separately identified from the study-specific deviations. We resolve this by anchoring at the RCT. Take a vague prior on the shared mean, θ∗ ∼ N (0 , κ 2) with 
+
+κ2 → ∞ . The pair ( θ0, θ 1) is then jointly Gaussian with Var( θs) = κ2 + σ2 
+
+> d
+
+and Cov( θ0, θ 1) = κ2.The contrast satisfies θ0 − θ1 = d0 − d1 ∼ N (0 , 2σ2
+
+> d
+
+). We condition on the RCT parameter θ1
+
+and let κ2 → ∞ . The regression coefficient then tends to one and the conditional variance tends to 2 σ2
+
+> d
+
+:
+
+θ0 | θ1 ∼ N
+
+> (
+
+θ1, 2σ2
+
+> d
+> )
+
+. (S18) The shared level θ∗ has dropped out, and the RCT parameter θ1 now serves as the borrowing target. This anchoring at the RCT is a reduction forced by having two studies and a non-informative level, not an extra assumption. Equation (S18) also reads as an informative prior that centres the RWD parameter on the RCT parameter, with a heterogeneity scale that controls the borrowing (Schmidli et al., 2014). We now extend the scalar reduction to functions. The study-specific parameter becomes the prognostic function evaluated at source s, θs(X) := m0(X, s ), and the Gaussian deviation becomes a mean-zero BART deviation. The conditional form (S18) then gives the main-text specification (11): 
+
+m0(X, S ) = msh 0 (X) + (1 − S) · d(X). (S19) We set the shared function equal to the RCT prognosis, msh 0 := m0(·, 1), and write the single RWD deviation as d, with d ∼ BART( σh,d ) and mean zero. Here BART( σh) denotes a BART prior indexed by its leaf scale σh, suppressing the tree-structure arguments of the full notation BART( J, k, α, β ). The deviation d carries the between-source heterogeneity, and the prior is heterogeneous because d varies with X. By (S18) the scale of d is the symmetric deviation scale inflated by √2, which we absorb into the calibration of kd below. In the functional model we do not take the vague-mean limit literally. We instead assign msh 0 its own BART(200 , . . . ) prior as a regularised borrowing target, and use the limit only to justify the anchoring. For more than two sources, or when neither source is a natural reference, we keep a separate mean-zero deviation 
+
+ds for each source, which retains the same identifiability of τ and c.26 We treat the borrowing scale as a calibrated hyperparameter rather than sampling it. The leaf scale of the deviation forest is set by the Chipman–George–McCulloch rule (Chipman et al., 2010): 
+
+σh,d = kd
+
+2√Jd
+
+, (S20) where Jd is the number of trees in the deviation forest and kd > 0 is the tuning constant of the Chipman calibration. The marginal standard deviation of d(X) is then √Jd σh,d = kd/2, independent of Jd. So kd is the borrowing-strength dial. Small kd shrinks d towards zero and induces strong borrowing of the RWD prognostic towards the RCT prognostic. Large kd relaxes the prior and lets d depart further from zero. We take kd = 1 by default, in line with the uniform Chipman calibration of the main text, and the √2 factor from the anchored reduction (S18) is absorbed into this choice. A fully Bayesian alternative is to put a hyperprior on the borrowing scale as in the standard and robust MAP (Neuenschwander et al., 2010; Schmidli et al., 2014); this trades the simplicity of the BART convention for additional data-driven adaptation of the borrowing strength. The standard MAP (S17) assumes Gaussian deviations, which is restrictive when one or more studies are outliers. Hupf et al. (2021) extend MAP to flexible deviations through a Dirichlet-process-based prior on the heterogeneity distribution. The BART deviation in our prior is flexible in a similar spirit, though along a different axis. Hupf et al. (2021) make the distribution of deviations across studies flexible, which guards against an outlying study. Our deviation instead lets the shape of d vary flexibly with the covariates X, while retaining the borrowing target msh 0 .The construction justifies the two-forest decomposition of the baseline prognosis. A single BART on m0(X, S ) with S as a covariate cannot encode the preference for borrowing, and two independent baselines would imply a needlessly diffuse prior on their difference. The shared-plus-deviation form instead places the prior directly on the between-source difference and tunes the borrowing through the deviation scale. 27 S.3 Posterior computation 
+
+We sample the posterior by a blocked Gibbs sampler. We recap the model, summarise one iteration of the outer Gibbs sampler, and derive the update for each parameter block in turn. We close with the calibration of the hyperparameters specific to the error model. 
+
+S.3.1 Model recap and augmented representation 
+
+The Bayesian fusion forest of the main text decomposes the log survival time as: log Ti = msh 0 (xi) + (1 − si) d(xi) + ai τ (xi) + (1 − si) ai c(xi) + εi, (S21) with si ∈ { 0, 1} the source indicator ( si = 1 for RCT, si = 0 for RWD), ai ∈ { 0, 1} the treatment indicator, and xi ∈ Rp the covariate vector. The four regression functions f ∈ { sh , d, τ, c } carry independent BART priors. The errors satisfy εi | Si = s ∼ Fs, with Fs a centred location mixture of Gaussians: 
+
+εi | Si = s, G s, σ s ∼ 
+
+> ∫
+
+1
+
+σs
+
+ϕ 
+
+> (
+
+w − θσs
+
+> )
+
+dG s(θ), Gs = ∑
+
+> k
+
+πsk δθ∗  
+
+> k−μs
+
+, (S22) with shared atoms θ∗
+
+> k
+
+, source-specific weights πs = ( πsk ), and source-specific shifts μs = ∑ 
+
+> k
+
+πsk θ∗
+
+> k
+
+that enforce E[εi | Si = s] = 0. The mixing measures are tied across sources through a hierarchical Dirichlet process with concentrations γ (top-level) and M0, M 1 (source-specific), and per-source residual scales σs.We observe each subject as a triple ( Li, R i, δ i) with Ti ∈ [Li, R i] and δi ∈ { 0, 1, 2} encoding the censoring type. The value δi = 1 corresponds to exact observation ( Li = Ri = Ti). The value 
+
+δi = 0 corresponds to right censoring ( Li = Ci, Ri = ∞). The value δi = 2 corresponds to interval censoring (0 ≤ Li < R i < ∞). The sampler treats log Ti as a latent quantity for every subject with δi̸ = 1, and augments it at the end of each iteration. For each observation we define the partial residual on the augmented log-time scale: 
+
+Ri := log Ti − msh 0 (xi) − (1 − si) d(xi) − ai τ (xi) − ai(1 − si) c(xi). (S23) The residual collects the contribution of the error εi at the current draw of the regression functions. For computation we truncate the top-level stick-breaking at a finite level K (Sethuraman, 1994; Ishwaran and James, 2001). The top-level weights β = ( β1, . . . , β K ) are constructed by βk = uk
+
+> ∏
+> l<k
+
+(1 − ul) with uk iid 
+
+∼ Beta(1 , γ ). We set uK = 1 to truncate at level K, so that βK = 1 − ∑ 
+
+> k<K
+
+βk and βk = 0 for k > K . The source-specific weights then have a finite-dimensional Dirichlet prior on the K-simplex, and the approximation becomes exact as 
+
+K → ∞ . We introduce latent cluster assignments Zi ∈ { 1, . . . , K } such that the latent location 28 of observation i is θ∗ 
+
+> Zi
+
+− μsi . The full hierarchical model after truncation reads: log Ti | · ∼ N
+
+> (
+
+ηi, σ 2
+
+> si
+> )
+
+, (S24) 
+
+ηi = msh 0 (xi) + (1 − si) d(xi) + ai τ (xi) + ai(1 − si) c(xi) + θ∗ 
+
+> Zi
+
+− μsi , (S25) 
+
+msh 0 ∼ BART( Jsh , k sh , α, β ), (S26) 
+
+d ∼ BART( Jd, k d, α, β ), (S27) 
+
+τ ∼ BART( Jτ , k τ , α τ , β τ ), (S28) 
+
+c ∼ BART( Jc, k c, α c, β c), (S29) 
+
+Zi | πsi ∼ Categorical( πsi ), (S30) 
+
+πs | β, M s ∼ Dirichlet( Msβ1, . . . , M sβK ), s ∈ { 0, 1}, (S31) 
+
+β | γ ∼ Stick K (γ), (S32) 
+
+θ∗
+
+> k
+> iid
+
+∼ N (0 , σ 2 
+
+> θ
+
+), k = 1 , . . . , K, (S33) 
+
+σ2 
+
+> s
+
+∼ νλ/χ 2 
+
+> ν
+
+, s ∈ { 0, 1}, (S34) 
+
+γ ∼ Gamma( aγ , b γ ), (S35) 
+
+Ms ∼ Gamma( aM , b M ), s ∈ { 0, 1}, (S36) where Stick K (γ) is the truncated stick-breaking construction given above. We use a default 
+
+K = 50 and track the largest occupied component index across iterations to confirm that it stays well below K. In our simulation studies the number of occupied components did not exceed 25, so the default K = 50 leaves substantial headroom. 
+
+S.3.2 Outer Gibbs sampler 
+
+One iteration of the sampler consists of three blocks executed in order: updates of the four forests 
+
+{sh , d, τ, c }, an update of the HDPM error block, and augmentation of the censored event times. We update the forests sequentially against partial residuals. We update the HDPM error block as a single unit because its conditional structure is internally coupled. The augmentation step at the end of the iteration updates the latent log Ti for use in the next iteration. Algorithm S1 summarises one iteration. 
+
+Algorithm S1: Outer Gibbs sampler, one iteration. 
+
+Input: Current forests ( T fj , Hfj ) for f ∈ { sh , d, τ, c }; current augmented event times log Ti; HDPM state ( θ∗, β, π0, π1, γ, M 0, M 1, σ 20 , σ 21 ).  
+
+> 1
+
+foreach forest f ∈ { sh , d, τ, c } do  
+
+> 2
+
+for j = 1 to Jf do  
+
+> 3
+
+Update ( T fj , Hfj ) by one BART backfitting step on the partial residual Rfi , i ∈ I f ; 
+
+> 4
+
+Update the HDPM error block (Algorithm S2);  
+
+> 5
+
+for i = 1 to n with δi̸ = 1 do  
+
+> 6
+
+Draw log Ti from its truncated normal full conditional; 
+
+S.3.3 Forest updates 
+
+We update the four forests sequentially by extended Bayesian backfitting (Hastie and Tibshirani, 2000; Chipman et al., 2010). We define a partial residual Rfi on the active subset If of 29 observations for each forest f ∈ { sh , d, τ, c }:
+
+Rmsh 0 
+
+> i
+
+= log Ti − (1 − si) d(xi) − ai τ (xi) − ai(1 − si) c(xi) − (θ∗ 
+
+> Zi
+
+− μsi ), (S37) 
+
+Rdi = log Ti − msh 0 (xi) − ai τ (xi) − ai c(xi) − (θ∗ 
+
+> Zi
+
+− μ0), (S38) 
+
+Rτi = log Ti − msh 0 (xi) − (1 − si) d(xi) − (1 − si) c(xi) − (θ∗ 
+
+> Zi
+
+− μsi ), (S39) 
+
+Rci = log Ti − msh 0 (xi) − d(xi) − τ (xi) − (θ∗ 
+
+> Zi
+
+− μ0), (S40) with active subsets 
+
+Imsh 0 = {1, . . . , n }, Id = {i : si = 0 }, Iτ = {i : ai = 1 }, Ic = {i : ai = 1 , s i = 0 }. (S41) Each Rfi subtracts the contributions of the other three forests and the current cluster shift 
+
+θ∗ 
+
+> Zi
+
+− μsi from log Ti, restricted to the subset on which f is active. Conditional on the cluster assignment Zi and the atoms θ∗, the residual Rfi is Gaussian with mean f (xi) and variance σ2
+
+> si
+
+for i ∈ I f . The BART step on forest f operates on this Gaussian working response. Within forest f , we update each tree by a standard BART backfitting step on Rfi . We update the tree structure T fj by a Metropolis-Hastings step with birth-death proposals (Chipman et al., 1998; Kapelner and Bleich, 2016). We then draw the leaf step heights Hfj from their conjugate Gaussian posterior. The Gaussian leaf prior is conjugate to the Gaussian working response, and the posterior mean and variance at each terminal node are available in closed form. 
+
+S.3.4 HDPM error block 
+
+The HDPM error block updates the cluster assignments, atoms, top-level sticks, source-specific weights, concentration parameters, and per-source residual variances. All full conditionals are conjugate. Throughout, we write | · for conditioning on the data and on the current values of all other parameters. Algorithm S2 summarises one update of the block. We sample the cluster assignments from 
+
+P(Zi = k | · ) ∝ πsi,k ϕ
+
+{ Ri − (θ∗ 
+
+> k
+
+− μsi )
+
+σsi
+
+}
+
+, k = 1 , . . . , K. (S42) We sample the atoms in the unconstrained parameterisation and reapply the centring determin-istically (Yang et al., 2010). Let nsk = ∑ 
+
+> i
+
+1{si = s, Z i = k} and ˜Rsk = ∑
+
+> i:si=s, Z i=k
+
+(Ri + μs). The two sources pool through the precision weights σ−2 
+
+> s
+
+in both the mean and the variance of the conjugate update: 
+
+θ∗ 
+
+> k
+
+| · ∼ N
+
+( ∑ 
+
+> s
+
+σ−2 
+
+> s
+
+˜Rsk 
+
+σ−2 
+
+> θ
+
++ ∑ 
+
+> s
+
+σ−2 
+
+> s
+
+nsk 
+
+, (σ−2 
+
+> θ
+
++ ∑
+
+> s
+
+σ−2 
+
+> s
+
+nsk 
+
+)−1
+
+)
+
+, k = 1 , . . . , K. (S43) We then recompute μs = ∑ 
+
+> k
+
+πsk θ∗ 
+
+> k
+
+and the centred atoms θ∗ 
+
+> k
+
+− μs.We update the top-level stick weights by the auxiliary table-count augmentation of Teh et al. (2006). For each ( s, k ) with nsk > 0 we sample the auxiliary table count via the Antoniak representation (Antoniak, 1974): 
+
+tsk =
+
+> nsk
+
+∑
+
+> j=1
+
+Bsk,j , Bsk,j ∼ Bernoulli 
+
+( Msβk
+
+Msβk + j − 1
+
+)
+
+, (S44) 30 and we set tsk = 0 when nsk = 0. With t·k = t0k + t1k, we update the truncated sticks by 
+
+uk | · ∼ Beta 
+
+1 + t·k, γ + ∑
+
+> l>k
+
+t·l
+
+ , k = 1 , . . . , K − 1, (S45) with uK = 1 and βk = uk
+
+∏
+
+> l<k
+
+(1 − ul). The source-specific weights then follow 
+
+πs | · ∼ Dirichlet( Msβ1 + ns1, . . . , M sβK + nsK ), s ∈ { 0, 1}, (S46) after which we recompute μs and the centred atoms. We update the concentration parameters γ and M0, M 1 by the auxiliary-variable scheme of Escobar and West (1995). See Teh et al. (2006, Appendix A) for the derivation. Let K∗ denote the number of occupied top-level components and t·· = ∑ 
+
+> s,k
+
+tsk the total table count. We draw 
+
+ηγ | γ, t ·· ∼ Beta( γ + 1 , t ·· ) and then sample γ from a mixture of two Gamma distributions with mixing weight ωγ :
+
+γ | · ∼ ωγ Gamma( aγ + K∗, b γ − log ηγ ) + (1 − ωγ ) Gamma( aγ + K∗ − 1, b γ − log ηγ ), (S47) with ωγ /(1 − ωγ ) = ( aγ + K∗ − 1) /[t·· (bγ − log ηγ )]. The analogous update for Ms replaces K∗
+
+by the source-specific table count ts· = ∑ 
+
+> k
+
+tsk and uses ηM,s | Ms, n s ∼ Beta( Ms + 1 , n s). The conjugate update of the per-source residual variance closes the block: 
+
+σ2 
+
+> s
+
+| · ∼ InverseGamma 
+
+( ν + ns
+
+2 , νλ + SS s
+
+2
+
+)
+
+, SS s = ∑
+
+> i:Si=s
+
+{Ri−(θ∗ 
+
+> Zi
+
+−μs)}2, s ∈ { 0, 1}.
+
+(S48) 
+
+Algorithm S2: Update of the HDPM error block. 
+
+Input: Partial residuals Ri from (S23); current atoms θ∗, sticks β, source weights 
+
+π0, π1, concentrations γ, M 0, M 1, scales σ20 , σ 21 . 
+
+> 1
+
+for i = 1 to n do  
+
+> 2
+
+Sample cluster assignment Zi from the categorical full conditional (S42);  
+
+> 3
+
+for k = 1 to K do  
+
+> 4
+
+Update the unconstrained atom θ∗ 
+
+> k
+
+from its conjugate Gaussian posterior (S43);  
+
+> 5
+
+Recompute μs = ∑ 
+
+> k
+
+πsk θ∗ 
+
+> k
+
+and the centred atoms;  
+
+> 6
+
+Sample auxiliary table counts tsk via the Antoniak representation;  
+
+> 7
+
+Update top-level sticks uk from Beta posteriors;  
+
+> 8
+
+Recompute βk = uk
+
+∏
+
+> l<k
+
+(1 − ul);  
+
+> 9
+
+foreach s ∈ { 0, 1} do  
+
+> 10
+
+Update source weights πs from a Dirichlet posterior;  
+
+> 11
+
+Recompute μs and the centred atoms;  
+
+> 12
+
+Update concentrations γ, M 0, M 1 via the Escobar-West auxiliary-variable scheme;  
+
+> 13
+
+foreach s ∈ { 0, 1} do  
+
+> 14
+
+Update the residual scale σ2 
+
+> s
+
+from its inverse-gamma posterior (S48); 
+
+S.3.5 Data augmentation for censored event times 
+
+Each iteration closes with data augmentation of the unobserved event times for the censored observations (Tanner and Wong, 1987). Subjects with δi = 1 contribute the observed log Ti =31 log Li = log Ri and need no augmentation. Subjects with δi = 0 have a right-censored event time and we draw log Ti | · ∼ TruncatedNormal 
+
+> (
+
+ηi, σ 2 
+
+> si
+
+; [log Li, ∞)
+
+> )
+
+, (S49) where ηi is the conditional mean of log Ti defined in (S25). Subjects with δi = 2 have an interval-censored event time and we draw log Ti | · ∼ TruncatedNormal 
+
+> (
+
+ηi, σ 2 
+
+> si
+
+; [log Li, log Ri]
+
+> )
+
+. (S50) The augmented values serve as the working response for the next iteration. 
+
+S.3.6 Hyperparameters of the nonparametric error distribution 
+
+The nonparametric error model carries three sets of hyperparameters: the per-source residual scales σ2 
+
+> s
+
+, the concentration parameters γ, M 0, M 1, and the base-measure variance σ2 
+
+> θ
+
+. We collect their priors and calibration here. We place a scaled-inverse-χ2 prior σ2 
+
+> s
+
+∼ νλ/χ 2 
+
+> ν
+
+on the per-source residual scales, with ν = 3 and 
+
+λ calibrated to the empirical residual variance (Chipman et al., 2010). We update each σ2 
+
+> s
+
+by the inverse-gamma conjugate step (S48). We treat the concentration parameters γ, M 0, M 1 as unknown and estimate them. We place independent Gamma hyperpriors γ ∼ Gamma( aγ , b γ ) and Ms ∼ Gamma( aM , b M ), with aγ =
+
+aM = 2 and bγ = bM = 0 .1. This places prior mean 20 and prior mode 10 on each concentration. We update them by the Escobar-West auxiliary-variable scheme of the HDPM error block. The base-measure variance σ2 
+
+> θ
+
+of the unconstrained atoms is calibrated by a Yamato-type approximation (Yamato, 1984). The quantity ∑ 
+
+> k
+
+πsk (θ∗ 
+
+> k
+
+− μs)2/σ 2 
+
+> θ
+
+is approximately χ21. We match the induced prior on the marginal residual variance Var( ε | S = s) in tail probability to a preliminary parametric estimate ˆ σ2 
+
+> ε
+
+. We apply the matching within each source separately, with a default tail probability q = 0 .5. 
+
+S.3.7 BART hyperparameters and initialisation 
+
+The BART tree-prior hyperparameters ( Jf , k f , α f , β f ) are set as in the main text. We initialise the BART forests by the standard Chipman et al. (2010) initialisation. We initialise the cluster labels by k-means on the residuals of a preliminary parametric log-normal AFT fit. We initialise the HDPM weights at β = (1 /K, . . . , 1/K ), πs = β, and the concentrations at 
+
+γ = M0 = M1 = 1. 32 S.4 Additional results for the simulation study 
+
+We report the simulation under varying between-source heterogeneity λd here. Figure S1 gives the CATE metrics across the grid of λd. The main text discusses these results. We give the full comparison with the deep-learning competitors here. Table S1 reports each metric across the ( λd, λ u) grid, with λd, λ u ∈ { 0, 1, 2}. The grid restricts to the deep network because it is the strongest of the four alternatives (Table 1 of the main text). The Bayesian fusion forest attains the lowest RMSE at every grid point. 
+
+S.4.1 Robustness to the covariate dimension 
+
+We report the efficiency of the fusion relative to the trial-only baseline as the covariate dimension 
+
+p grows. Figure S2 shows the ratio of the fusion to the trial-only RMSE and posterior variance, alongside the oracle that is handed only the active covariates. Both ratios stay below one across the whole range, so the fusion improves on the trial-only analysis at every p. The RMSE ratio drifts upward as p grows, because the fusion must also learn the high-dimensional baseline, deviation, and confounding surfaces. The oracle ratio instead falls, which confirms that this erosion is the cost of searching the noise covariates rather than a failure of borrowing. The posterior-variance ratio decreases with p, so the fusion’s precision advantage over the trial-only baseline in fact widens. 
+
+S.4.2 The nonparametric error distribution 
+
+We assess the source-specific hierarchical Dirichlet process mixture (HDPM) that the Bayesian fusion forest places on the residual. We isolate the residual model by setting λu = λd = 0, so the two sources share the same structural mean and differ only in their error distribution. We compare three residual priors within the Bayesian fusion forest: a single Gaussian, a Dirichlet process mixture pooled across the two sources (one residual law for both), and the proposed source-specific HDPM (shared atoms, source-specific weights and scale). We escalate the residual 0.4 0.6 0.8 1.0 1.2                   
+
+> λdRMSE 00.5 11.5 2−0.6 −0.4 −0.2 0.0 0.2 0.4 0.6
+> λdBias 00.5 11.5 20.80 0.85 0.90 0.95 1.00
+> λdCoverage 00.5 11.5 20.4 0.6 0.8 1.0 1.2 1.4
+> λdPosterior variance 00.5 11.5 2Fusion RCT−only RWD−only
+
+Figure S1: CATE metrics under varying between-source heterogeneity λd, with the unmeasured confounding held at λu = 1. Panels, methods, and reference lines as in Figure 1 of the main text. 33 Table S1: CATE metrics for the Bayesian fusion forest (BFF) and the four deepAFT competitors across the ( λd, λ u) grid. Each entry is the mean over simulation replicates, with the 2.5–97.5% range in brackets. R and P denote the RCT-only and naive-pool fits; S and T denote the S-learner and T-learner. 
+
+> λd λu BFF  DNN (RCT, S)  DNN (RCT, T)  DNN (pool, S)  DNN (pool, T)
+> RMSE
+> 0 0 0.68 [0.53;0.87]  1.11 [0.98;1.28]  1.24 [0.89;1.75]  1.08 [0.94;1.27]  1.11 [0.70;3.04] 1 0 0.68 [0.53;0.85]  1.11 [0.98;1.27]  1.25 [0.88;1.74]  1.08 [0.93;1.27]  1.11 [0.73;2.94] 2 0 0.67 [0.52;0.85]  1.12 [0.98;1.29]  1.27 [0.89;1.84]  1.09 [0.95;1.27]  1.22 [0.83;3.06] 0 1 0.68 [0.54;0.85]  1.11 [0.97;1.29]  1.23 [0.91;1.74]  1.10 [0.96;1.27]  1.09 [0.71;3.12] 1 1 0.68 [0.52;0.86]  1.12 [0.98;1.26]  1.25 [0.89;1.77]  1.10 [0.96;1.28]  1.13 [0.74;3.02] 2 1 0.68 [0.53;0.84]  1.13 [0.98;1.28]  1.26 [0.88;1.86]  1.12 [0.96;1.28]  1.23 [0.83;3.13] 0 2 0.68 [0.53;0.86]  1.11 [0.97;1.26]  1.25 [0.91;1.72]  1.16 [1.02;1.33]  1.12 [0.72;3.16] 1 2 0.69 [0.54;0.87]  1.12 [0.99;1.27]  1.25 [0.90;1.76]  1.17 [1.01;1.33]  1.19 [0.78;3.26] 2 2 0.68 [0.53;0.87]  1.12 [0.98;1.29]  1.24 [0.87;1.85]  1.17 [1.01;1.33]  1.25 [0.82;3.20]
+> Bias
+> 0 0 −0.01 [ −0.42;0.38]  −0.17 [ −0.55;0.23]  −0.21 [ −0.70;0.33]  −0.13 [ −0.39;0.14]  −0.02 [ −0.47;0.74] 1 0 −0.03 [ −0.44;0.36]  −0.20 [ −0.53;0.19]  −0.23 [ −0.70;0.27]  −0.13 [ −0.42;0.14]  0.01 [ −0.48;0.76] 2 0 −0.04 [ −0.46;0.36]  −0.20 [ −0.53;0.20]  −0.28 [ −0.81;0.28]  −0.12 [ −0.40;0.18]  −0.04 [ −0.58;0.88] 0 1 −0.03 [ −0.42;0.37]  −0.18 [ −0.52;0.20]  −0.23 [ −0.72;0.29]  0.11 [ −0.14;0.39]  0.09 [ −0.36;0.92] 1 1 −0.03 [ −0.45;0.37]  −0.19 [ −0.54;0.21]  −0.25 [ −0.77;0.26]  0.11 [ −0.16;0.38]  0.10 [ −0.39;0.91] 2 1 −0.01 [ −0.42;0.41]  −0.20 [ −0.54;0.18]  −0.25 [ −0.80;0.32]  0.10 [ −0.17;0.38]  0.06 [ −0.51;0.99] 0 2 −0.03 [ −0.43;0.37]  −0.20 [ −0.55;0.16]  −0.25 [ −0.75;0.26]  0.36 [ −0.03;0.65]  0.19 [ −0.30;1.08] 1 2 −0.02 [ −0.43;0.39]  −0.19 [ −0.53;0.21]  −0.24 [ −0.76;0.31]  0.35 [ −0.01;0.65]  0.19 [ −0.35;1.25] 2 2 0.00 [ −0.43;0.42]  −0.19 [ −0.53;0.23]  −0.24 [ −0.77;0.33]  0.32 [ −0.05;0.65]  0.21 [ −0.43;1.25]
+> Coverage
+> 0 0 0.96 [0.92;0.98]  0.38 [0.28;0.50]  0.91 [0.76;0.99]  0.41 [0.31;0.52]  0.99 [0.97;1.00] 1 0 0.96 [0.93;0.98]  0.37 [0.27;0.48]  0.91 [0.78;0.99]  0.42 [0.32;0.54]  0.99 [0.97;1.00] 2 0 0.97 [0.94;0.99]  0.37 [0.27;0.48]  0.92 [0.79;0.99]  0.43 [0.34;0.54]  0.99 [0.97;1.00] 0 1 0.96 [0.93;0.98]  0.38 [0.27;0.48]  0.91 [0.77;0.99]  0.44 [0.33;0.56]  0.99 [0.96;1.00] 1 1 0.96 [0.93;0.99]  0.38 [0.28;0.49]  0.91 [0.78;0.99]  0.44 [0.34;0.56]  0.99 [0.97;1.00] 2 1 0.97 [0.94;0.99]  0.37 [0.27;0.48]  0.92 [0.79;0.99]  0.45 [0.34;0.56]  0.99 [0.96;1.00] 0 2 0.96 [0.93;0.99]  0.37 [0.27;0.49]  0.91 [0.77;0.99]  0.45 [0.36;0.56]  0.99 [0.96;1.00] 1 2 0.96 [0.93;0.99]  0.37 [0.27;0.48]  0.91 [0.79;0.99]  0.45 [0.35;0.58]  0.99 [0.96;1.00] 2 2 0.97 [0.94;0.99]  0.37 [0.27;0.49]  0.93 [0.78;0.99]  0.45 [0.35;0.57]  0.99 [0.96;1.00]
+> Posterior variance
+> 0 0 0.48 [0.41;0.56]  0.07 [0.04;0.12]  1.15 [0.74;1.94]  0.12 [0.05;0.38]  3.96 [0.97;11.76] 1 0 0.50 [0.44;0.58]  0.07 [0.04;0.14]  1.18 [0.74;2.06]  0.12 [0.05;0.34]  4.19 [1.05;11.48] 2 0 0.56 [0.49;0.65]  0.07 [0.04;0.15]  1.35 [0.74;2.98]  0.13 [0.05;0.42]  4.72 [1.18;13.42] 0 1 0.49 [0.42;0.57]  0.07 [0.04;0.11]  1.10 [0.71;1.79]  0.12 [0.05;0.40]  3.72 [1.02;10.24] 1 1 0.52 [0.44;0.60]  0.07 [0.04;0.11]  1.13 [0.74;1.93]  0.13 [0.05;0.42]  4.13 [1.09;11.12] 2 1 0.58 [0.50;0.67]  0.07 [0.04;0.12]  1.21 [0.76;2.35]  0.13 [0.05;0.45]  5.19 [1.24;14.93] 0 2 0.52 [0.45;0.61]  0.07 [0.04;0.10]  1.08 [0.72;1.65]  0.15 [0.06;0.45]  3.60 [1.08;10.63] 1 2 0.55 [0.46;0.63]  0.06 [0.04;0.10]  1.09 [0.74;1.62]  0.15 [0.06;0.44]  4.06 [1.12;11.81] 2 2 0.61 [0.52;0.71]  0.07 [0.04;0.11]  1.12 [0.75;1.77]  0.14 [0.07;0.45]  5.27 [1.33;15.58]
+
+34 0.6 0.7 0.8 0.9 1.0      
+
+> p
+> RMSE ratio (vs RCT−only) 550 500 0.2 0.4 0.6 0.8 1.0
+> p
+> Posterior−variance ratio (vs RCT−only) 550 500 Fusion / RCT−only Fusion−oracle / RCT−only
+
+Figure S2: Efficiency of the Bayesian fusion forest relative to the trial-only baseline as the covariate dimension p grows, at λd = λu = 1. Left: ratio of RMSE; right: ratio of posterior variance. A ratio below one favours the fusion. The fusion oracle is the Bayesian fusion forest given only the active covariates. Shaded bands are 95% Monte Carlo intervals. difficulty over five settings. Setting 1 draws both errors from the standard normal, so the Gaussian prior is correctly specified. Settings 2–5 give the real-world source a markedly larger scale than the trial (a standard-deviation ratio of about three), which the single-scale Gaussian and pooled priors cannot represent, and add increasing non-Gaussianity: a pure scale gap (2), a skewed real-world error (3), a bimodal real-world error (4), and multimodal errors in both sources with shared component locations but different weights (5). To make the residual model bite, we censor heavily and coarsely: the trial is right-censored at circa 50% and the real-world data are interval-censored at quartile visits, so many observations enter the likelihood only through the error distribution over wide intervals. We report the CATE τ (x), our estimand throughout. Table S2 reports the CATE metrics over the combined population. At the correctly-specified null the three priors are indistinguishable, so the flexible residual models cost nothing when a Gaussian would do. From Setting 2 onward the HDPM attains the lowest RMSE at every setting, together with the lowest, or tied-lowest, bias. The Gaussian prior is the most biased throughout, and its bias grows as the error departs from normality, because under heavy coarse censoring a misspecified residual distribution biases the imputation of the censored events. The pooled mixture removes much of this bias by modelling the shape flexibly, but, tied to a single residual law and scale for both sources, it cannot match the source-specific HDPM once the sources differ. Coverage is near nominal, and slightly conservative, for all three priors, and posterior variance is comparable, so the accuracy gains of the HDPM do not come at a calibration cost. The pattern is the same in the trial- and real-world-only populations. 35 Table S2: CATE metrics by residual prior across the five error settings, over the combined population and averaged over simulation replicates. “Source HDPM” is the proposed source-specific hierarchical Dirichlet process mixture; “Shared DP” pools one Dirichlet process mixture across sources. The best RMSE and bias per setting are in bold. Coverage is the 95% credible-interval coverage; “Post. var.” is the mean posterior variance of ˆ τ (x).                                                                 
+
+> Residual prior RMSE Bias Coverage Post. var.
+> Setting 1 — Gaussian, identical (null)
+> Gaussian 0.745 −0.099 0.956 0.557 Shared DP 0.744 −0.064 0.957 0.561 Source HDPM 0.743 −0.066 0.959 0.576
+> Setting 2 — Gaussian, per-source scale gap
+> Gaussian 0.751 −0.146 0.964 0.627 Shared DP 0.745 −0.111 0.964 0.629 Source HDPM 0.739 −0.099 0.965 0.634
+> Setting 3 — Skewed RWD, scale gap
+> Gaussian 0.757 −0.179 0.961 0.613 Shared DP 0.745 −0.119 0.962 0.608 Source HDPM 0.740 −0.121 0.963 0.613
+> Setting 4 — Bimodal RWD, scale gap
+> Gaussian 0.758 −0.138 0.965 0.655 Shared DP 0.754 −0.117 0.966 0.666 Source HDPM 0.742 −0.096 0.967 0.661
+> Setting 5 — Multimodal, shared atoms, weight + scale gap
+> Gaussian 0.771 −0.150 0.966 0.691 Shared DP 0.768 −0.136 0.967 0.706 Source HDPM 0.752 −0.107 0.968 0.694
+
+# S.5 Additional results for the data analysis 
+
+We collect here the material supporting the data analysis of the main text. Section S.5.1 describes the analysis cohort and compares the Bayesian fusion forest with the trial-only fit. Section S.5.2 reports the full comparison with the machine-learning alternatives. 
+
+S.5.1 The analysis cohort and the trial-only comparison 
+
+Table S3 characterises the trial-aligned analysis cohort. Figure S3 gives the subject-level acceleration factor from the trial-only analysis, the comparator for the fusion estimates in the main text. Table S4 compares the precision of the subject-level estimates between the trial-only and fusion analyses. 
+
+S.5.2 Comparison with the machine-learning alternatives 
+
+We compare the results of the Bayesian fusion forest on this cohort with those of four flexible machine-learning predictors for survival outcomes: a deep accelerated failure time network (Norman et al., 2024), gradient boosting under an accelerated failure time loss (Barnwal et al., 2022), and Buckley–James boosting over extreme learning machines and over regression trees (Kong and Zhang, 2023). We fit each as an S-learner and a T-learner (K¨ unzel et al., 2019), on the trial alone and on a naive pool of both sources with a source indicator. This gives sixteen 36 Table S3: Characteristics of the trial-aligned analysis cohort of 2144 patients, by data source. Continuous variables are reported as median [IQR], categorical variables as n (%). ACTG 175 (RCT) MACS (RWD) Age, y 34 [29;41] 39 [34;44] CD4, cells/mm 3 337 [263;422] 263 [178;365] CD8, cells/mm 3 918 [670;1246] 849 [659;1153] Calendar year 1992 1991 [1991;1992] Prior ART, y 0.4 [0;2.1] 1.0 [0;1] Non-white, n (%) 404 (23) 78 (21) 0 5 10 15 Acceleration factor Patients (ordered by posterior mean) RCT RWD 
+
+Figure S3: Subject-level acceleration factor for every patient in the trial-aligned cohort, from the trial-only analysis, ordered by posterior mean. Vertical bars are pointwise 95% credible intervals; the dashed line at 1 marks no effect. The intervals are wider than those of the Bayesian fusion forest in Figure 4 of the main text. Table S4: Precision of the subject-level acceleration factor over the combined cohort, under the trial-only and fusion analyses. Both quantities are averaged across patients on the acceleration-factor scale. Trial-only Fusion Reduction Average 95% credible-interval width 3.16 1.21 62% Average posterior variance 0.808 0.098 88% configurations in total. None of these methods have intrinsic uncertainty quantification, so we obtain intervals from 100 stratified bootstrap resamples in every configuration. The neural network architecture matches the simulation study. We tune its learning rate, momentum, and weight decay by ten-fold cross-validation on the concordance index. The boosted trees are tuned by random search with five-fold cross-validation, following the protocol of their authors; the two Buckley–James methods use their authors’ default settings. The network and both Buckley–James methods require right-censored data. We therefore approximate the interval-censored MACS deaths by their right-censored last-observation encoding, the same encoding used by the trial-only forest. This approximation discards the interval information. 37 The accelerated failure time loss of the boosted trees accepts interval labels, so that method is fitted on the actual bounds. The cohort carries no ground truth, so nothing here reveals which method is closest to the true effect. Interval width in particular is not a measure of quality but of uncertainty, and it carries that meaning only if the method producing it is calibrated. For a calibrated method a narrower interval is genuinely informative, in that it permits a firmer conclusion about the same patient. For a miscalibrated one it merely understates what is not known, and this cohort cannot tell the two cases apart. In the simulation study, where the true conditional effect is known and coverage can therefore be measured, we showed that this distinction is not academic (Table 1). Every S-learner covered the truth between 0 .00 and 0 .45 of the time against a nominal 0 .95, while carrying intervals narrower than the Bayesian fusion forest’s in every case. Every T-learner reached between 0 .46 and 0 .99 coverage, but only at widths of 1 .25 to 5 .97, against 2 .82 for the Bayesian fusion forest, and at a higher error. No configuration of any method achieved accurate estimation and calibrated intervals together, and the lowest root mean squared error of any of them, 1 .01, remained half again the Bayesian fusion forest’s 0 .68. Table S5 and Figure S4 show that the cohort reproduces the same two shapes, method for method. Every S-learner compresses the patients into a narrow band, with an interquartile range of the per-patient estimate between 0 .11 and 0 .39 on the acceleration-factor scale. Every T-learner scatters them, with an interquartile range of 0 .37 to 0 .69 and individual estimates reaching from 0 .02 to 7 .65 at the extremes. Because the simulation established that these narrow S-learner intervals undercover badly, the narrow intervals here are to be read as overconfidence rather than precision. The wide T-learner intervals are the mirror image: the simulation showed they buy their coverage with width, and here they reach more than four times the Bayesian fusion forest’s. The consequence for a clinical reading is severe. The share of patients declared at least 95% certain to benefit ranges from 0 .0% to 100% across the sixteen configurations. Within a single method it can move almost the whole way: the deep network declares no patient certain to benefit when trained on the trial and 96 .1% when trained on the pool, and Buckley–James boosting over extreme learning machines declares 99 .1% as an S-learner and 3 .3% as a T-learner on the very same data. These are not differences of degree but opposite clinical conclusions, and neither the data nor any principled rule selects between them. The Bayesian fusion forest is not exposed to any of this. It is not a meta-learner, so there is no S-versus-T choice to make and no second configuration that could have reversed the answer. It targets the causal contrast directly rather than differencing two predictions, and it combines the two sources through the confounding function rather than by pooling them and hoping. Its intervals are posterior intervals, so they propagate the uncertainty of the fit instead of resampling around it, and the simulation confirmed they are calibrated: coverage 0 .96 at the lowest error of any method considered. On this cohort it returns one answer, with a 95% interval of average width 1 .21 and 96 .4% of patients at least 95% certain to benefit. That single number is not more comfortable than the alternatives; it is the only one that comes with evidence that it can be trusted. 38 Method Source Learner Mean 95% width ≥ 95% certain (AF scale) of benefit (%) Bayesian fusion forest Both — 1.21 96.4 Trial-only causal forest Trial — 3.15 36.8 Deep neural network Trial S 1.06 0.0 T 5.09 0.1 Pool S 1.16 96.1 T 3.32 6.6 XGBoost Trial S 1.20 60.8 T 2.14 76.5 Pool S 0.57 98.8 T 1.54 69.7 BJ-ELM Trial S 0.41 99.1 T 4.07 3.3 Pool S 0.53 99.9 T 2.39 48.7 BJ-trees Trial S 0.16 100.0 T 1.31 70.8 Pool S 0.32 100.0 T 1.85 68.1 
+
+Table S5: The machine-learning alternatives over the combined RCT + MACS cohort ( n = 2144). “Mean 95% width” is the average width of the per-patient interval on the acceleration-factor scale. The last column is the percentage of patients at least 95% certain to benefit; for the alternatives this is a bootstrap proportion rather than a posterior probability. The network and the two Buckley–James methods receive the right-censored approximation of the interval-censored MACS deaths, while XGBoost is fitted on the interval bounds. The Bayesian fusion forest and the trial-only forest are not meta-learners and have a single configuration each. Neither column measures accuracy: the cohort has no ground truth, and the calibration of these intervals is established in the simulation study of Table 1. 39 Trial, S-learner Trial, T-learner Pool, S-learner Pool, T-learner DNN 1.0 1.5 2.0 2.5 0.0 2.5 5.0 7.5 1.0 1.5 2.0 2.5 0.0 2.5 5.0 7.5 XGBoost 0.5 1.0 1.5 2.0 2.5 0.0 2.5 5.0 7.5 10.0 0.5 1.0 1.5 2.0 2.5 0.0 2.5 5.0 7.5 10.0 BJ-ELM 0.5 1.0 1.5 2.0 2.5 0.0 2.5 5.0 7.5 10.0 0.5 1.0 1.5 2.0 2.5 0.0 2.5 5.0 7.5 10.0 BJ-trees 0.5 1.0 1.5 2.0 2.5 0.0 2.5 5.0 7.5 10.0 0.5 1.0 1.5 2.0 2.5 0.0 2.5 5.0 7.5 10.0 
+
+Figure S4: Subject-level acceleration factor from every machine-learning alternative over the combined RCT + MACS cohort, by method (rows) and by training design and learner (columns). Patients are ordered by the bootstrap mean; bars are the 95% bootstrap interval and the horizontal axis is the acceleration factor, with the dashed line at 1 marking no effect. Colour indicates the data source, blue for the trial and vermillion for the cohort. Every S-learner column compresses the patients into a narrow band; every T-learner column scatters them from below one to above four. Compare the single calibrated fusion caterpillar of Figure 4 in the main text. 40

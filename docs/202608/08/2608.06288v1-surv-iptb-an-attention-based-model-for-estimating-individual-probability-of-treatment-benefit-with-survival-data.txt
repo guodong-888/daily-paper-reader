@@ -1,0 +1,546 @@
+Title: Surv-IPTB: An Attention-Based Model for Estimating Individual Probability of Treatment Benefit with Survival Data
+
+URL Source: https://arxiv.org/pdf/2608.06288v1
+
+Published Time: Fri, 07 Aug 2026 01:15:44 GMT
+
+Number of Pages: 29
+
+Markdown Content:
+# Surv-IPTB: An Attention-Based Model for Estimating Individual Probability of Treatment Benefit with Survival Data 
+
+## Lev V. Utkin, Stanislav K. Kogan and Andrei V. Konstantinov 
+
+Higher School of Artificial Intelligence Technologies Peter the Great St.Petersburg Polytechnic University, St.Petersburg, Russia 
+
+Abstract 
+
+This work presents a novel attention-based framework for estimating the Indi-vidual Probability of Treatment Benefit (IPTB) in survival analysis contexts. The proposed model, called Surv-IPTB, directly quantifies the probability that a spe-cific patient will experience extended survival time under treatment versus control. We reformulate IPTB estimation as a binary classification problem, leveraging pair-wise patient comparisons across treatment and control cohorts. The framework in-corporates a principled handling of right-censored observations through imprecise probability representations, where uncertain treatment effects are characterized by interval-valued probabilities. An attention mechanism with learnable query-key trans-formations enables flexible, data-driven aggregation of pairwise comparisons, while simultaneously learning soft class probabilities for censored cases. Through exten-sive experiments on synthetic datasets with complex nonlinear structures, including spiral, bell-shaped, and circular feature spaces, we demonstrate that our approach maintains robust performance across varying censoring rates and treatment effect strengths. The model consistently outperforms meta-learner baselines (T-learner and S-learner) equipped with random survival forests, Cox proportional hazards, and Beran estimators, particularly in challenging nonlinear scenarios where conventional methods exhibit significant degradation. The results establish the proposed attention-based framework as a scalable and statistically principled solution for personalized treatment benefit assessment in survival settings. The code implementing the model is publicly available. 
+
+Keywords : treatment effect, probability of treatment benefit, survival analysis, censored data, classification, attention mechanism 
+
+1arXiv:2608.06288v1 [cs.LG] 6 Aug 2026 1 Introduction 
+
+Clinically grounded medicine has historically depended on the average treatment effect (ATE) to assess the effectiveness of therapeutic interventions. This approach aggregates data from entire populations to classify whether a treatment is better, comparable, or worse than a control for an average patient, thereby supporting regulatory decision-making. Nevertheless, this population-focused perspective faces limitations when it comes to clinical practice, where decisions are primarily driven by predictions tailored to individual patients. In the context of survival analysis, patient outcomes are expressed as the time until the occurrence of an event of interest such as death, disease recurrence, or relapse. The primary clinical concern is not merely whether a treatment affects some average time-to-event but rather the probability that, for a specific patient, the treatment will extend or improve their individual outcome. This leads us to consider the Individual Probability of Treatment Benefit (IPTB) in survival settings, which quantifies the likelihood that the potential survival time under treatment exceeds that under control, given patient-specific covariates. Formally, let H and Y denote the potential survival times under treatment and control, respectively, for a patient with covariates X = x. The IPTB is defined as the probability that the treatment results in a longer survival time: 
+
+ρ(x) = Pr {H > Y | X = x} = Pr {∆ > 0 | X = x}, (1) where ∆ = H − Y is the individual treatment effect in terms of time to event. Estimating Pr {∆ > 0 | X = x} enables a more nuanced understanding of treatment benefits tailored to individual patients. Unlike the Conditional Average Treatment Effect (CATE), which estimates average differences in survival times across groups, IPTB di-rectly measures the probability that a particular patient will experience a longer survival time under treatment. This patient-specific approach aligns with clinical decision-making, accommodates individual variability in biological and lifestyle factors, and addresses the limitations of subgroup averages which often do not translate into accurate individual risk assessments [1, 2, 3]. From a statistical perspective, deriving IPTB involves reconstructing the joint distribu-tion of potential survival times under the fundamental causal inference challenge that only one potential outcome can be observed for each patient. This necessitates modeling the full conditional distributions of survival times given covariates, which can be approached effec-tively through Bayesian methods or advanced semi-parametric and frequentist techniques [4]. In this work, we focus on developing a framework for estimating the IPTB within sur-vival analysis, explicitly addressing the complexities introduced by censored data common in survival studies where the event of interest may not have occurred for some patients by the study end. Handling censored observations is essential to avoid biased estimates of survival probabilities and treatment effects. Standard methods like the Kaplan-Meier 2estimator and Cox proportional hazards models provide essential tools for survival da-ta, but estimating the probability that a treatment improves an individual survival time requires further extension to incorporate covariate-dependent distributions and censored information. The proposed model is called Surv-IPTB. We recast the estimation of Pr {∆ > 0 | X = x} as a binary classification problem, where the classes correspond to whether the difference in survival times is positive or neg-ative. This involves analyzing paired observations ( hi, y j ), representing potential survival times under treatment and control for different patients, and constructing non-parametric, interval-based probability distributions that accommodate prior uncertainty, especially for censored observations. To synthesize these distributions conditioned on covariates, we em-ploy feature-dependent aggregation models, such as Nadaraya-Watson kernel regression [5, 6] and attention mechanisms [7, 8]. This approach extends recent advancements in survival analysis [9]. Our key contributions are as follows: 1. We propose a novel model for estimating the IPTB in survival contexts with “soft” parametric assumptions about the distributions of survival times. The model employs attention mechanisms and can be extended to more complex architectures, including transformers. In addition, the model avoids ambiguity in determining the treatment effect for censored data. 2. Through extensive experiments with both synthetic and semi-synthetic datasets, we demonstrate the effectiveness of the proposed methods in capturing individual treat-ment benefits amid the challenges posed by censored data. Our experiments encom-pass diverse data structures, including, linear, bell-shaped, circular, and spiral feature spaces, representing varying degrees of complexity and nonlinearity. We provide a rigorous comparative analysis against six meta-learner baselines (T-learner and S-learner combined with random survival forests, Cox proportional hazards, and Beran estimators), demonstrating that our approach maintains superior performance across challenging scenarios where conventional methods exhibit significant degradation. We investigate the sensitivity of our model to key parameters including censoring rate, treatment power, and treatment group size, providing insights into its robustness and practical applicability. The implementation code is publicly available at: https://github.com/NTAILab/ SurvIPTB/tree/main .The paper is organized as follows. Section 2 reviews related work on CATE estima-tion, survival analysis with treatment effect heterogeneity, and IPTB estimation. Section 3 formalizes the problem setup, introduces notation, and presents the attention-based esti-mation framework with detailed treatment of censoring scenarios. Section 4 describes our experimental methodology, including synthetic data generation, benchmark models, and 3validation schemes. Section 5 presents comprehensive results across all datasets and sce-narios, with detailed analysis and discussion. Section 6 concludes the paper and outlines directions for future research. 
+
+# 2 Related Work 
+
+Conditional Average Treatment Effect Estimation. CATE estimation has evolved considerably over the past decade. Early approaches relied on regularized regression models and support vector machines [10, 11], with subsequent extensions to censored data [12]. Bayesian nonparametric methods [13], multiple testing formulations [14], and ensemble-based evaluations [15] further expanded the methodological toolkit. Comprehensive reviews provide detailed overviews of available techniques [16, 17, 18, 19]. Recent advances have introduced more flexible and scalable approaches. Meta-learners, including T-, S-, and X-learners, enable principled combination of base estimators [20, 21]. Deep learning methods capture complex functional relationships in treatment effect heterogeneity [22, 23, 24, 25, 26], while transformer-based architectures offer an alternative for representation learning in this context [27, 28, 29]. 
+
+Survival Analysis with Treatment Effect Heterogeneity. Extending treatment effect estimation to survival outcomes requires careful treatment of censoring. Foundational approaches include nonparametric least squares for survival times [30] and causal survival forests tailored to right-censored outcomes [31]. Meta-learning frameworks adapted for survival analysis employ survival-specific base learners such as random survival forests and Bayesian AFT models [32], while pseudo individualized treatment effects provide an alternative basis for HTE quantification [33]. Hybrid architectures combine established techniques: Counterfactual Survival Analy-sis has been integrated with Dragonnet-style representations [34], and Bayesian additive regression trees have been paired with random-intercept AFT models [35]. Orthogonal learning principles extend to the survival setting to address censoring-induced bias [36]. Nonparametric AFT models provide flexible alternatives for individualized HTE estima-tion [37]. Additional contributions to survival HTE include [38, 39, 40, 12, 41]. 
+
+Individual Probability of Treatment Benefit in Survival Settings. Estimating whether a treatment improves individual survival time, which is a key component of IPTB in survival analysis, requires moving beyond average treatment effects to characterize the full distribution of treatment benefit conditional on patient covariates. This task involves constructing non-parametric, interval-based probability distributions that accommodate censoring-related uncertainty, since observed survival times are often incomplete due to study follow-up limitations. Existing IPTB approaches employ Bayesian modeling of joint potential outcome distri-butions [29] and probabilistic classification schemes that directly model the benefit function ∆ = H − Y [28, 42]. However, adapting these methods to survival outcomes demands care-ful treatment of censored observations to avoid biased estimates of whether an individual 4would benefit. IPTB estimation in survival contexts inherits the fundamental challenges from CATE while introducing additional complexities. Beyond the unobserved counterfactual prob-lem, characterizing the probability that treatment improves an individual’s survival time requires methods that: (i) properly incorporate censoring information rather than ignor-ing incomplete observations, (ii) construct covariate-dependent distributions over paired survival times under different treatment regimes, and (iii) employ sufficiently flexible ag-gregation models to capture heterogeneous treatment benefit patterns. These requirements demand stronger statistical assumptions and more sophisticated machinery than estimating conditional mean effects alone. 
+
+# 3 Problem Formulation and Notation 
+
+We consider an observational study with two treatment groups: control and treatment. The control group is represented by dataset D0 = {(xi, y i)}ci=1 , comprising c indepen-dent observations. For each subject i, xi ∈ Rd denotes a d-dimensional covariate vector capturing patient characteristics, and yi ∈ R represents the observed outcome under con-trol (e.g., survival time or clinical measurement). Correspondingly, the treatment group 
+
+D1 = {(zj , h j )}tj=1 contains t subjects receiving active treatment. Here, zj ∈ Rd is the covariate vector and hj ∈ R the observed outcome under intervention. We adopt the potential outcomes framework [43] to formalize causal inference. For each subject, let Y denote the potential outcome under control ( A = 0) and H denote the potential outcome under treatment ( A = 1). These counterfactual quantities represent what would occur under each treatment regime, though in practice only one is observed. Our inferential goal departs from classical CATE estimation, which quantifies the con-ditional average treatment effect 
+
+τ (x) = E[H − Y | X = x]. (2) Instead, we focus on IPTB, defined as the probability that an individual with covariate profile X = x experiences a strictly positive treatment effect: 
+
+ρ(x) = Pr {H > Y | X = x} . (3) This quantity provides a direct probabilistic assessment of whether treatment improves outcomes at the individual level. Unlike the conditional average effect, ρ(x) captures the full heterogeneity in treatment response across the outcome distribution, revealing whether treatment is beneficial (probability exceeding 0.5), harmful (probability below 0.5), or neu-tral (probability near 0.5) for a given patient profile. This characterization is particularly valuable in clinical settings where decision-makers seek to identify patients likely to benefit from intervention, rather than only quantifying average improvements. 53.1 Formal Problem Statement for Survival Data 
+
+In the specific context of survival analysis, the outcomes Y and H represent latent event times (e.g., time to death or disease progression). However, due to the finite duration of studies or loss to follow-up, these event times are subject to right-censoring. We formally extend the data structures D0 and D1 to account for censoring indicators. Let Y ∗ and H∗ denote the true latent survival times under control and treatment, respectively. Let C0 and C1 denote the corresponding censoring times. The observed outcomes and censoring statuses for the control group are defined as: 
+
+yi = min( Y ∗ 
+
+> i
+
+, C 0 
+
+> i
+
+), ξi = I(Y ∗ 
+
+> i
+
+≤ C0 
+
+> i
+
+), (4) where ξi ∈ { 0, 1} is the event indicator ( ξi = 1 if the event is observed, ξi = 0 if censored). Similarly, for the treatment group: 
+
+hj = min( H∗ 
+
+> j
+
+, C 1 
+
+> j
+
+), δj = I(H∗ 
+
+> j
+
+≤ C1 
+
+> j
+
+), (5) where δj ∈ { 0, 1} is the treatment event indicator. Consequently, the observed datasets are triplets: 
+
+D0 = {(xi, y i, ξ i)}ci=1 , D1 = {(zj , h j , δ j )}tj=1 . (6) A fundamental concept in survival analysis is the survival function (SF) S(t | x), defined as the probability that an individual survives beyond time t. We denote SFs trained on D0
+
+and D1 as S0(t | x) and S1(t | z), respectively. Given the censored observational datasets D0 and D1, and assuming standard causal identifiability conditions (consistency, conditional ignorability, and positivity), the objec-tive is to construct an estimator bΨ( x) for the Individual Probability of Treatment Benefit (IPTB): Ψ( x) = Pr ( H∗ > Y ∗ | X = x) , (7) without direct access to the uncensored latent variables Y ∗ and H∗. The estimator must account for the informative nature of the censoring mechanisms and the potential selection bias inherent in the observational assignment A.Under assumptions of conditional exchangeability and positivity [43], the observed data identify conditional marginal distributions FH∗ (t | x) = Pr {H∗ ≤ t | X = x} and FY ∗ (t |
+
+x) = Pr {Y ∗ ≤ t | X = x}. However, the joint conditional distribution of the two potential outcomes is not identified. We can represent it using a copula [44]: 
+
+FH∗,Y ∗ (h, y | x) = Cθ, x (FH∗ (h | x), F Y ∗ (y | x)) .
+
+Here the copula Cθ, x defines how two potential outcomes are related in the same pa-tient; θ is the dependence parameter. The current pairwise construction corresponds to the independence copula C(u, v ) = u · v. Because the dependence parameter θ is not iden-tified from parallel-arm observational data, alternative values can be examined through sensitivity analysis. 64 Treatment Benefit Probability as a Binary Classifi-cation Framework 
+
+## 4.1 Pairwise Patient Comparison and Censoring Structure 
+
+The core methodology involves constructing pairwise comparisons between patients from distinct groups. Specifically, we form pairs consisting of one treatment group patient (zi, h i, δ i) and one control group patient ( xj , y j , ξ j ). The treatment effect for each pair is quantified as ∆ ij = hi − yj .The censoring status of ∆ ij is determined by the censoring indicators δi and ξj , yielding four distinct scenarios corresponding to the positive treatment effect: 
+
+Case 1: Both treatment and control observations are uncensored ( δi = 1 and ξj = 1), and 
+
+hi − yj > 0. The treatment effect ∆ ij is fully observed and positive. 
+
+Case 2: Treatment observation is censored while control is uncensored ( δi = 0 and ξj = 1), and hi − yj > 0. The treatment effect undergoes left censoring. 
+
+Case 3: Treatment observation is censored while control is uncensored ( δi = 0 and ξj = 1), and hi − yj ≤ 0. The treatment effect undergoes right censoring. 
+
+Case 4: Treatment observation is uncensored while control is censored ( δi = 1 and ξj = 0), and hi − yj > 0. The treatment effect undergoes left censoring. In the case when both observations are censored ( δi = 0 and ξj = 0), the treatment effect is completely indeterminate and excluded from analysis. These cases are depicted in Fig. 1. In the same way, we consider cases of the negative treatment effect (see Fig. 2): 
+
+Case 5: Both treatment and control observations are uncensored ( δi = 1 and ξj = 1), and 
+
+hi − yj ≤ 0. The treatment effect ∆ ij is fully observed and negative. 
+
+Case 6: Treatment observation is uncensored while control is censored ( δi = 1 and ξj = 0), and hi − yj ≤ 0. The treatment effect undergoes left censoring. 
+
+Case 7: Treatment observation is censored while control is uncensored ( δi = 0 and ξj = 1), and hi − yj ≤ 0. The treatment effect undergoes right censoring. 
+
+Case 8: Treatment observation is uncensored while control is censored ( δi = 1 and ξj = 0), and hi − yj > 0. The treatment effect undergoes left censoring. Cases 3 and 4 coincide with Cases 7 and 8, respectively, but they consider different regions of ∆ ij .7Figure 1: Four cases of subsets where ∆ > 0
+
+Figure 2: Four cases of subsets where ∆ ≤ 0
+
+## 4.2 Treatment Effect Partitioning 
+
+We collect all ordered treatment effect values ∆ ij for i = 1 , . . . , t and j = 1 , . . . , c , into two subsets G+ and G− with positive and negative values ∆ ij , respectively, i.e., we can write 
+
+G+ = {∆ij : ∆ ij > 0}, G− = {∆ij : ∆ ij ≤ 0}. (8) The values of ∆ ij define the class values in the binary classification task which are 8between 0 and 1. For some cases of the censored and uncensored observations described above, we cannot assign class values to 0 or 1. For example, the class values in Cases 3 and 4 are uncertain. Using the machine learning terminology of multi-class classification tasks, we will say about class probabilities rather than class values. Let us consider subsets of ∆ ij whose values can belong to the interval (0 , +∞), and introduce the following sets of indices corresponding to these subsets: 
+
+• The index set R+ corresponding to all pairs of uncensored observations ( δi = 1 and 
+
+ξj = 1) with positive values ∆ ij (from G+): 
+
+R+ = {(i, j ) : ∆ ij > 0, δ i = 1 , ξ j = 1 }. (9) This case is simple because ∆ ij > 0 and the class probability in the binary classifica-tion task is 1. 
+
+• The index set T + corresponding to all pairs of observations with δi = 0, ξj = 1 under condition ∆ ij > 0: 
+
+T + = {(i, j ) : ∆ ij > 0, δ i = 0 , ξ j = 1 }. (10) In this case, due to right censoring, we do not know when the event precisely occurs, but we exactly know that it will be in the positive part of values ∆ ij . This implies that the class probability in the binary classification task is also 1. 
+
+• The index set T − corresponding to all pairs of observations with δi = 0 and ξj = 1 under condition ∆ ij ≤ 0: 
+
+T − = {(i, j ) : ∆ ij ≤ 0, δ i = 0 , ξ j = 1 }. (11) This set contains indices of all right-censored observations ∆ ij . Due to right censoring, the set of possible ∆ ij contains positive and negative values. This case is more complex. The problem is that we do not know precise value ∆ ij of the event, and we do not know wether it positive or negative. This leads to the imprecise classprobability that the event will be in the positive part, i.e., it is in the interval [0 , 1]. This class probability may be arbitrary in the interval from 0 to 1. The interval [0 , 1] reflects epistemic uncertainty regarding probabilities of classes. 
+
+• The index set C+ corresponding to all pairs of observations with δi = 1 and ξj = 0 under condition that ∆ ij > 0: 
+
+C+ = {(i, j ) : ∆ ij > 0, δ i = 1 , ξ j = 0 }. (12) In this case, we have left-cenored observations ∆ ij . We again do not know in which part of ∆ will be event, but we know that there is possibility that event will be in positive part but with unknown class probability in the interval [0 , 1]. 9The relationship between the outcomes hi and yj and their censoring indicators defines sets of possible values of ∆ for which the condition ∆ > 0 is satisfied. These regions are indicated by the red dotted lines and arise due to censored observations, for which the exact event time is unknown. As shown in Fig. 1 (Case 2), when ∆ ij > 0, all points within the interval [∆ ij , ∞) are greater than zero. In Case 3, ∆ ij can be negative, however, due to the censoring of a treated patient, a possible event time may lie within the interval (0 , ∞). It could also lie within the interval [∆ ij , 0] with some unknown probability. This implies that the probability of the event occurring within (0 , ∞) is also unknown. The same reasoning applies to Case 4. 
+
+## 4.3 Challenge in Cases 3, 4, 7, and 8 
+
+By treating the IPTB problem as a binary classification task, we can precisely determine the class label for any pair ( zi, xj ) with ( i, j ) ∈ R + ∪ T +, corresponding to Cases 1 and 2. In contrast, the primary challenge in Cases 3 and 4 is that ∆ ij can be either positive or negative, and we do not know the true class labels or, at minimum, their probabilities (soft label definition) required to define the loss function. A straightforward approach would be to consider only pairs ( zi, xj ) with ( i, j ) ∈ R + ∪ T +. However, censored observations are often numerous, and discarding pairs ( zi, xj ) with ( i, j ) ∈ T − ∪ C + results in loss of valuable information. Therefore, we propose the following approach to leverage these pairs: we estimate soft class probabilities ϕi,j for ( i, j ) ∈ T − (Case 3) and ρi,j for ( i, j ) ∈ C +
+
+(Case 4). The corresponding negative class probabilities are defined as 1 − ϕi,j and 1 − ρi,j ,respectively. To derive the probability ϕi,j , we consider the random treatment event time H∗. For each pair ( zi, xj ), the positive region of ∆ ij in Case 3 corresponds to the event H∗ ≥ yj
+
+conditional on H∗ > h i. Thus, ϕi,j is defined as 
+
+ϕi,j = Pr {H∗ ≥ yj | H∗ > h i} = Pr {(H∗ ≥ yj ) ∩ (H∗ > h i)}
+
+Pr {H∗ > h i}
+
+= Pr {H∗ ≥ yj }
+
+Pr {H∗ > h i} for hi ≤ yj . (13) In terms of SFs, the probability ϕi,j is expressed through the SF S1(t) trained on the treatment group D1 = {(zj , h j , δ j )}tj=1 as follows: 
+
+ϕi,j = S1(yj )
+
+S1(hi). (14) The SF S1(t) can be estimated using the Kaplan-Meier estimator or other methods such as the Beran estimator or Cox proportional hazards model. Similarly, the probability ρi,j for Case 4 can be derived. We consider the random control event time Y ∗. For each pair ( zi, xj ), the positive region of ∆ ij in Case 4 corresponds to 10 the event yj ≤ Y ∗ ≤ hi conditional on Y ∗ ≥ yj . Thus, ρi,j is defined as 
+
+ρi,j = Pr {yj ≤ Y ∗ ≤ hi | Y ∗ ≥ yj } = Pr {(yj ≤ Y ∗ ≤ hi) ∩ (Y ∗ ≥ yj )}
+
+Pr {Y ∗ ≥ yj }
+
+= Pr {yj ≤ Y ∗ ≤ hi}
+
+Pr {Y ∗ ≥ yj } for yj ≤ hi. (15) In terms of survival functions, the probability ρi,j is expressed through the SF S0(t)estimated from the control group D0 as follows: 
+
+ρi,j = S0(yj ) − S0(hi)
+
+S0(yj ) . (16) We now consider Cases 5–8, which correspond to negative treatment effects and are depicted in Fig. 2. The analysis of these cases parallels that of Cases 1–4. Cases 5 and 6 are characterized by precisely known class labels, whereas Cases 7 and 8 coincide with Cases 3 and 4 but with negative treatment effect regions. These cases have probabilities 1 − ϕi,j and 1 − ρi,j for Cases 7 and 8, respectively. These probabilities will be incorporated into the loss function. It is important to note that we have considered unconditional SFs that do not depend on 
+
+zi and xj . The reason is that computing conditional SFs for these cases is a rather complex problem, which reduces to multi-class classification and the additional use of survival models that account for conditions on zi and xj . To simplify the computations, we have proposed an approximate simple approach, the effectiveness of which is confirmed by numerical experiments. So, our aim is to find the probability that the treatment effect will be positive for a new pair of patients with feature vectors z and x, that is, Pr {∆ > 0 | Z = z, X = x}. (17) 
+
+## 4.4 Attention-based estimation 
+
+Let p+(z, x) denote the probability that the difference between observations with treatment instance z and control instance x yields ∆ belonging to one of the sets R+, T +, or C+.Then we can write 
+
+p+(z, x) = X
+
+> (i,j )∈R +
+
+a(z, x, zi, xj ) · 1+ X 
+
+> (l,k )∈T +
+
+a(z, x, zl, xk) · 1+ X 
+
+> (v,w )∈T −
+
+a(z, x, zv, xw) · [0 , 1] + X
+
+> (r,s )∈C +
+
+a(z, x, zr, xs) · [0 , 1] . (18) 11 The attention weights are defined via kernel functions: 
+
+a(z, x, zi, xj ) = K(z, zi) · K(x, xj )
+
+P 
+
+> (r,s )∈G
+
+K(z, zr) · K(x, xs), (19) where G denotes the set of all possible indices ( r, s ) of feature vectors ( zr, xs). Intervals [0 , 1] in the expression for p+(z, x) indicate that we do not know probabilities that difference of outcomes for the pair ( z, x) is positive. Denote the probabilities Pr {∆ >
+
+0 | Z = zi, X = xj } for ( i, j ) ∈ T − and ( i, j ) ∈ C + as π(i,j ). Then the probability p+(z, x)can be rewritten as follows: 
+
+p+(z, x) = X 
+
+> (i,j )∈R +∪T +
+
+a(z, x, zi, xj )+ X 
+
+> (r,s )∈T −∪C +
+
+a(z, x, zr, xs) · π(r,s ), (20) where P 
+
+> (r,s )∈G
+
+a(z, x, zr, xs) = 1. Here π(r,s ) ∈ [0 , 1] represents the imprecise probability that the censored event ∆ rs 
+
+occurs in the interval (0 , ∞) for ( r, s ) ∈ T − or in the interval (0 , ∆rs ) for ( r, s ) ∈ C +.The probability p−(z, x) = Pr {∆ < 0 | Z = z, X = x} equals 1 − p+(z, x). Following the attention mechanism framework [7, 8], we treat ( z, x) as the query , ( zi, xj )as keys , and π(i,j ) as values . We define: 
+
+q = WQ[z, x]⊤ ∈ Rd,
+
+kij = WK [zi, xj ]⊤ ∈ Rd,vij = 1 or π(i,j ) ∈ [0 , 1] , (21) where WQ ∈ Rd×2d and WK ∈ Rd×2d are learnable weight matrices. The attention weights are then: 
+
+a(z, x, zi, xj ) = exp 
+
+ 1√2d q⊤kij 
+
+P 
+
+> (s,r )∈G
+
+exp 
+
+ 1√2d q⊤ksr 
+
+. (22) Let K ∈ R|G|× d contain all keys and V ∈ R|G|× 1 contain all values. The distribution can be expressed in matrix form: 
+
+p+(z, x) = softmax 
+
+ 1
+
+√2dqK ⊤
+
+
+
+V ∈ R. (23) Here a part of the vector V = (1 , ..., 1, π (i,j ), ..., π (r,s )) is equal to 1 and is not trained. The model learns matrices WQ and WK , and probabilities π(r,s ) by minimizing the log-likelihood loss: 
+
+L(p | WQ, WK ) = L(R+ ∪ T +) + L(R− ∪ S −)+ L(T −) + L(C+) + L(Q−) + L(C−) + γL (π) + ηL (W), (24) 12 where L(R+ ∪ T +) is the log-likelihood loss for pairs ( zi, xj ) with ∆ ij > 0, defined as 
+
+L(R+ ∪ T +) = − X 
+
+> (i,j )∈R +∪T +
+
+log  p+(zi, xj ) , (25) 
+
+L(R− ∪ S −) is the log-likelihood loss for pairs ( zi, xj ) with ∆ ij < 0, defined as 
+
+L(R− ∪ S −) = − X
+
+> (i,j )∈R −∪S −
+
+log  p−(zi, xj ) , (26) 
+
+L(T −), L(C+), L(Q−), L(C−) are the log-likelihood loss functions for pairs ( zi, xj ) with soft class label probabilities, defined as 
+
+L(T −) = − X 
+
+> (r,s )∈T −
+
+ϕrs log  p+(zr, xs) , (27) 
+
+L(C+) = − X
+
+> (r,s )∈C +
+
+ρrs log  p+(zr, xs) , (28) 
+
+L(Q−) = − X
+
+> (r,s )∈Q −
+
+(1 − ϕrs ) log  p−(zr, xs) , (29) 
+
+L(C−) = − X
+
+> (r,s )∈C −
+
+(1 − ρrs ) log  p−(zr, xs) , (30) and L(W) and L(π) are regularization loss functions defined as 
+
+L(W) = ∥WQ∥2 + ∥WK ∥2, (31) 
+
+L(π) = X 
+
+> (r,s )∈T −∪C +
+
+π(r,s ) log  π(r,s ) , (32) where γ and η are regularization coefficients (hyperparameters). 
+
+# 5 Numerical experiments 
+
+Our evaluation is structured around two distinct validation schemes, each designed to assess different aspects of model performance. 
+
+Validation scheme 1 (Val 1): This scheme evaluates the model’s ability to estimate predicted probabilities Pr {∆ > 0 | Z = zi, X = xj }, (33) for arbitrary feature pairs ( zi, xj ) drawn from test sets. Critically, this scheme does not constrain the evaluation to matched treatment-control pairs; rather, it assesses the model’s capacity to generalize across the entire joint feature space of treatments and controls, thereby measuring the estimator’s consistency in computing p+(z, x) for any combination of treatment and control covariates. 13 Validation scheme 2 (Val 2): This scheme focuses specifically on matched feature vec-tors, where treatment and control instances share identical covariates. For pairs ( x, x), outcomes are generated according to predefined data-generating mechanisms, enabling di-rect computation of 
+
+p+(x, x) = Pr {∆ > 0 | Z = x, X = x}. (34) This scheme provides a controlled setting to evaluate performance when the treatment and control populations are perfectly aligned in covariate space. Model discrimination is quantified using the area under the receiver operating char-acteristic curve (ROC-AUC). To ensure statistical robustness, we employ 5-fold stratified cross-validation, repeated ten times with different random seeds, yielding stable perfor-mance estimates with associated variability measures. Results are presented as paired ROC curves. The left panel displays learning trajectories across Train/Val 1/Val 2 for our proposed model, illustrating performance progression and generalization gaps. The right panel provides comparative analysis against meta-learner baselines, including T-learner and S-learner, each implemented with 200-tree RSF regressors, the Cox model, the Beran estimator as base learners. 
+
+## 5.1 Benchmark Models and Their Configuration 
+
+Our comparative analysis includes Surv-IPTB and six distinct models, which are based on using two meta-learners: the T-learner and S-learner, each paired with three different SF estimation techniques: Random Survival Forests (RSF) [45], the Cox proportional hazards model [46], and the Beran estimator with Gaussian kernels [47]. The specifications of these models are detailed below in the context of survival analysis. 1. T-learner [21]: This approach separately estimates the control-group SF, S0(t |
+
+x), and the treatment-group SF, S1(t | x), for any feature vector x. Under some assumptions [43], the CATE can be rewritten as: 
+
+τ (x) = E [H | X = x] − E [Y | X = x] . (35) Since H and Y are random times to events, then the CATE in the framework of survival analysis can be computed as follows [48, 40]: 
+
+τ (x) = bT1(x) − bT0(x), (36) where bT1(x) and bT0(x) are expected times to events derived from the SFs Si(t | x)as: 
+
+bTi(x) = 
+
+Z ∞
+
+> 0
+
+Si(t | x)d t, i = 0 , 1. (37) Due to the finite number of observations, the predicted SFs are step functions, i.e., we can write 
+
+bTi(x) = 
+
+> t
+
+X
+
+> j=1
+
+(t(i) 
+
+> j
+
+− t(i)
+
+> j−1
+
+) ˜S(j) 
+
+> i
+
+(x), i = 0 , 1, (38) 14 where ˜S(j) 
+
+> i
+
+(x) is the value of the SF Si(t | x) in the time interval [ t(i)
+
+> j−1
+
+, t (i) 
+
+> j
+
+), whose bounds are the ordered observed times to event. 2. S-learner [21]: Instead of modeling the two SFs independently, this method estimates a single SF, S(t | x, A ), where the treatment indicator A ∈ { 0, 1} is incorporated as an additional feature, i.e., x∗ = ( x, A ) ∈ Rd+1 . This transforms the original feature set into an augmented dataset: 
+
+D∗ = {(x∗
+
+> 1
+
+, y 1, ξ 1), . . . , (x∗ 
+
+> c
+
+, y c, ξ c), (z∗
+
+> 1
+
+, h 1, δ 1), . . . , (z∗ 
+
+> t
+
+, h t, δ t)}. (39) The CATE is then computed as: 
+
+τ (x) = 
+
+> t
+
+X
+
+> j=1
+
+(t(1)  
+
+> j
+
+− t(1) 
+
+> j−1
+
+) ˜S(j)(x, 1) −
+
+> c
+
+X
+
+> k=1
+
+(t(0)  
+
+> k
+
+− t(0) 
+
+> k−1
+
+) ˜S(k)(x, 0) . (40) As a result, we have six combinations of meta-learners (T and S) and the SF estimators (RSF, Cox, Beran) denoted as: T-RSF, S-RSF, T-Cox, S-Cox, T-Beran, S-Beran. 
+
+## 5.2 Generating Synthetic Datasets 
+
+As discussed above, we generate artificial complex feature spaces and outcomes for our numerical experiments. All feature vectors, encompassing both controls x and treatments 
+
+y, are produced using four distinct functions: the linear function, the spiral function, the bell-shaped function, and the circular function. These functions are selected specifically to create complex data structures that pose challenges for many standard processing methods. They are similar to functions proposed in [49]. Each function is defined through a parameter 
+
+ζ as follows: 1. Linear functions: The control and treatment effect applied to continuous features 
+
+x(i) ∼ U (0 , 1): 
+
+y(x) = 2 x(1) + 4 x(2) , (41) 
+
+h(x) = 2(1 − T P ) · x(1) + 4 x(2) + 8 · T P · x(3) , (42) with A ∈ { 0, 1} and T P ∈ { 0.1, 0.2, ..., 0.6}. Here T P is the treatment power, i.e., a parameter that determines how strong or effective a treatment is, such as how many tablets affect a patient. In other words, T P shows how the number of tablets affects 
+
+h(x). It is used to study and compare how the prediction accuracy of different models depends on treatment effect. 2. Spiral functions: Feature vectors of dimensionality d = 7 positioned on Archimedean spirals are defined for even d as 
+
+x = ( ζ sin( ζ), ζ cos( ζ), . . . , ζ sin( ζ · d/ 2) , ζ cos( ζ · d/ 2)) , (43) 15 and for odd d as 
+
+x = ( ζ sin( ζ), ζ cos( ζ), . . . , ζ sin( ζ · ⌈ d/ 2⌉)) . (44) For all numerical experiments, values of ζ are uniformly sampled from the interval [0 , 10]. 3. Bell-shaped functions: The features are constructed as a collection of nearly non-overlapping Gaussian functions. Since ζ is drawn from a uniform distribution, we denote ζmin and ζmax as the lower and upper bounds of this distribution. The feature vector of dimensionality d = 6 is then given by: 
+
+x = ( x1, x 1, . . . , x d),σ = ζmax − ζmin 
+
+6d , μ = ζmax − ζmin 
+
+d ,xi = 1
+
+σ√2π · exp 
+
+
+
+−(ζ − i · μ)2
+
+2σ2
+
+
+
+, i = 1 , . . . , d. (45) Consequently, each feature xi corresponds to a distinct region within the ζ distribu-tion. 4. Circular functions: The feature space is generated using only an even number of dimensions. Feature vectors are placed on two-dimensional circles as follows: 
+
+cnum = d
+
+2 , crange = ζmax − ζmin 
+
+d/ 2 ,
+
+x = ( x11, x 21, x 12, x 22, . . . , x 1
+
+> d/ 2
+
+, x 2
+
+> d/ 2
+
+),x(1)  
+
+> i
+
+= sin 
+
+2π(ζ − (i − 1) · crange )
+
+crange 
+
+
+
+· Ii,x(2)  
+
+> i
+
+= cos 
+
+2π(ζ − (i − 1) · crange )
+
+crange 
+
+
+
+· Ii,
+
+Ii = I{(i − 1) · crange ≤ ζ < i · crange }, i = 1 , . . . , d/ 2, (46) where d = 10, I denotes the indicator function. Each pair of features ( x(1)  
+
+> i
+
+, x (2)  
+
+> i
+
+) corre-sponds to its own two-dimensional circle and associated region of the ζ distribution. In all experiments except for the linear function dataset, feature vectors z for the treat-ment group are generated identically to the control vectors x. However, the corresponding event times y and h differ between the groups and are sampled from Weibull distributions as follows: 
+
+y(ζ) = −
+
+ log( u)0.0005 · exp(1 .6 · ζ)
+
+1/2
+
+, (47) 16 h(ζ) = −
+
+ log( u)0.005 · exp(0 .8 · ζ)
+
+1/2
+
+, (48) where u ∼ U (0 , 1) is a random variable uniformly distributed on (0 , 1). Any values of y
+
+and h exceeding 2000 are truncated to this upper bound. This generation scheme for y and h is consistent with the Cox proportional hazards model, which justifies the inclusion of the Cox model as a baseline alongside RSFs and the Beran estimator with Gaussian kernels in our numerical experiments. In the linear function dataset, values y(x) and h(x) are derived from the corresponding expressions (41) and (42). The proportion of censored observations, denoted as p, is fixed at 30% of all samples across all experiments. Accordingly, the censoring indicators δi and ξi are drawn from binomial distributions with probabilities Pr {δi = 1 } = Pr {ξi = 1 } = 0 .70 and Pr {δi =0} = Pr {ξi = 0 } = 0 .3. 
+
+## 5.3 Results on Benchmark Datasets 
+
+The experiments evaluate model performance under varying censoring rates (CR), treat-ment power (TP), and treatment group sizes (TR). 
+
+Figure 3: Left plot: The ROC curves and ROC-AUC scores obtained on the training set and sets Val 1 and Val 2 for Surv-IPTB trained on the Linear dataset. Right plot: Comparison of ROC curves and ROC-AUC scores for Surv-IPTB and the meta-learners The Linear dataset serves as a control experiment where the true relationships are linear. Fig. 3 illustrates the ROC curves and ROC-AUC scores obtained on the training set and sets Val 1 and Val 2 for Surv-IPTB trained on the Linear dataset by the censoring rate 30% (Left plot) and the corresponding ROC curves and ROC-AUC scores for Surv-IPTB and the meta-learners (Right plot). Fig. 4 illustrates values of training (Train) and two testing (Val 1 and Val 2) loss functions depending on the epoch numbers for the linear 17 Table 1: AUC values for models trained on the linear dataset by different values of censoring rate (CR) CR 0.0 0.1 0.2 0.3 0.4 0.5Surv-IPTB 0.957 ± 0.039 0.958 ± 0.019 0.947 ± 0.023 0.938 ± 0.025 0.925 ± 0.031 0.908 ± 0.043 T-RSF 0.847 ± 0.091 0.792 ± 0.118 0.720 ± 0.088 0.712 ± 0.095 0.663 ± 0.083 0.642 ± 0.082 T-Cox 0.924 ± 0.034 0.937 ± 0.018 0.929 ± 0.028 0.917 ± 0.048 0.918 ± 0.037 0.869 ± 0.054 T-Beran 0.856 ± 0.037 0.839 ± 0.036 0.828 ± 0.039 0.816 ± 0.038 0.786 ± 0.049 0.764 ± 0.052 S-RSF 0.728 ± 0.054 0.717 ± 0.071 0.716 ± 0.054 0.706 ± 0.056 0.683 ± 0.070 0.648 ± 0.067 S-Cox 0.976 ± 0.006 0.975 ± 0.005 0.972 ± 0.005 0.969 ± 0.009 0.962 ± 0.010 0.954 ± 0.014 S-Beran 0.848 ± 0.037 0.834 ± 0.037 0.825 ± 0.040 0.814 ± 0.040 0.786 ± 0.048 0.766 ± 0.051 Table 2: AUC values for models trained on the linear dataset by different values of treatment power (TP) TP 0.1 0.2 0.3 0.4 0.5 0.6Surv-IPTB 0.876 ± 0.032 0.911 ± 0.020 0.920 ± 0.022 0.939 ± 0.021 0.942 ± 0.022 0.938 ± 0.025 T-RSF 0.686 ± 0.094 0.729 ± 0.099 0.734 ± 0.096 0.726 ± 0.095 0.730 ± 0.099 0.712 ± 0.095 T-Cox 0.841 ± 0.062 0.874 ± 0.048 0.894 ± 0.046 0.905 ± 0.049 0.913 ± 0.047 0.917 ± 0.048 T-Beran 0.696 ± 0.033 0.755 ± 0.034 0.783 ± 0.036 0.797 ± 0.040 0.808 ± 0.040 0.816 ± 0.038 S-RSF 0.605 ± 0.082 0.609 ± 0.066 0.624 ± 0.059 0.667 ± 0.056 0.695 ± 0.050 0.706 ± 0.056 S-Cox 0.869 ± 0.025 0.924 ± 0.017 0.943 ± 0.014 0.953 ± 0.010 0.962 ± 0.010 0.969 ± 0.009 S-Beran 0.693 ± 0.033 0.753 ± 0.035 0.779 ± 0.035 0.795 ± 0.040 0.807 ± 0.039 0.814 ± 0.040 dataset. Curves Train and Val 1 show a consistent, gradual decline ending near 0 .32 and 0.34, respectively, whereas the Val 2 curve drops rapidly at the start but flattens out much higher around 0 .47 with noticeable noise. The Val 2 loss is the highest and has the widest confidence interval (shaded region), suggesting the model struggles most with the second validation set. Table 1 shows how the model performance depends on the censoring rate (CR). Table 2 shows how the model performance depends on the treatment power (TP) when the censoring rate is 30%. On linear data, S-Cox outperfoms all models achieving AUCs of 0 .976 at CR=0.0 and maintaining 0 .954 at CR=0.5, as the S-learner’s pooled data approach combined with a correctly-specified Cox model proves maximally efficient. Surv-IPTB performs very well with AUC ∼ 0.94 across all CRs but is consistently outperformed by S-Cox, confirming that simpler, correctly-specified models beat complex ones on simple data. T-Cox performs well initially but shows a sharper decline with censoring, dropping from 0 .924 to 0 .869, due to reduced sample sizes from splitting data into two groups. RSF-based models (T-RSF, S-RSF) perform worst on linear data with AUCs in the 0 .64–0 .72 range, demonstrating that tree-based methods are data-hungry and suffer high variance on low-dimensional, simple structures. Regarding treatment power, as TP increases, all models improve, but S-Cox shows the most dramatic gain from 0 .869 to 0 .969, perfectly exploiting the strengthening linear signal, while Surv-IPTB improves more modestly from 0 .876 to 0 .938, indicating it 18 Figure 4: Training and validation loss functions for the linear dataset is less sensitive to treatment effect strength. Table 3: AUC values for models trained on the bell dataset by different values of censoring rate (CR) CR 0.0 0.1 0.2 0.3 0.4 0.5Surv-IPTB 0.940 ± 0.022 0.901 ± 0.113 0.940 ± 0.025 0.920 ± 0.086 0.932 ± 0.027 0.927 ± 0.035 T-RSF 0.906 ± 0.024 0.843 ± 0.036 0.774 ± 0.058 0.721 ± 0.065 0.692 ± 0.044 0.648 ± 0.052 T-Cox 0.683 ± 0.031 0.678 ± 0.026 0.660 ± 0.019 0.646 ± 0.019 0.638 ± 0.026 0.623 ± 0.025 T-Beran 0.693 ± 0.022 0.687 ± 0.022 0.678 ± 0.027 0.668 ± 0.028 0.656 ± 0.025 0.634 ± 0.030 S-RSF 0.901 ± 0.031 0.836 ± 0.047 0.761 ± 0.061 0.720 ± 0.079 0.705 ± 0.064 0.666 ± 0.065 S-Cox 0.730 ± 0.037 0.727 ± 0.042 0.731 ± 0.044 0.724 ± 0.043 0.730 ± 0.039 0.721 ± 0.041 S-Beran 0.696 ± 0.020 0.689 ± 0.025 0.668 ± 0.026 0.660 ± 0.031 0.649 ± 0.030 0.617 ± 0.027 The next dataset is Bell-shaped . Fig. 5 illustrates the ROC curves obtained on the training set and sets Val 1 and Val 2 for Surv-IPTB trained on the Bell-shaped dataset by the censoring rate 30% (Left plot) and the corresponding ROC curves for Surv-IPTB and the meta-learners (Right plot). Fig. 6 illustrates values of training (Train) and two testing (Val 1 and Val 2) loss functions depending on the epoch numbers for the Bell-shaped dataset. The graph plots loss show a sharp initial decline for all curves during the first 50 epochs followed by a gradual stabilization, with shaded areas indicating variance or confidence intervals. Table 3 shows how the model performance depends on the censoring rate. RSF models become competitive here, with T-RSF and S-RSF starting at 0 .906–0 .901 and declining more gracefully, as the localized feature structure is ideally suited for tree-based partition-ing. Surv-IPTB nevertheless remains the best, consistently achieving AUCs betwenn 0 .93 19 Figure 5: Left plot: The ROC curves and ROC-AUC scores obtained on the training set and sets Val 1 and Val 2 for Surv-IPTB trained on the Bell-shaped dataset. Right plot: Comparison of ROC curves and ROC-AUC scores for Surv-IPTB and the meta-learners 
+
+Figure 6: Training and validation loss functions for the Bell-shaped dataset and 0 .94 across all CR levels and demonstrating superior generalization even when RSFs improve. Cox and Beran models perform poorly with AUCs around 0 .6 − 0.7 across all variants. Let us consider the Circular dataset . Results of the model comparison are shown in Tables 4 and 5. They illustrate how the model performance depend on the censoring rate (Table 4) and on the treatment group size (Table 5). The circular structure is very difficult for linear models, yet tree-based methods per-20 Table 4: AUC values for models trained on the circular dataset by different values of censoring rate (CR). Surv-IPTB is implemented with trainable values of π(r,s ) and with approximate using these values obtained by means of the Kaplan-Meier estimator CR 0.0 0.1 0.2 0.3 0.4 0.5Surv-IPTB 0.983 ± 0.010 0.979 ± 0.015 0.983 ± 0.011 0.976 ± 0.015 0.971 ± 0.015 0.968 ± 0.016 Surv-IPTB-KM 0.983 ± 0.010 0.981 ± 0.011 0.981 ± 0.013 0.977 ± 0.013 0.970 ± 0.019 0.966 ± 0.019 T-RSF 0.909 ± 0.044 0.832 ± 0.054 0.782 ± 0.051 0.718 ± 0.043 0.681 ± 0.053 0.637 ± 0.071 T-Cox 0.539 ± 0.051 0.539 ± 0.053 0.557 ± 0.051 0.558 ± 0.047 0.552 ± 0.055 0.565 ± 0.035 T-Beran 0.865 ± 0.042 0.836 ± 0.042 0.803 ± 0.042 0.773 ± 0.048 0.756 ± 0.051 0.715 ± 0.044 S-RSF 0.924 ± 0.039 0.857 ± 0.049 0.775 ± 0.078 0.737 ± 0.080 0.705 ± 0.094 0.674 ± 0.087 S-Cox 0.540 ± 0.051 0.535 ± 0.040 0.531 ± 0.036 0.529 ± 0.060 0.545 ± 0.077 0.549 ± 0.080 S-Beran 0.871 ± 0.041 0.835 ± 0.042 0.791 ± 0.045 0.749 ± 0.057 0.722 ± 0.051 0.675 ± 0.043 Table 5: AUC values for models trained on the Circular dataset by different values of treatment group size (TR) TR 200 175 150 125 100 75 50 Surv-IPTB 0.976 ± 0.015 0.981 ± 0.011 0.978 ± 0.016 0.971 ± 0.020 0.973 ± 0.019 0.966 ± 0.019 0.909 ± 0.154 T-RSF 0.823 ± 0.062 0.752 ± 0.065 0.747 ± 0.054 0.731 ± 0.064 0.718 ± 0.043 0.718 ± 0.062 0.709 ± 0.059 T-Cox 0.558 ± 0.047 0.571 ± 0.052 0.549 ± 0.049 0.552 ± 0.043 0.564 ± 0.050 0.541 ± 0.062 0.540 ± 0.045 T-Beran 0.773 ± 0.048 0.774 ± 0.042 0.771 ± 0.052 0.747 ± 0.050 0.762 ± 0.039 0.759 ± 0.048 0.767 ± 0.068 S-RSF 0.769 ± 0.077 0.755 ± 0.055 0.747 ± 0.072 0.743 ± 0.069 0.743 ± 0.119 0.737 ± 0.080 0.735 ± 0.066 S-Cox 0.529 ± 0.060 0.547 ± 0.064 0.537 ± 0.060 0.538 ± 0.065 0.501 ± 0.056 0.511 ± 0.062 0.512 ± 0.084 S-Beran 0.749 ± 0.057 0.750 ± 0.051 0.730 ± 0.063 0.723 ± 0.066 0.715 ± 0.047 0.696 ± 0.052 0.649 ± 0.079 form well on this data. Surv-IPTB dominates this setting, maintaining AUCs above 0 .96 even at large censoring rate (CR=0.5) and showing exceptional robustness. We compare two implementations of Surv-IPTB. The first implemetation, Surv-IPTB, supposes that 
+
+π(r,s ), ( r, s ) ∈ T − ∪ C +, is trained in accordance with the given loss functions jointly with parameters of the attention WQ and WK . The second implementation, Surv-IPTB-KM, does not train π(r,s ) and uses values derived from the Kaplan-Meier estimator. These im-plementations are provided to study how Surv-IPTB-KM approximate the full training implementation and can be used this approximation instead of Surv-IPTB. Table 4 shows the difference of the implementations by different values of censoring rate. One can see from Table 4 that Surv-IPTB-KM performs almost identically. In stark contrast, RSF models collapse dramatically, starting at 0 .909–0 .924 at CR=0.0 and plummeting to 0 .64–0 .67 at CR=0.5, as the forests overfit the circular pattern and become unstable with missing data. Cox models prove essentially useless with AUCs around 0.53–0 .56, representing near-random performance that confirms any non-linear structure destroys Cox regression. Regarding treatment group size, Surv-IPTB remains stable until TR drops to 50 (AUC 0 .909 with high variance ±0.154), while other models show no sensitivity to TR, indicating their limitations are structural rather than data-driven. Let us study the Spiral dataset now. The intertwined spiral structure is even more challenging than the circle. The corresponding results are shown in Table 6. It can be seen from the table that Surv-IPTB maintains a clear lead with AUCs consistently above 21 Table 6: AUC values for models trained on the Spiral dataset by different values of censoring rate (CR). Surv-IPTB is implemented with trainable values of π(r,s ) and with approximate using these values obtained by means of the Kaplan-Meier estimator CR 0.0 0.1 0.2 0.3 0.4 0.5Surv-IPTB 0.937 ± 0.037 0.901 ± 0.022 0.971 ± 0.040 0.963 ± 0.053 0.894 ± 0.142 0.956 ± 0.056 Surv-IPTB-KM 0.937 ± 0.037 0.901 ± 0.022 0.949 ± 0.057 0.979 ± 0.021 0.921 ± 0.076 0.928 ± 0.081 T-RSF 0.931 ± 0.034 0.854 ± 0.039 0.796 ± 0.065 0.727 ± 0.047 0.705 ± 0.038 0.663 ± 0.041 T-Cox 0.652 ± 0.053 0.653 ± 0.049 0.641 ± 0.042 0.636 ± 0.054 0.634 ± 0.041 0.614 ± 0.035 T-Beran 0.920 ± 0.045 0.900 ± 0.045 0.873 ± 0.045 0.854 ± 0.043 0.826 ± 0.054 0.793 ± 0.050 S-RSF 0.935 ± 0.039 0.879 ± 0.044 0.803 ± 0.058 0.761 ± 0.067 0.757 ± 0.055 0.728 ± 0.062 S-Cox 0.552 ± 0.129 0.575 ± 0.101 0.596 ± 0.102 0.581 ± 0.091 0.593 ± 0.096 0.608 ± 0.102 S-Beran 0.926 ± 0.044 0.906 ± 0.042 0.878 ± 0.042 0.857 ± 0.041 0.830 ± 0.053 0.798 ± 0.048 0.9 and demonstrates robustness across censoring levels. RSF models again suffer a sharp performance drop from 0 .93 at zero censoring rate (CR=0.0) to 0 .66–0 .72 at CR=0.5, confirming overfitting and instability under censoring. Interestingly, Beran models perform surprisingly well with AUCs from 0 .92 down to 0 .79, better than on the Circle dataset, as the Gaussian kernel smoother handles the spiral’s continuous gradient more effectively than the circle’s abrupt periodicity. Cox models fail completely with AUCs stuck at 0 .55–0 .65, reinforcing that non-linear data destroys linear model inference. Table 6 also shows the difference of the implementations (models Surv-IPTB and Surv-IPTB-KM) by different values of the censoring rate. 
+
+Figure 7: Left plot: The ROC curves and ROC-AUC scores obtained on the training set and sets Val 1 and Val 2 for Surv-IPTB trained on the IHDP dataset. Right plot: Comparison of ROC curves and ROC-AUC scores for Surv-IPTB and the meta-learners We also evaluate the performance of Surv-IPTB on the widely used Infant Health and Development Program (IHDP) dataset [50], a semi-synthetic benchmark based on real covariates for estimating heterogeneous treatment effects (HTE). The IHDP-100 22 dataset comprises 747 subjects with 25 covariates: 6 continuous and 19 binary. The target variables are considered as times to events. Censored observations are drawn from binomial distributions with probabilities Pr {δi = 0 } = Pr {ξi = 0 } = 0 .3. The data is publicly available at https://github.com/vdorie/npci .Fig. 7 illustrates the ROC curves obtained on the training, Val 1, and Val 2 sets for Surv-IPTB trained on the IHDP-100 dataset by the censoring rate 30% (Left plot) and the corresponding ROC curves for Surv-IPTB and the meta-learners (Right plot). Table 7 illustrates how the performance of models trained on the IHDP-100 dataset depend on the censoring rate. It demonstrates that Surv-IPTB consistently outperforms all baseline methods across all censoring rates, maintaining high AUC values between 0 .898 and 0 .916 with remarkably low variance, whereas the T-RSF and T-Cox models show near-random performance at zero censoring and fail to match Surv-IPTB’s robustness as censoring increases. Notably, while most models exhibit modest performance degradation with higher censoring rates, the kernel-based Beran estimators (both T-Beran and S-Beran) deliver the poorest results, suggesting that the IHDP-100 data structure is too complex for simple local smoothing approaches to capture effectively. Table 7: AUC values for models trained on the the IHDP-100 dataset by different values of censoring rate (CR) CR 0.0 0.1 0.2 0.3 0.4 0.5 Surv-IPTB 0.916 ± 0.036 0.914 ± 0.037 0.915 ± 0.035 0.912 ± 0.040 0.908 ± 0.045 0.898 ± 0.057 T-RSF 0.500 ± 0.000 0.776 ± 0.058 0.808 ± 0.040 0.788 ± 0.049 0.796 ± 0.037 0.770 ± 0.077 T-Cox 0.500 ± 0.000 0.833 ± 0.043 0.846 ± 0.036 0.842 ± 0.041 0.846 ± 0.036 0.841 ± 0.040 T-Beran 0.714 ± 0.065 0.711 ± 0.065 0.725 ± 0.076 0.701 ± 0.071 0.697 ± 0.066 0.690 ± 0.058 S-RSF 0.768 ± 0.054 0.780 ± 0.058 0.781 ± 0.056 0.760 ± 0.050 0.775 ± 0.060 0.760 ± 0.045 S-Cox 0.843 ± 0.046 0.840 ± 0.044 0.837 ± 0.048 0.840 ± 0.046 0.848 ± 0.039 0.828 ± 0.047 S-Beran 0.687 ± 0.071 0.665 ± 0.075 0.677 ± 0.072 0.624 ± 0.043 0.613 ± 0.064 0.612 ± 0.078 Table 7 demonstrates that Surv-IPTB consistently outperforms all baseline methods across all censoring rates, maintaining high AUC values between 0.898 and 0.916 with remarkably low variance, whereas the T-RSF and T-Cox models show near-random perfor-mance at zero censoring and fail to match Surv-IPTB’s robustness as censoring increases. Finally, we provide Table 8 which shows the best loss values for Surv-IPTB computed based on the Train, Val1, and Val2 subsets under condition CR=0.3. It reveals that the linear dataset achieves the lowest training and validation losses, indicating that the model fits this simple structure most effectively, while the spiral dataset exhibits the highest losses with substantial variance across all subsets, reflecting the difficulty of capturing its complex intertwined patterns. The circular dataset presents an interesting anomaly where the Val2 loss (0 .312) is notably lower than both Train (0 .379) and Val1 (0 .405), suggesting that the Val2 subset is constructed only from the pairs of uncensored observations. Across all datasets except circular, the losses on Val1 and Val2 remain close to the training loss, indicating minimal overfitting and stable generalization performance. 23 Table 8: Best loss values for Surv-IPTB on the Train, Val1, and Val2 subsets for different datasets Dataset Train Val1 Val2 Linear 0.318 ± 0.020 0.334 ± 0.060 0.397 ± 0.046 Bell-shaped 0.503 ± 0.059 0.510 ± 0.061 0.436 ± 0.069 Spiral 0.564 ± 0.164 0.567 ± 0.169 0.554 ± 0.209 Circular 0.379 ± 0.016 0.405 ± 0.034 0.312 ± 0.034 IHDP-100 0.519 ± 0.026 0.527 ± 0.043 0.488 ± 0.039 Surv-IPTB emerges as the most robust and general-purpose model. While not best on linear data where S-Cox wins, it is the only model that maintains excellent performance across all complex scenarios. The method proves highly stable against censoring and sample imbalance, making it the recommended choice for real-world data. All meta-models remain less robust than Surv-IPTB due to kernel and bandwidth sensitivity. Finally, censoring acts as the great equalizer: all models degrade with censoring, but Surv-IPTB degrades least, as its deep-learning architecture proves more sample-efficient and better at learning from incomplete data. 
+
+# 6 Conclusion 
+
+This work introduced a novel attention-based framework for estimating the Individual Probability of Treatment Benefit (IPTB) in survival analysis reformulating the problem as binary classification with pairwise patient comparisons. The framework provides principled handling of right-censored observations through imprecise probability representations, using trainable parameters π(r,s ) for uncertain treatment effect statuses that are learned jointly with attention weights. Extensive experiments across synthetic and real datasets (linear, bell-shaped, circular, spiral, IHDP) demonstrate that Surv-IPTB consistently outperforms meta-learner baselines, particularly in challenging nonlinear scenarios where conventional methods exhibit substantial degradation. The proposed model maintains exceptional sta-bility under increasing censoring rates, with performance decline significantly slower than RSF-based meta-learners. Surv-IPTB also demonstrates robust performance even with re-duced treatment group sizes, maintaining stability until group sizes drop to 50 patients, suggesting efficient learning from limited clinical data. The attention mechanism provides natural interpretability through its learned weights, indicating which treatment-control pairs are most influential for specific predictions. Com-parison of trainable versus Kaplan-Meier-derived π parameters revealed nearly identical performance, suggesting the simpler approximation may suffice in practice. This approach advances personalized medicine by enabling clinicians to estimate indi-vidual treatment benefit probabilities supporting shared decision-making and more efficient use of censored survival data. 24 Despite its strengths, our framework has several limitations that suggest promising directions for future work: The current framework assumes independent censoring mechanisms across treatment and control groups. In practice, censoring may depend on covariates (informative censor-ing) or differ systematically between arms. Extending the framework to handle covariate-dependent censoring through weighting or propensity-based adjustment would enhance its real-world applicability. The pairwise comparison nature of our approach scales quadratically with sample size, potentially limiting applicability to large datasets. While this is manageable for moderate-sized clinical datasets (hundreds to thousands of patients), scaling to biobank-scale data (tens of thousands or more) would require approximations, such as random subsampling of pairs or locality-sensitive hashing to restrict attention to informative comparisons. While we have focused on single-head attention, multi-head attention and transformer architectures could capture more complex relationships between covariates and treatment effects, potentially further improving performance on high-dimensional data. 
+
+# References 
+
+[1] D.M. Kent, J.K. Paulus, and D. et al. Van Klaveren. The predictive approaches to treatment effect heterogeneity (PATH) statement. Annals of Internal Medicine ,172(1):35–45, 2020. [2] A. Rekkas, J.K Paulus, G. Raman, J.B. Wong, E.W. Steyerberg, P.R. Rijnbeek, D.M. Kent, and D. van Klaveren. Predictive approaches to heterogeneous treatment effects: a scoping review. BMC Medical Research Methodology , 20:264(1):1–12, 2020. [3] G. Ruiz and O.H.M. Padilla. Non-asymptotic confidence bands on the probability an individual benefits from treatment (pibt). arXiv:2205.09094, May 2022. [4] B. Fava. Predicting the distribution of treatment effects via covariate-adjustment, with an application to microcredit. arXiv:2407.14635, Jul 2025. [5] E.A. Nadaraya. On estimating regression. Theory of Probability & Its Applications ,9(1):141–142, 1964. [6] G.S. Watson. Smooth regression analysis. Sankhya: The Indian Journal of Statistics, Series A , pages 359–372, 1964. [7] Thang Luong, Hieu Pham, and C.D. Manning. Effective approaches to attention-based neural machine translation. In Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing , pages 1412–1421, Lisbon, Portugal, 2015. Association for Computational Linguistics. 25 [8] A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A.N. Gomez, L. Kaiser, and I. Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems , pages 5998–6008, 2017. [9] A.V. Konstantinov, L.V. Utkin, V.A. Efremenko, V.A. Muliukha, A.A. Lukashin, and N.M. Verbova. Survival analysis as imprecise classification with trainable kernels. 
+
+Mathematics , 13(18):3040, 2025. [10] X.J. Jeng, W. Lu, and H. Peng. High-dimensional inference for personalized treatment decision. Electronic Journal of Statistics , 12:12 2074–2089, 2018. [11] X. Zhou, N. Mayer-Hamblett, U. Khan, and M.R. Kosorok. Residual weighted learning for estimating individualized treatment rules. Journal of the American Statistical Association , 112(517):169–187, 2017. [12] Weijia Zhang, Thuc Duy Le, Lin Liu, Zhi-Hua Zhou, and Jiuyong Li. Mining hetero-geneous causal effects for personalized cancer treatment. Bioinformatics , 33(15):2372– 2378, 2017. [13] Ahmed Alaa and Mihaela van der Schaar. Limits of estimating heterogeneous treat-ment effects: Guidelines for practical algorithm design. In Proceedings of the 35th International Conference on Machine Learning , volume 80 of Proceedings of Ma-chine Learning Research , pages 129–138, Stockholmsm¨ assan, Stockholm Sweden, 2018. PMLR. [14] Y. Xie, N. Chen, and X. Shi. False discovery rate controlled heterogeneous treatment effect detection for online controlled experiments. arXiv:1808.04904v1, Aug 2018. [15] T. Wendling, K. Jung, A. Callahan, A. Schuler, N.H. Shah, and B. Gallego. Comparing methods for estimation of heterogeneous treatment effects using observational data from health care databases. Statistics in Medicine , (23):3309–3324, 2018. [16] A. Caron, G. Baio, and I. Manolopoulou. Estimating individual treatment effects using non-parametric regression models: a review. Journal of the Royal Statistical Society Series A: Statistics in Society , 185(3):1115–1149, 2022. [17] A. Curth, R.W. Peck, E. McKinney, J. Weatherall, and M. van Der Schaar. Using machine learning to individualize treatment effect estimation: challenges and oppor-tunities. Clinical Pharmacology & Therapeutics , 115(4):710–719, 2024. [18] Liuyi Yao, Zhixuan Chu, Sheng Li, Yaliang Li, Jing Gao, and Aidong Zhang. A survey on causal inference. ACM Transactions on Knowledge Discovery from Data (TKDD) ,15(5):1–46, 2021. [19] Weijia Zhang, Jiuyong Li, and Lin Liu. A unified survey of treatment effect hetero-geneity modelling and uplift modelling. ACM Computing Surveys , 54(8):1–36, 2022. 26 [20] Y. Wang, P. Wu, Y. Liu, C. Weng, and D. Zeng. Learning optimal individualized treatment rules from electronic health record data. In IEEE International Conference on Healthcare Informatics (ICHI) , pages 65–71. IEEE, 2016. [21] S.R. Kunzel, J.S. Sekhona, P.J. Bickel, and B. Yu. Meta-learners for estimating hetero-geneous treatment effects using machine learning. Proceedings of the National Academy of Sciences , 116(10):4156–4165, 2019. [22] I. Bica, J. Jordon, and M. van der Schaar. Estimating the effects of continuous-valued interventions using generative adversarial networks. In Advances in neural information processing systems (NeurIPS) , volume 33, pages 16434–16445, 2020. [23] A. Curth and M. van der Schaar. Nonparametric estimation of heterogeneous treat-ment effects: From theory to learning algorithms. In International Conference on Artificial Intelligence and Statistics , pages 1810–1818. PMLR, 2021. [24] Lizhen Nie, Mao Ye, Qiang Liu, and D. Nicolae. Vcnet and functional targeted regular-ization for learning causal effects of continuous treatments. In International Conference on Learning Representations (ICLR 2021) , pages 1–24, 2021. [25] Tian Qin, Tian-Zuo Wang, and Zhi-Hua Zhou. Budgeted heterogeneous treatment effect estimation. In Proceedings of the 38th International Conference on Machine Learning, PMLR , volume 139, pages 8693–8702, 2021. [26] Pengfei Shi, Wei Zhong, Xinyu Zhang, Ningtao Wang, Xing Fu, Weiqiang Wang, and Yin Jin. Estimating conditional average treatment effects via sufficient representa-tion learning. In Proceedings of the Thirty-Third International Joint Conference on Artificial Intelligence , pages 4894–4901, 2024. [27] Zhenyu Guo, Shuai Zheng, Zhizhe Liu, Kun Yan, and Zhenfeng Zhu. Cetransformer: Casual effect estimation via transformer based representation learning. In Pattern Recognition and Computer Vision. PRCV 2021 , volume 13022 of Lecture Notes in Computer Science , pages 524–535. Springer, Cham, 2021. [28] V. Melnychuk, D. Frauen, and S. Feuerriegel. Causal transformer for estimating coun-terfactual outcomes. In International conference on machine learning , pages 15293– 15329. PMLR, 2022. [29] YiFan Zhang, Hanlin Zhang, Z.C. Lipton, Li Erran Li, and Eric Xing. Exploring transformer backbones for heterogeneous treatment effect estimation. Transactions on Machine Learning Research , 2023. [30] Hyo-Il Park. Estimation of the treatment effect for the survival time data. Journal of the Korean Statistical Society , 42(2):227–234, 2013. 27 [31] Yifan Cui, M.R. Kosorok, E. Sverdrup, S. Wager, and Ruoqing Zhu. Estimating heterogeneous treatment effects with right-censored data via causal survival forests. 
+
+Journal of the Royal Statistical Society Series B: Statistical Methodology , 85(2):179– 211, 2023. [32] Na Bo, Yue Wei, Lang Zeng, Chaeryon Kang, and Ying Ding. A meta-learner frame-work to estimate individualized treatment effects for survival outcomes. Journal of data science: JDS , 22(4):505, 2024. [33] Na Bo, Jong-Hyeon Jeong, Erick Forno, and Ying Ding. Evaluating meta-learners to analyze treatment heterogeneity in survival data: Application to electronic health records of pediatric asthma care in covid-19 pandemic. Statistics in medicine , 44(3-4):e10333, 2025. [34] Yijie Zhao, Hao Zhou, Jin Gu, and Hao Ye. Estimating the individual treatment effect on survival time based on prior knowledge and counterfactual prediction. Entropy ,24(7):975, 2022. [35] Liangyuan Hu. A new method for clustered survival data: Estimation of treatment effect heterogeneity and variable selection. Biometrical Journal , 66(1):2200178, 2024. [36] D. Frauen, M. Schr¨ oder, K. Hess, and S. Feuerriegel. Orthogonal survival learners for estimating heterogeneous treatment effects from time-to-event data. In The Thirty-ninth Annual Conference on Neural Information Processing Systems , 2025. [37] N.C. Henderson, T.A. Louis, G.L. Rosner, and R. Varadhan. Individualized treatment effects with censored data via fully nonparametric bayesian accelerated failure time models. Biostatistics , 21(1):50–68, 2020. [38] B.M.H. Ozenne, T.H. Scheike, L. Stark, and T.A. Gerds. On the estimation of aver-age treatment effects with right-censored time to event outcome and competing risks. 
+
+Biometrical Journal , 62:751–763, 2020. [39] S. Schrod, A. Sch¨ afer, S. Solbrig, R. Lohmayer, W. Gronwald, P.J. Oefner, T. Beißbarth, R. Spang, H.U. Zacharias, and M. Altenbuchinger. Bites: balanced individual treatment effect for survival data. Bioinformatics , 38(Supplement 1):i60– i67, 2022. [40] L. Trinquart, J. Jacot, S.C. Conner, and R. Porcher. Comparison of treatment effects measured by the hazard ratio and by the ratio of restricted mean survival times in oncology randomized controlled trials. Journal of Clinical Oncology , 34(15):1813–1819, 2016. [41] Jie Zhu and B. Gallego. Targeted estimation of heterogeneous treatment effect in observational survival analysis. Journal of Biomedical Informatics , 107(103474):1–10, 2020. 28 [42] V. Melnychuk, S. Feuerriegel, and M. van der Schaar. Quantifying aleatoric uncertainty of the treatment effect: a novel orthogonal learner. In Advances in Neural Information Processing Systems , volume 37, pages 105039–105089. Curran Associates, Inc., 2024. [43] D.B. Rubin. Causal inference using potential outcomes: Design, modeling, decisions. 
+
+Journal of the American Statistical Association , 100(469):322–331, 2005. [44] R.B. Nelsen. An introduction to copulas . Springer, 2006. [45] H. Ishwaran and U.B. Kogalur. Random survival forests for r. R News , 7(2):25–31, 2007. [46] D.R. Cox. Regression models and life-tables. Journal of the Royal Statistical Society, Series B (Methodological) , 34(2):187–220, 1972. [47] R. Beran. Nonparametric regression with randomly censored survival data. Technical report, University of California, Berkeley, 1981. [48] P. Chapfuwa, S. Assaad, S. Zeng, M. Pencina, L. Carin, and R. Henao. Survival analysis meets counterfactual inference. arXiv:2006.07756, Jun 2020. [49] S. Kirpichenko, L. Utkin, A. Konstantinov, and V. Muliukha. BENK: The Beran estimator with neural kernels for estimating the heterogeneous treatment effect. Algo-rithms , 17(1):40, 2024. [50] J.L. Hill. Bayesian nonparametric modeling for causal inference. Journal of Compu-tational and Graphical Statistics , 20(1), 2011. 29

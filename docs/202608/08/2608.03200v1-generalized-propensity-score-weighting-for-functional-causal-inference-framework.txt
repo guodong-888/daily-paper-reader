@@ -1,0 +1,1458 @@
+Title: Generalized propensity score weighting for functional causal inference framework
+
+URL Source: https://arxiv.org/pdf/2608.03200v1
+
+Published Time: Wed, 05 Aug 2026 00:43:27 GMT
+
+Number of Pages: 35
+
+Markdown Content:
+GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE FRAMEWORK 
+
+BY SIMONE CIARDULLI 1,*,a , N ICOLE FONTANA 1,2,*,b ,SIMONE VANTINI 1,c AND FRANCESCA IEVA 1,2,d    
+
+> 1MOX, Department of Mathematics, Politecnico di Milano, Milan, Italy , asimone.ciardulli@polimi.it;
+> bnicole.fontana@polimi.it; csimone.vantini@polimi.it; dfrancesca.ieva@polimi.it
+> 2Health Data Science Research Centre, Human Technopole, Milan, Italy
+
+Estimating causal effects in observational studies requires adjustment for confounding, a task that becomes challenging when the exposure is a function observed over a continuous domain rather than a scalar variable. We develop a functional propensity score weighting framework that achieves covariate bal-ance by removing dependence between time-varying treatments and observed confounders, thereby enabling estimation of marginal causal effects in set-tings with functional treatments, covariates, and outcomes. We propose a dual formulation of the weight estimation problem that yields a smooth uncon-strained optimization and improves computational scalability. The proposed framework extends naturally to settings with time-varying covariates and to longitudinal outcomes via a function-on-function marginal structural model, allowing estimation of causal effect surfaces. The proposed method improves covariate balance, estimation accuracy, and computational efficiency com-pared to the existing approach and retains these properties when extended to functional covariates and outcomes. We apply the method to data from the UK Biobank to estimate the causal effect of body mass index trajectories on the risk of Type 2 Diabetes and on subsequent glycated hemoglobin trajecto-ries, a functional measure of metabolic status. 
+
+1. Introduction. Propensity score methods are a central tool for causal inference in observational studies, enabling the estimation of treatment effects by adjusting for sys-tematic differences in pre-treatment covariates between exposure groups (Rosenbaum and Rubin, 1983; Rubin, 1974; Austin, 2011). Existing methodology, however, has been devel-oped for settings in which treatments, covariates, and outcomes are represented as scalar or low-dimensional vectors. This assumption is increasingly restrictive in modern applications, where variables are observed repeatedly over time and can be represented more naturally as functions. In this setting, standard propensity score methods are not directly applicable, as they rely on balancing finite-dimensional covariate representations. Functional Data Analysis (Ramsay and Silverman, 2005) provides the statistical tools to model longitudinal information, typically via Functional Principal Component Analysis (FPCA), which approximates infinite-dimensional functional objects through a finite set of principal component scores (Yao, Müller and Wang, 2005). Building on the extension of propensity score theory to continuous treatments through the Generalized Propensity Score (GPS) (Hirano and Imbens, 2004), recent work has begun to integrate FDA with causal in-ference. Zhang, Xue and Wang (2021) proposed the Functional Propensity Score (FPS), i.e., a covariate-balancing approach that represents a functional treatment through its Karhunen– Loève expansion and then estimates inverse-probability weights that remove the correlation between the FPC scores and observed confounders, extending the empirical-likelihood bal-ancing framework of Owen (2001) and Fong, Hazlett and Imai (2018). Despite these ad-vances, the FPS framework has two important limitations. First, weight estimation relies 
+
+> *
+
+These authors contributed equally to this work. 
+
+1arXiv:2608.03200v1 [stat.ME] 4 Aug 2026 2
+
+on constrained optimization with sequential tuning over a dimensionality-reduction param-eter, imposing a proportionality constraint on the balancing target and yielding computa-tional burdens at sample sizes typical of modern observational studies. Second, the current FPS formulation is restricted to settings with scalar covariates and scalar outcomes, whereas many applications involve confounders and outcomes that are observed repeatedly over time and for which a functional representation may be more appropriate. Related work has ad-dressed causal inference with functional covariates under a scalar treatment (Miao, Xue and Zhang, 2020) and with functional outcome under a binary treatment (Ecker, de Luna and Schelin, 2024; Fontana, et al., 2025), but a general framework that accommodates functional treatments, functional covariates, and functional outcomes simultaneously under a covariate-balancing strategy has not been developed. The absence of such a framework reflects the difficulty of simultaneously representing infinite-dimensional objects while maintaining co-variate balance to control for confounding. In this article, we develop a unified propensity score weighting framework for causal infer-ence with functional data. We show that the proposed formulation yields a general covariate-balancing representation that extends propensity score methods to functional treatments, co-variates, and outcomes. We develop a dual formulation of the functional propensity score weight estimation problem, yielding a smooth, unconstrained convex optimization that avoids sequential tuning or proportionality constraints. This formulation leads to improved compu-tational scalability and covariate balance compared to existing methods. We then extend the FPS framework to accommodate functional confounders by representing them via their own FPCA scores and augmenting the balancing constraint vector accordingly, without altering the structure of the dual optimization. Finally, we develop a function-on-function marginal structural model for the case where both treatment and outcome are functional, and estimate a causal effect surface that characterizes how the treatment trajectory influences the outcome trajectory over the domain. The proposed framework applies to a broad class of observational studies with complex data structures. We conduct simulation studies to evaluate the finite-sample performance of the proposed methodology under both the original functional propensity score setting and its extensions to longitudinal covariates and outcomes. The simulations assess covariate balance, bias re-duction, estimation accuracy, and computational scalability under varying degrees of con-founding, model complexity and sample sizes. The results show that the proposed weighting procedure consistently improves covariate balance and substantially reduces computational burden relative to the existing approach, while providing effective bias reduction and accurate estimation of the causal effect. Our methodological innovation is motivated by the study of longitudinal biomarkers and their impact on long-term health outcomes. In such settings, scalar summaries of exposure fail to capture critical features such as timing, duration, and cumulative burden. In particular, we apply the proposed framework to identify how body mass index (BMI) during midlife causally affects subsequent metabolic health, leveraging data from the UK Biobank (Sudlow et al., 2015). These data provide longitudinal BMI measurements from linked primary care records alongside rich clinical covariates and multiple metabolic outcomes. First, we estimate the time-varying causal effect of BMI trajectories observed during individuals’ midlife on the risk of incident Type 2 Diabetes. We then extend the analysis by treating both the BMI exposure and the glycaemic control profile measured by glycated hemoglobin (HbA1c) as functional, and estimate the causal effect surface that describes how BMI at each exposure age shapes glycaemic control at each subsequent outcome age. The remainder of the article is organized as follows. Section 2 introduces the method-ology, covering the FPS weight estimation (Section 2.2), the extension to functional co-variates (Section 2.3), and the functional outcome model (Section 2.4). Section 3 presents GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 3
+
+simulation studies evaluating the proposed weight estimator, including comparisons with unweighted analysis and with Zhang, Xue and Wang (2021), as well as an assessment of the extended framework with functional covariates and outcomes. In Section 4, we apply the proposed framework to estimate the causal effect of BMI trajectories on Type 2 Dia-betes risk and on longitudinal HbA1c trajectories. Section 5 concludes with a discussion and directions for future work. The proposed method and the code used to reproduce the simulation studies are implemented in the R package FPScausal , available on GitHub at https://github.com/NicoleFontana/FPScausal. 
+
+2. Methodology. 
+
+2.1. Setup and identification. We consider n i.i.d. observations {(Yi, X i(t), Ci)}ni=1 ,where Yi ∈ R is a scalar outcome, Xi(t) is a zero-mean square-integrable functional treat-ment observed over a compact domain T ⊂ R, and Ci ∈ Rp is a vector of observed con-founders with E[C⊤C] < ∞. Under the potential outcome framework (Rubin, 1974), let 
+
+Yi(x) denote the potential outcome of unit i under functional treatment x ∈ L2(T ) and let 
+
+Yi = Yi(Xi) denote the observed outcome. The causal estimand of interest is the effect func-tion μ(t), defined through the marginal structural model (Ramsay and Silverman, 2005): (1) E[Y (x)] = μ0 +
+
+Z
+
+> T
+
+μ(t) · x(t) dt, 
+
+where μ0 = E[Y ] by the zero-mean assumption on X(t). The function μ(t) characterizes how the treatment at each domain point t contributes to the expected outcome at the population level. Identification of μ(t) from the observed data rests on two standard assumptions. ASSUMPTION 1 (Strong Ignorability). Let Y (x) denote the potential outcome under treatment X = x. Conditional on the observed confounders C, the treatment X actually re-ceived by a unit is independent of that unit’s potential outcome under any fixed hypothetical treatment curve x:
+
+X ⊥⊥ Y (x) | C ∀ x ∈ L2(T ).
+
+Assumption 1 requires that all confounding between the functional treatment and the out-come is captured by C, so that adjusting for C is sufficient to remove confounding bias. Under this condition, identification of μ(t) reduces to the construction of weights that ren-der the distribution of Xi(t) independent of Ci in the weighted sample. For scalar contin-uous treatments, Hirano and Imbens (2004) showed that such weights can be derived for a continuous treatment T from the generalized propensity score (GPS) r(t, c) = fT |C (t | c).When the treatment is functional, however, no probability density is well-defined on L2(T )
+
+(Delaigle and Hall, 2010), and the GPS cannot be directly extended to this setting. We there-fore represent the functional treatment X(t) with a finite-dimensional representation via its Karhunen–Loève expansion, truncated at rank L:(2) X(t) ≈
+
+> L
+
+X
+
+> k=1
+
+Ak · ϕk(t),
+
+where ϕk(t) are the orthonormal eigenfunctions of Cov( X(s), X (t)) and Ak = R 
+
+> T
+
+X(t) ·
+
+ϕk(t) dt are the corresponding FPC scores satisfying E[Ak] = 0 and Var( Ak) = λk. The trun-cation level L is chosen to explain a pre-specified proportion of the total variance of X(t).The vector A = ( A1, . . . , A L)⊤ serves as the finite-dimensional surrogate for X(t) through-out the analysis. The GPS naturally extends to this setting as the conditional density of A∗4
+
+given C∗, r∗(a, c) = fA∗|C∗ (a | c), with corresponding standardized functional propensity score (SFPS) weight w∗ 
+
+> i
+
+= fA∗ (A∗ 
+
+> i
+
+)/r ∗(A∗ 
+
+> i
+
+, C∗ 
+
+> i
+
+), where A∗ and C∗ denote the standardized scores A and confounders C.ASSUMPTION 2 (Positivity). For any value c∗ of the observed confounders with positive density, the conditional distribution of the treatment scores A∗ given C∗ = c∗ has support containing the marginal support of A∗. Equivalently: 
+
+fA∗|C∗ (a∗ | c∗) > 0
+
+for all a∗ in the support of A∗ and all c∗ in the support of C∗.Assumption 2 ensures that every treatment profile, represented by its FPC scores, has a nonzero probability of being observed at any covariate value, so that the reweighting scheme is well-defined over the entire support. Under assumptions 1 and 2, identification of μ(t)
+
+reduces to constructing weights {wi}ni=1 that make Ai independent of Ci in the weighted sample, thereby recovering the marginal causal effect (Hirano and Imbens, 2004). In order to further simplify the expressions, we drop the asterisks in what follows. 2.2. Functional propensity score estimation. Building on the covariate-balancing frame-work for functional treatments (Zhang, Xue and Wang, 2021), to avoid possible parametric misspecification for the SFPS weights, we rewrite {wi}ni=1 as the solution to the following balancing conditions: (3) 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+wiAiC⊤ 
+
+> i
+
+= 0, 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+wiAi = 0, 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+wiCi = 0,
+
+> n
+
+X
+
+> i=1
+
+wi = 1 .
+
+Together, the constraints in (3) require that, in the reweighted sample, treatment scores and confounders are mean-zero and mutually uncorrelated, thereby mimicking a population in which treatment assignment is independent of the confounders. Following Owen (2001) and Fong, Hazlett and Imai (2018), the weights are obtained by maximizing the empirical likeli-hood subject to the balancing constraints, which is equivalent to solving the primal problem: (4) min 
+
+> w
+> n
+
+X
+
+> i=1
+
+log( wi) subject to 
+
+> n
+
+X
+
+> i=1
+
+wigi = 0,
+
+> n
+
+X
+
+> i=1
+
+wi = 1 , wi ≥ 0,
+
+where gi = A⊤ 
+
+> i
+
+, C⊤ 
+
+> i
+
+, vec( AiC⊤ 
+
+> i
+
+)⊤⊤ ∈ RL+p+Lp stacks the balancing moments for unit 
+
+i. Problem (4) is a constrained optimization whose dimension grows as O(Lp ), making it computationally demanding when L and p increase. We propose to solve it via its dual for-mulation (full derivation in Supplementary Material A). Introducing a multiplier λ ∈ R for the normalization constraint and γ ∈ RL+p+Lp for the balancing constraints, the dual prob-lem consists of maximizing the Lagrangian dual function: (5) max  
+
+> γ,λ
+
+D(λ, γ) = max  
+
+> γ,λ
+
+inf  
+
+> w≥0
+
+L(w, γ, λ ).
+
+Imposing the stationarity conditions and the primal constraints in (4), the dual function re-duces to: (6) D(γ) = −
+
+> n
+
+X
+
+> i=1
+
+log  n − γ⊤gi
+
+.
+
+To guarantee strict positivity of the weights and remove the implicit constraint n − γ⊤gi >
+
+0, we introduce the reparametrization n − γ⊤gi = K e θ⊤gi for θ ∈ RL+p+Lp and K > 0.GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 5
+
+The normalization constraint uniquely determines K = Pni=1 e−θ⊤gi , and the weights are recovered as the softmax transformation of −θ⊤gi:(7) wi = e−θ⊤gi
+
+Pnj=1 e−θ⊤gj
+
+, i = 1 , . . . , n. 
+
+Substituting into D and exploiting ¯g = 0 (since FPC scores and confounders are standard-ized), the dual function becomes: (8) D(θ) = −n log 
+
+> n
+
+X
+
+> i=1
+
+e−θ⊤gi
+
+!
+
+.
+
+The dual problem reduces then to the following smooth, unconstrained convex minimization in θ ∈ RL+p+Lp :(9) min  
+
+> θ
+
+log 
+
+> n
+
+X
+
+> i=1
+
+e−θ⊤gi
+
+!
+
+.
+
+A finite minimizer θ∗ exists whenever the empirical balancing constraints in (4) are feasible with positive weights. Under this condition, θ∗ can be obtained via the BFGS quasi-Newton algorithm, and the weights wi are then recovered via (7). Once the weights {wi}ni=1 are obtained, the effect function μ(t) can be estimated by approximating it, without loss of gen-erality, over the same FPCA basis {ϕk(t)} used to represent X(t):
+
+μ(t) ≈
+
+> L∗
+
+X
+
+> k=1
+
+μk · ϕk(t),
+
+where the truncation level L∗ is chosen by a second proportion-of-variance-explained thresh-old and may differ from L. The coefficients μ = ( μ0, μ 1, . . . , μ L∗ )⊤ are estimated by weighted least squares using the SFPS weights: 
+
+ˆμ = ( A⊤W A )−1A⊤W y ,
+
+where y = ( Y1, . . . , Y n)⊤, W = diag( w1, . . . , w n), and A ∈ Rn×(1+ L∗) is the design matrix of treatment FPC scores augmented with an intercept column. The estimated effect function is then ˆμ(t) = PL∗ 
+
+> k=1
+
+ˆμk · ϕk(t). Although we use the FPCA basis to represent the effect func-tion, the framework is not tied to this choice, and other fixed basis expansions could be used in the outcome model. We adopt the FPCA basis because it provides a data-adaptive and low-dimensional representation of the functional treatment, retaining the leading sources of variation with a limited number of components. Its orthogonality yields a simple representa-tion of the functional linear model in terms of FPC scores, reducing estimation to standard weighted linear regression. Full details of the estimation procedure are given in Supplemen-tary Material B. 2.3. Extension to Functional Covariates. The framework of Section 2.2 accommodates scalar confounders C ∈ Rp. We now extend it to settings where one or more covariates are themselves functional. Without loss of generality, consider a single functional covariate D(t),
+
+t ∈ T , observed alongside C; the extension to multiple functional covariates follows by ap-plying the same argument to each in turn. We apply FPCA to D(t), representing it as: 
+
+D(t) ≈
+
+> K
+
+X
+
+> k=1
+
+bk · ηk(t),6
+
+where ηk(t) are the orthonormal eigenfunctions of Cov( D(s), D (t)) , with corresponding eigenvalues νk, and bk = R 
+
+> T
+
+D(t) · ηk(t) dt are the FPC scores satisfying E[bk] = 0 and 
+
+Var( bk) = νk. The expansion is truncated at K components, chosen to explain a pre-specified proportion of the total variance in D(t). Denote the n × K matrix of FPC scores as B, with 
+
+[B]ik = bik . Functional covariates are incorporated into the balancing procedure by augment-ing the scalar covariate matrix C with B:
+
+¯C = C | B ∈ Rn×(p+K).
+
+The augmented matrix ¯C replaces C throughout the weight estimation procedure of Sec-tion 2.2. This leaves the structure of the dual optimization (9) unchanged: the functional covariate contributes to balancing through its finite-dimensional FPC representation, and the number of optimization variables increases only by K, which remains small in practice. 2.4. Extension to Functional Outcomes. We now extend the framework to settings where the outcome is itself a function. Given a functional treatment X(s), s ∈ S , and a functional outcome Y (t), t ∈ T , the causal effect is no longer a univariate function μ(t) but a bivariate causal effect surface μ(s, t ), characterizing how the treatment at domain point s causally influences the outcome at domain point t. The corresponding function-on-function marginal structural model (Ramsay and Silverman, 2005) is: (10) E[Y (t) | X] = μ0(t) + 
+
+Z
+
+> S
+
+μ(s, t ) · X(s) ds, t ∈ T ,
+
+where μ0(t) is a functional intercept capturing the baseline mean response trajectory. To make estimation of (10) feasible, we represent X(s) and Y (t) through their respec-tive Karhunen–Loève expansions, truncated respectively at L∗S and L∗T components, with orthonormal eigenfunctions {ϕk(s)} and {ψj (t)} and corresponding FPC scores Aik and 
+
+cij . The causal effect surface μ(s, t ) and the functional intercept μ0(t) are expanded in the same bases: 
+
+μ(s, t ) = 
+
+> L∗S
+
+X
+
+> k=1
+> L∗T
+
+X
+
+> j=1
+
+μkj · ϕk(s) · ψj (t), μ0(t) = 
+
+> L∗T
+
+X
+
+> j=1
+
+μ0j · ψj (t).
+
+This choice simplifies the integral in (10), which reduces to the FPC scores Aik of X(s) and yields a linear system that decouples across output components. Specifically, substituting the expansions into (10) and matching coefficients of ψj (t) yields, for each j = 1 , . . . , L ∗T , the linear model 
+
+cij = μ0j +
+
+> L∗S
+
+X
+
+> k=1
+
+μkj · Aik , i = 1 , . . . , n. 
+
+This decouples estimation of μ(s, t ) into L∗T independent regression problems, one per output component j. For each j, the coefficient vector μj = ( μ0j , μ 1j , . . . , μ L∗S j )⊤ is estimated by weighted least squares using the FPS weights W = diag( w1, . . . , w n):
+
+ˆμj = ( A⊤W A )−1A⊤W c j ,
+
+where cj = ( c1j , . . . , c nj )⊤ and A ∈ Rn×(1+ L∗S ) is the design matrix of treatment FPC scores augmented with an intercept. The estimated causal effect surface and functional intercept are then reconstructed as: (11) ˆμ(s, t ) = 
+
+> L∗S
+
+X
+
+> k=1
+> L∗T
+
+X
+
+> j=1
+
+ˆμkj · ϕk(s) · ψj (t), ˆμ0(t) = 
+
+> L∗T
+
+X
+
+> j=1
+
+ˆμ0j · ψj (t).GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 7
+
+As in the case with a scalar outcome, the SFPS weights are used to construct a weighted pseudo-population in which the treatment FPC scores are balanced with respect to the observed confounders. Under the identification assumptions stated above, the resulting weighted least squares regressions target the marginal causal effect surface rather than a con-founded regression surface. Full algebraic details of the basis expansion and the derivation of the linear system are provided in Supplementary Material B. 2.4.1. Overlapping Domains. The estimation procedure above assumes that the domains 
+
+S and T are either distinct or do not impose structural constraints on the support of μ(s, t ).When the two domains coincide or substantially overlap, the interpretation of μ(s, t ) must respect the temporal ordering required for a causal effect. In causal inference, a cause must precede its effect; hence, if both the treatment and the outcome are observed over a common time domain S = T = [ τ0, τ 1], the value of the outcome at time t can only be causally af-fected by treatment values observed at times s ≤ t. This temporal-precedence restriction is consistent with the intuition underlying Granger-type notions of causality for time-indexed data, where past information may be used to explain future outcomes, but future information cannot play a causal role for the present (Granger, 1969). This yields the non-anticipativity constraint: (12) μ(s, t ) = 0 for all s > t, 
+
+which restricts the support of the causal effect surface to the lower-triangular region {(s, t ) : 
+
+τ0 ≤ s ≤ t ≤ τ1}, as in the historical functional linear model of Malfait and Ramsay (2003). This specification corresponds to a historical, non-concurrent function-on-function model, in which the outcome at time t depends only on treatment values observed up to time t. The non-anticipativity restriction is therefore a causal constraint induced by the temporal order-ing of treatment and outcome, rather than solely a technical estimation consideration. Con-straint (12) affects only the estimation of μ(s, t ) and has no bearing on the weight estimation procedure of Section 2.2. Since the tensor-product FPCA basis is globally supported over S × T and cannot encode constraint (12), we follow Malfait and Ramsay (2003) and replace it with a triangular basis 
+
+{Bm(s, t )}Mm=1 of piecewise linear functions defined on a finite-element grid confined to 
+
+{(s, t ) : s ≤ t}. The causal effect surface is then expanded as: 
+
+μ(s, t ) = 
+
+> M
+
+X
+
+> m=1
+
+αm · Bm(s, t ),
+
+which satisfies (12) exactly by construction. The coefficients α = ( α1, . . . , α M )⊤ are esti-mated via weighted least squares using the FPS weights, following the same procedure as in Section 2.4 with the triangular basis replacing the FPCA tensor-product basis. 
+
+3. Simulations. 
+
+3.1. Functional Propensity Score Simulation. We study the finite-sample performance of the proposed estimator under varying degrees of confounding and model misspecifica-tion. The simulation design follows Zhang, Xue and Wang (2021) and allows controlled variation in both the treatment–covariate and covariate–outcome relationships. We generate 
+
+R = 200 independent datasets, each with n = 200 subjects for each simulation. The func-tional treatment is constructed as a linear combination of six trigonometric eigenfunctions 
+
+ϕ2j−1(t) = √2 sin(2 πjt ) and ϕ2j (t) = √2 cos(2 πjt ) for j = 1 , 2, 3, with corresponding FPC scores defined as Ai1 = 4 Zi1, Ai2 = 2 √3Zi2, Ai3 = 2 √2Zi3, Ai4 = 2 Zi4, Ai5 = Zi5, and 8
+
+Ai6 = Zi6/√2, where Zi1, . . . , Z i6 i.i.d.
+
+∼ N (0 , 1) . The scalar outcome is generated according to: 
+
+Yi = 1 + 
+
+Z 10
+
+μ(t) · Xi(t) dt + g(Ci) + ei, ei ∼ N (0 , 25) ,
+
+with true effect function: 
+
+μ(t) = 2 √2 sin(2 πt ) + √2 cos(2 πt ) +  
+
+> √22
+
+sin(4 πt ) +  
+
+> √22
+
+cos(4 πt ),
+
+and a three-dimensional vector of confounders Ci = ( Ci1, C i2, C i3)⊤. We consider four set-tings that vary the functional form of the treatment-covariate and covariate-outcome rela-tionships. In Setting 1, both relationships are linear, whereas Settings 2 and 3 introduce nonlinearities in the treatment–covariate and covariate–outcome relationships, respectively, and Setting 4 combines both nonlinear components. Details of the data-generating mech-anisms are provided in Supplementary Material C. For each setting, the truncation lev-els L and L∗ are selected based on the percentage of variance explained (PVE), with 
+
+PVE L, PVE L∗ ∈ { 0.95 , 0.99 }. Estimation accuracy is evaluated using the integrated squared error (ISE), with median (MISE), average (AISE), and integrated squared bias (ISB) com-puted across simulation runs. Results are compared to the unweighted estimator as a baseline. Table 1 summarizes the results and additional detailed diagnostics are provided in Sup-plementary Material C. Across all settings, the proposed weighting approach substantially reduces bias relative to the unweighted estimator, indicating effective control of confounding regardless of the functional form of the relationships. The performance of MISE and AISE depends on the specification of the outcome model. When the truncation level is correctly specified ( PVE L∗ = 0 .95 ), the weighted estimator improves estimation accuracy across all settings, while under misspecification ( PVE L∗ = 0 .99 ), performance deteriorates in settings with simpler dependence structures but remains comparable or improves in settings with nonlinear treatment-covariate relationships, where additional components are required to achieve adequate balance. Increasing PVE L mitigates this effect, highlighting the role of the treatment representation in balancing performance. Overall, the results support the use of 
+
+PVE L = PVE L∗ = 0 .95 as a practical default choice.                                                                                                          
+
+> TABLE 1
+> MISE, AISE and ISB for the weighted and unweighted estimators across simulation settings and truncation levels (PVE L,PVE L∗).
+> PVE L∗= 0 .95 PVE L∗= 0 .99
+> MISE AISE ISB MISE AISE ISB Unweighted 0.3135 0.3288 0.2397 0.5938 0.7270 0.2431 Setting 1 PVE L= 0 .95 Weighted 0.1623 0.2119 0.0009 0.8544 1.2635 0.0066
+> PVE L= 0 .99 Weighted 0.1642 0.2202 0.0013 0.7636 1.1919 0.0072 Unweighted 0.3489 0.3660 0.2461 0.6902 0.8789 0.2487 Setting 2 PVE L= 0 .95 Weighted 0.1104 0.1428 0.0010 0.7102 1.0280 0.0057
+> PVE L= 0 .99 Weighted 0.1172 0.1461 0.0011 0.5616 0.8493 0.0075 Unweighted 0.3116 0.3296 0.2394 0.5987 0.7334 0.2430 Setting 3 PVE L= 0 .95 Weighted 0.1639 0.2131 0.0008 0.8308 1.2758 0.0068
+> PVE L= 0 .99 Weighted 0.1723 0.2216 0.0012 0.7792 1.2034 0.0073 Unweighted 0.3490 0.3667 0.2458 0.7051 0.8866 0.2487 Setting 4 PVE L= 0 .95 Weighted 0.1119 0.1438 0.0009 0.7292 1.0331 0.0054
+> PVE L= 0 .99 Weighted 0.1187 0.1472 0.0011 0.5880 0.8548 0.0074 GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 9
+
+We further compare the proposed method with Zhang, Xue and Wang (2021) in terms of computational scalability and covariate balance. Under Setting 1, the proposed estima-tor achieves substantial reductions in computational time relative to the original approach, which requires approximately 1890 times longer running time. To study scaling behavior, we consider n ∈ { 500 , 1000 , 2000 , 3000 } and p ∈ { 8, 12 , 16 , 20 }. Figure 1 shows that the computational cost of Zhang, Xue and Wang (2021) increases rapidly with p, whereas the proposed method remains stable across the range of (n, p ) considered.   
+
+> (a) Log elapsed time by n
+> (b) Log elapsed time by p
+
+Fig 1: Log wall-clock time for the proposed method and Zhang, Xue and Wang (2021) as functions of n (top) and p (bottom), under Setting 1. Each curve corresponds to a fixed value of the other dimension. To assess whether the computational gains are accompanied by adequate covariate balance, we fix the largest sample size considered in the timing experiment ( n = 3000 ) and evaluate balance across the same values of p. For each value of p, we compute the absolute Pearson correlation between each confounder and each selected FPC score. A confounder-FPC pair is considered balanced if the absolute correlation is below 0.1. Figure 2 shows that the proposed method achieves stable covariate balance across all values of p, whereas the original FPS 10 
+
+method exhibits erratic and unpredictable behavior, showing fluctuating performance across different values of p and n, with no systematic pattern, occasionally dropping to very low values. 
+
+Fig 2: Percentage of confounder-FPC pairs with absolute Pearson correlation below 0.1, as a function of p, for n = 3000 under Setting 1. 3.2. Functional Covariates and Outcome Simulation. We evaluate the proposed method in the extended setting where both covariates and outcomes are functional. This simulation examines the ability of the framework to reduce confounding bias and accurately estimate causal effect surfaces when functional covariates and outcomes are present. We generate 
+
+R = 200 datasets, each with n = 1000 subjects. The functional treatment is simulated as in Section 3.1. The functional covariate is defined as Di(t) = P4 
+
+> k=1
+
+λik · ηk(t), where ηk = ϕk
+
+and the FPC scores are given by λi1 = f (Zi1) + 4 Ui1, λi2 = Zi2 + 2 Ui2, λi3 = Zi3 + Ui3,and λi4 = Zi4 + Ui4/√2, with Zik , Uik 
+
+> i.i.d.
+
+∼ N (0 , 1) . The functional outcome is generated according to: 
+
+Yi(t) = μ0(t) + 
+
+Z 10
+
+μ(s, t ) · Xi(s) ds + g(Di) + ϵi(t), ϵi(t) ∼ GP(0 , k SE ),
+
+where μ0(t) = 1+cos(2 πt ) and kSE (s, t ) = exp[ −(s−t)2/(2 ·0.01)] . The true causal surface 
+
+μ(s, t ) is defined as: 
+
+μ(s, t ) = 2 √2 sin(2 πs ) cos(2 πt ) + 2 √2 sin(2 πt ) cos(2 πs )+ √2 cos(4 πt ) sin(4 πs ) + √2 cos(4 πs ) sin(4 πt ).
+
+As in the previous simulation, we consider four settings that vary the treatment-covariate and covariate-outcome relationships. Details of the data-generating process are provided in GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 11 
+
+Supplementary Material D. The FPC scores of the functional covariate are incorporated into the balancing constraints as described in Section 2.3. Truncation levels LT and L∗T = L∗S
+
+are selected using PVE LT , PVE L∗T , PVE L∗S ∈ { 0.95 , 0.99 }. Estimation accuracy is assessed using ISE over the bivariate domain, along with MISE, AISE and ISB across runs. Table 2 summarizes the results and more detailed diagnostics are provided in Supplemen-tary Material D. The proposed estimator consistently reduces bias across all settings and truncation levels, indicating effective adjustment for confounding in the functional setting. The behavior of MISE and AISE depends on the specification of the outcome model, mirror-ing the findings of Section 3.1. Under correct specification, the weighted estimator improves estimation accuracy across settings. Under misspecification, performance deteriorates, but this effect is mitigated by increasing the truncation level used for the treatment representa-tion. Overall, the results confirm that the bias reduction and robustness properties observed in the scalar-outcome setting extend to the more general case with functional covariates and outcomes.                                                                                                            
+
+> TABLE 2
+> MISE, AISE and ISB for the weighted and unweighted estimators, functional covariate and outcome simulation (R= 200 runs, n= 1000 ).
+> PVE L∗T= PVE L∗S= 0 .95 PVE L∗T= PVE L∗S= 0 .99
+> MISE AISE ISB MISE AISE ISB Unweighted 1.2750 1.2792 1.2395 1.4272 1.4593 1.2408 Setting 1 PVE LT= 0 .95 Weighted 1.0083 1.0094 0.9989 1.9844 2.6861 1.0085
+> PVE LT= 0 .99 Weighted 1.0090 1.0099 0.9990 1.0260 1.0291 0.9991 Unweighted 1.2760 1.3178 1.2415 1.4455 1.5154 1.2440 Setting 2 PVE LT= 0 .95 Weighted 1.0085 1.0393 0.9994 2.0180 2.7749 1.0049
+> PVE LT= 0 .99 Weighted 1.0089 1.0399 0.9995 1.0276 1.0594 0.9996 Unweighted 3.3053 3.3079 3.1589 3.5760 3.6798 3.1589 Setting 3 PVE LT= 0 .95 Weighted 3.2619 3.3839 2.9272 4.9133 5.8024 2.9354
+> PVE LT= 0 .99 Weighted 3.2761 3.4019 2.9265 3.9724 4.2508 2.9295 Unweighted 3.3076 3.3162 3.1620 3.6202 3.7087 3.1621 Setting 4 PVE LT= 0 .95 Weighted 3.2748 3.3876 2.9289 4.9398 5.7833 2.9338
+> PVE LT= 0 .99 Weighted 3.2861 3.4131 2.9278 3.9598 4.2760 2.9296
+
+4. Real Case Application. 
+
+4.1. The data. Our application is based on data from the UK Biobank (Sudlow et al., 2015), a large-scale prospective cohort study that recruited approximately 500,000 partici-pants aged 40-69 across the United Kingdom between 2006 and 2010. Our objective is to evaluate the effect of midlife body mass index (BMI) trajectories on subsequent metabolic health, controlling for differences in patient health status. A study estimated the causal effect of BMI on metabolic outcomes in the UK Biobank (Wainberg et al., 2019), but it relies on a single summary measure of adiposity at baseline. Rather than focusing on a single adiposity measure, we treat BMI as a functional exposure and estimate its time-varying causal impact. We consider two complementary analyses that differ in the outcome considered: (1) incident Type 2 Diabetes (T2D), and (2) longitudinal HbA1c levels. UK Biobank is an ideal setting for this application due to its large sample size, rich longitudinal data, and comprehensive covariate information, guaranteed by the resource linkage of many data sources (baseline assessments, primary care records, hospital episode statistics). 12 
+
+BMI and HbA1c trajectories are reconstructed from repeated measurements recorded at UK Biobank assessment visits and linked general practitioner records. To ensure data qual-ity, BMI values are restricted to the clinically plausible range [12 , 75] kg/m 2, while HbA1c values are restricted to the range [4 , 15 .7] . Participants are required to satisfy common eli-gibility criteria: absence of T2D diagnosis (defined using the International Classification of Diseases and Related Health Problems system with the code E11) at age 50, survival through-out follow-up, complete baseline covariates information, and at least one BMI observation within each five-year interval of the exposure window to ensure adequate functional represen-tation. We select a common set of clinical confounders measured at baseline: sex, ethnicity, smoking status, family history of diabetes, hypertension, dyslipidemia, ischaemic heart dis-ease, chronic kidney disease, depression, anemia, and antihypertensive medication use. These variables are established determinants of both adiposity and metabolic outcomes and exhibit associations with BMI trajectories prior to adjustment. Analysis 1 additionally includes base-line HbA1c as a continuous covariate to control for pre-existing metabolic status. Descriptive summaries of the baseline covariates for both analyses are reported in Supplementary Mate-rial E. 4.2. Analysis 1: BMI trajectories and incident T2D. After applying the inclusion crite-ria, the cohort consists of 596 individuals. The exposure is the BMI trajectory over the age range T = [50 , 65] , and the outcome is a binary indicator of incident T2D. We represent BMI trajectories using 2 principal components, which explain 99.3% of the total variabil-ity (97.7% and 1.6%, respectively). The leading component captures the overall BMI level, while the second reflects the temporal contrast between earlier and later exposure periods. The selected FPC components are shown in Supplementary Material E. We employ the FPS to balance the distribution of baseline covariates across the two-dimensional FPCA score space. The FPS weighting procedure removes systematic associations between BMI trajec-tory and baseline health status, thus isolating the marginal effect of BMI on diabetes risk from confounding by health-related factors. After applying FPS weights, all correlations between FPS and baseline covariates are reduced to zero (Figure 3), demonstrating that the weighting scheme effectively induces covariate balance in the target population. 
+
+Fig 3: Absolute Pearson correlations between each FPC score of the BMI trajectory and each baseline covariate in Analysis 1, before (red) and after (blue) applying the FPS weights. GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 13 
+
+We estimate the causal effect of the BMI trajectory on the risk of T2D using a func-tional marginal structural logistic model.Figure 4 reports the estimated weighted effect func-tion ˆμ(t) and the corresponding unweighted (naive) estimate, together with 95% point-wise reverse-percentile bootstrap confidence intervals based on subject-level resampling (B = 1000 ). The estimated effect is positive across the observed period, indicating that higher BMI increases the log-odds of developing T2D. The approximately linear shape of the es-timated effect function is consistent with the empirical structure of the BMI trajectories in this age range. Adult BMI is generally relatively stable over time (Heo, Faith and Pietro-belli, 2002), and the trajectories in our data show gradual temporal variation with limited evidence of sharp oscillations. Additional plots of the smoothed BMI trajectories are re-ported in Supplementary Material E. Notably, the effect is strongest at the beginning of the exposure window and declines steadily with age, becoming non statistically significant from zero after approximately age 57. The unweighted analysis yields uniformly larger effects that remain significant throughout the exposure window, reflecting possible confounding by baseline health status, which is associated with both higher BMI and increased diabetes risk. 
+
+Fig 4: Estimated causal effect function ˆμ(t) for the BMI trajectory on incident T2D risk, with 95% pointwise bootstrap confidence intervals (Analysis 1). 4.3. Analysis 2: BMI trajectories and HbA1c dynamics. After applying the inclusion criteria, the cohort for the second analysis consists of 1713 individuals. The exposure is the BMI trajectory over ages S = [50 , 60] , and the outcome is the HbA1c trajectory over ages T = [60 , 70] . Both exposure and outcome processes are represented via FPCA and two components are retained for each process, capturing the dominant modes of variation. The selected FPC components for both exposure and outcome are shown in Supplementary Ma-terial E. FPS weights are estimated using the same baseline covariates as in Analysis 1, excluding baseline HbA1c. As before, weighting eliminates systematic associations between exposure features and covariates, achieving near-perfect balance (Figure 5). 14 
+
+Fig 5: Absolute Pearson correlations between each FPC score of the BMI trajectory and each baseline covariate in Analysis 2, before (red) and after (blue) applying the FPS weights. We estimate the causal effect surface ˆμ(s, t ), which quantifies how BMI at age s affects HbA1c at age t. The estimated surface is shown in Figure 6. 
+
+Fig 6: Estimated causal effect surface ˆμ(s, t ) in Analysis 2, where s ∈ [50 , 60] denotes BMI exposure age and t ∈ [60 , 70] denotes HbA1c outcome age. Warmer colors indicate larger positive estimated effects. Contour lines indicate levels of equal estimated effect and are added to facilitate visual comparison. Figure 7 presents one-dimensional slices of the estimated effect surface ˆμ(s, t ) for se-lected values of s ∈ { 50 , 55 , 60 } and t ∈ { 60 , 65 , 70 }, together with 95% pointwise reverse-percentile bootstrap confidence intervals based on subject-level resampling ( B = 1000 ). The GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 15 
+
+corresponding unweighted estimates are reported in Supplementary Material E. The esti-mated surface is uniformly positive, indicating that higher BMI at any exposure age increases subsequent HbA1c levels, consistent with the findings in Section 4.2. As in Analysis 1, this smooth pattern is consistent with the gradual temporal evolution expected for adult BMI tra-jectories (Heo, Faith and Pietrobelli, 2002) and with the slowly varying BMI and HbA1c trajectories observed in our data, which are reported in Supplementary Material E. The effect exhibits a clear dependence on the timing of exposure, showing a stronger effect in the early part of the exposure window and attenuates as s approaches 60. For a fixed exposure age, the effect shows a mild declining trend over outcome ages t, although this variation is less pronounced than the change across exposure ages. Effects at later exposure ages are both weaker and less precisely estimated, with wider confidence intervals that, in some cases (no-tably for t = 70 ), include zero. These findings align with the pattern observed in Analysis 1: BMI in the early part of midlife exerts the strongest estimated causal effect, while the influ-ence of BMI at later exposure ages weakens. This pattern may reflect the cumulative nature of metabolic risk, where prolonged exposure to elevated BMI in midlife has a more profound impact on long-term glycaemic control than BMI at older ages. 
+
+Fig 7: Slices of the estimated causal effect surface ˆμ(s, t ) with 95% pointwise bootstrap confidence bands. Stars mark pointwise significance ( α = 0 .05 ). Top: ˆμ(·, t 0) as a function of exposure age s, for fixed outcome ages t0 ∈ { 60 , 65 , 70 }. Bottom: ˆμ(s0, ·) as a function of outcome age t, for fixed exposure ages s0 ∈ { 50 , 55 , 60 }.
+
+5. Discussion. This article develops a unified propensity score weighting framework for causal inference with functional data. The central methodological contribution is a dual for-mulation of the functional propensity score weight estimation problem, yielding a smooth, unconstrained optimization that eliminates the proportionality constraint on the weighted co-variance structure and avoids the sequential line search required by existing approaches. This formulation yields a scalable estimator whose dimension depends on p and L rather than on the sample size n, making it computationally feasible for large-scale observational datasets. Simulation results confirm that this reformulation achieves better covariate balance at sub-stantially reduced computational cost. The framework is extended to accommodate func-tional confounders by augmenting the balancing constraint vector with FPCA scores for each 16 
+
+functional covariate and extending it to functional outcomes through a function-on-function marginal structural model whose estimation reduces to a sequence of independent weighted least squares problems in the outcome FPC basis. Together, these extensions allow causal questions involving functional treatments, functional covariates, and functional outcomes to be addressed within a single coherent framework. Applying the proposed framework to data from the UK Biobank, we find consistent evi-dence that midlife BMI has a positive causal effect on subsequent metabolic health. In Anal-ysis 1, the estimated causal effect of the BMI trajectory on the log-odds of incident Type 2 Diabetes is strongest in the early part of the exposure window, approximately ages 50 to 57, and attenuates thereafter, becoming non-significant beyond age 57. The unweighted analysis yields uniformly larger estimates throughout the exposure window, consistent with positive confounding by baseline health status, which is associated with both higher BMI and in-creased diabetes risk. In Analysis 2, the estimated causal effect surface is uniformly positive and exhibits a clear dependence on the timing of exposure: higher BMI in the early part of midlife drives the greatest increase in subsequent HbA1c, while the causal effect of BMI at later exposure ages is both weaker and less precisely estimated. Taken together, these find-ings suggest that early midlife represents a critical window during which elevated BMI most substantially raises long-term metabolic risk, with implications for the targeting and timing of preventive interventions. The results of this observational study must be interpreted with caution, however, given the possibility of residual confounding by factors not included in the analysis, such as genetic predisposition, dietary patterns, or physical activity level, that may be associated with both BMI trajectories and metabolic outcomes. Although the application in this article is motivated by questions in metabolic epidemi-ology, the proposed framework is broadly applicable wherever an exposure or treatment of scientific interest is more naturally represented as a trajectory or curve than as a scalar sum-mary. A key feature supporting this broad applicability is the scalability of the proposed estimator, which allows the method to remain feasible even in observational datasets with very large sample sizes. Relevant applications span pharmacoepidemiology (drug dosing trajectories and clinical outcomes), environmental epidemiology (pollution or temperature curves and disease risk), and economics (income or consumption profiles and long-term out-comes), among others. Although the present applications index functions by age, the frame-work places no restriction on the nature of the domain, and the treatment and outcome need not share a common one, as illustrated in our analysis, where BMI and HbA1c are observed over non-overlapping age intervals. This paper has several limitations that warrant further investigation. First, the FPCA imple-mentation used here relies on sufficiently dense, regularly observed trajectories for individual FPC scores to be estimated reliably. In many real-world applications, however, longitudinal data may be sparse or irregularly observed. In such settings, extensions could incorporate sparse FPCA methods, such as PACE, to estimate individual scores from incomplete trajec-tories (Yao, Müller and Wang, 2005). Alternatively, the functional propensity score could be defined through small-ball probability methods (Ferraty and Vieu, 2006), which characterize the conditional distribution of a functional treatment without requiring a finite-dimensional FPC representation. Extending the proposed covariate-balancing approach to sparse and ir-regular functional data is a natural direction for future research. Second, the marginal struc-tural models in Sections 2.1 and 2.4 assume a linear functional effect relationship. Nonlinear extensions, for example, through kernel-based or nonparametric functional regression, would increase the power of the outcome model, though at the cost of additional assumptions and increased complexity. Third, as in most observational causal analyses, identification rests on the strong ignorability assumption, which requires that all relevant confounders are ob-served. This assumption is not testable from the observed data, and unmeasured confounding GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 17 
+
+cannot be ruled out. Nevertheless, it may be more plausible in settings with rich baseline phenotyping, repeated clinical measurements, and linkage to electronic health records or ad-ministrative registries, such as the UK Biobank. The increasing availability of longitudinal health data and linked records may therefore broaden the settings in which functional causal methods can be applied with credible adjustment for confounders. Developing sensitivity analysis procedures adapted to functional treatments would be a valuable complement to the proposed methodology. Finally, we used FPCA decomposition to estimate the outcome model using Weighted Least Squares (WLS); however, an alternative approach would be to employ roughness regularization methods. Developing a weighted extension of the S-Lasso estimator (Centofanti et al., 2022) may offer better finite-sample performance and improved interpretability, particularly when the effect function is represented using many principal components. 
+
+Acknowledgments. This study used data from the UKB Resource under Application Number 102297. The present research has been supported by MUR, grant Dipartimento di Eccellenza 2023-2027. F. Ieva acknowledges the National Plan for NRRP Complementary In-vestments "Advanced Technologies for Human-centred Medicine" (PNC0000003). We thank Prof. Piercesare Secchi for insightful discussions and valuable suggestions. REFERENCES 
+
+HIRANO , K. and I MBENS , G. W. (2004). The propensity score with continuous treatments. In Applied Bayesian Modeling and Causal Inference from Incomplete-Data Perspectives: An Essential Journey with Donald Rubin’s Statistical Family , pp. 73–84. Wiley. AUSTIN , P. C. (2011). An introduction to propensity score methods for reducing the effects of confounding in observational studies. Multivariate Behav. Res. 46 399–424. DELAIGLE , A. and H ALL , P. (2010). Defining probability density for a distribution of random functions. Ann. Statist. 38 1171–1193. FONG , C., H AZLETT , C. and I MAI , K. (2018). Covariate balancing propensity score for a continuous treatment: Application to the efficacy of political advertisements. Ann. Appl. Stat. 12 156–177. OWEN , A. B. (2001). Empirical Likelihood . Chapman & Hall/CRC, Boca Raton, FL. ZHANG , X., X UE , W. and W ANG , Q. (2021). Covariate balancing functional propensity score for functional treatments in cross-sectional observational studies. Comput. Statist. Data Anal. 163 10730. RAMSAY , J. O. and S ILVERMAN , B. W. (2005). Functional Data Analysis , 2nd ed. Springer, New York. ROSENBAUM , P. R. and R UBIN , D. B. (1983). The central role of the propensity score in observational studies for causal effects. Biometrika 70 41–55. RUBIN , D. B. (1974). Estimating causal effects of treatments in randomized and nonrandomized studies. J. Educ. Psychol. 66 688–701. FERRATY , F. and V IEU , P. (2006). Nonparametric Functional Data Analysis: Theory and Practice . Springer, New York. YAO , F., M ÜLLER , H.-G. and W ANG , J.-L. (2005). Functional data analysis for sparse longitudinal data. J. Amer. Statist. Assoc. 100 577–590. CENTOFANTI , F., F ONTANA , M., L EPORE , A. and V ANTINI , S. (2022). Smooth LASSO estimator for the function-on-function linear regression model. Comput. Statist. Data Anal. 176 10755. WAINBERG , M., M AHAJAN , A., K UNDAJE , A., M CCARTHY , M. I., I NGELSSON , E., S INNOTT -A RMSTRONG ,N. and R IVAS , M. A. (2019). Homogeneity in the association of body mass index with type 2 diabetes across the UK Biobank: A Mendelian randomization study. PLoS Med. 16 (12) e1002982. SUDLOW , C., G ALLACHER , J., A LLEN , N., B ERAL , V., B URTON , P., D ANESH , J., D OWNEY , P., E LLIOTT ,P., G REEN , J., L ANDRAY , M., L IU , B., M ATTHEWS , P., O NG , G., P ELL , J., S ILMAN , A., Y OUNG , A., SPROSEN , T., P EAKMAN , T. and C OLLINS , R. (2015). UK biobank: an open access resource for identifying the causes of a wide range of complex diseases of middle and old age. PLoS Med. 12 (3) e1001779. MALFAIT , N. and R AMSAY , J. O. (2003). The historical functional linear model. Canad. J. Statist. 31 115–128. MIAO , R., X UE , W. and Z HANG , X. (2020). Average treatment effect estimation in observational studies with functional covariates. arXiv preprint arXiv:2004.06166 .ECKER , K., DE LUNA , X. and S CHELIN , L. (2024). Causal inference with a functional outcome. J. R. Stat. Soc. Ser. C Appl. Stat. 73 221–240. 18       
+
+> FONTANA , N., S ECCHI , P., P IVATO , C. A., D IANGELANTONIO , E. and I EVA , F. (2025). Fostering drug repur-posing using observational data by integrating functional data analysis and causal inference. In Statistics for Innovation III. SIS 2025. Italian Statistical Society Series on Advances in Statistics . Springer, Cham. GRANGER , C. W. J. (1969). Investigating causal relations by econometric models and cross-spectral methods.
+> Econometrica 37 424–438. HEO , M., F AITH , M. S. and P IETROBELLI , A. (2002). Resistance to change of adulthood body mass index.
+> International Journal of Obesity 26 1404–1405.
+
+SUPPLEMENTARY MATERIAL 
+
+Supplementary Material A: Dual Derivation of the Weight Estimation Problem 
+
+This appendix provides the full derivation of the unconstrained dual optimization problem introduced in Section 2.2. 
+
+Supplementary Material B: Causal Effect Estimation via Weighted Least Squares 
+
+This appendix provides the full computational details of the causal effect estimation proce-dures summarized in Sections 2.2 and 2.3. 
+
+Supplementary Material C: Additional Analysis and Diagnostics for Functional Propensity Score Simulation 
+
+This section provides additional covariate balance diagnostics supporting the results of Sec-tion 3.1. We summarize the simulation settings and present detailed evidence on the ability of the proposed weighting scheme to reduce dependence between FPC scores and covariates. 
+
+Supplementary Material D: Additional Analysis and Diagnostics for Functional Co-variates and Outcome Simulation 
+
+This section provides additional diagnostics supporting the simulation study reported in Sec-tion 3.2. We summarize the simulation settings and present detailed evidence on covariate balance and inferential behavior in the setting with a functional covariate and a functional outcome. 
+
+Supplementary Material E: Additional descriptive and FPCA diagnostics for the UK Biobank Application 
+
+This section provides additional descriptive summaries and FPCA diagnostics for the UK Biobank application in Section 4. GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 1
+
+Supplementary Material A: Dual Derivation of the Weight Estimation Problem. 
+
+This appendix derives the unconstrained dual optimization problem introduced in Section 2.2. Starting from the primal formulation, we obtain the corresponding Lagrangian dual, de-rive the softmax representation of the weights, and show how the resulting objective reduces to a smooth unconstrained minimization problem. We also describe the log-sum-exp stabi-lization used in the numerical implementation. The primal problem is defined as: 
+
+min 
+
+> w∗
+> n
+
+X
+
+> i=1
+
+log( wi) subject to 
+
+> n
+
+X
+
+> i=1
+
+wigi = 0,
+
+> n
+
+X
+
+> i=1
+
+wi = 1 , wi ≥ 0,
+
+where 
+
+gi = (Ai)⊤, (Ci)⊤, vec  Ai(Ci)⊤⊤⊤ ∈ RL+p+L×p, i = 1 , . . . , n. 
+
+Introducing a multiplier λ ∈ R for the normalization constraint and γ ∈ RL+p+L×p for the balancing constraints, the Lagrangian is: 
+
+L(w, γ, λ ) = 
+
+> n
+
+X
+
+> i=1
+
+log( wi) + λ
+
+> n
+
+X
+
+> i=1
+
+wi − 1
+
+!
+
++ γ⊤
+
+> n
+
+X
+
+> i=1
+
+wigi.
+
+The dual function is therefore defined as: 
+
+D(λ, γ) = inf  
+
+> w≥0
+
+L(w, γ, λ ).
+
+Since the wi enter the Lagrangian independently, the infimum can be rewritten as: 
+
+D(λ, γ) = 
+
+> n
+
+X
+
+> i=1
+
+inf 
+
+> wi>0
+
+
+
+log( wi) + wi
+
+ λ + γ⊤gi
+
+
+
+− λ. 
+
+The dual problem is then: 
+
+max  
+
+> γ,λ
+
+D(λ, γ).
+
+Setting partial derivatives of L to zero yields the stationarity conditions: 
+
+∂L
+
+∂w i
+
+= 1
+
+wi
+
++ γ⊤gi + λ = 0 ⇒ wi = 1
+
+−λ − γ⊤gi
+
+, i = 1 , . . . , n, ∂L
+
+∂γ =
+
+> n
+
+X
+
+> i=1
+
+wigi = 0 ⇒
+
+> n
+
+X
+
+> i=1
+
+wigi = 0,∂L
+
+∂λ =
+
+> n
+
+X
+
+> i=1
+
+wi − 1 = 0 ⇒
+
+> n
+
+X
+
+> i=1
+
+wi = 1 .
+
+To eliminate λ, we impose the weighted stationarity condition Pni=1 wi ∂L 
+
+> ∂w i
+
+= 0 , which gives: 
+
+> n
+
+X
+
+> i=1
+
+wi
+
+ 1
+
+wi
+
++ γ⊤gi + λ
+
+
+
+= n + γ⊤
+
+> n
+
+X
+
+> i=1
+
+wigi + λ
+
+> n
+
+X
+
+> i=1
+
+wi = 0 .
+
+Substituting the constraints Pni=1 wigi = 0 and Pni=1 wi = 1 , it follows immediately that: 
+
+λ = −n. 2
+
+Substituting λ = −n into the dual function gives: 
+
+D(γ) = 
+
+> n
+
+X
+
+> i=1
+
+inf 
+
+> wi>0
+
+
+
+log( wi) + wi
+
+ −n + γ⊤gi
+
+
+
++ n. 
+
+For each i, define the inner function ℓi(wi) = log( wi) + wi(−n + γ⊤gi). Setting ℓ′
+
+> i
+
+(wi) = 0:
+
+1
+
+wi
+
+− n + γ⊤gi = 0 ⇒ w∗ 
+
+> i
+
+= 1
+
+n − γ⊤gi
+
+, i = 1 , . . . , n. 
+
+Substituting back: 
+
+inf  
+
+> wi>0
+
+ℓi(wi) = − log  n − γ⊤gi
+
+ − 1, i = 1 , . . . , n. 
+
+Therefore, 
+
+D(γ) = 
+
+> n
+
+X
+
+> i=1
+
+
+
+− log  n − γ⊤gi
+
+ − 1
+
+
+
++ n = −
+
+> n
+
+X
+
+> i=1
+
+log  n − γ⊤gi
+
+.
+
+To guarantee strict positivity of the weights and reduce the dual to an unconstrained prob-lem in a free parameter vector, we introduce the reparametrization 
+
+n − γ⊤gi = K e θ⊤gi , i = 1 , . . . , n, 
+
+for some K > 0 and θ ∈ RL+p+L×p. Under this parametrization, the weights become 
+
+wi = 1
+
+K e−θ⊤gi , i = 1 , . . . , n. 
+
+Imposing the normalization constraint Pni=1 wi = 1 determines K uniquely: (S1) 
+
+> n
+
+X
+
+> i=1
+
+1
+
+K e−θ⊤gi = 1 ⇒ K =
+
+> n
+
+X
+
+> i=1
+
+e−θ⊤gi .
+
+The normalized weights are therefore: 
+
+wi(θ) = e−θ⊤gi
+
+> n
+
+X
+
+> j=1
+
+e−θ⊤gj
+
+, i = 1 , . . . , n, 
+
+which is a softmax transformation of −θ⊤gi. Substituting the reparametrization into the dual function: 
+
+D(θ) = −
+
+> n
+
+X
+
+> i=1
+
+log 
+
+ nX
+
+> j=1
+
+e−θ⊤gj
+
+
+
+e−θ⊤gi
+
+
+
+= −n log 
+
+
+
+> n
+
+X
+
+> j=1
+
+e−θ⊤gj
+
+ − θ⊤
+
+> n
+
+X
+
+> i=1
+
+gi.GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 3
+
+Since the FPC scores A and confounders C have been standardized to zero mean, the sample mean of gi satisfies ¯g = 1
+
+> n
+
+Pni=1 gi = 0, so the linear term θ⊤ Pni=1 gi vanishes identically. The dual function simplifies to: 
+
+D(θ) = −n log 
+
+> n
+
+X
+
+> i=1
+
+e−θ⊤gi
+
+!
+
+.
+
+Maximizing D(θ) is equivalent to minimizing f (θ) = log 
+
+Pni=1 e−θ⊤gi
+
+
+
+, yielding the final unconstrained problem. The gradient of the objective with respect to θ is: 
+
+∇θf (θ) = 
+
+Pni=1 −gi e−θ⊤gi
+
+Pnj=1 e−θ⊤gj
+
+= −
+
+> n
+
+X
+
+> i=1
+
+wi(θ) gi,
+
+which admits a closed-form expression in terms of the current weights wi(θ), making it di-rectly available to the BFGS optimizer. Direct evaluation of Pni=1 e−θ⊤gi can suffer from numerical overflow or underflow when the exponents are large in magnitude. To ensure nu-merical stability, we apply the log-sum-exp (LSE) trick. Define: 
+
+M = max 
+
+> i=1 ,...,n
+
+ −θ⊤gi
+
+.
+
+Then: 
+
+log 
+
+> n
+
+X
+
+> i=1
+
+e−θ⊤gi
+
+!
+
+= log 
+
+> n
+
+X
+
+> i=1
+
+e−θ⊤gi−M +M
+
+!
+
+= log eMnX
+
+> i=1
+
+e−θ⊤gi−M
+
+!
+
+= M + log 
+
+> n
+
+X
+
+> i=1
+
+e−θ⊤gi−M
+
+!
+
+.
+
+Since −θ⊤gi − M ≤ 0 for all i, all exponentiated terms lie in (0 , 1] , eliminating the risk of overflow. The stabilized objective function used in the numerical implementation is therefore: (S2) F(θ) = M + log 
+
+> n
+
+X
+
+> i=1
+
+e−θ⊤gi−M
+
+!
+
+, M = max 
+
+> i
+
+ −θ⊤gi
+
+.
+
+The gradient of (S2) retains the same closed form derived before, with exponents shifted by 
+
+M , and is passed analytically to the BFGS algorithm, ensuring both numerical stability and fast convergence. 4
+
+Supplementary Material B: Causal Effect Estimation via Weighted Least Squares. 
+
+This appendix provides the full computational details of the causal effect estimation proce-dures summarized in Sections 2.2 and 2.4 of the main paper. 
+
+B.1 Scalar Outcome. Once the SFPS weights wi are obtained, the causal effect function 
+
+μ(t) is estimated by fitting the outcome model: 
+
+E[Y | X] = μ0 +
+
+Z
+
+> T
+
+μ(t) · X(t) dt, 
+
+where μ0 = E[Y ] by the zero-mean assumption on X(t). To make estimation feasible, μ(t)
+
+is approximated through a truncated basis expansion. While any complete orthonormal basis would be admissible, we adopt, without loss of generality, the eigenfunctions {ϕk(t)}L∗ 
+
+> k=1
+
+of 
+
+X(t) already computed during the FPCA decomposition: 
+
+μ(t) ≈
+
+> L∗
+
+X
+
+> k=1
+
+μk · ϕk(t),
+
+where the coefficients μk = R 
+
+> T
+
+μ(t) · ϕk(t) dt are the projections of μ(t) onto the k-th basis function, and L∗ is chosen by a second PVE threshold that may differ from L used in the treatment decomposition. Substituting this expansion into the outcome model gives: 
+
+E[Y | X] ≈ μ0 +
+
+> L∗
+
+X
+
+> k=1
+
+μk ·
+
+Z
+
+> T
+
+X(t) · ϕk(t) dt = μ0 +
+
+> L∗
+
+X
+
+> k=1
+
+μk · Ak,
+
+where Ak = R 
+
+> T
+
+X(t) · ϕk(t) dt are the FPC scores of X(t). The coefficients (μ1, . . . , μ L∗ )
+
+are estimated via weighted least squares using the SFPS weights: 
+
+(ˆ μ1, . . . , ˆμL∗ ) = arg min 
+
+> μ1,...,μ L∗
+> n
+
+X
+
+> i=1
+
+ˆwi · Yi − ¯Y −
+
+> L∗
+
+X
+
+> k=1
+
+μk · Aik 
+
+!2
+
+,
+
+where ¯Y = 1
+
+> n
+
+Pni=1 Yi is the sample mean of the outcomes, Aik = R 
+
+> T
+
+Xi(t) · ϕk(t) dt are the individual FPC scores, and ˆwi are the estimated SFPS weights. The final estimate of the causal effect function is: 
+
+ˆμ(t) = 
+
+> L∗
+
+X
+
+> k=1
+
+ˆμk · ϕk(t).
+
+B.2 Functional Outcome. When the outcome is itself a function, both X(s) and Y (t)
+
+are represented through their respective Karhunen–Loève expansions, truncated at LS and 
+
+LT components: 
+
+Xi(s) = 
+
+> LS
+
+X
+
+> k=1
+
+Aik · ϕk(s), Yi(t) = 
+
+> LT
+
+X
+
+> j=1
+
+cij · ψj (t), i = 1 , . . . , n, 
+
+where ϕk(s) and ψj (t) are the orthonormal eigenfunctions of the covariance operators of 
+
+X(s) and Y (t), respectively, and Aik , cij are the corresponding FPC scores. The causal effect surface and the functional intercept are expanded in the same bases, but using possibly different truncation levels, denoted by L∗S and L∗T :
+
+μ(s, t ) = 
+
+> L∗S
+
+X
+
+> k=1
+> L∗T
+
+X
+
+> j=1
+
+μkj · ψj (t) · ϕk(s), μ0(t) = 
+
+> L∗T
+
+X
+
+> j=1
+
+μ0j · ψj (t).GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 5
+
+Substituting these expansions into model (10): 
+
+> L∗T
+
+X
+
+> j=1
+
+cij · ψj (t) = 
+
+> L∗T
+
+X
+
+> j=1
+
+μ0j · ψj (t) + 
+
+> L∗S
+
+X
+
+> k=1
+> L∗T
+
+X
+
+> j=1
+
+μkj · ψj (t) ·
+
+Z
+
+> S
+
+Xi(s) · ϕk(s) ds. 
+
+Since the integral term is precisely the k-th FPC score of Xi(s), that is Aik = R 
+
+> S
+
+Xi(s) ·
+
+ϕk(s) ds , the expression simplifies to: 
+
+> L∗T
+
+X
+
+> j=1
+
+cij · ψj (t) = 
+
+> L∗T
+
+X
+
+> j=1
+
+μ0j · ψj (t) + 
+
+> L∗S
+
+X
+
+> k=1
+> L∗T
+
+X
+
+> j=1
+
+μkj · ψj (t) · Aik .
+
+Matching coefficients of ψj (t) for each j = 1 , . . . , L T yields the system: 
+
+cij = μ0j +
+
+> L∗S
+
+X
+
+> k=1
+
+μkj · Aik , i = 1 , . . . , n, 
+
+which in matrix form reads cj = A · μj , where: 
+
+cj = ( c1j , . . . , c nj )⊤, A =
+
+
+
+1 A11 · · · A1L∗S
+
+... ... . . . ...
+
+1 An1 · · · AnL ∗S
+
+ , μj = ( μ0j , μ 1j , . . . , μ L∗S j )⊤.
+
+For each j = 1 , . . . , L ∗T , the coefficient vector μj is estimated via weighted least squares using the FPS weights W = diag( w1, . . . , w n):
+
+ˆμj = arg min 
+
+> μj
+
+W 1/2 cj − A · μj
+
+ 2 = ( A⊤W A )−1A⊤W c j .
+
+The estimated causal effect surface and functional intercept are then reconstructed as: 
+
+ˆμ(s, t ) = 
+
+> L∗S
+
+X
+
+> k=1
+> L∗T
+
+X
+
+> j=1
+
+ˆμkj · ψj (t) · ϕk(s), ˆμ0(t) = 
+
+> L∗T
+
+X
+
+> j=1
+
+ˆμ0j · ψj (t).6
+
+Supplementary Material C: Additional Analysis and Diagnostics for Functional Propensity Score Simulation. This section provides additional covariate balance diagnos-tics supporting the results of Section 3.1. We summarize the simulation settings and present detailed evidence on the ability of the proposed weighting scheme to reduce dependence between FPC scores and covariates. We consider four simulation settings that vary the form of the treatment–covariate and covariate–outcome relationships: • Setting 1 (linear treatment–covariate and covariate–outcome relationships): 
+
+Ci1 = Zi1 + Wi1, Ci2 = 0 .2Zi2 + Wi2, Ci3 = 0 .2Zi3 + Wi3, with Wi1 ∼ N (0 , 1) and 
+
+Wi2, W i3 ∼ N (0 , 0.5) independent of Zik ; g(Ci) = 2 Ci1.• Setting 2 (nonlinear treatment–covariate, linear outcome): 
+
+Ci1 = ( Zi1 + 0 .5) 2 + Wi1; Ci2, Ci3 and g as in Setting 1. • Setting 3 (linear treatment–covariate, nonlinear outcome): Covariates as in Setting 1; g(Ci) = 2 Ci1 + C2
+
+> i2
+
+.• Setting 4 (nonlinear treatment–covariate and nonlinear outcome): Covariates as in Setting 2; g as in Setting 3. Table S1 reports the percentage change of the weighted estimator relative to the unweighted estimator for MISE, AISE, and ISB across all settings and (PVE L, PVE L∗ ) combinations.                                                                      
+
+> TABLE S1
+> Percentage improvement of the weighted estimator over the unweighted in MISE, AISE and ISB. Negative values indicate deterioration.
+> PVE L∗= 0 .95 PVE L∗= 0 .99
+> MISE AISE ISB MISE AISE ISB Setting 1 PVE L= 0 .95 48 .23% 35 .55% 99 .62% −43 .89% −73 .80% 97 .29% PVE L= 0 .99 47 .62% 33 .03% 99 .46% −28 .60% −63 .95% 97 .04%
+> Setting 2 PVE L= 0 .95 68 .36% 60 .98% 99 .59% −2.90% −16 .96% 97 .71% PVE L= 0 .99 66 .41% 60 .08% 99 .55% 18 .63% 3.37% 96 .98%
+> Setting 3 PVE L= 0 .95 47 .40% 35 .35% 99 .67% −38 .77% −73 .96% 97 .20% PVE L= 0 .99 44 .70% 32 .77% 99 .50% −30 .15% −64 .09% 97 .00%
+> Setting 4 PVE L= 0 .95 67 .94% 60 .79% 99 .63% −3.42% −16 .52% 97 .83% PVE L= 0 .99 65 .99% 59 .86% 99 .55% 16 .61% 3.59% 97 .02%
+
+Figures S1 and S2 summarize the distribution of F -statistics and corresponding p-values from weighted regressions of FPC scores on the covariates. The proposed method yields 
+
+F -statistics concentrated near zero and p-values close to one across all settings, indicat-ing weak residual dependence after weighting. In contrast, the unweighted case exhibits large F -statistics and small p-values, reflecting substantial dependence between FPC scores and covariates. Results are displayed separately for PVE L = 0 .95 (L = 4 FPC scores) and 
+
+PVE L = 0 .99 (L = 6 FPC scores), and are grouped by the nature of the treatment-covariate relationship. The reference thresholds are F = 10 and p = 0 .05 . These results suggest that the proposed weighting scheme effectively reduces linear dependence between FPC scores and covariates, which is the form of confounding targeted by the balancing constraints. GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 7
+
+(a) Settings 1 and 3, PVE L = 0 .95 (b) Settings 1 and 3, PVE L = 0 .99 
+
+(c) Settings 2 and 4, PVE L = 0 .95 (d) Settings 2 and 4, PVE L = 0 .99 
+
+Fig S1: Boxplots of F -statistics from weighted linear regressions of each selected FPC score on the covariate vector C, across R = 200 simulation runs. The dashed horizontal line indi-cates the reference threshold F = 10 .
+
+(a) Settings 1 and 3, PVE L = 0 .95 (b) Settings 1 and 3, PVE L = 0 .99 
+
+(c) Settings 2 and 4, PVE L = 0 .95 (d) Settings 2 and 4, PVE L = 0 .99 
+
+Fig S2: Boxplots of p-values from the F -tests corresponding to Figure S1. The dashed hori-zontal line indicates the reference threshold p = 0 .05 .8
+
+To assess inferential performance, Figure S3 presents 99% bootstrap reverse-percentile confidence bands for the estimated causal effect function ˆμ(t) in two representative simula-tion runs (Runs 34 and 126) from setting 1, constructed using B = 1 ,000 bootstrap samples. In both cases, the bands cover the true effect function across the domain, suggesting adequate finite-sample performance.  
+
+> (a) Run 34 (b) Run 126
+
+Fig S3: Estimated causal effect function ˆμ(t) and 99% bootstrap reverse-percentile pointwise confidence bands for two representative simulation runs from setting 1 ( PVE L = PVE L∗ =0.95 ). The true causal effect function μ(t) is shown as a solid black line. Confidence bands are based on B = 1 ,000 bootstrap samples. For completeness, Figure S4 reports the absolute Pearson correlations between con-founder–FPC pairs under the unweighted estimator, Zhang, Xue and Wang (2021), and the proposed method for a representative configuration. The proposed method substantially re-duces correlation magnitudes relative to the alternatives. 
+
+Fig S4: Absolute Pearson correlations between confounder-FPC pairs under three weighting schemes: unweighted (green), proposed (red), and Zhang, Xue and Wang (2021) (blue), for 
+
+n = 3000 and p = 10 under Setting 1. GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 9
+
+Supplementary Material D: Additional Analysis and Diagnostics for Functional Co-variates and Outcome Simulation. This section provides additional diagnostics support-ing the simulation study reported in Section 3.2. We summarize the simulation settings and present detailed evidence on covariate balance and inferential behavior in the setting with a functional covariate and a functional outcome. We consider four simulation settings that vary the treatment-covariate and covariate-outcome relationships: • Setting 1 (linear treatment–covariate and covariate–outcome relationships): 
+
+λi1 = Zi1 + 4 Ui1 and g(Di) = 2 λi1.• Setting 2 (nonlinear treatment–covariate, linear outcome): 
+
+λi1 = ( Zi1 + 0 .5) 2 + 4 Ui1, with g as in Setting 1. • Setting 3 (linear treatment–covariate, nonlinear outcome): 
+
+λi1 as in Setting 1 and g(Di) = 2 λi1 + λ2
+
+> i2
+
+.• Setting 4 (nonlinear treatment–covariate and nonlinear outcome): 
+
+λi1 as in Setting 2, with g as in Setting 3. Table S2 reports the percentage change of the weighted estimator relative to the un-weighted estimator for MISE, AISE, and ISB across all settings and PVE L, PVE L∗T and 
+
+PVE L∗S combinations.                                                                        
+
+> TABLE S2
+> Percentage improvement of the weighted estimator over the unweighted, functional covariate and outcome simulation. Negative values indicate deterioration.
+> PVE L∗T= PVE L∗S= 0 .95 PVE L∗T= PVE L∗S= 0 .99
+> MISE AISE ISB MISE AISE ISB Setting 1 PVE LT= 0 .95 20 .92% 21 .09% 19 .41% −39 .04% −84 .07% 18 .72% PVE LT= 0 .99 20 .86% 21 .05% 19 .40% 28 .11% 29 .48% 19 .48%
+> Setting 2 PVE LT= 0 .95 20 .96% 21 .13% 19 .50% −39 .61% −83 .11% 19 .22% PVE LT= 0 .99 20 .93% 21 .09% 19 .49% 28 .91% 30 .09% 19 .65%
+> Setting 3 PVE LT= 0 .95 1.31% −2.30% 7.33% −37 .40% −57 .68% 7.08% PVE LT= 0 .99 0.88% −2.84% 7.36% −11 .09% −15 .52% 7.26%
+> Setting 4 PVE LT= 0 .95 0.99% −2.15% 7.37% −36 .45% −55 .94% 7.22% PVE LT= 0 .99 0.65% −2.92% 7.41% −9.38% −15 .30% 7.35%
+
+Figure S5 assesses covariate balance through absolute Pearson correlations for settings I–III. To assess inferential performance, we construct 99% bootstrap reverse-percentile point-wise confidence surfaces for the estimated causal effect surface ˆμ(s, t ) in a representative simulation run from Setting 1, using B = 1 ,000 bootstrap samples. Because the estimand is bivariate, we report both three-dimensional visualizations and two-dimensional cross-sections. Figure S6 displays the estimated surface ˆμ(s, t ), the true surface μ(s, t ), and the up-per and lower confidence surfaces. Figure S7 presents cross-sections at t = 0 .5 and s = 0 .5,providing a more detailed view of estimation accuracy and pointwise coverage along each axis. In these representative cross-sections, the true function lies within the confidence bands across the displayed domain. 10 
+
+Fig S5: Correlation plot for settings I–III with PVE L = 0 .95 .
+
+Fig S6: Three-dimensional visualization of the estimated causal effect surface ˆμ(s, t ) and the true surface μ(s, t ), with upper and lower 99% bootstrap reverse-percentile confidence surfaces. Run 126, setting 1, PVE L = PVE L∗ = 0 .95 , B = 1 ,000 bootstrap samples. GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 11         
+
+> (a) Cross-section at t= 0 .5:μ(s, 0.5) (b) Cross-section at s= 0 .5:μ(0 .5, t )
+
+Fig S7: Two-dimensional cross-sections of the estimated causal effect surface, true surface, and 99% bootstrap reverse-percentile confidence bands at fixed t = 0 .5 (left) and fixed s =0.5 (right). Run 126, setting 1. Figure S8 displays regions of the domain where the 99% confidence interval excludes zero, together with contour plots of the true and estimated causal effect surfaces. 
+
+Fig S8: Significance map at α = 0 .01 . Left: contour plot of the true surface μ(s, t ). Middle: contour plot of the estimated surface ˆμ(s, t ). Right: domain regions where zero is excluded from the 99% confidence interval. Run 126, setting 1. 12 
+
+Supplementary Material E: Additional descriptive and FPCA diagnostics for the UK Biobank Application. This section provides additional descriptive summaries and FPCA diagnostics for the UK Biobank application in Section 4. 
+
+Analysis 1: BMI trajectories and incident Type 2 Diabetes. Figure S9 summarizes the distribution of the categorical and continuous covariates used in Analysis 1. Baseline HbA1c is included as a continuous covariate to adjust for pre-existing metabolic status. Ischaemic heart disease is excluded from the analysis due to a severe imbalance between the exposure groups. 
+
+Fig S9: Distribution of categorical and continuous baseline confounders in Analysis 1. Base-line HbA1c is included as a continuous confounder to adjust for pre-existing metabolic status. fhd = family history of diabetes. Figure S10 displays the selected FPCs for the BMI exposure trajectory in Analysis 1. These components provide the finite-dimensional representation used in the functional propensity score weighting procedure. GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 13 
+
+Fig S10: Selected functional principal components for the BMI exposure trajectory in Anal-ysis 1. To support the interpretation of the estimated effect functions, Figure S11 displays the smoothed BMI trajectories used in the analyses. The trajectories show gradual temporal vari-ation over the age ranges considered, with limited evidence of rapid oscillations. This empir-ical pattern is consistent with the approximately linear leading functional principal compo-nents and with the smooth estimated effect functions reported in Section 4.2. Exposure BMI trajectories 
+
+Fig S11: Smoothed BMI trajectories used in Analysis 1, where BMI over ages 50–65 is used as the functional treatment. Grey lines represent individual smoothed trajectories, and the red line represents the mean smoothed trajectory. 
+
+Bootstrap confidence intervals. Pointwise confidence intervals were constructed using a subject-level bootstrap. At each bootstrap iteration, individuals were resampled with re-placement, and the outcome, weights, and treatment FPC scores were resampled jointly. The weighted outcome model was then refitted on the bootstrap sample. We report reverse-percentile bootstrap intervals. Specifically, if ˆμ(t) denotes the estimate from the original sam-ple and qα/ 2(t) and q1−α/ 2(t) denote the empirical quantiles of the bootstrap estimates at time 
+
+t, the interval is given by: 2ˆ μ(t) − q1−α/ 2(t), 2ˆ μ(t) − qα/ 2(t) .14 
+
+Analysis 2: BMI trajectories and HbA1c dynamics. Figure S12 summarizes the distribu-tion of categorical baseline covariates used in Analysis 2. In this analysis, baseline HbA1c is not included among the confounders because HbA1c is modeled as the functional outcome. 
+
+Fig S12: Distribution of categorical baseline confounders in Analysis 2. Figures S13 and S14 display the selected FPCs for the BMI exposure trajectory and HbA1c outcome trajectory, respectively. These components define the finite-dimensional representa-tion used for the functional treatment and functional outcome models. 
+
+Fig S13: Selected functional principal components for the BMI exposure trajectory in Anal-ysis 2. GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 15 
+
+Fig S14: Selected functional principal components for the HbA1c outcome trajectory in Anal-ysis 2. Figure S15 reports the lower and upper pointwise bootstrap confidence surfaces corre-sponding to the estimated weighted causal effect surface in Analysis 2. 
+
+Fig S15: Lower and upper pointwise bootstrap confidence surfaces for the estimated weighted causal effect surface in Analysis 2. Contour lines indicate levels of equal estimated effect and are added to facilitate visual comparison. Figure S16 reports the unweighted estimates of the one-dimensional slices of the effect surface in Analysis 2, together with 95% pointwise reverse-percentile bootstrap confidence intervals based on subject-level resampling ( B = 1000 ). The unweighted estimates show the same overall positive association between BMI and subsequent HbA1c as the weighted analysis, with larger effects at earlier exposure ages and attenuation at later exposure and outcome ages. 16 
+
+Fig S16: Unweighted slices of the estimated effect surface ˆμ(s, t ) with 95% pointwise boot-strap confidence bands. Stars mark pointwise significance ( α = 0 .05 ). Top: ˆμ(·, t 0) as a func-tion of exposure age s, for fixed outcome ages t0 ∈ { 60 , 65 , 70 }. Bottom: ˆμ(s0, ·) as a func-tion of outcome age t, for fixed exposure ages s0 ∈ { 50 , 55 , 60 }.To support the interpretation of the estimated effect surface, Figures S17 and S18 display the smoothed treatment and outcome trajectories used in Analysis 2. As for Analysis 1, the trajectories show gradual temporal variation over the age ranges considered, with limited evidence of rapid oscillations. This empirical pattern is consistent with the approximately linear leading functional principal components and with the smooth estimated effect surface reported in Section 4.3. Exposure BMI trajectories 
+
+Fig S17: Smoothed BMI trajectories used in Analysis 2, where BMI over ages 50–60 is used as the functional treatment. Individual smoothed trajectories are shown in grey, with their pointwise mean shown in red. GENERALIZED PROPENSITY SCORE WEIGHTING FOR FUNCTIONAL CAUSAL INFERENCE 17 Outcome HbA1c trajectories 
+
+Fig S18: Smoothed HbA1c trajectories used in Analysis 2, where HbA1c over ages 60–70 is used as the functional outcome. Individual smoothed trajectories are shown in light blue, with their pointwise mean shown in blue.
