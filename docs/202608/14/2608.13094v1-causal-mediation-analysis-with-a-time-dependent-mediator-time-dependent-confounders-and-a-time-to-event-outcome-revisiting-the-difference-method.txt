@@ -1,0 +1,889 @@
+Title: Causal Mediation Analysis with a Time-Dependent Mediator, Time-Dependent Confounders and a Time-to-Event Outcome: Revisiting the Difference Method
+
+URL Source: https://arxiv.org/pdf/2608.13094v1
+
+Published Time: Fri, 14 Aug 2026 00:51:17 GMT
+
+Number of Pages: 44
+
+Markdown Content:
+# Causal Mediation Analysis with a Time-Dependent Mediator, Time-Dependent Confounders and a Time-to-Event Outcome: Revisiting the Difference Method 
+
+## Robin Denz and Nina Timmesfeld Ruhr-University Bochum Department of Medical Informatics, Biometry and Epidemiology 
+
+Abstract 
+
+Mediation analysis is a powerful tool to decompose treatment effects into di-rect and indirect components, enabling explanations of total treatment effects in a formal statistical framework. However, applying such analyses to settings with time-to-event outcomes, time-dependent mediators and confounders remains chal-lenging. Existing methods are statistically complex, computationally intensive, and rarely available in user-friendly software. The difference method offers a simple al-ternative, but its performance in this setting has not been systematically evaluated. We conducted a simulation study and real-world data analysis to fill this gap in the literature. Using Cox proportional hazards, Aalen additive hazards, and accelerated failure time (AFT) models with time-varying covariates, the difference method was compared across different data generation processes with time-dependent mediators and confounders, focusing on bias in estimated indirect effects. The parametric me-diational g-formula was used as benchmark comparator. If correctly specified, the Aalen model based difference method produced unbiased estimates in the absence of a time-dependent confounder that was directly caused by the treatment. Similar results were obtained when using the Cox model based difference with rare out-comes, but not with common outcomes. The AFT model based difference method was biased in almost all scenarios, due to collapsibility issues. Only the parametric mediational g-formula was unbiased in all scenarios. In contrast to specialized meth-ods, the difference method requires additional, often unrealistic, assumptions, such as the absence of a direct causal relationship of the treatment on time-dependent confounders. If those assumptions hold, however, it may be used as a simple and efficient alternative. 
+
+Keywords: mediation, time-to-event outcome, time-dependent covariates, differ-ence method 
+
+1arXiv:2608.13094v1 [stat.ME] 13 Aug 2026 1 Introduction 
+
+Mediation analysis is a central tool to investigate the mechanisms by which some treat-ment causally influences an outcome. Its main goal is to decompose the total effect of the treatment into direct and indirect components, with respect to a mediating variable, which is suspected to be caused by the treatment and may in turn influence the outcome (VanderWeele 2015). These decompositions are valuable for designing interventions and deepening scientific understanding beyond total treatment effects. As such, methods for mediation analysis are increasingly being used and developed (Lapointe-Shaw et al. 2018; Rijnhart et al. 2021). A comprehensive overview is given by VanderWeele (VanderWeele 2015). Originally, these methods were developed only for continuous mediators and outcomes measured at single points in time, but have been extended to cover many other settings since (Baron and Kenny 1986; VanderWeele 2015). Extensions for time-to-event out-comes, such as the time until death or disease progression, are particularly important for medical research. These types of outcomes are often right-censored , meaning that for some individuals it is only known that the event of interest has not occurred up until some point in time, which considerably complicates mediation analysis (Fulcher et al. 2017; Lange and Hansen 2011; Lapointe-Shaw et al. 2018). Additionally, the longitudi-nal nature of such time-to-event data almost inevitably brings variables that vary over time. For example, the effect of Ursodeoxycholic acid on survival of patients with primary biliary cholangits might be mediated by histological progression or other time-dependent markers of disease worsening (Rudic et al. 2012). When mediators and confounders are time-dependent, both the definition of appropriate target estimands and their estimation becomes particularly challenging (Aalen et al. 2018; Didelez 2019; Mogensen et al. 2023). Multiple methods to perform causal mediation analysis with a time-dependent me-diator and a time-to-event outcome have been proposed in the literature (Aalen et al. 2020; Bhandari et al. 2025a,b; Breum et al. 2024; Gao et al. 2023; Huang 2021; Kateline et al. 2025; Kormaksson et al. 2024; Lin et al. 2017a,b; Valeri et al. 2023; Vansteelandt et al. 2019; Wang et al. 2025; Zeng et al. 2023). Some are based on various g-methods, such as the parametric mediational g-formula, and / or dynamic path analysis, (Aalen et al. 2020; Fosen et al. 2006; Kateline et al. 2025; Kormaksson et al. 2024; Lin et al. 2017a,b; Vansteelandt et al. 2019) while others use the semi-competing risk or multi-state modelling framework, (Breum et al. 2024; Gao et al. 2023; Huang 2021; Valeri et al. 2023) complex Bayesian joint models based on Markov chain Monte-Carlo simulation (Bhandari et al. 2025a,b; Zeng et al. 2023) or targeted maximum likelihood estimation (Wang et al. 2025). Although these methods offer valuable estimation strategies, it is not straightforward to apply them in practice. First, they all require advanced knowledge of both statistical and causal inference based concepts. Secondly, most of these methods are not implemented in user-friendly software packages. Finally, many of the proposed methods also require models to be fit sequentially for each relevant point in time, sometimes for all involved variables, which is computationally demanding (Aalen et al. 2020; Vansteelandt et al. 2019). Taken together with the need for non-parametric bootstrapping to obtain valid confidence intervals and standard errors, (Efron 1979) they often require long computation times. If hundreds or thousand of points in time need to be considered, their usage may 2even be infeasible in practice. It may thus be tempting to use the difference method instead, which is a simple and widely known approach that has been used extensively in settings without time-varying mediators (Jiang and VanderWeele 2015; Susser 1973; VanderWeele 2015). Briefly, this method utilizes two models for the outcome: one for the direct effect (including both the treatment, mediator and confounders as independent variables) and one for the total effect (including only the treatment and confounders as independent variable). The difference of the obtained beta coefficients is used to estimate the indirect effect (VanderWeele 2015). Extending this approach to time-to-event outcomes with time-varying mediators and confounders is straightforward from a computational perspective (Vansteelandt et al. 2019). For example, users may simply fit two Cox proportional hazards models (Cox 1972) with time-dependent covariates, which requires only two lines of code with standard software (Therneau 2025). The appeal of such simplicity is clear. Nevertheless, the usage of this method is con-troversial for multiple reasons. First, studies on time-to-event outcomes with time-fixed mediators have shown that, depending on the underlying data generation process (DGP) and the employed models, the difference method may produce biased estimates (Fulcher et al. 2017; Lange and Hansen 2011). For example, Lange and Hansen (2011) showed that the Cox proportional hazard model based difference method does not work well with common outcomes. Furthermore, it is well understood that under certain types of time-dependent feedback between the treatment, mediator, and confounders, the estimation of marginal causal effects using conditional models is not possible, complicating the use of the difference method for mediation analysis (Daniel et al. 2011; Hernán and Robins 2020; Lin et al. 2017a; Vansteelandt et al. 2019). As a result, the method is generally discouraged in this context. However, there has been no systematic investigation of its em-pirical performance in realistic data-generating scenarios with time-dependent mediators for a well-defined target estimand. Beyond the known bias under violations of structural assumptions, the properties of the method in this context are thus unclear. This paper seeks to fill that gap. Through a simulation study and the analysis of data from a randomized controlled trial on the effect of Ursodeoxycholic acid on survival in primary biliary cholangitis patients, we evaluate the performance of the difference method for causal mediation analysis in the presence of time-dependent mediators, time-dependent confounders, and a time-to-event outcome. We apply the difference method using Cox proportional hazards models, (Cox 1972) Aalen additive hazards models (Aalen 1989) and accelerated failure time (AFT) models, (Wei 1992) comparing the results to the known truth and against the parametric mediational g-formula, (Lin et al. 2017a) which serves as a benchmark for more rigorous methods. Our aim is to identify conditions under which the difference method produces unbiased estimates of direct and indirect effects, and to highlight scenarios where it yields severely biased results. In doing so, we aim to provide applied researchers with clearer guidance on the potential risks and limitations of relying on this deceptively simple method in complex longitudinal survival settings. 32 Motivating Example 
+
+Before diving into the methodological details, we first want to introduce a scenario, in which the sort of mediation analysis discussed in this paper may be of interest to prac-titioners. Roughly, this application focuses on disentangling direct and indirect effects of a medical treatment in patients with primary biliary cholangitis (PBC), which is a rare immune-mediated chronic cholestatic liver disease (Hohenester et al. 2009). It is charac-terized by the progressive destruction of small intrahepatic bile ducts, leading to impaired bile flow, chronic cholestasis, and ultimately liver fibrosis and cirrhosis if left untreated (Hohenester et al. 2009; Trivella et al. 2023). The primary treatment for PBC is Ursodeoxycholic acid (UDCA), which aims to slow disease progression and improve long-term outcomes. Despite some initial contro-versy fuelled by early meta-analyses,(Goulis et al. 1999; Rudic et al. 2012) UDCA has been shown to significantly increase liver transplant-free survival (LTFS) time in multiple studies (Harms et al. 2019; Lammers et al. 2014; Trivella et al. 2023; Zhu et al. 2015). For example, in an international cohort study including 3902 PBC patients from eight countries in Europe and North America, an adjusted hazard ratio of 0.46 (95% CI 0.40– 0.52) was observed when comparing LTFS among UDCA-treated and untreated patients (Harms et al. 2019). Although the benefits of UDCA for PBC patients are well docu-mented, the precise mechanism by which UDCA improves these outcomes is not as well understood (Beuers 2006; Hohenester et al. 2009; Paumgartner and Beuers 2004). A fairly consistent finding in the literature is that UDCA slows histological progression, (Rudic et al. 2012) which likely mediates the effect of UDCA on LTFS, but no formal causal mediation analysis has been conducted so far. To get a better understanding about the UDCA treatment, it would be of great benefit to quantify the direct and indirect effects of treatment with UDCA on LTFS with respect to histological progression by two stages in PBC patients. In this scenario, UDCA is the baseline treatment, histological progression is the time-dependent mediator and the LTFS is the time-to-event outcome. We performed such an analysis to illustrate the potential usage and pitfalls of the difference method and the parametric mediational g-formula in a setting with a time-to-event outcome and time-dependent mediators and confounders. We used publicly available data from 170 patients that were enrolled in a double-blind, placebo-controlled trial of UDCA at the Mayo Clinic from 1988 to 1992, conducted by Lindor et al. (1994). The data is freely available as part of the survival R package, with ten patients from the original study being excluded due to incomplete follow-up (Therneau and Grambsch 2000). A detailed discussion of the study results are given in the primary article (Lindor et al. 1994). The aim of this analysis is not to generate new clinical evidence. In fact, the sample size is not sufficient for reliable results to be drawn and some required identifiability assumptions likely do not hold for either analysis, as discussed below. Instead, the presented analysis is merely meant as an illustrative example to showcase how the investigated methods may be used in practice. More details and results of this analysis are discussed in section 6. 43 Background 
+
+## 3.1 Notation and setup 
+
+Let A be a binary baseline treatment variable with A ∈ { 0, 1}, where 0 indicates the control condition and 1 the treatment condition. Similarly, let Mt be a time-dependent mediator and Yt be a binary time-dependent outcome of interest, with t specifying the respective point in time. Additionally, let X denote a baseline covariate and let Lt =
+
+{L1,t , L 2,t , L i,t , ..., L w,t } denote a vector of w time-dependent variables (indexed by i), that may act as confounders of the causal relationship between Mt and Yt+1 , as shown in figure 1. To keep the notation simple, we focus on a single baseline variable and equi-distant discrete-time measurements of Lt, Mt and Yt, with t ∈ { 0, 1, 2, ..., k } for every individual. The first time at which Yt turns one is denoted as T . In practice, this time might not be observed for all individuals, due to loss to follow-up or other censoring events that may occur before T . Let the time until such censoring events be denoted C. In practice, we only observe T obs = min( T, C ), with corresponding event indicator Dobs = I(T ≤ C), where I() denotes the indicator function. The data one would observe under this setup, are thus equivalent to data from a cohort study or data from secondary databases, such as administrative health-claims data. We assume that the DGP can be described by a non-parametric structural equation model with independent error terms, (Pearl 2009) with all temporal orderings being de-fined according to the causal directed acyclic graph (DAG) in figure 1. For simplicity, we assume a Markovian property, so that, given all variables at t − 1, variables at t
+
+are independent of the past. In the subsequent simulation study, this DAG is changed slightly, to allow investigation of different scenarios, but the general temporal orderings are consistent throughout the article. We additionally assume independent censoring of 
+
+T obs given time-independent confounders X, e.g. T ⊥ C|X.
+
+## 3.2 Target estimand 
+
+Estimands for mediation analysis are usually defined in terms of contrasts of counterfac-tual or potential outcomes, denoting the outcome one would observe under hypothetical interventions on some variables (Hernán 2016; Pearl 2009). In standard mediation anal-ysis without time-dependent mediators and confounders, the classic definition of natural effects , as proposed by Robins and Greenland (1992) relies on the nested counterfactual 
+
+Y a,M a′
+
+, which denotes the outcome that would be observed if the treatment was set to a,but the mediator was set to the value it would have taken under a′ (Didelez 2019; Robins and Greenland 1992). By contrasting Y a,M a′
+
+under different value combinations of a and 
+
+a′, direct and indirect effects may be defined (VanderWeele 2015). Unfortunately, this strategy to define the estimand does not generalize to the setting considered in this article. First, it is possible that a patient survives longer under treat-ment a than he/she would have under treatment a′, making the mediator process in one of these counterfactual worlds ill-defined (Didelez 2019). Additionally, because the obser-vation of the time-dependent confounders Lt and mediator Mt depends on prior survival, they act as post-treatment confounders, which makes the identifiability of natural effects 5Figure 1: A causal directed acyclic graph describing the assumed data generation process for the baseline treatment A, baseline confounder X, the time-dependent variable Lt,the time-dependent mediator Mt and the time-to-event outcome T . The graph is only drawn for t ∈ { 0, 1, 2}, showing only one time-dependent confounder and omitting the independent error terms, for simplicity. Here, Lt acts as a time-dependent confounder for the relationship between Mt and Yt+1 .impossible (Avin et al. 2005). To circumvent these issues, we follow the strategy of Vansteelandt et al. (2019) to define the target estimand as path-specific effects , (Avin et al. 2005; Pearl 2001) by first recursively defining counterfactual values for Lt, Mt and Yt, after intervention on A.Let Li,t (a, l i,t −1, m t−1, u i,t ) denote a function to evaluate the counterfactual value of Li,t ,given that A had been set to a, Li,t −1 had been set to li,t −1 and Mt−1 had been set to mt−1, with the exogenous error term taking value ui,t . Here, Ui,t captures all unob-served sources of variation in the system and shared across counterfactual worlds. Let 
+
+Mt(a, lt−1, m t−1, u M,t ) and Yt(a, lt−1, m t−1, y t−1, u Y,t ) be defined accordingly. The coun-terfactual La,a ′ 
+
+> i,t
+
+is then defined as: 
+
+La,a ′ 
+
+> i,t
+
+=
+
+> 
+
+Li, 0, if t = 0 
+
+Li,t 
+
+> (
+
+a, L a,a ′
+
+> i,t −1
+
+, M a,a ′ 
+
+> t−1
+
+, U i,t 
+
+> )
+
+if t > 0 , (1) with: 
+
+M a,a ′ 
+
+> t
+
+=
+
+> 
+
+M0 if t = 0 
+
+Mt
+
+> (
+
+a′, La,a ′
+
+> t−1
+
+, M a,a ′ 
+
+> t−1
+
+, U M,t 
+
+> )
+
+if t > 0 . (2) In words, La,a ′ 
+
+> i,t
+
+is defined as the value of Li,t that would have been observed if the time-dependent confounder process Li,t had evolved as if A had been set to a, but the mediator process had evolved as if A had been set to a′, both using the updated values of each other in a feedback over time. For example, given these equations with w = 1, the counterfactual value of La,a ′ 
+
+> 1,2
+
+is defined as: 6La,a ′ 
+
+> 1,2
+
+= L1,2(a, L1,1(a, L 1,0, M 0, U 1,1) , M1(a′, L 1,0, M 0, U M, 1) , U 1,2) . (3) This is the value of L1,2 that would be observed if A had been set to a, with M1 taking the value one would see if A had been set to a′ instead, given the observed values of L1,0
+
+and M0, and with L1,1 taking its counterfactual value under a, given L1,0 and M0 . The counterfactual outcome Y a,a ′ 
+
+> t
+
+is defined accordingly as: 
+
+Y a,a ′ 
+
+> t
+
+=
+
+> 
+
+Y0 if t = 0 
+
+Yt
+
+> (
+
+a, La,a ′
+
+> t−1
+
+, M a,a ′ 
+
+> t−1
+
+, Y a,a ′ 
+
+> t−1
+
+, U Y,t 
+
+> )
+
+if t > 0 , (4) with a similar interpretation. Using this definition, the potential outcomes Y 0,0 
+
+> t
+
+and 
+
+Y 1,1 
+
+> t
+
+define the values of Yt that would be observed at t if A was set to 0 or 1 respectively, leaving everything else unchanged. The outcome Y 1,0 
+
+> t
+
+on the other hand, denotes the value of Yt that would be observed at t if the treatment had been set to A = 1, but the mediator process had evolved as if A had been set to 0, leaving the process of the time-dependent confounders Li,t unchanged, with the exception of it being dependent on the changed mediator process instead of the mediator process under A = 0. In all of these counterfactuals, censoring events are not directly removed or intervened on (Wen et al. 2025). If the time-dependent confounders include the at-risk indicator I(T > t ), the issue of post-treatment confounding is resolved, because the mediator under a′ is set to the level it would have taken if the time-dependent confounders, including the survival status, had evolved as if a. A more thorough discussion is given by Vansteelandt et al. (2019) Using very small steps in time, these discrete-time based definitions approximate their continuous time analogues (Kateline et al. 2025). On the basis of these potential outcomes, the total effect (TE), path-specific direct effect (DE) and path-specific indirect effect (IE) can now be defined on different scales. Let T a,a ′
+
+denote the first time at which Y a,a ′ 
+
+> t
+
+turns one. The hazard function of T a,a ′
+
+is then given as: 
+
+λa,a ′
+
+(t) = P (
+
+T a,a ′
+
+= t ∣∣∣ T a,a ′
+
+≥ t)
+
+. (5) Using this definition, the target estimands on the log hazard ratio scale are defined as: ΨT E (t) = log  
+
+> (
+
+λ1,1(t)
+
+λ0,0(t)
+
+> )
+
+, (6) ΨDE (t) = log  
+
+> (
+
+λ1,0(t)
+
+λ0,0(t)
+
+> )
+
+, (7) ΨIE (t) = log  
+
+> (
+
+λ1,1(t)
+
+λ1,0(t)
+
+> )
+
+. (8) Assuming a constant hazard ratio, as is usually done in a Cox model, the time-dependency could simply be dropped. In this study, we additionally focus on the hazard difference scale and the log survival time scale (see appendix for formal definitions). These three scales were chosen, because they correspond to the scale of the beta coefficients for 7popular time-to-event models (Aalen 1989; Cox 1972; Wei 1992). Alternatively, the differ-ence in counterfactual survival probabilities, (Denz et al. 2023; Vansteelandt et al. 2019) or difference in restricted mean survival times (Chernofsky and Lok 2025) could be used as well. Because the target estimands are defined as expected outcomes over a population without regards to the observed values of A, these effects may be considered marginal average treatment effects (Kateline et al. 2025). As explained by Vansteelandt et al. (2019), effects defined according to this strategy make no mention of the specific values of mediators at single points in time. Instead, the effect of interest is the effect mediated through the entire mediator process up to t. Note also that, the indirect effect defined according to equation 8 deliberately does not include indirect effects that occur due to A influencing Lt, which then influences Mt+1 , which in turn influences Yt+2 . Alternative path-specific effects are given by Kateline et al. (2025) Additionally, other authors proposed different definition strategies, such as decomposing the treatment into two separate different components which can be intervened on sepa-rately (Didelez 2019; Hernán and Robins 2020) or principal stratum based effects (Gao et al. 2023). For simplicity, we exclusively focus on the ones derived from the potential path-specific outcomes 1, 2 and 4 in this study, but others might be more appropriate depending on the setting or study question. 
+
+## 3.3 Identifiability assumptions 
+
+Because the target estimands are defined in terms of contrasts in potential outcomes, they are not directly observable in reality. To allow identification ot these estimands from the actually observed data, multiple identifiability assumptions have to be made. In particular, the counterfactual consistency , (Cole and Frangakis 2009; VanderWeele 2009) 
+
+positivity , (Westreich and Cole 2010) sequential ignorability (Deng et al. 2024; Forastiere et al. 2018) and cross-world independence (Andrews and Didelez 2021) assumptions are required. These are described and discussed in great detail elsewhere (Kateline et al. 2025; Mogensen et al. 2023; Nguyen et al. 2022). Briefly, the counterfactual consistency assumption states that the observed value of the outcome under treatment a is equal to the potential outcome that would have been observed under treatment a (Cole and Frangakis 2009; VanderWeele 2009). Further, the positivity assumption states, that each individual must have a positive probability below 1 to have any possible time-dependent confounder or mediator history. The sequential ignorability assumption is concerned with different kinds of confounding in the data gen-eration process. It states that, conditional on observed time-fixed and time-dependent confounders (i) there is no confounding of the A and Yt+1 relationship, (ii) there is no confounding of the A and Mt relationship, (iii) there is no confounding of the Mt and 
+
+Yt+1 relationship, and (iv) there is no confounding of the Lt and Mt+1 , or Mt and Lt+1 
+
+relationships (Kateline et al. 2025). Finally, the cross-world independence assumption states that the potential outcomes under intervention on both A and Mt is independent of the value of Mt after intervention on A (Deng et al. 2024; Hernán and Robins 2020; Nguyen et al. 2022). Further model- and method-specific assumptions will be necessary for unbiased effect estimation, as discussed below. 84 Methods 
+
+This study focuses on the difference method (Susser 1973; VanderWeele 2015) and on the 
+
+parametric mediational g-formula (Keil et al. 2014; Lin et al. 2017a). The former is the main point of interest of this study and the latter was chosen as reference, representing more advanced alternatives. For the parametric mediational g-formula, we also use the terms parametric g-formula or just g-formula interchangeably throughout this article. 
+
+## 4.1 The difference method 
+
+The difference method works by fitting two models: one for the direct effect and one for the total effect of A on T . In the considered setting, the direct effect model contains the treatment A, both time-fixed and time-dependent confounders such as X and Lt,and the time-dependent mediator Mt as time-varying independent variables, so that the updated values are used at the correct points in time (Zhang et al. 2018). The total effects model should contain only the treatment A and baseline confounders such as X.The resulting (possibly time-dependent) beta coefficients for A can then serve as estimates of the direct and total effects, assuming no interaction between A and Mt. The indirect effect is obtained by simply subtracting the direct effect from the total effect (Susser 1973; VanderWeele 2015). Formally: ˆΨT E (t) = ˆθA(t), (9) ˆΨDE (t) = ˆβA(t), (10) ˆΨIE (t) = ˆθA(t) − ˆβA(t), (11) where ˆθA(t) is the estimated coefficient for A at t in the total effects model and ˆβA(t)is the estimated coefficient for A at t in the direct effects model. If the coefficients are not time-dependent, the corresponding time dependency is simply dropped. Different types of models may be used for their estimation. Popular alternatives are the Cox proportional hazards model, (Cox 1972) the Aalen additive hazards model (Aalen 1989) and AFT models (Wei 1992). Depending on the model, estimates will be on different scales. When using Cox models of the form: 
+
+λDE (t) = λ0(t) exp (
+
+βAA + βM Mt + βL1 L1,t + βL2 L2,t + ... + βLw Lw,t + βX X)
+
+, (12) and: 
+
+λT E (t) = λ0(t) exp (
+
+θAA + θX X)
+
+, (13) the resulting estimates are on the log hazard ratio scale. Usually, time-constant co-efficients are assumed, although this assumption may be relaxed if needed (Zhang et al. 2018). Note that if the model for the direct effect is true and there is an indirect effect of 
+
+A on T through A → Mt → Yt+1 , the coefficient θA in the total effects model is likely not actually constant, because of the potentially changing distribution of Mt over time. θA
+
+should then be interpreted as the average log hazard ratio of A in the observed follow-up time. In contrast, when using Aalen models of the form (Aalen 1989): 9λDE (t) = λ0(t)+ βA(t)A+βM (t)Mt+βL1 (t)L1,t +βL2 (t)L2,t +... +βLw (t)Lw,t +βX (t)X, (14) and: 
+
+λT E (t) = λ0(t) + θA(t)A + θX (t)X, (15) the results would be directly on the hazard difference scale. Contrary to the Cox model time-dependent coefficients are often used here, as shown in the model equations. It is, however, also possible to fit such models with constant beta coefficients (Aalen 1989). Finally, the AFT models have the form (Wei 1992): 
+
+TDE = exp (
+
+β0 + βAA + βM Mt + βL1 L1,t + βL2 L2,t + ... + βLw Lw,t + βX X)
+
+· exp( σε ), (16) and: 
+
+TT E = exp (
+
+θ0 + θAA + θX X)
+
+· exp( σε ), (17) with β0 and θ0 being the intercept, σ being a scaling factor and ε being a random error term that follows some parametric distribution. In contrast to the Cox and Aalen models, the AFT models directly model the survival time instead of the hazard. The coefficients are thus on the log survival time scale, making them interpretable as accelerating (or decelerating) factors (Wei 1992). As in the Cox model, if the direct effects model is true and indirect effects through A → Mt → Yt+1 exist, θA should usually be interpreted as an average over the observed follow-up time, if not directly modelled as time-dependent coefficient. 
+
+## 4.2 Issues of the difference method 
+
+Although the difference method is very popular in epidemiology and other fields when considering continuous outcomes and time-fixed mediators, (VanderWeele 2015) its usage with time-to-event outcomes or time-dependent mediators is more controversial (Fulcher et al. 2017; Lange and Hansen 2011; VanderWeele 2011). When using Cox models, mul-tiple potential issues arise. First, Cox models are generally non-collapsible, in the sense that the inclusion or exclusion of an independent variable in the model may change the value of the coefficients, even if that variable is not a confounder (Daniel et al. 2020; Mar-tinussen and Vansteelandt 2013). Observed differences between ˆβA and ˆθA may therefore not accurately reflect indirect effects. In contrast, the coefficients of the Aalen and AFT models have been shown to be collapsible in previous studies dealing with time-fixed me-diators (Crowther et al. 2023; Martinussen and Vansteelandt 2013; Ochoa et al. 2020; VanderWeele 2015). Similarly, unobserved heterogeneity, e.g. omitting independent variables from the model that cause the outcome, may further bias results when using Cox models, if the true treatment effect of A is not 0, due to built-in selection bias through conditioning on survival up to t (Hernán 2010). Recent studies indicate, however, that this bias is small in practice (Abrahamowicz et al. 2025; Strobel et al. 2023). Additionally, previous studies 10 have shown that the Cox model based difference method with time-fixed mediators only produces unbiased estimates when the outcome is rare, limiting its usage with common outcomes. Neither the Aalen nor the AFT model based difference method required this rare outcome assumption with time-fixed mediators (Tein and MacKinnon 2003; Vander-Weele 2011). However, when using AFT models, biased estimates may be produced by model misspecification arising from censoring or truncation (Fulcher et al. 2017; Ochoa et al. 2020). Regardless of the form of the model used, some structural aspects of the underlying DGP may also prohibit the use of the difference method. As has been pointed out by other authors, (Daniel et al. 2011) if the time-dependent variables Lt are confounders of the relationship between Mt and Yt+1 , and are simultaneously caused by A, the difference method generally produces biased estimates. The reason is that while including Lt as independent variables in the direct effects model removes the confounding effect of Lt, it also removes parts of the actual direct effect. That is, it mistakenly adjusts for effects that flow through A → Lt → Yt+1 , which should be counted as direct effects of A on Yt
+
+in regards to Mt, because they are not mediated by Mt.The practical extent of these issues when applying the difference method with time-varying mediators is currently unknown. This study aims to quantify them through a comprehensive simulation study. 
+
+## 4.3 The parametric mediational g-formula 
+
+A more rigorous method is the parametric mediational g-formula , (Lin et al. 2017a) which is an extension of the regular g-formula for time-dependent exposures introduced by Robins (1986). Let ¯ Lt be defined as the history of Lt up to t with ¯ Lt = ( L0, L1, ..., Lt)and let ¯Mt and ¯Yt be defined accordingly as ¯Mt = ( M0, M1, ..., Mt) and ¯Yt = ( Y0, Y1,..., Yt), respectively. For simplicity, suppose that there is only one categorical baseline confounder X and that both Lt and Mt are binary variables. We further assume that the data are generated according to the DAG shown in figure 1 and that Y0 = 0 for all individuals. The expectation of the counterfactual outcome Y a,a ′ 
+
+> t
+
+can then be defined as (Lin et al. 2017a; Vansteelandt et al. 2019): 
+
+E(
+
+Y a,a ′
+
+> t
+> )
+
+= ∑
+
+> x
+> ∑
+> ¯lt−1
+> ∑
+> ¯mt−1
+> ∑
+> ¯yt−1
+
+P
+
+> (
+
+Yt = 1  
+
+> ∣∣∣∣
+
+a, lt−1, m t−1, y t−1, x 
+
+> )
+
+×
+
+> t−1∏
+> s=1
+
+P
+
+> (
+
+ls | a, ls−1, m s−1, x 
+
+> )
+
+×
+
+> t−1∏
+> s=1
+
+P
+
+> (
+
+ms | a′, ls−1, m s−1, x 
+
+> )
+
+×
+
+> t−1∏
+> s=1
+
+P
+
+> (
+
+ys | a, ls−1, m s−1, y s−1, x 
+
+> )
+
+× P (x) P (l0) P (m0).
+
+(18) where, with a slight abuse of notation, we write P (m|a′, ¯ls−1, ¯ms−1, x ) to denote P (m|A =
+
+a′, ¯Ls−1 = ¯ls−1, ¯Ms−1 = ¯ ms−1, X = x) and use similar notation for all other conditional probabilities. The sums ∑
+
+> x
+
+, ∑¯lt , ∑ 
+
+> ¯mt
+
+and ∑ 
+
+> ¯yt
+
+denote that the sum is to be taken over all possible values of x and all possible ¯lt-, ¯ mt and ¯ yt-histories (Hernán and Robins 2020). In words, this equation states that the expectation of the counterfactual outcome Y a,a ′
+
+> t
+
+can be written as a function of nested conditional probability densities. If either of Lt, Mt
+
+11 or X is continuous, the corresponding sum may be replaced by an integral, substituting the probabilities for density functions. Theoretically, one thus only needs to estimate the conditional probabilities of Yt, L1,t , L 2,t , ..., L w,t and Mt, as well as the marginal distribu-tion of X, L0 and M0, to obtain an plug-in estimator of E(Y a,a ′ 
+
+> t
+
+). Since neither of these quantities involve counterfactuals, they can be estimated from the observed data, under the stated identifiability assumptions. Using the same strategy, the target estimands given in section 3.2 may be identified (Lin et al. 2017a; Vansteelandt et al. 2019). Because it is difficult to calculate these values analytically, the estimation is usually performed using Monte-Carlo simulation methods (Daniel et al. 2011; Hernán and Robins 2020; Lin et al. 2017a). This works by first approximating the conditional probabilities using standard bino-mial regression models, in which the current value of the respective value is regressed against appropriately time-lagged values of itself and the relevant predictors. Depending on the parametric assumptions, this may be done with pooled models for all t or with separate models for each t. These models are then used to directly simulate data under the respective counterfactual scenario, using the following steps: 1. Set t = 0. For each individual d = 1 , ..., n , set ( Xd, Ld, 0, M d, 0, Y d, 0) equal to their observed values. 2. Increase t by 1. 3. Use the observed values of X and the models for Lt to generate n random values for Lt under A = a. Use the previously generated values for Mt−1 and Lt−1 in the generation process. 4. Use the observed values for X and the model for Mt to generate n random values for Mt under A = a′. Also use the previously generated values for Mt−1 and Lt−1
+
+in the generation process. 5. Use the observed values for X and the model for Yt to generate n random values for 
+
+Yt under A = a. Also use the previously generated values for Yt−1, Mt−1 and Lt−1
+
+in the generation process. 6. Repeat steps 2 to 5 until Yt is 1 for all n.By repeating this procedure for different combinations of a and a′, data under multiple counterfactual scenarios are simulated (Lin et al. 2017a; Vansteelandt et al. 2019). Simple analysis methods may then be applied to these datasets to obtain estimates of the target estimands, depending on the desired scale. For example, if one wanted to estimate the indirect effect on the log hazard-ratio scale as defined in equation 6, one would only need to (1) simulate data under a = 1 , a ′ = 0 and a = a′ = 0, (2) add an indicator for which scenario the dataset belongs to, (3) put the data together into one dataset and (4) fit a univariable Cox proportional hazards model, using the scenario indicator as the sole independent variable. Standard errors and confidence intervals may be obtained by bootstrapping this whole procedure (including the model fitting) (Keil et al. 2014). Note that if the target estimand is defined without interventions on censoring events, censoring should also be added to the simulated data. Under the independent censoring assumption, 12 this may be done by approximating an appropriate distribution of the censoring times using maximum likelihood estimation, sampling from this distribution and censoring the simulated event times appropriately. Although this method is conceptually simple and intuitive to understand, it is not trivial to apply in practice. First, it requires models for all of the involved variables, which may not be easy to obtain depending on the DGP and the available data. Secondly, the implementation of the approach does require software development knowledge or the use of specialized software, (Daniel et al. 2011) which may not be available. Finally, it is computationally expensive, especially when fitting models per point in time and when considering large amounts of points in time. If the Markovian assumption used here does not hold, the histories ¯ Lt, ¯Mt and ¯Yt need to be used when fitting the models, further complicating estimation. Most of these hurdles can often be overcome in practice, but given the time and resource constraints faced by many applied researchers, simpler alternatives such as the difference method may seem more attractive. 
+
+# 5 Simulation study 
+
+## 5.1 Data generation process 
+
+Data for the simulation study was generated using a discrete-event simulation approach, based on a Gillespie type algorithm, (Anderson 2007; Denz and Timmesfeld 2025; Gillespie 1977). Six variables are included in the DGP, with three of those ( X, Z, A) being time-fixed and the other three ( Lt, Mt, Yt) being binary and time-dependent. The former three consist of a standard normally distributed variable X, a Bernoulli distributed variable 
+
+Z, and the binary treatment variable A, which is modelled as a log-binomial regression dependent on Z. The latter three are the time-dependent covariate Lt, the time-dependent mediator of interest Mt and the time-dependent outcome of interest Yt. Note that we use two specifications for Yt: one that is consistent with both a Cox and AFT model and one that is consistent with an Aalen model, so that we can investigate the performance of each model without inherent model misspecification. Finally, the censoring time C
+
+is generated using an exponential distribution. The DGP can be described using the following structural equations: 
+
+X ∼ N (0 , 1) , (19) 
+
+Z ∼ Bernoulli (0 .5) , (20) 
+
+A ∼ Bernoulli (PA(Z)) , (21) 
+
+Lt ∼ Bernoulli (PL(t | A, X, L t−1, M t−1)) , (22) 
+
+Mt ∼ Bernoulli (PM (t | A, X, Z, L t−1, M t−1)) , (23) 
+
+Yt ∼ Bernoulli (PY (t | A, X, Z, L t−1, M t−1, Y t−1)) , (24) 
+
+C ∼ ⌈ Exp (λC )⌉, (25) with the corresponding probability functions PA, PL(t) and PM (t) being defined as: 13 PA = exp (
+
+βA 
+
+> 0
+
++ βAZ Z)
+
+, (26) 
+
+PL(t) = 
+
+> 
+
+0, if t = 0 1, if Lt−1 = 1 exp 
+
+> (
+
+log(0 .01) + βLAA + log(0 .8) X+
+
+βLM Mt−1
+
+> )
+
+otherwise 
+
+, (27) and: 
+
+PM (t) = 
+
+> 
+
+0, if t = 0 1, if Mt−1 = 1 exp 
+
+> (
+
+log(0 .01) + βMA A + log(0 .8) X+
+
+βMZ Z + βML Lt−1
+
+> )
+
+otherwise 
+
+. (28) (29) Additionally, when investigating the performance of the Cox and AFT model based difference method, PY (t) is defined as: 
+
+PY (t) = 
+
+> 
+
+0, if t = 0 1, if Yt−1 = 1 exp 
+
+> (
+
+βY 
+
+> 0
+
++ log(0 .9) A + log(0 .8) X+
+
+βYZ Z + log(2 .5) Lt−1 + log(5) Mt−1
+
+> )
+
+otherwise 
+
+, (30) For the investigation of the Aalen model based difference method, it is instead defined as: 
+
+PY (t) = 
+
+> 
+
+0, if t = 0 1, if Yt−1 = 1 1 − exp 
+
+> (
+
+−
+
+> (
+
+βY 
+
+> 0
+
++ log(0 .9) γA + log(0 .8) γX +
+
+βYZ γZ + log(2 .5) γL t−1 + log(5) γM t−1
+
+> ))
+
+otherwise 
+
+, (31) where γ = 0 .00015, representing a constant scaling factor, used to ensure that the relative strengths of the coefficients are comparable between the Cox / AFT model spec-ification and the Aalen model specification. The exact values for the currently undefined beta coefficients, intercepts, and λC depend on the considered simulation scenario, as discussed below. A table of all used values is given in the appendix. All of the resulting datasets have hundreds or thousand of distinct points in time for each individual, depend-ing on the scenario and parameters. This mimics real datasets containing date-specific information, such as electronic health care records, patient registries or randomized con-trolled trials that track specific disease transitions. 14 5.2 Scenarios 
+
+Six data generation scenarios were considered, in which different types of confounding and time-dependent feedback loops between variables are included in the DGP. A brief illustration in the form of causal directed acyclic graphs is shown in figure 2. The different scenarios were created by adjusting the causal beta coefficients in the probability functions 26, 27, 28, 30 and 31, as summarised below. The scenarios are: 
+
+Scenario 1 A is randomly assigned, meaning there are no confounders of the treatment - mediator or treatment - outcome relationships. Additionally, Mt is only causally influenced by A and X, meaning there is also no time-dependent confounding of the mediator - outcome relationship. The only considered time-dependent covariate 
+
+Lt is a pure predictor ot Yt+1 , meaning it is not causally influenced by A or Mt.The only real confounder of the mediator - outcome relationship is X. This is the simplest baseline scenario, which all other scenarios are built upon. The specific values used were: βA 
+
+> 0
+
+= log(0 .5) and βAZ = βLA = βLM = βMZ = βML = βYZ = 0. 
+
+Scenario 2 The same as scenario 1, with the only difference being that Lt now also has a direct causal effect on Mt+1 and is thus a time-dependent confounder of the mediator - outcome relationship. The only changed value is βML , with βML = log(3). 
+
+Scenario 3 The same as scenario 2, with the only difference being that Lt is now also caused directly by previous values of Mt−1, resulting in a feedback loop between Lt
+
+and Mt. Due to this feedback loop, Lt now lies on the causal pathway between A
+
+and Yt through A → Mt → Lt+1 → Mt+2 → Yt+3 . The only parameter changed with respect to scenario 2 is βLM = log(0 .6). 
+
+Scenario 4 The same as scenario 3, with the only difference being that Lt is now also directly caused by A, making Lt a direct mediator as well, which is in a complex feedback loop with the mediator of interest Mt. With respect to scenario 3, only 
+
+βLA = log(0 .6) was changed. 
+
+Scenario 5 The same as scenario 1, except that A is no longer randomized, but caused by Z, which also has a direct causal influence on Mt, making Z a confounder of the treatment - mediator relationship. With respect to scenario 1, the only parameter changes are: βA 
+
+> 0
+
+= log(0 .445), βAZ = log(0 .7), and βMZ = log(0 .7). 
+
+Scenario 6 The same as scenario 1, except that A is no longer randomized, but caused by Z, which also has a direct causal influence on Yt, making Z a confounder of the treatment - outcome relationship. With respect to scenario 1, the only parameter changes are: βA 
+
+> 0
+
+= log(0 .445), βAZ = log(0 .7), and βYZ = log(0 .7). All scenarios were additionally stratified into a scenario where Mt does mediate the relationship between A and Yt, and in one where it does not. This was achieved by changing the value of βMA . To make Mt a mediator, βMA = log(0 .2) was used, meaning that the probability P (Mt = 1) is highly reduced if A = 1. In conjunction with the probability of Yt always being increased by a factor of 5 if Mt−1 = 1, a strong indirect effect through Mt is created. In the no-mediation scenario, βMA = 0 was used instead, keeping the relationship between Mt−1 and Yt unchanged. Additionally, the baseline probability 15 of Yt was also varied over all considered simulation scenarios, using the values βY 
+
+> 0
+
+=log(0 .0001) (low probability) and βY 
+
+> 0
+
+= log(0 .001) (high probability) for the Cox / AFT model specification. For the Aalen model specification, βY 
+
+> 0
+
+= 0 .00014 (low probability) and βY 
+
+> 0
+
+= 0 .0014 (high probability) were used instead. A large sample size of n = 2000 was used for all scenarios, with the simulation being run until Yt has turned 1 for each simulated individual, approximating a continuous time process, initially without censoring. If C < T , the individual was then censored. Here, 
+
+λC differs for every simulation parameter combination. Its’ values were chosen so that the resulting percentage of right-censored data is approximately 30% overall in every scenario (see appendix B). 
+
+## 5.3 Methods 
+
+The Cox, Aalen and AFT models based difference method was then applied to the respec-tive data twice; once including all relevant confounders and once without including either 
+
+Lt (in scenarios 1 to 4) or Z (in scenarios 5 and 6). Because the actual DGP satisfies the Markov property, only the immediately previous values of Lt and Mt were included as time-varying covariates in the direct effects models, without further inclusion of their histories. All models were fit using time-constant coefficients for all included variables. The AFT models were fit using a Weibull baseline hazard function, approximating the true underlying Cox model (Carroll 2003). When analyzing the data in which Yt follows a Cox / AFT model, we used the following steps to apply the parametric g-formula. First, we fitted pooled log-binomial models for 
+
+Lt, Mt and Yt, if possible. If a model did not converge, a Poisson model with a log-link was fit instead, which generally produces equivalent coefficients (Chen et al. 2018). These models were then used to simulate a single dataset for the T 1,0 scenario, which was then pooled with the observed data under A = 0 or A = 1 as needed and analysed using univariable versions of the Cox or AFT models as outlined in section 4.3. In scenario 5 and 6, Z was additionally included in the total effects model. For the data simulation step we used the same discrete-event simulation algorithm as for the true data generation process, only substituting the true coefficients for the estimated ones. Censoring was added by first calculating the maximum likelihood estimate of the rate parameter for the exponential censoring distribution, given the observed censoring times, and then drawing values for C from it. The same strategy was used when analyzing the data in which Yt
+
+follows an Aalen model, with the small exception that an Aalen model was used to model 
+
+Yt instead of a log-binomial model. We calculated total, direct and indirect effects for all methods using 1000 simulation replications. 16 1 23 45 6Figure 2: Causal directed acyclic graphs (DAGs) visualizing the causal relationships in the data generation processes used in each considered simulation scenario. All DAGs only show two points in time ( t = 1 and t = 2) to make them more comprehensible. Values for L0 and M0 were omitted, because they are always 0 by definition. A denotes the time-invariant treatment, X and Z denote time-invariant covariates, Lt is a time-dependent covariate, Mt is the time-dependent mediator and T is the time until the first event occurring in the time-dependent outcome Yt. Arrows coloured in blue are varied in all scenarios, while red arrows and outlines denote causal dependencies that are not present in scenario 1, to highlight differences between the scenarios. 
+
+## 5.4 Target estimand calculation 
+
+Because we used a discrete-event simulation approach that does not directly specify the marginal causal effects of interest, the true value of the target estimands was not known in all considered simulation scenarios. To calculate the unknown values, we used the method described by Naimi et al. (2025), in which the structural equations are adjusted to allow direct simulation of data under different counterfactual scenarios. The simulated data for the relevant scenarios are then put together and analysed using univariable statistical methods, mimicking the approach described in section 4.3, with the main difference being that the known true conditional probability functions are used instead of estimated ones. 17 For the target estimands considered here, we simulated data under three counterfactual scenarios: (1) everyone receiving the treatment A, (2) no one receiving the treatment A
+
+and (3) everyone receiving treatment A, with the mediator process Mt evolving as if no one had received treatment A. We generated n = 1 , 000 , 000 independent observations for each of these three scenarios, using the same random number generation seed for each one. The simulation were run until every individual experienced its first event and were then censored using the same censoring distribution as in the observed data. To calculate the total effect, the datasets from (1) and (2) were pooled together and a univariate Cox, Aalen or AFT model, including only an indicator for which scenario the observation belongs to as an independent variable, was then fit to this data. The beta coefficient of the indicator was then be used as the target estimand of the total effect on the respective scale. The direct effect and indirect effects were calculated similarly, with the only difference being that the datasets from (1) and (3) or (2) and (3) were pooled, respectively. This method was used separately for all considered simulation scenarios and parameter combinations described in section 5.2. 
+
+## 5.5 Performance criteria 
+
+Our main interest lies in the bias of the indirect effect on the different considered scales. The bias when estimating the direct and total effects was also examined for completeness. We define the bias of each component as the expected difference between the true and estimated values. Formally: Bias ( ˆΨ)
+
+= E(
+
+Ψ − ˆΨ)
+
+, (32) where Ψ and ˆΨ are substituted by Ψ T E , ΨDE and Ψ IE and their estimates on their respective scales. Similarly, the mean squared error is defined as: MSE ( ˆΨ)
+
+= E
+
+> ((
+
+Ψ − ˆΨ)2)
+
+, (33) which is used to judge the efficiency of the considered methods. Monte-Carlo standard error were calculated by applying the regular standard error equation to the performance criteria over all simulation runs. Because there is no known approximate or exact equation for the standard errors for any of the methods included in this simulation study, type-I error, confidence interval coverages or statistical power are not calculated in this study. In practice, the standard error may be estimated using non-parametric bootstrap methods (Efron 1979). 
+
+## 5.6 Computational details 
+
+The entire simulation study was performed using the R programming language (version 4.3.3). The simDAG R package (Denz and Timmesfeld 2025) was used to generate the required datasets, and the survival , (Therneau 2025) timereg (Scheike and Zhang 2011) and flexsurv (Jackson 2016) R packages were used to fit the required Cox, Aalen and AFT models with time-dependent covariates, respectively. The R code used is available as part of the online appendix. Details about the data generation procedure are also given in appendix B. 18 5.7 Results 
+
+Figure 3 shows the distribution of the difference between the true and estimated indirect effect on the log-hazard scale for estimates obtained using both the Cox model based difference method and the g-formula. Here, these methods were applied to the data generated based on a Cox / AFT model. In scenario 1, 2 and 3, when the outcome is rare and Lt was included in the direct effects model, the difference method produced unbiased estimates on average. When Lt is omitted from the model, and the real underlying indirect effect is not 0, this is no longer the case. Conversely, if there is no underlying indirect effect through Mt, the exclusion of Lt does not seem to introduce bias. Importantly, if the outcome is not rare, the difference method produces biased estimates regardless of the scenario and the presence of an indirect effect. The estimates obtained using the parametric g-formula, on the other hand, are consistently unbiased in all three scenarios and with all considered parameter combinations. Furthermore, in scenario 4, the difference method consistently produces biased esti-mates, regardless of whether Lt is included in the direct effects model or not. The bias is substantially larger if it is included, but it is also present if it is not. The only exception occurs when no indirect effect is present, Lt is omitted from the direct effects model, and the outcome is rare. Again, the parametric g-formula does not show any bias. Similar to the first three scenarios, the difference method show negligible bias on average in scenarios 5, whenever the outcome is rare and the models are correctly specified (e.g. both models including the baseline confounder Z as an independent variable). Otherwise, they are biased, with no substantial difference whether direct or indirect effects are present or not. The results are similar for scenario 6, although a small amount of bias can be seen if an indirect effect is present, even if the outcome is rare. The parametric g-formula remains unbiased in both of these scenarios as well. Further results for the total and direct effects on the log-hazard ratio scale are shown in the online supplement. Figure 4 shows the corresponding results for the indirect effect estimation on the log survival time scale, obtained using the AFT model based difference method and the para-metric g-formula. Some similarities to the log hazard ratio scale can be observed. First, as before, the parametric g-formula produces unbiased results on average in all considered scenarios and parameter combinations. Additionally, the bias of the difference method is substantial in scenario 4, especially when Lt is included in the direct effects model. Con-trary to the results shown in figure 3, however, the AFT based difference method never produced completely unbiased results. In all scenarios and parameter combinations, a small bias can be observed, with larger bias being observed when baseline probability of the outcome is high. Although across scenarios 1–3, as well as 5 and 6, the bias is generally very small when Lt is included and the outcome is rare, it is never zero. To investigate the source of this bias further, table 1 shows the mean estimates of the total and direct effects obtained from the (full) AFT models in scenario 1 in comparison to the true target estimand value and the true βYA used in the DGP (see equation 30). Regardless of whether there is an indirect effect through Mt or not, the total effect is not equal to the underlying βYA . The total effects models are still able to correctly estimate the total effect, as expected. This is no longer the case for the direct effects model. Here, most of the models consistently estimate the true underlying βYA instead, leading to a biased estimate of the true marginal direct effect and hence to a biased estimate of the indirect effect. In other words, the marginal effect of interest is not equal to the conditional effect 19 captured by the beta coefficient. As table 1 further shows, these results remain consistent in the absence of any right-censoring. Finally, figure 5 displays the distribution of the difference between the true and esti-mated indirect effect on the hazard difference scale, as estimated using the Aalen model based difference method and the g-formula. In contrast to the results shown above, the results in this figure were obtained by applying these methods to the data in which the outcome was generated according to a true Aalen model. The results in figure 5 are very similar to the ones obtained for the Cox model based difference method with a low baseline event probability. The main difference is that the Aalen model based difference method also produces unbiased estimates when the baseline event probability is high. Again, the g-formula also produces unbiased estimates on average in all scenarios and parameter combinations. Across all scenarios, parameter combinations and scales, whenever the difference method produced unbiased estimates, the mean-squared error of these estimates was lower than the mean-squared error of the corresponding parametric g-formula. This can be seen directly in figures 3, 4 and 5, by the larger spread of the bias. This difference in perfor-mance is most evident on the hazard difference scale with a true underlying Aalen model. A contributing factor to this larger variance is that our implementation of the parametric g-formula uses simulations to obtain the point estimate. To keep this simulation study feasible, we only simulated one dataset corresponding to the size of the input dataset to obtain the point estimates with this method. In real applications, multiple replica-tions would be used and the point estimate would be calculated as the average of these replications, likely reducing the variance substantially. Additional results, in which the Cox and AFT model based difference method was applied to the data generated according to an Aalen additive hazards model and vice versa to study the impact of model misspecification, are given in the online supplement. Furthermore, tables including the average bias, mean-squared error and their associated Monte-Carlo standard errors for all methods, scenarios and estimands are also given in that online supplement. Finally, to demonstrate the effect of right-censoring on the results, the online supplement additionally includes a repetition of the entire analysis without any right-censoring. 20 low β0Y high β0YNo indirect effect With indirect effect No indirect effect With indirect effect Scenario 1  Scenario 2  Scenario 3  Scenario 4  Scenario 5  Scenario 6 −0.15 −0.10 −0.05 0.00 0.05 0.10 −0.1 0.0 0.1 −0.1 0.0 0.1 0.2 −0.1 0.0 0.1 0.2 0.3 −0.1 0.0 0.1 −0.1 0.0 0.1  
+
+> ΨIE  − Ψ ^ IE Difference Method Full Models Difference Method Partial Models G−Formula
+
+Figure 3: Boxplots displaying the difference between the true indirect effect and the es-timated indirect effect on the log hazard ratio scale for the Cox model based difference method and the parametric g-formula for all considered simulation scenarios and parame-ter combinations (outliers not shown). βY 
+
+> 0
+
+is the intercept of the log-binomial model used to generate data for Yt. “Full models” refers to Cox models that include all confounders as independent variables, e.g. X and Lt in scenario 1-4 and X and Z in scenarios 5 and 6. “Partial models” excluded Lt in scenarios 1-4 and Z in scenarios 5 and 6. All values are based on 1000 simulation repetitions. 21 low β0Y high β0YNo indirect effect With indirect effect No indirect effect With indirect effect Scenario 1  Scenario 2  Scenario 3  Scenario 4  Scenario 5  Scenario 6 0.0 0.1 0.2 −0.1 0.0 0.1 −0.1 0.0 0.1 −0.2 −0.1 0.0 0.1 −0.1 0.0 0.1 0.2 −0.1 0.0 0.1 0.2  
+
+> ΨIE  − Ψ ^ IE Difference Method Full Models Difference Method Partial Models G−Formula
+
+Figure 4: Boxplots displaying the difference between the true indirect effect and the estimated indirect effect on the log mean survial time scale for the AFT model based difference method and the parametric g-formula for all considered simulation scenarios and parameter combinations (outliers not shown). βY 
+
+> 0
+
+is the intercept of the log-binomial model used to generate data for Yt. “Full models” refers to AFT models that include all confounders as independent variables, e.g. X and Lt in scenario 1-4 and X and Z in scenarios 5 and 6. “Partial models” excluded Lt in scenarios 1-4 and Z in scenarios 5 and 6. All values are based on 1000 simulation repetitions. 22 Estimand  Kind  log (
+
+> βY
+> 0
+> )
+> % right-censored  Mean estimate  MCSE  True  βYA True target estimand Total effect No indirect effect 0.0001  0 0.094  0.001  0.105  0.094 30  0.086  0.001  0.105  0.089 0.001  0 0.058  0.001  0.105  0.059 30  0.059  0.001  0.105  0.058 With indirect effect 0.0001  0 0.319  0.002  0.105  0.317 30  0.346  0.001  0.105  0.346 0.001  0 0.609  0.001  0.105  0.608 30  0.565  0.001  0.105  0.567 Direct effect No indirect effect 0.0001  0 0.106  0.002  0.105  0.094 30  0.099  0.002  0.105  0.085 0.001  0 0.104  0.002  0.105  0.059 30  0.106  0.002  0.105  0.060 With indirect effect 0.0001  0 0.109  0.003  0.105  0.093 30  0.107  0.002  0.105  0.089 0.001  0 0.116  0.002  0.105  0.059 30  0.115  0.002  0.105  0.058 Table 1:  Mean estimate and associated Monte-Carlo standard errors (MCSE) for the estimation of the beta coefficients in the full direct effects accelerated failure time (AFT) model and the AFT total effects model in simulation scenario 1.  The true beta coefficients for the AFT model are equal to the negative of the known beta coefficients of the underlying data generation process (DGP). All values are rounded to the third decimal point. All values are based on 1000 simulation repetitions.
+
+23 low β0YNo indirect effect With indirect effect −4e−05 −2e−05 0e+00 2e−05 4e−05 −4e−05 −2e−05 0e+00 2e−05 4e−05 −4e−05 −2e−05 0e+00 2e−05 −2e−05 0e+00 2e−05 −4e−05 −2e−05 0e+00 2e−05 4e−05 −4e−05 −2e−05 0e+00 2e−05    
+
+> ΨIE  − Ψ ^ IE high β0YNo indirect effect With indirect effect Scenario 1  Scenario 2  Scenario 3  Scenario 4  Scenario 5  Scenario 6 −1e−04 0e+00 1e−04 −1.5e−04 −1.0e−04 −5.0e−05 0.0e+00 5.0e−05 1.0e−04 1.5e−04 −1.0e−04 −5.0e−05 0.0e+00 5.0e−05 1.0e−04 1.5e−04 −1e−04 0e+00 1e−04 −1e−04 0e+00 1e−04 −1.5e−04 −1.0e−04 −5.0e−05 0.0e+00 5.0e−05 1.0e−04 Difference Method Full Models Difference Method Partial Models G−Formula
+
+Figure 5: Boxplots displaying the difference between the true indirect effect and the esti-mated indirect effect on the hazard difference scale for the Aalen model based difference method and the parametric g-formula for all considered simulation scenarios and param-eter combinations (outliers not shown). βY
+
+0 is the intercept used when generating data for Yt using the Aalen model DGP. “Full models” refers to Aalen models that include all confounders as independent variables, e.g. X and Lt in scenario 1-4 and X and Z in scenarios 5 and 6. “Partial models” excluded Lt in scenarios 1-4 and Z in scenarios 5 and 6. All values are based on 1000 simulation repetitions. 24 6 Results for the motivating example 
+
+Below we describe the analysis of the motivating example introduced in section 2. We first applied the difference method based on Cox, Aalen and AFT models to the data. The outcome ( Yt) was the first date until either a liver transplant or death occurred, which happened for 28 patients in total. The suspected mediator ( Mt), histological pro-gression by two stages, was included as a time-dependent covariate which was set to 0 before the date at which the progression occurred and to 1 afterwards. Because the treat-ment with UDCA ( A) was completely randomized in this study, there is by definition no confounding of the relationship between UDCA and LTFS or UDCA and histologi-cal progression. However, there may be confounding of the causal relationship between histological progression and LTFS. As exemplary baseline adjustment variables, we included the stage of the disease at randomization, the Mayo PBC risk score (Jacob et al. 2008) at randomization and the natural logarithm of the bilirubin value at randomization, which is an important biomarker for liver function (Trivella et al. 2023), in the direct effects models. As potential baseline confounders, these variables play the same role as X in the rest of the article. Multiple potential time-varying confounders were measured in the study. These include the appearance of esphogeal varices, ascites and encephalopathy, as well as the doubling of of initial bilirubin levels. All of these variables could be argued to play the role of Lt in the analysis. Due to the small sample size and co-linearity among some of these variables, it is not possible to include all of them in the analysis. Instead, only the appearance of varices was included as a time-varying covariate, using the same coding scheme as for the histological progression. The Aalen models were fit using time-varying coefficients for all variables, because the proportional hazards assumption was found to be appropriate for this dataset, (Lindor et al. 1994; Therneau and Grambsch 2000) which implies a time-varying hazard difference. For the AFT model, we used a Weibull baseline distribution. For the parametric g-formula, the dataset was first transformed into the long-format, including a single row per day under observation for each individual. Three logistic re-gression models were then fit to the data: one for LTFS, one for histological progression and one for appearance of varices. Each model only contained data up to the first time that the variable turned 1. All models included the three baseline variables, with the model for LTFS also including the previous values of the appearance of varices and his-tological progression. The model for the appearance of varices included previous values of histological progression and vice versa. These models were then used to apply the parametric g-formula as described in section 4.3. For the main analysis, the g-formula was applied 10 times and the average of the results was used as a point estimate. All analyses were repeated using patient-level non-parametric bootstrapping with 1000 rep-etitions. 95% confidence intervals were derived from these bootstrap samples using the percentile method (Efron 1979). The R code used for the analysis is available as part of the online appendix. Table 2 shows the point estimates and 95% confidence intervals of the total, direct and indirect effects of UDCA with respect to histological progression that were obtained using the difference method and the g-formula on both the hazard ratio and survival time ratio scale. Across both scales and both analysis methods, the results are fairly consistent. Estimates of the total effect of UDCA on LTFS consistently show a protective effect of 25 Estimand Hazard Ratio Scale Survival Time Ratio Scale 
+
+Estimate 95% CI Estimate 95% CI Total Effect 0.63 [0 .28 , 1.39] 1.41 [0 .80 , 2.56] Difference Method Direct Effect 0.50 [0 .17 , 1.14] 1.43 [0 .95 , 2.99] Indirect Effect 1.25 [0 .81 , 2.64] 0.99 [0 .57 , 1.28] Total Effect 0.62 [0 .26 , 1.42] 1.41 [0 .80 , 2.84] Parametric G-Formula Direct Effect 0.55 [0 .23 , 1.21] 1.81 [0 .86 , 4.13] Indirect Effect 1.14 [0 .68 , 1.97] 0.86 [0 .52 , 1.34] 
+
+Table 2: Estimates of the total, direct and indirect effects of UDCA on LTFS with respect to histological progression by two stages on the hazard ratio and survival time ratio scale. The difference method based estimates for the hazard ratio scale were obtained using two Cox models, and the corresponding estimates for the survival time ratio scale were obtained using two accelerated failure time models. The associated 95% confidence intervals were obtained using 1000 patient-level bootstrap samples and the percentile method. All values were rounded to the second digit. Total Effect Direct Effect Indirect Effect Difference Method  G−Formula 0 500 1000 0 500 1000 0 500 1000 −0.2 −0.1 0.0 0.1 −0.2 −0.1 0.0 0.1 Time in Days Cumulative Hazard Difference 
+
+Figure 6: Estimates of the time-dependent total, direct and indirect effects of UDCA on LTFS with respect to histological progression by two stages on the cumulative hazard difference scale, as obtained using the Aalen model based difference method and the parametric g-formula (solid lines). The associated 95% confidence intervals (dotted lines) were obtained using 1000 patient-level bootstrap samples and the percentile method. UDCA, with a hazard ratio of approximately 0.63 or a survival time ratio of 1.41. Due to the small sample size, however, all associated 95% confidence intervals include 1. The direct effect estimates are very similar to the total effect estimates, while the indirect effect estimates are very close to 1. Again, all 95% confidence intervals contain the reference value 1. Figure 6 shows similar results as table 2, but on the time-dependent cumulative 26 hazard difference scale, as obtained using the Aalen model based difference method and the parametric g-formula. The results are similar to the ones obtained on the other scales. Again, no substantial difference between the methods can be observed. This analysis has multiple limitations. First, the small sample size clearly inhibits our ability to draw substantial conclusions, highlighting the importance of performing adequate sample size calculations if the goal is to perform mediation analysis. In most cases, a randomized trial that has adequate statistical power to detect the main effect will not have adequate statistical power for such analyses (VanderWeele 2015). Secondly, multiple required assumptions for both methods may be violated here. Although the event is rare and the data seem consistent with a Cox proportional hazards model (Lindor et al. 1994; Therneau and Grambsch 2000), it is doubtful that UDCA has no direct effect on any of the potential time-dependent confounders, such as the development of varices. If such effects exist, the difference method should not be used, as described throughout the article. Developing a causal DAG based on expert opinion and the available literature would be required to assess this assumption more formally. Regardless of the presence of such structural issues, it is also highly doubtful that the sequential ignorability assumption (see section 3.3) holds here in general. Due to the sample size limitations, we were not able to adjust for all available time-varying variables, that might act as confounders of the mediator - outcome relationship in either analysis. Since this assumption is also needed for the g-formula, the results of both methods are potentially affected. Further, we were unable to investigate whether an interaction between UDCA and histological progression is present, or whether censoring truly is independent, conditional on the included covariates. The violation of either assumptions could also introduce bias in both methods, which may explain the near equivalence of the estimates produced by the g-formula and the difference method. 
+
+# 7 Discussion 
+
+In this article we investigated the performance of the difference method for causal media-tion analysis in the presence of a time-dependent mediator, time-dependent confounders and a time-to-event outcome. We performed a comprehensive simulation study, consid-ering different kinds of scenarios that may arise in real data analyses. The results were highly dependent on the underlying DGP and the employed models. In simulation sce-narios 1–3, where Lt was merely an independent predictor of Yt (scenario 1), an otherwise independent time-dependent confounder of the mediator outcome relationship (scenario 2) or even a time-dependent confounder in a feedback loop with the mediator (scenario 3), the difference method was unbiased when Aalen models with time-dependent covariates were used. The addition of baseline confounders of the treatment - mediator (scenario 5) or treatment - outcome relationship (scenario 6) did not change these results. Results for the Cox model were similar when the event was relatively rare. However, if the baseline hazard of the event was increased, biased estimates were produced, mirroring previous re-sults considering only time-fixed mediators (Fulcher et al. 2017; Lange and Hansen 2011). These results were consistent, regardless of whether an actual indirect effect through Mt
+
+was present or not. The AFT model based difference method showed slightly different results. Very small but consistent bias was found in nearly all scenarios and parameter combinations. This 27 unexpected result was not due to simulation error, convergence issues or classic model misspecification, since the DGP used for this analysis can be described as a Cox model with a constant baseline hazard, which is mathematically consistent with an AFT model based on a Weibull distribution (Carroll 2003). It was also not the result of model misspecification due to censoring (Fulcher et al. 2017; Ochoa et al. 2020), since an analysis without any censoring showed similar results. Instead, the reason was non-collapsibility of the beta coefficients. The direct effects model consistently estimated the conditional beta coefficient of the true DGP, but the true marginal direct effect was not equal to this coefficient, even when no confounding was present. This result is in contrast to previous studies dealing with time-fixed mediators, in which the coefficients of AFT models were found to be collapsible (Crowther et al. 2023). Importantly, all versions of the difference method produced highly biased estimates when the treatment had a direct causal effect on the time-dependent confounder. The reason for this bias is, that the direct effect of A on Yt with respect to Mt cannot be identified by standard models, because Lt is both a confounder for the mediator - outcome relationship and a mediator for the treatment - outcome relationship. Conditioning on Lt
+
+correctly adjusts for the former, but also incorrectly adjusts for the latter. Conversely, not conditioning on Lt correctly leaves open the mediating pathways, but fails to adjust for the confounding ones. This problem was less pronounced in scenarios without indirect effects of Mt, but the bias was not zero. This suggests that, contrary to situations with time-fixed mediators and a time-to-event outcome, the difference method cannot generally be used to test for the presence of time-dependent mediation, without making further assumptions (VanderWeele 2011). The parametric g-formula on the other hand produced unbiased estimates in all scenarios, regardless of the underlying DGP. Our results suggest that, under the stated identifiability and model assumptions, the Cox or Aalen based difference method, but not the AFT model based difference method, may be used when there are no time-dependent confounders that are directly caused by the treatment. It is, however, important to note that the presented simulations do not constitute a mathematical proof of this result. Although we used a large amount of dif-ferent settings and scenarios, it is possible that the method behaves differently under extreme parameter values or slightly different DGPs. For example, although our sim-ulations showed negligible non-collapsibility issues for the Cox model based difference method in most scenarios with a rare outcome, exactly how rare the outcome needs to be remains unclear. Additionally, although many scenarios were covered, we did not con-sider all complications that may arise in real-world analysis of time-to-event data. For example, we did not consider interactions between the mediator and the treatment vari-able (Yan and Shen 2025), the combined indirect effect of multiple mediators (Huang and Hong 2025; Lange et al. 2014), dependent censoring (Fulcher et al. 2017), competing risks (Domingo-Relloso et al. 2026), various forms of truncation (Yu and Huang 2025) or measurement error (Bhandari et al. 2025b; VanderWeele et al. 2013), all of which would further complicate the analysis. It is also important to consider censoring carefully. In this article, we defined the target estimand without additional interventions on censoring events, meaning that the target estimand is implicitly dependent on the censoring mechanism as well (Wen et al. 2025). In some cases, researchers may instead be interested in the direct or indirect effects that would be observed in the absence of censoring. This may complicate the use of the 28 classical difference method further. First, if censoring is not independent, adjustment for dependent censoring is necessary, but not always possible (Fulcher et al. 2017). Secondly, if an indirect effect through A → Mt → T exists, the total effect of A on T is time-dependent whenever the distribution of Mt changes over time. For example, in one of the DGP used in our simulation study, a time-constant hazard ratio for A on T was used, but since Mt slowly turns 1 for every individual, partially through the influence of 
+
+A, the total effect varies over time. The beta coefficient in the total effects Cox model, for instance, is then only an average over the observed follow-up time. Right-censoring shortens this time, which would result in the coefficient targeting a different average than the un-censored true average. In such cases, the use of time-dependent coefficients for A
+
+in the total effects model would thus be necessary. We also focused solely on a binary baseline treatment variable. If the treatment changes over time, even more complex forms of feedback between the time-dependent variables are possible. Similar to the discussed issue of estimating the direct effect of A
+
+on Yt in the presence of a direct causal relationship between A and Lt, the causal effect of 
+
+A on Mt or of A on Yt is usually not identified by simple conditioning, if Lt or Mt act as both confounders and mediators of the respective relationship (Hernán and Robins 2020). Therefore, the difference method would likely fail in these scenarios. In comparison, under the assumptions used throughout the study, the parametric g-formula would still be able to produce unbiased estimates, as shown in the literature (Lin et al. 2017a). In general, the difference method should only be used very carefully with a time-dependent mediator and a time-to-event outcome. All required assumptions, including the regular causal identifiability assumptions, model based assumptions (such as the pro-portional hazards assumption) and structural assumptions should be assessed carefully with respect to the respective study question. These assumptions can be considered re-strictive or even “heroic” (Hernán and Robins 2020) in practice, but may hold in some cases. For example, the required assumption that none of the time-dependent confounders are themselves directly caused by the treatment of interest may be hard to defend when considering the effect of UDCA on survival, but might be plausible when trying to esti-mate the indirect effect of a Herpes Zoster vaccination on the development of dementia, through the prevention of Herpes Zoster manifestations (Eyting et al. 2025; Lophatananon et al. 2023). If those assumptions can be reasonably defended, the difference method may be used as a simple and efficient alternative to more complex methods. This may be espe-cially helpful in situations with many discrete points in time or continuous time, because most other methods are not designed for such scenarios, with some notable exceptions (Bhandari et al. 2025b; Kateline et al. 2025). In most cases, however, the usage of specif-ically designed methods that require less stringent structural assumptions, such as the parametric mediational g-formula, (Lin et al. 2017a) is preferable. Although an increasing amount of such methods are being proposed in the literature (Aalen et al. 2020; Bhandari et al. 2025a,b; Breum et al. 2024; Gao et al. 2023; Huang 2021; Kateline et al. 2025; Kormaksson et al. 2024; Lin et al. 2017a,b; Valeri et al. 2023; Vansteelandt et al. 2019; Wang et al. 2025; Zeng et al. 2023), it is currently unclear which is the most appropriate in which scenario. Future research should focus on systematically reviewing and comparing these methods and their associated target estimands before developing further methods. Both a neutral comparison study (Boulesteix et al. 2017) and user-friendly software implementations are needed to facilitate their usage by applied 29 researchers. We hope that the simulation study design presented in this article may be useful for such future studies. 
+
+# Acknowledgments 
+
+We would like to thank all members of the Department of Medical Informatics, Biome-try and Epidemiology at the Ruhr-University Bochum for their valuable input and the multiple discussions about the contents of this paper. 
+
+# Financial disclosure 
+
+None reported. 
+
+# Conflict of interest 
+
+The authors declare no potential conflict of interests. 
+
+# Data availability statement 
+
+The data for the study on Ursodeoxycholic acid in primary biliary cholangitis patients by Lindor et al. (1994) is freely available as part of the survival R package ( https: //cran.r-project.org/package=survival ). The R code used for the simulation study and the illustrative example is available as part of the online appendix. 30 References 
+
+Aalen, Odd O. (1989). “A Linear Regression Model for the Analysis of Life Times”. In: 
+
+Statistics in Medicine 8.8, pp. 907–925. doi : 10.1002/sim.4780080803 .Aalen, Odd O., Kjetil Røysland, Jon Michael Gran, Mats Julius Stensrud, and Susanne Strohmaier (2018). “Feedback and Mediation in Causal Inference Illustrated by Stochas-tic Process Models”. In: Scandinavian Journal of Statistics 45, pp. 62–86. doi : 10. 1111/sjos.12286 .Aalen, Odd O., Mats J. Stensrud, Vanessa Didelez, Rhian Daniel, Kjetil Røysland, and Susanne Strohmaier (2020). “Time-Dependent Mediators in Survival Analysis: Mod-eling Direct and Indirect Effects with the Additive Hazards Model”. In: Biometrical Journal 62, pp. 532–549. doi : 10.1002/bimj.201800263 .Abrahamowicz, Michal, Marie-Eve Beauchamp, Emily K. Roberts, and Jeremy M. G. Taylor (2025). “Revisiting the Hazards of Hazard Ratios Through Simulations and Case Studies”. In: European Journal of Epidemiology 40.6, pp. 611–629. doi : 10 . 1007/s10654-025-01245-6 .Anderson, David F. (2007). “A Modified Next Reaction Method for Simulating Chemical Systems with Time Dependent Propensities and Delays”. In: The Journal of Chemical Physics 127.21. doi : 10.1063/1.2799998 .Andrews, Ryan M. and Vanessa Didelez (2021). “Insights into the Cross-World Indepen-dence Assumption of Causal Mediation Analysis”. In: Epidemiology 32.2, pp. 209–219. 
+
+doi : 10.1097/EDE.0000000000001313 .Avin, Chen, Ilya Shpitser, and Judea Pearl (2005). “Identifiability of Path-Specific Ef-fects”. In: Proceedings of International Joint Conference on Artificial Intelligence, Edunburgh, Schotland , pp. 357–363. doi : 10.5555/1642293.1642350 .Baron, Reuben M. and David A. Kenny (1986). “The Moderator-Mediator Variable Dis-tinction in Social Psychological Research: Conceptual, Strategic, and Statistical Con-siderations”. In: Journal of Personality and Social Psychology 51.6, pp. 1173–1182. 
+
+doi : 10.1037/0022-3514.51.6.1173 .Beuers, Ulrich (2006). “Drug Insight: Mechanisms and Sites of Action of Ursodeoxycholic Acid in Cholestasis”. In: Nature Reviews Gastroenterology & Hepatology 3.6, pp. 318– 328. doi : 10.1038/ncpgasthep0521 .Bhandari, Saurabh, Michael J. Daniels, Maria Josefsson, Donald M. Lloyd-Jones, and Juned Siddique (2025a). “A Bayesian Semi-Parametric Approach to Causal Mediation for Longitudinal Mediators and Time-to-Event Outcomes with Application to a Car-diovascular Disease Cohort Study”. In: Biostatistics 26.1. doi : 10.1093/biostatistics/ kxaf027 .Bhandari, Saurabh, Michael J. Daniels, and Juned Siddique (2025b). Causal Mediation Analysis for Longitudinal and Survival Data in Continuous Time Using Bayesian Non-Parametric Joint Models . arXiv Preprint. doi : 10.48550/arXiv.2506.20058 .31 Boulesteix, Anne-Laure, Rory Wilson, and Alexander Hapfelmeier (2017). “Towards Evidence-Based Computational Statistics: Lessons from Clinical Research on the Role and De-sign of Real-Data Benchmark Studies”. In: BMC Medical Research Methodology 17.138. 
+
+doi : 10.1186/s12874-017-0417-2 .Breum, Marie Skov, Anders Munch, Thomas A. Gerds, and Torben Martinussen (2024). “Estimation of Separable Direct and Indirect Effects in a Continuos-Time Illness-Death Model”. In: Lifetime Data Analysis 30, pp. 143–180. doi : 10.1007/s10985-023-09601-y .Carroll, Kevin J. (2003). “On the Use and Utility of the Weibull Model in the Analysis of Survival Data”. In: Controlled Clinical Trials 24.6, pp. 682–701. doi : 10.1016/S0197-2456(03)00072-2 .Chen, Wansu, Lei Qian, Jiaxiao Shi, and Meredith Franklin (2018). “Comparing Perfor-mance Between Log-Binomial and Robust Poisson Regression Models for Estimating Risk Ratios Under Model Misspecification”. In: BMC Medical Research Methodology 
+
+18.63. doi : 10.1186/s12874-018-0519-5 .Chernofsky, Ariel and Judith J. Lok (2025). “Causal Mediation Analysis for Time-To-Event Outcomes on the Restricted Mean Survival Time Scale: A Pseudo-Value Ap-proach”. In: PLoS ONE 20.4, pp. 1–16. doi : 10.1371/journal.pone.0319074 .Cole, Stephen R. and Constantine E. Frangakis (2009). “The Consistency Statement in Causal Inference: A Definition or an Assumption?” In: Epidemiology 20.1, pp. 3–5. 
+
+doi : 10.1097/EDE.0b013e31818ef366 .Cox, D. R. (1972). “Regression Models and Life-Tables”. In: Journal of the Royal Sta-tistical Society: Series B (Methodological) 34.2, pp. 187–220. doi : 10.1111/j.2517-6161.1972.tb00899.x .Crowther, Michael J., Patrick Royston, and Mark Clements (2023). “A Flexible Paramet-ric Accelerated Failure Time Model and the Extension to Time-Dependent Acceler-ation Factors”. In: Biostatistics 24.3, pp. 811–831. doi : 10.1093/biostatistics/ kxac009 .Daniel, Rhian, Jingjing Zhang, and Daniel Farewell (2020). “Making Apples from Or-anges: Comparing Noncollapsible Effect Estimators and Their Standard Errors after Adjustment for Different Covariate Sets”. In: Biometrical Journal 63.3, pp. 528–557. 
+
+doi : 10.1002/bimj.201900297 .Daniel, Rhian M., Bianca L. De Stavola, and Simon N. Cousens (2011). “gformula: Es-timating Causal Effects in the Presence of Time-Varying Confounding or Mediation using the G-Computation Formula”. In: The Stata Journal 11.4, pp. 479–517. doi :
+
+10.1177/1536867X1201100401 .Deng, Yuhao, Haoyu Wei, Xia Xiao, Yuan Zhang, and Yuanmin Huang (2024). “Sequential Ignorability and Dismissible Treatment Components to Identify Mediation Effects”. In: Mathematics (MDPI) 12.15, pp. 1–20. doi : 10.3390/math12152332 .32 Denz, Robin, Renate Klaaßen-Mielke, and Nina Timmesfeld (2023). “A Comparison of Dif-ferent Methods to Adjust Survival Curves for Confounders”. In: Statistics in Medicine 
+
+42.10, pp. 1461–1479. doi : 10.1002/sim.9681 .Denz, Robin and Nina Timmesfeld (2025). Simulating Complex Crossectional and Longi-tudinal Data using the simDAG R Package . doi : 10.48550/arXiv.2506.01498 .Didelez, Vanessa (2019). “Defining Causal Mediation Analysis with a Longitudinal Me-diator and a Survival Outcome”. In: Lifetime Data Analysis 25, pp. 593–610. doi :
+
+10.1007/s10985-018-9449-0 .Domingo-Relloso, Arce, Yuchen Zhang, Ziqing Wang, Astrid M. Suchy-Dicey, Dedra S. Buchwald, Ana Navas-Acien, Joel Schwartz, Kiros Berhane, Brent A. Coull, and Linda Valeri (2026). “A Path-Specific Approach to Mediation Analysis with Time-Varying Mediators and Time-To-Event Outcomes Accounting for Competing Risks”. In: Statis-tics in Medicine 45.e70425. doi : 10.1002/sim.70425 .Efron, B. (1979). “Bootstrap Methods: Another Look at the Jackknife”. In: Annals of Statistics 7.1, pp. 1–26. doi : 10.1214/aos/1176344552 .Eyting, Markus, Min Xie, Felix Michalik, Simon Heß, Seunghun Chung, and Pascal Geld-setzer (2025). “A Natural Experiment on the Effect of Herpes Zoster Vaccination on Dementia”. In: Nature 641, pp. 438–445. doi : 10.1038/s41586-025-08800-x .Forastiere, Laura, Alessandra Mattei, and Peng Ding (2018). “Principal Ignorability in Mediation Analysis: Through and Beyond Sequential Ignorability”. In: Biometrika 
+
+105.4, pp. 979–986. doi : 10.1093/biomet/asy053 .Fosen, Johan, Egil Ferkingstad, Ørnulf Borgan, and Odd. O. Aalen (2006). “Dynamic Path Analysis: A New Approach to Analyzing Time-Dependent Covariates”. In: Lifetime Data Analysis 12.2, pp. 143–167. doi : 10.1007/s10985-006-9004-2 .Fulcher, Isabel R., Eric Tchetgen Tchetgen, and Paige L. Williams (2017). “Mediation Analysis for Censored Survival Data under an Accelerated Failure Time Model”. In: 
+
+Epidemiology 28.5, pp. 660–666. doi : 10.1097/EDE.0000000000000687 .Gao, Fei, Fan Xia, and K. C. G. Chan (2023). “Defining and Estimating Principal Stratum Specific Mediation Effects with Semi-Competing Risks Data”. In: Statistica Sinica 33, pp. 2495–2517. doi : 10.5705/ss.202021.0167 .Gillespie, Daniel T. (1977). “Exact Stochastic Simulation of Coupled Chemical Reac-tions”. In: The Journal of Physical Chemistry 81.25, pp. 2340–2361. doi : 10.1021/ j100540a008 .Goulis, John, Gioacchino Leandro, and Andrew K. Burroughs (1999). “Randomised Con-trolled Trials of Ursodeoxycholic-Acid Therapy for Primary Biliary Cirrhosis: A Meta-Analysis”. In: The Lancet 354.9184, pp. 1053–1060. doi : 10.1016/S0140-6736(98) 11293-X .Harms, Maren H., Henk R. van Buuren, Christophe Corpechot, Douglas Thorburn, Harry L. A. Janssen, Keith D. Lindor, Gideon M. Hirschfeld, Albert Parés, Annarosa Flo-33 reani, Marlyn J. Mayo, Pietro Invernizzi, Pier Maria Bettazzati, Frederik Nevens, Cyriel Y. Ponsioen, Andrew L. Mason, Kris V. Kowdley, Willem J. Lammers, Bet-tina E. Hansen, and Adriaan J. van der Meer (2019). “Ursodeoxycholic Acid Therapy and Liver Transplant-Free Survival in Patients with Primary Biliary Cholangitis”. In: 
+
+Journal of Hepatology 71.2, pp. 357–365. doi : 10.1016/j.jhep.2019.04.001 .Hernán, Miguel A. (2010). “The Hazards of Hazard Ratios”. In: Epidemiology 21.1, pp. 13– 15. doi : 10.1097/EDE.0b013e3181c1ea43 .Hernán, Miguel A. (2016). “Does Water Kill? A Call for Less Casual Causal Inferences”. In: Annuals of Epidemiology 26.10, pp. 674–680. doi : 10.1016/j.annepidem.2016. 08.016 .Hernán, Miguel A. and James M. Robins (2020). Causal Inference: What If . Boca Raton: CRC Press. Hohenester, Simon, Ronald P. J. Oude-Elferink, and Ulrich Beuers (2009). “Primary Bil-iary Cirrhosis”. In: Seminars in Immunopathology 31.3, pp. 283–307. doi : 10.1007/ s00281-009-0164-5 .Huang, Yen-Tsung (2021). “Causal Mediation of Semicompeting Risks”. In: Biometrics 
+
+77, pp. 1143–1154. doi : 10.1111/biom.13525 .Huang, Yen-Tsung and Ju-Sheng Hong (2025). “Nonparametric Path-Specific Effects on a Survival Outcome Through Multiple Time-To-Event Mediators”. In: Statistics in Medicine 44.3–4. doi : 10.1002/sim.10327 .Jackson, Christopher (2016). “flexsurv: A Platform for Parametric Survival Modeling in R”. In: Journal of Statistical Software 70.8, pp. 1–33. doi : 10.18637/jss.v070.i08 .Jacob, Dietmar A., Marcus Bahra, Sven C. Schmidt, Guido Schumacher, Andreas Weimann, Peter Neuhaus, and Ulf P. Neumann (2008). “Mayo Risk Score for Primary Biliary Cirrhosis: A Useful Tool for the Prediction of Course after Liver Transplantation?” In: 
+
+Annals of Transplantation 13.3, pp. 35–42. Jiang, Zhichao and Tyler J. VanderWeele (2015). “When is the Difference Method Conser-vative for Assessing Mediation?” In: American Journal of Epidemiology 182.2, pp. 105– 108. doi : 10.1093/aje/kwv059 .Kateline, Le Bourdonnec, Valeri Linda, and Proust-Lima Cécile (2025). “Continuous-Time Mediation Analysis for Repeatedly Measured Mediators and Outcomes”. In: 
+
+Biometrics 81.2. doi : 10.1093/biomtc/ujaf062 .Keil, Alexander P., Jessie K. Edwards, David R. Richardson, Ashley I. Naimi, and Stephen R. Cole (2014). “The Parametric G-Formula for Time-To-Event Data: Towards Intu-ition with a Worked Example”. In: Epidemiology 25.6, pp. 889–897. doi : 10.1097/ EDE.0000000000000160 .Kormaksson, Matthias, Markus Reiner Lange, David Demanse, Susanne Strohmaier, Ji-awei Duan, Qing Xie, Mariana Carbini, Claudia Bossen, Achim Guettner, and An-tonella Maniero (2024). “Dynamic Path Analysis for Exploring Treatment Effect Me-34 diation Processes in Clinical Trials with Time-To-Event Endpoints”. In: Statistics in Medicine 43.23, pp. 4614–4634. doi : 10.1002/sim.10191 .Lammers, Willem J., Henk R. van Buuren, Gideon M. Hirschfield, Harry L. A. Janssen, Pietro Invernizzi, Andrew L. Mason, Cyriel Y. Ponsioen, Annarosa Floreani, Christophe Corpechot, Marlyn J. Mayo, Pier M. Battezzati, Albert Parés, Frederik Nevens, An-drew K. Burroughs, Kris V. Kowdley, Palak J. Trivedi, Teru Kumagi, Angela Cheung, Ana Lleo, Mohamad H. Imam, Kirsten Boonstra, Nora Cazzagon, Irene Franceschet, Raoul Poupon, Llorenç Caballeria, Giulia Pieri, Pushpjeet S. Kanwar, Keith D. Lin-dor, and Bettina E. Hansen (2014). “Levels of Alkaline Phosphatase and Biliburin are Surrogate End Points of Outcomes of Patients with Primary Biliary Cirrhosis: An International Follow-Up Study”. In: Gastroenterology 147.6, pp. 1338–1249. doi :
+
+10.1053/j.gastro.2014.08.029 .Lange, Theis and Jørgen V. Hansen (2011). “Direct and Indirect Effects in a Survival Context”. In: Epidemiology 22.4, pp. 575–581. doi : 10.1097/EDE.0b013e31821c680c .Lange, Theis, Mette Rasmussen, and Lau Caspar Thygesen (2014). “Assessing Natural Direct and Indirect Effects Through Multiple Pathways”. In: American Journal of Epidemiology 179.4, pp. 513–518. doi : 10.1093/aje/kwt270 .Lapointe-Shaw, Lauren, Zachary Bouck, Nicholas A. Howell, Theis Lange, Ani Orchanian-Cheff, Peter C. Austin, Noah M. Ivers, Donald A. Redelmeier, and Chaim M. Bell (2018). “Mediation Analysis with a Time-To-Event Outcome: A Review of Use and Reporting in Healthcare Research”. In: BMC Medical Research Methodology 18.118. 
+
+doi : 10.1186/s12874-018-0578-7 .Lin, Sheng-Hsuan, Jessica Young, Roger Logan, Eric J. Tchetgen Tchetgen, and Tyler J. VanderWeele (2017a). “Parametric Mediational G-Formula Approach to Mediation Analysis with Time-Varying Exposures, Mediators and Confounders”. In: Epidemiol-ogy 28.2, pp. 266–274. doi : 10.1097/EDE.0000000000000609 .Lin, Sheng-Hsuan, Jessica G. Young, Roger Logan, and Tyler J. VanderWeele (2017b). “Mediation Analysis for a Survival Outcome with Time-Varying Exposures, Mediators, and Confounders”. In: Statistics in Medicine 36.26, pp. 4153–4166. doi : 10.1002/sim. 7426 .Lindor, Keith D., E. Rolland Dickson, William P. Baldus, Roberta A. Jorgensen, Jurgen Ludwig, Paul A. Murtaugh, Jay M. Harrison, Russell H. Wiesner, Monte L. Ander-son, Stephen M. Lange, Gene Lesage, Steven S. Rossi, and Alan F. Hoffmann (1994). “Ursodeoxycholic Acid in the Treatment of Primary Biliary Cirrhosis”. In: Gastroen-terology 106.5, pp. 1284–1290. doi : 10.1016/0016-5085(94)90021-3 .Lophatananon, Artitaya, Matthew Carr, Brian Mcmillan, Curtis Dobson, Ruth Itzhaki, Rosa Parisi, Darren M. Ashcroft, and Kenneth R. Muir (2023). “The Association of Herpes Zoster and Influenza Vaccinations with the Risk of Developing Dementia: A Population-Based Cohort Study within the UK Clinical Practice Research Datalink”. In: BMC Public Health 23.1903. doi : 10.1186/s12889-023-16768-4 .35 Martinussen, Torben and Stijn Vansteelandt (2013). “On Collapsibility and Confounding Bias in Cox and Aalen Regression Models”. In: Lifetime Data Analysis 19.3, pp. 279– 296. doi : 10.1007/s10985-013-9242-z .Mogensen, Søren Wengel, Odd O. Aalen, and Susanne Strohmaier (2023). Time-Dependent Mediators in Survival Analysis: Graphical Representation of Causal Assumptions . arXiv:2310.04709v1 
+
+doi : 10.48550/arXiv.2310.04709 .Naimi, Ashley I., David Benkeser, and Jacqueline E. Rudolph (2025). “Computing True Parameter Values in Simulation Studies Using Monte Carlo Integration”. In: Epidemi-ology 36.5, pp. 690–693. doi : 10.1097/EDE.0000000000001873 .Nguyen, Trang Quynh, Ian Schmid, Elizabeth L. Ogburn, and Elizabeth A. Stuart (2022). “Clarifying Causal Mediation Analysis: Effect Identification via Three Assumptions and Five Potential Outcomes”. In: Journal of Causal Inference 10.1, pp. 246–279. 
+
+doi : 10.1515/jci-2021-0049 .Ochoa, Lizbeth Burgos, Judith J. M. Rijnhart, Brenda W. Penninx, Klaas J. Wardenaar, Jos W. R. Twisk, and Martijn W. Heymans (2020). “Performance of Methods to Con-duct Mediation Analysis with Time-To-Event Outcomes”. In: Statistica Neerlandica 
+
+74, pp. 72–91. doi : 10.1111/stan.12191 .Paumgartner, Gustav and Ulrich Beuers (2004). “Mechanisms of Action and Therapeutic Efficacy of Ursodeoxycholic Acid in Cholestatic Liver Disease”. In: Clinics in Liver Disease 8, pp. 67–81. doi : 10.1016/S1089-3261(03)00135-1 .Pearl, Judea (2001). “Direct and Indirect Effects”. In: Proceedings of the Seventeenth Conference on Uncertainty in Artificial Intelligence . Ed. by Jack Breese and Daphne Koller. San Francisco: Morgan Kaufmann Publishers Inc, pp. 411–420. doi : 10.5555/ 2074022.2074073 .Pearl, Judea (2009). Causality: Models, Reasoning and Inference . 2nd ed. Cambridge: Cambridge University Press. Rijnhart, Judith J. M., Sophia J. Lamp, Matthew J. Valente, David P. MacKinnon, Jos W. R. Twisk, and Martijn W. Heymans (2021). “Mediation Analysis Methods Used in Observational Research: A Scoping Review and Recommendations”. In: BMC Medical Research Methodology 21.226. doi : 10.1186/s12874-021-01426-3 .Robins, James (1986). “A New Approach to Causal Inference in Mortality Studies with a Sustained Exposure Period: Application to Control of the Healthy Worker Survivor Effect”. In: Mathematical Modelling 7.9–12, pp. 1393–1512. doi : 10 . 1016 / 0270 -0255(86)90088-6 .Robins, James M. and Sunder Greenland (1992). “Identifiability and Exchangeability for Direct and Indirect Effects”. In: Epidemiology 3.2, pp. 143–155. doi : 10.1097/ 00001648-199203000-00013 .Rudic, J. S., G. Poropat, M. N. Krstic, G. Bjelakovic, and C. Gluud (2012). “Ursodeoxy-cholic Acid for Primary Biliary Cirrhosis”. In: Cochrane Database of Systematic Re-views 12.CD000551. doi : 10.1002/14651858.CD000551.pub3 .36 Scheike, Thomas H. and Mei-Jie Zhang (2011). “Analyzing Competing Risk Data Using the timereg R Package”. In: Journal of Statistical Software 38.2, pp. 1–15. doi : 10. 18637/jss.v038.i02 .Strobel, Alexandra, Andreas Wienke, and Oliver Kuss (2023). “How Hazardous are Haz-ard Ratios? An Empirical Investigation of Individual Patient Data from 27 Large Randomized Clinical Trials”. In: European Journal of Epidemiology 38, pp. 859–867. 
+
+doi : 10.1007/s10654-023-01026-z .Susser, M. (1973). Causal Thinking in the Health Sciences: Concepts and Strategies of Epidemiology . New York: Oxford University Press. Tein, Jenn-Yun and David P. MacKinnon (2003). “Estimating Mediated Effects with Sur-vival Data”. In: New Developments in Psychometrics: Proceedings of the International Meeting of the Psychometric Society IMPS2001. Osaka, Japan, July 15–19, 2001 . Ed. by H. Yanai, A. Okada, K. Shigemasu, Y. Kano, and J. J. Meulman. Tokyo: Springer, pp. 405–412. doi : 10.1007/978-4-431-66996-8_46 .Therneau, Terry and Patricia M. Grambsch (2000). Modeling Survival Data: Extending the Cox Model . New York: Springer Science + Business Media. Therneau, Terry M (2025). A Package for Survival Analysis in R . R package version 3.5-8. 
+
+url : https://CRAN.R-project.org/package=survival .Trivella, Juan, Binu V. John, and Cynthia Levy (2023). “Primary Biliary Cholangitis: Epidemiology, Prognosis, and Treatment”. In: Hepatology Communications 7.6. doi :
+
+10.1097/HC9.0000000000000179 .Valeri, Linda, Cecile Proust-Lima, Weijia Fan, Jarvis T. Chen, and Helene Jacqmin-Gadda (2023). “A Multistate Approach for the Study of Interventions on an Intermediate Time-To-Event in Health Disparaties Research”. In: Statistical Methods in Medical Research 32.8, pp. 1445–1460. doi : 10.1177/09622802231163331 .VanderWeele, Tyler J. (2009). “Concerning the Consistency Assumption in Causal Infer-ence”. In: Epidemiology 20.6, pp. 880–883. doi : 10.1097/EDE.0b013e3181bd5638 .VanderWeele, Tyler J. (2011). “Causal Mediation Analysis with Survival Data”. In: Epi-demiology 22.4, pp. 582–585. doi : 10.1097/EDE.0b013e31821db37e .VanderWeele, Tyler J. (2015). Explanation in Causal Inference: Methods for Mediation and Interaction . New York: Oxford University Press. VanderWeele, Tyler J., Linda Valeri, and Elizabeth L. Ogburn (2013). “The Role of Mea-surement Error and Misclassification in Mediation Analysis”. In: Epidemiology 23.4, pp. 561–564. doi : 10.1097/EDE.0b013e318258f5e4 .Vansteelandt, Stijn, Martin Linder, Sjouke Vandenberghe, Johan Steen, and Jesper Mad-sen (2019). “Mediation Analysis for Time-To-Event Endpoints Accounting for Re-peatedly Measured Mediators Subject to Time-Varying Confounding”. In: Statistics in Medicine 38, pp. 4828–4840. doi : 10.1002/sim.8336 .37 Wang, Zeyi, Lars van der Laan, Maya Petersen, Thomas Gerds, Kajsa Kvist, and Mark J. van der Laan (2025). “Targeted Maximum Likelihood Estimation for Longitudinal Mediation Analysis”. In: Journal of Causal Inference 13.1. doi : 10.1515/jci-2023-0013 .Wei, L. J. (1992). “The Accelerated Failure Time Model: A Useful Alternative to the Cox Regression Model in Survival Analysis”. In: Statistics in Medicine 11.14–15, pp. 1871– 1879. doi : 10.1002/sim.4780111409 .Wen, Lan, Aaron L. Sarvet, and Jessica G. Young (2025). On Treating Right-Censoring Events Like Treatments . arXiv Preprint. doi : 10.48550/arXiv.2511.17379 .Westreich, Daniel and Stephen R. Cole (2010). “Invited Commentary: Positivity in Prac-tice”. In: American Journal of Epidemiology 171.6, pp. 674–677. doi : 10.1093/aje/ kwp436 .Yan, Ying and Lingzhu Shen (2025). “Mediation Analysis with Exposure – Mediator Interaction and Covariate Measurement Error Under the Additive Hazards Model”. In: Biometrical Journal 67.1. doi : 10.1002/bimj.70035 .Yu, Jih-Chang and Yen-Tsung Huang (2025). “Causal Mediation Analysis for Time-To-Event Mediator and Outcome in the Presence of Left Truncation”. In: Statistical Meth-ods in Medical Research 34.5, pp. 1001–1017. doi : 10.1177/09622802241313291 .Zeng, Shuxi, Elizabeth C. Lange, Elizabeth A. Archie, Fernando A. Campos, Susan C. Al-berts, and Fan Li (2023). “A Causal Mediation Model for Longitudinal Mediators and Survival Outcomes with an Application to Animal Behavior”. In: Journal of Agri-cultural, Biological and Environmental Statistics 28.2, pp. 197–218. doi : 10.1007/ s13253-022-00490-6 .Zhang, Zhongzheng, Jaako Reinikainen, Kazeem Adedayo Adeleke, Marcel E. Pieterse, and Catharina G. M. Groothuis-Oudshoorn (2018). “Time-Varying Covariates and Coefficients in Cox Regression Models”. In: Annals of Translational Medicine 6.7, pp. 1–10. doi : 10.21037/atm.2018.02.12 .Zhu, Gui-Qi, Ke-Qing Shi, Sha Huang, Gui-Qian Huang, Yi-Qian Lin, Zhi-Rui Zhou, Mar-tin Braddock, Yong-Ping Chen, and Ming-Hua Zheng (2015). “Network Meta-Analysis of Randomized Controlled Trials: Efficacy and Safety of UDCA-Based Therapies in Primary Biliary Cirrhosis”. In: Medicine 94.11. doi : 10.1097/MD.0000000000000609 .38 A Target estimand on different scales 
+
+In the main text, the definition for the target estimands were given only on the log-hazard ratio scale. On the hazard difference scale the estimands are defined as: ΨT E (t) = λ1,1(t) − λ0,0(t), (34) ΨDE (t) = λ1,0(t) − λ0,0(t), (35) ΨIE (t) = λ1,0(t) − λ1,1(t). (36) Similarly, on the log survival time ratio scale, the estimands are defined as: ΨT E =E (
+
+log (
+
+T 1,1)
+
+− log (
+
+T 0,0)) 
+
+, (37) ΨDE =E (
+
+log (
+
+T 1,0)
+
+− log (
+
+T 0,0)) 
+
+, (38) ΨIE =E (
+
+log (
+
+T 1,0)
+
+− log (
+
+T 1,1)) 
+
+. (39) 
+
+# B Data generation process 
+
+To generate data corresponding to the DGP described in section 5.1, we used the following discrete-event simulation based approach: 1. Generate n random draws from a standard normal distribution to generate X.2. Generate n random draws from a Bernoulli distribution to generate Z.3. Generate n random draws from a log-binomial regression model based on Z to generate A.4. Set t = 0 for all n individuals. 5. Initialize three vectors of size n that are filled with zeros for L0, M0 and Y0, repre-senting their values at t = 0. 6. Calculate the probabilities for Lt, Mt and Yt turning one if t is increased by 1, based on equations 27, 28 and 30 or 31, using the current state of these variables and the values generated in steps 1-3. 7. For each of the n individuals and for each of Lt, Mt and Yt that are still not 1, draw a random value from a corresponding left-truncated exponential distribution. The rate of this distribution is set to the corresponding individual-specific proba-bility calculated in step 6 and the left-truncation is the current individual-specific simulation time. 8. Round up all generated times to the next integer. 9. For each of the n individuals, choose the smallest of the times generated in the previous step, denoted tnext .39 10. For each of the n individuals, set the variable(s) corresponding to tnext to 1. 11. For each of the n individuals, set the individual-specific t to tnext .12. For each of the n individuals, repeat steps 6-11 until Yt turns 1. 40 Scenario  βMA βY
+
+> 0 βA
+> 0 βAZ βLA βLM βMZ βML βYZ λC
+> 1
+> 0 log(0 .0001)  log(0 .5)  0 0 0 0 0 0 0.0004253625 log(0 .001)  log(0 .5)  0 0 0 0 0 0 0.0021502414 log(0 .2)  log(0 .0001)  log(0 .5)  0 0 0 0 0 0 0.0003650604 log(0 .001)  log(0 .5)  0 0 0 0 0 0 0.0016433996
+> 2
+> 0 log(0 .0001)  log(0 .5)  0 0 0 0 log(3)  0 0.0004374994 log(0 .001)  log(0 .5)  0 0 0 0 log(3)  0 0.0024057371 log(0 .2)  log(0 .0001)  log(0 .5)  0 0 0 0 log(3)  0 0.0004104836 log(0 .001)  log(0 .5)  0 0 0 0 log(3)  0 0.0019531746
+> 3
+> 0 log(0 .0001)  log(0 .5)  0 0 log(0 .6)  0 log(3)  0 0.0004263690 log(0 .001)  log(0 .5)  0 0 log(0 .6)  0 log(3)  0 0.0023093365 log(0 .2)  log(0 .0001)  log(0 .5)  0 0 log(0 .6)  0 log(3)  0 0.0004036540 log(0 .001)  log(0 .5)  0 0 log(0 .6)  0 log(3)  0 0.0019126007
+> 4
+> 0 log(0 .0001)  log(0 .5)  0 log(0 .6)  log(0 .6)  0 log(3)  0 0.0004136372 log(0 .001)  log(0 .5)  0 log(0 .6)  log(0 .6)  0 log(3)  0 0.0021736180 log(0 .2)  log(0 .0001)  log(0 .5)  0 log(0 .6)  log(0 .6)  0 log(3)  0 0.0003916444 log(0 .001)  log(0 .5)  0 log(0 .6)  log(0 .6)  0 log(3)  0 0.0017965080
+> 5
+> 0 log(0 .0001)  log(0 .445)  log(0 .7)  0 0 log(0 .7)  0 0 0.0004112966 log(0 .001)  log(0 .445)  log(0 .7)  0 0 log(0 .7)  0 0 0.0020159880 log(0 .2)  log(0 .0001)  log(0 .445)  log(0 .7)  0 0 log(0 .7)  0 0 0.0003272549 log(0 .001)  log(0 .445)  log(0 .7)  0 0 log(0 .7)  0 0 0.0014279447
+> 6
+> 0 log(0 .0001)  log(0 .445)  log(0 .7)  0 0 0 0 log(0 .7)  0.0003564597 log(0 .001)  log(0 .445)  log(0 .7)  0 0 0 0 log(0 .7)  0.0019138197 log(0 .2)  log(0 .0001)  log(0 .445)  log(0 .7)  0 0 0 0 log(0 .7)  0.0003018970 log(0 .001)  log(0 .445)  log(0 .7)  0 0 0 0 log(0 .7)  0.0013732391
+> Table 3: An overview of all combinations of parameters used in each scenario of the simulation study, when simulating data for  Yt
+> based on a Cox or AFT model. Simulation parameters that were fixed over all scenarios are not included.  λC was determined by first simulating a single dataset with 1 , 000 , 000 individuals from the respective DGP and then using the Newton-Raphson algorithm to numerically determine the rate needed for an exponential distribution that leads to approximately 30% censoring.
+
+41 Scenario  βMA βY
+
+> 0 γ βA
+> 0 βAZ βLA βLM βMZ βML βYZ λC
+> 1
+> 0 0.00014  0.00015  log(0 .5)  0 0 0 0 0 0 0.0002077317 0.0014  0.00015  log(0 .5)  0 0 0 0 0 0 0.0015544418 log(0 .2)  0.00014  0.00015  log(0 .5)  0 0 0 0 0 0 0.0001976828 0.0014  0.00015  log(0 .5)  0 0 0 0 0 0 0.0013604477
+> 2
+> 0 0.00014  0.00015  log(0 .5)  0 0 0 0 log(3)  0 0.0002094211 0.0014  0.00015  log(0 .5)  0 0 0 0 log(3)  0 0.0016280939 log(0 .2)  0.00014  0.00015  log(0 .5)  0 0 0 0 log(3)  0 0.0002051545 0.0014  0.00015  log(0 .5)  0 0 0 0 log(3)  0 0.0014590998
+> 3
+> 0 0.00014  0.00015  log(0 .5)  0 0 log(0 .6)  0 log(3)  0 0.0002090750 0.0014  0.00015  log(0 .5)  0 0 log(0 .6)  0 log(3)  0 0.0016007601 log(0 .2)  0.00014  0.00015  log(0 .5)  0 0 log(0 .6)  0 log(3)  0 0.0002047112 0.0014  0.00015  log(0 .5)  0 0 log(0 .6)  0 log(3)  0 0.0014473551
+> 4
+> 0 0.00014  0.00015  log(0 .5)  0 log(0 .6)  log(0 .6)  0 log(3)  0 0.0002066089 0.0014  0.00015  log(0 .5)  0 log(0 .6)  log(0 .6)  0 log(3)  0 0.0015535868 log(0 .2)  0.00014  0.00015  log(0 .5)  0 log(0 .6)  log(0 .6)  0 log(3)  0 0.0002020655 0.0014  0.00015  log(0 .5)  0 log(0 .6)  log(0 .6)  0 log(3)  0 0.0013875856
+> 5
+> 0 0.00014  0.00015  log(0 .445)  log(0 .7)  0 0 log(0 .7)  0 0 0.0002053677 0.0014  0.00015  log(0 .445)  log(0 .7)  0 0 log(0 .7)  0 0 0.0014970387 log(0 .2)  0.00014  0.00015  log(0 .445)  log(0 .7)  0 0 log(0 .7)  0 0 0.0001892460 0.0014  0.00015  log(0 .445)  log(0 .7)  0 0 log(0 .7)  0 0 0.0012559950
+> 6
+> 0 0.00014  0.00015  log(0 .445)  log(0 .7)  0 0 0 0 log(0 .7)  0.0001953243 0.0014  0.00015  log(0 .445)  log(0 .7)  0 0 0 0 log(0 .7)  0.0014426110 log(0 .2)  0.00014  0.00015  log(0 .445)  log(0 .7)  0 0 0 0 log(0 .7)  0.0001825023 0.0014  0.00015  log(0 .445)  log(0 .7)  0 0 0 0 log(0 .7)  0.0011991308
+> Table 4: An overview of all combinations of parameters used in each scenario of the simulation study, when simulating data for
+> Yt based on an Aalen additive hazards model. Simulation parameters that were fixed over all scenarios are not included.  λC was determined by first simulating a single dataset with 1 , 000 , 000 individuals from the respective DGP and then using the Newton-Raphson algorithm to numerically determine the rate needed for an exponential distribution that leads to approximately 30% censoring.
+
+42 C Extensions to Continuous Time 
+
+The results presented in this article are easily generalizable to the setting in which time is continuous instead of discrete. First, we re-define the target estimands as stochastic pro-cesses. with t ∈ [0 , τ ]. The counterfactual processes for the time-dependent confounders 
+
+La,a ′ 
+
+> 1
+
+, L a,a ′ 
+
+> 2
+
+, ..., L a,a ′ 
+
+> w
+
+are then given as: 
+
+ddt La,a ′ 
+
+> i
+
+(t) = Li
+
+> (
+
+t, a, L a,a ′ 
+
+> i
+
+(t), M a,a ′
+
+(t), U i(t))
+
+(40) with the counterfactual mediator process M a,a ′
+
+(t) being defined as: 
+
+ddt M a,a ′
+
+(t) = M(
+
+t, a ′, La,a ′
+
+(t), M a,a ′
+
+(t), U M (t))
+
+, (41) and the counterfactual outcome process Y a,a ′
+
+(t) being defined as: 
+
+ddt Y a,a ′
+
+(t) = Y(
+
+t, a, La,a ′
+
+(t), M a,a ′
+
+(t), Y a,a ′
+
+(t), U Y (t))
+
+(42) The initial conditions for t = 0 are defined equivalently to the discrete-time case as: 
+
+La,a ′ 
+
+> i
+
+(0) = Li, 0, M a,a ′
+
+(0) = M0 and Y a,a ′
+
+(0) = Y0. The hazard function for T (the first time that Y a,a ′
+
+(t) turns 1) is then defined as: 
+
+λa,a ′ 
+
+> Y
+
+(t) = lim 
+
+> ∆t↓0
+
+P (
+
+t ≤ T a,a ′ 
+
+> Y
+
+< t + ∆ t ∣∣∣ T a,a ′ 
+
+> Y
+
+≥ t)
+
+∆t . (43) The target estimands defined in equations 6, 7 and 8 remain unchanged, once the hazard function definition has been updated. The identifiability assumptions remain largely equivalent, as shown by Kateline et al. (2025). This generalization to continuous time does not change how the Cox, Aalen or AFT model based difference method may be applied, because the employed models were directly designed to handle continuous time. In practice, researchers may structure the data in the counting process format to fit the models. In this format, only one row per time-interval without covariate changes, with associated beginning and end times, is included in the dataset. This is the same format that we used for the discrete-time case. Applying the parametric g-formula is a little more complicated in continuous time, but not impossible. First, the required models for the conditional probabilities of Yt,
+
+L1,t , L 2,t , ..., L w,t and Mt may be approximated by discretizing the time into a sufficiently large number of equally sized bins, structuring the data in the long-format and fitting the models as in the discrete-time case. The method may then be applied as outlined in the main text. Alternatively, under the assumptions used throughout the article, the data may also be kept in the counting process format, by fitting weighted models instead, where the weights correspond to the duration of each time-interval in the data. Note that under more realistic assumptions, such as time-varying baseline hazards or complex mul-tilevel structures, the latter strategy may no longer be feasible. After obtaining suitable parametric models, exact realizations of the stochastic processes, as approximated by the models, may then be generated using the discrete-event simulation approach outline in appendix B. The simulated datasets may then be analysed using the same univariable models as in the discrete-time case to obtain the final estimates. 43 Although we did not present the results here, the simulation study performed in this study is very close to the continuos time case. In fact, since we used a discrete-event simulation algorithm, the only thing that would need to be changed to run the same simulation in continuous time is to remove step 8 in the process used to generate the data (see appendix B). 44

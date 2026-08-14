@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-14",
+  "date": "2026-08-14",
+  "generated_at": "2026-08-14T21:24:53",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/14/2608.13094v1-causal-mediation-analysis-with-a-time-dependent-mediator-time-dependent-confounders-and-a-time-to-event-outcome-revisiting-the-difference-method",
+      "section": "quick",
+      "title_en": "Causal Mediation Analysis with a Time-Dependent Mediator, Time-Dependent Confounders and a Time-to-Event Outcome: Revisiting the Difference Method",
+      "authors": "Robin Denz, Nina Timmesfeld",
+      "date": "2026-08-13",
+      "pdf": "https://arxiv.org/pdf/2608.13094v1",
+      "score": "7.0",
+      "evidence": "提供时间-事件结局下的因果中介分析方法，直接适用于检验运动预适应是否通过代谢重编程改善皮瓣存活。",
+      "tldr": "现有中介分析方法在处理时间依赖中介、混杂和生存结局时复杂且难以使用。差异法简单但在此场景未经系统评估。模拟与真实数据表明，Aalen模型差异法在无治疗直接影响的时变混杂且模型正确时无偏，Cox法仅在罕见结局时类似，AFT法则几乎全有偏；参数g-formula始终无偏。差异法虽需苛刻假设，但在满足时可作简单高效替代。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Mediation analysis is a powerful tool to decompose treatment effects into direct and indirect components, enabling explanations of total treatment effects in a formal statistical framework. However, applying such analyses to settings with time-to-event outcomes, time-dependent mediators and confounders remains challenging. Existing methods are statistically complex, computationally intensive, and rarely available in user-friendly software. The difference method offers a simple alternative, but its performance in this setting has not been systematically evaluated. We conducted a simulation study and real-world data analysis to fill this gap in the literature. Using Cox proportional hazards, Aalen additive hazards, and accelerated failure time (AFT) models with time-varying covariates, the difference method was compared across different data generation processes with time-dependent mediators and confounders, focusing on bias in estimated indirect effects. The parametric mediational g-formula was used as benchmark comparator. If correctly specified, the Aalen model based difference method produced unbiased estimates in the absence of a time-dependent confounder that was directly caused by the treatment. Similar results were obtained when using the Cox model based difference with rare outcomes, but not with common outcomes. The AFT model based difference method was biased in almost all scenarios, due to collapsibility issues. Only the parametric mediational g-formula was unbiased in all scenarios. In contrast to specialized methods, the difference method requires additional, often unrealistic, assumptions, such as the absence of a direct causal relationship of the treatment on time-dependent confounders. If those assumptions hold, however, it may be used as a simple and efficient alternative.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/14/2608.09839v1-clustering-informed-inverse-probability-weighting-strategies-for-causal-effect-estimation-in-observational-studies",
+      "section": "quick",
+      "title_en": "Clustering Informed Inverse Probability Weighting Strategies for Causal Effect Estimation in Observational Studies",
+      "authors": "Ruohui Chen, Scott Zuo, Whitney Stevens, Seth Pollack, Wenna Xi, Lucia Petito, Lihui Zhao, Hui Zhang",
+      "date": "2026-08-10",
+      "pdf": "https://arxiv.org/pdf/2608.09839v1",
+      "score": "6.0",
+      "evidence": "因果效应估计方法（逆概率加权）适用于运动-皮瓣观察性研究",
+      "tldr": "针对观察性研究中的因果效应估计，逆概率加权(IPW)依赖倾向得分正确设定。本文比较了标准IPW、聚类增强IPW（聚类特异性倾向得分模型）和含估计聚类成员的全局倾向得分模型。模拟显示两种聚类知情策略在遗漏协变量时均降低偏差和均方误差，但性能依潜在聚类结构、样本量而异。应用于乳腺癌患者数据，聚类分析提供亚组估计和诊断概况。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Inverse probability weighting (IPW) is widely used to estimate causal effects in observational studies but depends on adequate propensity-score specification. We compare three strategies for addressing treatment assignment heterogeneity: standard IPW, clustering augmented IPW with cluster specific propensity score models, and a global propensity score model including estimated cluster membership as a covariate. Through simulations with and without latent cluster structure and under correctly specified and omitted covariate propensity score models, we evaluate bias, mean squared error (MSE), and confidence interval coverage across sample sizes of 100 to 500. Both cluster informed strategies reduced bias and MSE from omitted covariate misspecification relative to standard IPW, but neither uniformly dominated: clustering augmented IPW achieved lower MSE when latent cluster structure was present, whereas the global model generally provided lower bias and better coverage at smaller sample sizes. We also apply the methods to 966 breast cancer patients treated with carboplatin, using generalized propensity scores to estimate the dose response relationship between treatment cycles and hypersensitivity reaction risk. Standard and clustered analyses produced similar pooled estimates, while clustering additionally provided subgroup specific estimates and diagnostic profiles. Overall, cluster informed strategies may improve robustness to propensity score misspecification, with relative performance depending on subgroup structure, sample size, and inferential priorities.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/14/2608.13234v1-knowledge-guided-pattern-discovery-via-coupled-tensor-factorizations",
+      "section": "quick",
+      "title_en": "Knowledge-guided Pattern Discovery via Coupled Tensor Factorizations",
+      "authors": "Gaute Johannessen, Geert Roelof van der Ploeg, Evrim Acar",
+      "date": "2026-08-13",
+      "pdf": "https://arxiv.org/pdf/2608.13234v1",
+      "score": "6.0",
+      "evidence": "面向多维代谢组学数据的知识引导耦合张量分解，有助于分析运动诱导的皮瓣代谢变化。",
+      "tldr": "复杂系统数据常呈多路结构，现有张量分解主要数据驱动，未利用计算模型中的先验知识。本文提出知识引导方法，通过线性耦合联合分析真实数据和模型模拟数据，实现知识引导的模式发现。在代谢组学实验中，该方法提升噪声数据模式发现性能，并揭示数据与模型间潜在差异。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "In order to understand complex systems such as the human metabolome or human brain, different sensing technologies are used, generating complex data. These datasets are often multiway, i.e., with more than two axes of variation such as a subjects by metabolites by time array. While tensor factorizations have successfully revealed interpretable patterns from such complex data, they have so far been mainly data-driven. On the other hand, there is more to data -- there are computational models (of these systems), which are rich sources of prior information. In this paper, we introduce a knowledge-guided approach that brings together data and computational models by jointly analyzing real data and simulated data (generated using a computational model) using coupled tensor factorizations with linear coupling. Our experiments on real metabolomics measurements demonstrate that guiding the analysis of such noisy data with simulated data improves the pattern discovery performance while also revealing potential discrepancies between data and computational models.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

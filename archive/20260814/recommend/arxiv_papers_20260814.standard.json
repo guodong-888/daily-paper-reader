@@ -1,0 +1,133 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-14T21:22:36.668520+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.13094v1",
+      "source": "arxiv",
+      "title": "Causal Mediation Analysis with a Time-Dependent Mediator, Time-Dependent Confounders and a Time-to-Event Outcome: Revisiting the Difference Method",
+      "abstract": "Mediation analysis is a powerful tool to decompose treatment effects into direct and indirect components, enabling explanations of total treatment effects in a formal statistical framework. However, applying such analyses to settings with time-to-event outcomes, time-dependent mediators and confounders remains challenging. Existing methods are statistically complex, computationally intensive, and rarely available in user-friendly software. The difference method offers a simple alternative, but its performance in this setting has not been systematically evaluated. We conducted a simulation study and real-world data analysis to fill this gap in the literature. Using Cox proportional hazards, Aalen additive hazards, and accelerated failure time (AFT) models with time-varying covariates, the difference method was compared across different data generation processes with time-dependent mediators and confounders, focusing on bias in estimated indirect effects. The parametric mediational g-formula was used as benchmark comparator. If correctly specified, the Aalen model based difference method produced unbiased estimates in the absence of a time-dependent confounder that was directly caused by the treatment. Similar results were obtained when using the Cox model based difference with rare outcomes, but not with common outcomes. The AFT model based difference method was biased in almost all scenarios, due to collapsibility issues. Only the parametric mediational g-formula was unbiased in all scenarios. In contrast to specialized methods, the difference method requires additional, often unrealistic, assumptions, such as the absence of a direct causal relationship of the treatment on time-dependent confounders. If those assumptions hold, however, it may be used as a simple and efficient alternative.",
+      "authors": [
+        "Robin Denz",
+        "Nina Timmesfeld"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-08-13T11:01:04+00:00",
+      "link": "https://arxiv.org/pdf/2608.13094v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Provides causal mediation analysis for time-to-event outcomes, directly applicable to testing whether exercise preconditioning improves flap survival via metabolic reprogramming.",
+      "llm_evidence_cn": "提供时间-事件结局下的因果中介分析方法，直接适用于检验运动预适应是否通过代谢重编程改善皮瓣存活。",
+      "llm_evidence": "提供时间-事件结局下的因果中介分析方法，直接适用于检验运动预适应是否通过代谢重编程改善皮瓣存活。",
+      "canonical_evidence": "提供时间-事件结局下的因果中介分析方法，直接适用于检验运动预适应是否通过代谢重编程改善皮瓣存活。",
+      "llm_tldr_en": "Presents causal mediation analysis for survival data with time-dependent mediators/confounders, revisiting the simple difference method; simulations and real data show its performance and it offers a user-friendly alternative to complex estimators.",
+      "llm_tldr_cn": "该论文针对带时间相依中介变量和混杂变量、结局为时间-事件数据的因果中介分析问题，指出现有方法统计复杂且难以实现，并系统评估了简单差值法的表现。作者模拟研究和真实数据分析表明，差值法在该类设置下具有一定有效性，为研究如运动预适应是否通过代谢重编程改善皮瓣存活率这类中介机制提供了可操作的工具。该工作弥补了简单方法在复杂纵向中介分析中的空白，有助于实证研究者在常规软件中实现因果中介推断。",
+      "llm_tldr": "该论文针对带时间相依中介变量和混杂变量、结局为时间-事件数据的因果中介分析问题，指出现有方法统计复杂且难以实现，并系统评估了简单差值法的表现。作者模拟研究和真实数据分析表明，差值法在该类设置下具有一定有效性，为研究如运动预适应是否通过代谢重编程改善皮瓣存活率这类中介机制提供了可操作的工具。该工作弥补了简单方法在复杂纵向中介分析中的空白，有助于实证研究者在常规软件中实现因果中介推断。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "Does exercise preconditioning improve flap survival through metabolic reprogramming?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.09839v1",
+      "source": "arxiv",
+      "title": "Clustering Informed Inverse Probability Weighting Strategies for Causal Effect Estimation in Observational Studies",
+      "abstract": "Inverse probability weighting (IPW) is widely used to estimate causal effects in observational studies but depends on adequate propensity-score specification. We compare three strategies for addressing treatment assignment heterogeneity: standard IPW, clustering augmented IPW with cluster specific propensity score models, and a global propensity score model including estimated cluster membership as a covariate. Through simulations with and without latent cluster structure and under correctly specified and omitted covariate propensity score models, we evaluate bias, mean squared error (MSE), and confidence interval coverage across sample sizes of 100 to 500. Both cluster informed strategies reduced bias and MSE from omitted covariate misspecification relative to standard IPW, but neither uniformly dominated: clustering augmented IPW achieved lower MSE when latent cluster structure was present, whereas the global model generally provided lower bias and better coverage at smaller sample sizes. We also apply the methods to 966 breast cancer patients treated with carboplatin, using generalized propensity scores to estimate the dose response relationship between treatment cycles and hypersensitivity reaction risk. Standard and clustered analyses produced similar pooled estimates, while clustering additionally provided subgroup specific estimates and diagnostic profiles. Overall, cluster informed strategies may improve robustness to propensity score misspecification, with relative performance depending on subgroup structure, sample size, and inferential priorities.",
+      "authors": [
+        "Ruohui Chen",
+        "Scott Zuo",
+        "Whitney Stevens",
+        "Seth Pollack",
+        "Wenna Xi",
+        "Lucia Petito",
+        "Lihui Zhao",
+        "Hui Zhang"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "stat.AP"
+      ],
+      "published": "2026-08-10T16:55:09+00:00",
+      "link": "https://arxiv.org/pdf/2608.09839v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Causal effect estimation methods (IPW) applicable to observational exercise-flap studies",
+      "llm_evidence_cn": "因果效应估计方法（逆概率加权）适用于运动-皮瓣观察性研究",
+      "llm_evidence": "因果效应估计方法（逆概率加权）适用于运动-皮瓣观察性研究",
+      "canonical_evidence": "因果效应估计方法（逆概率加权）适用于运动-皮瓣观察性研究",
+      "llm_tldr_en": "Inverse probability weighting depends on correct propensity score specification. This paper compares standard IPW, cluster-augmented IPW, and global IPW with cluster covariates via simulations, showing that both cluster-informed strategies reduce bias and MSE when latent clusters exist, offering more robust causal effect estimation.",
+      "llm_tldr_cn": "逆概率加权（IPW）是观察性研究估计因果效应的常用方法，但其效果依赖倾向性得分模型的正确设定。本文比较了标准IPW、聚类增强IPW（使用聚类特定倾向模型）以及加入聚类协变量的全局IPW三种策略，并通过模拟研究评估偏倚、均方误差和置信区间覆盖率。结果显示，两种聚类信息策略在存在潜在聚类结构时均能降低偏倚和均方误差，为处理治疗分配异质性提供了更稳健的因果推断方案。",
+      "llm_tldr": "逆概率加权（IPW）是观察性研究估计因果效应的常用方法，但其效果依赖倾向性得分模型的正确设定。本文比较了标准IPW、聚类增强IPW（使用聚类特定倾向模型）以及加入聚类协变量的全局IPW三种策略，并通过模拟研究评估偏倚、均方误差和置信区间覆盖率。结果显示，两种聚类信息策略在存在潜在聚类结构时均能降低偏倚和均方误差，为处理治疗分配异质性提供了更稳健的因果推断方案。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "exercise training effect on flap survival",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.13234v1",
+      "source": "arxiv",
+      "title": "Knowledge-guided Pattern Discovery via Coupled Tensor Factorizations",
+      "abstract": "In order to understand complex systems such as the human metabolome or human brain, different sensing technologies are used, generating complex data. These datasets are often multiway, i.e., with more than two axes of variation such as a subjects by metabolites by time array. While tensor factorizations have successfully revealed interpretable patterns from such complex data, they have so far been mainly data-driven. On the other hand, there is more to data -- there are computational models (of these systems), which are rich sources of prior information. In this paper, we introduce a knowledge-guided approach that brings together data and computational models by jointly analyzing real data and simulated data (generated using a computational model) using coupled tensor factorizations with linear coupling. Our experiments on real metabolomics measurements demonstrate that guiding the analysis of such noisy data with simulated data improves the pattern discovery performance while also revealing potential discrepancies between data and computational models.",
+      "authors": [
+        "Gaute Johannessen",
+        "Geert Roelof van der Ploeg",
+        "Evrim Acar"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-13T13:38:45+00:00",
+      "link": "https://arxiv.org/pdf/2608.13234v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Knowledge-guided coupled tensor factorizations for multiway metabolomics data, useful for analyzing exercise-induced metabolic changes in skin flaps.",
+      "llm_evidence_cn": "面向多维代谢组学数据的知识引导耦合张量分解，有助于分析运动诱导的皮瓣代谢变化。",
+      "llm_evidence": "面向多维代谢组学数据的知识引导耦合张量分解，有助于分析运动诱导的皮瓣代谢变化。",
+      "canonical_evidence": "面向多维代谢组学数据的知识引导耦合张量分解，有助于分析运动诱导的皮瓣代谢变化。",
+      "llm_tldr_en": "Introduces knowledge-guided coupled tensor factorizations that jointly analyze real and simulated metabolic data to discover interpretable patterns, enabling hypothesis-driven exploration of multiway metabolomics data such as exercise-induced metabolic changes.",
+      "llm_tldr_cn": "该论文提出一种知识引导的耦合张量分解方法，将真实代谢组学数据与计算模型产生的模拟数据联合分析，用于发现可解释的多维模式。研究以人代谢组和脑成像等复杂系统为例，表明该方法能比纯数据驱动分解更好地利用先验知识，从而识别具有生理意义的模式。这一方法可直接应用于运动训练中皮瓣组织代谢组学数据的模式挖掘，支持代谢变化与皮瓣存活关系的假设生成。该工作弥合了数据驱动与模型驱动分析之间的鸿沟。",
+      "llm_tldr": "该论文提出一种知识引导的耦合张量分解方法，将真实代谢组学数据与计算模型产生的模拟数据联合分析，用于发现可解释的多维模式。研究以人代谢组和脑成像等复杂系统为例，表明该方法能比纯数据驱动分解更好地利用先验知识，从而识别具有生理意义的模式。这一方法可直接应用于运动训练中皮瓣组织代谢组学数据的模式挖掘，支持代谢变化与皮瓣存活关系的假设生成。该工作弥合了数据驱动与模型驱动分析之间的鸿沟。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
