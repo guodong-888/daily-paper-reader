@@ -6,32 +6,27 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-14
-- 运行时间：2026-08-14 21:24:47 UTC
+- 最新运行日期：2026-08-15
+- 运行时间：2026-08-15 20:33:26 UTC
 - 运行状态：成功
-- 本次总论文数：3
+- 本次总论文数：2
 - 精读区：0
-- 速读区：3
+- 速读区：2
 
 ### 今日简报（AI）
-今日速读3篇，聚焦因果推断与张量分解方法。  
-最值得看的是《Causal Mediation Analysis with a Time-Dependent Mediator...》一文（7.0分），深入探讨了时间依赖中介和生存结局的因果中介分析。  
-下一步建议：普通读者可优先关注因果推断在观察性研究中的应用，尤其注意时间维度与混杂因素的处理。
-- 详情：[/202608/14/README](/202608/14/README)
+今日速读2篇论文，聚焦血管生成数学模型与有界潜在结果下的最优实验设计，均获6.0分。值得关注的方向：p-Laplacian扩散在血管生成动力学中的应用，以及边界约束下实验估计的优化策略。下步建议从两篇的模型假设入手，结合实例理解数学工具如何提升生物或统计问题的可解释性。
+- 详情：[/202608/15/README](/202608/15/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Causal Mediation Analysis with a Time-Dependent Mediator, Time-Dependent Confounders and a Time-to-Event Outcome: Revisiting the Difference Method](/202608/14/2608.13094v1-causal-mediation-analysis-with-a-time-dependent-mediator-time-dependent-confounders-and-a-time-to-event-outcome-revisiting-the-difference-method)  
-   标签：评分：7.0/10、query:flap-ex-met
-   evidence：提供时间-事件结局下的因果中介分析方法，直接适用于检验运动预适应是否通过代谢重编程改善皮瓣存活。
-2. [Clustering Informed Inverse Probability Weighting Strategies for Causal Effect Estimation in Observational Studies](/202608/14/2608.09839v1-clustering-informed-inverse-probability-weighting-strategies-for-causal-effect-estimation-in-observational-studies)  
+1. [Novel Dynamics in Models of Angiogenesis with p-Laplacian diffusion](/202608/15/2608.07675v1-novel-dynamics-in-models-of-angiogenesis-with-p-laplacian-diffusion)  
    标签：评分：6.0/10、query:flap-ex-met
-   evidence：因果效应估计方法（逆概率加权）适用于运动-皮瓣观察性研究
-3. [Knowledge-guided Pattern Discovery via Coupled Tensor Factorizations](/202608/14/2608.13234v1-knowledge-guided-pattern-discovery-via-coupled-tensor-factorizations)  
+   evidence：建立血管生成数学模型，血管生成是皮瓣存活与血运重建的关键过程
+2. [Optimal Experimental Design and Estimation when Potential Outcomes are Bounded](/202608/15/2608.09812v1-optimal-experimental-design-and-estimation-when-potential-outcomes-are-bounded)  
    标签：评分：6.0/10、query:flap-ex-met
-   evidence：面向多维代谢组学数据的知识引导耦合张量分解，有助于分析运动诱导的皮瓣代谢变化。
+   evidence：面向有界结局的优化实验设计与估计方法，可直接用于检验运动对皮瓣存活影响的随机试验
 
 
 <div class="dpr-home-promo-card">

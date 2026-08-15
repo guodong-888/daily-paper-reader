@@ -1,0 +1,1161 @@
+Optimal Experimental Design and Estimation
+when Potential Outcomes are Bounded
+Peter Hull∗
+August 2026
+Abstract
+I study the optimal design and analysis of randomized experiments for estimating
+finite-population average treatment effects when potential outcomes are known to be
+bounded, as with binary outcomes. Among all assignment mechanisms and a broad class
+of affine estimators, worst-case mean-squared error (MSE) is minimized by independent
+random assignment and an unconventional regression of the support-midpoint-centered
+outcome on the recentered treatment, with no intercept. This contrasts with the usual
+prescription of balanced complete randomization and difference-in-means estimation:
+when outcomes are bounded, randomness in the realized treatment share is informative.
+The worst-case gain over full-sample complete randomization is asymptotically small,
+but gains can be first-order relative to other designs: complete within-pair randomization
+and pair-fixed-effect regression have twice the worst-case MSE. I extend the result to
+allow for arbitrary estimators. Independent random assignment remains optimal, and
+the generally-nonlinear optimal estimator can meaningfully reduce worst-case MSE.
+∗I thank P Aronow, Kirill Borusyak, Jimbo Brand, Jiafeng Chen, Paul Goldsmith-Pinkham, Evan Munro,
+and Jonathan Roth for comments and conversations that helped shape this paper. OpenAI’s ChatGPT also
+contributed valuable insights.
+1
+arXiv:2608.09812v1  [econ.EM]  10 Aug 2026
+
+
+1
+Introduction
+Complete randomization in experiments—where a fixed number of units are treated—is often
+viewed as an unambiguous efficiency improvement over independent random assignment.
+By fixing the treated share, it eliminates chance imbalances while preserving uniform
+randomness over unit labels. Recent minimax results formalize this intuition, selecting
+complete randomization and difference-in-means estimation of average treatment effects
+(ATEs) with unrestricted potential outcomes (Bai, 2023; Kallus, 2021).
+This paper shows that the formal optimality of complete randomization depends on the
+researcher not having an a priori bound on potential outcomes—as one has with binary
+or otherwise limited-support outcomes. I show that, given outcome bounds, complete
+randomization may no longer be minimax. Instead, worst-case mean-squared error (MSE) is
+minimized by independent random assignment—with a random treated share. Intuitively,
+when outcomes are unbounded complete randomization is preferred because variation in
+the treated share can be exploited by an adversary: making the level of potential outcomes
+arbitrarily large or small can blow up the estimator with even a small imbalance. By
+anchoring the level of potential outcomes, ex ante bounds prevent this and make a random
+treated share useful for ATE estimation. In particular, independent randomization avoids
+any pairwise correlation between treatment assignments which an adversary can exploit
+through the heterogeneity (rather than the level) of potential outcomes.
+I first show this reversal over a large class of affine estimators satisfying a natural
+condition, which ensures equivariance to midpoint-preserving shifts in treatment effects.1
+This class includes simple or weighted difference-in-means, ordinary or weighted least squares
+with predetermined controls or fixed effects, and many other estimators. I show indepen-
+dent randomization is minimax-optimal with an unconventional estimator: a regression
+of the support-midpoint-centered outcome on the recentered treatment with no intercept.
+Treatment recentering ensures design-based identification (Borusyak and Hull, 2023), while
+midpoint-centering the outcome makes the random treated share variation informative. I
+further show complete randomization is strictly suboptimal, regardless of the affine estimator.
+The worst-case MSE reduction of the optimal design and affine estimator is asymptotically
+small relative to full-sample complete randomization and the usual difference-in-means
+estimator, but it can be large relative to other popular strategies. Indeed, I show the
+procedure of paired randomization and pair-fixed-effect regression has twice the worst-case
+MSE by eliminating variation in treated shares within each pair. While the minimax analysis
+may be overly pessimistic for this case, as it doesn’t incorporate a priori information on
+the possible similarity of potential outcomes within strata, it formalizes the sense in which
+1More precisely, the equivariance restriction says that increasing every treatment effect by some t while
+holding each potential-outcome midpoint fixed must increase the estimate by exactly t.
+2
+
+
+repeated balance restrictions can be costly when the strata are not prognostically informative.
+Finally, I consider the general minimax problem which allows for any design and measur-
+able estimator. I show that independent randomization remains minimax-optimal, while
+the optimal estimator is generally nonlinear.2 This estimator is characterized by a finite-
+dimensional convex program with quadratic constraints, and has a least-favorable-prior
+representation analogous to Hodges and Lehmann (1982). It generally improves on the
+unbiased affine estimator by adding bias and reducing variance. Numerically, I find that
+using this optimal estimator decreases worst-case MSE by 15-30% for moderate sample sizes,
+although this benefit declines asymptotically.
+This paper builds on several related literatures. From statistics, a closely related literature
+studies optimal finite-population sampling and estimation of means. Early results study
+different restrictions on the population or the estimator class. Godambe (1955) shows that,
+for broad sampling designs and unrestricted population values, there is generally no unbiased
+linear estimator that uniformly minimizes variance. Godambe and Joshi (1965) establish
+the admissibility of the Horvitz–Thompson estimator within the class of design-unbiased
+estimators. Bickel and Lehmann (1981) impose a bound on finite-population dispersion
+and show that the sample mean is minimax under simple random sampling. Most directly
+related is Hodges and Lehmann (1982), who show that if all finite-population values lie in
+a known interval then the minimax estimator under simple random sampling shrinks the
+sample mean toward the interval midpoint; moreover, simple random sampling paired with
+this estimator is minimax among all sampling and estimation strategies.3 This paper adopts
+a similar logic for ATE estimation.4
+The closest contemporary paper is Aronow and Lopatto (2026), who consider finite-
+population totals when each unit’s outcome has a known and potentially unit-specific support
+interval. Holding marginal inclusion probabilities fixed, they derive a sharp lower bound
+on the maximum mean squared error of any design-unbiased estimator and show that it is
+attained precisely when the inclusion indicators are pairwise independent, in which case the
+optimal estimator is a midpoint-differenced Horvitz–Thompson estimator. They also jointly
+optimize the sampling design and estimator subject to an expected-sample-size constraint.
+My problem has the same bounded-support and midpoint-adjustment logic, but differs in
+two substantive ways. First, I study a causal setting where treatment assignment yields a
+2I show that complete randomization is suboptimal in small samples and conjecture this holds generally.
+3Other work develops minimax sampling theory for alternative parameter spaces and estimator classes,
+including Joshi (1979), Cheng and Li (1983), Gabler (1988, 1990), and Stenger (1989).
+4Harshaw et al. (2024, Lemma 4.1 and Proposition 4.2) provide a close antecedent.
+Fixing the
+Horvitz–Thompson estimator and restricting to designs with marginal treatment probability one-half, they
+show that worst-case MSE over an ℓ2 bound is minimized by independent randomization. This paper’s
+Proposition 1 strengthens this result by allowing arbitrary assignment mechanisms and optimizing jointly over
+a large set of affine estimators. Theorem 1 further generalizes by optimizing over all measurable estimators.
+3
+
+
+nonstandard “one-from-each-pair” sampling from treated and untreated potential outcomes.
+Second, and more importantly, I impose no design-unbiasedness restriction and ultimately
+optimize over all measurable estimators.5
+This paper more directly contributes to the literature on optimal assignments and
+estimators for average treatment effects. Classic Neyman allocation fixes assigned shares to
+minimize the variance of differences in means given arm-specific outcome variances. Modern
+minimax results yield decision-theoretic foundations for related prescriptions. Kallus (2021)
+shows complete randomization is minimax when the relevant conditional-mean class is
+permutation symmetric. Bai (2023) studies joint optimization of assignment and linear
+estimation, obtaining difference-in-means at the Neyman allocation under his parameter
+class. My results are best viewed as complementing these analyses which leave outcome
+location unrestricted.6 I show that a known outcome support can be exploited with a
+random treated share; conditional on the share, however, my optimal design is exactly the
+complete-randomization designs considered in earlier work.7
+Lastly, this paper builds on a recent literature on estimation with recentered estimators.
+Borusyak and Hull (2023) establish recentering for design-based identification of formula
+treatments, combining as-if-random assignments with other predetermined variables, while
+Borusyak and Hull (2026) characterize efficient formula instruments for a given design.
+Borusyak et al. (2026) jointly optimize the design and recentered instrument under a
+minimax approximate-variance criterion. A motivating example in Borusyak et al. (2026)
+shows that independent—rather than complete—randomization is minimax-optimal when
+the treatment formula is the assignment itself, using an asymptotic variance approximation
+and a restricted class of well-behaved recentered estimators. This paper shows a similar
+result holds for finite-sample MSE over an unrestricted class of estimators.
+The rest of this paper is organized as follows. The next section shows the initial result
+for restricted affine estimators. Section 3 then considers the general problem. Section 4
+concludes. All proofs are given in the appendix.
+5A related robust-design literature asks how randomization protects against misspecification or unknown
+dependence rather than bounded support. Wu (1981) connects randomization to worst-case mean squared
+error protection in comparative experiments, while Bickel and Herzberg (1979) study designs robust to serially
+correlated errors. These papers provide an additional precedent for interpreting independent randomization
+as protection against an adversarial outcome configuration, although the settings are quite different.
+6My minimax analysis under bounds is similar in spirit to de Chaisemartin (2024), who assumes bounded
+strata-specific ATEs and derives the minimax linear combination of stratum-specific unbiased estimators.
+7Other work uses baseline information to improve on complete randomization: Bai (2022) proves optimality
+of appropriately constructed matched pairs among stratified designs that treat every unit with probability
+one half; Hahn et al. (2011) and Tabord-Meehan (2023) use earlier experimental waves to choose treatment
+propensities and strata, and Harshaw et al. (2024) construct a design that explicitly trades covariate balance
+against worst-case robustness. Kallus (2018) shows that complete randomization is minimax without structure
+linking baselines to potential outcomes.
+4
+
+
+2
+Restricted Affine Estimators
+Consider a fixed population of N units. For each unit i, let Yi(0) and Yi(1) be fixed potential
+outcomes and let Di ∈{0, 1} denote treatment assignment. A researcher knows, prior to
+assignment, that potential outcomes are bounded: for known L < U,
+Yi(0), Yi(1) ∈[L, U],
+i = 1, . . . , N.
+The parameter of interest is the finite-population ATE:
+β = 1
+N
+N
+X
+i=1
+(Yi(1) −Yi(0)).
+To estimate β, the researcher first chooses a design δ ∈∆({0, 1}N), where ∆(·) denotes
+the simplex, along with an estimator.
+Treatment assignments are drawn from δ and
+determine outcomes Yi = Yi(0)(1 −Di) + Yi(1)Di. The researcher then applies the estimator
+to (Di, Yi)N
+i=1, yielding an estimate ˆβ. Here we restrict to affine estimators, of the form:
+ˆβ = a(D) + b(D)′Y,
+where D and Y are N × 1 vectors of the assignments and outcomes, a(·) is a fixed function,
+and b(·) is an N × 1 vector of fixed functions. The goal of the researcher is to pick the design
+and estimator to minimize worst-case MSE over the unknown potential outcomes. Formally,
+for Y (·) = (Yi(0), Yi(1))N
+i=1, they solve:
+inf
+(δ,ˆβ)
+sup
+Y (·)∈[L,U]2N Eδ
+h
+(ˆβ −β)2i
+.
+(1)
+We first analyze this problem for the large set of affine estimators that satisfy a natural
+equivariance condition:
+b(D)′
+
+D −1
+21
+
+= 1,
+δ-almost surely
+(2)
+To see why this condition is natural, note that we can rewrite the outcome equation as:
+Yi = Yi(1) + Yi(0)
+2
++ (Yi(1) −Yi(0))
+
+Di −1
+2
+
+.
+Thus, under equation (2), shifting all treatment effects by some constant t while keeping the
+5
+
+
+location (i.e. midpoint) of potential outcomes fixed increases the estimate by exactly t:
+ˆβnew = a(D) +
+X
+i
+b(D)i
+Yi(1) + Yi(0)
+2
++ (Yi(1) −Yi(0) + t)
+
+Di −1
+2
+
+= a(D) + b(D)′Y + b(D)′
+
+D −1
+21
+
+× t = ˆβ + t.
+In this sense, equation (2) ensures the estimator is equivariant to midpoint-preserving
+treatment effect shifts. One can verify that it is satisfied for many common estimators—
+including simple or weighted difference-in-means, ordinary or weighted least squares with an
+intercept and possibly other predetermined controls or fixed effects, and matching estimators
+that match on predetermined strata—with the analogous equivariance holding for many
+nonlinear procedures such as differences of medians or trimmed means.8
+The first result shows independent randomization is optimal for this class of affine
+estimators, with an unconventional estimator:
+Proposition 1. Let M = U+L
+2 . Restricting to affine estimators satisfying equation (2),
+inf
+(δ,ˆβ)
+sup
+Y (·)∈[L,U]2N Eδ
+h
+(ˆβ −β)2i
+= (U −L)2
+N
+≡V ∗.
+A minimax procedure is independent random assignment, Di
+iid
+∼Bernoulli(0.5), with the
+unbiased estimator
+ˆβ∗=
+P
+i(Di −1
+2)(Yi −M)
+P
+i(Di −1
+2)2
+= 2
+N
+N
+X
+i=1
+(2Di −1)(Yi −M).
+(3)
+The appendix proof is straightforward. It shows that, for any design and any estimator
+satisfying (2), the adversary can generate an MSE of at least (U −L)2/N by placing both
+potential outcomes at one of the two support endpoints: i.e., selecting a Bi ∈{L, U} for each
+unit i and setting Yi(0) = Yi(1) = Bi. If treatment assignments are correlated across units,
+the adversary can choose the endpoint pattern to align with that dependence and increase
+MSE above the lower bound. Independent random assignment eliminates this possibility
+and attains the V ∗bound when paired with the optimal estimator ˆβ∗.
+The ˆβ∗estimator is nonstandard. Equation (3) shows it arises from an ordinary least
+squares regression of the support-midpoint-centered outcome Yi −M on the recentered
+treatment Di −1/2, with no intercept. Equivalently, it is the Horvitz–Thompson ATE
+estimator applied to the centered outcome.9 While omitting an intercept from a regression
+8The general condition can be stated, for estimators ˆβ(D, Y ), as ˆβ(D, Y + t(D −1
+21)) = ˆβ(D, Y ) + t.
+9The second expression in (3) can also be written ˆβ∗=
+1
+N
+P
+i
+  Di(Yi−M)
+π
+−(1−Di)(Yi−M)
+1−π
+
+for π = 1/2.
+6
+
+
+or using unnormalized Horvitz-Thompson weights is often undesirable, here it is exactly
+what allows the estimator to attain the minimax bound under independent randomization,
+by avoiding the slight negative correlation in observation weights induced by demeaning.
+Recentering the treatment by its known propensity score of 1/2 ensures unbiasedness, while
+centering the outcome at the support midpoint anchors outcomes, leaving only midpoint
+deviations that cannot be exploited by the adversary under independent randomization.
+A closely related result shows that complete randomization is strictly suboptimal:
+Proposition 2. Let N be even and restrict to affine estimators satisfying equation (2).
+Then if δ is chosen to be balanced complete randomization,
+inf
+ˆβ
+sup
+Y (·)∈[L,U]2N Eδ
+h
+(ˆβ −β)2i
+≥(U −L)2
+N −1
+=
+N
+N −1V ∗.
+Moreover, the difference-in-means estimator attains this bound.
+The optimality of difference-in-means for complete randomization is unsurprising; the new
+insight is that this conventional estimator-design pair has strictly higher worst-case MSE than
+the V ∗bound. Intuitively, complete randomization generates a slight negative correlation
+between treatment assignment pairs which the adversary can exploit by making exactly half
+of the Bi equal to L and half equal to U. Averaging over such endpoint patterns makes MSE
+proportional to the squared magnitude of the difference-in-means outcome weights b(D),
+with the usual N/(N −1) finite-population factor from sampling without replacement.
+The N/(N −1) factor inflating worst-case MSE with complete randomization is, of
+course, small for even moderately large populations; repeated exact-balance restrictions,
+however, can produce a first-order loss. To illustrate, consider paired randomization with J
+predetermined pairs and the conventional pair-fixed-effect regression estimator. Here there
+are J exact-balance restrictions with exactly one unit selected for treatment in each pair, and
+assignments are perfectly negatively correlated within pairs. The adversary can exploit this
+restriction by choosing a no-effect schedule in which one unit’s potential outcomes equal L
+and the other’s equal U in every pair. Each pair then contributes an independent estimation
+error of magnitude U −L, yielding worst-case MSE that is twice that of V ∗.
+Proposition 3. Suppose N = 2J units are partitioned into J pairs, indexed by (j, 1) and
+(j, 2). Restrict to affine estimators satisfying (2) and set δ to paired randomization with
+exactly one unit in each pair assigned with probability 1/2, independently across pairs. Then:
+inf
+ˆβ
+sup
+Y (·)∈[L,U]2N Eδ
+h
+(ˆβ −β)2i
+≥(U −L)2
+J
+= 2V ∗.
+Moreover, the pair-fixed-effect regression estimator attains this bound.
+7
+
+
+The minimax analysis is likely too pessimistic for the expected MSE of such a paired
+randomization strategy, as it does not incorporate any a priori information on the similarity
+of potential outcomes within pairs. In practice, stratification is typically based on such
+information and can significantly improve MSE (see, e.g., Bai 2022; Tabord-Meehan 2023).
+In such settings, Proposition 3 can be viewed as a formalization of the idea that stratification
+can come at a high MSE cost when the strata are not overly informative about potential
+outcomes, such that highly heterogeneous potential outcomes could coexist within strata.
+3
+Optimal Estimation
+We now consider the general minimax problem (1) without restricting the class of estimators.
+The first main result shows that independent randomization remains optimal, while the
+optimal estimator is generally nonlinear:
+Theorem 1. For nonnegative integers k, m with k + m ≤N, define θk,m = 2k+m
+N
+and
+pk,m(x) = 2−m
+ 
+m
+x −k
+!
+,
+x = 0, . . . , N,
+where
+ m
+j
+ = 0 when j /∈{0, . . . , m}. Let KN be the set of all such (k, m) and define
+κN =
+min
+d=(d0,...,dN)∈[0,2]N+1
+max
+(k,m)∈KN
+N
+X
+x=0
+pk,m(x)(dx −θk,m)2.
+(4)
+Then, over all measurable estimators,
+inf
+(δ,ˆβ)
+sup
+Y (·)∈[L,U]2N Eδ
+h
+(ˆβ −β)2i
+= (U −L)2κN.
+A minimax procedure is independent random assignment, Di
+iid
+∼Bernoulli(0.5), with the
+estimator
+ˆβ∗
+NL = ˆβ∗+ (U −L)
+N
+X
+x=0
+
+d∗
+x −2x
+N
+
+px(Z)
+where ˆβ∗is the optimal affine estimator in Proposition 1, d∗= (d∗
+0, . . . , d∗
+N) is any solution
+to (4), px(z) = Pr(P
+i Bi = x) for Bi
+ind
+∼Bernoulli(zi), and Z = (Zi)N
+i=1 for
+Zi = 1
+2 + (2Di −1)(Yi −U+L
+2 )
+U −L
+∈[0, 1].
+The appendix proof follows in the same spirit of Hodges and Lehmann (1982); as in their
+8
+
+
+bounded finite-population sampling problem, the minimax estimator ˆβ∗
+NL is shown to be a
+Bayes rule under a least-favorable prior supported on the potential outcome endpoints. This
+estimator takes the form of the previous restricted-affine ˆβ∗plus a term that is nonlinear in
+Y . This term generally makes ˆβ∗
+NL biased while reducing worst-case MSE.
+To understand this new estimator, it is useful to specialize it to the previous affine class
+while relaxing the equivariance restriction (2). The next result shows that a “shrunk” version
+of ˆβ∗is then optimal (along with independent randomization):
+Corollary 1. Over all affine estimators, without imposing (2), minimax MSE is (U −
+L)2/(
+√
+N + 1)2. A minimax procedure is independent random assignment with the estimator
+ˆβ∗
+NL =
+√
+N
+√
+N + 1
+ˆβ∗
+Moreover, κN < (
+√
+N + 1)−2 when N > 2.
+The first part of this corollary shows that shrinking ˆβ∗towards zero—generating some
+bias and violating the equivariance restriction—reduces worst-case MSE by a factor of
+N/(
+√
+N + 1)2. The second part shows that further expanding to nonlinear estimators is
+useful for any nontrivial number of units.
+Computing ˆβ∗
+NL is relatively straightforward, as (4) is a finite-dimensional convex program
+with quadratic constraints that depends only on the population size N. A direct solver is
+practical for populations in low thousands; for larger N, constraint generation gives certified
+lower and upper bounds. Numerically, I find a relatively small share of constraints bind.10
+Figure 1 shows the potential benefit in using ˆβ∗
+NL instead of ˆβ∗. Specifically, it plots
+κNN, the worst-case MSE from using ˆβNL as a fraction of the worst-case MSE from using ˆβ∗
+(both with independent randomization) on a grid up to N = 2, 500. The relative worst-case
+MSE reduction is substantial for moderate sample sizes and declines smoothly with N; for
+example, it is around 30% when N = 100 and falls to around 15% for N = 1, 000. I conjecture
+it converges to zero as N →∞, as with the gain in using ˆβ∗and independent randomization
+relative to balanced complete randomization and difference-in-means estimation.11 The
+figure also plots the corresponding relative worst-case MSE of the best affine estimator under
+independent randomization, N/(
+√
+N + 1)2, which has a similar shape.
+10E.g., the number of binding or nearly binding constraints is in the low tens when N is in the hundreds.
+11One may wonder whether complete randomization remains strictly suboptimal with general estimators. I
+have verified this numerically in small samples and conjecture it is true, but as of now have not proved it.
+9
+
+
+Figure 1: Nonlinear minimax risk
+0
+500
+1,000
+1,500
+2,000
+2,500
+Population size, N
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1.0
+Relative worst-case MSE
+Unrestricted minimax
+Best affine
+Notes: The solid blue line plots NκN against the actual population size N, where κN is the
+minimax MSE from Theorem 1 divided by (U −L)2. Thus, it reports the worst-case MSE of
+the unrestricted minimax estimator as a fraction of the worst-case MSE of the equivariant affine
+estimator bβ∗from Proposition 1 (both under independent randomization). Values solve program
+4 on the grid N = j2, j = 1, . . . , 50. The dashed black line plots the corresponding relative
+worst-case MSE of the best affine estimator under independent randomization, N/(
+√
+N + 1)2.
+4
+Conclusion
+This paper shows a curious advantage of independent randomization, relative to complete or
+otherwise stratified randomization, when estimating ATEs for bounded potential outcomes.
+Exact balance of treated shares can be suboptimal once the level of outcomes is anchored,
+because the estimator variance can no longer be made arbitrarily large by a random treated
+share multiplying some arbitrarily high or low outcomes. Independent randomization is
+generally preferred by avoiding negative correlations in treatment assignments which can
+otherwise blow up MSE. While such correlations tend to be small for complete randomization,
+they can be first-order if balance is imposed repeatedly, such as in paired randomization.
+In practice, complete, paired, or more elaborate randomization schemes are likely
+to dominate simple independent randomization when based on informative observables.
+Similarly, more elaborate regressions that incorporate informative controls or fixed effects are
+likely to dominate the unconventional support-midpoint-centered estimator in the restricted
+affine class and likely also the minimax-optimal estimator ˆβ∗
+NL. Extending this paper’s
+minimax problem to additional assumptions on the homogeneity of potential outcomes
+within strata, or other prognostic structure, is a natural direction for future work.
+10
+
+
+References
+Aronow, Peter M. and Patrick Lopatto, “Minimax Unbiased Estimation for Finite
+Populations with Bounded Outcomes,” arXiv preprint arXiv:2605.20572, 2026.
+Bai, Yuehao, “Optimality of Matched-Pair Designs in Randomized Controlled Trials,”
+American Economic Review, 2022, 112 (12), 3911–3940.
+, “Why Randomize? Minimax Optimality under Permutation Invariance,” Journal of
+Econometrics, 2023, 232 (2), 565–575.
+Bickel, P. J. and E. L. Lehmann, “A Minimax Property of the Sample Mean in Finite
+Populations,” The Annals of Statistics, 1981, 9 (5), 1119–1122.
+Bickel, Peter J. and Agnes M. Herzberg, “Robustness of Design Against Autocorrelation
+in Time I: Asymptotic Theory, Optimality for Location and Linear Regression,” The
+Annals of Statistics, 1979, 7 (1), 77–95.
+Borusyak, Kirill and Peter Hull, “Nonrandom Exposure to Exogenous Shocks,” Econo-
+metrica, 2023, 91 (6), 2155–2185.
+and
+, “Optimal Formula Instruments,” Econometrica, 2026.
+,
+, and Evan Munro, “Robust Signal Maximization in Spillover Experiments,” arXiv
+preprint arXiv:2607.18601, 2026.
+Cheng, Ching-Shui and Ker-Chau Li, “A Minimax Approach to Sample Surveys,” The
+Annals of Statistics, 1983, 11 (2), 552–563.
+de Chaisemartin, Clément, “Trading-off Bias and Variance in Stratified Experiments and
+in Matching Studies, Under a Boundedness Condition on the Magnitude of the Treatment
+Effect,” arXiv preprint arXiv:2105.08766v6, 2024.
+Gabler, Siegfried, “A Conditional Minimax Approach in Survey Sampling,” Metrika, 1988,
+35, 211–221.
+, Minimax Solutions in Sampling from Finite Populations, Vol. 64 of Lecture Notes in
+Statistics, New York: Springer-Verlag, 1990.
+Godambe, V. P., “A Unified Theory of Sampling from Finite Populations,” Journal of the
+Royal Statistical Society Series B: Methodological, 1955, 17 (2), 269–278.
+and V. M. Joshi, “Admissibility and Bayes Estimation in Sampling Finite Populations.
+I,” The Annals of Mathematical Statistics, 1965, 36 (6), 1707–1722.
+Hahn, Jinyong, Keisuke Hirano, and Dean Karlan, “Adaptive Experimental Design
+Using the Propensity Score,” Journal of Business & Economic Statistics, 2011, 29 (1),
+96–108.
+11
+
+
+Harshaw, Christopher, Fredrik Sävje, Daniel A. Spielman, and Peng Zhang,
+“Balancing Covariates in Randomized Experiments with the Gram–Schmidt Walk Design,”
+Journal of the American Statistical Association, 2024, 119 (548), 2934–2946.
+Hodges, J. L. and E. L. Lehmann, “Minimax Estimation in Simple Random Sampling,”
+in G. Kallianpur, P. R. Krishnaiah, and J. K. Ghosh, eds., Statistics and Probability:
+Essays in Honor of C. R. Rao, North-Holland, 1982, pp. 325–327.
+Joshi, V. M., “The Best Strategy for Estimating the Mean of a Finite Population,” The
+Annals of Statistics, 1979, 7 (3), 531–536.
+Kallus, Nathan, “Optimal A Priori Balance in the Design of Controlled Experiments,”
+Journal of the Royal Statistical Society Series B: Statistical Methodology, 2018, 80 (1),
+85–112.
+, “On the Optimality of Randomization in Experimental Design: How to Randomize for
+Minimax Variance and Design-Based Inference,” Journal of the Royal Statistical Society
+Series B: Statistical Methodology, 2021, 83 (2), 404–409.
+Stenger, Horst, “Asymptotic Analysis of Minimax Strategies in Survey Sampling,” The
+Annals of Statistics, 1989, 17 (3), 1301–1314.
+Tabord-Meehan, Max, “Stratification Trees for Adaptive Randomisation in Randomised
+Controlled Trials,” The Review of Economic Studies, 2023, 90 (5), 2646–2673.
+Wu, C. F., “On the Robustness and Efficiency of Some Randomized Designs,” The Annals
+of Statistics, 1981, 9 (6), 1168–1177.
+A
+Appendix Proofs
+A.1
+Proposition 1
+Proof. Write M = U+L
+2 , r = U−L
+2 , and X(D) = D −1
+21. For each fixed s ∈{−1, 1}N,
+consider the no-effect potential outcome schedule Yi(0) = Yi(1) = M + rsi. For any design
+δ, the maximum risk is at least the average risk over these 2N schedules. Hence, for any
+affine estimator bβ = a(D) + b(D)′Y satisfying (2),
+sup
+Y (·)∈[L,U]2N Eδ[( bβ −β)2] ≥Eδ
+"
+2−N X
+s
+{a(D) + Mb(D)′1 + rb(D)′s}2
+#
+= Eδ
+h
+{a(D) + Mb(D)′1}2 + r2∥b(D)∥2i
+.
+The second line uses 2−N P
+s s = 0 and 2−N P
+s ss′ = I. By (2) and Cauchy–Schwarz,
+1 = {b(D)′X(D)}2 ≤∥b(D)∥2∥X(D)∥2 = N
+4 ∥b(D)∥2,
+12
+
+
+so ∥b(D)∥2 ≥4/N a.s. Thus every admissible procedure has worst-case MSE of at least
+4r2
+N = (U −L)2
+N
+.
+It remains to show attainability. Under independent Bernoulli(0.5) assignment write
+Hi = 2Di −1, µi = Yi(1)+Yi(0)
+2
+, and τi = Yi(1) −Yi(0). Then Yi −M = (µi −M) + Hiτi/2,
+so the proposed estimator satisfies
+bβ∗= 2
+N
+X
+i
+Hi(Yi −M) = β + 2
+N
+X
+i
+Hi(µi −M).
+Then, since the Hi are independent mean-zero Rademacher variables,
+Eδ[( bβ∗−β)2] =
+4
+N2
+X
+i
+(µi −M)2 ≤4r2
+N = (U −L)2
+N
+.
+The bound is attained, for example, when Yi(0) = Yi(1) = U for every i.
+A.2
+Proposition 2
+Proof. Write M = U+L
+2 , r = U−L
+2 , X(D) = D −1
+21, P = I −1
+N 11′, and S = {s ∈{−1, 1}N :
+1′s = 0}. Under balanced complete randomization, X(D) ∈1⊥and ∥X(D)∥2 = N/4 a.s.
+For each s ∈S, consider the no-effect potential outcome schedule Yi(0) = Yi(1) = M + rsi.
+Uniform averaging over S gives
+1
+|S|
+X
+s∈S
+s = 0
+and
+1
+|S|
+X
+s∈S
+ss′ =
+N
+N −1P.
+Hence, for any affine estimator satisfying (2) ,
+sup
+Y (·)∈[L,U]2N Eδ[( bβ −β)2] ≥Eδ
+
+{a(D) + Mb(D)′1}2 + r2
+N
+N −1b(D)′Pb(D)
+
+.
+Since X(D) ∈1⊥, 1 = b(D)′X(D) = {Pb(D)}′X(D); hence b(D)′Pb(D) ≥4/N by Cauchy–
+Schwarz. This yields the lower bound
+sup
+Y (·)∈[L,U]2N Eδ[( bβ −β)2] ≥(U −L)2
+N −1 .
+For the upper bound, let H = 2D −1 and write µi = {Yi(1) + Yi(0)}/2. Under balanced
+13
+
+
+complete randomization, the difference-in-means estimator can be written
+bβDM = 2
+N H′Y = β + 2
+N H′µ = β + 2
+N H′(µ −M1),
+because H′1 = 0. Moreover, Eδ[HH′] =
+N
+N−1P. Thus
+Eδ[( bβDM −β)2] =
+4
+N2 (µ −M1)′
+N
+N −1P(µ −M1)
+≤
+4
+N(N −1)∥µ −M1∥2
+≤(U −L)2
+N −1 .
+Equality is attained by a no-effect schedule with N/2 units having Yi(0) = Yi(1) = U and
+N/2 units having Yi(0) = Yi(1) = L. Hence difference in means attains the lower bound.
+A.3
+Proposition 3
+Proof. Again let M = U+L
+2
+and r = U−L
+2 . For s = (s1, . . . , sJ) ∈{−1, 1}J, consider the
+no-effect potential outcome schedule:
+Yj1(0) = Yj1(1) = M + rsj,
+and
+Yj2(0) = Yj2(1) = M −rsj.
+Averaging risk over these 2J schedules gives, for any affine estimator satisfying (2),
+sup
+Y (·)∈[L,U]2J Eδ[( bβ −β)2] ≥Eδ
+
+{a(D) + Mb(D)′1}2 + r2
+J
+X
+j=1
+{bj1(D) −bj2(D)}2
+
+.
+Let Hj = 2Dj1 −1, so 2Dj2 −1 = −Hj. Condition (2) implies, pointwise in D,
+1 = b(D)′
+
+D −1
+21
+
+= 1
+2
+J
+X
+j=1
+Hj{bj1(D) −bj2(D)}.
+By Cauchy–Schwarz,
+J
+X
+j=1
+{bj1(D) −bj2(D)}2 ≥4
+J .
+Therefore every admissible estimator has worst-case risk at least
+4r2
+J
+= (U −L)2
+J
+.
+14
+
+
+Under paired randomization, the pair-fixed-effect coefficient can be written
+bβPFE = 1
+J
+J
+X
+j=1
+Hj(Yj1 −Yj2).
+Writing µjr = {Yjr(1) + Yjr(0)}/2, direct substitution gives
+bβPFE −β = 1
+J
+J
+X
+j=1
+Hj(µj1 −µj2).
+The Hj are independent mean-zero Rademacher variables, so
+Eδ[( bβPFE −β)2] = 1
+J2
+J
+X
+j=1
+(µj1 −µj2)2 ≤(U −L)2
+J
+.
+Equality is attained by setting, in each pair, one unit’s two potential outcomes equal to U
+and the other’s equal to L. Thus the pair-fixed-effect estimator attains the lower bound.
+A.4
+Theorem 1
+Proof. Write M = U+L
+2 . ∆= U −L, Ai = Yi(1)−L
+∆
+, and Ci = U−Yi(0)
+∆
+. Then Ai, Ci ∈[0, 1]
+and β = ∆(θ −1) for
+θ = 1
+N
+N
+X
+i=1
+(Ai + Ci).
+Moreover,
+Zi = 1
+2 + (2Di −1)(Yi −M)
+∆
+= DiAi + (1 −Di)Ci.
+It thus suffices to solve the normalized problem of estimating θ from one observed member
+of each pair (Ai, Ci); squared-error risk for β is ∆2 times the corresponding risk for θ.
+We proceed in three steps:
+Step 1: Symmetrization. Since Yi = M + ∆(2Di −1)(Zi −1
+2), any measurable estimator
+based on (D, Y ) can be equivalently written as some t(D, Z). Consider any design δ and
+any such estimator. For h ∈{0, 1}N, let (Ah, Ch) be obtained by interchanging Ai and Ci
+whenever hi = 1, and define δh(d) = δ(d ⊕h) and th(d, z) = t(d ⊕h, z). Since simultaneously
+replacing (A, C) by (Ah, Ch) and D by D ⊕h leaves both Z and θ unchanged,
+R(δh, th; A, C) = R(δ, t; Ah, Ch).
+The parameter space is invariant under such swaps, so every (δh, th) has the same maximum
+risk as (δ, t). Mixing uniformly over all h therefore cannot increase maximum risk. The
+15
+
+
+resulting design satisfies
+Pr(D = d) = 2−N X
+h
+δ(d ⊕h) = 2−N.
+so the assignment becomes independent Bernoulli(0.5) randomization.
+Conditional on
+(D, Z) = (d, z), the mean of the randomized estimator is
+X
+h
+δ(d ⊕h)t(d ⊕h, z) =
+X
+r
+δ(r)t(r, z) ≡et(z),
+which does not depend on d. By Jensen’s inequality, replacing the randomized estimate by
+this conditional mean weakly lowers squared-error risk. Thus it is without loss for minimaxity
+to restrict attention to independent randomization and estimators of the form et(Z). Since
+independent randomization is invariant to permutations and the parameter space is invariant
+to a common relabeling of the potential outcome pairs, the same averaging-and-Jensen
+argument over permutations allows et to be taken symmetric.
+Step 2: Lower bound. Restrict the transformed parameter space to vertices (Ai, Ci) ∈{0, 1}2
+for every i. Up to pair swaps and permutations, a vertex is characterized by k pairs of type
+(1, 1), m mixed pairs, and N −k −m pairs of type (0, 0). Its target is θk,m = (2k + m)/N.
+Under independent randomization, if X = P
+i Zi, then X
+d= k + Binomial(m, 1/2) so
+Pr(X = x) = pk,m(x).
+On binary observations a symmetric estimator is completely
+described by numbers dx = et(z) whenever P
+i zi = x. Since θ ∈[0, 2], clipping the dx to [0, 2]
+cannot increase risk. Since the symmetrized procedure has maximum risk no greater than
+the original procedure, while its maximum risk is at least maximum risk over the endpoint
+parameter space, it follows that every original procedure has maximum risk of at least
+min
+d∈[0,2]N+1
+max
+(k,m)∈KN
+N
+X
+x=0
+pk,m(x)(dx −θk,m)2 = κN.
+Step 3: Attainment. For d ∈[0, 2]N+1 define
+Bd(z) =
+N
+X
+x=0
+dxpx(z),
+where px(z) is the probability that a sum of independent Bernoulli(zi) variables equals x.
+The function Bd is affine in each coordinate separately and equals dP
+i zi at every z ∈{0, 1}N.
+16
+
+
+Under independent randomization, the normalized risk at (A, C) ∈[0, 1]2N is
+Rd(A, C) = 2−N
+X
+g∈{0,1}N
+"
+Bd{Zg(A, C)} −1
+N
+X
+i
+(Ai + Ci)
+#2
+.
+Fix all coordinates except Ai. In terms with gi = 1, both the estimate and the target are
+affine in Ai; in terms with gi = 0, the estimate is constant and the target is affine. Each
+squared difference is therefore convex in Ai. The same argument applies separately to every
+Ai and Ci. Thus Rd is separately convex on the cube, and successively maximizing over
+coordinates shows that its maximum is attained at a vertex. Taking d = d∗solving (4),
+every vertex risk is at most κN by construction, so
+sup
+(A,C)∈[0,1]2N Rd∗(A, C) ≤κN.
+Along with Step 2, this shows the normalized minimax value of κN and hence the stated
+value ∆2κN. Finally, note that
+N
+X
+x=0
+xpx(Z) =
+N
+X
+i=1
+Zi,
+and
+bβ∗= ∆
+ 
+2
+N
+X
+i
+Zi −1
+!
+.
+Therefore we can write:
+ˆβ∗
+NL = ∆{Bd∗(Z) −1} = bβ∗+ ∆
+N
+X
+x=0
+
+d∗
+x −2x
+N
+
+px(Z).
+Least-favorable-prior characterization.
+For completeness in connecting to Hodges and
+Lehmann (1982), let π be any prior on the finite state space KN. Because [0, 2]N+1 and the
+simplex of priors on KN are compact and convex, while the prior-weighted risk is continuous,
+convex in d, and linear in π, the minimax theorem gives
+κN = max
+π
+min
+d
+X
+k,m
+πk,m
+X
+x
+pk,m(x)(dx −θk,m)2.
+Let d∗be a minimax rule and π∗a least-favorable prior. They form a saddle point. Hence
+d∗minimizes Bayes risk under π∗and, whenever
+qπ∗(x) =
+X
+k,m
+π∗
+k,mpk,m(x) > 0,
+d∗
+x =
+P
+k,m π∗
+k,mpk,m(x)θk,m
+qπ∗(x)
+= Eπ∗[θk,m | X = x].
+17
+
+
+Coordinates with qπ∗(x) = 0 are unrestricted by Bayes risk and may be chosen as in the
+minimax rule d∗.
+A.5
+Corollary 1
+Proof. Work with the normalized problem for estimating θ =
+1
+N
+PN
+i=1(Ai + Ci) as in the
+proof of Theorem 1. Since, for fixed D = d,
+Yi = M + (U −L)(2di −1)(Zi −1
+2),
+any estimator that is affine in Y is also affine in Z conditional on D. The conditional-mean
+symmetrization in the proof of Theorem 1 is a weighted average P
+d δ(d)t(d, Z) with weights
+independent of Z, so it remains affine in Z. Permutation averaging preserves affinity as well.
+Hence it is without loss to consider a symmetric affine function of Z. Such an estimator
+must take the form
+bθ = 1 + c + λ
+ 
+2
+N
+N
+X
+i=1
+Zi −1
+!
+for some c, λ ∈R. Equivalently, its endpoint rule in (4) is dx = 1 + c + λqx and qx = 2x
+N −1.
+For any (k, m), let
+qk,m = θk,m −1 = 2k + m −N
+N
+.
+Since X = k + Binomial(m, 0.5), we have E[qX] = qk,m and Var(qX) = m
+N2 . The normalized
+risk of the affine rule is therefore
+Rk,m(c, λ) = λ2m
+N2 + {c + (λ −1)qk,m}2 .
+(A.1)
+Consider the three particular (k, m) of (0, N), (0, 0), and (N, 0). Equation (A.1) gives
+R0,N(c, λ) = c2 + λ2
+N ,
+while max{R0,0(c, λ), RN,0(c, λ)} = max{(c + 1 −λ)2, (c −1 + λ)2} ≥(1 −λ)2. Thus every
+affine procedure has normalized worst-case risk at least
+max
+(
+λ2
+N , (1 −λ)2
+)
+.
+Minimizing this expression over λ gives
+λN =
+√
+N
+√
+N + 1
+,
+min
+λ max
+(
+λ2
+N , (1 −λ)2
+)
+=
+1
+(
+√
+N + 1)2 .
+18
+
+
+This lower bound is attained with c = 0 and λ = λN. Indeed, for any (k, m), |qk,m| ≤
+1 −m
+N , and, since λ2
+N
+N = (1 −λN)2, equation (A.1) yields
+Rk,m(0, λN) =
+1
+(
+√
+N + 1)2
+m
+N + q2
+k,m
+
+≤
+1
+(
+√
+N + 1)2
+(
+m
+N +
+
+1 −m
+N
+2)
+≤
+1
+(
+√
+N + 1)2 .
+Let
+dA
+x = 1 + λN
+2x
+N −1
+
+.
+The preceding calculation shows that every endpoint risk of dA is at most (
+√
+N + 1)−2. Its
+Bernstein extension is
+BdA(Z) = 1 + λN
+ 
+2
+N
+X
+i
+Zi −1
+!
+,
+since P
+x xpx(Z) = P
+i Zi. Thus this extension is precisely the normalized version of λN bβ∗.
+By the separate-convexity argument in Step 3 of the proof of Theorem 1, its maximum risk
+over the full cube is attained at a vertex. Hence the affine minimax risk is
+(U −L)2
+(
+√
+N + 1)2 .
+Finally, the Bernstein extension of dA
+x is itself affine, since
+N
+X
+x=0
+xpx(Z) =
+N
+X
+i=1
+Zi.
+Thus the corresponding estimator of β is
+(U −L)
+(X
+x
+dA
+x px(Z) −1
+)
+= λN(U −L)
+ 
+2
+N
+X
+i
+Zi −1
+!
+= λN bβ∗,
+For the strict inequality, let
+rN =
+1
+(
+√
+N + 1)2 .
+At the affine optimum,
+Rk,m(dA) = rN
+m
+N + q2
+k,m
+
+.
+(A.2)
+The inequality above is strict except when (k, m) equals (0, N), (0, 0), or (N, 0). Indeed,
+writing t = m/N, we have
+m
+N + q2
+k,m ≤t + (1 −t)2 ≤1.
+Equality in the second inequality requires t ∈{0, 1}. If t = 1, then necessarily (k, m) = (0, N).
+If t = 0, equality in the first inequality additionally requires |qk,0| = 1, which gives
+19
+
+
+(k, m) = (0, 0) or (N, 0). Thus these are exactly the named values of (k, m).
+For N > 2, choose
+C >
+21−N
+N−1 −21−N
+and define a perturbation h = (h0, . . . , hN) by
+h0 = −1,
+hN = 1,
+hx = −Cqx,
+x = 1, . . . , N −1.
+The directional derivatives of the risks at the first two active states in (A.2) are both strictly
+negative:
+∂εR0,0(dA + εh)|0 = ∂εRN,0(dA + εh)|0 = −2(1 −λN) < 0.
+At the third, if X ∼Binomial(N, 1
+2),
+d
+dεR0,N(dA + εh)
+
+ε=0
+= 2λNE[qXhX].
+Since E[q2
+X] = 1/N,
+E[qXhX] = 21−N −C
+ 1
+N −21−N
+
+< 0
+by the choice of C. Thus all three active risks decrease for sufficiently small ε > 0. Every
+other (k, m) has strict slack in (A.2), and there are only finitely many such states. Hence,
+for sufficiently small ε > 0, the perturbed rule dA + εh remains in [0, 2]N+1 and has every
+endpoint risk strictly below rN. Thus by (4), κN <
+1
+(
+√
+N+1)2 for every N > 2.
+20

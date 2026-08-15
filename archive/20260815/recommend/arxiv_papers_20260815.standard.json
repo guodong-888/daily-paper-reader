@@ -1,0 +1,90 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-15T20:31:25.637474+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.07675v1",
+      "source": "arxiv",
+      "title": "Novel Dynamics in Models of Angiogenesis with p-Laplacian diffusion",
+      "abstract": "Ischemic heart diseases represent the leading cause of mortality worldwide. Revascularization, the process to restore blood flow in blockages, shows promise. To this end, mathematical models for angiogenesis, the process by which new blood vessels form from existing ones, have been extremely well investigated. In the current work, we consider a classical two species model for angiogenesis, consisting of cell and VEGF populations. However, we assume the cells move according to p-Laplacian diffusion, which could be both ``fast\" ($1<p<2$) and ``slow\" ($p>2$), in addition to normal diffusion ($p=2$). We first show that the system is well posed in a weak sense when $p>\\frac{3}{2}$, for sufficiently small initial data. Next, we show that the p-Laplacian can lead to several novel dynamics not reported earlier; these include increased cellular proliferation via bi-modal and multi spike solutions, gain of regularity, prevention of finite time blow-up, cell depletion via finite time extinction, and Turing patterns. We discuss applications of these results for cardiac health via a digital twins framework.",
+      "authors": [
+        "Wenbo Zhang",
+        "Hossein Asgaribakhtiari",
+        "Aishwarya Pawar",
+        "Rana D. Parshad"
+      ],
+      "primary_category": "math.AP",
+      "categories": [
+        "math.AP"
+      ],
+      "published": "2026-08-07T18:01:35+00:00",
+      "link": "https://arxiv.org/pdf/2608.07675v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Develops mathematical models of angiogenesis, a key biological process for flap survival and revascularization",
+      "llm_evidence_cn": "建立血管生成数学模型，血管生成是皮瓣存活与血运重建的关键过程",
+      "llm_evidence": "建立血管生成数学模型，血管生成是皮瓣存活与血运重建的关键过程",
+      "canonical_evidence": "建立血管生成数学模型，血管生成是皮瓣存活与血运重建的关键过程",
+      "llm_tldr_en": "Introduces p-Laplacian diffusion into a two-species model of angiogenesis, proving weak well-posedness for p>3/2 and revealing novel dynamics. Offers a mathematical framework applicable to vascularization in flap survival.",
+      "llm_tldr_cn": "缺血性心脏病是全球主要死因，血管生成是恢复血流的关键，已有大量数学模型。该工作在经典细胞与VEGF两物种血管生成模型中引入p-Laplacian扩散，涵盖快扩散（1<p<2）、慢扩散（p>2）与正常扩散（p=2）。先证明当p>3/2且初始数据足够小时系统在弱意义下适定，再展示p-Laplacian扩散可带来新动力学。这为理解血管生成的复杂行为提供新视角，也为皮瓣存活中血运重建研究提供了可借鉴的理论框架。",
+      "llm_tldr": "缺血性心脏病是全球主要死因，血管生成是恢复血流的关键，已有大量数学模型。该工作在经典细胞与VEGF两物种血管生成模型中引入p-Laplacian扩散，涵盖快扩散（1<p<2）、慢扩散（p>2）与正常扩散（p=2）。先证明当p>3/2且初始数据足够小时系统在弱意义下适定，再展示p-Laplacian扩散可带来新动力学。这为理解血管生成的复杂行为提供新视角，也为皮瓣存活中血运重建研究提供了可借鉴的理论框架。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.09812v1",
+      "source": "arxiv",
+      "title": "Optimal Experimental Design and Estimation when Potential Outcomes are Bounded",
+      "abstract": "I study the optimal design and analysis of randomized experiments for estimating finite-population average treatment effects when potential outcomes are known to be bounded, as with binary outcomes. Among all assignment mechanisms and a broad class of affine estimators, worst-case mean-squared error (MSE) is minimized by independent random assignment and an unconventional regression of the support-midpoint-centered outcome on the recentered treatment, with no intercept. This contrasts with the usual prescription of balanced complete randomization and difference-in-means estimation: when outcomes are bounded, randomness in the realized treatment share is informative. The worst-case gain over full-sample complete randomization is asymptotically small, but gains can be first-order relative to other designs: complete within-pair randomization and pair-fixed-effect regression have twice the worst-case MSE. I extend the result to allow for arbitrary estimators. Independent random assignment remains optimal, and the generally-nonlinear optimal estimator can meaningfully reduce worst-case MSE.",
+      "authors": [
+        "Peter Hull"
+      ],
+      "primary_category": "econ.EM",
+      "categories": [
+        "econ.EM"
+      ],
+      "published": "2026-08-10T16:32:06+00:00",
+      "link": "https://arxiv.org/pdf/2608.09812v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Optimal experimental design and estimation for bounded/binary outcomes, directly applicable to randomized trials testing exercise effects on flap survival",
+      "llm_evidence_cn": "面向有界结局的优化实验设计与估计方法，可直接用于检验运动对皮瓣存活影响的随机试验",
+      "llm_evidence": "面向有界结局的优化实验设计与估计方法，可直接用于检验运动对皮瓣存活影响的随机试验",
+      "canonical_evidence": "面向有界结局的优化实验设计与估计方法，可直接用于检验运动对皮瓣存活影响的随机试验",
+      "llm_tldr_en": "A statistical paper derives optimal assignment and estimation rules when outcomes are bounded, with gains over complete randomization; the methods can be used to design and analyze experiments on exercise training effect on binary flap survival.",
+      "llm_tldr_cn": "在有界结局（如二元皮瓣存活状态）的随机实验中，传统完全随机化搭配均值差并非最优。本论文证明独立随机分配与对中心化结局和去截距处理回归的估计器能最小化最坏情况均方误差，并给出渐近收益。该结果为设计检验运动训练是否提高皮瓣存活率的实验提供了理论最优的分配与分析框架，具有直接的方法借鉴价值。",
+      "llm_tldr": "在有界结局（如二元皮瓣存活状态）的随机实验中，传统完全随机化搭配均值差并非最优。本论文证明独立随机分配与对中心化结局和去截距处理回归的估计器能最小化最坏情况均方误差，并给出渐近收益。该结果为设计检验运动训练是否提高皮瓣存活率的实验提供了理论最优的分配与分析框架，具有直接的方法借鉴价值。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "exercise training effect on flap survival",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

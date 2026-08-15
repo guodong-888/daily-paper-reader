@@ -1,0 +1,39 @@
+{
+  "label": "2026-08-15",
+  "date": "2026-08-15",
+  "generated_at": "2026-08-15T20:33:32",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202608/15/2608.07675v1-novel-dynamics-in-models-of-angiogenesis-with-p-laplacian-diffusion",
+      "section": "quick",
+      "title_en": "Novel Dynamics in Models of Angiogenesis with p-Laplacian diffusion",
+      "authors": "Wenbo Zhang, Hossein Asgaribakhtiari, Aishwarya Pawar, Rana D. Parshad",
+      "date": "2026-08-07",
+      "pdf": "https://arxiv.org/pdf/2608.07675v1",
+      "score": "6.0",
+      "evidence": "建立血管生成数学模型，血管生成是皮瓣存活与血运重建的关键过程",
+      "tldr": "针对缺血性心脏病中血管生成建模，本文在经典细胞-VEGF双物种模型引入p-Laplacian扩散，涵盖快、慢及正常扩散。证明了p>3/2且初始数据较小时系统弱适定，并揭示多种新动力学：双峰/多尖峰解促进细胞增殖、正则性提升、阻止有限时间爆破、有限时间细胞灭绝及图灵斑图。研究为心脏数字孪生框架提供理论支持。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Ischemic heart diseases represent the leading cause of mortality worldwide. Revascularization, the process to restore blood flow in blockages, shows promise. To this end, mathematical models for angiogenesis, the process by which new blood vessels form from existing ones, have been extremely well investigated. In the current work, we consider a classical two species model for angiogenesis, consisting of cell and VEGF populations. However, we assume the cells move according to p-Laplacian diffusion, which could be both ``fast\" ($1<p<2$) and ``slow\" ($p>2$), in addition to normal diffusion ($p=2$). We first show that the system is well posed in a weak sense when $p>\\frac{3}{2}$, for sufficiently small initial data. Next, we show that the p-Laplacian can lead to several novel dynamics not reported earlier; these include increased cellular proliferation via bi-modal and multi spike solutions, gain of regularity, prevention of finite time blow-up, cell depletion via finite time extinction, and Turing patterns. We discuss applications of these results for cardiac health via a digital twins framework.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/15/2608.09812v1-optimal-experimental-design-and-estimation-when-potential-outcomes-are-bounded",
+      "section": "quick",
+      "title_en": "Optimal Experimental Design and Estimation when Potential Outcomes are Bounded",
+      "authors": "Peter Hull",
+      "date": "2026-08-10",
+      "pdf": "https://arxiv.org/pdf/2608.09812v1",
+      "score": "6.0",
+      "evidence": "面向有界结局的优化实验设计与估计方法，可直接用于检验运动对皮瓣存活影响的随机试验",
+      "tldr": "针对潜在结果有界（如二元结果）的有限总体平均处理效应估计，研究随机实验的最优设计与分析。在仿射估计量类别中，独立随机分配与以支持中点为基准、去截距的回归组合能最小化最坏情形均方误差；相对完全随机化增益渐近微小，但比配对设计的均方误差减半。扩展到任意估计量后，独立随机分配仍最优，非线性估计可进一步降低最坏情形均方误差。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "I study the optimal design and analysis of randomized experiments for estimating finite-population average treatment effects when potential outcomes are known to be bounded, as with binary outcomes. Among all assignment mechanisms and a broad class of affine estimators, worst-case mean-squared error (MSE) is minimized by independent random assignment and an unconventional regression of the support-midpoint-centered outcome on the recentered treatment, with no intercept. This contrasts with the usual prescription of balanced complete randomization and difference-in-means estimation: when outcomes are bounded, randomness in the realized treatment share is informative. The worst-case gain over full-sample complete randomization is asymptotically small, but gains can be first-order relative to other designs: complete within-pair randomization and pair-fixed-effect regression have twice the worst-case MSE. I extend the result to allow for arbitrary estimators. Independent random assignment remains optimal, and the generally-nonlinear optimal estimator can meaningfully reduce worst-case MSE.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
