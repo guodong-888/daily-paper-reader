@@ -1,0 +1,733 @@
+Title: Martingale R-learner: Estimating Time-varying Heterogeneous Treatment Effects for Time-to-event Outcomes
+
+URL Source: https://arxiv.org/pdf/2608.19596v1
+
+Published Time: Fri, 21 Aug 2026 00:23:02 GMT
+
+Number of Pages: 38
+
+Markdown Content:
+# Martingale R-learner: Estimating Time-varying Heterogeneous Treatment Effects for Time-to-event Outcomes 
+
+Jue Hou 1, Yuchen Qi 2, Ronghui Xu 2,3,4 
+
+> 1
+
+Division of Biostatistics and Health Data Science, School of Public Health, University of Minnesota;  
+
+> 2
+
+Biostatistics and Bioinformatics, Herbert Wertheim School of Public Health and Human Longevity Science, University of California, San Diego;  
+
+> 3
+
+Department of Mathematics, University of California, San Diego;  
+
+> 4
+
+Halicioglu Data Science Institute University of California, San Diego; 
+
+Abstract 
+
+Biological research and clinical evidence suggest that treatment response may vary substantially along characteristics, such as comorbidities, genetic variants, environmental, or socio-economic factors. Future precision medicine requires accurate assessment of heterogeneous treatment effects (HTE) to guide optimal clinical decisions at the individual level. We introduce a functional score framework that extends the traditional estimating equations for survival data to nonparametric HTE and generalize the Neyman orthog-onality accordingly, thus filling a methodological as well as theoretical gap. Under the Neyman orthogonal functional score framework, we developed the martingale R-learner based on a decomposition of the conditional martingale residuals into residuals of the risk-set propensity score and the marginal martingale, thereby reducing the impact of estimation bias in HTE from nuisance models including (1) marginal survival, and (2) risk-set propensity scores. This enables leveraging advances in machine learning and incorporates flexible estimators for the nuisance functions and attaining the standard optimal nonparametric estimation rate with the oracle property. Numerical experiments demonstrated empirical performance consistent with the theory. We applied the martingale R-learner to estimate the effect of alcohol on dementia using the Honolulu-Asia Aging Study data. 
+
+Keywords: aging study; functional score; machine learning; Neyman orthogonality; structural nested failure time model. 
+
+## 1. Introduction 
+
+A critical question in biomedical or epidemiological research in precision medicine is understanding each individual’s response to treatment, i.e. the heterogeneous treatment effect (HTE), varying along the personal characteristics (Kravitz et al., 2004; Hamburg and Collins, 2010). For research on cognitive impact of alcohol consumption, early studies have noticed 1arXiv:2608.19596v1 [stat.ME] 20 Aug 2026 heterogeneity among age groups (Dufour et al., 1992), which was confirmed in subsequent studies (Brumback et al., 2007; Zanjani et al., 2013). Other studies have investigated the roles of characteristics, such as sex and APOE genotype, as the effect modifiers for alcohol consumption on cognitive impairment (Sabia et al., 2010; Abulseoud et al., 2024). As the development of cognitive impairment is often a gradual process, cohort studies with long-term follow up, such as the Honolulu-Asia Aging Study (HAAS), are extremely valuable for uncovering the personalized patterns of alcohol-cognition relationship (Gelber et al., 2012). The HAAS extended the follow-up for surviving participants of the Honolulu Heart Program, which collected drinking data from Exams 1–3 (1965 – 1974) along with histories of cardiovascular diseases and risk factors, and collected additionally the longitudinal cognitive assessments from Exams 4 – 12 (1991 – 2012). Previous studies using different subsets of HAAS reported inconsistent results about the impact of mid-life alcohol on later life cognitive impairment (Galanis et al., 2000; Kardaun et al., 2000; Chosy et al., 2022), and it has been noted that the lack of a coherent framework on HTE jointly over all patient characteristics may lead to spurious findings (Assmann et al., 2000). To fill the scientific gap, we aim to develop an appropriate statistical method for systematically estimating the HTE of mid-life heavy drinking on cognitive impairment-free survival in the HAAS cohort. Considerable efforts have been put into developing advanced estimation methods for the HTE without censoring. Künzel et al. (2019) coined the concept of “metalearners” and classified previous methods as T-learners and S-learners based on if two regression models (T-learner) or a single regression model (S-learner) was involved for estimating the HTE (Hill, 2011; Green and Kern, 2012; Athey and Imbens, 2016). They also proposed the X-learners that construct the pseudo-outcomes of the unobservable individual treatment effect by imputing the outcome under the unobserved counterfactual treatment (Künzel et al., 2019). Under the broad metalearner framework, various machine learning methods have been applied for the underlying regression problems, including lasso (Imai and Ratkovic, 2013), random forests (Wager and Athey, 2018), boosting (Powers et al., 2018), neural networks (Shalit et al., 2017) 2and Bayesian additive regression trees (Hill, 2011; Hahn et al., 2020). The R-learner extends the Robinson’s estimator (Robinson, 1988; Chernozhukov et al., 2018) for the average treatment effect to HTE (Nie and Wager, 2021). By regressing the residuals of a marginal outcome model on residuals of the propensity score model and their interactions with the effect modifiers, R-learner attains Neyman orthogonality (Neyman, 1959) against the two nuisance models, leading to the same estimation rate as if nuisance models were known (Neyman, 1959; Chernozhukov et al., 2018; Nie and Wager, 2021). Neyman orthogonality was also leveraged in Kennedy (2023) to resolve the issue of bias, or equivalently, slow convergence, induced to the target HTE parameter estimation from estimating nuisance models. In general, if a score or loss function satisfies Neyman orthogonality, the estimation error of the nuisance models should not affect the limiting distribution of the estimator for the target parameter (Newey, 1990, 1994; Bickel et al., 1993; Van der Vaart, 2000; Chernozhukov et al., 2018; Foster and Syrgkanis, 2023). In healthcare applications, time-to-event outcomes subject to right censoring are often of interest. Xu et al. (2023) provided a comprehensive tutorial and review that illustrates how popular metalearners (T-learners, S-learners and X-learners) can be extended and used for right censored time-to-event data, with a focus on randomized controlled trials (RCTs). Likewise for time-to-event outcomes, various machine learning based methods have been deployed to the underlying regression problems for HTE estimation (Zhu and Gallego, 2020; Cui et al., 2023). However, few existing works provided theoretical guarantees on the estimation rate of the HTE (Xu et al., 2024; Cui et al., 2023). Moreover, to our best knowledge, the R-learner has not been developed for time-to-event outcomes. As has been known (Hou et al., 2023), the dependence between the at-risk process and the treatment assignment poses a challenge to obtaining orthogonality under certain survival models. In this work, we propose a new martingale R-learner framework to estimate time-varying HTE for time-to-event outcomes subject to right censoring. Like its prototype, our martingale 3R-learner identifies a nonparametric HTE through two nuisance models to be flexibly esti-mated through machine learning methods: 1) a marginal survival model (over the treatment assignment) for the outcome conditioning on the confounders, and 2) the risk-set propensity score for treatment that varies along time. Modeling the risk-set propensity score bypasses the dependence between the treatment and the at-risk process involved in the martingale residual (Jiang et al., 2017). We constructe the martingale R-learner functional score through a decomposition of the martingale residual of the marginal survival model. Due to the unique semiparametric structure of martingale residuals under survival models, standard computa-tional and theoretical formulation for metalearners no longer apply. To develop and analyze the martingale R-learner, we proposed a novel functional score framework that identifies the nonparametric HTE through an estimating equation style approach with infinite dimensional nuisance models. We developed a pseudo-data computational scheme to solve the HTE from the functional score, eventually arriving at a penalized least-squares. Based on our theoretical groundwork for the general functional score methods, we established that the HTE estimated by our martingale R-learner is insensitive to estimation errors of nuisance models and can achieve the estimation rate as the oracle who knows the nuisance models. We highlight our major contributions: • We extend the R-learner to time-varying HTE on time-to-event outcomes by developing the martingale R-learner; • We generalize the loss function based metalearner framework to estimating equation style functional score framework; • We prove that the martingale R-learner attains the standard optimal non-parametric estimation rate for smooth HTE. An outline of this paper is as follows. In Section , we introduce the general notations and causal settings of the paper. In Section , we introduce the functional score framework with its 4own system of notations and describe the martingale R-learner. In Section , we establish a general theoretical framework for functional scores and apply it to derive the estimation rate of the martingale R-learner. In Section , we present the evaluation of the martingale R-learner on simulated data. In Section , we showcase the application in the motivating HAAS study. In Section , we conclude the paper with the summary statement and discussions on potential extensions. 
+
+## 2. Heterogeneous treatment effect 
+
+For subject indexed by i ∈ { 1, . . . , n }, let Zi ∈ Rp be the p-dimensional vector of baseline covariates collected before the treatment initiation and Di be the treatment assignment at time t = 0. Here we focus on a binary treatment Di ∈ { 0, 1} for our motivating aging study, although our framework applies to bounded discrete or continuous numeric treatments. The outcome of interest is the time-to-event variable Ti > 0 subject to the right censoring at time 
+
+Ci ∈ [0 , t max ] up to a maximal follow-up time tmax . The observed right-censored outcome is (Xi, δ i) with the observation time Xi = min {Ti, C i} and event status δi = I {Ti ≤ Ci}. We denote the observed data for each subject as Oi = ( Zi, D i, X i, δ i) in the sample space O,which are assumed to be independent among subjects and follow an identical distribution. Following the counting process notation (Andersen and Gill, 1982), we define the event process 
+
+Ni(t) = δi I{Xi ≤ t} and the at-risk process Yi(t) = I {Xi ≥ t}.To define the HTE, we introduce T (d) 
+
+> i
+
+and C(d) 
+
+> i
+
+as the potential time-to-event and censoring time if the treatment were assigned as Di = d. We quantify the HTE using the structural cumulative failure time model (SCFTM): 
+
+P(T (d) 
+
+> i
+
+≥ t | Zi)
+
+P(T (0)  
+
+> i
+
+≥ t | Zi) = exp {− T (t, Zi) · d} , (1) which is a special case of the structural nested cumulative failure time models (Picciotto et al., 2012; Vansteelandt and Joffe, 2014). By imposing the SCFTM (1), we characterized the HTE 5as the log risk ratio T (t, z) against the reference or control exposure level d = 0, and allow it to vary across both the covariate value z and time t. Like all structural nested models the definition of the HTE through the structural model (1) does not require modeling the distribution of T (0)  
+
+> i
+
+.Define the survival function S(t; Zi, d ) = P(T (d) 
+
+> i
+
+≥ t | Zi), the cumulative hazard function Λ( t; Zi, d ) = − log {S(t; Zi, d )}, the hazard function λ(t; Zi, d ) = ∂Λ( t; Zi, d )/∂t , and the derivative of the log risk ratio τ (t; Zi) = ∂T (t; Zi)/∂t . Under model (1) we can alternatively characterize the HTE by τ (t, Zi) as in the followng: 
+
+λ(t; Zi, d ) = λ(t; Zi, 0) + d · τ (t, Zi). (2) In order to identify as well as make inference about the HTE T (t, Zi), or equivalently 
+
+τ (t, Zi), we require the following assumptions, where a.s. stands for almost surely. 
+
+Assumption 1 (Causal settings) . For absolute constants α1, α 2 ∈ (0 , 1) , we assume (i) Stable Unit Treatment Value Assumption (SUTVA) . There are no multiple versions of treatment and there is no interaction between units. (ii) Consistency . Ti = T (Di) 
+
+> i
+
+and Ci = C(Di) 
+
+> i
+
+.(iii) Unconfoundedness . {T (d) 
+
+> i
+
+, C (d) 
+
+> i
+
+} ⊥ ⊥ Di | Zi.(iv) Strict positivity of treatment . inf t∈[0 ,t max ] Var( Di | Zi, X i ≥ t) > α 1 a.s. Zi.(v) Non-informative censoring . C(d) 
+
+> i
+
+⊥⊥ T (d) 
+
+> i
+
+| Zi.(vi) Strict positivity of at-risk . E{Yi(tmax ) | Zi} > α 2 a.s. Zi.
+
+Assumption 1-(i) SUTVA and Assumption 1-(ii) consistency are fundamental prerequisites for most causal inference methodology (Rubin, 1980; VanderWeele, 2009). In the presence of confounding in observational studies, Assumption 1-(iii) unconfoundedness requires that the 6covariate Zi adequately represent the pre-treatment variables affecting both the treatment assignment and the outcome so that the confounding can be properly accounted for (Rosenbaum and Rubin, 1983). Assumption 1-(iv) requires that the treatment has sufficient variability in risk sets at all time t and all possible covariate z values so that HTE can be reflected by contrasting events at different levels of d. For the binary treatment Di ∈ { 0, 1}, Assumption 1-(iv) is equivalent to the common positivity assumption (Rosenbaum and Rubin, 1983) since Var( Di | Zi, X i ≥ t) = P(Di = 1 | Zi, X i ≥ t)P(Di = 0 | Zi, X i ≥ t). Assumption 1 also reflects the unique role of censoring. On the one hand, censoring time C(d) 
+
+> i
+
+may be affected by treatment assignment, so it is also involved in the Assumptions 1-(ii) and 1-(iii). On the other hand, censoring is another layer of missing data in addition to the counterfactual outcomes (Ding and Li, 2018; Luo et al., 2025), so Assumptions 1-(v) and 1-(vi) are parallel to Assumptions 1-(iii) and 1-(iv) in enabling the estimation of the event time distribution in the presence of right censoring (Cox, 1972; Lagakos, 1979; Lin and Ying, 1994). All elements of the Assumption 1 have been imposed in the literature for causal inference methods with right-censored time-to-event outcomes (Curth et al., 2021; Hou et al., 2023; Xu et al., 2024). As the HTE τ in (2) is additive for the hazards, model (1) is connect with the additive hazards models (Aalen, 1989; Martinussen et al., 2011), and our method is intrinsically inspired by the corresponding estimation approaches (Lin and Ying, 1994; Hou et al., 2023). In particular for model (2) under Assumption 1, we have 
+
+λ(t; Zi, D i) = λ(t; Zi, 0) + Di · τ (t, Zi). (3) As this is a conditional model given Di, we define the conditional martingale residual (Lin and Ying, 1994), 
+
+Mi(t) = Ni(t) − 
+
+> ∫t
+> 0
+
+Yi(u) {Diτ (u, Zi) + λ(u; Zi, 0) } du 
+
+=Ni(t) − 
+
+> ∫t
+> 0
+
+Yi(u) {Diτ (u, Zi)du + dΛ( u; Zi, 0) } . (4) 7Denote its natural filtration as Ft = σ{Di, Zi, Y i(u), N i(u) : u ≤ t}, which represents the 
+
+σ-algebra generated by information available at time t.
+
+## 3. Orthogonal functional score 
+
+In the following we introduce the Neyman orthogonal functional scores for HTE as a generalization of Neyman orthogonality for finite dimensional estimators (Chernozhukov et al., 2018) and loss function approaches (Foster and Syrgkanis, 2023; Kennedy, 2023). We then demonstrate the derivation of the Martingale R-learner functional score under model (2) according to the idea of R-learner (Nie and Wager, 2021) and explain its Neyman orthogonality. We detail the estimation process through a pseudo-data trick that transforms the solution of the functional score into a least-squares optimization problem. 
+
+3.1. Functional score framework with Neyman orthogonality 
+
+Unlike the original Robinson’s estimator that can be formulated directly as regression, leading to Nie and Wager’s R-learner using penalized least-squares to estimate the HTE, estimation of τ under model (1) is motivated by the estimating equations approach that is often employed for various parameters with right-censored time-to-event outcomes (Lin and Ying, 1994; Hou et al., 2023). Existing literature so far has studied Neyman orthogonality for either finite dimensional parameters or infinite dimensional parameters identified by loss functions (Chernozhukov et al., 2018; Foster and Syrgkanis, 2023; Kennedy, 2023). We herein introduce a functional score framework that extends the traditional estimating equations for survival data to nonparametric parameters and generalize the Neyman orthogonality concept accordingly, thus filling a methodological as well as theoretical gap in Neyman orthogonality. Let H and G be two normed infinite dimensional spaces equipped with norms ∥·∥ H and 
+
+∥·∥ G , respectively. The space H contains the target parameter of interest, i.e. the HTE in our setting, while the space G contains the nuisance models. We use τ∗ ∈ H and g∗ ∈ G for 8the “true parameters”. We are particularly interested in the dual space for H, denoted as H∗
+
+(Lang, 1993, Definition 6.1.1, page 188). As a generalization of vector-valued scores in classic parametric statistics, we define the functional scores over the space H. We defer to Section for our martingale R-learner functional score as an example. 
+
+Definition 1 (Functional scores) . A functional score ψ(τ, g ; Oi) is a class of linear functionals in H∗ indexed by the models τ and g. For a function ϕ ∈ H , the element of functional score with models τ and g maps to the real valued random variable ψ(τ, g ; Oi)[ ϕ]. Properly constructed functional score should identify the true parameters τ∗ and g∗ by satisfying moment equation uniformly in H, E{ψ(τ∗, g ∗; Oi)[ ϕ]} = 0 , ∀ϕ ∈ H .
+
+We also introduce the derivatives of the functional scores as the functional of the product space (Foster and Syrgkanis, 2023), indexed by functions ϕ1, ϕ 2, ϕ 3 in spaces H or G.
+
+Definition 2 (Derivatives of functional scores) . For the functional score ψ in Definition 1, we define the following derivative functionals based on the directional derivatives 
+
+∂τ ψ(τ, g ; Oi)[ ϕ1, ϕ 2] = lim  
+
+> ∆→0
+
+{ψ(τ + ∆ · ϕ2, g ; Oi)[ ϕ1] − ψ(τ, g ; Oi)[ ϕ1]} /∆; 
+
+∂gψ(τ, g ; Oi)[ ϕ1, ϕ 2] = lim  
+
+> ∆→0
+
+{ψ(τ, g + ∆ · ϕ2; Oi)[ ϕ1] − ψ(τ, g ; Oi)[ ϕ1]} /∆,∂2 
+
+> g
+
+ψ(τ, g ; Oi)[ ϕ1, ϕ 2, ϕ 3] = lim  
+
+> ∆→0
+
+{∂gψ(τ, g + ∆ · ϕ3; Oi)[ ϕ1, ϕ 2] − ∂gψ(τ, g ; Oi)[ ϕ1, ϕ 2]} /∆.
+
+Using the functional score framework specified by Definitions 1 and 2, we can now define the Neyman orthogonality for functional scores. 
+
+Definition 3 (Neyman orthogonality) . The functional score ψ(τ, g ; Oi) with true target parameter τ∗ and true nuisance parameter g∗ is Neyman orthogonal if 
+
+E{∂gψ(τ∗, g ∗; Oi)[ τ − τ∗, g − g∗]} = 0 , ∀τ ∈ H and g ∈ G .
+
+Remark 1. As traditional estimating functions can be seen as the gradients of certain (im-9plicit) loss functions (Wolfson, 2011), our functional score framework also relates to the loss function approach for infinite dimensional parameters. Suppose that ℓ(τ, g ; Oi) is a loss function that identifies τ∗ by τ∗ = argmin τ ∈H E{ℓ(τ, g ∗; Oi)}. We denote its directional derivatives similar to Definition 2. It can be seen that if ℓ is locally convex, i.e. with inf ∥ϕ∥H=1 E{∂2 
+
+> τ
+
+ℓ(τ∗, g ∗; Oi)[ ϕ, ϕ ]} > 0, then analyzing the one-dimensional sub-problem with optimality of τ∗ leads to 0 = argmin ∆∈R E{ℓ(τ∗ + ∆ · ϕ, g ∗; Oi)} and E{∂τ ℓ(τ∗, g ∗; Oi)[ ϕ]} = 0 .
+
+This implies that optimization using the loss function ℓ can be achieved through the functional score derived from its gradient ∂τ ℓ. The Neyman orthogonality defined for loss function (Foster and Syrgkanis, 2023; Kennedy, 2023), 
+
+E{∂g∂τ ℓ(τ∗, g ∗; Oi)[ τ − τ∗, g − g∗]} = 0 , ∀τ ∈ H and g ∈ G ,
+
+thus coincides with the Neyman orthogonality defined for the functional score ψ = ∂τ ℓ under Definition 3. 
+
+3.2. Functional score for Martingale R-learner 
+
+To derive a Neyman orthogonal functional score for HTE τ under model (2), we consider the R-learner framework (Robinson, 1988; Nie and Wager, 2021). Nie and Wager (2021) considered the conditional mean HTE without right censoring, and proposed the R-learner that extended the estimator of Robinson (1988) for the average treatment effect under the partially linear model. In both works, the key idea was to decompose the residual from regression of the observed outcome on the covariates, referred to as the “marginal” model as it “integrates” out the potential outcomes with respect to the treatment assignment. Let 
+
+π(Zi) = P(Di = 1 | Zi) be the propensity score. The residual is then decomposed into the sum of two uncorrelated components: 1) the residuals of the propensity score Di − π(Zi)multiplied by the treatment effect, and 2) the residual from regression of the outcome on both the treatment and the covariates, i.e. the “conditional” model. The uncorrelatedness enables treating the treatment effect as a regression coefficient with the second component 10 above acting as an exogenous error in the regression. In the following we will refer to both the Robinson (1988) and the Nie and Wager (2021) developments as R-learners. Development of our R-learner falls on the proper construction of the marginal model residuals, the conditional model residuals and the centering of the treatment variable. We can define the marginal hazard function of the observed time-to-event outcome Ti
+
+given Zi: λm(t; Zi) = lim ∆→0 P(Ti < t + ∆ | Ti ≥ t, Zi)/∆, with the corresponding marginal martingale residual 
+
+Mi(t) = Ni(t) − 
+
+> ∫t
+> 0
+
+Yi(t)dΛm(u; Zi), (5) where Λ m(t; Zi) = ∫ t 
+
+> 0
+
+λm(u; Zi)du . The challenge for applying the standard R-learner to HTE 
+
+τ under model (2) is that the typical martingale residual (4) for a conditional model (3) is often correlated with the residuals of the propensity score variable Di − π(Zi) (Kang et al., 2018; Dukes et al., 2019; Hou et al., 2023). To decouple the correlation, we consider the approach of Kang et al. (2018) using risk-set propensity score: 
+
+ρ(t, Zi) = E{Di | Yi(t) = 1 , Zi}. (6) An alternative approach by Dukes et al. (2019) and Hou et al. (2023) involved a multiplicative factor of risk ratio but that turned out to be difficult for use here. 
+
+Lemma 1 (R-learner martingale residual) . Under the model (2) and Assumption 1, we have the decomposition of marginal martingale residual (5) ,
+
+Mi(t) =  
+
+> ∫t
+> 0
+
+τ (u, Zi)Yi(u){Di − ρ(u, Zi)}du + Mi(t),
+
+with the conditional martingale residual Mi in (4) , HTE τ in (2) and the residuals of the risk-set propensity score ρ in (6) .
+
+The proof of Lemma 1 (see Section C.1 in the Supplementary Materials) is based on the 11 following fact: 
+
+λm(t; Zi) = ρ(t, Zi)τ (t, Zi) + λ(t; Zi, 0) .
+
+Lemma 1 provides the canonical form of the R-learner construction (Robinson, 1988; Nie and Wager, 2021): the left-hand side is the marginal martingale residual; the first term on the right is the integral of a predictable process under filtration Ft from the product of the causal parameter τ with the residuals of the risk-set propensity score; the second term on the right is the conditional martingale residual. The increments of the the Ft–predictable process and 
+
+Ft–martingale on the right are uncorrelated according to standard martingale transforms argument (Durrett, 2019, Theorem 5.2.5). The involved nuisance models are the risk-set propensity score ρ in (6) and marginal model cumulative hazard Λ m within the marginal martingale residual Mi through (5). Unlike the standard R-learners, we cannot directly regress Mi(t) onto the residuals of the risk-set propensity score Di − ρ(t, Zi) because the Mi(t)’s are not i.i.d. and cannot act as regression errors. Instead, applying the functional score framework, we propose to identify the HTE by the following martingale R-learner functional score 
+
+ψmrl (τ, ρ, Λm; Oi)[ ϕ] =  
+
+> ∫tmax
+> 0
+
+ϕ(t, Zi){Di − ρ(t, Zi)} { dN i(t) − Yi(t)dΛm(t; Zi)}− 
+
+> ∫tmax
+> 0
+
+ϕ(t, Zi)τ (t, Zi)Yi(t){Di − ρ(t, Zi)}2dt. (7) where ϕ(t, Zi) ∈ H is an arbitrary square integrable function, and g = ( ρ, Λm) are the nuisance models. We verified that the martingale R-learner functional score (7) can identify the true τ∗ and attains the Neyman orthogonality (Definition 3). 
+
+Lemma 2 (Neyman orthogonality) . Under Assumptions 1 and model (2) , the martingale R-learner functional score ψmrl in (7) satisfies E {ψmrl (τ∗, ρ ∗, Λm, ∗; Oi)[ ϕ]} =
+
+E {∂ρψmrl (τ∗, ρ ∗, Λm, ∗; Oi)[ ϕ, ρ − ρ∗]} = E {∂Λm ψmrl (τ∗, ρ ∗, Λm, ∗; Oi)[ ϕ, Λm − Λm, ∗]} = 0 , at 
+
+12 the true parameters τ∗, ρ∗, Λm, ∗ for any ϕ ∈ H and (ρ, Λm) ∈ G .
+
+The proof of Lemma 2 (see Section C.2 in the Supplementary Materials) anchors on the alternative form of (7) as the product of two uncorrelated residuals following Lemma 1, 
+
+ψmrl (τ∗, ρ ∗, Λm, ∗; Oi)[ ϕ] =  
+
+> ∫tmax
+> 0
+
+ϕ(t, Zi){Di − ρ∗(t, Zi)}dM i(t).
+
+Following Lemma 2, we may estimate the risk-set propensity scores (6) and marginal model (5) using flexible machine learning approaches with moderately slow convergence rates and construct a consistent estimator for the HTE with oracle convergence rates. 
+
+3.3. Implementation 
+
+We first discuss the estimation of the two nuisance parameters ρ and Λ m involved in the martingale R-learner (7). In order to guarantee compatibility, we propose to construct both nuisance models from two shared basic models: 1) the (baseline) propensity scores π(·), and 2) the conditional survival function S(t; Zi, d ) = P(Ti ≥ t | Zi, D i = d). For the risk-set propensity scores ρ in (6), under the stronger assumption of noninformative treatment for censoring given the covariates, we have 
+
+ρ(t, Zi) = P(Di = 1 | Zi, X i ≥ t) = π(Zi)S(t; Zi, 1) /S (t; Zi, 0) 1 + π(Zi) {S(t; Zi, 1) /S (t; Zi, 0) − 1} ; (8) we provide the proof in Section A.1 of the Supplementary Materials as well as extension to potential treatment-dependent censoring (Assumption 1-(v)). Likewise for Λ m in (5), we derive the alternative expression Λm(t; Zi) = − log [ π(Zi)S(t; Zi, 1) + {1 − π(Zi)}S(t; Zi, 0)] . (9) Under a cross-fitting scheme, we split the data into K folds of roughly equal sizes nk whose indices are Ik, k = 1 , . . . , K . Denote the out-of-fold indices as Ick = {1, . . . , n } \ I k and the 13 out-fold-data as O(−k) = {Oi : i ∈ I ck}. We estimate the basic models ̂ π(−k) and ̂ S(−k) using the out-of-fold data O(−k) to construct the out-of-fold estimators ̂ ρ(−k) and ̂ Λ(−k) 
+
+> m
+
+according to (8) and (9) with ̂ π and ̂ S obtained from flexible estimation. As the infinite dimensional spaces H and G can be overwhelmingly large, we may consider much smaller subsets for feasible estimators. For the HTE we consider the q-dimensional approximation Hq ⊆ H following the classic polynomial splines in nonparametric estimation (Stone, 1982; Stone et al., 1997), by 
+
+τ (t, Zi) ≈ β⊤B(t, Zi) = 
+
+> q∑
+> j=1
+
+βj Bj (t, Zi), (10) where Bj are basis functions of space H such as the natural splines or B-splines. In our functional score framework, the basis functions not only approximates the HTE τ through (10) but also guide the approximation of the arbitrary ϕ for the infinite dimensional equation in Definition 1. We propose to estimate the HTE by solving ̂ β by utilizing the q-dimensional cross-fitted estimating equation 1
+
+n
+
+> K∑
+> k=1
+> ∑
+> i∈I k
+
+ψmrl 
+
+> (
+
+β⊤B,̂ ρ(−k),̂ Λ(−k) 
+
+> m
+
+; Oi
+
+> )
+
+[Bj ] = 0 , j = 1 , . . . , q. (11) We considered two strategies, directly solving equation (11) or approximately solving the equation with regularization of β (see Remark 2 and Section A.2 of the Supplementary Materials). Plugging the solution ̂ β into the basis approximation (10), we obtain the estimated HTE, ̂ τ (t, z) = ̂ β⊤B(t, z). This time-varying HTE can distinguish short-term versus long-term effects, informing the infinitesimal effect of treatment for subject with covariate z at time t.On the other hand, for cumulative risks an estimator for the risk ratio in (1) can be derived from ̂ T (t, z) = ∫ t 
+
+> 0̂
+
+τ (t, z)dt .
+
+Remark 2. Notice that the evaluation of the integrals (7) involving the estimated ̂ ρ(−k) and ̂
+
+Λ(−k) 
+
+> m
+
+usually has no immediate analytical solutions. In Section A.2 of the Supplementary Materials we show that a pseudo data based algorithm can be solved using weighted least 14 squares with a memory friendly divide-and-conquer option for large datasets. The pseudo least squares also enable the convenient extension to regularized splines by adding the penalty term η ∥β∥pen with the norm of choice ∥·∥ pen (Eilers and Marx, 1996). As cross-validation or its computationally efficient alternatives have been recommended to determine the choices of splines (O’Sullivan, 1988; Ruppert, 2002), we proposed to use the same pseudo least squares to select dimension q and basis functions Bj for splines, as well as the penalty factor η for regularized splines. The theoretical choice of dimension q and basis functions Bj has been thoroughly studied for classic nonparametric regressions (Stone, 1982; Stone et al., 1997). In Section below, we establish a theory guided oracle choice of basis dimension q for estimation from (11) in order to achieve the standard estimation rate of polynomial splines as if the nuisance models were known. The theory also applies to its regularized splines with penalty factor η decaying in appropriate rate. 
+
+## 4. Asymptotic theory 
+
+Like in the R-learner (Nie and Wager, 2021) or general orthogonal learning (Foster and Syrgkanis, 2023), the centerpiece of our theoretical analysis is the oracle property. With the oracle property, the estimation error of nuisance models does not impact the convergence rate of the estimated target parameter, i.e. using the estimated nuisance models is as good as knowing the true nuisance models. This leads to the estimation for HTE at the rate previously established as optimal for nonparametric regressions. In the following we first establish a general theory in Section for the oracle property of Neyman orthogonal functional scores under broad regularity conditions. We then apply the general theory to the Martingale R-learner with specified assumptions to derive the estimation error rate in Section . Throughout our theory, we assume the folds k = 1 , . . . , K are exchangeable with shared theoretical properties and hence suppress the fold notation for cross-fitted models. 15 4.1. Theory for general functional score 
+
+We first establish a parallel result to Theorem 1 of Foster and Syrgkanis (2023) for functional score. Using the notations and definitions in Section , we introduce the following regularity conditions sufficient for oracle property. Recall that τ∗ ∈ H and g∗ ∈ G is the true target parameter and true nuisance parameter, and the subspaces ̂ H ⊆ H and ̂ G ⊆ G contain possible estimators for τ and g, respectively. The regularity conditions in Assumption 2 below for the functional score ψ are parallel to those required for orthogonal learning through loss functions by Foster and Syrgkanis (2023). In case that the spaces of estimators fail to cover the true parameters or models, we leverage the cone set star 
+
+(
+
+τ∗,̂ H
+
+)
+
+=
+
+{
+
+∆( τ − τ∗) : τ ∈̂ H, ∆ ∈ [0 , 1] 
+
+}
+
+. (12) and the best approximation ¯ τq = argmin τ ∈H q ∥τ − τ∗∥H.We use O∗ = ( Z∗, D ∗, X ∗, δ ∗) for the data for a new observation following the same distribution yet independent of the observed data, and denote the expectation with respect to 
+
+O∗ conditioning on the observed data as E∗{f (O∗; O1, . . . , On)}.
+
+Assumption 2 (Regularity for oracle property) . For absolute constants κ1, κ 2, κ 3, κ 4 ∈ (0 , ∞)
+
+and α3 ∈ [0 , 1) , we assume that the general score ψ(τ, g ; Oi)[ ϕ] satisfies the following. (i) Smoothness . The derivatives (Definition 2) are uniformly continuous: 
+
+sup 
+
+> ϕ1∈star
+
+(τ∗,̂ H)
+
+E {∂τ ψ(τ∗ + ϕ1, g ∗; Oi) [ ϕ1, ϕ 1]}∥ϕ1∥2
+
+> H
+
+≤ κ1,
+
+sup 
+
+> ϕ1∈star
+
+(τ∗,̂τ ),ϕ 2,ϕ 3∈star( g∗,G)
+
+∣∣∣E
+
+{
+
+∂2 
+
+> g
+
+ψ (τ∗, g ∗ + ϕ2) [ ϕ1, ϕ 3, ϕ 3]
+
+}∣ ∣∣
+
+∥ϕ1∥1−α3 
+
+> H
+
+∥ϕ3∥2
+
+> G
+
+≤ κ2.
+
+(ii) Invertibility . The first-order derivatives with respect to the target parameter (Defini-
+
+16 tion 2) is bounded away from zero for ∀ϕ1, ϕ 2 ∈ star 
+
+> (
+
+τ∗,̂ H
+
+> )
+
+, ϕ 3 ∈ star ( g∗, G):
+
+E {∂τ ψ(τ∗ + ϕ1, g ∗ + ϕ3; Oi) [ ϕ2, ϕ 2]} ≥ κ3 · ∥ ϕ2∥2 
+
+> H
+
+− κ4 ∥ϕ3∥4/(1+ α3) 
+
+> G
+
+.
+
+(iii) Convergence of estimators . For an independent testing data O∗, the target parameter estimator ̂ τ and the cross-fitted nuisance model ̂ g satisfy 
+
+E∗ {ψ (̂τ , ̂ g; O∗) [ ̂ τ − τ∗]} + ∥̂ g − g∗∥G = op (1) .
+
+Our Assumptions 2-(i) and 2-(ii), like “higher-order smoothness” and “strong convexity” in Foster and Syrgkanis (2023, their Assumptions 3 & 4), controls the local geometry of the functional score. Assumption 2-(i) imposes local smoothness of the functional score around the true parameters, leading to the local asymptotic linearity of the function score with respect to the HTE. Assumption 2-(ii) guarantees the uniqueness of local solution. Assumption 2-(iii) requires that the estimated nuisance models are consistent and the target estimator asymptotically solves the functional score equation in Definition 1. This replaces the “excess risks” under the loss function formulation and should be expected for estimators obtained from solving equations like (11), which is an example of the following general functional equation, 1
+
+n
+
+> K∑
+> k=1
+> ∑
+> i∈I k
+
+ψ(̂τ , ̂ g(−k); Oi)[ ϕ] = 0 , ∀ϕ ∈̂ H. (13) While the convergence in Assumption 2-(iii) were not explicitly declared by Foster and Syrgkanis (2023), their corresponding rates for nuisance model and excess risks must converge to zero to establish the consistency of target estimator. For any loss function satisfying the assumptions for Theorem 1 of Foster and Syrgkanis (2023), the functional score derived from its derivative, as discussed in Remark 1, would satisfy Assumption 2. The reverse problem for a given functional score is substantially harder, and the anti-derivative loss function might not exist. 17 We state the theory for general Neyman orthogonal functional scores. 
+
+Theorem 1 (General functional score) . Let ̂ ϕ = ( ̂τ − τ∗) / ∥̂ τ − τ∗∥H be the standardized estimation error. For the Neyman orthogonal functional score ψ (Definitions 1 and 3) and estimators {̂τ , ̂ g(−k)} satisfying Assumption 2, the estimation error rate is given by 
+
+∥̂τ − τ∗∥H = Op
+
+> (
+
+E∗
+
+> {
+
+ψ (̂τ , ̂ g; O∗)
+
+> [̂
+
+ϕ
+
+> ]}
+
++ ∥̂ g − g∗∥
+
+> 21+ α3
+> G
+> )
+
+= op (1) .
+
+Theorem 1 provides the estimation rate that reflects the potential oracle property. The term E{ψ(τ∗, g ; Oi)[ τ − τ∗]} represents the standard generalization error of the equation (13) solved within the subspace ̂ H, which typically determines the estimation rates in classical non-parametric estimation (Newey, 1997). For α3 ∈ [0 , 1) as specified in Assumption 2, the order for estimation error of the nuisance model is higher than the first order if 2 /(1 + α3) > 1. That means we may still have the oracle property 
+
+∥̂ τ − τ∗∥H = Op (E∗ {ψ (̂τ , ̂ g; O∗) [ ̂ τ − τ∗]}) ,
+
+i.e. the estimation rate is not affected by the slower estimation rate of nuisance model, as long as its 2 /(1 + α3)-power is faster 
+
+∥̂ g − g∗∥ 
+
+> 21+ α3
+> G
+
+≪ E∗ {ψ (̂τ , ̂ g; O∗) [ ̂ τ − τ∗]} ≤ ∥ ̂g − g∗∥G .
+
+Among literatures on estimating finite dimensional parameters at n−1/2 rate, the requirement for nuisance model estimation is typically n−1/4 root mean square error (RMSE) rate, the square root of target n−1/2 rate (Chernozhukov et al., 2018). Although our minimax estimation rate for nonparametric HTE τ is slower than n−1/2 (Stone, 1982), our required estimation rate for nuisance model is also the square root of target rate for HTE when α3 = 0 and slower than n−1/4 rate accordingly. The detailed proof is provided in Section C.3 of the Supplementary Materials. Our proof 18 is anchored on the construction of the pseudo regret (excess risk) function, 
+
+R (τ, g ) = E∗{ψ(τ, g ; O∗)[ τ − τ∗]} − E∗{ψ(τ∗, g ; O∗)[ τ − τ∗]}. (14) Note that (14) is the contrast of the functional scores with parameter τ against the that with true τ∗ at the estimation error τ − τ∗. Its construction is inspired by the symmetrized Bregman divergence used in the theory for high-dimensional regressions as an alternative to the Kullback-Leibler (K-L) divergence (Huang and Zhang, 2012), where the estimator is typically identified by solving the quasi-moment Karush-Kuhn-Tucker (KKT) conditions. We showed in our proof that the pseudo regret (14) can take the same role as the excess risks in Foster and Syrgkanis (2023) for theoretical analysis of the functional scores. 
+
+4.2. Theory for Martingale R-learner 
+
+We now apply Theorem 1 to establish the estimation error rate of HTE from the Martingale R-learner. Specifically for ϕ(t, Zi) in the space H of square integrable functions that contains the HTE under model (2), denote the inner product and its induced L2 norm, the uniform norm, and the dual norms for measures as 
+
+⟨ϕ1, ϕ 2⟩H = 
+
+> ∫tmax
+> 0
+
+E{ϕ1(t, Zi)ϕ2(t, Zi)}dt, ∥ϕ∥2 =
+
+> √
+
+⟨ϕ, ϕ ⟩H, ∥ϕ∥∞ = sup 
+
+> t∈[0 ,t max ]
+
+∥ϕ(t, ·)∥∞ ,
+
+∥ϕ1dμ ∥H∗ = sup 
+
+> ϕ2∈H ,∥ϕ2∥H=1
+
+E 
+
+> {∫ tmax
+> 0
+
+ϕ1(t, Zi)ϕ2(t, Zi)dμ (t; Zi)
+
+> }
+
+, ∥ϕ1∥H∗ = ∥ϕ1dt ∥H∗ . (15) Under mild regularity conditions, the norms ∥·∥ 2, ∥·∥ H∗ and another L2 norm (Kooperberg et al., 1995b) are equivalent (see the Section C.6 of the Supplementary Materials). The following regularity conditions along with Assumption 1 are shown to be sufficient for Assumption 2, in Section C.4 of the Supplementary Materials. 
+
+Assumption 3 (Regularity for Martingale R-learner) . For absolute constants κ5, κ 6, κ 7 ∈
+
+[1 , +∞) and a sequence ξq ≥ 1 indexed by the dimension q of basis in (10) , we assume the 
+
+19 following. (i) Bounded marginal hazards . The measure induced by the estimated marginal cu-mulative hazards ̂ Λm admits Radon-Nikodym representation with respect to a mixed Lebesgue-counting measure whose continuous and jumping components are characterized by ̂ λm,t and ̂ λm,N , respectively, ̂
+
+Λm(t; Zi) = 
+
+∫ t
+
+> 0
+
+̂ λm,t (u; Zi)du +̂ λm,N (u; Zi)̂
+
+Nm(tmax ) d̂Nm(u),
+
+∥∥∥̂ λm,t 
+
+∥∥∥∞ +
+
+∥∥∥̂ λm,N 
+
+∥∥∥∞ ≤ κ5,
+
+where ̂ Nm is a counting measure over a finite set determined by training data of ̂ Λm.(ii) Donsker class of models . The bounded subset for HTE, and the candidate nuisance models ̂ Gg belong to a Donsker class D of functions f (z) of covariates Zi:
+
+{τ∗/κ 6,̂ τ /κ 6} ⊆ U H = {ϕ(t, z) ∈ H : ∥ϕ∥2 ≤ 1, ∥ϕ∥∞ ≤ 1, t ∈ [0 , t max ]} ⊆ D,̂
+
+Gg = {̂ρ(t, z),̂ λm,t (t; z),̂ λm,N (t; z) : t ∈ [0 , t max ]} ⊆ D.
+
+(iii) Uniform norm in subspace . Over finite dimensional basis expansion subspace Hq
+
+spanned by the basis in (10) , the uniform norm has bound sup ϕ∈H q ,∥ϕ∥2=1 ∥ϕ∥∞ ≤ ξq.(iv) Consistent nuisance models . The nuisance models are consistent in suitable norms, 
+
+(
+
+∥̂ ρ − ρ∗∥ρ +
+
+∥∥∥̂ Λm − Λm, ∗
+
+∥∥∥Λ
+
+)
+
+= op (1) ,
+
+∥∥∥(̂ρ − ρ∗)2∥∥∥H∗ ≤ κ7 ∥̂ρ − ρ∗∥2 
+
+> ρ
+
+,
+
+∥∥∥(̂ρ − ρ∗) d
+
+(̂ 
+
+Λm − Λm, ∗
+
+)∥ ∥∥H∗ ≤ κ7 ∥̂ ρ − ρ∗∥ρ
+
+∥∥∥̂ Λm − Λm, ∗
+
+∥∥∥Λ .
+
+Assumption 3-(i) is applicable for various flexible estimation methods of marginal survival models with continuous or discrete ̂ Λm (Ishwaran et al., 2008; Kooperberg et al., 1995a), as long as their total variation is bounded, which is guaranteed for ̂ Λm(·) monotone in time. As the basis approximation (10) usually require the HTE to belong to a smooth class, the Donsker property for such a class in Assumption 3-(ii) is typically well established (van der 20 Vaart and Wellner, 1996, Example 2.10.25). Likewise, the Donsker property for the class of estimated nuisance models ̂ ρ,̂ λm,t , and ̂ λm,N in Assumption 3-(ii) should be satisfied with classical nonparametric estimation methods that produce smooth estimated models. While Donsker class admits uniform weak convergence of empirical processes at √n rate (van der Vaart and Wellner, 1996), nonparametric estimation of models from infinite dimensional Donsker class is usually slower than the parametric rates (Stone, 1982). For splines, increasing dimensionality usually creates basis with higher resolution that concentrates in a smaller area, which creates larger ratio between uniform and L2 norms for these basis functions, e.g. piecewise polynomial splines satisfy Assumption 3-(iii) with ξq = O(√q) (Donald and Newey, 1994). Assumption 3-(iv) is the consistency of nuisance models in Assumption 2-(iii) for the Martingale R-learner. The required norms are usually guaranteed by uniform convergence of ̂ ρ
+
+and ̂ Λm but may also be satisfied by L2 convergence under regression models with light-tailed covariates (Hou et al., 2023). We now state the theory for the Martingale R-learner. To cover both the standard and regularized splines, we characterize the estimated HTE by its proximity of solving the estimating equation (11), 
+
+Sn,q = sup  
+
+> ϕ∈H q,∥ϕ∥H=1
+
+1
+
+n
+
+> K∑
+> k=1
+> ∑
+> i∈I k
+
+ψmrl 
+
+> (̂
+
+τ , ̂ ρ(−k),̂ Λ(−k) 
+
+> m
+
+; Oi
+
+> )
+
+[ϕ]. (16) For standard splines solved precisely from equation (11), we have Sn,q = 0 due to linearity of functional score with respect to ϕ and linear representation of any ϕ ∈ H q by Bj . For regularized splines, Sn,q is typically determined by norm ∥·∥ pen and penalty factor η through analyzing the KKT condition (see Section A.2 of the Supplementary Materials). Recall the best approximation ¯ τq = argmin τ ∈H q ∥τ − τ∗∥H.
+
+Theorem 2 (Martingale R-learner) . Under Assumptions 1 and 3, for Martingale R-learner asymptotically solving the estimating equation (11) with Sn,q = o(1) , the estimation error of 
+
+21 HTE has the rate 
+
+∥̂τ − τ∗∥2 = Op
+
+(
+
+∥¯τq − τ∗∥2 + ξq
+
+√n + Sn,q + ∥̂ ρ − ρ∗∥2 
+
+> ρ
+
++
+
+∥∥∥̂ Λm − Λm, ∗
+
+∥∥∥2Λ
+
+)
+
+.
+
+The detailed proof is provided in Section C.4 of the Supplementary Materials. The first two terms ∥¯τq − τ∗∥2 + ξq/√n represent the bias-variance trade off in the estimation of τ . This part of estimation error is always present in spline regressions (Donald and Newey, 1994). The last two terms are the squared estimation errors for the nuisance parameters ρ and Λ m. We specify in the following corollary when the Martingale R-learner achieves the oracle property with spline basis (10) and spline regressions for ρ and Λ m. Recall p is the dimension of Z.
+
+Assumption 4 (Polynomial spline models) . Let ατ , α λ, α ρ ∈ (0 , +∞) be absolute constants. (i) Standard estimation rates . Under smoothness parameters αρ and αλ for nuisance parameters, the estimated polynomial regressions with no jumps ( ̂λm,N = 0 ) achieve the standard rate: 
+
+∥̂ρ − ρ∗∥H = n− αρ  
+
+> 2·αρ +p
+
+,
+
+∥∥∥̂ λm,t − λm, ∗
+
+∥∥∥H = n− αλ 
+
+> 2·αλ+p
+
+.
+
+(ii) Standard approximation rate . The approximation of HTE in the subspace Hq with 
+
+∥B j ∥H = 1 , ∥B j ∥∞ = O
+
+(
+
+q1/2)
+
+and smoothness parameter ατ , achieves the standard rate ∥¯τq − τ∗∥H = O
+
+(
+
+q−ατ /p )
+
+.(iii) Smoothness for oracle property . min {αρ, α λ} ≥ ατ p/ (2 ατ + 2 p).
+
+The established approximation rate and estimation rates for polynomial spline regressions in Assumption 4-(i) are typically achieved under Hölder smooth models over bounded covariates (Kooperberg et al., 1995b; Newey, 1997). The uniformly bounded subsets of these Hölder smooth function classes are well-known Donsker classes required by Assumption 3-(ii) (van der Vaart and Wellner, 1996, Example 2.10.25). 22 The optimal rates for non-parametric estimation of Hölder smooth models has been established for standard and hazard regressions (Stone, 1982; Kooperberg et al., 1995b). In both work, the optimal L2 rate with covariate dimension p and smoothness parameter ατ is 
+
+n−ατ /(p+2 ατ ). In Corollary 1 we show that through the Martingale R-learner, we achieved the same rate. 
+
+Corollary 1 (Polynomial spline) . Under Assumptions 1, 3 and 4, with (a) polynomial spline 
+
+B of order greater than ατ and dimension q = n1/(1+2 ατ /p ), and (b) no regularization or a ridge penalty ∥·∥ pen = ∥·∥ 22 with η = Op
+
+> (
+
+n−ατ /(p+2 ατ ))
+
+, the estimation error of Martingale R-learner is ∥̂τ − τ∗∥2 = Op
+
+> (
+
+n−ατ /(p+2 ατ ))
+
+.The proof of Corollary 1 is in the Section C.5 of the Supplementary Materials. The resulting estimation rate for τ in Corollary 1 only involves the smoothness of HTE, ατ ,indicating the oracle property. Because min {αρ, α λ} ≥ ατ implies the Assumption 4-(iii), the oracle property can be achieve as long as the nuisance models are Hölder smooth with at least the half smoothness of HTE by inequality ατ /2 ≥ ατ p/ (2 ατ + 2 p). This mild smoothness requirement reveals one essential advantage of the Martingale R-learner compared to deriving HTE directly from S-learners or T-learners for hazard regressions, which would be with rate n−αλ/(p+2 αλ). When the outcome survival model is much more complex than the HTE (Kennedy, 2023), reflected in less smoothness of outcome survival model compared to HTE, 
+
+αλ ≪ ατ , the improvement from the n−αλ/(p+2 αλ) rate of the S-learners or the T-learners to the n−ατ /(p+2 ατ ) rate of Martingale R-learner would be substantial. 
+
+## 5. Simulation Experiments 
+
+We assessed the finite sample performance of the Martingale R-learner in simulation studies. Based on the simulation studies from related literatures (Nie and Wager, 2021; Foster and Syrgkanis, 2023), we designed the following scenarios, specified by the dimension of covariate p, baseline propensity score π(Zi), HTE τ (t, Zi) and the hazard function of control group λ(t; Zi, 0). 23 A. p = 1, π(Zi) = 0 .5, τ (t, Z i) = Zi + Z2 
+
+> i
+
++ t + t2, λ(t; Zi, 0) = 0 .5. 
+
+B. p = 3, π(Zi) = expit( Zi, 1 + Zi, 2 + Zi, 3), τ (t, Zi) = sin( Zi, 1 + Zi, 2 + Zi, 3) + sin( t) + 4, 
+
+λ(t; Zi, 0) = 4 + Zi, 1.
+
+C. p = 3, π(Zi) = expit( Zi, 1), τ (t, Zi) = 4+log {1+exp( Zi, 2 +Zi, 3)}+t, λ(t; Zi, 0) = 3+ Zi, 1.
+
+D. p = 3, π(Zi) = expit( −Zi, 1 − Zi, 2 − Zi, 3), τ (t, Zi) = 6, λ(t; Zi, 0) = log {1 + exp( Zi, 1 +
+
+Zi, 2)} + t2.
+
+E. p = 5, π(Zi) = expit( −Zi, 1 −Zi, 2 −Zi, 3), τ (t, Zi) = log {6+ Zi, 3 +Zi, 4}+sin( Zi, 5)+sin( t), 
+
+λ(t; Zi, 0) = 3 + Zi, 1.Here expit( x) = 1 /(1 + e−x) is the link function for logistic regression. Across all scenarios, the covariates Zi are generated from independent uniform distribution Unif( −2, 2). In these scenarios, we defined polynomial HTEs and randomized treatment in Scenario A, complex HTEs with trigonometric and logarithm-exponential functions and logistic regression propensity scores in Scenarios B – E. We considered time-invariant control group hazard functions in Scenarios A – C and E, and set a time-varying hazard function in Scenarios D. The associations between baseline propensity scores and control group hazard functions were positive in Scenarios B and C and negative in Scenarios D and E. The censoring time Ci are generated from Unif(0 , c max ) with cmax chosen to produce 15% censoring rate. In all the simulation studies, we implemented and deployed the Martingale R-learner (MRL ) as specified in the following. We estimated the (baseline) propensity scores ̂ π(−k)(Zi)by regressing Di on Zi using a generalized additive logistic regression model (Hastie and Tibshirani, 1986) and derived the conditional survival function ̂ S(−k)(t; Zi, D i) from hazard regression with the survival outcome on linear splines of Di and Zi (Kooperberg et al., 1995a; Stone et al., 1997). We obtained ̂ ρ(−k) and ̂ Λ(−k) 
+
+> m
+
+by assembling ̂ π(−k) and ̂ S(−k) through (8) and (9), respectively. For all simulation scenarios, we approximated the HTE using natural spline basis expansions for time and continuous baseline covariates, together with their pairwise 24 interactions. We used the same degrees of freedom for time and for each continuous covariate, with candidate values {5, 6, 7, 8, 9}. The spline dimension and ridge penalty parameter were selected by cross-validation using the pseudo least-squares criterion. As the benchmark, we also implemented the S-learner using hazard regression with linear splines ( SL-HARE ) and the T-learner using the same method with two separate models for the control and treated groups ( TL-HARE ). To assess the oracle property, we also implemented the Martingale R-learner with oracle nuisance models. For each scenario, we considered three difference sample sizes n = 500 , 750 , 1000 to evaluate the trajectory of estimation performance with growing sample sizes. We repeated the experiments 500 times and report the mean squared error (MSE) evaluated over an independent testing data {(X∗,i , Z∗,i ) : i = 1 , . . . , n }, which is same across repeats to eliminate uncertainty, 
+
+[MSE ( ̂τ , τ ∗) = N −1
+
+> N∑
+> i=1
+
+{̂ τ (X∗,i , Z∗,i ) − τ∗(X∗,i , Z∗,i )}2 .
+
+We reported the simulation results in Figure 1. Across all five simulation scenarios and all sample sizes considered, the Martingale R-learner with estimated nuisance functions achieved lower median RMSE than the S- and T-learners. In Scenarios A and D where the HTE was set as polynomial functions favorable for spline methods, Martingale R-learner significantly outperformed the benchmark S- and T-learners exhibited with much smaller RMSE and variability. In Scenarios B, C, and E where the HTE was complex, the Martingale R-learner still demonstrated were relatively moderate advantage over benchmark S- and T-learners. As expected, the oracle Martingale R-learner generally achieved the lowest RMSE with the extra information of true nuisance models. The gap between the estimated nuisance and oracle nuisance learners tended to decrease as the sample size increased (see also Figure S1 in the Supplementary Materials), indicating the oracle property of the Martingale R-learner that the effect of nuisance estimation error diminished with the increasing sample size. RMSE also generally decreased with the sample size for all methods, while the relative advantage of the 25 Martingale R-learner remained evident. 
+
+Figure 1: Distribution of root MSE under scenarios A - E. 
+
+## 6. Application 
+
+We applied the Martingale R-learner implemented as in Section to the motivating study on mid-life heavy drinking on the cognitive-impairment-free-survival. Cognitive function was assessed repeatedly at HAAS examinations using the Cognitive Abilities Screening Instrument (CASI), a 0–100 scale covering attention, concentration, orientation, memory, language, visual 26 construction, fluency, abstraction, and judgment. Death was ascertained through study surveillance and follow-up contacts, with death dates obtained from death certificates. From the baseline at study Exam 4, we define the cognitive-impairment-free-survival outcome as as the time from baseline to the first HAAS examination at which the participant had a CASI score below 74, or mortality, whichever comes first. Participants alive with all CASI scores above 74 were censored at their last HAAS examination with available CASI assessment. The mid-life heavy drinking status was defined as ≥ 14 drinks/week at either study Exam 1 or Exam 3. We considered covariates including the baseline age at Exam 4, education ( ≤
+
+12 years or > 12 years) assessed at the start of study Exam 1, APOE genotype ( APOE4 +or APOE4 -) and grip strength (kilograms of force, defined as the maximum over six grip measurements at study Exam 4, consisting of three dominant hand and three opposite hand measurements. After excluding observations with missing data in any of exposure, outcomes or covariates, the analytic data set contained 1874 participants. Baseline characteristics are summarized in Table S1 (Section B.2 of Supplementary Materials). Figure 2 shows the estimated HTE surfaces varying by time and baseline age or grip strength for four strata defined by education and APOE genotype, where age or grip strength is fixed at its average value. The estimated HTE surfaces display non-linear features across time and baseline age or grip strength. The HTE is positive for most values of covariates, suggesting that mid-life heavy drinking is associated with higher risks of cognitive impairment. Moreover, we observed that the harm of mid-life heavy drinking is smaller for groups with better education. As better education were found to associate with better cognitive outcomes (Meng and D’arcy, 2012), our finding seems to be consistent with previous analysis. We presented additional analysis results in Section B.2 of Supplementary Materials including visualization of the estimated HTE surfaces from other angles and subgroup descriptive analyses to support the findings and estimated HTE. 
+
+## 7. Discussion 
+
+27 Figure 2: Estimated heterogeneous treatment effect surfaces for midlife heavy drinking in the HAAS application. The top row shows the infinitesimal treatment effect, and the bottom row shows the cumulative hazard difference. The left column varies baseline age and time, with grip strength fixed at its mean; the right column varies grip strength and time, with baseline age fixed at its mean. Surfaces are shown separately by education and APOE. 28 In this work, we developed the Martingale R-learner for estimating time-varying HTE on right censored time-to-event outcomes. With the oracle property, the Martingale R-learner can produce faster estimation rate for HTE with flexible machine learning methods for nuisance models with slower rates and can attain standard optimal nonparametric estimation rate for smooth HTE. To formalize our methodology and theory, we introduced the functional score framework that extended traditional estimating equations to nonparametric parameters and generalized the concept of Neyman orthogonality accordingly. Unlike the traditional problem with finite dimensional parameter space, the connection between loss functions and functional scores as explained in Remark 1 does not hold universally with infinite dimensional parameters. The differentiation was shown to be significantly more restrictive (Luedtke and Chung, 2024), and the existence of anti-derivative loss with a given derivative functional is a topic in quantum mechanics (Feynman et al., 2010). While various regression or classification based methods have previously been applied for learning HTE without explicit involvement of the counterfactual alternative (Willke et al., 2012), under the potential outcome framework causal inference models characterize the HTE through structural nested models and marginal structural models (Vansteelandt and Joffe, 2014; Robins et al., 2000). In this work, we adopt the structural nested model framework for time-to-event outcomes, namely, the structural nested cumulative failure time models (Robins and Hernan, 2008; Picciotto et al., 2012), and define the HTE through the time-varying survival ratio of potential time-to-event outcomes between the two treatment options in comparison conditionally on all confounders. While the distinction between these two classes of models originally stemmed from the different strategy for handling time-varying confounders in the analysis of time-varying treatment (Robins, 2000), the idea of “marginalizing out” some confounding variables from effect modification motivated the marginal structural models for point treatment (Robins and Hernan, 2020, Section 12.5). In our current study, we focused on the problem of the HTE with a point treatment applied before the start of follow-up without any a priori selection for effect modifiers from candidate confounders. Extension to R-learner 29 marginal structural models can be derived from generalizing a proper estimating equation through the functional score framework. Beyond the implemented Martingale R-learner with hazard regressions, other machine learning methods for survival outcomes can also be considered, such as high-dimensional regressions, random forests or boosting (Gaıffas and Guilloux, 2012; Ishwaran et al., 2008; Binder and Schumacher, 2008). While we focused on the estimation of the infinite dimensional HTE, our theoretical analysis explicitly identified the variance and bias components within the estimation error, which may prepare the statistical inference for its low dimensional projections with under-smoothing (Ruppert et al., 2003, Chapter 6). The HAAS study is potentially subject to left truncation as patients died before study Exam 4 were excluded in the analysis. Future study should revisit the analysis after incorporating the general strategy to correct for left-truncation as laid out in Wang et al. (2024). 
+
+## 8. Acknowledgment 
+
+Jue Hou and Yuchen Qi have equal contribution as co-first authors. The study codes and supplementary materials of technical details and theoretical proofs are not made available for the preprint version. 
+
+# References 
+
+Aalen, O. O. (1989), “A Linear Regression Model for the Analysis of Life Times,” Statistics in Medicine , 8, 907–925. Abulseoud, O. A., Caparelli, E. C., Krell-Roesch, J., Geda, Y. E., Ross, T. J., and Yang, Y. (2024), “Sex-difference in the Association Between Social Drinking, Structural Brain Aging and Cognitive Function in Older Individuals Free of Cognitive Impairment,” Frontiers in Psychiatry , 15, 1235171. 30 Andersen, P. K. and Gill, R. D. (1982), “Cox’s Regression Model for Counting Processes: a Large Sample Study,” The Annals of Statistics , 10, 1100–1120. Assmann, S. F., Pocock, S. J., Enos, L. E., and Kasten, L. E. (2000), “Subgroup Analysis and Other (mis) Uses of Baseline Data in Clinical Trials,” The Lancet , 355, 1064–1069. Athey, S. and Imbens, G. (2016), “Recursive Partitioning for Heterogeneous Causal Effects,” 
+
+Proceedings of the National Academy of Sciences , 113, 7353–7360. Bickel, P. J., Klaassen, C. A., Bickel, P. J., Ritov, Y., Klaassen, J., Wellner, J. A., and Ritov, Y. (1993), Efficient and Adaptive Estimation for Semiparametric Models , vol. 4, Springer. Binder, H. and Schumacher, M. (2008), “Allowing for Mandatory Covariates in Boosting Estimation of Sparse High-dimensional Survival Models,” Bmc Bioinformatics , 9, 14. Brumback, T., Cao, D., and King, A. (2007), “Effects of Alcohol on Psychomotor Performance and Perceived Impairment in Heavy Binge Social Drinkers,” Drug and Alcohol Dependence ,91, 10–17. Chernozhukov, V., Chetverikov, D., Demirer, M., Duflo, E., Hansen, C., Newey, W., and Robins, J. (2018), “Double/Debiased Machine Learning for Treatment and Structural Parameters,” The Econometrics Journal , 21, C1–C68. Chosy, E. J., Edland, S., Launer, L., and White, L. R. (2022), “Midlife Alcohol Consumption and Later Life Cognitive Impairment: Light Drinking Is Not Protective and Apoe Genotype Does Not Change This Relationship,” Plos One , 17, e0264575. Cox, D. R. (1972), “Regression Models and Life-tables,” Journal of the Royal Statistical Society: Series B (methodological) , 34, 187–202. Cui, Y., Kosorok, M. R., Sverdrup, E., Wager, S., and Zhu, R. (2023), “Estimating Heteroge-neous Treatment Effects with Right-censored Data Via Causal Survival Forests,” Journal of the Royal Statistical Society Series B: Statistical Methodology , 85, 179–211. 31 Curth, A., Lee, C., and van der Schaar, M. (2021), “Survite: Learning Heterogeneous Treatment Effects From Time-to-event Data,” Advances in Neural Information Processing Systems , 34, 26740–26753. Ding, P. and Li, F. (2018), “Causal Inference,” Statistical Science , 33, 214–237. Donald, S. G. and Newey, W. K. (1994), “Series Estimation of Semilinear Models,” Journal of Multivariate Analysis , 50, 30–40. Dufour, M. C., Archer, L., and Gordis, E. (1992), “Alcohol and the Elderly,” Clinics in Geriatric Medicine , 8, 127–142. Dukes, O., Martinussen, T., Tchetgen Tchetgen, E. J., and Vansteelandt, S. (2019), “On Doubly Robust Estimation of the Hazard Difference,” Biometrics , 75, 100–109. Durrett, R. (2019), Probability: Theory and Examples , Cambridge Series in Statistical and Probabilistic Mathematics, Cambridge University Press, 5th ed. Eilers, P. H. and Marx, B. D. (1996), “Flexible Smoothing with B-splines and Penalties,” 
+
+Statistical Science , 11, 89–121. Feynman, R. P., Hibbs, A. R., and Styer, D. F. (2010), Quantum Mechanics and Path Integrals ,Courier Corporation. Foster, D. J. and Syrgkanis, V. (2023), “Orthogonal Statistical Learning,” The Annals of Statistics , 51, 879–908. Gaıffas, S. and Guilloux, A. (2012), “High-dimensional Additive Hazards Models and the Lasso,” Electronic Journal of Statistics , 6, 522–546. Galanis, D. J., Joseph, C., Masaki, K. H., Petrovitch, H., Ross, G. W., and White, L. (2000), “A Longitudinal Study of Drinking and Cognitive Performance in Elderly Japanese American Men: the Honolulu-asia Aging Study,” American Journal of Public Health , 90, 1254. 32 Gelber, R. P., Launer, L. J., and White, L. R. (2012), “The Honolulu-asia Aging Study: Epidemiologic and Neuropathologic Research on Cognitive Impairment,” Current Alzheimer Research , 9, 664–672. Green, D. P. and Kern, H. L. (2012), “Modeling Heterogeneous Treatment Effects in Survey Experiments with Bayesian Additive Regression Trees,” Public Opinion Quarterly , 76, 491–511. Hahn, P. R., Murray, J. S., and Carvalho, C. M. (2020), “Bayesian Regression Tree Mod-els for Causal Inference: Regularization, Confounding, and Heterogeneous Effects (with Discussion),” Bayesian Analysis , 15, 965–1056. Hamburg, M. A. and Collins, F. S. (2010), “The Path to Personalized Medicine,” New England Journal of Medicine , 363, 301–304. Hastie, T. and Tibshirani, R. (1986), “Generalized additive models,” Statistical science , 1, 297–310. Hill, J. L. (2011), “Bayesian Nonparametric Modeling for Causal Inference,” Journal of Computational and Graphical Statistics , 20, 217–240. Hou, J., Bradic, J., and Xu, R. (2023), “Treatment Effect Estimation Under Additive Hazards Models with High-dimensional Confounding,” Journal of the American Statistical Association , 118, 327–342. Huang, J. and Zhang, C.-H. (2012), “Estimation and Selection Via Absolute Penalized Convex Minimization and Its Multistage Adaptive Applications,” The Journal of Machine Learning Research , 13, 1839–1864. Imai, K. and Ratkovic, M. (2013), “Estimating Treatment Effect Heterogeneity in Randomized Program Evaluation,” The Annals of Applied Statistics , 7, 443 – 470. Ishwaran, H., Kogalur, U. B., Blackstone, E. H., and Lauer, M. S. (2008), “Random Survival Forests,” The Annals of Applied Statistics , 2, 841 – 860. 33 Jiang, R., Lu, W., Song, R., Hudgens, M. G., and Naprvavnik, S. (2017), “Doubly Robust Estimation of Optimal Treatment Regimes for Survival Data—with Application to an HIV/AIDS Study,” The Annals of Applied Statistics , 11, 1763. Kang, S., Lu, W., and Zhang, J. (2018), “On Estimation of the Optimal Treatment Regime with the Additive Hazards Model,” Statistica Sinica , 28, 1539. Kardaun, J. W., White, L., Resnick, H. E., Petrovitch, H., Marcovina, S. M., Saunders, A. M., Foley, D. J., and Havlik, R. J. (2000), “Genotypes and Phenotypes for Apolipoprotein E and Alzheimer Disease in the Honolulu-asia Aging Study,” Clinical Chemistry , 46, 1548–1554. Kennedy, E. H. (2023), “Towards Optimal Doubly Robust Estimation of Heterogeneous Causal Effects,” Electronic Journal of Statistics , 17, 3008–3049. Kooperberg, C., Stone, C. J., and Truong, Y. K. (1995a), “Hazard Regression,” Journal of the American Statistical Association , 90, 78–94. — (1995b), “The L2 Rate of Convergence for Hazard Regression,” Scandinavian Journal of Statistics , 22, 143–157. Kravitz, R. L., Duan, N., and Braslow, J. (2004), “Evidence-based Medicine, Heterogeneity of Treatment Effects, and the Trouble with Averages,” The Milbank Quarterly , 82, 661–687. Künzel, S. R., Sekhon, J. S., Bickel, P. J., and Yu, B. (2019), “Metalearners for Estimating Heterogeneous Treatment Effects Using Machine Learning,” Proceedings of the National Academy of Sciences , 116, 4156–4165. Lagakos, S. W. (1979), “General Right Censoring and Its Impact on the Analysis of Survival Data,” Biometrics , 35, 139–156. Lang, S. (1993), Real and Functional Analysis , Graduate Texts in Mathematics, 142, New York, NY: Springer New York, 3rd ed. 34 Lin, D. Y. and Ying, Z. (1994), “Semiparametric Analysis of the Additive Risk Model,” 
+
+Biometrika , 81, 61–71. Luedtke, A. and Chung, I. (2024), “One-step Estimation of Differentiable Hilbert-valued Parameters,” The Annals of Statistics , 52, 1534–1563. Luo, J., Rava, D., Bradic, J., and Xu, R. (2025), “Doubly Robust Estimation Under a Possibly Misspecified Marginal Structural Cox Model,” Biometrika , 112, asae065. Martinussen, T., Vansteelandt, S., Gerster, M., and Hjelmborg, J. B. (2011), “Estimation of Direct Effects for Survival Data By Using the Aalen Additive Hazards Model,” Journal of the Royal Statistical Society Series B: Statistical Methodology , 73, 773–788. Meng, X. and D’arcy, C. (2012), “Education and Dementia in the Context of the Cognitive Reserve Hypothesis: a Systematic Review with Meta-analyses and Qualitative Analyses,” 
+
+Plos One , 7, e38268. Newey, W. K. (1990), “Semiparametric Efficiency Bounds,” Journal of Applied Econometrics ,5, 99–135. — (1994), “The Asymptotic Variance of Semiparametric Estimators,” Econometrica: Journal of the Econometric Society , 1349–1382. — (1997), “Convergence Rates and Asymptotic Normality for Series Estimators,” Journal of Econometrics , 79, 147–168. Neyman, J. (1959), “Optimal Asymptotic Tests of Composite Hypotheses,” Probability and Statsitics , 213–234. Nie, X. and Wager, S. (2021), “Quasi-oracle Estimation of Heterogeneous Treatment Effects,” 
+
+Biometrika , 108, 299–319. O’Sullivan, F. (1988), “Nonparametric Estimation of Relative Risk Using Splines and Cross-validation,” Siam Journal on Scientific and Statistical Computing , 9, 531–542. 35 Picciotto, S., Hernán, M. A., Page, J. H., Young, J. G., and Robins, J. M. (2012), “Structural Nested Cumulative Failure Time Models to Estimate the Effects of Interventions,” Journal of the American Statistical Association , 107, 886–900. Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., and Tibshirani, R. (2018), “Some Methods for Heterogeneous Treatment Effect Estimation in High Dimensions,” 
+
+Statistics in Medicine , 37, 1767–1787. Robins, J. and Hernan, M. (2008), “Estimation of the Causal Effects of Time-varying Expo-sures,” Chapman & Hall/crc Handbooks of Modern Statistical Methods , 553–599. Robins, J. M. (2000), “Marginal Structural Models Versus Structural Nested Models As Tools for Causal Inference,” in Statistical Models in Epidemiology, the Environment, and Clinical Trials , Springer, pp. 95–133. Robins, J. M. and Hernan, M. A. (2020), Causal Inference: What If , Chapman & Hall/CRC. Robins, J. M., Hernan, M. A., and Brumback, B. (2000), “Marginal Structural Models and Causal Inference in Epidemiology,” Epidemiology , 11, 550–560. Robinson, P. M. (1988), “Root-n-consistent Semiparametric Regression,” Econometrica: Journal of the Econometric Society , 931–954. Rosenbaum, P. R. and Rubin, D. B. (1983), “The Central Role of the Propensity Score in Observational Studies for Causal Effects,” Biometrika , 70, 41–55. Rubin, D. B. (1980), “Randomization Analysis of Experimental Data: the Fisher Randomiza-tion Test Comment,” Journal of the American Statistical Association , 75, 591–593. Ruppert, D. (2002), “Selecting the Number of Knots for Penalized Splines,” Journal of Computational and Graphical Statistics , 11, 735–757. Ruppert, D., Wand, M. P., and Carroll, R. J. (2003), Semiparametric Regression , Cambridge Series in Statistical and Probabilistic Mathematics, Cambridge university press. 36 Sabia, S., Kivimaki, M., Kumari, M., Shipley, M. J., and Singh-Manoux, A. (2010), “Effect of Apolipoprotein E ε4 on the Association Between Health Behaviors and Cognitive Function in Late Midlife,” Molecular Neurodegeneration , 5, 23. Shalit, U., Johansson, F. D., and Sontag, D. (2017), “Estimating individual treatment effect: generalization bounds and algorithms,” in Proceedings of the 34th International Conference on Machine Learning , PMLR, vol. 70, pp. 3076–3085. Stone, C. J. (1982), “Optimal Global Rates of Convergence for Nonparametric Regression,” 
+
+The Annals of Statistics , 10, 1040–1053. Stone, C. J., Hansen, M. H., Kooperberg, C., and Truong, Y. K. (1997), “Polynomial Splines and Their Tensor Products in Extended Linear Modeling: 1994 Wald Memorial Lecture,” 
+
+The Annals of Statistics , 25, 1371–1470. Van der Vaart, A. W. (2000), Asymptotic Statistics , vol. 3, Cambridge university press. van der Vaart, A. W. and Wellner, J. A. (1996), Weak Convergence and Empirical Processes ,Springer Series in Statistics, New York, NY: Springer New York. VanderWeele, T. (2009), “Further Remarks Concerning the Consistency Assumption,” Epi-demiology , 20, 880–883. Vansteelandt, S. and Joffe, M. (2014), “Structural Nested Models and G-estimation: the Partially Realized Promise,” Statistical Science , 29, 707 – 731. Wager, S. and Athey, S. (2018), “Estimation and Inference of Heterogeneous Treatment Effects Using Random Forests,” Journal of the American Statistical Association , 113, 1228–1242. Wang, Y., Ying, A., and Xu, R. (2024), “Learning Treatment Effects Under Covariate Dependent Left Truncation and Right Censoring,” ArXiv:2411.18879. Willke, R. J., Zheng, Z., Subedi, P., Althin, R., and Mullins, C. D. (2012), “From Concepts, 37 Theory, and Evidence of Heterogeneity of Treatment Effects to Methodological Approaches: a Primer,” Bmc Medical Research Methodology , 12, 185. Wolfson, J. (2011), “EEBoost: a General Method for Prediction and Variable Selection Based on Estimating Equations,” Journal of the American Statistical Association , 106, 296–305. Xu, S., Cobzaru, R., Finkelstein, S. N., Welsch, R. E., Ng, K., and Shahn, Z. (2024), “Estimating Heterogeneous Treatment Effects on Survival Outcomes Using Counterfactual Censoring Unbiased Transformations,” ArXiv:2401.11263. Xu, Y., Ignatiadis, N., Sverdrup, E., Fleming, S., Wager, S., and Shah, N. (2023), “Treatment Heterogeneity for Survival Outcomes,” in Handbook of Matching and Weighting Adjustments for Causal Inference , eds. Zubizarreta, J. R., Stuart, E. A., Small, D. S., and Rosenbaum, P. R., Routledge, chapter preprint available on arXiv:2207.07758. Zanjani, F., Downer, B. G., Kruger, T. M., Willis, S. L., and Schaie, K. W. (2013), “Alcohol Effects on Cognitive Change in Middle-aged and Older Adults,” Aging & Mental Health , 17, 12–23. Zhu, J. and Gallego, B. (2020), “Targeted Estimation of Heterogeneous Treatment Effect in Observational Survival Analysis,” Journal of Biomedical Informatics , 107, 103474. 38

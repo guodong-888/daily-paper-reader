@@ -1,0 +1,39 @@
+{
+  "label": "2026-08-23",
+  "date": "2026-08-23",
+  "generated_at": "2026-08-23T20:04:16",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202608/23/2608.19823v1-simultaneous-3d-co-registered-perfusion-and-oxygenation-with-ulm-photoacoustic-imaging-and-a-planar-matrix-array",
+      "section": "quick",
+      "title_en": "Simultaneous 3D co-registered perfusion and oxygenation with ULM, photoacoustic imaging, and a planar matrix array",
+      "authors": "Léa Davenet, Jacques Battaglia, Franck Lager, Pascal Dargent, Charlotte Lussey-Lepoutre, Bertrand Tavitian, Olivier Couture, Lori Bridal, Jérôme Gateau",
+      "date": "2026-08-20",
+      "pdf": "https://arxiv.org/pdf/2608.19823v1",
+      "score": "7.0",
+      "evidence": "提供配准的灌注与氧合成像，是皮瓣存活的关键因素",
+      "tldr": "单一模态难以同时评估组织氧合与微血管灌注，而多光谱光声成像和超声定位显微镜具有互补性。本文提出使用单一平面超声矩阵阵列同时实现两种模态的3D共配准成像。体外实验显示配准精度达20微米，血氧饱和度测量误差仅5%；体内小鼠实验成功表征了血管氧合与灌注。该平台为双模态成像提供了实验验证，并识别了平面阵列的有限视角伪影。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Objective. Joint assessment of tissue oxygenation and microvascular perfusion could offer valuable insights into vascular function across a wide range of biomedical applications. Multispectral photoacoustic imaging enables the evaluation of blood oxygenation, while ultrasound localization microscopy provides sub-diffraction visualization of the microvasculature and blood perfusion. Here, we combine these two complementary modalities to simultaneously generate co-registered, volumetric maps of blood oxygenation and perfusion. Approach. Photoacoustic imaging and ultrasound localization microscopy are both ultrasound-based techniques. We developed an imaging platform that integrates the two modalities using a single planar ultrasonic matrix array, a state-of-the-art array for 3D ultrasound localization microscopy. The bimodal platform was validated in vitro using vessel-mimicking phantoms, then in vivo in mice. Main results. In vitro bimodal images of tubes injected with contrast agents demonstrated a coregistration accuracy of 20 $μ$m and revealed complementary structural and functional information. Multispectral photoacoustic imaging achieved oxygen saturation measurements spanning the physiological range (60-95 %) with 5 % accuracy using only five optical wavelengths. In vivo imaging of healthy mouse tissues with known vascular anatomy further demonstrated the ability of the proposed platform to jointly characterize blood oxygenation and microvascular perfusion. Significance. This work experimentally validates a bimodal photoacoustic imaging-ultrasound localization microscopy approach using a planar ultrasound array. We characterized the functional imaging performance of this platform and identified limited-view artifacts inherent to this array configuration in photoacoustic imaging. These findings establish a foundation for adopting the platform in future studies of murine models and for advancing this promising bimodal approach.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/23/2608.19596v1-martingale-r-learner-estimating-time-varying-heterogeneous-treatment-effects-for-time-to-event-outcomes",
+      "section": "quick",
+      "title_en": "Martingale R-learner: Estimating Time-varying Heterogeneous Treatment Effects for Time-to-event Outcomes",
+      "authors": "Jue Hou, Yuchen Qi, Ronghui Xu",
+      "date": "2026-08-20",
+      "pdf": "https://arxiv.org/pdf/2608.19596v1",
+      "score": "6.0",
+      "evidence": "提供用于异质性处理效应的生存分析方法，适用于皮瓣存活影响因素研究",
+      "tldr": "针对生存数据中随时间变化的异质性处理效应估计问题，现有方法受nuisance模型偏差影响。我们提出鞅R学习器，将条件鞅残差分解为风险集倾向得分残差和边际鞅残差，并推广Neyman正交性，构建非参数正交分数框架。该方法能灵活结合机器学习，达到最优非参数估计率并具oracle性质。模拟实验和 Honolulu-Asia Aging Study 数据应用验证了其性能，为精准医疗提供可靠工具。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "Biological research and clinical evidence suggest that treatment response may vary substantially along characteristics, such as comorbidities, genetic variants, environmental, or socio-economic factors. Future precision medicine requires accurate assessment of heterogeneous treatment effects (HTE) to guide optimal clinical decisions at the individual level. We introduce a functional score framework that extends the traditional estimating equations for survival data to nonparametric HTE and generalize the Neyman orthogonality accordingly, thus filling a methodological as well as theoretical gap. Under the Neyman orthogonal functional score framework, we developed the martingale R-learner based on a decomposition of the conditional martingale residuals into residuals of the risk-set propensity score and the marginal martingale, thereby reducing the impact of estimation bias in HTE from nuisance models including (1) marginal survival, and (2) risk-set propensity scores. This enables leveraging advances in machine learning and incorporates flexible estimators for the nuisance functions and attaining the standard optimal nonparametric estimation rate with the oracle property. Numerical experiments demonstrated empirical performance consistent with the theory. We applied the martingale R-learner to estimate the effect of alcohol on dementia using the Honolulu-Asia Aging Study data.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,97 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-23T20:02:06.825033+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.19823v1",
+      "source": "arxiv",
+      "title": "Simultaneous 3D co-registered perfusion and oxygenation with ULM, photoacoustic imaging, and a planar matrix array",
+      "abstract": "Objective. Joint assessment of tissue oxygenation and microvascular perfusion could offer valuable insights into vascular function across a wide range of biomedical applications. Multispectral photoacoustic imaging enables the evaluation of blood oxygenation, while ultrasound localization microscopy provides sub-diffraction visualization of the microvasculature and blood perfusion. Here, we combine these two complementary modalities to simultaneously generate co-registered, volumetric maps of blood oxygenation and perfusion. Approach. Photoacoustic imaging and ultrasound localization microscopy are both ultrasound-based techniques. We developed an imaging platform that integrates the two modalities using a single planar ultrasonic matrix array, a state-of-the-art array for 3D ultrasound localization microscopy. The bimodal platform was validated in vitro using vessel-mimicking phantoms, then in vivo in mice. Main results. In vitro bimodal images of tubes injected with contrast agents demonstrated a coregistration accuracy of 20 $μ$m and revealed complementary structural and functional information. Multispectral photoacoustic imaging achieved oxygen saturation measurements spanning the physiological range (60-95 %) with 5 % accuracy using only five optical wavelengths. In vivo imaging of healthy mouse tissues with known vascular anatomy further demonstrated the ability of the proposed platform to jointly characterize blood oxygenation and microvascular perfusion. Significance. This work experimentally validates a bimodal photoacoustic imaging-ultrasound localization microscopy approach using a planar ultrasound array. We characterized the functional imaging performance of this platform and identified limited-view artifacts inherent to this array configuration in photoacoustic imaging. These findings establish a foundation for adopting the platform in future studies of murine models and for advancing this promising bimodal approach.",
+      "authors": [
+        "Léa Davenet",
+        "Jacques Battaglia",
+        "Franck Lager",
+        "Pascal Dargent",
+        "Charlotte Lussey-Lepoutre",
+        "Bertrand Tavitian",
+        "Olivier Couture",
+        "Lori Bridal",
+        "Jérôme Gateau"
+      ],
+      "primary_category": "physics.med-ph",
+      "categories": [
+        "physics.med-ph"
+      ],
+      "published": "2026-08-20T09:21:13+00:00",
+      "link": "https://arxiv.org/pdf/2608.19823v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "provides co-registered perfusion and oxygenation imaging, key factors for flap survival",
+      "llm_evidence_cn": "提供配准的灌注与氧合成像，是皮瓣存活的关键因素",
+      "llm_evidence": "提供配准的灌注与氧合成像，是皮瓣存活的关键因素",
+      "canonical_evidence": "提供配准的灌注与氧合成像，是皮瓣存活的关键因素",
+      "llm_tldr_en": "This paper presents a multimodal imaging platform combining ultrasound localization microscopy and multispectral photoacoustic imaging to simultaneously map tissue perfusion and oxygenation, offering a tool to assess vascular function relevant to flap viability.",
+      "llm_tldr_cn": "皮瓣存活高度依赖组织灌注与氧合水平，但目前缺乏同步三维评估手段。该研究将超声定位显微成像与多光谱光声成像集成于平面矩阵阵列平台，实现了微血管灌注与血氧饱和度的同时三维共配准成像。实验证明了该方法在体获取血管功能参数的能力，为皮瓣缺血与代谢状态的动态评估提供了一种有前景的无创影像工具。",
+      "llm_tldr": "皮瓣存活高度依赖组织灌注与氧合水平，但目前缺乏同步三维评估手段。该研究将超声定位显微成像与多光谱光声成像集成于平面矩阵阵列平台，实现了微血管灌注与血氧饱和度的同时三维共配准成像。实验证明了该方法在体获取血管功能参数的能力，为皮瓣缺血与代谢状态的动态评估提供了一种有前景的无创影像工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.19596v1",
+      "source": "arxiv",
+      "title": "Martingale R-learner: Estimating Time-varying Heterogeneous Treatment Effects for Time-to-event Outcomes",
+      "abstract": "Biological research and clinical evidence suggest that treatment response may vary substantially along characteristics, such as comorbidities, genetic variants, environmental, or socio-economic factors. Future precision medicine requires accurate assessment of heterogeneous treatment effects (HTE) to guide optimal clinical decisions at the individual level. We introduce a functional score framework that extends the traditional estimating equations for survival data to nonparametric HTE and generalize the Neyman orthogonality accordingly, thus filling a methodological as well as theoretical gap. Under the Neyman orthogonal functional score framework, we developed the martingale R-learner based on a decomposition of the conditional martingale residuals into residuals of the risk-set propensity score and the marginal martingale, thereby reducing the impact of estimation bias in HTE from nuisance models including (1) marginal survival, and (2) risk-set propensity scores. This enables leveraging advances in machine learning and incorporates flexible estimators for the nuisance functions and attaining the standard optimal nonparametric estimation rate with the oracle property. Numerical experiments demonstrated empirical performance consistent with the theory. We applied the martingale R-learner to estimate the effect of alcohol on dementia using the Honolulu-Asia Aging Study data.",
+      "authors": [
+        "Jue Hou",
+        "Yuchen Qi",
+        "Ronghui Xu"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-08-20T03:20:45+00:00",
+      "link": "https://arxiv.org/pdf/2608.19596v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Provides a survival analysis method for heterogeneous treatment effects, applicable to studying factors influencing flap survival",
+      "llm_evidence_cn": "提供用于异质性处理效应的生存分析方法，适用于皮瓣存活影响因素研究",
+      "llm_evidence": "提供用于异质性处理效应的生存分析方法，适用于皮瓣存活影响因素研究",
+      "canonical_evidence": "提供用于异质性处理效应的生存分析方法，适用于皮瓣存活影响因素研究",
+      "llm_tldr_en": "The paper introduces a functional score framework and martingale R-learner for estimating time-varying heterogeneous treatment effects on time-to-event outcomes, filling a methodological gap relevant to precision medicine.",
+      "llm_tldr_cn": "生物医学与临床证据表明治疗反应会随合并症、遗传变异等因素变化，但现有方法难以对时间-事件结局进行非参数异质性处理效应估计。本文提出函数化评分框架，拓展了生存数据的估计方程，并推广了Neyman正交性；据此开发了Martingale R学习器，基于分解实现对随时间变化的处理效应的稳健估计。该方法填补了相关理论与方法学空白，为精准医学中生存结局的个体化治疗评估提供了通用统计工具。",
+      "llm_tldr": "生物医学与临床证据表明治疗反应会随合并症、遗传变异等因素变化，但现有方法难以对时间-事件结局进行非参数异质性处理效应估计。本文提出函数化评分框架，拓展了生存数据的估计方程，并推广了Neyman正交性；据此开发了Martingale R学习器，基于分解实现对随时间变化的处理效应的稳健估计。该方法填补了相关理论与方法学空白，为精准医学中生存结局的个体化治疗评估提供了通用统计工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
