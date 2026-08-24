@@ -1,0 +1,1924 @@
+Title: Causal Survival Forests with Negative Controls
+
+URL Source: https://arxiv.org/pdf/2608.19749v1
+
+Published Time: Fri, 21 Aug 2026 00:39:28 GMT
+
+Number of Pages: 41
+
+Markdown Content:
+# Causal Survival Forests with Negative Controls 
+
+Zijun Gao ∗ Kyounggeui Hong † Leyi Ma ‡
+
+Qianli Wu § Zachary Izzo ¶ Ruishan Liu ‖
+
+August 21, 2026 
+
+Abstract 
+
+We study heterogeneous treatment-effect (HTE) estimation in observational survival studies commonly associated with both censored outcomes and unmeasured confounding. We integrate causal survival forests (CSF) with negative controls (NC) from proximal causal inference and introduce Negative Control Causal Survival Forests (NC-CSF), a flexible nonparametric HTE learner for survival analysis. Our approach uses a loss that incorporates proxy variables and Neyman orthogonalization to train the random forest, thereby mitigating bias from unobserved confounding and gaining robustness to nuisance estimation. Through extensive simulations span-ning varying levels of confounding, proxy relevance, and censoring mechanisms, we demonstrate that NC-CSF substantially reduces bias and estimation error relative to existing baselines. We further demonstrate the practical utility of our method on various clinical datasets, where it confirms several existing findings and also reveals new interpretable patterns of treatment-effect heterogeneity. To facilitate practical use, we provide an end-to-end Python implementation of NC-CSF that carefully handles implementation details such as nuisance estimation and clipping. 
+
+# 1 Introduction 
+
+Time-to-event outcomes are common in treatment-effect analysis, especially in clinical trials and biomedical studies [19, 16]. These survival outcomes are frequently right-censored, for example because follow-up ends before the event is observed or participants leave the study early. In recent years, treatment-effect heterogeneity for survival outcomes has received increasing attention [12, 31, 13, 8, 14], where the causal effect of treatment may vary across subgroups defined by baseline covariates. To model such heterogeneity flexibly in survival settings, machine-learning-assisted estimators have been developed. Among them, causal survival forests [8, 35, 2] provide a promising framework, as they can estimate heterogeneous treatment effects in a flexible and nonparametric manner. Many existing methods for heterogeneous treatment-effect analysis with survival outcomes rely on an ignorability assumption, that is, they assume there is no unobserved confounding. However, this assumption may be unrealistic in many observational survival datasets, where unobserved confounding 
+
+> ∗
+
+Department of Data Sciences and Operations, USC Marshall School of Business, University of Southern California. 
+
+zijungao@marshall.usc.edu 
+
+> †
+
+Department of Computer Science, University of Southern California. hongkyou@usc.edu 
+
+> ‡
+
+Department of Computer Science, University of Southern California. rma99604@usc.edu 
+
+> §
+
+Department of Computer Science, University of Southern California. ewu96023@usc.edu 
+
+> ¶
+
+NEC Labs America. zle.izzo@gmail.com 
+
+> ‖
+
+Department of Computer Science, University of Southern California. ruishanzliu@gmail.com 
+
+1arXiv:2608.19749v1 [stat.ME] 20 Aug 2026 can induce bias in treatment-effect estimates when it is not properly adjusted for [16, 15]. To address unobserved confounding, proximal causal inference [25, 33, 9, 36, 32, 22] offers a promising framework by leveraging negative-control treatments and negative-control outcomes, that is, auxiliary variables that are informative about latent confounders while satisfying exclusion-type restrictions with respect to the primary treatment and outcome. Negative-control variable assumptions may be more suitable in some biomedical applications than the classical no-unmeasured-confounding assumption, for example, pre-treatment measurements may share latent risk factors while remaining unaffected by treatment. This literature has also recently been extended to survival settings with censored data, primarily for average treatment effects and under parametric modeling assumptions [21]. Motivated by the practical need for flexible nonparametric modeling of heterogeneous treatment effects, as well as by the appeal of addressing unobserved confounding via negative controls, we connect proximal causal inference with causal survival forests and develop negative-control causal survival forests (NC-CSF). In particular, our contributions are as follows. 1. Method . We design a loss for random forests to learn heterogeneous treatment effects with cen-sored survival outcomes that explicitly incorporates negative controls to adjust for unobserved confounding and employs Neyman orthogonalization to achieve robustness to nuisance-function estimation. 2. Theory . We provide theoretical justification for the proposed approach by showing how the negative-control-based loss mitigates bias from unobserved confounding and by establishing a local doubly robust property. 3. Applications . We evaluate the proposed method on both simulated and real datasets. In particular, on an AIDS clinical trial dataset, our method suggests that the fitted RMST treatment effect is negative for younger individuals and positive for older individuals, consistent with existing treatment recommendations, whereas existing methods yield uniformly positive estimates across ages. 4. Packages . We provide a ready-to-use Python package for the proposed method, where we have carefully addressed several practical issues required for stable finite-sample performance, such as nuisance estimation and variable clipping. 
+
+Organization. Section 2 introduces the problem setup and background. Section 3 presents our proposed NC-CSF estimator and provides its theoretical justification. Section 4 studies NC-CSF’s performance in simulations. Section 5 illustrates the method on real clinical data. We conclude with a discussion in Section 6. Proofs and additional numerical results are deferred to the appendix. 
+
+# 2 Background 
+
+We first formulate the problem of heterogeneous treatment-effect estimation in the presence of right censoring and unmeasured confounding. We then review the two key ingredients underlying our proposal: causal survival forests and negative controls. 
+
+2.1 Problem Formulation 
+
+We follow the potential-outcome framework [29, 16] and consider an observational survival study with 
+
+n units. Each unit is associated with a binary treatment Ai ∈ { 0, 1}, observed baseline covariates 
+
+Xi, and unobserved confounders Ui. Let Ti(a) and Ci(a), for a ∈ { 0, 1}, denote the potential 2event time and potential censoring time, respectively. The realized event and censoring time are given by Ti = Ti(Ai) and Ci = Ci(Ai), and the observed survival time and censoring indicator are 
+
+Yi = min( Ti, C i) and ∆i = I{Ti ≤ Ci}. Let h > 0 be a fixed horizon, and we define the horizon-adjusted follow-up time and indicator by Y (h) 
+
+> i
+
+= min( Yi, h ) and ∆(h) 
+
+> i
+
+= ∆ i 1{Yi ≤ h} + 1{Yi > h }.We consider two sets of causal estimands derived from the potential event times. The first is the restricted mean survival time (RMST), defined by min {Ti(a), h }, and the second is the survival probability at horizon h, defined by I{Ti(a) > h }. Let Gi(a; h) denote either of these two functionals, and use Gi(h) to denote Gi(Ai; h). The associated heterogeneous treatment-effect estimands are 
+
+τ := E [Gi(1; h) − Gi(0; h)] ,τ (x) := E [Gi(1; h) − Gi(0; h) | Xi = x] ,τ w(x) := E [w(Xi, U i)( Gi(1; h) − Gi(0; h)) | Xi = x] ,τ (x, u ) := E [Gi(1; h) − Gi(0; h) | Xi = x, U i = u] ,
+
+where w(Xi, U i) ≥ 0 denotes some weight function such that E[w(Xi, U i) | Xi] = 1 (we define a specific weight function in Section 3.4). Here, τ is the average treatment effect, τ (x) is the treatment effect conditional on the observed covariates, τ (x, u ) is the treatment effect conditional on the full confounding state, and τ w(x) denotes a weighted average of τ (x, U i) over the conditional distribution of Ui given Xi = x.We state the assumptions needed for our proposal. We assume the stable unit treatment value assumption (SUTVA), which says there is no interference between units and no hidden versions of treatment. We also assume overlap given both Xi and Ui, namely 
+
+0 < P (Ai = 1 | Xi, U i) < 1, a.s. Importantly, we do not assume ignorability given the observed covariates Xi, and we allow treatment assignment to depend on the latent confounder Ui.
+
+2.2 Causal Survival Forest Preliminaries 
+
+To review the causal survival forests (CSF) in [8] under no unmeasured confounding, we first introduce some new notation. Let e(Xi) = P(Ai = 1 | Xi) denote the propensity score, and let 
+
+m(Xi) = E[Gi(h) | Xi] denote the marginal mean function. Let SC (t | Xi, A i) = P(Ci > t | Xi, A i)
+
+and ΛC (t | Xi, A i) = R t 
+
+> 0
+
+λC (u | Xi, A i) du denote the conditional censoring survival function and cumulative hazard, respectively, where λC (t | Xi, A i) is the conditional censoring hazard function defined by λC (t | Xi, A i) = lim ∆t→0 P(t ≤ Ci < t + ∆ t | Ci ≥ t, X i, A i)/∆t.In CSF, the following loss is used for node splitting and leaf fitting within each tree, 
+
+ℓCSF =
+
+> n
+
+X
+
+> i=1
+
+
+
+ΓCSF  
+
+> i
+
+(h) − m(Xi) − τ (Xi) Ai − e(Xi)2
+
+,
+
+ΓCSF  
+
+> i
+
+(h) = ∆(h) 
+
+> i
+
+Gi(h) +  1 − ∆(h)
+
+> i
+
+ρAi
+
+ Y (h) 
+
+> i
+
+, X i; h
+
+SC
+
+ Y (h) 
+
+> i
+
+| Xi, A i
+
+ −
+
+Z Y (h)
+
+> i
+> 0
+
+ρAi (t, X i; h)
+
+SC
+
+ t | Xi, A i
+
+ dΛC
+
+ t | Xi, A i
+
+,
+
+where ΓCSF  
+
+> i
+
+(h) is the censoring-corrected outcome and ρa(t, X i; h) = E[Gi(a; h) | Ti(a) > t, X i]
+
+denotes the expected outcome conditional on the unit surviving to time t. Results for uncensored data can be recovered as a special case of the censored setting by assuming Ci(0) = Ci(1) = ∞, a.s. A key property of this construction is its robustness to nuisance-function estimation (here the nuisance functions include ρa, SC , ΛC , m, and e). In particular, the associated score function is 3UZ X WA (Y, ∆) 
+
+> Unobserved
+
+Figure 1: Directed acyclic graph illustrating the assumptions of the negative-control treatment Z
+
+and negative-control outcome W .Neyman orthogonal, meaning that its pathwise derivative regarding the nuisance functions is zero at the truth, and only second-order nuisance estimation errors remain locally. In Section 3, we extend the loss of CSF to incorporate negative controls to address unobserved confounders. 
+
+2.3 Negative Controls and Bridge Functions Preliminaries 
+
+To review negative controls and bridge functions for latent confounders, we first introduce some additional notation. The standard proximal causal inference framework [25, 33, 9] assumes access to a negative-control outcome proxy Wi and a negative-control treatment proxy Zi. Intuitively, Wi is associated with the latent confounder but is not affected by the treatment, while Zi is associated with treatment assignment but does not directly affect the outcome. The conditional independence structure is shown in Figure 1; the formalized assumption adapted to our setting is in (1). To remove bias induced by unobserved confounding, a common way of using negative controls is through bridge functions. In the standard setting of estimating the average treatment effect, one may consider bridge functions satisfying E [fa(Wi, X i) | Xi, U i] = E [Yi(a) | Xi, U i]. When such functions exist, a key benefit of these bridge relations is that, although Ui is not observed, we have E[fa(Wi, X i)] = E[E[fa(Wi, X i) | Xi, U i]] = E[E[Yi(a) | Xi, U i]] = E[Yi(a)] , so that unbiased estimation can still be achieved using observable variables alone. In existing work, estimators are typically formed by averaging bridge-function-based functionals over units, whereas we instead use the bridge functions to construct a loss to train random forests that allows more flexible modeling of 
+
+τ (x) and facilitates the use of well-developed machine learning tools. 
+
+# 3 Method 
+
+3.1 Negative Control and Bridge Functions for Survival Analysis 
+
+In this paper, we assume access to both a negative-control outcome and a negative-control treatment, satisfying the conditional independence structure 
+
+(Ai, Z i) ⊥ (Ti(a), C i(a), W i) | Ui, X i. (1) This means that, conditional on the full confounding state (Xi, U i), the treatment Ai and negative-control treatment Zi are independent of the potential event time, the potential censoring time, and the negative-control outcome Wi. Although the assumption (1) is not testable from the observed data 4alone, it may be plausible in biomedical studies by temporal ordering; for example, pre-treatment measurements can serve as negative-control outcomes as they may share latent risk factors [33, 21]. Given Wi and Zi, we consider bridge functions fa(w, x ), a ∈ { 0, 1}, and q(z, x ) satisfying 
+
+E [fa(Wi, X i) | Xi, U i] = E [Gi(a; h) | Xi, U i] ,
+
+E [q(Zi, X i) | Xi, U i] = P(Ai = 1 | Xi, U i). (2) These bridge relations imply that, although Ui is unobserved, the latent conditional outcome and treatment mechanisms can be represented through observable functions of (Wi, X i) and (Zi, X i),respectively. We note that our specification of q differs mildly from that in [25], where the conditional expectation of the bridge function is specified to match 1/P(Ai = a | Xi, U i).Finally, for censoring, we assume the standard conditional independent censoring assumption [19, 8] given the observed variables including the negative controls: 
+
+Ci(a) ⊥ Ti(a) | Xi, W i, Z i, A i = a, a ∈ { 0, 1}. (3) We next introduce some additional notation for censored survival outcomes in the presence of negative-control treatment and outcome variables. Let m(x, w, z ) = E[Gi(h) | Xi = x, W i = w, Z i = z] denote the marginal mean function. Define SC (t | Xi, W i, Z i, A i), ρa(t | Xi, W i, Z i), ΛC (t | Xi, W i, Z i, A i),
+
+λC (t | Xi, W i, Z i, A i) analogously to Section 2.2. 
+
+3.2 Oracle NC-CSF 
+
+We construct the loss for NC-CSF using both bridge functions q and fa, and then fit a random forest by minimizing it. We refer to this as the oracle NC-CSF, since we assume that all true nuisance functions, including the bridge functions, are provided. Below we focus on the loss construction. Analogous to the residualization in [28, 27], we introduce residualized treatment and outcome, 
+
+Ares  
+
+> i
+
+= Ai − qi,Y res  
+
+> i
+
+= ∆(h)
+
+> i
+
+ Y (h) 
+
+> i
+
+− mi
+
+ +  1 − ∆(h)
+
+> i
+
+  ρAi (Y (h) 
+
+> i
+
+, X i, W i, Z i; h) − mi
+
+
+
+SC (Y (h) 
+
+> i
+
+| Xi, W i, Z i, A i)
+
+−
+
+Z Y (h)
+
+> i
+> 0
+
+dΛC (t | Xi, W i, Z i, A i)
+
+SC (t | Xi, W i, Z i, A i)
+
+ ρAi (t, X i, W i, Z i; h) − mi
+
+ dt. 
+
+(4) Here, Ares  
+
+> i
+
+is the bridge-adjusted treatment residual satisfying E[Ares  
+
+> i
+
+| Xi, U i] = 0 , and Y res  
+
+> i
+
+denotes the censoring-corrected residualized outcome. In the absence of censoring, Y res  
+
+> i
+
+simplifies to Y (h) 
+
+> i
+
+−mi,as illustrated in Example 3.1. Finally, we define the NC-CSF loss based on the residuals again motivated by [28, 27], 
+
+ℓNC -CSF =
+
+> n
+
+X
+
+> i=1
+
+(Y res  
+
+> i
+
+− τ (Xi) Ares  
+
+> i
+
+)2 . (5) 
+
+Example 3.1 (Uncensored case) If there is no censoring, then Ci = ∞ almost surely and hence 
+
+∆i = 1 for all i, ∆(h) 
+
+> i
+
+= 1 , SC (t | Xi, W i, Z i, A i) = 1 , ΛC (t | Xi, W i, Z i, A i) = 0 , and thus 
+
+Y res  
+
+> i
+
+= Y (h) 
+
+> i
+
+− mi.
+
+53.3 Empirical NC-CSF 
+
+In this section, we discuss how to estimate the nuisance quantities and plug them into the oracle loss for fitting, yielding the (empirical) NC-CSF. Because Ui is unobserved, the latent bridge equations in (2) cannot be evaluated directly from the observed data. We therefore use the observable conditional moment equations stated in Proposition 3.2 below, which do not involve Ui and are implied by Eq. (1) and Eq. (2). 
+
+Proposition 3.2 Suppose f and q satisfy (2) , then, for each a,
+
+E[Ai − q(Zi, X i) | Xi, W i] = 0 , E[Gi(a; h) − fa(Wi, X i) | Xi, Z i, A i = a] = 0 . (6) 
+
+Conversely, if the following completeness conditions hold: E[r(Xi, U i) | Xi, W i] = 0 a.s. implies 
+
+r(Xi, U i) = 0 a.s. and E[s(Xi, U i) | Xi, Z i, A i = a] = 0 a.s. implies s(Xi, U i) = 0 a.s. for any square-integrable measurable function r, s, then (6) implies (2) .
+
+When censoring is present, Gi(a; h) may be unobserved. Under (1) and (3), it can be replaced by an inverse censoring probability weighted pseudo-outcome that satisfies the same conditional moment equation (details in the Appendix). To learn survival-related nuisance functions, under (3), those nuisance functions are not required to satisfy conditions involving the unobserved confounder 
+
+Ui, and thus can be estimated using standard survival-analysis procedures, such as Cox models. Finally, to avoid overfitting in the nuisance stage, we employ cross-fitting [5]. See Algorithm 1 for a brief summary. Additional implementation details and a more detailed version of Algorithm 1 are deferred to the Appendix. 
+
+Algorithm 1 Censored NC-CSF (Brief) 
+
+Require: Data {(Xi, W i, Z i, A i, Y i, ∆i)}ni=1 , causal estimand, horizon h, number of folds K 
+
+> 1:
+
+Split the sample into K folds for cross-fitting.  
+
+> 2:
+
+for k = 1 , . . . , K do  
+
+> 3:
+
+Fit the censoring model, survival models, treatment and outcome bridges on the training folds.  
+
+> 4:
+
+Construct Ares  
+
+> i
+
+, Y res  
+
+> i
+
+in (4) on the held-out fold.  
+
+> 5:
+
+end for  
+
+> 6:
+
+Fit the final causal forest on {(Xi, A res  
+
+> i
+
+, Y res  
+
+> i
+
+)}ni=1 with the loss (5).  
+
+> 7:
+
+return bτ (·)
+
+3.4 Theories 
+
+Proposition 3.3 (Validity of the NC-CSF score) Assume (1) and (2) . Then the score has conditional mean zero given Xi = x at 
+
+τ w(x) = E(Ai − q(Zi, X i)) 2τ (Xi, U i) | Xi = x
+
+E[( Ai − q(Zi, X i)) 2 | Xi = x] ,
+
+where τ (x, u ) = E[Y (1) − Y (0) | X = x, U = u].In particular, when the latent variable U does not modify the treatment effect beyond X, that is, 
+
+τ (x, u ) = τ (x), we have τ w(x) = τ (x).
+
+6Remark 3.4 (Interpretation of the weighted target) We treat τ w(x) as the general NC-CSF estimand. It remains a heterogeneous treatment-effect target over the observed covariates even when the latent confounder also modifies treatment effects. By 
+
+τ w(x) − τ (x) = Cov( ω(x, U i), τ (x, U i) | Xi = x)
+
+E[ω(x, U i) | Xi = x] , (7) 
+
+τ w(x) equals the standard CATE τ (x) when U does not modify the effect beyond X, or when ω(x, U )
+
+and τ (x, U ) are conditionally uncorrelated given X = x.The weighting is analogous to the overlap weighting induced by an R-learner with omitted effect modifiers [27]. In addition, among all positive latent weighting functions w′, the choice w′(x, u ) ∝
+
+ω(x, u ) minimizes the oracle conditional variance, which implies τ w(x) is variance-optimal within this class of weighted estimands. 
+
+Proposition 3.5 (Neyman orthogonality of the NC-CSF score) Let η = ( q, m, S C , ρ a, ΛC )
+
+denote the set of nuisance functions. At the true nuisance value η0, the pathwise derivative of the score of the NC-CSF loss regarding each nuisance component has conditional expectation zero given 
+
+X.
+
+Proposition 3.5 implies the loss is only second-order sensitive to the nuisance estimation error. 
+
+Proposition 3.6 Let S be a fixed subgroup, or a subgroup learned on data independent of the sample used for within-subgroup estimation, and let nS → ∞ denote its estimation-sample size. Define 
+
+τ w 
+
+> S
+
+= E[{Ai − q(Zi, X i)}2τ (Xi, U i) | Xi ∈ S ]
+
+E[{Ai − q(Zi, X i)}2 | Xi ∈ S ] .
+
+Assume the following: 1. Boundedness: the outcomes, covariates, and nuisance functions q, m, SC , ρa, and ΛC are uniformly bounded, and SC is bounded away from zero on the time range of interest; 2. Residual overlap: E[{Ai − q(Zi, X i)}2 | Xi ∈ S ] is bounded away from zero; 3. Nuisance estimation: the cross-fitted estimators bq, bm, bSC , bρa, and bΛC are consistent and each has L2 error op(n−1/4 
+
+> S
+
+) on the subgroup. Then the cross-fitted NC-CSF estimator is asymptotically equivalent to its oracle-nuisance counterpart and 
+
+√nS (bτS − τ w 
+
+> S
+
+) d
+
+−→ N (0 , σ 2 
+
+> S
+
+),
+
+where 
+
+σ2 
+
+> S
+
+= Var( Ares  
+
+> i
+
+(Y res  
+
+> i
+
+− τ w 
+
+> S
+
+Ares  
+
+> i
+
+) | Xi ∈ S )
+
+E[( Ares  
+
+> i
+
+)2 | Xi ∈ S ]2 .
+
+In Proposition 3.6, if τ (x, u ) is constant on S, then τ w 
+
+> S
+
+equals that shared subgroup effect. However, no homogeneity assumption is needed for the asymptotic normality around the weighted within-subgroup target. 
+
+Remark 3.7 Proposition 3.6 considers the estimation and inference within a fixed or honest subgroup, following the sample-splitting principle used by honest causal trees and forests [1, 35]. It does not prove that a recursively learned forest recovers a unique oracle partition. Exact partition recovery generally requires additional separation and structural conditions, such as minimum jumps between adjacent regions [24]. 
+
+74 Simulation 
+
+4.1 Methods for Comparison 
+
+We distinguish a matched ablation from external competitors. This distinction is important because the methods differ in software, nuisance estimators, and forest engines. 
+
+Matched ablations and oracle references. In the uncensored setting, Uncensored Baseline 
+
+applies CausalForestDML [3] directly to [X, W, Z ], while Uncensored NC-CSF adds the bridge-adjusted residualization. In the censored setting, Censored Baseline is NC-CSF with the bridge layer removed: it retains the same preprocessing, censoring-robust residual construction, event and censoring nuisances, final features, train/test splits, and forest family. It is therefore the comparison that isolates the contribution of the negative-control bridge. The oracle variants have access to U
+
+and serve only as synthetic upper-bound references. 
+
+External survival and HTE learners. We additionally evaluate the R implementation of causal survival forests in grf [8], random survival forests used as T- and S-learners [17], and a discrete-time survival BART S-learner [30]. Every external learner receives [X, W, Z ] as ordinary pre-treatment covariates; NC-CSF differs by assigning W and Z their negative-control roles. Thus no external method is disadvantaged by lack of feature access. The no-negative-control arm in our simulation is the matched Censored Baseline, not the grf implementation. We also report population-level AIPW and TMLE comparisons in Appendix D.5, while noting that they target a marginal ATE rather than an individual CATE. 
+
+Implementation and metrics. NC-CSF uses logistic regression for the treatment bridge, ExtraTrees [10] for outcome-bridge regressions, Cox models [7] for censored nuisances, and EconML’s 
+
+CausalForestDML for the final forest. All benchmark methods use identical training/test splits, horizons, and target values. We summarize RMSE and MAE over the common 12 × 22 = 264 
+
+censored configurations; pseudocode for the matched estimators appears in Appendix 4–6. Table 1: Average error over the 12 × 22 = 264 censored benchmark configurations. External learners receive [X, W, Z ] as ordinary covariates; lower is better.                                   
+
+> Model RMST Survival Probability RMSE MAE RMSE MAE
+> NC-CSF Oracle 0.0516 0.0380 0.0361 0.0275 NC-CSF 0.0994 0.0768 0.0613 0.0491
+> grf R-CSF 0.1211 0.0971 0.0686 0.0581 Censored Baseline 0.1662 0.1247 0.0788 0.0642 RSF T-learner 0.1773 0.1416 0.0796 0.0721 RSF S-learner 0.1637 0.1274 0.0889 0.0638 Survival BART 0.1762 0.1318 0.0699 0.0657
+
+NC-CSF has the lowest error among all feasible methods. Relative to the matched Censored Baseline, it reduces RMST RMSE by 40 .2% and survival-probability RMSE by 22 .2% ; relative to the strongest external tree-ensemble comparator, grf R-CSF, the reductions are 17 .9% and 10 .6% .The component ablation in Appendix 11 shows that the bridge adjustment is the largest contributor: adding the bridge while holding the forest and censoring pipeline fixed reduces RMST RMSE from 0.1662 to 0.1081 and survival-probability RMSE from 0.0788 to 0.0675 ; nuisance-summary augmentation yields the remaining improvement to 0.0994 and 0.0613 .8Figure 2: Left: RMSE vs. sample size n under Case 10 (nonlinear treatment and outcome, informative proxies, weak confounding). Right: RMSE vs. covariate dimension d under Case 12 (nonlinear, treatment/outcome, non-informative proxies, weak confounding). The associated Monte Carlo standard errors and confidence intervals are reported in Appendix Table 6. 
+
+4.2 Data-Generating Mechanism 
+
+We generate n i.i.d. samples with covariates Xi and latent confounder Ui, where Xi ∼ N (0 , I p) and 
+
+Ui ∼ N (0 , 1) . The negative-control proxies Zi and Wi are constructed as noisy linear functions of (Xi, U i), so that both carry information about the latent confounder. Treatment assignment follows a Bernoulli model with logistic mean P(Ai = 1 | Xi, U i) = σ(b0 + γuUi + α⊤Xi). Potential event times are generated from a Weibull proportional hazards model, with Ti(a) | Xi, U i ∼
+
+Weibull( k, λ exp( −ηi(a)/k )) and linear predictor ηi(a) = β⊤ 
+
+> t
+
+Xi + βuUi + τ a . Because the proxy construction is linear-Gaussian, the conditional law of Ui given (Xi, Z i, W i) is available in closed form, which yields an explicit expression for the observed-data conditional treatment effect E[Ti(1) − Ti(0) |
+
+Xi, Z i, W i] after integrating out Ui. Appendix D.3 further replaces the proxy mechanism with nonlinear, heavy-tailed, noninjective, and binary-coarsened alternatives. We evaluate performance across regimes varying proxy quality, confounding strength, treatment effect size, and covariate dimensionality, under both linear and nonlinear settings, which results in 
+
+12 × 22 configurations (Table 17 in Appendix). 
+
+4.3 Results with Uncensored Data 
+
+We evaluate estimation accuracy using root mean squared error, RMSE = pn−1 Pni=1 (bτ (Xi) − τi)2,and mean absolute error, MAE = n−1 Pni=1 |bτ (Xi) − τi|. NC-CSF closely matches the oracle across all n and covariate dimensions, while the baseline exhibits higher error, particularly in small-sample and high-dimensional regimes. Table 18 in Appendix further shows that NC-CSF improves over the Uncensored Baseline in both RMSE and MAE and remains closer to the oracle; additional results appear in Appendix Figure 9, Figure 10, and Table 6. 
+
+4.4 Results with Censored Data 
+
+Following the uncensored experiments, we evaluate performance under right censoring. We fix the censoring rate at 35% across all configurations and calibrate the Weibull scale parameter accordingly to achieve the desired censoring level. Table 1 summarizes results for both RMST (Restricted Mean Survival Time) and survival probability. These results indicate that the benefits of proxy-based adjustment become more pronounced in the presence of censoring, where standard approaches are more susceptible to bias and instability. 9Figure 3: RMSE for survival probability under censoring across settings S01–S22. Boxes show variation across the 12 base cases. NC-CSF achieves lower and more stable RMSE than the baseline and remains close to the oracle, with the largest gains in harder settings (S10–S11, S17–S22). To assess heterogeneity, we compute subgroup bias on an independent test set of size 20,000 for each setting–case pair. Subgroups are predefined using quantile bins of selected covariates, yielding 20 groups per configuration: three bins for X0, three for X1, five for the true CATE, and nines for the X0 × X1 interaction bins. After training on an independent dataset, we predict CATEs on the test set and compute, for each subgroup g, the bias Bias( g) = |g|−1 P
+
+> i∈g
+
+{bτ (Xi) − τi}, excluding groups below a minimum size. These plots highlight local CATE accuracy beyond aggregate ATE performance. Figure 4 shows one example; additional results appear in Appendix 11–18. 
+
+# 5 Real Data 
+
+5.1 ACTG175 Trial 
+
+We apply NC-CSF to the ACTG175 HIV trial [11], using the same ddI versus ZDV+ddI subset and RMST target as [8]. The analysis contains 1,083 subjects, with A = 0 denoting ddI monotherapy (561 controls) and A = 1 denoting ZDV+ddI (522 treated). Following [8], we analyze this two-arm subset as observational and use RMST at h = 1 ,000 days, which avoids the late follow-up region dominated by censoring. For the negative-control specification, we set W = ( cd420 , cd820 ),
+
+Z = ( race , preanti ), and use 12 baseline variables as X. Since the negative-control restrictions are not directly testable, these proxy choices should be interpreted as exploratory modeling choices. For comparison, we re-ran the causal survival forest implementation in the R grf package (R-CSF) on the same subset, covariates, and horizon, rather than reusing the original published figure. The right panel of Figure 5 shows the main fitted pattern. NC-CSF estimates a weaker, slightly negative fitted RMST effect of ZDV+ddI for younger reference profiles: −5.69 days at age 20 and 
+
+−1.11 days at age 30. The estimate becomes positive by middle age, reaching 5.13 days at age 40 and peaking at 6.37 days around age 62. By contrast, the re-run R-CSF curve is positive across the displayed age range and peaks at 14 .43 days around age 47. Thus NC-CSF suggests a more age-dependent and more conservative incremental benefit from adding ZDV to ddI. We interpret the negative estimates for younger profiles as unfavorable incremental RMST benefit from ZDV+ddI relative to ddI alone, not as direct evidence of ZDV toxicity. This direction is consistent with the ACTG175 individualized-treatment-rule analysis of [23], where age entered positively in a rule 10 Figure 4: Subgroup bias for RMST estimation across settings S01–S22 under censoring, using 
+
+X1-based subgroups. Each box summarizes the distribution of subgroup-level biases across the 12 base cases within a setting. NC-CSF consistently reduces subgroup bias relative to the baseline and remains closer to the oracle, indicating improved heterogeneous treatment effect estimation. 
+
+Figure 5: Left: ACTG175 follow-up times with RMST horizon h = 1 ,000 . Right: age-specific RMST effect estimates from NC-CSF and our re-run R-CSF baseline, holding other covariates fixed. Shaded bands are pointwise percentile-bootstrap intervals. 11 favoring ZDV+ddI over ddI, although that study used CD4 count at 20 ± 5 weeks rather than RMST. The pointwise intervals are wide because 1,083 subjects from a trial powered for a marginal contrast provide limited information for an age-resolved 1,000-day RMST effect; the re-run R-CSF intervals are similarly wide. We therefore use the paired difference between curves fitted to the same subset and seeds as an exploratory comparison, not as a treatment rule. All three proxy variants in Appendix D.6 preserve the pattern of smaller fitted benefit at younger ages. 
+
+5.2 Right Heart Catheterization 
+
+As a second real-data check, we use the right heart catheterization (RHC) data from the SUPPORT study of seriously ill hospitalized adults [6]. The dataset records whether a patient received RHC within 24 hours of admission, 30-day survival, and 72 baseline variables covering demographics, comorbidities, admission diagnoses, and physiological and laboratory measurements. The treatment indicates RHC within 24 hours of admission and the outcome is binary 30-day survival. Following the negative-control analysis of [20], we set Z = ( pafi1 , paco21 ), W = ( ph1 , hema1 ), and use the remaining 68 encoded baseline variables as X. The sample contains 5,735 patients, with 2,184 treated and 3,551 controls. Table 2: RHC average treatment-effect estimates for binary 30-day survival. Negative values indicate lower 30-day survival under RHC. The literature estimates are reported in [20]. Our estimate is the average of the uncensored final model’s subject-level effect predictions. 
+
+Estimator ATE estimate SE 95% CI 
+
+Final Non-Censored Model -0.0433 0.0110 [-0.0649, -0.0217] Kallus et al. DR -0.0219 0.0051 [-0.0319, -0.0119] Kallus et al. DR(sta) -0.0271 0.0043 [-0.0355, -0.0188] CPSMT20 linear bridge -0.0607 0.0055 [-0.0714, -0.0500] VV15 no-unmeasured-confounding -0.0612 0.0141 [-0.0889, -0.0335] All estimates in Table 2 imply lower survival under RHC. Our estimate, −0.0433 , lies between the flexible minimax bridge estimates of [20] and the more negative linear/no-hidden-confounding estimates. Since RHC is observational and lacks ground truth, we interpret this result as a consistency check rather than a definitive accuracy comparison. 
+
+5.3 MIMIC-IV pharmacologic positive and inert controls 
+
+We analyze MIMIC-IV [18] to study whether combining tacrolimus with a CYP3A inhibitor increases the risk of acute kidney injury (AKI) within seven days. This interaction is well documented [34, 4, 26]. We define survival as remaining free of AKI, so negative estimates indicate harm. Pretreatment laboratory values are used as proxies for underlying illness severity, while administrative variables capture differences in prescribing patterns. The analysis includes 2,257 records in the positive-control group with CYP3A inhibition and 1,398 records in the inert-control group, where the added drug has no CYP3A activity. 12 Table 3: MIMIC-IV average treatment-effect estimates for 7-day AKI-free survival and restricted mean AKI-free time in the positive-control group comparing tacrolimus with versus without a concomitant CYP3A inhibitor. Negative values indicate lower AKI-free survival or fewer AKI-free days under concomitant CYP3A inhibition. The reported estimates are averages of the corresponding methods’ subject-level effect predictions. 
+
+AKI-free survival at 7 days AKI-free RMST through 7 days Method Estimate 95% CI E-value Estimate 95% CI 
+
+RSF-S −0.0033 [−0.0128 , +0 .0018] 1.15 −0.0205 [−0.0773 , +0 .0017] 
+
+BART −0.0462 [−0.1529 , +0 .0311] – −0.2365 [−0.7806 , +0 .1800] 
+
+RSF-T −0.0758 [−0.1245 , −0.0401] 2.17 −0.4279 [−0.6396 , −0.2223] 
+
+CSF −0.1176 [−0.1939 , −0.0758] 2.69 −0.6232 [−0.9129 , −0.4440] 
+
+NC-CSF −0.2410 [−0.2857 , −0.1816 ] 4.40 −1.6248 [−2.1263 , −1.2023 ]
+
+Table 4: Results for the inert group: the added drug has no CYP3A activity. See the caption of Table 3 for details. 
+
+AKI-free survival at 7 days AKI-free RMST through 7 days Method Estimate 95% CI Estimate 95% CI 
+
+RSF-S +0 .0053 [+0 .0001 , +0 .0189] +0 .0224 [−0.0051 , +0 .0986] 
+
+BART +0 .0092 [−0.0694 , +0 .0965] +0 .0473 [−0.3791 , +0 .5054] 
+
+RSF-T +0 .0147 [−0.0187 , +0 .0492] −0.0221 [−0.1486 , +0 .0990] 
+
+CSF +0 .0013 [−0.0414 , +0 .0466] +0 .0056 [−0.1574 , +0 .2161] 
+
+NC-CSF −0.0323 [−0.1403 , +0.0171 ] +0.0265 [−0.2453 , +0.4034 ]
+
+In the positive-control group, NC-CSF gives the strongest evidence of harm: a 0.2410 reduction in seven-day AKI-free survival and 1.6248 fewer AKI-free days, more than twice the corresponding CSF estimates. RSF-S and BART do not clearly detect harm, while RSF-T and CSF give smaller effects. In the inert group, NC-CSF finds no clear effect on either outcome, supporting its ability to detect the known interaction without producing a signal under the inert substitution. Among the four prespecified comorbidity subgroups, only prior liver disease has a direct biological link through hepatic CYP3A metabolism. NC-CSF estimates a larger harm for patients with prior liver disease than for those without it ( −0.3532 versus −0.2131 ), whereas the other three subgroup comparisons show no clear differences. Appendix D.7 reports the liver-disease results. 
+
+# 6 Discussion 
+
+In this paper, we provide a practical approach to survival analysis with flexible heterogeneous treatment-effect modeling in the presence of unobserved confounding. Empirically, the proposed method performs favorably in extensive experiments and yields interesting findings in real data applications. We also provide an off-the-shelf Python package to improve practical usability. We discuss limitations. First, τ w(x) is the general estimand and need not equal the conven-tional CATE when latent treatment-effect heterogeneity covaries with bridge-residualized treatment variation. Second, negative-control validity is application-specific and cannot be verified from the observed law alone. Third, completeness does not resolve finite-sample ill-posedness: orthogonality 13 limits downstream sensitivity to sufficiently accurate nuisance estimates but does not create accurate bridge estimates when the moment operator is poorly conditioned. Regularized bridge learning and diagnostics for proxy strength therefore remain practically relevant. Several directions remain for future work. From the causal perspective, since the resulting target is weighted in general, it would be useful to further study the interpretation and behavior of different estimands. On the theoretical side, one direction is to analyze the recursive splitting behavior of both the oracle forest and its feasible counterpart with estimated nuisance functions. 
+
+# References 
+
+[1] Susan Athey and Guido Imbens. Recursive partitioning for heterogeneous causal effects. 
+
+Proceedings of the National Academy of Sciences , 113(27):7353–7360, 2016. [2] Susan Athey, Julie Tibshirani, and Stefan Wager. Generalized random forests. The Annals of Statistics , 47(2):1148–1178, 2019. [3] Keith Battocchi, Eleanor Dillon, Maggie Hei, Greg Lewis, Paul Oka, Miruna Oprescu, and Vasilis Syrgkanis. Econml: A python package for ml-based heterogeneous treatment effects estimation. https://github.com/py-why/EconML , 2019. [4] Kelly A. Birdwell et al. Clinical pharmacogenetics implementation consortium (CPIC) guidelines for CYP3A5 genotype and tacrolimus dosing. Clinical Pharmacology & Therapeutics , 98(1):19–24, 2015. [5] Victor Chernozhukov, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. Double/debiased machine learning for treatment and structural parameters. The Econometrics Journal , 21(1):C1–C68, 2018. [6] Alfred F. Jr. Connors, Theodore Speroff, Neal V. Dawson, Charles Thomas, Frank E. Jr. Harrell, Douglas Wagner, Norman Desbiens, Lee Goldman, Albert W. Wu, Robert M. Califf, William J. Jr. Fulkerson, Humberto Vidaillet, Steven Broste, Paul Bellamy, Joanne Lynn, and William A. Knaus. The effectiveness of right heart catheterization in the initial care of critically ill patients. 
+
+JAMA , 276(11):889–897, 1996. [7] D. R. Cox. Regression models and life-tables. Journal of the Royal Statistical Society: Series B (Methodological) , 34(2):187–220, 1972. [8] Yifan Cui, Michael R. Kosorok, Erik Sverdrup, Stefan Wager, and Ruoqing Zhu. Estimating heterogeneous treatment effects with right-censored data via causal survival forests. Journal of the Royal Statistical Society: Series B (Statistical Methodology) , 85(2):179–211, 2023. [9] Yifan Cui, Hongming Pu, Xu Shi, Wang Miao, and Eric J. Tchetgen Tchetgen. Semiparametric proximal causal inference. Journal of the American Statistical Association , 119(546):1348–1359, 2024. [10] Pierre Geurts, Damien Ernst, and Louis Wehenkel. Extremely randomized trees. Machine Learning , 63(1):3–42, 2006. [11] Scott M. Hammer, David A. Katzenstein, Michael D. Hughes, Holly Gundacker, Richard T. Schooley, Richard H. Haubrich, W. Keith Henry, Michael M. Lederman, John P. Phair, Manette Niu, Martin S. Hirsch, and Thomas C. Merigan. A trial comparing nucleoside monotherapy 14 with combination therapy in hiv-infected adults with cd4 cell counts from 200 to 500 per cubic millimeter. New England Journal of Medicine , 335(15):1081–1090, 1996. [12] Nicholas C. Henderson, Thomas A. Louis, Gary L. Rosner, and Ravi Varadhan. Individualized treatment effects with censored data via fully nonparametric bayesian accelerated failure time models. Biostatistics , 21(1):50–68, 2020. [13] Liangyuan Hu, Jiayi Ji, and Fan Li. Estimating heterogeneous survival treatment effect in observational data using machine learning. Statistics in Medicine , 40(21):4691–4713, 2021. [14] Liangyuan Hu, Jiayi Ji, Hanzhong Liu, and Ronald Ennis. A flexible approach for assessing heterogeneity of causal treatment effects on patient survival using large datasets with clustered observations. International Journal of Environmental Research and Public Health , 19(22):14903, 2022. [15] Rong Huang, Ronghui Xu, and Parambir S. Dulai. Sensitivity analysis of treatment effect to unmeasured confounding in observational studies with survival and competing risks outcomes. 
+
+Statistics in Medicine , 39(24):3397–3411, 2020. [16] Guido W. Imbens and Donald B. Rubin. Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction . Cambridge University Press, 2015. [17] Hemant Ishwaran, Udaya B. Kogalur, Eugene H. Blackstone, and Michael S. Lauer. Random survival forests. The Annals of Applied Statistics , 2(3):841–860, 2008. [18] Alistair E. W. Johnson, Lucas Bulgarelli, Lu Shen, et al. MIMIC-IV, a freely accessible electronic health record dataset. Scientific Data , 10:1, 2023. [19] John D. Kalbfleisch and Ross L. Prentice. The Statistical Analysis of Failure Time Data . John Wiley & Sons, Hoboken, NJ, 2 edition, 2002. [20] Nathan Kallus, Xiaojie Mao, and Masatoshi Uehara. Causal inference under unmeasured con-founding with negative controls: A minimax learning approach. arXiv preprint arXiv:2103.14029 ,2021. [21] Kendrick Qijun Li, George C. Linderman, Xu Shi, and Eric J. Tchetgen Tchetgen. Regression-based proximal causal inference for right-censored time-to-event data. Epidemiology , 36(5):694– 704, 2025. [22] Jiewen Liu, Chan Park, Kendrick Li, and Eric J. Tchetgen Tchetgen. Regression-based proximal causal inference. American Journal of Epidemiology , 194(7):2030–2036, 2025. [23] Wenbin Lu, Hao Helen Zhang, and Donglin Zeng. Variable selection for optimal treatment decision. Statistical Methods in Medical Research , 22(5):493–504, 2013. [24] Oscar Hernan Madrid Padilla, Yi Yu, and Alessandro Rinaldo. Lattice partition recovery with dyadic CART. In Advances in Neural Information Processing Systems , volume 34, pages 26143–26155, 2021. [25] Wang Miao, Zhi Geng, and Eric J. Tchetgen Tchetgen. Identifying causal effects with proxy variables of an unmeasured confounder. Biometrika , 105(4):987–993, 2018. [26] Maarten Naesens, Dirk R. J. Kuypers, and Minnie Sarwal. Calcineurin inhibitor nephrotoxicity. 
+
+Clinical Journal of the American Society of Nephrology , 4(2):481–508, 2009. 15 [27] Xinkun Nie and Stefan Wager. Quasi-oracle estimation of heterogeneous treatment effects. 
+
+Biometrika , 108(2):299–319, 2021. [28] Peter M. Robinson. Root-n-consistent semiparametric regression. Econometrica , 56(4):931–954, 1988. [29] Donald B. Rubin. Estimating causal effects of treatments in randomized and nonrandomized studies. Journal of Educational Psychology , 66(5):688–701, 1974. [30] Rodney A. Sparapani, Brent R. Logan, Robert E. McCulloch, and Purushottam W. Laud. Nonparametric survival analysis using bayesian additive regression trees (BART). Statistics in Medicine , 35(16):2741–2753, 2016. [31] Sami Tabib and Denis Larocque. Non-parametric individual treatment effect estimation for survival data with random forests. Bioinformatics , 36(2):629–636, 2020. [32] Eric J. Tchetgen Tchetgen. Proximal causal inference for complex longitudinal studies. Journal of the Royal Statistical Society: Series B (Statistical Methodology) , 85(3):684–704, 2023. [33] Eric J. Tchetgen Tchetgen, Andrew Ying, Yifan Cui, Xu Shi, and Wang Miao. An introduction to proximal causal inference. Statistical Science , 39(3):375–390, 2024. [34] U.S. Food and Drug Administration. PROGRAF (tacrolimus) prescribing information. DailyMed, August 2023. Revised August 2023, Section 5.5. [35] Stefan Wager and Susan Athey. Estimation and inference of heterogeneous treatment effects using random forests. Journal of the American Statistical Association , 113(523):1228–1242, 2018. [36] Jeffrey Zhang, Wei Li, Wang Miao, and Eric J. Tchetgen Tchetgen. Proximal causal inference without uniqueness assumptions. Statistics & Probability Letters , 198:109836, 2023. 
+
+# A Additional Algorithms 
+
+This section provides pseudocode for the estimators used in the simulation comparisons. Algorithm 3 describes the uncensored NC-CSF pipeline, while Algorithms 4 and 5 give the corresponding observed-data baselines, which use (X, W, Z ) directly and remove the negative-control bridge layer. For the censored setting, the matched baseline keeps the same preprocessing, survival nuisance estimation, censoring correction, residual construction, and final causal-forest step as Censored NC-CSF, isolating the effect of proxy-based bridge adjustment. Algorithm 2 extends Algorithm 1 with implementation details, and Algorithm 6 gives the synthetic-only oracle comparator, which has access to U and DGP-specific nuisance functions and serves only as an upper-bound reference. We additionally compare against grf::causal_survival_forest , RSF T-/S-learners, and survival BART in the common simulation benchmark; the grf implementation is also used in the ACTG175 analysis. 
+
+# B Bridge Estimation and Operator Stability 
+
+Define the observable conditional-expectation operators 
+
+(Tqq)( x, w ) = E[q(Z, X ) | X = x, W = w],
+
+(Tf,a fa)( x, z ) = E[fa(W, X ) | X = x, Z = z, A = a].
+
+16 Algorithm 2 Censored NC-CSF Training 
+
+Require: Data {(Xi, W i, Z i, A i, Y i, ∆i)}ni=1 ; target type; horizon h; number of folds K; clipping levels ϵq, α br , α res 
+
+Ensure: Fitted effect predictor bτ (·) 
+
+> 1:
+
+Partition {1, . . . , n } into cross-fitting folds I1, . . . , IK . 
+
+> 2:
+
+for k = 1 , . . . , K do  
+
+> 3:
+
+Let I−k = {1, . . . , n } \ I k and set (Y ⋆i , ∆⋆i ) = ( Y (h) 
+
+> i
+
+, ∆(h) 
+
+> i
+
+) for RMST, and (Y ⋆i , ∆⋆i ) = ( Yi, ∆i)
+
+for survival probability.  
+
+> 4:
+
+Fit a censoring Cox model on I−k with covariates (X, W, Z, A ), times T ⋆, and censoring indicators 1 − ∆⋆, yielding the censoring survival bS(−k) 
+
+> C
+
+and cumulative censoring hazard increments dbΛ(−k) 
+
+> C
+
+. 
+
+> 5:
+
+Construct target-specific bridge pseudo-outcomes eY bridge  
+
+> i
+
+on I−k, and clip them to empirical 
+
+(αbr , 1 − αbr ) quantiles.  
+
+> 6:
+
+Fit the treatment bridge bq(−k) using logistic regression on I−k, with labels A and bridge covariates (X, Z ). 
+
+> 7:
+
+for a ∈ { 0, 1} do  
+
+> 8:
+
+Let I−k,a = {i ∈ I −k : Ai = a}. 
+
+> 9:
+
+Fit the outcome bridge bf (−k) 
+
+> a
+
+using a random forest regressor on I−k,a , with labels eY bridge 
+
+and bridge covariates (X, W ). 
+
+> 10:
+
+Fit event-survival model bS(−k) 
+
+> a
+
+using a Cox model on I−k,a , with covariates (X, W, Z ),times T ⋆, and event indicators ∆⋆. 
+
+> 11:
+
+end for  
+
+> 12:
+
+Construct continuation functions bρ(−k) 
+
+> a
+
+(t; h) from bS(−k) 
+
+> a
+
+, a ∈ { 0, 1}:
+
+bρ(−k) 
+
+> a
+
+(t; h) = t + R ht   
+
+> bS(−k)
+> a(u|X,W,Z )
+> bS(−k)
+> a(t|X,W,Z )
+
+du for RMST, and bρ(−k) 
+
+> a
+
+(t; h) = bS(−k)   
+
+> a(h|X,W,Z )
+> bS(−k)
+> a(t|X,W,Z )
+
+for survival probability.  
+
+> 13:
+
+for i ∈ I k do  
+
+> 14:
+
+Predict bqi = Clip {bq(−k)(Xi, Z i), ϵ q, 1 − ϵq}, bfa,i = bf (−k) 
+
+> a
+
+(Xi, W i) for a ∈ { 0, 1}. 
+
+> 15:
+
+Form bmi = bqi bf1,i + (1 − bqi) bf0,i , and Ares  
+
+> i
+
+= Ai − bqi. 
+
+> 16:
+
+Compute eY res  
+
+> i
+
+from Eq. (18) using bmi, bρ(−k) 
+
+> Ai
+
+, bS(−k) 
+
+> C
+
+, and dbΛ(−k) 
+
+> C
+
+. 
+
+> 17:
+
+Form Xfinal  
+
+> i
+
+= ( Xi, W i, Z i, bqi, bf1,i , bf0,i , bmi, br1,i , br0,i , br1,i − br0,i ), where bra,i is the target-specific event-survival summary.  
+
+> 18:
+
+end for  
+
+> 19:
+
+Clip { eY res  
+
+> i
+
+: i ∈ I k} to empirical (αres , 1 − αres ) quantiles, yielding Y res  
+
+> i
+
+. 
+
+> 20:
+
+end for  
+
+> 21:
+
+Fit the final causal forest bF on the cross-fitted training triples {(Xfinal  
+
+> i
+
+, A res  
+
+> i
+
+, Y res  
+
+> i
+
+)}ni=1 . 
+
+> 22:
+
+Refit only the nuisance models on the full training sample. For a new point (x, w, z ), construct 
+
+Xfinal new using the same formula above and return bτ (x) = bF(Xfinal new ). 
+
+> 23:
+
+return bτ (·).17 Algorithm 3 Uncensored NC-CSF Training 
+
+Require: Data {(Xi, W i, Z i, A i, Y unc  
+
+> i
+
+)}ni=1 ; number of folds K; clipping levels ϵq, α y, α res 
+
+Ensure: Fitted effect predictor bτ (·) 
+
+> 1:
+
+Partition {1, . . . , n } into cross-fitting folds I1, . . . , IK . 
+
+> 2:
+
+for k = 1 , . . . , K do  
+
+> 3:
+
+Let I−k = {1, . . . , n } \ I k. 
+
+> 4:
+
+Clip {Y unc  
+
+> i
+
+: i ∈ I −k} to empirical (αy, 1 − αy) quantiles, yielding Y unc ,clip  
+
+> i
+
+. 
+
+> 5:
+
+Fit the treatment bridge bq(−k) using logistic regression on I−k, with labels A and bridge covariates (X, Z ). 
+
+> 6:
+
+for a ∈ { 0, 1} do  
+
+> 7:
+
+Let I−k,a = {i ∈ I −k : Ai = a}. 
+
+> 8:
+
+Fit the outcome bridge bf (−k) 
+
+> a
+
+using a random forest regressor on I−k,a , with labels Y unc ,clip 
+
+and bridge covariates (X, W ). 
+
+> 9:
+
+end for  
+
+> 10:
+
+for i ∈ I k do  
+
+> 11:
+
+Predict bqi = Clip {bq(−k)(Xi, Z i), ϵ q, 1 − ϵq}, bfa,i = bf (−k) 
+
+> a
+
+(Xi, W i) for a ∈ { 0, 1}. 
+
+> 12:
+
+Form bmi = bqi bf1,i + (1 − bqi) bf0,i , Ares  
+
+> i
+
+= Ai − bqi, and eY res  
+
+> i
+
+= Y unc  
+
+> i
+
+− bmi. 
+
+> 13:
+
+Form Xfinal  
+
+> i
+
+= ( Xi, W i, Z i, bqi, bf1,i , bf0,i , bmi). 
+
+> 14:
+
+end for  
+
+> 15:
+
+Clip { eY res  
+
+> i
+
+: i ∈ I k} to empirical (αres , 1 − αres ) quantiles, yielding Y res  
+
+> i
+
+. 
+
+> 16:
+
+end for  
+
+> 17:
+
+Fit the final causal forest bF on the cross-fitted training triples {(Xfinal  
+
+> i
+
+, A res  
+
+> i
+
+, Y res  
+
+> i
+
+)}ni=1 . 
+
+> 18:
+
+Refit only the nuisance models on the full training sample. For a new point (x, w, z ), construct 
+
+Xfinal new using the same formula above and return bτ (x) = bF(Xfinal new ). 
+
+> 19:
+
+return bτ (·).
+
+Algorithm 4 Uncensored Baseline 
+
+Require: Training data {(Xi, W i, Z i, A i, Y unc  
+
+> i
+
+)}ni=1 ; test point (x, w, z )
+
+Ensure: Baseline CATE estimate bτ unc base (x, w, z ) 
+
+> 1:
+
+Form raw covariates Xraw  
+
+> i
+
+= ( Xi, W i, Z i) for all training samples.  
+
+> 2:
+
+Fit a causal forest using outcomes Y unc  
+
+> i
+
+, treatments Ai, and covariates Xraw  
+
+> i
+
+. 
+
+> 3:
+
+Form the test covariate vector xraw = ( x, w, z ). 
+
+> 4:
+
+return bτ unc base (x, w, z ) by evaluating the fitted causal forest at xraw .
+
+18 Algorithm 5 Censored Baseline 
+
+Require: Training data {(Xi, W i, Z i, A i, Y i, ∆i)}ni=1 ; target type; horizon h if needed; test point (x, w, z )
+
+Ensure: bτ cens base (x, w, z )
+
+1: Form the raw observed feature stack 
+
+Xraw  
+
+> i
+
+= [ Xi, W i, Z i].
+
+2: Initialize the censored baseline with the same target, horizon, and final forest family as the proposed censored model. 
+
+3: for each nuisance fold do 
+
+4: Fit an observed-data propensity model on [X, W, Z ].
+
+5: Fit treated and control Cox event-survival models using the target-preprocessed time/event outcome. 
+
+6: Fit a Cox censoring model on (Yi, 1 − ∆i) with features [Xi, W i, Z i, A i].
+
+7: Construct the residual pair (Y res  
+
+> i
+
+, A res  
+
+> i
+
+) from these observed-data nuisances. 
+
+8: end for 
+
+9: Fit the final causal forest on {(Xraw  
+
+> i
+
+, A res  
+
+> i
+
+, Y res  
+
+> i
+
+)}ni=1 .
+
+10: Form the test feature vector xraw = [ x, w, z ].
+
+11: return bτ cens base (x, w, z ) = effect (xraw ).
+
+Algorithm 6 NC-CSF Oracle Comparator 
+
+Require: Synthetic training data with oracle access to latent confounders U and DGP nuisances; setting type ∈ { uncensored , censored }; test point (x, u )
+
+Ensure: Oracle CATE estimate bτoracle (x, u )
+
+1: Use (X, U ) in place of proxy-based bridge inputs and obtain oracle nuisances from the DGP. 
+
+2: if uncensored setting then 
+
+3: For each training unit, obtain bqoracle  
+
+> i
+
+= q0(Xi, U i) and bf oracle  
+
+> a,i
+
+= fa(Xi, U i) for a ∈ { 0, 1}.
+
+4: Form bmoracle  
+
+> i
+
+= bqoracle  
+
+> i
+
+bf oracle 1,i + (1 − bqoracle  
+
+> i
+
+) bf oracle 0,i , Ares  
+
+> i
+
+= Ai − bqoracle  
+
+> i
+
+, and Y res  
+
+> i
+
+= Y unc  
+
+> i
+
+− bmoracle  
+
+> i
+
+, with the same clipping rules as Uncensored NC-CSF. 
+
+5: Form Xfinal  
+
+> i
+
+by augmenting (Xi, U i) with oracle nuisance summaries. 
+
+6: else 
+
+7: Set (Y ⋆i , ∆⋆i ) = ( Y (h) 
+
+> i
+
+, ∆(h) 
+
+> i
+
+) for RMST, and (Y ⋆i , ∆⋆i ) = ( Yi, ∆i) for survival probability. 
+
+8: For each training unit, obtain oracle bridge nuisances bqoracle  
+
+> i
+
+= q0(Xi, U i) and bf oracle  
+
+> a,i
+
+= fa(Xi, U i; h),and oracle survival nuisances bSoracle  
+
+> a
+
+(t | Xi, U i), Soracle  
+
+> C
+
+(t | Xi, U i, A i), and dΛoracle  
+
+> C
+
+(t | Xi, U i, A i).
+
+9: Form bmoracle  
+
+> i
+
+= bqoracle  
+
+> i
+
+bf oracle 1,i + (1 − bqoracle  
+
+> i
+
+) bf oracle 0,i and Ares  
+
+> i
+
+= Ai − bqoracle  
+
+> i
+
+.
+
+10: Compute Y res  
+
+> i
+
+using the oracle version of Eq. (18). 
+
+11: Form Xfinal  
+
+> i
+
+by augmenting (Xi, U i) with oracle bridge and survival nuisance summaries. 
+
+12: end if 
+
+13: Fit a causal forest to {(Xfinal  
+
+> i
+
+, A res  
+
+> i
+
+, Y res  
+
+> i
+
+)}ni=1 .
+
+14: Construct the corresponding oracle final feature vector Xfinal new for test point (x, u ).
+
+15: return the fitted causal forest prediction at Xfinal new .
+
+19 The bridge moment equations set these operators equal to E[A | X = x, W = w] and E[G(a; h) |
+
+X = x, Z = z, A = a], respectively. Estimating their inverse solutions is the conditional-moment problem studied in proximal causal learning [20, 9]. Completeness makes the relevant operators injective on the chosen function classes, which supports identification, but injectivity alone does not bound the inverse. A sequence of bridge candidates can have small observable moment error while remaining far from the target bridge when an operator is nearly singular. For a finite-dimensional bridge qθ, let M (θ) denote the vector of observable moment restrictions. If the model is correctly specified, M (θ0) = 0 , and the smallest singular value of ∇θM (θ0) is bounded below, standard M-estimation arguments yield consistency and a regular rate. The logistic treatment-bridge fit used in the implementation should be understood in this working-model sense. Analogously, a nonparametric moment learner requires a stability inequality of the form 
+
+∥h − h0∥L2 ≤ κ−1∥T (h − h0)∥H,
+
+for a suitable moment norm ∥ · ∥ H. A small κ corresponds to a poorly conditioned inverse and amplifies conditional-moment estimation error. Ridge regularization replaces inversion by a stabilized problem. Schematically, if bhλ minimizes an empirical moment loss plus λ∥h∥2, its error separates into a stabilized estimation term and a regularization-bias term. Under an appropriate source condition, moment consistency, and a sequence λ ↓ 0 chosen slowly enough to control stochastic amplification, both terms can vanish. Proposition 3.5 then controls propagation of the remaining bridge error into the effect estimate, provided the rates in Proposition 3.6 hold. It does not replace these bridge-estimation conditions. In practice, informative diagnostics include cross-fitted conditional-moment residuals, sensitivity to regularization and clipping, and stability across scientifically defensible proxy routings. The weak-proxy and proxy-map experiments in Appendix D.3 quantify the effect of poor conditioning and information loss on the final estimator. 
+
+# C Proofs 
+
+Proof C.1 (Proof of Proposition 3.2) We first prove (6) . For the treatment bridge, 
+
+E[Ai − q(Zi, X i) | Xi, U i, W i] = E[Ai | Xi, U i, W i] − E[q(Zi, X i) | Xi, U i, W i]= P(Ai = 1 | Xi, U i) − E[q(Zi, X i) | Xi, U i]= 0 ,
+
+where the second equality uses (Ai, Z i) ⊥ Wi | Xi, U i, and the third follows from (2) . Taking conditional expectation with respect to (Xi, W i) yields 
+
+E[Ai − q(Zi, X i) | Xi, W i] = 0 .
+
+Similarly, for the outcome bridge, 
+
+E[Gi(a; h) − fa(Wi, X i) | Xi, U i, Z i, A i = a]= E[Gi(a; h) | Xi, U i, Z i, A i = a] − E[fa(Wi, X i) | Xi, U i, Z i, A i = a]= E[Gi(a; h) | Xi, U i] − E[fa(Wi, X i) | Xi, U i]= 0 ,
+
+20 where the third equality uses (Ai, Z i) ⊥ (Gi(a; h), W i) | Xi, U i, and the last follows from (2) . Taking conditional expectation with respect to (Xi, Z i, A i = a) yields 
+
+E[Gi(a; h) − fa(Wi, X i) | Xi, Z i, A i = a] = 0 .
+
+We now prove the converse. Suppose (6) holds. Define 
+
+r(Xi, U i) = P(Ai = 1 | Xi, U i) − E[q(Zi, X i) | Xi, U i] ,s(Xi, U i) = E[Gi(a; h) | Xi, U i] − E[fa(Wi, X i) | Xi, U i] .
+
+By iterated expectation and (Ai, Z i) ⊥ Wi | Xi, U i,
+
+E[r(Xi, U i) | Xi, W i] = E[E[Ai − q(Zi, X i) | Xi, U i, W i]|Xi, W i]= E[Ai − q(Zi, X i) | Xi, W i]= 0 .
+
+By the first completeness condition, this implies r(Xi, U i) = 0 a.s., that is, 
+
+E[q(Zi, X i) | Xi, U i] = P(Ai = 1 | Xi, U i).
+
+Similarly, using (Ai, Z i) ⊥ (Gi(a; h), W i) | Xi, U i,
+
+E[s(Xi, U i) | Xi, Z i, A i = a] = E[E[Gi(a; h) − fa(Wi, X i) | Xi, U i, Z i, A i = a]|Xi, Z i, A i = a]= E[Gi(a; h) − fa(Wi, X i) | Xi, Z i, A i = a]= 0 .
+
+Similarly for the second completeness condition. 
+
+Proof C.2 (Proof of Proposition 3.3) We first prove the uncensored case, and then note that the censored case follows by the same argument using the censoring-corrected pseudo-outcome as in the proof of Proposition 3.5. For the uncensored case, we aim to show 
+
+E[( Ai − qi)( Gi − mi − τ w(Xi)( Ai − qi)) |Xi = x] = 0 .
+
+In fact, we can decompose (Ai − qi)( Gi − mi) as 
+
+Ai(Ai − qi)( Yi(1) − f1,i ) + (1 − Ai)( Ai − qi)( Yi(0) − f0,i ) + ( Ai − qi)2(f1,i − f0,i ).
+
+Taking conditional expectation given (Xi, U i), the first two terms are zero by (1) and (2) as 
+
+E[Ai(Ai − qi)( Yi(1) − f1,i ) | Xi, U i] = E[Ai(Ai − qi) | Xi, U i] E[Yi(1) − f1,i | Xi, U i] = 0 ,
+
+and similarly for the second term. Therefore, 
+
+E[( Ai − qi)( Gi − mi) | Xi, U i] = E(Ai − qi)2 | Xi, U i
+
+ E[f1,i − f0,i | Xi, U i]= E(Ai − qi)2τ (Xi, U i) | Xi, U i
+
+ .
+
+Taking conditional expectation given Xi = x yields 
+
+E[( Ai − qi)( Gi − mi) | Xi = x] = E(Ai − qi)2τ (Xi, U i) | Xi = x .
+
+21 Therefore, the NC-CSF loss satisfies 
+
+E[( Ai − qi)( Gi − mi − τ (Xi)( Ai − qi)) |Xi = x]= E(Ai − qi)2τ (Xi, U i) | Xi = x − τ (x)E(Ai − qi)2 | Xi = x ,
+
+which is zero at 
+
+τ w(x) = E(Ai − qi)2τ (Xi, U i) | Xi = x
+
+E[( Ai − qi)2 | Xi = x] .
+
+Finally, if τ (x, u ) = τ (x), then the numerator of τ w(x) simplifies to τ (x)E(Ai − qi)2 | Xi = x, and as a result τ w(x) = τ (x).
+
+Proof C.3 (Proof of Proposition 3.5) Let Vi = ( Xi, W i, Z i, A i). Under (3) , E[Γ i | Vi] = E[Gi |
+
+Vi] according to [8]. Therefore, 
+
+E[Y res | X] = E[E[Y res | V ]|X] = E[E[G − m | V ]|X] = E[G − m | X] .
+
+Next, 
+
+E[Y res | X] = E[G − m | X]=EEAG (1; h) + (1 − A)G(0; h) − q(Z, X )f1(W, X ) −  1 − q(Z, X )f0(W, X ) | X, U  X .
+
+By (1) and (2) ,
+
+E[AG (1; h) | X, U ] = E[A | X, U ] · E[G(1; h) | X, U ]= E[q(Z, X ) | X, U ] · E[f1(W, X ) | X, U ]= E[q(Z, X )f1(W, X ) | X, U ],
+
+and similarly 
+
+E[(1 − A)G(0; h) | X, U ] = E[(1 − q(Z, X )) f0(W, X ) | X, U ].
+
+Therefore, E[Y res  
+
+> η0
+
+| X] = 0 . Again by (2) and the tower property, 
+
+EAres  
+
+> η0
+
+| X = E[E[A − q(Z, X ) | X, U ]|X] = 0 .
+
+For the bridge q, since Ares = A − q, the derivative of the score with respect to q is proportional to 
+
+− Y res  
+
+> η0
+
+− 2τ0(X)Ares 
+
+> η0
+
+.
+
+Taking conditional expectation given X and using the two centering identities above yields zero. For 
+
+m, the derivative of the score is proportional to −Ares  
+
+> η0
+
+, whose conditional expectation given X is also zero by the above argument. For the survival-related nuisance functions SC , ρ, define the censoring counting process and at-risk process by NC,i (t) = I(Yi ≤ t, ∆i = 0) and Ri(t) = I(Yi ≥ t). Under (3) ,
+
+MC,i (t | Vi) = NC,i (t) −
+
+Z t
+
+> 0
+
+Ri(u) dΛC (u | Vi)
+
+is a martingale. For any perturbation δ(t; h) of ρ(t; h), the first-order derivative of the score with respect to ρ is proportional to 
+
+Ares 
+
+> i
+
+Z h
+
+> 0
+
+δAi (t; h)
+
+SC (t | Vi) dM C,i (t | Vi),
+
+which has mean zero conditional on Xi. The same argument applies to perturbations of SC and ΛC .
+
+22 Proof C.4 (Proof of Proposition 3.6) Let eτS be the oracle estimator using the true nuisance functions. The argument in the proof of Proposition 3.3, now averaging over X ∈ S , gives 
+
+E[Ares  
+
+> i
+
+(Y res  
+
+> i
+
+− tA res  
+
+> i
+
+) | Xi ∈ S ] = E[( Ares  
+
+> i
+
+)2τ (Xi, U i) | Xi ∈ S ] − t E[( Ares  
+
+> i
+
+)2 | Xi ∈ S ],
+
+whose unique zero is t = τ w 
+
+> S
+
+. Thus the oracle estimator is a ratio of empirical moments centered at τ w 
+
+> S
+
+. Boundedness, residual overlap, and nS → ∞ yield the displayed central limit theorem and variance by the multivariate CLT and delta method. For the feasible estimator, cross-fitting makes each observation independent of the nuisance estimates used to construct its score, conditional on the training folds. Proposition 3.5 removes the first-order Gateaux derivative at the truth. The remaining score difference consists of products of nuisance errors and is op(n−1/2 
+
+> S
+
+) under the stated op(n−1/4 
+
+> S
+
+) rates and boundedness conditions. Hence 
+
+bτS − eτS = op(n−1/2 
+
+> S
+
+),
+
+and Slutsky’s theorem gives the result. If τ (x, u ) is constant on S, the weighted target reduces to that common value. 
+
+# D Additional Numerical Details and Results 
+
+D.1 Numerical Experiment Details 
+
+We describe more implementation details of NC-CSF using our proposed loss with estimated nuisance functions. 
+
+D.1.1 Uncensored NC-CSF 
+
+In the uncensored setting, the nuisance layer consists of 
+
+qi = q(Zi, X i), f1,i = f (Wi, 1, X i), f0,i = f (Wi, 0, X i),
+
+together with the bridge mixture 
+
+mi = q(Zi, X i)f (Wi, 1, X i) +  1 − q(Zi, X i)f (Wi, 0, X i).
+
+We then form the orthogonal residuals 
+
+Ares  
+
+> i
+
+= Ai − qi, Y res  
+
+> i
+
+= Y unc  
+
+> i
+
+− mi. (8) The final-stage feature vector augments the raw observed covariates with nuisance summaries: 
+
+Xfinal  
+
+> i
+
+= [ Xi, W i, Z i, q i, f 1,i , f 0,i , m i]. (9) The final learner is a causal forest fit on the bridge-adjusted residualized data. In our implementation, we use the CausalForestDML interface in EconML with externally constructed residuals and final-stage features. 23 D.1.2 Censored NC-CSF 
+
+We now extend the estimator to right-censored outcomes. As in the uncensored case, we estimate the treatment bridge q, the treatment-specific outcome bridges f (W, 1, X ) and f (W, 0, X ), and the bridge mixture m, and define 
+
+Ares  
+
+> i
+
+= Ai − bqi. (10) For censored outcomes, the outcome bridges are trained using a target-specific IPCW bridge pseudo-outcome eY bridge  
+
+> i
+
+, used only for nuisance estimation. For the RMST target, using the truncated time/event pair ( eYi, e∆i), we use 
+
+eY bridge  
+
+> i
+
+= eYi e∆i
+
+bSC ( eYi | Xi, W i, Z i, A i) . (11) For the survival-probability target, let 
+
+eY (h) 
+
+> i
+
+= min( Yi, h ), e∆(h) 
+
+> i
+
+= ∆ i1{Yi ≤ h} + 1{Yi > h }, (12) and define 
+
+eY bridge  
+
+> i
+
+= 1{Yi > h }
+
+bSC ( eY (h) 
+
+> i
+
+| Xi, W i, Z i, A i) . (13) We also fit arm-specific event-survival curves 
+
+bSa(t | Xi, W i, Z i) ≈ bP(Ti > t | Xi, W i, Z i, A i = a), a ∈ { 0, 1},
+
+using separate Cox models within treatment arms. For RMST, we use 
+
+Ti, nuis = min( Yi, h ), ∆i, nuis = ∆ i1{Yi < h } + 1{Yi ≥ h}. (14) For survival probability, the Cox duration/event pair is (Yi, ∆i).These event-survival curves define target-specific continuation terms. For RMST, 
+
+ρRMST  
+
+> a
+
+(t, X i; h) = t +
+
+Z ht
+
+bSa(u | Xi, W i, Z i)
+
+bSa(t | Xi, W i, Z i) du, 0 ≤ t ≤ h, a ∈ { 0, 1}. (15) For survival probability, 
+
+ρa(t, X i; h) = bSa(h | Xi, W i, Z i)
+
+bSa(t | Xi, W i, Z i) , 0 ≤ t ≤ h, a ∈ { 0, 1}. (16) Because Ui is unobserved, our main specification uses a proxy-adjusted working model for censoring, bSC (t | Xi, W i, Z i, A i), (17) estimated by a censoring Cox model using (Yi, 1 − ∆i) and covariates (Xi, W i, Z i, A i).The outcome residual plugs the bridge-adjusted regression term into the three-term censoring-robust score of [8]. For survival probability, 
+
+Y res  
+
+> i
+
+= e∆(h)
+
+> i
+
+ 1{Yi > h } − bmi
+
+ +  1 − e∆(h)
+
+> i
+
+  ρAi ( eY (h) 
+
+> i
+
+, X i; h) − bmi
+
+bSC ( eY (h) 
+
+> i
+
+| Xi, W i, Z i, A i) (18) 
+
+−
+
+Z eY (h)
+
+> i
+> 0
+
+dbΛC (t | Xi, W i, Z i, A i)
+
+bSC (t | Xi, W i, Z i, A i)
+
+ ρAi (t, X i; h) − bmi
+
+ dt. 
+
+24 For RMST, we replace 1{Yi > h } with eYi e∆i, and replace ρa(t, x ; h) with ρRMST  
+
+> a
+
+(t, x ; h).The final-stage feature vector is 
+
+Xfinal  
+
+> i
+
+= [ Xi, W i, Z i, bqi, bf1,i , bf0,i , bmi, bS1,i (h), bS0,i (h), bS1,i (h) − bS0,i (h)] . (19) Here bSa,i (h) denotes the target-specific scalar summary derived from the fitted event-survival curve under arm a. Clipping thresholds are specified in Algorithm 1. 
+
+D.2 Data-Generating Mechanism 
+
+We generate n i.i.d. samples with covariates Xi ∼ N (0 , I p) and latent confounder Ui ∼ N (0 , 1) . To model negative controls, we construct proxies Zi and Wi as noisy linear functions of (Xi, U i):
+
+Zi = az Ui + b⊤ 
+
+> z
+
+Xi + εz,i , Wi = awUi + b⊤ 
+
+> w
+
+Xi + εw,i ,
+
+with independent Gaussian noise. Treatment assignment follows 
+
+Ai ∼ Bernoulli  σ(b0 + γuUi + α⊤Xi),
+
+introducing unobserved confounding via Ui. Potential event times follow a Weibull proportional hazards model: 
+
+Ti(a) | Xi, U i ∼ Weibull  k, λe −ηi(a)/k , ηi(a) = β⊤ 
+
+> t
+
+Xi + βuUi + τ a. 
+
+The conditional treatment effect under full observability is 
+
+E[Ti(1) − Ti(0) | Xi, U i] = λΓ(1 + 1 /k ) exp 
+
+
+
+− 1 
+
+> k
+
+(β⊤ 
+
+> t
+
+Xi + βuUi)
+
+  e−τ /k − 1. (20) Although Ui is unobserved, its conditional distribution given (Xi, Z i, W i) is available due to the linear-Gaussian structure. Defining residualized proxies ˜Zi = Zi − b⊤ 
+
+> z
+
+Xi and ˜Wi = Wi − b⊤ 
+
+> w
+
+Xi, we have 
+
+Ui | Xi, Z i, W i ∼ N  μU |Z,W , σ 2 
+
+> U|Z,W
+
+,
+
+with closed-form expressions for the mean and variance. Integrating over this distribution yields the observed-data treatment effect: 
+
+E[Ti(1) − Ti(0) | Xi, Z i, W i]= λ Γ
+
+
+
+1 + 1
+
+k
+
+
+
+exp 
+
+
+
+− 1
+
+k β⊤ 
+
+> t
+
+Xi − βu
+
+k μU |Z,W + 12
+
+β2
+
+> u
+
+k2 σ2 
+
+> U|Z,W
+
+ 
+
+e−τ /k − 1
+
+
+
+. (21) We evaluate performance across regimes varying proxy quality (σz , σ w), confounding strength 
+
+(γu, β u), treatment effect size τlog -hr , and dimensionality (px, p z , p w), under both linear and nonlinear models. We fix az = aw = 1 .5, and it results into 12 × 22 configurations. 
+
+D.3 Proxy-map stress tests beyond linear Gaussian proxies 
+
+To isolate the proxy mechanism, we replace the construction by 
+
+Z = aZ eg(U ) + b⊤ 
+
+> Z
+
+X + εZ , W = aW eg(U ) + b⊤ 
+
+> W
+
+X + εW ,
+
+where eg is standardized to have mean zero and variance one under U ∼ N (0 , 1) . Treatment, event times, censoring, X, U , and the target effects are held fixed across arms. P0 is the submitted 25 linear-Gaussian proxy model. P1 uses g(u) = tanh( u); P2 uses g(u) = u with t3 noise scaled to preserve variance; P3 uses the noninjective map g(u) = u + 0 .5u2; and P4 coarsens each noisy proxy to one bit. P1 and P2 remove joint Gaussianity while preserving an essentially invertible signal. P3 and P4 remove exact invertibility or fine-grained proxy information. Table 5: Proxy-map stress tests over all 12 × 22 configurations. Entries are average RMSE; gain is the relative reduction from the matched Censored Baseline. 
+
+Proxy arm RMST: Baseline → NC-CSF Survival: Baseline → NC-CSF 
+
+P0 (submitted) 0.1662 → 0.0994 (40.2%) 0.0788 → 0.0613 (22.2%) P1 ( tanh ) 0.1641 → 0.1012 (38.3%) 0.0791 → 0.0620 (21.6%) P2 ( t3 noise) 0.1621 → 0.0993 (38.8%) 0.0798 → 0.0603 (24.5%) P3 (quadratic, noninjective) 0.1795 → 0.1159 (35.4%) 0.0856 → 0.0693 (19.1%) P4 (binary coarsening) 0.1769 → 0.1079 (39.0%) 0.0830 → 0.0661 (20.4%) 
+
+NC-CSF improves on the matched baseline in every arm, with RMST reductions of 35.4–40.2% and survival-probability reductions of 19.1–24.5%. P3 and P4 nevertheless degrade the bridge-based method in the predicted direction. In an n-sweep from 500 to 16,000, excess RMST RMSE relative to P0 averages only +0 .9% for P1 and +0 .8% for P2 and changes sign across sample sizes, whereas it is positive at every sample size and averages +12 .8% for P3 and +9 .2% for P4. Thus more data repair an identified but difficult moment system more readily than proxy information lost through a noninjective or coarsened map. P3 degrades NC-CSF RMST accuracy by 16.6% relative to P0, compared with 8.1% for the no-bridge ablation. This approximately twofold differential degradation localizes the damage to the bridge component rather than to the forest or censoring correction. The bridge is degraded, not disabled: corr {g(U ), U } = 0 .816 , and the linear R2 of U on (Z, W, X ) falls from 0.733 under P0 to 0.489 under P3 and 0.503 under P4. 
+
+D.4 Paired Monte Carlo uncertainty 
+
+We reran the representative sample-size and dimension sweeps 30 times. NC-CSF and the matched baseline use the same training draw within each replication, and performance is evaluated on an independent test set of 10,000 observations against the observed-data target E[T (1) − T (0) | X, Z, W ].Table 6 reports mean RMSE plus or minus Monte Carlo standard error, the paired NC-CSF-minus-baseline difference with a pointwise 95% interval, and the number of NC-CSF wins. Table 6: Monte Carlo uncertainty over 30 paired replications.                                                                                                            
+
+> Setting n/dBaseline RMSE NC-CSF RMSE NC-CSF −baseline [95% CI] Reduction Wins
+> Case 10 ( n)1,000 0.1404 ±0.0057 0.1079 ±0.0058 −0.0325 [ −0.0411 ,−0.0240] 23.2% 29/30 Case 10 ( n)4,000 0.1282 ±0.0060 0.0892 ±0.0027 −0.0390 [ −0.0490 ,−0.0291] 30.5% 30/30 Case 10 ( n)8,000 0.1158 ±0.0044 0.0810 ±0.0028 −0.0348 [ −0.0421 ,−0.0275] 30.1% 30/30 Case 10 ( n)16,000 0.1031 ±0.0025 0.0793 ±0.0024 −0.0238 [ −0.0298 ,−0.0179] 23.1% 29/30 Case 12 ( d)20.0588 ±0.0027 0.0308 ±0.0023 −0.0280 [ −0.0330 ,−0.0229] 47.6% 29/30 Case 12 ( d)50.0321 ±0.0008 0.0191 ±0.0009 −0.0130 [ −0.0149 ,−0.0112] 40.5% 30/30 Case 12 ( d)10 0.0508 ±0.0015 0.0347 ±0.0027 −0.0161 [ −0.0209 ,−0.0113] 31.7% 28/30 Case 12 ( d)20 0.2207 ±0.0245 0.1256 ±0.0069 −0.0952 [ −0.1443 ,−0.0460] 43.1% 30/30 Case 12 ( d)40 0.4359 ±0.0313 0.2816 ±0.0103 −0.1543 [ −0.2205 ,−0.0881] 35.4% 30/30
+
+26 Every paired interval lies below zero, and NC-CSF wins 28–30 of 30 replications in each setting. These intervals quantify Monte Carlo uncertainty in mean test RMSE, not uncertainty for an individual CATE. 
+
+D.5 Marginal ATE learners 
+
+AIPW and TMLE target a marginal average effect and therefore are not directly comparable with individual-level CATE learners. For a transparent auxiliary comparison, we estimate the population-average survival-probability effect at the same horizon, assign that scalar estimate to every test individual, and evaluate it against the true individual effects from the simulation. Table 7: Population-level learners evaluated as constant individual-effect predictors.       
+
+> Model Survival-probability RMSE Survival-probability MAE
+> AIPW 0.1127 0.0879 TMLE 0.1063 0.0875
+
+The table is included to situate the benchmark, not as a head-to-head HTE comparison: a constant marginal prediction cannot represent genuine individual heterogeneity. 
+
+D.6 ACTG175 Proxy-Split Sensitivity 
+
+The main ACTG175 analysis uses the clinical X/W/Z split described in Table 8. Because ACTG175 does not include variables that were designed as negative-control proxies, we also fit two additional clinically motivated proxy splits. These specifications should not be interpreted as definitive proximal identification designs; rather, they test how much the fitted age profile changes when immune-progression, disease-severity, and treatment-selection variables are routed through the proxy channels. All sensitivity analyses used the same ACTG175 subset, treatment coding, RMST target, and horizon as the main analysis: n = 1 ,083 , with 561 ddI controls, 522 ZDV+ddI treated subjects, and 
+
+h = 1 ,000 days. For a fair comparison, the three NC-CSF proxy-split specifications and the re-run R-CSF baseline were fit with 10,000 trees in the final forest stage. Bootstrap uncertainty summaries used 200 nonparametric bootstrap replications, with model seed 42, bootstrap seed 2026, and the same fixed age-reference grid across all specifications. The sensitivity curves in Figure 6 preserve the main qualitative pattern: estimated benefit is smaller for younger patients and larger for middle-aged or older patients. The proxy-split NC-CSF models have average fitted effects between 3.76 and 5.93 days, compared with 9.68 days for the re-run R-CSF baseline. Their peak ages range from 43 to 62 years, while their peak fitted effects range from 4.38 to 6.37 days. This indicates that the split choice changes the magnitude and smoothness of the age profile, but does not overturn the broad conclusion that age is the most visible heterogeneity dimension in this dataset. 
+
+D.7 MIMIC-IV liver-disease subgroup analysis 
+
+The liver-disease contrast was prespecified because hepatic CYP3A clearance is directly relevant to tacrolimus exposure. The cohort estimate bτ w for seven-day AKI-free survival is −0.2410 . Table 9 reports subgroup effects and each subgroup’s difference from the cohort effect. 27 Table 8: ACTG175 proxy-split sensitivity specifications. Variables not listed under W or Z are kept in X.
+
+Specification W variables Z variables Rationale 
+
+Clinical split CD4 count at 20 ± 5 weeks, CD8 count at 20 ± 5 weeks Race, prior antiretrovi-ral history Follow-up immune markers are outcome-side progression proxies; race and antiretroviral history may proxy treatment-selection patterns in the analyzed subset. Rec A Karnofsky score, symp-tomatic status, baseline CD4, baseline CD8, CD4 at 
+
+20 ± 5 weeks, CD8 at 20 ± 5
+
+weeks Prior antiretroviral his-tory, intravenous drug use, haemophilia 
+
+W emphasizes disease severity and immune progression; Z emphasizes variables that may affect regimen selection or anticipated adherence risk. Rec B Baseline CD4, baseline CD8, CD4 at 20 ± 5 weeks, CD8 at 20 ± 5 weeks Karnofsky score, symp-tomatic status, prior antiretroviral history, haemophilia 
+
+W isolates lab-based immune mea-surements; Z collects decision-relevant clinical status and history variables. 
+
+Figure 6: Unified ACTG175 age-profile comparison for the main NC-CSF clinical split, two additional proxy-split sensitivity specifications, and our re-run R-CSF baseline. All curves target RMST at 
+
+h = 1 ,000 days and use the same 10,000-tree final-stage setting. 28 Table 9: NC-CSF subgroup estimates by prior liver disease in the MIMIC-IV positive-control group.                         
+
+> Subgroup nbτw95% CI ∆vs. cohort 95% CI E-value
+> Prior liver disease 449 −0.3532 [−0.3990 ,−0.2737] −0.1122 [−0.1395 ,−0.0463] 11.16 No prior liver disease 1,808 −0.2131 [−0.2692 ,−0.1569] +0 .0279 [+0 .0115 ,+0 .0346] 3.92
+
+The harm estimate is 1.66 times as large among patients with prior liver disease. Both the subgroup interval and the interval for its difference from the cohort exclude zero. By contrast, the three prespecified comorbidity axes without a direct metabolic link produce effect ratios of 0.85, 1.02, and 0.82 relative to the cohort, and every corresponding difference interval covers zero. 
+
+D.8 Marginal versus Conditional Censoring 
+
+Our main specification uses conditional censoring adjustment, modeling the censoring survival as 
+
+SC (t | Xi, W i, Z i, A i). We compare this with a marginal variant that replaces the subject-specific nuisance by a pooled curve SC (t). The conditional pseudo-outcome is 
+
+Y res ,cond  
+
+> i
+
+= e∆i(Gi − bmi) + (1 − e∆i)( ρAi ( eYi, X i) − bmi)
+
+bSC ( eYi | Xi, W i, Z i, A i) (22) 
+
+−
+
+Z eYi
+
+> 0
+
+dbΛC (t | Xi, W i, Z i, A i)
+
+bSC (t | Xi, W i, Z i, A i) (ρAi (t, X i) − bmi) dt. 
+
+The marginal variant replaces bSC (· | Xi, W i, Z i, A i) and dbΛC (· | Xi, W i, Z i, A i) with bSC (·) and 
+
+dbΛC (·). Thus, the bridge layer and final forest are unchanged and only the censoring nuisance differs. Table 10 compares both variants on the common 12 × 22 benchmark grid, using RMST at h = 3 .0
+
+and survival probability at the observed-follow-up q90 horizon. Conditional and marginal NC-CSF perform nearly identically, while both variants outperform their corresponding baselines. Thus, the main gains come from the negative-control adjustment rather than the censoring model. Table 10: Marginal versus conditional censoring on the fixed-horizon benchmark. Lower RMSE and MAE indicate better performance. 
+
+Target Model RMSE MAE 
+
+RMST ( h = 3 .0)Conditional NC-CSF 0.0994 0.0768 Marginal NC-CSF 0.0996 0.0763 Marginal Baseline 0.1214 0.0937 Conditional Baseline 0.1662 0.1247 Survival ( q90 )Conditional NC-CSF 0.0613 0.0491 Marginal NC-CSF 0.0620 0.0495 Marginal Baseline 0.0676 0.0562 Conditional Baseline 0.0788 0.0642 
+
+We use conditional censoring as the main specification because it preserves subject-level censoring heterogeneity, aligns naturally with the proxy-adjusted nuisance construction, and gives a slight RMST advantage in our benchmark. Since the gap between marginal and conditional censoring is small relative to the gain from NC-CSF over baseline estimators, we view the censoring specification as a secondary modeling choice rather than the primary driver of performance. 29 D.9 Final-Stage Feature Ablation 
+
+Table 11 evaluates two final-stage design choices: passing proxy-adjusted raw features to the final learner and augmenting them with nuisance summaries. The comparison uses the common 12 × 22 
+
+benchmark grid, with RMST at h = 3 .0 and survival probability at the q90 horizon. The NC-CSF (X) and NC-CSF (X,W,Z) variants omit nuisance summaries from the final learner. Table 11: Final-stage feature ablation on the fixed-horizon benchmark for RMST and survival probability. Lower RMSE and MAE indicate better performance.                     
+
+> Target Model RMSE MAE
+> RMST ( h= 3 .0)NC-CSF 0.0994 0.0768 NC-CSF (X,W,Z) 0.1081 0.0861 NC-CSF (X) 0.1147 0.0914 Censored Baseline 0.1662 0.1247 Survival ( q90 )NC-CSF 0.0613 0.0491 NC-CSF (X,W,Z) 0.0675 0.0561 NC-CSF (X) 0.0717 0.0595 Censored Baseline 0.0788 0.0642
+
+The bridge-adjusted feature set already gives a large gain over the baseline. Compared with the censored baseline, NC-CSF (X,W,Z) reduces RMST RMSE from 0.1662 to 0.1081 (35 .0% ) and RMST MAE from 0.1247 to 0.0861 (30 .9% ). For survival probability, RMSE decreases from 0.0788 
+
+to 0.0675 (14 .3% ), and MAE decreases from 0.0642 to 0.0561 (12 .6% ). Adding nuisance summaries yields a further improvement. Compared with NC-CSF (X,W,Z) ,the full NC-CSF reduces RMST RMSE from 0.1081 to 0.0994 (8.0% ) and survival-probability RMSE from 0.0675 to 0.0613 (9.2% ). Overall, compared with the censored baseline, the full NC-CSF 
+
+reduces RMST RMSE by 40 .2% and survival-probability RMSE by 22 .2% .This isolates the bridge as the primary source of improvement. The forest family is identical across the matched comparisons; RSF-T and RSF-S omit residualization and give RMST RMSEs of 0.1773 and 0.1637, bracketing the 0.1662 of the residualized no-bridge baseline; and conditional versus marginal censoring changes NC-CSF only from 0.0994 to 0.0996 for RMST and from 0.0613 to 0.0620 for survival probability. Thus neither the forest, residualization alone, nor the precise censoring specification explains the bridge-adjusted gain. Intuitively, raw (X, W, Z ) require the final learner to reconstruct the bridge-adjusted signal indirectly, whereas nuisance summaries such as bq, bf1, and bf0 provide denoised, low-dimensional features aligned with the orthogonalized residualization step. This makes the final learner more effective at recovering treatment-effect heterogeneity. 
+
+D.10 RMST Under the Default max( Y ) Horizon 
+
+The main text and fixed-horizon appendix tables evaluate RMST at a common benchmark horizon, such as h = 3 .0. The original synthetic benchmark also supports a default convention in which, when no explicit RMST horizon is supplied, the target is evaluated at the maximum observed follow-up within each benchmark instance: 
+
+hcell = max 
+
+> 1≤i≤ncell
+
+Yi.
+
+30 This comparison serves as a robustness check, testing whether NC-CSF maintains its performance advantage when the RMST horizon is not fixed. The comparison includes the full 12 × 22 = 264 case-setting cells for each model. Under the default max( Y ) convention, the realized RMST horizon varies across cells because it is determined by the maximum observed follow-up in each benchmark instance. We also report the corresponding survival-probability benchmark results from the same output grid for completeness. Table 12: Benchmark results under the default RMST horizon h = max i Yi. Lower RMSE and MAE indicate better performance.                 
+
+> Model RMSE MAE Panel A: RMST ( h= max iYi)
+> NC-CSF Oracle 0.0994 0.0559 NC-CSF 0.1892 0.1155 Baseline 0.3766 0.2609
+> Panel B: Survival (benchmark quantile horizon)
+> NC-CSF Oracle 0.0413 0.0337 NC-CSF 0.0656 0.0556 Baseline 0.0691 0.0587
+
+Table 12 shows that the main qualitative ranking is preserved under the default max( Y ) RMST convention. For RMST, NC-CSF reduces RMSE from 0.3766 to 0.1892 (49 .8% ) and MAE from 
+
+0.2609 to 0.1155 (55 .7% ) relative to the baseline. Thus, the advantage of NC-CSF is not specific to the fixed-horizon choice h = 3 .0.For survival probability, the gain is smaller but still favorable: NC-CSF reduces RMSE from 
+
+0.0691 to 0.0656 (5.0% ) and MAE from 0.0587 to 0.0556 (5.2% ). We therefore interpret this appendix result as a robustness check: changing the RMST horizon convention from a fixed benchmark horizon to the default max( Y ) rule does not overturn the main conclusion that NC-CSF improves upon the baseline. The gains are larger for RMST than for horizon-specific survival probability, likely because RMST integrates survival over time and is therefore smoother. In contrast, survival probability depends on a single time point and is more sensitive to local errors in censoring correction and continuation-term estimation. 
+
+D.11 Sensitivity to RMST and Survival Horizons 
+
+Tables 13 and 14 summarize average performance over all 12 ×22 case-setting combinations, separately for each horizon. For RMST, we use the four fixed horizons from the CSF synthetic benchmark, 
+
+h ∈ { 1.5, 2.0, 3.0, 15 .0}. For survival probability, we sweep quantile horizons from q60 to q90 . This comparison serves as a robustness check across time scales rather than a result tied to a single horizon choice. 31 Table 13: RMSE comparison across horizon choices. Gain denotes the relative reduction from the baseline; lower RMSE is better.                                
+
+> Horizon NC-CSF Baseline Gain RMST (fixed horizons)
+> h= 1 .50.063 0.077 18.0%
+> h= 2 .00.077 0.105 26.2%
+> h= 3 .00.099 0.166 40.2%
+> h= 15 .00.341 1.016 66.4%
+> Survival (quantile horizons)
+> q60 0.066 0.069 5.0%
+> q70 0.068 0.074 7.9%
+> q80 0.068 0.080 15.1%
+> q90 0.061 0.079 22.2%
+
+Table 14: Absolute bias comparison across horizon choices. Gain denotes the relative reduction from the baseline; lower absolute bias is better.                                
+
+> Horizon NC-CSF Baseline Gain RMST (fixed horizons)
+> h= 1 .50.038 0.043 11.0%
+> h= 2 .00.046 0.058 20.3%
+> h= 3 .00.055 0.084 34.5%
+> h= 15 .00.160 0.488 67.2%
+> Survival (quantile horizons)
+> q60 0.036 0.036 0.9%
+> q70 0.039 0.041 5.2%
+> q80 0.038 0.043 12.1%
+> q90 0.031 0.037 17.3%
+
+The results show that NC-CSF achieves lower RMSE and smaller absolute bias than the baseline at every RMST horizon and every survival horizon. For RMST, the gain increases with the horizon and is largest at h = 15 .0, suggesting that bridge-adjusted nuisance learning is especially useful when long-horizon targets accumulate more censoring and survival-modeling error. A similar pattern appears for survival probability. Gains are modest at q60 and q70 but become larger at q80 and q90 , where censoring and continuation-term estimation are more influential. Overall, the advantage of NC-CSF is not confined to a single horizon choice; it persists across both the RMST horizon set and the survival quantile sweep, with the strongest improvements in more challenging long-horizon regimes. 
+
+D.12 Compatibility with the Original CSF Synthetic Benchmark 
+
+We additionally evaluate our estimator on the original synthetic simulation benchmark of Cui et al. [8]. This experiment is distinct from our main proximal benchmark: the original CSF simulation 32 study does not include a latent unobserved confounder U or negative-control proxy variables, and all confounding is induced through the observed covariates X. Thus, this appendix does not test the benefit of proximal adjustment. Instead, it checks whether the final censored learner used in NC-CSF remains stable in a standard fully observed causal survival setting. We follow the Section 4 simulation protocol of Cui et al. [8]. The four data-generating settings are the original CSF synthetic settings, with independent covariates drawn from [0 , 1] p and p = 15 .Each method is trained on n = 2 ,000 observations and evaluated on an independent test set of size ntest = 2 ,000 , over 250 simulation replications. We consider the same two estimands as the original paper: restricted mean survival time (RMST) and survival probability. The RMST horizons are (1 .5, 2.0, 15 .0, 3.0) for settings 1–4, respectively, and the survival probability horizons are (0 .8, 1.2, 10 .0, 2.0) .For a fair comparison, we re-run R-CSF locally using the direct grf implementation under the same simulation protocol. R-CSF is fit with 2,000 trees, minimum node size 5, subsampling fraction 
+
+0.5, and the default split-variable rule min( p, ⌈√p⌉ + 20) . The nuisance survival forests use 500 
+
+trees and minimum node size 15 , matching the original benchmark. Because this benchmark has no designated negative-control proxies, we evaluate the all-X variant of NC-CSF, where all observed covariates are passed through the observed feature block X. Therefore, this experiment evaluates the compatibility of the NC-CSF final censored learner with the original CSF setting, rather than the benefit of negative-control adjustment. Table 15: Original CSF synthetic benchmark results. MSE is multiplied by 100. Excess MSE is computed relative to the better method in each replication.                                            
+
+> Setting Metric Re-run R-CSF NC-CSF Panel A: RMST
+> 1MSE 0.27 0.25 Excess MSE 1.14 1.08 2MSE 1.15 1.24 Excess MSE 1.03 1.16 3MSE 13.37 14.67 Excess MSE 1.03 1.15 4MSE 2.97 2.33 Excess MSE 1.38 1.02
+> Panel B: Survival probability
+> 1MSE 0.16 0.15 Excess MSE 1.15 1.16 2MSE 0.37 0.38 Excess MSE 1.05 1.11 3MSE 0.15 0.16 Excess MSE 1.04 1.09 4MSE 0.28 0.28 Excess MSE 1.14 1.09
+
+33 Table 16: Classification error on the original CSF synthetic benchmark. Classification error is defined as 1 − (1 /n test ) Pntest  
+
+> i=1
+
+1{sign( bτ (Xi)) = sign( τ (Xi)) }. For Setting 4, classification error is evaluated on the subgroup X(1) ≥ 0.3, following the original benchmark.                   
+
+> Setting Re-run R-CSF NC-CSF Panel A: RMST
+> 10.22 0.22 20.17 0.18 30.09 0.09 40.01 0.03
+> Panel B: Survival probability
+> 10.22 0.25 20.23 0.24 30.10 0.11 40.04 0.14
+
+Tables 15 and 16 show that NC-CSF remains broadly competitive with the re-run R-CSF in the fully observed, no-latent-confounding benchmark. This is a demanding comparison for NC-CSF because the benchmark was designed for the original R-CSF framework and contains no negative-control structure. NC-CSF achieves similar MSE in most settings and improves RMST MSE in Settings 1 and 4, while R-CSF remains stronger in some classification-error comparisons, especially survival probability in Setting 4. We therefore interpret this experiment as a compatibility check: NC-CSF does not replace R-CSF in fully observed settings, but its final censored learner remains stable when applied outside the proximal benchmark. 34 D.13 Detailed Synthetic Setup 
+
+Table 17: Synthetic experiment configuration grid. The left column reports the parameter ranges and the 12 base configurations; the right column reports the 22 dimensional settings. The full benchmark crosses the 12 cases with the 22 settings. 
+
+> (a) Parameter ranges
+
+Value Range 
+
+Corr( Z, U ) [0 .1, 0.9] 
+
+σz , σ w [0 .73 , 14 .93] (γu, β u) [0 , 2] 
+
+τlog -hr [−0.7, 0.7] 
+
+model Linear / Nonlinear 
+
+n [500 , 16000] 
+
+dx [2 , 40] 
+
+dz , d w [1 , 20] 
+
+> (b) Base configurations
+
+Case βu γu σz σw τlog-hr Linear T Linear Y 
+
+C01 0.8 0.8 1.125 1.53 -0.6 Yes Yes C02 0.3 0.2 1.125 1.53 -0.25 Yes Yes C03 0.9 0.9 7.35 4.77 -0.5 Yes Yes C04 0.2 0.3 7.35 4.77 -0.12 Yes Yes C05 0.8 0.9 1.125 1.53 -0.7 Yes No C06 0.2 0.2 1.125 1.53 -0.3 Yes No C07 1.1 0.9 7.35 4.77 -0.5 Yes No C08 0.15 0.25 7.35 4.77 -0.12 Yes No C09 1.0 1.0 1.125 1.53 -0.7 No No C10 0.2 0.2 1.125 1.53 -0.3 No No C11 1.1 0.9 7.35 4.77 -0.5 No No C12 0.2 0.3 7.35 4.77 -0.12 No No 
+
+> (c) Dimensional settings
+
+Setting n dx dw dz
+
+S01 500 5 1 1S02 1000 5 1 1S03 2000 5 1 1S04 4000 5 1 1S05 8000 5 1 1S06 16000 5 1 1S07 2000 2 1 1S08 2000 5 1 1S09 2000 10 1 1S10 2000 20 1 1S11 2000 40 1 1S12 2000 5 2 2S13 2000 5 3 3S14 2000 5 5 5S15 2000 5 10 10 S16 2000 5 20 20 S17 2000 5 1 10 S18 2000 5 10 1S19 2000 10 5 5S20 2000 20 5 5S21 2000 40 10 10 S22 4000 20 10 10 
+
+The 12 cases isolate key problem dimensions under fixed proxy loading az = aw = 1 .5. Cases C01–C04 consider linear treatment and outcome models, varying proxy quality via (σz , σ w) (informative vs. noisy proxies) and confounding strength via (βu, γ u) (weak to strong). Cases C05–C08 introduce nonlinear outcome models, which capture misspecification in the survival process. Cases C09–C12 further incorporate nonlinear treatment assignment, representing the most challenging regimes. We focus on beneficial treatment effects (negative log-hazard ratios) to reflect common clinical settings where interventions are expected to improve survival. This restriction is without loss of generality: reversing the sign of τlog -hr yields the harmful-treatment counterpart, and all error metrics considered (e.g., RMSE, MAE, subgroup bias) are invariant to such sign reversal. Moreover, including both positive and negative effects within the same evaluation can lead to sign cancellation when averaging treatment effects, obscuring systematic estimation errors. Restricting to a single direction avoids this cancellation and provides a clearer assessment of model performance. The experimental settings are designed to isolate the effect of different problem dimensions. Settings S01–S06 focus on sample size, varying n from 500 to 16,000 while keeping covariate and proxy dimensions fixed. Settings S07–S11 vary the covariate dimensionality dx from 2 to 40 with 35 fixed sample size. Settings S12–S16 jointly increase proxy dimensions dw and dz , which capture regimes with richer proxy information. Settings S17–S22 are the stress test cases, which explore asymmetric and high-dimensional configurations. 
+
+D.14 Additional Results and Graphs for Uncensored Cases 
+
+Table 18: Summary performance in the uncensored setting.         
+
+> Model RMSE MAE
+> NC-CSF Oracle 0.3347 0.1203 NC-CSF 0.3518 0.1309 Uncensored Baseline 0.3988 0.1861
+
+Figure 7: Left: RMSE as a function of sample size n under Case 11. Right: RMSE as a function of sample size n under Case 12. In both cases, NC-CSF consistently achieves lower RMSE. 
+
+Figure 8: Left: RMSE as a function of covariate dimensionality d under Case 10. Right: RMSE as a function of d under Case 11. In both cases, NC-CSF scales more robustly with increasing dimensionality d, while the baseline degrades substantially in high-dimensional regimes. 36 Figure 9: MAE of CATE estimation across settings S01–S22 without censoring. While NC-CSF generally improves over the baseline, the gains are modest. 
+
+Figure 10: RMSE of CATE estimation across settings S01–S22 under uncensoring. While NC-CSF generally improves over the baseline, the gains are modest in the uncensored setting; as shown later, the advantage becomes substantially more pronounced under censoring. 37 D.15 Additional Results and Graphs for Censored Cases 
+
+Figure 11: MAE for RMST estimation across settings S01–S22 under censoring. NC-CSF achieves substantially lower MAE than the baseline and remains close to the oracle. 
+
+Figure 12: MAE for survival probability estimation across settings S01–S22 under censoring. NC-CSF achieves substantially lower MAE than the baseline and remains close to the oracle. 38 Figure 13: RMSE for RMST estimation across settings S01–S22 under censoring. NC-CSF achieves substantially lower RMSE than the baseline and remains close to the oracle. 
+
+Figure 14: Subgroup bias for RMST estimation across settings S01–S22 under censoring, using 
+
+X0-based subgroups. NC-CSF consistently reduces subgroup bias relative to the baseline and remains closer to the oracle, indicating improved heterogeneous treatment effect estimation. 39 Figure 15: Subgroup bias for RMST estimation across settings S01–S22 under censoring, using 
+
+X0X1-based subgroups. NC-CSF consistently reduces subgroup bias relative to the baseline and remains closer to the oracle, indicating improved heterogeneous treatment effect estimation. 
+
+Figure 16: Subgroup bias for survival probability estimation across settings S01–S22 under censoring, using X0-based subgroups. NC-CSF consistently reduces subgroup bias relative to the baseline and remains closer to the oracle, indicating improved heterogeneous treatment effect estimation. 40 Figure 17: Subgroup bias for survival probability estimation across settings S01–S22 under censoring, using X1-based subgroups. NC-CSF consistently reduces subgroup bias relative to the baseline and remains closer to the oracle, indicating improved heterogeneous treatment effect estimation. 
+
+Figure 18: Subgroup bias for survival probability estimation across settings S01–S22 under censoring, using X0X1-based subgroups. NC-CSF consistently reduces subgroup bias relative to the baseline and remains closer to the oracle, indicating improved heterogeneous treatment effect estimation. 41

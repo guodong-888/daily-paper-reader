@@ -1,0 +1,525 @@
+Title: Functional forms in joint models for longitudinal and time-to-event data: A practical guide with application and interpretation
+
+URL Source: https://arxiv.org/pdf/2608.18858v1
+
+Published Time: Thu, 20 Aug 2026 00:49:59 GMT
+
+Number of Pages: 40
+
+Markdown Content:
+# Functional forms in joint models for longitudinal and time-to-event data: A practical guide with application and interpretation 
+
+# Felix Boakye Oppong 1,2* , Dimitris Rizopoulos 1, Thierry Gorlia 2,Nicole Erler 3
+
+1Department of Biostatistics, Erasmus University Medical Center, The Netherlands. 
+
+2European Organisation for Research and Treatment of Cancer, Belgium. 
+
+3Julius Center for Health Sciences and Primary Care, University Medical Center Utrecht, The Netherlands. *Corresponding author(s). E-mail(s): felix.oppong@eortc.org; 
+
+Abstract Background: Joint models for longitudinal and time-to-event data are widely used in clinical research, yet many of their most powerful features remain under-utilised. In particular, the choice of functional form (association structure), which defines how the biomarker trajectory relates to event risk, is often treated as a technical detail despite its central role in shaping model assumptions and interpretation. As a result, researchers frequently rely on default specifications that may not capture clinically relevant characteristics of biomarker trajectories, potentially leading to misleading scientific conclusions. 
+
+Methods: We provide a structured overview and practical guide to functional forms that link longitudinal and survival processes in joint models. We classify and compare commonly used and recently proposed association structures, including instantaneous effects (current value, slope, and acceleration), cumula-tive and change-based formulations, shared random effects, and variability-based associations. Using longitudinal white blood cell measurements and overall survival data from the MIRAGE glioblastoma trial, we illustrate how different 
+
+1arXiv:2608.18858v1 [stat.ME] 19 Aug 2026 functional forms target distinct features of the biomarker trajectory and define different biomarker–risk relationships. 
+
+Results: Instantaneous functional forms capture the biomarker’s current level or short-term dynamics, whereas cumulative and change-based formulations reflect longer-term exposure or trends over relevant past intervals. Variability-based structures quantify instability in the biomarker trajectory, offering an alter-native prognostic signal. As the interpretation of the association parameters depends on the chosen formulation, it’s (implied) transformation and scale of the biomarker, and the time-scale, effect sizes are not directly comparable across functional forms, but the variety of functional forms can capture many of the complex relationships between outcomes present in clinical data. In the MIRAGE application, alternative functional forms produced different effect interpretations and, in some cases, different substantive conclusions regarding the biomarker–risk relationship. 
+
+Conclusions: The choice of functional form is a key modelling decision in joint models and directly determines the interpretation of the biomarker–risk association. Careful alignment between the scientific question and the chosen functional form is essential for valid interpretation and transparent reporting in applied studies.  
+
+> Keywords: Joint models, Longitudinal data, Time-to-event data, Functional forms, Association structure
+
+# 1 Introduction 
+
+Joint models for longitudinal and time-to-event data have become essential for analysing how repeated biomarker measurements relate to a time-to-event endpoint [1, 2, 3]. These models offer a unified approach that jointly accounts for the longitu-dinal biomarker trajectory and the risk process governing event occurrence, thereby allowing us to more accurately capture the complex relationships between the biomarker dynamics and the underlying biological processes driving the event risk [4, 5]. They play a central role in biomedical research, for example in oncology, cardi-ology, and HIV research, where biomarkers such as tumour burden, cardiac function, or immune cell counts evolve over time and directly influence prognosis [6, 7, 8, 9]. 2In their simplest form, the event risk at any given time is assumed to depend either on the expected underlying value of the longitudinal biomarker or on subject-specific random effects [5, 10, 11]. While these formulations implicitly assume that instanta-neous biomarker levels or latent subject-specific deviations fully capture the relevant biological signal, the relationship between biomarker trajectories and event processes is often more complex. Different characteristics of a patient’s biomarker history, such as the rate of change, cumulative exposure, or overall variability may influence the patient’s prognosis in distinct ways [7, 12, 13]. Ignoring such aspects may lead to incomplete or even misleading inference about the mechanisms linking biomarkers and clinical outcomes. To address this, several functional forms (also referred to as association structures) have been developed, each capturing a different aspect of the longitudinal process that may influence the hazard of an event. Among the instantaneous-risk formula-tions, the time-dependent slope association extends the current value structure by linking the hazard not only to the biomarker level but also to its instantaneous rate of change, thereby allowing the risk to depend on how the biomarker evolves over time rather than solely on its current level [10, 11, 14, 7]. Further extensions incorporate higher-order features such as curvature, allowing the hazard to depend on the accel-eration of the biomarker trajectory. Beyond these instantaneous effects, cumulative functional forms summarize the historical burden of the biomarker over time, either through area-based measures that reflect overall exposure or through change-based formulations that quantify deviations from earlier values [3, 5, 7]. Such cumulative effects may be particularly relevant when prolonged exposure influences risk, as seen in settings such as smoking exposure, radiation dose accumulation, etc. More recent developments introduce functional forms that account for subject-specific variability or instability in the biomarker trajectory, capturing fluctuations that may themselves 3carry prognostic information [12, 15, 13]. The choice of functional form has important implications for model interpretation, estimation, and clinical inference. Each form embodies a different assumption about how the longitudinal process influences risk, whether through its current latent value, velocity, accumulated exposure, variability, etc. Therefore, understanding and appro-priately selecting the functional form is crucial for accurate modeling and meaningful interpretation of joint model parameters. In this paper, we provide a practical overview of the most commonly used functional forms in joint models for longitudinal and time-to-event data, and a novel formula-tion that links the biomarker variability to the event risk. Using longitudinal white blood cell count (WBC) and overall survival data from the MIRAGE glioblastoma trial [16], we present illustrative examples for each functional form to demonstrate the implied relationships between the longitudinal trajectory and event risk. In addi-tion, extensions that allow more flexibility in modelling, including interactions with covariates and time-varying effects are also discussed. The remainder of this paper is structured as follows. Section 2 describes the general formulation of a joint model for longitudinal and time-to-event data, and describes the example dataset. Section 3 presents the different functional forms, illustrates their application in practice, and provides guidance on the interpretation of the estimated parameters. Section 4 discusses key considerations in choosing appropriate association structures and concludes with practical guidance on the interpretation, implementation, and selection of functional forms in joint models. 42 Standard Joint Model and Real Data Example 
+
+Joint models for longitudinal and survival data simultaneously model the evolution of time-dependent biomarkers and the occurrence of a time-to-event outcome [3, 1]. For a continuous biomarker, the longitudinal submodel captures each subject’s biomarker trajectory over time, typically using a linear mixed effects model: 
+
+yi(t) = mi(t) + εi(t),mi(t) = x⊤ 
+
+> i
+
+(t)β + z⊤ 
+
+> i
+
+(t)bi,
+
+bi ∼ N (0, Σ), εi(t) ∼ N (0 , σ 2),
+
+(1) where yi(t) is the observed biomarker value for subject i at time t, mi(t) is the true underlying biomarker value, xi(t) and zi(t) are design vectors for fixed and random effects β and bi, respectively, Σ is the covariance of the random effects, and εi(t) is the error term. Beyond the linear mixed model, generalized linear models could also be considered for the longitudinal submodel. The survival submodel links the longitudinal process to the hazard of the event using a proportional hazards model: 
+
+hi{t | M i(t), wi(t)} = h0(t) exp 
+
+h
+
+w⊤ 
+
+> i
+
+(t)γ + f {t, bi, Mi(t)}⊤α
+
+i
+
+, (2) where Mi(t) = {mi(u); 0 ≤ u < t } denotes the history of the true unobserved longitudinal process up to time t, h0(t) is the baseline hazard, and wi(t) denotes baseline and time-dependent exogenous covariates with associated coefficients γ. The association between the longitudinal biomarker process and the hazard is specified through the function f {t, bi, Mi(t)}, with α representing the corresponding vector of association parameters. Depending on the characteristic(s) of the longitudinal biomarker believed to be 5related to the event risk, the function f {t, bi, Mi(t)} can take different forms, further detailed in the following Section. To illustrate the practical implementation and interpretation of these functional forms, data from the EORTC 1709 / Canadian Cancer Trials Group CE.8 (MIRAGE) trial [16], a multicentre, randomized phase 3 study in patients with newly diagnosed glioblastoma was used. This trial randomized a total of 749 patients to receive stan-dard temozolomide-based radiochemotherapy with or without the experimental agent marizomib. Hematologic parameters, including white blood cell count (WBC) , were assessed weekly during the 6-week radiotherapy period, prior to each maintenance cycle, and at the end of treatment. For our illustration, we focus on WBC (unit: 
+
+10 9/L) as a representative biomarker of immune function, which has previously been linked to survival outcomes in glioblastoma [17, 18]. Among the 749 randomized patients, 689 provided consent for re-use of their data for further research. After excluding 9 patients who had no data on WBC, 680 patients were included in these illustrative analyses. The median number of repeated measurements was 10, with a range of 1-43 measurements. This application focuses on illustration and inter-pretation, rather than model selection or formal comparison, providing guidance on specifying and understanding different functional forms in practice. The R package 
+
+JMbayes2 version 0.6-0 [19] was used to fit the different joint models. In JMbayes2 ,the joint model is specified through separate fitted objects for the longitudinal and survival submodels, typically obtained from a linear mixed effects model and a Cox proportional hazards model, respectively. Given that the WBC measurements exhibit non-linear trends over time (Figure 1), the longitudinal submodel was specified as a linear mixed effects model with natural cubic splines for time, including random effects for each subject. The corresponding 6linear mixed model can be fitted using the R package nlme [20] with the following syntax: 
+
+fit_mixed_WBC <- lme(WBC ~ ns(time, 2), random = ~ ns(time, 2) | patid, data = lab_data_WBC, control = lmeControl(opt = ’optim’)) 
+
+The survival submodel considered a Cox proportional hazards model for overall survival (OS), adjusted for treatment effect and other baseline covariates: 
+
+fit_cox_WBC <- coxph(Surv(tss, ss) ~ AGE + trt2 + strasurg + strakps + nmgmt, data = pat_rand_WBC) 
+
+Note that this proportional hazards model is only used to specify the exogenous part of the linear predictor and time-to-event outcome, and that the association between the (endogenous) longitudinal outome(s) and the event is specified separately, via the association structure. How this ist done, is illustrated in the next section. 7Fig. 1 : WBC count over time for the first 20 subjects The motivating example presented in this paper is based on the MIRAGE trial data which is not publicly available. To provide an illustration of the syntax for the different functional forms implemented in JMbayes2 , a tutorial using the publicly avail-able Primary Biliary Cholangitis (PBC) dataset is available at https://t.ly/VqQhv. The corresponding R Markdown source code is available in the associated GitHub repository: https://t.ly/rj9hV. 
+
+# 3 Functional forms for the association structure 
+
+In the joint model described in Section 2, the association between the longitudinal biomarker and the time-to-event outcome is fully determined by the choice of the function 
+
+f {t, bi, Mi(t)},
+
+8which specifies how features of the subject-specific longitudinal process enter the hazard function. Although the survival submodel is formulated conditionally on the entire biomarker history Mi(t) = {mi(u); 0 ≤ u < t }, the manner in which this history affects the hazard is determined by the specified association function 
+
+f {t, bi, Mi(t)}. Hence, it is important to note that, including a longitudinal outcome in a joint model does not, by itself, imply that cumulative information from the biomarker history contributes to the event process. Rather, the relationship between the longitudinal and survival outcomes is governed by the chosen functional form, which determines which features of the biomarker trajectory are assumed to influence the hazard. Different specifications, therefore, encode different assumptions about the relevant aspects of the longitudinal process. Figure 2 provides a graphical overview of the different functional forms presented in this paper. Each panel illustrates the feature of the estimated biomarker trajectory that is linked to the hazard under the corresponding association structure. 9Fig. 2 : Graphical overview of the functional forms for linking longitudinal biomarkers to the hazard in joint models. In the following Sections, we distinguish between instantaneous functional forms , in which the risk of an event at time t depends on instantaneous characteristics of the estimated biomarker trajectory evaluated at time t, and cumulative functional forms , which summarise information from this trajetory over a (past) time interval. For each functional form, we provide a formal definition, describe its implementa-tion in JMbayes2 , and discuss the interpretation of the corresponding association parameters. 
+
+# 3.1 Instantaneous association structures 
+
+Instantaneous association structures link the instantaneous event risk at time t to features of the longitudinal biomarker trajectory evaluated at the same time point. 10 These specifications assume that the hazard depends on the current state or behaviour of the biomarker, rather than on its accumulated history. As such, they represent 
+
+instantaneous association structures, even though they are derived from an underlying longitudinal process. 
+
+3.1.1 Current value functional form 
+
+The simplest and most widely used association structure is based on the current value of the underlying longitudinal biomarker process. In this case, the association function is defined as 
+
+f {t, bi, Mi(t)} = mi(t),
+
+= x⊤ 
+
+> i
+
+(t)β + z⊤ 
+
+> i
+
+(t)bi,
+
+(3) where mi(t) denotes the subject-specific true underlying biomarker value at time t,as defined by the longitudinal submodel in (1). This functional form assumes that the instantaneous risk of event depends on the underlying current biomarker level. Although the survival submodel in (2) is conditioned on the full biomarker history 
+
+Mi(t), the current-value functional form reduces to mi(t), implying that distinct longitudinal trajectories may yield identical hazard contributions if their estimated values at time t are the same. Consider the (artificial) example in Figure 3. The three subjects have very different trajectories, however, the biomarker contribution to the risk at time 5.7 would be the same for subjects 2 and 3, and it would be the same for subjects 1 and 3 at time 12. The corresponding association parameter α quantifies the difference in the log-hazard for a one-unit difference in the biomarker value, holding all other covariates constant. Equivalently, exp( α) represents the hazard ratio comparing two individuals who differ by one unit in their biomarker value at time t.For illustration, we fit a joint model for white blood cell (WBC) count and overall survival (OS) from the MIRAGE trial described in Section 2. Using JMbayes2 , the joint model with the current value functional form can be fitted using the following 11 syntax, where fit_cox_WBC and fit_mixed_WBC are the survival and longitudinal sub-models as specified above, n_chains indicates the number of MCMC chains, and n_iter and n_burnin are the total number of iterations and number of burn-in iterations that will be discarded. Since the current value functional form is the default in JMbayes2 , the specification of the functional form via the argument 
+
+functional_form = value(wbc) is implied here. 
+
+jm_current_WBC <- jm(fit_cox_WBC, fit_mixed_WBC, time_var = "time", n_chains = 5L, n_iter = 10000L, n_burnin = 1000L) 
+
+Table 1 : Posterior means and 95% credible intervals from the survival submodel of the joint model assessing the association of white blood cell count (WBC) with overall survival using the current-value functional form.                         
+
+> Covariate Posterior Mean 2.5% CI 97.5% CI Age (years) 0.025 0.012 0.038 Treatment (B vs. A) 0.028 -0.158 0.215 Extent of Surgery (Biopsy/Partial vs. Gross total) 0.367 0.197 0.535 KPS (90/100 vs. 70/80) -0.297 -0.475 -0.116 MGMT methylated vs. unmethylated -1.158 -1.376 -0.948 MGMT undetermined/invalid vs. unmethylated -0.300 -0.611 0.000
+> Current WBC ( α)0.011 -0.002 0.024
+
+The model estimated that a 1 × 10 9/L higher WBC at any given time is associated with an approximate 1.1% increase in the instantaneous log-hazard of death (last row in table 1), suggesting a possible positive association, although with considerable uncertainty in this dataset as the 95% credible interval includes zero. Table 1 also shows the results for the other covariates in the survival submodel: older age and Biopsy/Partial resection are associated with higher risk, whereas better performance status and favorable molecular markers are protective. In some settings, it may be biologically implausible for the event risk at time t to 12 depend on the biomarker value observed at the exact same time point. Instead, a delayed effect may be more realistic. This can be accommodated by defining a lagged current value functional form [21]: 
+
+f {t, bi, Mi(t)} = mi(t − δ), δ > 0, (4) where δ denotes a pre-specified lag. This specification assumes that the instanta-neous hazard at time t depends on the biomarker level measured δ time units earlier. Lagged current-value effects are particularly relevant in settings where the biological effect of a process is delayed. For example, following chemotherapy, bone marrow suppression develops over several days, such that the current risk of febrile neutrope-nia or infection may be more strongly related to the neutrophil count measured a few days earlier than to the contemporaneous value. In such situations, a lagged current value may better capture the biologically relevant state preceding the event. An attractive feature of the (lagged) current value functional form is that the asso-ciation parameter α is readily interpretable. As in a standard regression model, it represents the change in the log-hazard associated with a one-unit increase in the biomarker, evaluated either at the current time or δ time units earlier. However, it only makes limited use of the subject’s biomarker history, and does not allow to distinguish subjects with very different biomarker trajectories, such as subjects 1 and 3 in Figure 3. For both, the biomarker would have the same contribution to the instantaneous risk at month 12 under the current value formulation, even though their longitudinal WBC trajectory is very different. 13 Fig. 3 : Illustration of functional forms using hypothetical data on WBC trajectory for 3 subjects over 12 months. The solid points represent observed values for each subject, while the lines show the estimated trajectories from a mixed model. 
+
+3.1.2 Time-dependent slope (velocity) functional form 
+
+The current value formulation presented in 3.1.1 does not encode if the biomarker is currently improving or deteriorating. The time-dependent slope functional form characterizes how the rate of change of a biomarker at time t is associated with the risk of the event [22, 4]. This association function is defined as 
+
+f {t, bi, Mi(t)} = m′
+
+> i
+
+(t) = ddt mi(t), (5) that is, the first derivative of the estimated subject-specific longitudinal trajectory with respect to time. Here, the association parameter α quantifies the change in the log-hazard associated with a one-unit increase in the current rate of change of the biomarker per unit time. Intuitively, m′
+
+> i
+
+(t) captures the instantaneous velocity of the biomarker, where positive values indicate increasing biomarker values, and negative values indicate a decreasing biomarker. 14 Although closed-form expressions for the derivative ddt mi(t) exist for many choices of the (non-linear) effect of time (i.e., the shape of the biomarker trajectories), these derivatives are not part of the mixed-effects model specification or estimation. They are only required when defining association structures in the survival submodel and must be derived explicitly when needed. This additional burden can be inconvenient in practice. Consequently, JMbayes2 computes the velocity numerically using finite differences. Specifically, the derivative is approximated using central finite differences of the subject-specific fitted trajectory from the mixed-effects model. That is, if the biomarker is evaluated at time t, the velocity is computed as 
+
+m′
+
+> i
+
+(t) ≈ mi(t + ϵ) − mi(t − ϵ)2ϵ
+
+= ˜ x⊤ 
+
+> i
+
+(t)β + ˜ z⊤ 
+
+> i
+
+(t)bi,
+
+(6) where ϵ is a small time increment (default ϵ = 0 .001 in JMbayes2 ), and the velocity design matrices are defined as 
+
+˜x⊤ 
+
+> i
+
+(t) = x⊤ 
+
+> i
+
+(t + ϵ) − x⊤ 
+
+> i
+
+(t − ϵ)2ϵ , ˜z⊤ 
+
+> i
+
+(t) = z⊤ 
+
+> i
+
+(t + ϵ) − z⊤ 
+
+> i
+
+(t − ϵ)2ϵ .
+
+This can evaluated at any time point for each subject, implicitly producing a latent time-varying covariate that enters the survival submodel. For a model with a linear effect of time, the time-dependent slope is constant over time. Therefore, the time-dependent slope functional form is most informative when the longitudinal trajectory includes nonlinear time effects, such as spline-based or polynomial terms, for which the instantaneous slope varies as a function of time. Using the motivating dataset and the same longitudinal and survival submodels for WBC and OS described in Section 3.1.1, the joint model using the time-dependent 15 slope functional form was fitted by using the update() function to modify the pre-viously specified model (jm_current_WBC) by changing only the specification of the association structure: 
+
+jm_velocity_WBC <- update(jm_current_WBC, functional_forms = ~ velocity(WBC)) 
+
+The estimated association parameter for the time-dependent slope for WBC is 
+
+α = 1 .402 , with a 95% credible interval of [−1.821; 4 .751] . This suggests that subjects experiencing more rapid increases in WBC at a given time point tend to have a higher instantaneous risk of death compared with subjects whose WBC is stable or decreasing, even if their absolute WBC levels are similar. However, the wide credible interval includes zero, indicating substantial uncertainty in the estimated effect and weak evidence for a clear association between the instantaneous rate of change of WBC and overall survival in this dataset. Importantly, interpretation of the time-dependent slope parameter may be less straightforward than that of the current-value functional form because the association is expressed on the scale of change in the biomarker per unit time rather than on the original biomarker scale. Consequently, the clinical meaning of a one-unit increase in the slope depends strongly on both the units of the biomarker and the time scale. For biomarkers that change gradually or are measured on a large scale, a one-unit increase in velocity may represent an unrealistically large change, making direct inter-pretation of the corresponding hazard ratio less intuitive. In this respect, the change (Delta) functional form, introduced in Section 3.2.3, provides a related but often more interpretable alternative by quantifying changes in the biomarker over a clinically meaningful time interval rather than relying on an instantaneous rate of change. 16 3.1.3 Acceleration functional form 
+
+The acceleration functional form links the curvature of the longitudinal biomarker at time t with the event risk. This functional form is defined as 
+
+f {t, bi, Mi(t)} = m′′  
+
+> i
+
+(t) = d2
+
+dt 2 mi(t), (7) where m′′  
+
+> i
+
+(t) is the second derivative (with respect to time) of the expected value of the biomarker at time t. This formulation captures the changes in the velocity of the biomarker over time. As for the slope functional form, to unburden the user from having to specify the ana-lytical solutions of the second derivative for the chosen function of time, JMbayes2 
+
+computes the acceleration numerically using a second-order finite-difference approx-imation. Specifically, for a small time increment ϵ, the acceleration at time t is approximated as 
+
+m′′  
+
+> i
+
+(t) ≈ mi(t + ϵ) − 2mi(t) + mi(t − ϵ)
+
+ϵ2
+
+= ˜˜x⊤ 
+
+> i
+
+(t)β + ˜˜z⊤ 
+
+> i
+
+(t)bi,
+
+(8) where the acceleration design matrices are defined as 
+
+˜˜x⊤ 
+
+> i
+
+(t) = x⊤ 
+
+> i
+
+(t + ϵ) − 2x⊤ 
+
+> i
+
+(t) + x⊤ 
+
+> i
+
+(t − ϵ)
+
+ϵ2 , ˜˜z⊤ 
+
+> i
+
+(t) = z⊤ 
+
+> i
+
+(t + ϵ) − 2z⊤ 
+
+> i
+
+(t) + z⊤ 
+
+> i
+
+(t − ϵ)
+
+ϵ2 ,
+
+where ϵ is as previously defined. As with the velocity functional form, these quantities can be evaluated at any time point for each subject, implicitly producing a latent time-varying covariate that enters the survival submodel. For a model that assumes a linear effect of time, the acceleration equates to 0 (zero), which implies that accel-eration is only meaningful when the longitudinal trajectory includes nonlinear time effect. 17 To illustrate this functional form, we fitted a joint model for white blood cell (WBC) count and overall survival from the MIRAGE trial, using the same longitudinal and survival submodels described in Section 3.1.1. The model was specified as follows: 
+
+jm_acceleration_WBC <- update(jm_current_WBC, functional_forms = ~ acceleration (WBC)) 
+
+The estimated association parameter for the acceleration of WBC was α = 1464 .33 
+
+with a 95% credible interval [459 .87 , 2485 .79] , indicating that the curvature of the WBC trajectory is associated with overall survival. The positive estimate indicates that stronger upward curvature in the biomarker trajectory at time t is associ-ated with an increased instantaneous risk of death. Although the magnitude of the parameter estimate appears large, it reflects the scale of the acceleration term rather than an extreme biological effect. Because acceleration represents an instantaneous second-order derivative of the biomarker trajectory, its numerical values are typically close to zero (i.e., a change in acceleration of 1 would be extreme and likely biologi-cally implausible), which naturally leads to larger regression coefficients in the survival submodel. 
+
+# 3.2 Cumulative functional forms 
+
+For the instantaneous functional forms specification presented in Section 3.1, the haz-ard at time t is conditionally independent of the past biomarker history given the current value of the estimated trajectory, even though the longitudinal model itself is defined over time. For this, subjects with markedly different biomarker histories may contribute identically to the hazard at time t if their estimated current biomarker val-ues coincide. Cumulative functional forms address this limitation by linking the event risk at time t to functions that capture parts of or the entire biomarker history up 18 to that time [22]. These specifications reflect the clinically plausible notion that pro-longed exposure, rather than instantaneous biomarker values alone, may be relevant for the event process. 
+
+3.2.1 Cumulative effect (area under the curve) functional form 
+
+The cumulative effect association structure links the hazard at time t to the accumu-lated biomarker exposure from start to time t. The corresponding association function is 
+
+f {t, bi, Mi(t)} =
+
+Z t
+
+> 0
+
+mi(s) ds 
+
+=
+
+Z t
+
+> 0
+
+x⊤ 
+
+> i
+
+(s)β + z⊤ 
+
+> i
+
+(s)bi ds. 
+
+(9) This formulation assumes that the entire biomarker history contributes to the haz-ard. As follow-up increases, however, the area under the fitted biomarker trajectory increases not only because of higher biomarker values but also because the integra-tion interval becomes longer. This complicates the interpretation of the cumulative effect. To obtain a more interpretable measure, JMbayes2 scales the integral by dividing it by t, yielding the average biomarker exposure over the observed follow-up period. Since the integral of the fitted biomarker trajectory generally does not have a closed-form solution, they are calculated using Gaussian quadrature, typically based on Gauss–Kronrod rules with adaptive refinement to control approximation error. Numerical quadrature approximates the integral by evaluating the trajectory at a set of carefully chosen time points (nodes) and combining these evaluations using cor-responding weights that ensure high accuracy. Let s∗ 
+
+> j
+
+and wj denote the quadrature nodes and weights mapped to the interval [0 , t ]. This functional form is approximated as follow: 
+
+1
+
+t
+
+Z t
+
+> 0
+
+mi(s) ds ≈
+
+> Q
+
+X
+
+> j=1
+
+wj x⊤ 
+
+> i
+
+(s∗ 
+
+> j
+
+)β +
+
+> Q
+
+X
+
+> j=1
+
+wj z⊤ 
+
+> i
+
+(s∗ 
+
+> j
+
+)bi (10) 19 Using the example dataset with WBC count and OS, the joint model with the cumulative effect functional form was fitted in JMbayes2 as follows: 
+
+jm_area_WBC <- update(jm_current_WBC, functional_forms = ~ area(WBC)) 
+
+Table 2 : Posterior means and 95% credible intervals for the survival submodel of the joint model using the cumulative (area under the trajectory) functional form for WBC.                         
+
+> Covariate Posterior Mean 2.5% CI 97.5% CI Age (years) 0.025 0.013 0.038 Treatment (B vs. A) 0.024 -0.164 0.209 Extent of Surgery (Biopsy/Partial vs. Gross total) 0.353 0.181 0.519 KPS (90/100 vs. 70/80) -0.274 -0.454 -0.090 MGMT methylated vs. unmethylated -1.147 -1.367 -0.936 MGMT undetermined/invalid vs. unmethylated -0.299 -0.612 -0.001 Cumulative WBC (area) 0.051 0.015 0.090
+
+Table 2 shows the posterior estimates from the survival submodel. The estimated association parameter for the cumulative WBC exposure is α = 0 .051 (95% credible interval [0 .015 , 0.090] ). This indicates that, at any given time, having a higher average past WBC over time is associated with a higher risk of death. Even though the most common specification of the cumulative effect functional forms do explicitly take into account the entire history of the (estimated) biomarker profile, it is possible that distinct longitudinal trajectories may yield identical cumulative exposure values. For example, a patient with moderately elevated biomarker levels over a long period and another subject with very high levels over a short period may have the same area under the curve, despite very different temporal patterns. As illustrated in Figure 4, although the two subjects have very different biomarker trajectories, their cumulative exposures at month 12 are equal, with AUC ≈ 137 .20 Fig. 4 : Two subjects with different estimated biomarker values at 12 months and different marker evolution In some clinical settings, it may be reasonable to assume that the current risk of an event depends primarily on recent biomarker values rather than on the entire biomarker history. For example, short-term deterioration may be more clinically rele-vant than cumulative burden accumulated over several years. This is accommodated by the restricted cumulative effect , obtained directly from (9) by choosing a fixed window length u < t , so that only biomarker values in the interval (t − u, t ] contribute to the hazard at time t. Returning to Figure 4, although Subjects A and B have simi-lar total AUC over the 12-month period, the restricted cumulative effect distinguishes between their recent biomarker histories. It reflects differences in recent exposure between the two subjects, so that they are no longer assigned the same risk at t = 12 .In JMbayes2 , the restricted cumulative effect is specified via the time_window 
+
+argument. The example below links the hazard to the average WBC exposure over the preceding 30 days: 
+
+jm_area2_WBC <- update(jm_current_WBC, functional_forms = ~ area(WBC, time_window = 30)) 
+
+21 The estimated association parameter for the restricted cumulative WBC effect was 
+
+α = 0 .011 with a 95% credible interval [−0.001 , 0.024] . This suggests that recent WBC exposure also contributes to the hazard of the event. Because the cumulative exposure measures are standardized by dividing the area under the trajectory by the length of the corresponding interval, the full and restricted cumulative effects are on the same scale. The smaller estimated association for the 30-day window therefore suggests that recent WBC history captures only part of the association between WBC and the hazard, whereas a measure incorporating the entire exposure history appears to be more strongly associated with the risk of death. 
+
+3.2.2 Weighted cumulative functional form 
+
+In many biological processes, recent biomarker values may have a stronger influence on the risk of an event than older values. To allow different parts of the biomarker history to contribute unequally to the event risk, weighted cumulative functional forms extend the cumulative effect by introducing a weight function. The general form of the association function is 
+
+f {t, bi, Mi(t)} =
+
+Z tt−u
+
+w(t − s) mi(s) ds, (11) where w(·) is a nonnegative weight function that governs the relative importance of past biomarker values. Both the full cumulative effect and the restricted cumula-tive effect introduced in Section 3.2.1 can be viewed as special cases of the weighted cumulative functional form. Specifically, the full cumulative effect is recovered when 
+
+w(t − s) = 1 for all s ∈ (t − u, t ], assigning equal weight to all biomarker values within the exposure window. In contrast, the restricted cumulative effect is obtained by defining the weight function as 22 w(t − s) = 
+
+
+
+1, s ∈ (t − u, t ],
+
+0, s ∈ [0 , t − u].
+
+More flexible formulations are also possible, in which a restricted time window is combined with a smoothly varying weight function taking values between 0 and 1, thereby allowing biomarker values within the window to contribute unequally to the hazard. Such weighted cumulative association structures have been proposed to flex-ibly characterize how the timing of biomarker exposure influences risk [23]. Although conceptually appealing, these extensions are currently not implemented in JMbayes2 .
+
+3.2.3 Change ( ∆) functional forms 
+
+Change-based association structures, sometimes referred to as Delta (∆) functional forms, relate the hazard at time t to the change in the biomarker up to time t. The corresponding association function is 
+
+f {t, bi, Mi(t)} = mi(t) − mi(0) = {xi(t) − xi(0) }β + {zi(t) − zi(0) }bi.
+
+(12) This functional form represents the total change in the estimated biomarker level since baseline and is appropriate when deviation from the initial biomarker value is believed to be clinically meaningful. Since patients typically have different lengths of follow-up, it is often useful to standardize this change by dividing by the elapsed time 
+
+t, thereby expressing the change per unit time. This standardized formulation is the default implementation in JMbayes2 . The joint model with change in WBC count from baseline as the functional form was fitted as: 
+
+jm_delta_WBC <- update(jm_current_WBC, functional_forms = ~ Delta(WBC)) 
+
+23 The estimated association parameter is α = −4.355 (95% CI [−13 .271 , 4.443] ). This indicates that greater deviation from baseline WBC may be associated with the haz-ard of death, although the wide credible interval indicates considerable uncertainty in this association. In some clinical settings, however, the current risk may depend more strongly on recent biomarker changes than on the total change since baseline. For example, a rapid deterioration during the preceding weeks may be more clinically relevant than gradual changes accumulated over a much longer period. This leads to the restricted change functional form, in which the change is evaluated over a fixed time window 
+
+(t − u, t ], where u > 0 denotes the length of the window. The association function becomes 
+
+f {t, bi, Mi(t)} = mi(t) − mi(t − u)= {xi(t) − xi(t − u)}β + {zi(t) − zi(t − u)}bi.
+
+(13) As for the change-from-baseline formulation, the change may be standardized by divid-ing by the window length u, yielding a rate of change per unit time. For our WBC example, we set the length of the window to 30 days (via the time_window argument), to estimate the effect of change in WBC in the past 30 days as follows: 
+
+jm_delta30_WBC <- update(jm_current_WBC, functional_forms = ~ Delta(WBC, time_window = 30)) 
+
+The estimated association parameter was α = 1.336 (95% credible interval 
+
+[−2.051 , 4.843] ). This suggests that larger changes in WBC over a 30-day window may be associated with a higher instantaneous risk of death. However, the 95% cred-ible interval is wide and includes zero, indicating no clear evidence of an association in this dataset. 24 The change functional form is conceptually related to the time-dependent slope func-tional form described in Section 3.1.2. Whereas the slope functional form captures the instantaneous rate of change at a specific time point through the derivative of the longitudinal trajectory, the change functional form summarizes change over a finite time interval. When the selected interval is short relative to the degree of nonlinear-ity in the biomarker trajectory, the standardized change may serve as a practical approximation to the instantaneous slope. In practice, the change functional form may also be easier to interpret clinically because it reflects biomarker changes over a familiar time window (e.g., 30 days), and the magnitude of change is often closer to what is observed in routine clinical monitoring. 
+
+# 3.3 Shared random effects functional form 
+
+An association structure frequently used in the early joint modelling literature links the event risk directly to the subject-specific random effects from the longitudinal submodel [2, 3, 24]. In this formulation, the hazard at time t depends only on the latent random effects that characterise individual deviations from the population-average biomarker trajectory. This functional form is defined as 
+
+f {t, bi, Mi(t)} = bi, (14) where bi denotes the subject specific random effects from the longitudinal model. In this formulation, the association between the longitudinal process and the event risk is captured exclusively through the subject-specific random effects, rather than through explicit features of the estimated biomarker trajectory. While all functional forms discussed in this paper rely on random effects to construct the subject-specific 25 trajectory, the shared random effects formulation links the hazard directly to these latent components themselves. A concrete illustration clarifies this distinction. Consider two patients with similar blood pressure trajectories over time, one older and one younger. Suppose age is included as a fixed effect in the longitudinal submodel, to account for the systematic increase in blood pressure associated with older age. After adjusting for this effect, the older patient may have a smaller random intercept than the younger patient, as part of their higher observed blood pressure is explained by age, whereas the younger patient requires a larger random intercept to reconcile their observed trajectory with the population-average trend. Random effects represent subject-specific deviations from the covariate-adjusted mean trajectory, and the shared random effects formula-tion links the hazard to these deviations. In contrast, functional forms based on the estimated trajectory relate the hazard to the estimated underlying biomarker level, which includes random as well as (fixed) covariate effects. Although incorporating such between-subject heterogeneity alongside other clinical covariates may be useful in certain prediction settings, the interpretation of the corresponding association parameter is less straightforward. This interpretational challenge becomes more pronounced in flexible longitudinal models, such as those based on penalised splines or other basis expansions, where the random effects cor-respond to basis coefficients rather than directly interpretable clinical quantities. In such cases, the subject-specific random effects no longer have an immediate clinical interpretation. Despite its historical importance and computational convenience [1, 3], the shared random effects formulation has attracted increasing criticism [3, 25], prompting a shift toward functional forms that link the hazard to inter-pretable aspects of the biomarker trajectory, such as its current value, its velocity, or cumulative exposure, among others. 26 3.4 Variability-based functional form 
+
+The functional forms introduced thus far are all defined through the general associa-tion function f {t, bi, Mi(t)}, which links the hazard to features of the subject-specific mean trajectory mi(t) and the random effects bi. These functional forms are based on the estimated trajectory and do not account for the variability in the biomarker measurements around this trajectory. As presented in Section 2 in the formulation of the standard joint model, it is assumed that the residual variability of the biomarker is constant across subjects and over time (see 1). This homoscedasticity assumption may be restrictive in practice, as individuals can differ not only in their mean tra-jectories but also in the variability of their biomarker measurements. Moreover, the short-term variability of biomarker measurements may itself carry prognostic infor-mation beyond the mean trajectory. For example, increased variability in clinical biomarkers has been associated with adverse outcomes in several disease areas, includ-ing oncology and cardiovascular disease, where greater instability in disease-related markers may reflect underlying physiological dysregulation and an increased risk of disease progression or mortality [26, 27]. To accommodate this heteroscedasticity and model it’s relationship with the event process, recent work has extended the standard formulation of the joint model to allow the residual variance to vary across subjects and time [13, 15, 28], leading to 
+
+yi(t) = x⊤ 
+
+> i
+
+(t)β + z⊤ 
+
+> i
+
+(t)bi + εi(t),
+
+bi ∼ N (0, Σ), εi(t) ∼ N (0 , σ 2 
+
+> i
+
+(t)) ,
+
+(15) where σ2 
+
+> i
+
+(t) is the subject-specific and time-dependent variance. To ensure positivity, 
+
+σi(t) is typically modeled on the log-scale via a separate submodel, for example 
+
+log {σi(t)} = u⊤ 
+
+> i
+
+(t)ξ + v⊤ 
+
+> i
+
+(t)ηi,
+
+27 with design vectors ui(t) and vi(t) and corresponding fixed and random effects. We define Vi(t) = {σi(u); 0 ≤ u < t }, as the history of subject-specific standard devi-ations. The hazard can then be linked to features of this subject-specific standard deviation trajectory through the association function f {t, ηi, Vi(t)}, independently of the mean trajectory. The hazard model including the variability can therefore be written as 
+
+hi(t | V i(t), wi(t)) = h0(t) exp 
+
+h
+
+w⊤ 
+
+> i
+
+(t)γ + α⊤ 
+
+> σ
+
+f {t, ηi, Vi(t)}
+
+i
+
+. (16) The functional forms presented for the mean trajectory in Sections 3.1 and 3.2 can analogously be applied to the variance trajectory. However, fitting a full heteroscedas-tic joint model requires dedicated software extensions, as standard joint modeling packages currently do not directly support subject-specific, time-varying residual variance. To overcome this, a variability-based functional form can be implemented using standard joint modeling software via a two-step approach [29]. In the first step, resid-uals from a preliminary mixed-effects model are used as subject- and time-specific empirical approximations of within-subject variability. In the second step, a trans-formation of these residuals (e.g., the absolute residual |ˆεi(t)| or the squared residual 
+
+ˆεi(t)2) is included as an additional longitudinal outcome in a standard joint model, with its fitted trajectory linked to the hazard through the association parameter ασ .Although this two-step approach does not fully account for the uncertainty associ-ated with the estimated residual process and is therefore an approximation to the fully joint heteroscedastic model, simulation studies have shown that it can provide a reasonable approximation in practice. It may therefore serve as a pragmatic alter-native when fitting a fully joint heteroscedastic model is computationally challenging 28 or not feasible. This approach can readily be implemented in JMbayes2 and other standard joint model software without any custom extensions. To illustrate this, we apply the two-step approach to model WBC count from the MIRAGE trial. Here, the longitudinal submodel is a linear mixed-effects model for the absolute residuals |ˆεi(t)| as an approximation of the subject-specific standard deviation. The model was fitted as follows: 
+
+# Step 1: fit preliminary mixed model for WBC and extract absolute residuals fit_mixed_WBC <- lme(WBC ~ ns(time, 2), random = ~ ns(time, 2) | patid, data = lab_data_WBC, control = lmeControl(opt = ’optim’)) lab_data_WBC$abs_resid <- abs(residuals(fit_mixed_WBC)) # Step 2: pre-fit mixed model for variability (input for joint model) fit_mixed_var <- lme(abs_resid ~ time, random = ~ time | patid, data = lab_data_WBC) # The cox model input for the joint model is fit_cox_WBC, as specified in Section 2 # Joint model with WBC count variability jm_variability_WBC <- jm(fit_cox_WBC, fit_mixed_var, time_var = "time", n_chains = 5L, n_iter = 10000L, n_burnin = 1000L) 
+
+The estimated association parameter was ˆαε = 0.236 (95% credible interval 
+
+[−0.045 , 0.549] ). This positive estimate suggests that greater within-subject variabil-ity in WBC count may be associated with an increased hazard of death, although the wide credible interval indicates substantial uncertainty regarding the strength of this association. Clinically, this may reflect the idea that instability in biomarker 29 measurements, beyond the mean trajectory itself, captures additional prognostic information. For example, two patients with similar average WBC trajectories may differ in risk if one exhibits substantially greater fluctuations over time. While the present example linked the hazard to the current level of biomarker vari-ability, the two-step framework is sufficiently flexible to accommodate any of the functional forms described in Sections 3.1 and 3.2. For example, one could model the association between the hazard and the slope, cumulative exposure, or recent change in biomarker variability over time. However, although such extensions are theoretically possible, the resulting association parameters may not always admit intuitive clinical interpretations. For instance, relating the hazard to the velocity of the biomarker standard deviation may be mathematically well defined, but its clinical meaning may be difficult to motivate or communicate. Consequently, the choice of functional form for variability-based associations should be guided not only by statistical flexibility but also by interpretability and clinical plausibility. An overview of all functional forms discussed in this Section, including their defi-nitions, interpretation, and the aspect of the biomarker trajectory they capture, is presented in table 3. 
+
+# 4 Discussion 
+
+In this paper, we provided a practical overview of functional forms for linking longi-tudinal biomarker trajectories to time-to-event outcomes in a joint model. We showed how each association structure captures a different aspect of the biomarker process and how the choice of functional form shapes both the interpretation of the estimated parameters and the resulting scientific conclusions. Using data from the MIRAGE trial, we demonstrated how these structures can be implemented in practice with the 30 Table 3 : Summary of functional forms for linking longitudinal biomarkers to the hazard in joint models 
+
+Functional form Quantity Scale / units Interpretation of α
+
+Current value Estimated biomarker level at time t
+
+Original biomarker scale Change in log-hazard per unit difference in current biomarker level Time-dependent slope Instantaneous rate of change Biomarker per unit time Change in log-hazard per unit difference in velocity of biomarker (i.e., change in biomarker per time unit) Acceleration Curvature (change in slope) Biomarker per time 2 Change in log-hazard per unit increase in velocity.. Highly scale-sensitive associ-ation Change (Delta) Change over a speci-fied window u
+
+Biomarker (or per time unit if standard-ized) Change in log-hazard per unit difference in biomarker change over the specified window Cumulative (AUC) Total historical expo-sure Biomarker × time Change in log-hazard per unit difference in accumulated biomarker exposure up to time t
+
+Standardized cumula-tive (mean exposure) Average historical exposure Original biomarker scale Change in log-hazard per unit difference in average biomarker exposure up to time t
+
+Restricted cumulative Recent exposure over window u
+
+Biomarker × time (window-based) Change in log-hazard per unit difference in accumulated biomarker exposure over the specified window Shared random effects Latent subject-specific deviations Units depend on the associated random effect (e.g. biomarker units for a random intercept; biomarker per unit time for arandom slope) Change in log-hazard per unit difference in the corresponding random effect(s) Variability-based Within-subject vari-ability over time Biomarker variability scale (e.g. SD or vari-ance) Change in log-hazard per unit difference in biomarker variability 
+
+31 R package JMbayes2 .The functional forms considered in this work can be broadly grouped according to how they use information from the biomarker trajectory. Instantaneous functional forms, including the current value, time-dependent slope, and acceleration, link the hazard at time t to features of the biomarker trajectory evaluated at that same time point. Although the current-value formulation provides a natural and interpretable association parameter, it does not explicitly incorporate earlier biomarker values beyond their contribution to the current estimated biomarker level [3, 11]. Conse-quently, subjects with identical estimated biomarker values at a given time may have similar contributions to the hazard even if their earlier biomarker trajectories differ substantially. The slope and acceleration formulations extend this framework by incorporating the velocity and curvature of the trajectory [7, 14], which may be informative when biomarker dynamics are biologically relevant. In contrast, cumulative functional forms summarize the biomarker history over time. These association structures reflect the idea that risk may depend on sustained expo-sure rather than on instantaneous levels alone [7, 23]. They are particularly relevant when the underlying mechanism operates through long-term burden. Change-based formulations quantify the effect of change in a biomarker over a defined period [10], which may be more relevant when recent deterioration or improvement is of interest. The variability-based functional form captures fluctuations around the mean trajec-tory and reflects the notion that instability in a biomarker may be a prognostic signal [15, 13, 12]. Finally, the shared random effects formulation links the hazard to subject specific deviations from a population trajectory which can complicate interpretation and may obscure the underlying biological mechanism. Given the availability of flex-ible software such as JMbayes2 , trajectory-based formulations are often preferable 32 when the scientific objective is to understand how biomarker dynamics relate to risk. From a practical perspective, the choice of functional form should be guided by the hypothesized mechanism linking the biomarker to the event process. Different formulations may be appropriate depending on whether risk is thought to depend primarily on the current biomarker level, its recent evolution, cumulative exposure, variability, or other trajectory characteristics. When no clear biological rationale exists, comparing several clinically plausible formulations and evaluating their pre-dictive performance may be informative. We also note that the scale of the association parameter depends fundamentally on the chosen functional form and the scale of the underlying covariate entering the survival model. Each functional form induces a different scale, which is central to the interpretation of the corresponding parameter. As a result, the magnitude of associ-ation parameters is not directly comparable across functional forms, and differences in scale should not be interpreted as differences in effect size. Instead, interpretation should be grounded in the clinical meaning of the underlying transformation of the biomarker trajectory. Meaningful clinical interpretation therefore requires under-standing both the mathematical transformation and the time scale on which it is defined. When the longitudinal outcome is modelled on a transformed scale, for example using a log transformation to address skewness, the subject-specific linear predictor from the mixed-effects model does not lie on the natural scale of the biomarker. This can make the resulting association parameter difficult to interpret clinically because the functional form is evaluated on the transformed rather than the original scale. In such cases, it may be desirable to transform the subject-specific linear predictor 33 back to the outcome scale before linking it to the hazard. Transformation functions provide a flexible mechanism to achieve this within JMbayes2 [19], allowing the association parameter to be interpreted on a clinically meaningful scale. Functional forms need not be considered in isolation and may be combined when supported by the scientific question [5, 11]. For example, both the current biomarker level and its rate of change may jointly influence risk, or biomarker variability may provide prognostic information beyond the mean trajectory. Such combinations can capture complementary biological mechanisms but require careful consideration of identifiability, interpretability, and clinical plausibility. By default, the association between the longitudinal biomarker and the hazard is governed by a time-constant coefficient, consistent with the proportional hazards assumption in the survival submodel. In many clinical settings, however, the strength or even the direction of the association may evolve over time [6]. For example, a biomarker may be strongly prognostic early in follow-up but less informative at later time points, or its prognostic value may depend on treatment phase or disease progression. To accommodate such scenarios, the joint model can be extended by allowing the association parameter to vary over time through an interaction between the functional form covariate and a function of time [30]. This extension relaxes the proportional hazards assumption for the longitudinal association, allowing the effect of the biomarker on the log-hazard to change over follow-up rather than remaining constant. Such flexibility can be applied to any of the functional forms introduced in this paper and is possible using software such as JMbayes2 .Some limitations of the current overview should be acknowledged. First, while we have illustrated each functional form using a single dataset, the relative performance 34 of different association structures will depend on the clinical context, the measure-ment frequency, and the underlying biological process. Formal model comparison may be useful when the scientific question does not clearly favour one functional form over another, but should not replace subject-matter reasoning. Second, the variability-based functional form as implemented via the two-step approach inherits the limitations of two-stage methods more generally. Uncertainty from the first-stage estimation is not propagated to the second stage, which may lead to underestimated standard errors for the association parameters [1, 31]. Despite these limitations, this work has several strengths. We provide applied researchers with a practical overview of a broad range of functional forms and illustrate their implementation and interpretation using a clinical trial dataset and 
+
+JMbayes2 . In addition, the inclusion of less commonly discussed formulations, such as curvature and variability-based functional forms, broadens the scope of available association structures and highlights opportunities for future methodological devel-opment. In conclusion, the choice of functional form in a joint model is not merely a technical modelling decision but a scientific one that determines how the longitudinal biomarker process is related to event risk [3, 25, 7, 22]. No single association structure will be universally appropriate. Selection should therefore be guided by the clinical question, biological plausibility, interpretability, and the aspect of the biomarker trajectory believed to be most relevant to the outcome. 
+
+# Declarations 
+
+• Funding: This work is supported by the EORTC and the Belgian National Lottery and their players. 35 • Competing interests: The authors declare no competing interests. • Ethics approval and consent to participate: Not applicable. • Consent for publication: Not applicable. • Data availability: The example dataset can be obtained from the EORTC through datasharing request via https://www.eortc.org/data-sharing/ • Author contribution: F.B.O, D.R. and N.E. conceived the idea. D.R. and N.E. pro-vided statistical guidance and supervision. F.B.O. conducted the methodological review, performed the statistical analyses and illustrative examples, developed the figures, and drafted the manuscript. T.G. provided clinical guidance and supervi-sion, including input on the motivating example and interpretation of the clinical context. All authors contributed to the interpretation of the results, critically reviewed and revised the manuscript, and approved the final version. 
+
+# References 
+
+[1] Anastasios A. Tsiatis and Marie Davidian. Joint modeling of longitudinal and time-to-event data: An overview. Statistica Sinica , 14(3):809–834, 2004. [2] R. Henderson, P. Diggle, and A. Dobson. Joint modelling of longitudinal measurements and event time data. Biostatistics , 1(4):465–480, 2000. [3] Dimitris Rizopoulos. Joint Models for Longitudinal and Time-to-Event Data With Applications in R . Chapman and Hall/CRC., Boca Raton, 2012. [4] Dimitris Rizopoulos and Pulak Ghosh. A Bayesian semiparametric multivariate joint model for multiple longitudinal outcomes and a time-to-event. Statistics in Medicine , 30(12):1366–1380, 2011. [5] Dimitris Rizopoulos, Laura A. Hatfield, Bradley P. Carlin, and Johanna J.M. Takkenberg. Combining Dynamic Predictions From Joint Models for Longitu-dinal and Time-to-Event Data Using Bayesian Model Averaging. Journal of the American Statistical Association , 109(508):1385–1397, 2014. 36 [6] Carolyn I. Sartor, Myla H. Strawderman, Xi Hong Lin, Katherine E. Kish, Patrick W. McLaughlin, and Howard M. Sandler. Rate of PSA rise predicts metastatic versus local recurrence after definitive radiotherapy. International Journal of Radiation Oncology Biology Physics , 38(5):941–7, 1997. [7] Elizabeth R. Brown. Assessing the association between trends in a biomarker and risk of event with an application in pediatric HIV/AIDS. Annals of Applied Statistics , 3(3):1163–1182, 2009. [8] Nobuhle N. McHunu, Henry G. Mwambi, Tarylee Reddy, Nonhlanhla Yende-Zuma, and Kogieleum Naidoo. Joint modelling of longitudinal and time-to-event data: An illustration using CD4 count and mortality in a cohort of patients initiated on antiretroviral therapy. BMC Infectious Diseases , 20(1):256, 2020. [9] Pouya Joolharzadeh, Mario Rodriguez, Raja Zaghlol, Lauren N. Pedersen, Jesus Jimenez, Carmen Bergom, and Joshua D. Mitchell. Recent Advances in Serum Biomarkers for Risk Stratification and Patient Management in Cardio-Oncology. 
+
+Current Cardiology Reports , 25(3):133–146, 3 2023. [10] Wen Ye, Xihong Lin, and Jeremy M.G. Taylor. Semiparametric Modeling of Longitudinal Measurements and Time-to-Event Data–A Two-Stage Regression Calibration Approach. Biometrics , 64(4):1238–1246, 2008. [11] Jeremy M.G. Taylor, Yongseok Park, Donna P. Ankerst, Cecile Proust-Lima, Scott Williams, Larry Kestin, Kyoungwha Bae, Tom Pickles, and Howard San-dler. Real-Time Individual Predictions of Prostate Cancer Recurrence Using Joint Models. Biometrics , 69(1):206–213, 2013. [12] Rui Martins. A flexible link for joint modelling longitudinal and survival data accounting for individual longitudinal heterogeneity. Statistical Methods and Applications , 31(1):41–61, 2022. [13] Marco Palma, Ruth H Keogh, Siobhán B Carr, Rhonda Szczesniak, David Taylor-Robinson, Angela M Wood, Graciela Muniz-Terrera, and Jessica K37 Barrett. A Bayesian location-scale joint model for time-to-event and multi-variate longitudinal data with association based on within-individual variability. 
+
+arXiv:2503.12270 , 3 2025. [14] Menggang Yu, Jeremy M.G. Taylor, and Howard M. Sandler. Individual pre-diction in prostate cancer studies using a joint longitudinal survival-cure model. 
+
+Journal of the American Statistical Association , 103(481):178–187, 2008. [15] Léonie Courcoul, Christophe Tzourio, Mark Woodward, Antoine Barbieri, and Hélène Jacqmin-Gadda. A Location-Scale Joint Model for Studying the Link Between the Time-Dependent Subject-Specific Variability of Blood Pressure and Competing Events. Statistics in Medicine , 44(20-22), 9 2025. [16] Patrick Roth, Thierry Gorlia, Jaap C. Reijneveld, Filip de Vos, Ahmed Idbaih, Jean Sébastien Frenel, Emilie Le Rhun, Juan Manuel Sepulveda, James Perry, G. Laura Masucci, Pierre Freres, Hal Hirte, Clemens Seidel, Annemiek Walenkamp, Slavka Lukacova, Paul Meijnders, Andre Blais, Francois Ducray, Vincent Verschaeve, Garth Nicholas, Carmen Balana, Daniela A. Bota, Matthias Preusser, Sarah Nuyens, Fréderic Dhermain, Martin van den Bent, Chris J. O’Callaghan, Maureen Vanlancker, Warren Mason, and Michael Weller. Mari-zomib for patients with newly diagnosed glioblastoma: A randomized phase 3 trial. Neuro-Oncology , 26(9):1670–1682, 2024. [17] Güven Gürsoy. CRP/albumin ratio and WBC values correlate with Ki-67 and survival in glioblastoma multiforme. Frontiers in Oncology , 15:1612212, 2025. [18] Shuodan Zhang, Nadia McMillan, Matthew McGuinness, Stephen Trudeau, Ka Wai Grace Ho, and Erik J. Uhlmann. Peripheral biomarkers predict survival in patients with glioblastoma treated with temozolomide. Molecular and Clinical Oncology , 22(6):56, 2025. [19] Dimitris Rizopoulos, Pedro Miranda Afonso, and Grigorios Papageorgiou. 
+
+JMbayes2: Extended Joint Models for Longitudinal and Time-to-Event Data ,38 2025. R package version 0.5-95, https://github.com/drizopoulos/jmbayes2. [20] J Pinheiro, D Bates, S DebRoy, D Sarkar, and R Core Team. nlme: Linear and nonlinear mixed effects models. https://cran.r-project.org/package=nlme, 2019. [21] Paul S. Albert and Joanna H. Shih. An approach for jointly modeling multivariate longitudinal measurements and discrete time-to-event data. Annals of Applied Statistics , 4(3):1517–1532, 2010. [22] Eleni Rosalina Andrinopoulou, D. Rizopoulos, Johanna J.M. Takkenberg, and E. Lesaffre. Combined dynamic predictions using joint models of two longitudinal outcomes and competing risk data. Statistical Methods in Medical Research ,26(4):1787–1801, 2017. [23] Katya Mauff, Ewout W. Steyerberg, Giel Nijpels, Amber A.W.A. van der Heijden, and Dimitris Rizopoulos. Extension of the association structure in joint models to include weighted cumulative effects. Statistics in Medicine , 36(23):3746–3759, 2017. [24] Michael S. Wulfsohn and Anastasios A. Tsiatis. A Joint Model for Survival and Longitudinal Data Measured with Error. Biometrics , 53(1):330–9, 1997. [25] Graeme L. Hickey, Pete Philipson, Andrea Jorgensen, and Ruwanthi Kolamunnage-Dona. Joint modelling of time-to-event and multivariate longi-tudinal outcomes: Recent developments and issues. BMC Medical Research Methodology , 16(1):117, 2016. [26] Szymon Piatek, Grzegorz Panek, Zbigniew Lewandowski, Mariusz Bidzinski, Dominika Piatek, Przemyslaw Kosinski, and Miroslaw Wielgos. Rising serum CA-125 levels within the normal range is strongly associated recurrence risk and survival of ovarian cancer. Journal of Ovarian Research , 13(1):102, 2020. [27] Shouling Wu, Xue Tian, Qin Xu, Yijun Zhang, Xiaoli Zhang, Penglian Wang, Shuohua Chen, and Anxin Wang. Visit-to-visit blood pressure variability and the risk of cardiovascular disease: a prospective cohort analysis. Hypertension 
+
+39 Research , 46(12):2622–2634, 2023. [28] Shanpeng Li, Daniel S. Nuyujukian, Robyn L. McClelland, Peter D. Reaven, Jin Zhou, Hua Zhou, and Gang Li. A joint model of the individual mean and within-subject variability of a longitudinal outcome with a competing risks time-to-event outcome. arXiv:2301.06584 , 2023. [29] Felix Boakye Oppong, Dimitris Rizopoulos, Thierry Gorlia, and Nicole Erler. Joint modelling of time-dependent biomarker variability and time-to-event outcomes, a two-step approach. arXiv:2605.05923 , 5 2026. [30] Haiqun Lin, Charles E. McCulloch, and Susan T. Mayne. Maximum likeli-hood estimation in the joint analysis of time-to-event and multiple longitudinal variables. Statistics in Medicine , 21(16):2369–82, 2002. [31] Ipek Guler, Laura Calaza-Díaz, Christel Faes, Carmen Cadarso-Suárez, Elena Giraldez, and Francisco Gude. Joint modelling for longitudinal and time-to-event data: Application to liver transplantation data. Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics) , 8581 LNCS(PART 3):580–593, 2014. 40

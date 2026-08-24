@@ -6,27 +6,30 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-23
-- 运行时间：2026-08-23 20:04:12 UTC
+- 最新运行日期：2026-08-24
+- 运行时间：2026-08-24 19:20:24 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：3
 - 精读区：0
-- 速读区：2
+- 速读区：3
 
 ### 今日简报（AI）
-今日速读2篇论文，无精读。最值得关注的是7.0分的《Simultaneous 3D co-registered perfusion and oxygenation with ULM, photoacoustic imaging, and a planar matrix array》，融合超声定位显微镜与光声成像实现3D灌注/氧合共配准。若想深入了解，建议优先精读该文，体会多模态成像的协同价值。
-- 详情：[/202608/23/README](/202608/23/README)
+今日速读三篇生存分析与因果推断相关论文，重点聚焦纵向-时间事件联合建模与因果生存森林方法。两篇7分论文分别提供联合模型实用指南与负控制框架下的因果森林改进，值得优先关注。建议下一步精读这两篇高分论文，并尝试将方法应用于自身临床或生存数据场景。
+- 详情：[/202608/24/README](/202608/24/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Simultaneous 3D co-registered perfusion and oxygenation with ULM, photoacoustic imaging, and a planar matrix array](/202608/23/2608.19823v1-simultaneous-3d-co-registered-perfusion-and-oxygenation-with-ulm-photoacoustic-imaging-and-a-planar-matrix-array)  
+1. [Functional forms in joint models for longitudinal and time-to-event data: A practical guide with application and interpretation](/202608/24/2608.18858v1-functional-forms-in-joint-models-for-longitudinal-and-time-to-event-data-a-practical-guide-with-application-and-interpretation)  
    标签：评分：7.0/10、query:flap-ex-met
-   evidence：提供配准的灌注与氧合成像，是皮瓣存活的关键因素
-2. [Martingale R-learner: Estimating Time-varying Heterogeneous Treatment Effects for Time-to-event Outcomes](/202608/23/2608.19596v1-martingale-r-learner-estimating-time-varying-heterogeneous-treatment-effects-for-time-to-event-outcomes)  
+   evidence：提供将纵向代谢轨迹与生存风险关联的框架，适用于运动诱导代谢变化与皮瓣存活研究
+2. [Causal Survival Forests with Negative Controls](/202608/24/2608.19749v1-causal-survival-forests-with-negative-controls)  
+   标签：评分：7.0/10、query:flap-ex-met
+   evidence：带阴性对照的因果生存森林可估计处理对生存的效应，适用于运动训练对皮瓣存活的效果
+3. [MultiSigBERT: Beyond Survival Analysis through Multimodal and Sequential Modeling in Oncology](/202608/24/2608.16972v1-multisigbert-beyond-survival-analysis-through-multimodal-and-sequential-modeling-in-oncology)  
    标签：评分：6.0/10、query:flap-ex-met
-   evidence：提供用于异质性处理效应的生存分析方法，适用于皮瓣存活影响因素研究
+   evidence：多模态序列生存模型整合结构化和文本数据，可用于识别影响皮瓣存活的因素
 
 
 <div class="dpr-home-promo-card">

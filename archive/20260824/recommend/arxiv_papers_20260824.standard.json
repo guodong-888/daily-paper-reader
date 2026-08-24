@@ -1,0 +1,134 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-24T19:18:06.895558+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.18858v1",
+      "source": "arxiv",
+      "title": "Functional forms in joint models for longitudinal and time-to-event data: A practical guide with application and interpretation",
+      "abstract": "Background: Joint models for longitudinal and time-to-event data are widely used in clinical research. However, the choice of functional form linking the biomarker trajectory to event risk is often treated as a technical detail, despite its importance for model assumptions and interpretation. Default specifications may fail to capture clinically relevant features of biomarker trajectories.   Methods: We provide a structured overview of functional forms linking longitudinal and survival processes in joint models. We compare association structures including instantaneous effects (current value, slope, and acceleration), cumulative and change-based formulations, shared random effects, and variability-based associations. Using longitudinal white blood cell measurements and overall survival data from the MIRAGE glioblastoma trial, we illustrate how different functional forms capture distinct features of biomarker trajectories and define different biomarker-risk relationships.   Results: Instantaneous forms capture the biomarker's current level or short-term dynamics, whereas cumulative and change-based forms reflect longer-term exposure or trends. Variability-based structures quantify instability in the biomarker trajectory as an alternative prognostic signal. Association parameters depend on the functional form, biomarker scale, and time scale, and effect sizes are therefore not directly comparable. In the MIRAGE application, alternative functional forms produced different effect interpretations and, in some cases, different conclusions regarding the biomarker-risk relationship.   Conclusions: The choice of functional form is a key modelling decision in joint models and determines the interpretation of the biomarker-risk association. Aligning the functional form with the scientific question is essential for valid interpretation and transparent reporting.",
+      "authors": [
+        "Felix Boakye Oppong",
+        "Dimitris Rizopoulos",
+        "Thierry Gorlia",
+        "Nicole Erler"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-08-19T12:29:26+00:00",
+      "link": "https://arxiv.org/pdf/2608.18858v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Provides a framework for linking longitudinal metabolic trajectories to survival risk, applicable to exercise-induced metabolic changes and flap survival",
+      "llm_evidence_cn": "提供将纵向代谢轨迹与生存风险关联的框架，适用于运动诱导代谢变化与皮瓣存活研究",
+      "llm_evidence": "提供将纵向代谢轨迹与生存风险关联的框架，适用于运动诱导代谢变化与皮瓣存活研究",
+      "canonical_evidence": "提供将纵向代谢轨迹与生存风险关联的框架，适用于运动诱导代谢变化与皮瓣存活研究",
+      "llm_tldr_en": "A practical guide to functional forms in joint models for longitudinal and time-to-event data, enabling the study of how exercise-induced metabolic changes over time influence tissue survival outcomes.",
+      "llm_tldr_cn": "纵向与生存数据联合模型常用，但关联函数形式的选择常被忽略。该文系统介绍了当前值、斜率、加速、累积效应等函数形式的设定与解释，并通过实例展示其对模型结论的影响。该方法适用于分析运动训练过程中代谢标志物的动态变化对皮瓣存活的影响。",
+      "llm_tldr": "纵向与生存数据联合模型常用，但关联函数形式的选择常被忽略。该文系统介绍了当前值、斜率、加速、累积效应等函数形式的设定与解释，并通过实例展示其对模型结论的影响。该方法适用于分析运动训练过程中代谢标志物的动态变化对皮瓣存活的影响。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "metabolic changes during exercise and flap survival",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.16972v1",
+      "source": "arxiv",
+      "title": "MultiSigBERT: Beyond Survival Analysis through Multimodal and Sequential Modeling in Oncology",
+      "abstract": "Machine learning has become an essential component of modern healthcare, where the integration of heterogeneous data sources offers unprecedented opportunities to improve clinical decision-making. Electronic Health Records (EHR) contain complementary information -- including narrative clinical reports, numerical measurements, and structured variables -- yet most survival models remain limited to a single modality or fail to exploit the temporal nature of patient trajectories. We propose MultiSigBERT, a unified framework for multimodal sequential survival modeling in oncology based on path signature representations. Here, narrative medical reports (free-text) are converted into sentence embeddings by extracting and averaging contextual word embeddings. These representations are then compressed via modality-specific PCA and concatenated with structured covariates to form joint temporal trajectories which are then encoded using the Signature transform, a tool from Rough Paths theory that efficiently captures higher-order temporal interactions across modalities without supervision needed. The computed Signature features are finally incorporated as high dimensional features into a LASSO-regularized Cox model to estimate individualized risk scores. The performance of our novel MultiSigBERT pipeline is illustrated on the analysis of a real-world oncology cohort from the Léon Bérard Center, comprising over 120,000 medical reports and structured records from more than 2,500 patients. The model achieves a concordance index of 0.743 (sd 0.029) on an independent test set, demonstrating the benefit of jointly modeling multimodal temporal dynamics together with patient-level geometric structure for survival prediction.",
+      "authors": [
+        "Paul Minchella",
+        "Stéphane Chrétien",
+        "Guillaume Metzler",
+        "Loïc Verlingue",
+        "Rémi Vaucher"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-17T12:44:38+00:00",
+      "link": "https://arxiv.org/pdf/2608.16972v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multimodal sequential survival model integrating structured and text data, adaptable to identify factors influencing flap survival",
+      "llm_evidence_cn": "多模态序列生存模型整合结构化和文本数据，可用于识别影响皮瓣存活的因素",
+      "llm_evidence": "多模态序列生存模型整合结构化和文本数据，可用于识别影响皮瓣存活的因素",
+      "canonical_evidence": "多模态序列生存模型整合结构化和文本数据，可用于识别影响皮瓣存活的因素",
+      "llm_tldr_en": "MultiSigBERT is a multimodal sequential survival model for oncology using path signatures over EHR data, integrating narrative text and numerical variables, applicable to survival factor identification in flap research.",
+      "llm_tldr_cn": "电子健康记录中的多模态数据未充分利用，现有生存模型多限于单一模态。该文提出MultiSigBERT，利用路径签名表达整合医疗文本和数值变量进行序列生存建模。文本被转换为句子嵌入并学习时序特征。该方法可迁移到皮瓣存活影响因素分析。",
+      "llm_tldr": "电子健康记录中的多模态数据未充分利用，现有生存模型多限于单一模态。该文提出MultiSigBERT，利用路径签名表达整合医疗文本和数值变量进行序列生存建模。文本被转换为句子嵌入并学习时序特征。该方法可迁移到皮瓣存活影响因素分析。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.19749v1",
+      "source": "arxiv",
+      "title": "Causal Survival Forests with Negative Controls",
+      "abstract": "We study heterogeneous treatment-effect (HTE) estimation in observational survival studies commonly associated with both censored outcomes and unmeasured confounding. We integrate causal survival forests (CSF) with negative controls (NC) from proximal causal inference and introduce Negative Control Causal Survival Forests (NC-CSF), a flexible nonparametric HTE learner for survival analysis. Our approach uses a loss that incorporates proxy variables and Neyman orthogonalization to train the random forest, thereby mitigating bias from unobserved confounding and gaining robustness to nuisance estimation. Through extensive simulations spanning varying levels of confounding, proxy relevance, and censoring mechanisms, we demonstrate that NC-CSF substantially reduces bias and estimation error relative to existing baselines. We further demonstrate the practical utility of our method on various clinical datasets, where it confirms several existing findings and also reveals new interpretable patterns of treatment-effect heterogeneity. To facilitate practical use, we provide an end-to-end Python implementation of NC-CSF that carefully handles implementation details such as nuisance estimation and clipping.",
+      "authors": [
+        "Zijun Gao",
+        "Kyounggeui Hong",
+        "Leyi Ma",
+        "Qianli Wu",
+        "Zachary Izzo",
+        "Ruishan Liu"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-08-20T07:52:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.19749v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Causal survival forest with negative controls estimates treatment effects on survival, applicable to exercise training effect on flap survival",
+      "llm_evidence_cn": "带阴性对照的因果生存森林可估计处理对生存的效应，适用于运动训练对皮瓣存活的效果",
+      "llm_evidence": "带阴性对照的因果生存森林可估计处理对生存的效应，适用于运动训练对皮瓣存活的效果",
+      "canonical_evidence": "带阴性对照的因果生存森林可估计处理对生存的效应，适用于运动训练对皮瓣存活的效果",
+      "llm_tldr_en": "Introduces Negative Control Causal Survival Forests (NC-CSF) for nonparametric heterogeneous treatment-effect estimation in survival studies with unmeasured confounding, enabling robust causal inference for interventions like exercise on flap survival.",
+      "llm_tldr_cn": "观察性生存研究常受未测量混杂影响，导致干预效果估计有偏。该文将因果生存森林与阴性对照推断结合，提出NC-CSF方法，利用代理变量和Neyman正交化训练随机森林。模拟研究表明该方法显著减少偏倚并提升稳健性，为评估运动训练等干预对皮瓣存活的影响提供了可靠工具。",
+      "llm_tldr": "观察性生存研究常受未测量混杂影响，导致干预效果估计有偏。该文将因果生存森林与阴性对照推断结合，提出NC-CSF方法，利用代理变量和Neyman正交化训练随机森林。模拟研究表明该方法显著减少偏倚并提升稳健性，为评估运动训练等干预对皮瓣存活的影响提供了可靠工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "exercise training effect on flap survival",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
