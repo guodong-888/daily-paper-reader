@@ -6,30 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-24
-- 运行时间：2026-08-24 19:20:24 UTC
+- 最新运行日期：2026-08-25
+- 运行时间：2026-08-25 20:33:44 UTC
 - 运行状态：成功
-- 本次总论文数：3
-- 精读区：0
-- 速读区：3
+- 本次总论文数：1
+- 精读区：1
+- 速读区：0
 
 ### 今日简报（AI）
-今日速读三篇生存分析与因果推断相关论文，重点聚焦纵向-时间事件联合建模与因果生存森林方法。两篇7分论文分别提供联合模型实用指南与负控制框架下的因果森林改进，值得优先关注。建议下一步精读这两篇高分论文，并尝试将方法应用于自身临床或生存数据场景。
-- 详情：[/202608/24/README](/202608/24/README)
+今日精读1篇高分论文，聚焦多状态数据下带中间事件的路径处理效应估计（8.0/10）。  
+核心看点：如何在存在中间事件时区分直接与间接处理效应，是多状态模型分析的关键。  
+建议普通读者先理解“中间事件”与“处理效应”的基本概念，再深入该文方法。
+- 详情：[/202608/25/README](/202608/25/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Estimating Pathway Treatment Effects in the Presence of Intermediate Events with Multi-State Data](/202608/25/2608.22608v1-estimating-pathway-treatment-effects-in-the-presence-of-intermediate-events-with-multi-state-data)  
+   标签：评分：8.0/10、query:flap-ex-met
+   evidence：估计经由中间事件影响生存结局的通路治疗效应的方法，可用于运动引起的代谢变化对皮瓣存活的中介分析。
 
 ### 速读区论文标签
-1. [Functional forms in joint models for longitudinal and time-to-event data: A practical guide with application and interpretation](/202608/24/2608.18858v1-functional-forms-in-joint-models-for-longitudinal-and-time-to-event-data-a-practical-guide-with-application-and-interpretation)  
-   标签：评分：7.0/10、query:flap-ex-met
-   evidence：提供将纵向代谢轨迹与生存风险关联的框架，适用于运动诱导代谢变化与皮瓣存活研究
-2. [Causal Survival Forests with Negative Controls](/202608/24/2608.19749v1-causal-survival-forests-with-negative-controls)  
-   标签：评分：7.0/10、query:flap-ex-met
-   evidence：带阴性对照的因果生存森林可估计处理对生存的效应，适用于运动训练对皮瓣存活的效果
-3. [MultiSigBERT: Beyond Survival Analysis through Multimodal and Sequential Modeling in Oncology](/202608/24/2608.16972v1-multisigbert-beyond-survival-analysis-through-multimodal-and-sequential-modeling-in-oncology)  
-   标签：评分：6.0/10、query:flap-ex-met
-   evidence：多模态序列生存模型整合结构化和文本数据，可用于识别影响皮瓣存活的因素
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">

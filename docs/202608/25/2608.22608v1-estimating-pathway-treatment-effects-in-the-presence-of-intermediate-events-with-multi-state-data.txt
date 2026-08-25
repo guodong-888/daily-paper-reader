@@ -1,0 +1,3566 @@
+Title: Estimating Pathway Treatment Effects in the Presence of Intermediate Events with Multi-State Data
+
+URL Source: https://arxiv.org/pdf/2608.22608v1
+
+Published Time: Tue, 25 Aug 2026 01:22:34 GMT
+
+Number of Pages: 66
+
+Markdown Content:
+# Estimating Pathway Treatment Effects in the Presence of Intermediate Events with Multi-State Data 
+
+Yuhao Deng *
+
+Vaccine and Infectious Disease Division, Fred Hutchinson Cancer Center Haoyu Wei ∗
+
+Department of Economics, University of California San Diego Donglin Zeng Department of Biostatistics, University of Michigan Rui Song Amazon Inc. Xiao-Hua Zhou Department of Biostatistics and Beijing International Center for Mathematical Research, Peking University 
+
+Abstract 
+
+During clinical trials evaluating a drug’s effect on a survival endpoint, intermediate events often occur in addition to the primary event. The treatment can exert its effect on the primary endpoint along multiple pathways through intermediate events. Assumptions for identify-ing mediation effects, such as sequential ignorability in natural effects or the dismissible components condition in separable effects, fail because intermediate events act as treatment-induced confounding. To understand the effect along each pathway, we consider hypothetical interventions in transitions between event statuses to mimic the treatment mechanism. The hypothetical interventions adjust for effects through intermediate events and marginalize over unobserved treatment-induced confounding, if any. Based on the derived efficient influence functions for the counterfactual cumulative incidences under hypothetical interventions, we construct multiply robust and semiparametrically efficient estimators for pathway treatment effects. Our proposed framework enables the examination of treatment effects through each transition, on each event, and along each path. By analyzing data from the LEADER Trial, we find that liraglutide significantly reduces the risk of cardiovascular and microvascular events. The reduction in all-cause mortality is primarily mediated by its effects on expanded major adverse cardiovascular events. 
+
+Keywords: Causal inference; Efficient influence function; Mediation; Multi-state model; Time-to-event; Transition. 
+
+> *
+
+Yuhao Deng and Haoyu Wei contributed equally. The authors thank Kajsa Kvist from Novo Nordisk A/S (Denmark) for the insightful discussions on the LEADER Trial. 
+
+1arXiv:2608.22608v1 [stat.ME] 23 Aug 2026 1 Introduction 
+
+When evaluating the effect of a new drug on a survival endpoint, individuals may experience multiple intermediate events, thereby generating multiple transition pathways from baseline to the primary endpoint. The effects operating through each pathway provide insight into multiple questions, such as how the drug is effective and whether additional post-treatment interventions should be recommended. For example, to study the direct effect, researchers wish to isolate the effect of treatment itself on the primary endpoint, independent of any modification through intermediate events. By identifying the transitions associated with the largest treatment effects, doctors can provide intensive prompts to increase treatment adherence when patients are at risk of these transitions. By identifying the transition pathways through which treatment is ineffective or harmful, doctors can impose additional medications to prevent these transitions. Treating the primary event and intermediate events as distinct states yields the so-called multi-state data (Hougaard 1999, Andersen & Keiding 2002, Putter et al. 2007). In particular, when the primary event is a terminal state and the intermediate events may or may not occur before it, this results in special cases called competing or semi-competing risks data, which have been extensively studied (Prentice et al. 1978, Kodell & Nelson 1980, Fine & Gray 1999, Fine et al. 2001, Xu et al. 2010, Andersen et al. 2012, Chen 2012). For such data, mediation-type frameworks, such as natural effects and separable effects, have been proposed to estimate direct and indirect treatment effects on the primary event by counterfactually controlling for intermediate event risks, under no-unmeasured-confounding-like assumptions (Huang 2021, Weir et al. 2022, Martinussen & Stensrud 2023, Deng et al. 2024, Breum et al. 2024). However, these frameworks only considered at most one type of intermediate event. Since intermediate events act as treatment-induced confounders for subsequent transitions, natural effects are not identifiable due to violation of sequential ignorability if there are both semi-competing and competing events (Shpitser & Tchetgen Tchetgen 2016, Miles et al. 2020). The separable effects framework posits that the 2original treatment consists of multiple components, each of which only directly influences a single event (Stensrud et al. 2021, 2022, Robins et al. 2022). Separable effects target the effect of each component, but are not informative about the effect through each transition pathway. Even if the effects of each component are theoretically well-defined, it is hard to identify biologically meaningful treatment components with isolated effects in a real trial. Moreover, unobserved treatment-induced confounding is unavoidable due to the complex interactions among events during disease progression, so the no-unmeasured-confounding-like assumptions underlying the identification of natural and separable effects cannot be satisfied. To avoid these untestable or unverifiable assumptions, we consider hypothetical interventions associated with each transition. In particular, we envision a hypothetical scenario in which local interventions are imposed at each possible transition between events, while all other transitions remain unaffected. This intervention mimics the organic effect that shifts the risks of intermediate events (Lok 2015). Essentially, we cut one directed edge in the causal graph. Formally, we extend the randomized (stochastic) interventional effects framework, originally proposed for mediation analysis in longitudinal studies, to accommodate multi-state data (VanderWeele & Tchetgen Tchetgen 2017, Vansteelandt & Daniel 2017, Lin & VanderWeele 2017, Lin et al. 2017, Díaz & Hejazi 2020, Hejazi et al. 2022, Valeri et al. 2023). The randomized intervention envisions random draws of the intermediate event process from a specific distribution, either conditioning on or marginalizing over time-varying confounding (Deng et al. 2026). When unmeasured confounders are present, the randomized intervention remains valid in a hypothetical sense by marginalizing over them. Nevertheless, interpreting such an intervention is less straightforward: it mimics the generation of intermediate events under “recanting twins” of unmeasured confounders (Vo et al. 2026). Identifying treatment effects under hypothetical interventions does not require cross-world assumptions such as sequential ignorability as long as the hypothetical intervention is meaningful. The randomized interventional effects framework is powerful in studies with multiple 3mediators or multiple outcomes. For example, path-specific effects can be defined by considering sequences of randomized interventions (Vansteelandt et al. 2019, D’iaz et al. 2022, Tai et al. 2023, Kormaksson et al. 2024). There are several advantages to evaluating treatment effects through hypothetical interventions. First, by intervening in a single transition and comparing changes in cumulative incidence func-tions, one can determine whether the treatment affects this transition. Second, by intervening in the transitions into a state, one can identify which events are affected by the treatment. Third, by intervening in all the transitions along a path, one can estimate the path-specific treatment effect. Estimating transition-, event-, and path-specific effects generally concerns estimating counterfactual cumulative incidences under hypothetical interventions imposed on transitions. Rather than intervening in event times, the key to distinguishing pathway effects in multi-state data is to intervene in the instantaneous risk of transitions, as characterized by hazard functions. For example, a practitioner may consider exposing healthy individuals to a high-risk environment for cardiovascular events, thereby introducing a hypothetical transition-specific hazard. Next, the practitioner may expose individuals to a low-risk environment for microvascular events, thereby introducing another transition-specific hazard. The levels of transition-specific hazards in the hy-pothetical world can be specified as the observable transition hazards in the real world, regardless of treatment-induced confounding. However, hypothetical interventions for multi-state data pose conceptual challenges for randomized interventions. First, interventions can only be performed for at-risk individuals who have not experienced the terminal event. Second, once an intermediate event occurs under the intervention, subsequent interventions should not cause this event to recur. Third, the interventions should be applied sequentially across all event-counting processes, not only to a single intermediate event, because the status of any event can modify the risk of another. In addition to the conceptual difficulty of defining the randomized intervention, the interaction among intermediate events 4makes estimation more complex than modeling competing risks. While cumulative incidence functions can be calculated from transition hazards using the Kolmogorov forward equation (Andersen & Keiding 2002), such a plug-in estimator is inefficient and model-dependent. If the working models are misspecified, the resulting estimator may be biased, yielding misleading conclusions. Statistically efficient and robust estimation methods remain understudied. In this paper, we define randomized interventional effects for multi-state data. We rigorously specify the sequential randomized interventions in event-counting processes that control transition hazards by marginalizing over potential treatment-induced confounding. We demonstrate the identifiability of the counterfactual cumulative incidence of each event under any given intervention. The total effect on an event can be decomposed into the sum of interventional effects arising from sequentially intervening at each transition. We derive the efficient influence function for the counterfactual cumulative incidence under semiparametric theory (Bickel et al. 1993) and provide a semiparametrically efficient, multiply robust estimator that does not require modeling of treatment-induced confounding. We establish the asymptotic properties for the proposed estimator. We also propose hypothesis testing methods for treatment effects. 
+
+# 2 Randomized Interventional Effects 
+
+2.1 Notations and Estimands 
+
+Suppose there are K states, including initial (baseline), intermediate, and terminal states. The most typical multi-state data involve only one initial state (denoted by O), such as competing or semi-competing risks data. The transitions between states can be represented by a graph (G, E),where G is the set of states (nodes) and E is the set of one-step transitions (edges) between adjacent states. Let Gk represent the set of states with one-step transitions from state k to its adjacent following states. We denote the set of paths from state k to state g as Qkg , and the set of paths 5O D    
+
+> E
+> M
+> OD
+> E
+> M
+> OD
+> E
+> M
+> OD
+> E
+> M
+> OD
+> E
+> M
+> q1 = O →D
+> q2 = O →E→D
+> q3 = O →M→D
+> q4 = O →E→M→D
+> q5 = O →M→E→D
+
+Figure 1: Five potential paths from baseline (O) to death (D) with expanded major adverse cardiovascular events (E) and microvascular events (M) as two intermediate states. from initial states to state g as Qg. A path q ∈ Q kg is represented as an ordered sequence of states q = ( q(0) , q (1) , . . . , q (l(q))) , where q(0) = k, q(l(q)) = g, and l(q) denotes the number of transitions along q. We assume that each state is visited at most once on any path. For example, Figure 1 shows the multi-state structure for our motivating data, where O denotes the initial state, E denotes expanded major adverse cardiovascular events, M denotes microvascular events, and D denotes death. For this multi-state structure, QD = QOD = {q1, q 2, q 3, q 4, q 5}. For a single individual, it can either remain in the initial state O, or reach an event g ∈ { E, M, D} along a single path in QOg at the end of the study. Transition between event statuses is the core of modeling multi-state data, and treatment effect evaluation should start from each transition. An interpretable causal estimand should satisfy two rules: • The effect on a transition only matters on the population at risk of the transition, so the treatment should shift the transition hazard. • The effect on a transition is only present after conditioning on the history before the 6transition; since latent variables such as frailty are unobserved, the hazard should marginalize over latent variables. Specifically, for each transition (k, g ) ∈ E , we generate |G k| hypothetical counting processes are according to the hazards of Gk, and the first jump among these counting processes determines the next state an individual will transition to. In the counterfactual world, there are |E| transitions that are subject to intervention. Let a = ( akg : ( k, g ) ∈ E ) denote the levels of interventions, where the entries of a may take different values. Here, akg = 1 indicates that the transition from k to g is intervened in by drawing a counting process from the natural level under treatment, and akg = 0 
+
+indicates that it is intervened in by drawing a counting process from the natural level under control. In this way, interventions are sequential from one transition to the next, resulting in a hypothetical transition trajectory. Let W ∈ Rp be baseline covariates with support W. The end of the study is set at t∗. In practice, t∗ should not be larger than the maximum follow-up time by design. Mathematically, we can characterize the above hypothetical transitions in terms of conditional hazard functions as described below. Let Xa(t) represent the current state at time t under the interventions of level a.We define the hypothetical transition trajectory up to time t as Xa(t) = ( Xa(s) ∈ G : 0 ≤ s ≤ t).This hypothetical transition trajectory is generated in the following way. Let Xa(t) be the potential state at time t if the unit is assigned treatment a at baseline, and let 
+
+dΛ akg (t | W, X a(t)) := P {Xa(t + d t) = g | Xa(t) = k, W, X a(t)}
+
+be the potential transition hazard. For the transition (k, g ) ∈ E , we intervene in the counting process of event g according to the reference hazard associated with treatment akg ∈ { 0, 1}. Then the counting process of g given history (W, X a(t)) subject to Xa(t) = k under the randomized intervention is drawn from the hazard 
+
+dΛ akg (t | W, X a(t)) := P {Xa(t + d t) = g | Xa(t) = k, W, X a(t)}. (1) 7Such a randomized intervention postulates that the counterfactual hazards of transitions between two adjacent states are locally stable under intervention. Notably, the randomized intervention remains hypothetically achievable even in the presence of unmeasured confounding. In the presence of potential treatment-induced confounding La(t), the hazard (1) marginalizes over treatment-induced confounding, 
+
+dΛ akg (t | W, X a(t)) := 
+
+> ∫
+> l(t)
+
+dΛ akg  
+
+> kg
+
+(t | W, l (t), X a(t))P( Lakg (t) = l(t) | W, X a(t))d l(t). (2) The primary object of interest is the time to reach a specific state j ∈ G (typically a terminal event such as death), defined as T aj = inf {t ∈ [0 , t ∗] : Xa(t) = j} if state j is on the trajectory Xa(t∗),otherwise we set T aj = ∞. The primary estimand is the counterfactual cumulative incidence function (CIF) of state j ∈ G , given by 
+
+F aj (t) := P( T aj ≤ t) = P( j ∈ Xa(t)) , t ∈ [0 , t ∗]. (3) This estimand evaluates the probability that the event j occurs by time t under this hypothetical intervention. It remains well-defined even if T aj is infinite. Note that the paths from baseline to state j are not unique. Let F aj (t; q) denote the sub-incidence (or path-specific cumulative incidence) of state j along a specific path q ∈ Q j . Then, the counterfactual cumulative incidence function can be decomposed as 
+
+F aj (t) = ∑
+
+> q∈Q j
+
+F aj (t; q). (4) The counterfactual CIF is the key to defining transition-, event-, and path-specific effects, as these effects are defined by comparing counterfactual CIFs under different hypothetical interventions. To illustrate the interventions and estimands in our framework, we consider the multi-state data structure in Figure 1. The level of interventions is indexed by a vector of seven dimensions, 
+
+a = ( aOE , a OM , a OD , a EM , a ME , a ED , a MD ).
+
+For example, we can impose treatment to the transitions along the path O → E → D, while leaving all other transitions under control, that is, a = (1 , 0, 0, 0, 0, 1, 0) . Figure 2 presents the causal 8𝑁𝑁E 𝑎𝑎 𝑡𝑡1  𝑁𝑁E 𝑎𝑎 𝑡𝑡2  
+
+> 𝑁𝑁M 𝑎𝑎 𝑡𝑡1
+> 𝑁𝑁D 𝑎𝑎 𝑡𝑡1 𝑁𝑁D 𝑎𝑎 𝑡𝑡2
+> 𝑁𝑁M 𝑎𝑎 𝑡𝑡2
+
+Figure 2: Causal graphs of counterfactual counting processes. Solid arrows represent stochastic effects on the counting processes of E, M, and D. Dashed arrows represent deterministic effects, enforcing that N a 
+
+> E
+
+(t + s) = N a 
+
+> E
+
+(t) and N a
+
+> M
+
+(t + s) = N a
+
+> M
+
+(t) for all s > 0 if N a
+
+> D
+
+(t) = 1 at some 
+
+t > 0.graph of the counterfactual event-counting processes: N a 
+
+> E
+
+(t) for E, N a
+
+> M
+
+(t) for M, and N a
+
+> D
+
+(t) for D. Given the history up to time t, if the individual is in the initial state O, we draw N a
+
+> OE
+
+(t) based on the transition hazard of O →E under treated, N a
+
+> OM
+
+(t) based on the transition hazard of O →M under control, and N a
+
+> OD
+
+(t) based on the transition hazard of O →D under control; if the individual is in state E, we draw N a
+
+> EM
+
+(t) based on the transition hazard of E →M under control and N a
+
+> ED
+
+(t) based on the transition hazard of E →D under treated; if the individual is in state M, we draw N a
+
+> ME
+
+(t) based on the transition hazard of M →E under control and N a
+
+> MD
+
+(t) based on the transition hazard of M →Dunder control. The event-counting processes for E, M, and D are N a 
+
+> E
+
+(t) = max {N a
+
+> OE
+
+(t), N a
+
+> ME
+
+(t)},
+
+N a
+
+> M
+
+(t) = max {N a
+
+> OM
+
+(t), N a
+
+> EM
+
+(t)}, and N a
+
+> D
+
+(t) = max {N a
+
+> OD
+
+(t), N a
+
+> ED
+
+(t), N a
+
+> MD
+
+(t)} by aggregating all transitions to this event, respectively. The counterfactual cumulative incidence function of D is 
+
+F a 
+
+> D
+
+(t) = P {N a
+
+> D
+
+(t) = 1 }.
+
+2.2 Identifiability 
+
+According to the Kolmogorov forward equation in multi-state models, the central goal of iden-tifying the counterfactual cumulative incidence function is to identify transition hazards. In the 9hypothetical world, by definition, the intervention leads to transition hazards exactly identical to the potential hazards. Therefore, we only need assumptions to identify potential hazards. The following assumptions are commonly made in causal inference methods for survival data. 
+
+Assumption 1 (Ignorability) A ⊥⊥ Xa(t∗) | W for a = 0 , 1.
+
+Ignorability (also known as unconfoundedness or exchangeability) excludes unmeasured con-founding between the treatment assignment and the potential outcomes. This assumption does not exclude treatment-induced confounding. To account for censoring, let T a 
+
+> c
+
+be the potential censoring time and dN a 
+
+> c
+
+(t) be the increase (jump) of the potential counting process for censoring in [t, t + dt ) under treatment assignment a. We assume censoring is independent of potential outcomes given the history. 
+
+Assumption 2 (Random censoring) N a 
+
+> c
+
+(t) ⊥⊥ Xa(t + dt ) | W, X a(t), A = a.
+
+Additionally, we assume that the treatment probability and the uncensored probability at the end of the study are both positive. 
+
+Assumption 3 (Positivity) There exists a positive constant ϵ > 0 such that P( A = a | W ) > ϵ ,and P( T A 
+
+> c
+
+≥ t∗, A = a | W, X a(t∗)) > ϵ on the support of (W, X a(t∗)) .
+
+Positivity has two implications. First, the propensity score (i.e., the probability of receiving treatment) is bounded away from 0 and 1, ensuring we have data from both the treated and control groups. Second, at the end of the follow-up period t∗, a non-negligible proportion of subjects remain at risk and uncensored within the strata defined by W and Xa(t∗).Let X(t) = ( X(s) : 0 ≤ s ≤ t) be the observed trajectory from the treatment initiation to time 
+
+t. The trajectory X(·) is defined so that X(t) = g if the individual is in state g ∈ G at time t for 
+
+0 ≤ t ≤ t∗. If the individual is censored at Tc, we denote X(t) = c for t > T c. We let ∆k = 1 if state k is visited before the end of the study. Let Tk = inf {t ∈ [0 , t ∗] : X(t) = k} ∧ Tc ∧ t∗ be the time of the first visit to state k if ∆k = 1 , and otherwise Tk = Tc ∧ t∗.10 Assumption 4 (Consistency) T A 
+
+> c
+
+= Tc and XA(T A 
+
+> c
+
+∧ t∗) = X(Tc ∧ t∗).
+
+Consistency links the potential outcomes with the observed data. Specifically, if an individual has not been censored at time t, then the potential transition trajectory under the observed treatment assignment A coincides with the observed trajectory. Assumptions 1–4 ensure that the potential transition hazards can be identified as observed hazards, 
+
+dΛ akg (t | w, x (t)) = P {t < T g < t + d t, ∆g = 1 | A = a, W = w, X (t) = x(t), X (t) = k}.
+
+Consequently, the identifiability of the counterfactual cumulative incidence F aj (t) of state j ∈ G 
+
+under the hypothetical treatment sequence a is presented in the following theorem. 
+
+Theorem 1 Under Assumptions 1–4, the counterfactual cumulative incidence F aj (t) of any event 
+
+j ∈ G is identified as 
+
+F aj (t) = ∑  
+
+> q∈Q j
+> ∫
+> W
+> ∫t
+> 0
+> ∫tl(q)
+> 0
+
+· · ·  
+
+> ∫t2
+> 0
+> l(q)
+> ∏
+> r=1
+
+dP r(tr | aq(r−1) , · , w, q [tr])dP( w), (5) 
+
+where q[tr] is the history of the path q = ( q(0) , q (1) , . . . , q (r − 1)) before time tr with transition times tr = {ts : s = 1 , . . . , r − 1} and x(tr) = q(r − 1) , and P( w) is the distribution function of covariates. Here, dP r(tr | aq(r−1) , · , w, q [tr]) is the transition-specific intensity of moving from state q(r − 1) to q(r) at time tr,
+
+dP r(tr | aq(r−1) , · , w, q [tr]) = exp 
+
+> 
+
+− ∑
+
+> k∈G q(r−1)
+
+Λaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(tr | w, q [tr]) 
+
+> 
+
+× dΛ aq(r−1) ,q (r)
+
+> q(r−1) ,q (r)
+
+(tr | w, q [tr]) .
+
+(6) The proof of this identifiability result is provided in Supplementary Material E.1. If all units are given the treatment a, then the potential cumulative incidences F aj (t) = P( j ∈ Xa(t)) of each event j ∈ G is identifiable by integrating event-specific hazards into cumulative incidences using the Kolmogorov forward equation. Based on the identification formula, we observe that the counterfactual cumulative incidence F aj (t) coincides with the potential cumulative incidence F aj (t)
+
+11 if all components of the hypothetical treatment vector are identical, i.e., akg = a for every k, g ∈ E .That is, F 1 
+
+> j
+
+(t) = F 1 
+
+> j
+
+(t) and F 0 
+
+> j
+
+(t) = F 0 
+
+> j
+
+(t), where 1 = (1 , . . . , 1) and 0 = (0 , . . . , 0) . Therefore, we can decompose the total effect τj (t) = F 1 
+
+> j
+
+(t) − F 0 
+
+> j
+
+(t) on event j ∈ G into a summation of individual effects via transitions. 
+
+Remark 1 To illustrate how to decompose the total effect into interventional effects, we consider an illness–death (I–D) model. The hypothetical treatment vector a = ( aOI , a OD , a ID ) has three components, corresponding to transitions from the initial state to illness, from the initial state to death, and from illness to death, respectively. The interventional direct effect on death is 
+
+F (0 ,1,1)  
+
+> D
+
+(t) − F 0
+
+> D
+
+(t), representing the difference in counterfactual cumulative incidences of death resulting from manipulating the hazard of death while keeping the hazard of illness controlled. The interventional indirect effect on death is F 1
+
+> D
+
+(t) − F (0 ,1,1)  
+
+> D
+
+(t), representing the difference in counterfactual cumulative incidences of death due to altering the hazard of disease while controlling the hazard of illness. These two effects sum to the total effect F 1
+
+> D
+
+(t) − F 0
+
+> D
+
+(t), which coincides with the natural effects under sequential ignorability and the separable effects under the dismissible components condition in semi-competing risks when there is no treatment-induced confounding (Deng et al. 2024, Breum et al. 2024). Furthermore, the direct effect on death can be decomposed into an effect via the transition from the initial state to death F (0 ,1,0)  
+
+> D
+
+(t) − F 0
+
+> D
+
+(t),and an effect via the transition from illness to death F (0 ,1,1)  
+
+> D
+
+(t) − F (0 ,1,0)  
+
+> D
+
+(t). The path-specific effect along the path O → I → D is F (1 ,0,1)  
+
+> D
+
+(t) − F 0
+
+> D
+
+(t), and the path-specific effect along the path O → D is F (0 ,1,0)  
+
+> D
+
+(t) − F 0
+
+> D
+
+(t). Compared with natural effects, identifying interventional effects does not require the cross-world independence assumption required for natural effects; compared with separable effects, identifying interventional effects does not require partial isolation that excludes interacting effect pathways of treatment-induced confounding across different events. 
+
+12 3 Estimation and Inference 
+
+3.1 Efficient Influence Function 
+
+In the real-world study, we observe n independent and identically distributed (i.i.d.) copies of 
+
+O = ( A, W, X (t∗)) , denoted by O = {Oi = ( Ai, W i, X i(t∗)) : i = 1 , . . . , n }. Equivalently, the trajectory X(t∗) can be written as (Tk, ∆k : k ∈ G ). Unlike competing risks models, estimating hazard functions nonparametrically is difficult in multi-state models because the origins of transitions between arbitrary states are not aligned. As a compromise, parametric or semiparametric models are usually employed, restricting the dependence of hazards on the history. The set of unordered states in the transition history reflects the current status of an individual; therefore, it is reasonable to expect that the transition hazard obeys the extended Markov property. We assume that the hazard dΛ akg (t | w, x (t)) at time t depends only on w and the unordered states in the path {q(s) : s = 0 , . . . , l (q), t s < t } rather than the past transition times 
+
+{ts : s = 1 , . . . , l (q)}. Conditional on covariates at a fixed time (see Figure 1), the Markovness condition implies that the counterfactual hazard of death may take one of four distinct values corresponding to the paths q1, q2, q3, and {q4, q 5}. We formalize the Markovness condition in the following statement. 
+
+Assumption 5 (Extended Markovness) For every possible state history x(t), there exists a set of history h(x(t)) (unordered states) such that P( X(t) ∈ h(x(t)) | W ) > ϵ for some constant 
+
+ϵ > 0 and 
+
+dΛ akg (t | w, x (t)) = dΛ akg (t | w, h (x(t))) , (k, g ) ∈ E .
+
+Extended Markovness automatically holds in competing risks data because all transitions share the same at-risk set. The at-risk probability declines from 1 since the time origin. Extended Markovness ensures that there is sufficient data to flexibly estimate the hazards. It excludes the case where the second event in a path occurs just after the baseline. This assumption is 13 testable (Grambsch & Therneau 1994), and can be relaxed by modeling sojourn times. Let Pn(·)
+
+denote the empirical average over the sample. By replacing the unknown hazards with their corresponding semiparametric estimators, we obtain the plug-in (or regression ) estimator for the conditional counterfactual cumulative incidence ̂ F aj (t | w) according to the identification result in Theorem 1. Then, the population-level counterfactual cumulative incidence is estimated by ̂
+
+F aj (t) = Pn{̂ F aj (t | W )}. Plug-in estimators suffer from model misspecification. To increase estimation efficiency and robustness, we derive the efficient influence function (EIF) of the counterfactual cumulative incidence F aj (t), which is in the tangent space restricted by extended Markovness. 
+
+Lemma 1 Under Assumptions 1–5, the efficient influence function of the counterfactual cumu-lative incidence F aj (t) in the semiparametric model space restricted by extended Markovness is given by 
+
+EIF {F aj (t)} = ∑
+
+> q∈Q j
+
+∫ t
+
+> 0
+
+∫ tl(q)
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+> l(q)
+
+∏
+
+> r=1
+
+dP r(tr | aq(r−1) , · , W, q [tr]) 
+
+×
+
+> l(q)
+
+∑
+
+> r=1
+
+ dηaq(r−1) ,q (r) 
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) dΛ aq(r−1) ,q (r)
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) − ∑
+
+> k∈G q(r−1)
+
+ηaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(tr | W, q [tr]) 
+
+
+
++ F aj (t | W ) − F aj (t),
+
+(7) 
+
+where 
+
+ηaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(t | w, x (t)) = 1(A = aq(r−1) ,k , W = w)P( A = aq(r−1) ,k | W = w)
+
+×
+
+∫ t
+
+> 0
+
+dMq(r−1) ,k (s; aq(r−1) ,k , w, x (s)) P{Tk ∧ Tc ≥ s, X (s) ∈ h(x(s)) | A = aq(r−1) ,k , W = w},
+
+(8) 
+
+and Mq(r−1) ,k (t; aq(r−1) ,k , w, x (t)) is the martingale process associated with the transition from 
+
+q(r − 1) to k,
+
+Mq(r−1) ,k (t; a, w, x (t)) = 
+
+∫ t
+
+> 0
+
+1{X(s) ∈ h(x(s)) } {
+
+dNk(s) − Yk(s)dΛ aq(r−1) ,k  
+
+> q(r−1) ,k
+
+(s | w, x (s)) }
+
+,
+
+with the event-counting process Nk(t) = ∆ k1{Tk ≤ t} and at-risk process Yk(t) = 1{Tk ∧ Tc ≥
+
+t}.
+
+14 The proof of Lemma 1 is given in Supplementary Material E.2. The EIF is a function of the observed data O, characterizing the influence of a single observation on the target estimand. In the context of competing risks, the function ηa
+
+> 0,k
+
+(t | w) is exactly the EIF of the potential cause-specific hazard of event k under treatment a. Compared with the identification formula based on F aj (t|W ),an additional term in the EIF 
+
+φaj (t; O) = ∑  
+
+> q∈Q j
+> ∫t
+> 0
+> ∫tl(q)
+> 0
+
+· · ·  
+
+> ∫t2
+> 0
+> l(q)
+> ∏
+> r=1
+
+dP r(tr | aq(r−1) , · , W, q [tr]) 
+
+× 
+
+> l(q)
+> ∑
+> r=1
+> 
+
+dηaq(r−1) ,q (r) 
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) dΛ aq(r−1) ,q (r)
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) − ∑
+
+> k∈G q(r−1)
+
+ηaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(tr | W, q [tr]) 
+
+> 
+
+whose expectation is zero, incorporates information in every single observation to reduce the bias of the regression estimator. 
+
+Remark 2 The dΛ aq(r−1) ,q (r)
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) that appears in the denominator of EIF {F aj (t)} cancels out with Pr(tr | aq(r−1) , · , W, q [tr]) . This is important for fitting the EIF if we employ semipara-metric models for the hazard functions. For example, in the Cox model, the Breslow estimator consistently estimates the cumulative hazard but not the pointwise hazard (Breslow 1972). Consis-tent estimation of cumulative hazards is sufficient to fit the EIF. If the model space is not restricted by extended Markovness, the EIF will involve pointwise hazards (see Supplementary E.5), and consistently estimating pointwise hazards is required in this case, which is much more inefficient. 
+
+3.2 Estimation Based on the Efficient Influence Function 
+
+The efficient influence function involves transition hazards, censoring hazards, and the propensity score. We fit the transition hazards using semiparametric models. For example, we may use the Cox proportional hazards model with the occurrence statuses of other events as time-varying covariates. In particular, the transition hazard from k to g can be modeled as 
+
+dΛ akg (t | w, x (t)) = dΛ akg (t) exp 
+
+> 
+
+βT
+
+> kg
+
+w + ∑
+
+> h∈G\{ o,k,g }
+
+γk,hg Nh(t) 
+
+> 
+
+,
+
+15 where Λakg (t) is the unspecified baseline hazard, βkg is the coefficients for baseline covariates, 
+
+γk,hg is the coefficients for event history, and Nh(t) is the status (counting process) indicating whether event h has occurred at time t. If x(t)̸ = k, we set dΛ akg (t | w, x (t)) = 0 . If an event h ∈ G does not appear in any possible trajectory including k → g, the coefficient γhg 
+
+is set to zero. Since treatment-induced confounding is integrated out by the definition of a randomized intervention, we do not need to model its intensity. Model parameters can be estimated by fitting Cox models separately for each event g ∈ G\{ o} using nonparametric maximum likelihood (Breslow 1972, 1974, Zeng & Lin 2007), where W is treated as time-invariant covariates and {Nh(·) : h ∈ G\{ o, k, g }} are treated as time-varying covariates. The censoring hazards Λakc(t | w, x (t)) are fitted using similar models. The propensity score can be fitted using generalized linear models such as logistic regression, 
+
+P( A = 1 | W = w) = 1 /{1 + exp( −αTw)},
+
+where the parameters are estimated using maximum likelihood. Using the fitted transition hazards ̂ Λakg (t | w, x (t)) , we fit the transition density d̂ Pr(tr |
+
+aq(r−1) ,·, W, q [tr]) along each path at every time point for each unit. In particular, for each path q = ( q(0) , q (1) , . . . , q (r − 1) , q (r)) with transition times tr = ( t1, . . . , t r−1, t r),
+
+d̂ Pr(tr | aq(r−1) , · , W, q [tr]) = exp 
+
+> 
+
+− ∑ 
+
+> k∈G q(r−1)
+> ∫tr
+> tr−1
+
+d̂Λaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(tr | W, q [tr]) 
+
+> 
+
+× d̂ Λaq(r−1) ,q (r)
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) .
+
+By plugging the estimated densities into Equation (6), we estimate the counterfactual cumulative incidence ̂ F aj (t | W ; q) along each path q ∈ Q j . The plug-in estimator for F aj (t | W ) is obtained by ̂ F aj (t | W ) = ∑ 
+
+> q∈Q ĵ
+
+F aj (t | W ; q), and the plug-in estimator for F aj (t) is ̂ F aj (t) = Pn{̂ F aj (t |
+
+W )}.Next, we augment the multi-state model by regarding censoring c as an absorbing state, so that G∗ = G ∪ { c} and Q∗ 
+
+> g
+
+= Qg ∪ { (k, c) : k ∈ G} . Using the fitted transition hazards 16 ̂Λakg (t | w, x (t)) and censoring hazards ̂ Λakc(t | w, x (t)) , we can estimate the counterfactual cumulative incidence ̂ F ∗aj (t | w; q) for each j ∈ G when all treatment components are set at 
+
+a ∈ { 0, 1}. Using the fitted propensity score ̂ P( A = a | W = w) we fit the weighted integral martingale ̂ ηaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(tr | W, q [tr]) based on Equation (8), ̂
+
+ηaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(tr | W, q [tr]) = 1̂
+
+P( A = aq(r−1) ,k | W )
+
+×
+
+∫ tr
+
+> tr−1
+
+dNk(s; aq(r−1) ,k , W, q [tr]) − Yk(s; aq(r−1) ,k , W, q [tr])d ̂ Λaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(s | W, q [tr]) ̂
+
+P{Tk ∧ Tc ≥ s, X (s) ∈ h(q[tr]) | A = aq(r−1) ,k , W } ,
+
+where ̂
+
+P{Tk ∧ Tc ≥ s, X (s) ∈ h(q[tr]) | A = aq(r−1) ,k , W }
+
+= ∑
+
+> q′:h(q′)= h(q)
+
+{̂ 
+
+F ∗aq(r−1) ,k  
+
+> q(r−1)
+
+(s | W ; q′) − ∑
+
+> g∈G ∗
+> q(r−1)
+
+̂
+
+F ∗aq(r−1) ,k  
+
+> g
+
+(s | W ; ( q′, g )) 
+
+}
+
+is the estimated probability of remaining in state q(r − 1) at time s with a history compatible with 
+
+q[tr] under treatment A = aq(r−1) ,k in the presence of censoring. Let ̂ φaj (t; O) denote the fitted debiasing term obtained by substituting the unknown components with their estimated counterparts. We update the plug-in estimator Pn{̂F aj (t | W )} by adding the empirical average of the debiasing term, 
+
+˜F aj (t) = Pn
+
+[̂ 
+
+F aj (t | W ) + ̂ φaj (t; O)]
+
+. (9) The estimator ˜F aj (t) is known as a one-step estimator because it gives a one-step update for the initial plug-in estimator. This EIF-based estimator corrects the first-order bias of the plug-in estimator. This EIF-based estimator solves the estimating equation of the fitted EIF, 
+
+Pn
+
+[̂ 
+
+EIF {F aj (t)}]
+
+:= Pn
+
+[̂ 
+
+F aj (t | W ) + ̂ φaj (t; O) − ˜F aj (t)]
+
+= 0 .
+
+The standard error of the EIF-based estimator is given by 
+
+s.e.{ ˜F aj (t)} = (
+
+n−1Pn
+
+[̂ 
+
+EIF {F aj (t)}2]) 1/2
+
+.
+
+17 3.3 Asymptotic Properties 
+
+The one-step estimator typically exhibits higher efficiency and robustness to model misspecifica-tion, making it more attractive than plug-in methods. A key advantage of our EIF-based estimator is multiple robustness .
+
+Theorem 2 (Multiple robustness) Suppose that the assumptions in Lemma 1 hold. The EIF-based estimator ˜F aj (t) is consistent if, for each q ∈ Q j , at least one of the following conditions holds: (1) All the transition hazards from the states on the path q to their adjacent following states 
+
+{Λaq(r−1) ,k (·) : r = 1 , . . . , l (q), k ∈ G q(r−1) } are correctly specified. (2) The propensity score and censoring hazard are correctly specified, while all but one transition hazard in {Λaq(r−1) ,k (·) : r = 1 , . . . , l (q), k ∈ G q(r−1) } are correctly specified. 
+
+Another appealing property of the EIF-based estimator is semiparametric efficiency .
+
+Theorem 3 (Semiparametric efficiency) Suppose that the assumptions in Lemma 1 and the additional regularity conditions listed in Supplementary Material A hold. Then 
+
+√n{ ˜F aj (t) − F aj (t)} ⇝ N (
+
+0, E[EIF {F aj (t)}]2)
+
+for t ∈ [0 , t ∗]. The asymptotic variance attains the semiparametric efficiency bound. 
+
+The regularity conditions essentially require that the fitted models are not too complex (Donsker condition). They should be correctly specified, and the convergence rate is not too slow. Note that the EIF is Lipschitz continuous with respect to the hazard model and propensity score model. The Cox model with a bounded baseline hazard and time-varying covariates of bounded variation is Donsker (Zeng & Lin 2007), and the logistic regression model for the propensity score is Donsker. Therefore, the fitted EIF is Donsker. If these working models are correctly specified, then the fitted models converge at the Op(n−1/2) rate. As a result, all regularity conditions for Theorem 3 18 O DEMO DEM   
+
+> ሺaሻሺbሻሺcሻ
+> ODEM
+
+Figure 3: Three versions of interventions. Solid arrows represent interventions with hazards under treatment, and dashed lines represent interventions with hazards under control. (a) The treatment effect on the transition O →E. (b) The treatment effect on the event M. (c) The treatment effect on the path O →E→D. hold. Theorem 3 indicates that the EIF-based estimator ˜F aj (t) is regular and asymptotically linear (RAL), with an influence function EIF {F aj (t)}. The pointwise confidence interval (CI) of F aj (t)
+
+can be constructed by the normal approximation. The proofs of Theorems 2 and 3 are given in Supplementary Material E.3 and E.4. 
+
+3.4 Treatment Effects Comparing Sequential Interventions 
+
+The primary goal of causal inference for multi-state data is to answer the following three questions: identifying transition-specific effects to determine the transitions delivering treatment effects, identifying event-specific effects to determine the target of treatment, and identifying path-specific effects to determine the causal pathway. Figure 3 illustrates three possible ways for envisioning hypothetical interventions. In (a), we let the one-step transition from O to E be treated while other transitions are controlled, and then we can find the treatment effect on the transition (O, E). In (b), we let all one-step transitions to M be treated while other transitions are controlled, and then we can find the treatment effect on M. In (c), we treat the transitions along the path O →E→D while keeping the other transitions controlled, and then we can estimate the treatment effect delivered through this path. 19 Generally, for a target state j ∈ G , the treatment effect comparing two hypothetical treatment vectors a and a∗ is defined as 
+
+τj (t; a, a ∗) := F aj (t) − F a∗ 
+
+> j
+
+(t). (10) Here, a represents the treatment sequence of interest, and a∗ serves as the baseline treatment (Robins 2004). This estimand can be used to quantify whether a treatment effect exists on a specific path. Specially, we may set all components in a∗ at 0, then τj (t; a, a ∗) represents the effect of partially active treatment. We may also set all components in a∗ to 1, then τj (t; a, a ∗) represents the effect of abstaining from treatment. Let ˜τj (t; a, a ∗) = ˜F aj (t) − ˜F a∗ 
+
+> j
+
+(t) be the EIF-based one-step estimator for the treatment effect. Inference for the treatment effect is straightforward as a result of Theorem 3 and the linearity of efficient influence functions. 
+
+Corollary 1 Suppose that the conditions in Theorem 3 hold, then for t ∈ [0 , t ∗],
+
+√n{˜τj (t; a, a ∗) − τj (t; a, a ∗)} ⇝ N (
+
+0, E[EIF {F aj (t)} − EIF {F a∗ 
+
+> j
+
+(t)}]2)
+
+.
+
+For hypothesis testing of the treatment effect, we construct a test statistic based on the event-specific restricted mean survival time lost (RMSTL) by the end of the study as 
+
+Tj (a, a ∗) =  
+
+> ∫t∗
+> 0
+
+{ ˜F aj (s) − ˜F a∗ 
+
+> j
+
+(s)}ds. (11) Under the null hypothesis that there is no effect, the test statistic Tj (a, a ∗) should converge to 0 in probability. Its asymptotic variance can be derived from the EIF. 
+
+Corollary 2 Suppose that the conditions in Theorem 3 hold. Under the null hypothesis H0 :
+
+τj (t; a, a ∗) = 0 for all t ∈ [0 , t ∗],
+
+√nT j (a, a ∗) ⇝ N (
+
+0, σ 2 
+
+> j
+
+(a, a ∗))
+
+,
+
+where 
+
+σ2 
+
+> j
+
+(a, a ∗) = var  
+
+> (∫t∗
+> 0
+
+[EIF {F aj (s)} − EIF {F a∗ 
+
+> j
+
+(s)}]d s
+
+> )
+
+.
+
+20 In Supplementary Material C, we conduct simulation studies to assess the finite-sample perfor-mance of the EIF-based estimator in various settings, confirming its consistency and multiple robustness. The coverage rate of confidence intervals based on the estimated EIF is close to the nominal level. We also find that using an estimated propensity score can yield a slightly lower finite-sample variance than using the true propensity score. 
+
+# 4 Application to the LEADER Trial 
+
+4.1 Data Description 
+
+Vascular events are leading causes of mortality among patients with type 2 diabetes (Stratton et al. 2000, ADVANCE Collaborative Group 2008). In clinical studies, these events are typically classified as expanded major adverse cardiovascular events (EMACE) and microvascular events (MVE), while other types of vascular events are relatively uncommon (Emerging Risk Factors Collaboration et al. 2010, Forbes & Cooper 2013). EMACE includes myocardial infarction, stroke, unstable angina pectoris, heart failure, coronary revascularization, and cardiovascular death, while MVE includes nephropathy and retinopathy. These two categories of non-fatal vascular events can occur alternatively, with one potentially leading to or influencing the development of the other before ultimately resulting in death. The LEADER (Liraglutide Effect and Action in Diabetes: Evaluation of Cardiovascular Outcome Results) Trial was a large, multi-center, double-blind, randomized controlled trial designed to investigate the long-term effects of liraglutide on cardiovascular outcomes in patients with type 2 diabetes at high cardiovascular risk (Marso et al. 2013, 2016). Conducted across 410 clinical research sites in 32 countries as part of a global phase 3a program, the trial enrolled 9,340 participants, who were randomized in equal proportions to receive either liraglutide (a glucagon-like peptide-1 receptor agonist) or placebo. The LEADER trial offers a valuable opportunity to 21 investigate the impact of liraglutide on the progression of vascular events. Standard Kaplan–Meier regression (associated with log-rank test) and Cox regression (associated with Wald or score test) demonstrated that liraglutide significantly reduced the risks of EMACE and MVE. Analyses of individual events further revealed significant reductions in cardiovascular death and nephropathy. However, these results do not distinguish between the direct effect on a specific event and the indirect effects mediated through other events. Taking death as an example, an individual can either experience death without any vascular events or experience both vascular events and death. To gain a clearer understanding of how treatment improves survival, it is necessary to examine all potential pathways from treatment initiation through subsequent clinical events. Elucidating these causal mechanisms can enhance our understanding of liraglutide’s efficacy and safety. Furthermore, identifying the specific pathways through which liraglutide exerts its effects may foster precision medicine by enabling targeted treatment for individuals at high risk of specific disease pathways. Figure 1 illustrates the five potential paths from baseline to death, where the first occurrences of EMACE and MVE are regarded as intermediate states. The interventional effects framework is well-suited to studying transition-, event-, and path-specific effects in this example. In the LEADER Trial, 4,668 individuals were assigned to liraglutide and 4,672 to placebo. We adjust for seven baseline covariates: age (continuous), sex (binary: male or female), BMI (binary: normal or high), HbA1c (binary: normal or high), diabetes duration (continuous), cardiovascular risk (binary: high or medium), and insulin naive (binary: yes or no). Although the trial was completely randomized and baseline covariates were balanced, we estimate the propensity score using logistic regression that adjusts for these covariates, which may improve finite-sample efficiency (Hirano et al. 2003). There were 4 missing values for age, 9 for BMI, and 19 for diabetes duration. The missingness rate is low, and the hazard estimation is insensitive to imputation methods in pilot analyses. In the formal analysis below, we impute missing values using 5-nearest-neighbor imputation. The LEADER Trial is completely randomized, so ignorability 22 holds. Censoring is administrative, so random censoring holds. The choice of t∗ = 60 ensures positivity. Since there is only one liraglutide formulation, consistency holds. 
+
+4.2 Effect of Liraglutide on Vascular Events and Death 
+
+We consider EMACE (E) and MVE (M) as intermediate events and death (D) as the terminal event. We observe individuals along every path to death in each treatment group. Note that EMACE includes both direct cardiovascular death (CVD) and non-fatal events. To distinguish causes of death, we model the hazards of CVD and other causes of death separately. Since cardiovascular death is part of EMACE by definition, the intervention in the transition to direct CVD is always identical to the intervention in the transition (O,E). Cause-specific hazards for non-fatal EMACE, MVE, direct CVD, and other-cause death were estimated separately in each treatment group using Cox models, adjusting for baseline covariates, with occurrences of other non-fatal events treated as time-varying covariates. The transition hazard from direct CVD to D is set at infinity, meaning that an individual with direct CVD in E transits to D immediately. The estimated coefficients are listed in Supplementary Material D.1. To determine the direct effect on each event, we estimate interventional effects by switching the treatment on the transitions into the event of interest. For E, we treat transitions into E (ajk = 1 for k = E) while controlling all other transitions ( ajk = 0 for k̸ = E). The difference in counterfactual cumulative incidences of EMACE (including non-fatal EMACE and direct CVD) between this intervention and the all-placebo scenario represents the direct effect on EMACE. Similarly, the difference in counterfactual cumulative incidences of MVE between the world with interventions in the transitions to MVE and the all-placebo scenario represents the direct effect on MVE. The difference in counterfactual cumulative incidences of death (including direct CVD and other-cause death) between the world with interventions in the transitions to other-cause death and the all-placebo scenario represents the direct effect on other-cause death. Figure 4 displays the 23 0 10 20 30 40 50 60             
+
+> −0.10  −0.05  0.00  0.05  0.10
+> Differential cumulative incidence of EMACE
+> Months Difference in CIF Direct treatment effect on EMACE
+> P = 0.0013
+> 010 20 30 40 50 60
+> −0.10  −0.05  0.00  0.05  0.10
+> Differential cumulative incidence of MVE
+> Months Difference in CIF Direct treatment effect on MVE
+> P = 0.004
+> 010 20 30 40 50 60
+> −0.10  −0.05  0.00  0.05  0.10
+> Differential cumulative incidence of death
+> Months Difference in CIF Direct treatment effect on death
+> P = 0.8638
+
+Figure 4: The estimated direct treatment effect on EMACE, MVE, and other-cause death by intervening in the hazards of the event of interest while controlling for other hazards at placebo, with 95% confidence intervals. direct effects on these three categories of events. The direct effects on EMACE ( P = 0 .0013 ) and MVE ( P = 0 .0040 ) are significant, while the direct effect on other-cause death ( P = 0 .8638 ) is insignificant. 
+
+4.3 Transition-Specific and Path-Specific Effects 
+
+Now we examine the treatment effect on death through each one-step transition; this helps us understand how liraglutide reduces the risks of EMACE and MVE. We first assume all transitions are initially under placebo. We intervene in a single transition and compare the resulting coun-terfactual cumulative incidence with that in the all-placebo world. Liraglutide has a significant effect on the transition from O to E ( P = 0 .0152 ), whereas the effects on all other transitions are not significant. The reduced risk of EMACE through the transition from baseline to EMACE contributes to a lower risk of EMACE-induced death. Figure 5 shows the restricted mean survival time gained with liraglutide via one-step transitions. Solid lines represent a reduction in risk, while dashed lines represent an increase in risk. By intervening in each path from baseline to D, we find that the restricted mean survival time gained by liraglutide is −0.0751 (s.e. 0.1166) months along the path O →D, 0.3962 (s.e. 0.1576) 24 O D 
+
+> E
+> M
+> (a) Effect of receiving liraglutide
+> −0.0031
+> (0.0081)
+> −0.0263
+> (0.0455)
+> 0.0761
+> (0.0769)
+> 0.0003
+> (0.0050)
+> 0.0059
+> (0.0067)
+> −0.0751
+> (0.1166)
+> 0.3393
+> (0.1398)
+> (b) Effect of abstaining from liraglutide
+> OD
+> E
+> M
+> 0.0124
+> (0.0106)
+> −0.0152
+> (0.0367)
+> 0.0620
+> (0.0703)
+> 0.0031
+> (0.0032)
+> 0.0047
+> (0.0045)
+> −0.0841
+> (0.1200)
+> 0.3168
+> (0.1400)
+
+Figure 5: The restricted mean survival time gained by liraglutide through one-step transitions, (a) taking all-placebo as the reference, and (b) taking all-liraglutide as the reference. Solid lines represent liraglutide increases survival, and dashed lines represent liraglutide reduces survival. months along the path O →E→D, −0.0202 (s.e. 0.0416) months along the path O →M→D, 0.0787 (s.e. 0.0773) months along the path O →M→E→D, and 0.3198 (s.e. 0.1468) months along the path O→E→M→D. The estimated treatment effect curves under each path-specific intervention are presented in Supplementary Material D.1. The effects along the paths O →E and O →E→M→Dcount for the largest proportions, and they are significant at the 0.05 level. The result suggests that treatment in individuals with a high risk of EMACE is crucial to reducing mortality. In Supplementary Material D.2, we present the total effects on each event. In Supplementary Ma-terial D.3, we infer dynamic treatment policies to reduce event risks under sequential ignorability. In Supplementary Material D.4, we conduct a sensitivity analysis by allowing for a parametrically distributed unmeasured confounder using frailty modeling, such that randomized intervention is achieved additionally conditional on this unmeasured confounder (Rotolo et al. 2016, Li et al. 2020, Gu et al. 2024). We assume the randomized intervention is performed conditional on both observed covariates and frailty; technical details are provided in Supplementary Material B. The results are similar. The small size of frailty indicates that the influence of unmeasured confounding is weak, even if it exists. In Supplementary Material D.5, we conduct a secondary analysis by con-25 sidering the first occurrence of nine mutually exclusive individual events (myocardial infarction, stroke, unstable angina pectoris, heart failure, coronary revascularization, nephropathy, retinopathy, cardiovascular death, non-cardiovascular death). We find that liraglutide has significant direct effects on cardiovascular death and nephropathy. The analyses above provide new knowledge on how liraglutide reduces mortality over existing studies. There are three sources of death: direct cardiovascular death (fatal EMACE at first occurrence), non-cardiovascular death, and death following non-fatal EMACE or MVE. Firstly, liraglutide reduces the risk of direct cardiovascular death. Secondly, liraglutide does not affect non-cardiovascular death. Thirdly, liraglutide reduces the risk of non-fatal EMACE and MVE, which in turn lowers the risk of death. Collectively, these findings suggest that liraglutide reduces the risk of all-cause death. These findings are supported by a sensitivity analysis using frailty modeling, which accounts for potential unmeasured confounding. 
+
+# 5 Discussion 
+
+The key assumption for envisioning the counterfactual cumulative incidence is the randomized intervention in event-counting processes according to hazards. This intervention is counterfac-tually achievable regardless of unmeasured confounding, allowing inference on path-specific effects. Such a treatment falls within the hypothetical strategy of the International Conference on Harmonization guideline E9 (R1) addendum. If sequential ignorability holds, the randomized interventional effects can be interpreted as natural effects. Under sequential ignorability, the counterfactual cumulative incidences will be identical to the real cumulative incidences in future experiments where the corresponding treatment sequence is applied. Therefore, our framework can potentially inform the development of optimal dynamic treatment policies. Inferring dynamic treatment policies relies on sequential ignorability, that is, the absence of treatment-induced confounding (Robins 2004). In future experimental or observational studies, different treatments 26 could be assigned at each stage, providing opportunities to test for unmeasured confounding and evaluate the performance of the inferred treatment policy. Our estimation framework can be extended to accommodate sequential treatments. Estimating the cumulative incidence functions for multi-state data is much more complex than for competing risks data. First, estimating transition hazards is complicated because they depend on the entire transition history, which comprises multiple ordered events. For competing risks data, all individuals share the same at-risk process; however, the time origins of being at risk in intermediate states for multi-state data are not aligned, so working assumptions on transition hazards should be imposed to ensure robust estimation. Second, censoring renders the complete transition paths unobserved. There may be a shared transition between two paths from the baseline to the terminal state, but the intensities along this shared transition cannot be separated. If an individual is in an intermediate state at the time of censoring, we cannot predict how the individual will transition after censoring. Transition hazards can only be identified conditionally on the observed history up to the censoring and event time, leaving subsequent transitions unconditioned on. Several promising avenues for future research remain. First, alternative interventions may be considered when time-varying confounders are present. An intuitive modification is intervening in event-counting processes conditional on time-varying covariates. Since such interventions may alter the covariate distribution, it becomes necessary to model the intensity of the time-varying covariates to derive counterfactual cumulative incidences. Second, as an alternative to the randomized interventional effects framework, the separable effects framework assumes that the initial treatment can be decomposed into components, each exerting a direct effect on a specific event or a pathway (Stensrud et al. 2021, 2022, Robins et al. 2022, Chen & Lin 2025). Separable effects place the targets of treatment components on events rather than transitions. Identifying clinically meaningful treatment components with isolated effects is not always feasible, 27 limiting the practical interpretation of separable effects. Third, interventional effects are not sharp (Miles 2023). Even if a null effect is obtained, it does not necessarily imply that there is no effect, because time-varying confounding may offset the genuine effect. However, in the presence of time-varying confounding, other mediation frameworks suffer from their own limitations, either well-definedness or identifiability, so interventional effects can at least recover useful knowledge that motivates future investigation on biological mechanisms. Lastly, alternative working models are possible. Nonparametric working models, such as kernel smoothing, can estimate the hazards conditional on prior event times without Assumption 5. The counterfactual cumulative incidence may also be estimated using other EIF-based methods, such as the targeted minimum-loss-based estimation (Wang et al. 2025). However, the efficient estimator of CIF may not be solved recursively, as the adjusted model depends on the specific time point in the target CIF. 
+
+# 6 Data Availability Statement 
+
+The data that support the findings of this study are available from Novo Nordisk A/S. Restrictions apply to the availability of these data, which were used under license for this study. 
+
+SUPPLEMENTARY MATERIAL 
+
+Supplementary material The online Supplementary Material includes (A) regularity conditions, (B) details of sensitivity analysis, (C) simulation studies, (D) additional data analysis results, and (E) proofs of theoretical results. (pdf) 
+
+R code for simulation Code for simulation. (.R) 28 References 
+
+ADVANCE Collaborative Group (2008), ‘Intensive blood glucose control and vascular outcomes in patients with type 2 diabetes’, New England Journal of Medicine 358 (24), 2560–2572. Andersen, P. K., Geskus, R. B., de Witte, T. & Putter, H. (2012), ‘Competing risks in epidemiology: possibilities and pitfalls’, International Journal of Epidemiology 41 (3), 861–870. Andersen, P. K. & Keiding, N. (2002), ‘Multi-state models for event history analysis’, Statistical Methods in Medical Research 11 (2), 91–115. Bickel, P. J., Klaassen, C. A., Bickel, P. J., Ritov, Y., Klaassen, J., Wellner, J. A. & Ritov, Y. (1993), 
+
+Efficient and adaptive estimation for semiparametric models , Vol. 4, Springer. Breslow, N. (1972), ‘Disussion of regression models and life-tables by D. R. Cox’, Journal of the Royal Statistical Society Series B: Statistical Methodology 34 , 216–217. Breslow, N. (1974), ‘Covariance analysis of censored survival data’, Biometrics 30 (1), 89–99. Breslow, N. E. (1975), ‘Analysis of survival data under the proportional hazards model’, Interna-tional Statistical Review/Revue Internationale de Statistique pp. 45–57. Breum, M. S., Munch, A., Gerds, T. A. & Martinussen, T. (2024), ‘Estimation of separable direct and indirect effects in a continuous-time illness–death model’, Lifetime Data Analysis 
+
+30 (1), 143–180. Chen, Y.-H. (2012), ‘Maximum likelihood analysis of semicompeting risks data with semipara-metric regression models’, Lifetime Data Analysis 18 , 36–57. Chen, Y.-L. & Lin, S.-H. (2025), ‘Definition and interpretation of separable path-specific effects with multiple ordered mediators’, Epidemiology 36 (5), 677–685. Deng, Y., Wang, R., Zhang, T. & Zhan, X. (2026), ‘Randomized interventional effects in semi-29 competing risks, with application to a hematopoietic cell transplantation study’, Statistics in Medicine 45 (13-14), e70628. Deng, Y., Wang, Y. & Zhou, X.-H. (2024), ‘Direct and indirect treatment effects in the presence of semicompeting risks’, Biometrics 80 (2), ujae032. Díaz, I. & Hejazi, N. S. (2020), ‘Causal mediation analysis for stochastic interventions’, Journal of the Royal Statistical Society Series B: Statistical Methodology 82 (3), 661–683. D’iaz, I., Hoffman, K. & Hejazi, N. (2022), ‘Causal survival analysis under competing risks using longitudinal modified treatment policies’, Lifetime Data Analysis 30 , 213–236. Emerging Risk Factors Collaboration et al. (2010), ‘Diabetes mellitus, fasting blood glucose concentration, and risk of vascular disease: a collaborative meta-analysis of 102 prospective studies’, The lancet 375 (9733), 2215–2222. Fine, J. P. & Gray, R. J. (1999), ‘A proportional hazards model for the subdistribution of a competing risk’, Journal of the American Statistical Association 94 (446), 496–509. Fine, J. P., Jiang, H. & Chappell, R. (2001), ‘On semi-competing risks data’, Biometrika 88 (4), 907– 919. Forbes, J. M. & Cooper, M. E. (2013), ‘Mechanisms of diabetic complications’, Physiological Reviews 93 (1), 137–188. Grambsch, P. M. & Therneau, T. M. (1994), ‘Proportional hazards tests and diagnostics based on weighted residuals’, Biometrika 81 (3), 515–526. Gu, Y., Zeng, D., Heiss, G. & Lin, D. (2024), ‘Maximum likelihood estimation for semiparametric regression models with interval-censored multistate data’, Biometrika 111 (3), 971–988. Ha, I. D., Xiang, L., Peng, M., Jeong, J.-H. & Lee, Y. (2020), ‘Frailty modelling approaches for semi-competing risks data’, Lifetime Data Analysis 26 , 109–133. 30 Hejazi, N. S., Rudolph, K. E., Van Der Laan, M. J. & Díaz, I. (2022), ‘Nonparametric causal mediation analysis for stochastic interventional (in)direct effects’, Biostatistics 24 (3), 686–707. Hines, O., Dukes, O., Diaz-Ordaz, K. & Vansteelandt, S. (2022), ‘Demystifying statistical learning based on efficient influence functions’, The American Statistician 76 (3), 292–304. Hirano, K., Imbens, G. W. & Ridder, G. (2003), ‘Efficient estimation of average treatment effects using the estimated propensity score’, Econometrica 71 (4), 1161–1189. Hougaard, P. (1999), ‘Multi-state models: a review’, Lifetime Data Analysis 5, 239–264. Huang, Y.-T. (2021), ‘Causal mediation of semicompeting risks’, Biometrics 77 (4), 1143–1154. Kennedy, E. H. (2024), ‘Semiparametric doubly robust targeted double machine learning: a review’, Handbook of Statistical Methods for Precision Medicine pp. 207–236. Kodell, R. & Nelson, C. (1980), ‘An illness–death model for the study of the carcinogenic process using survival/sacrifice data.’, Biometrics 36 (2), 267–277. Kormaksson, M., Lange, M. R., Demanse, D., Strohmaier, S., Duan, J., Xie, Q., Carbini, M., Bossen, C., Guettner, A. & Maniero, A. (2024), ‘Dynamic path analysis for exploring treatment effect mediation processes in clinical trials with time-to-event endpoints’, Statistics in Medicine 
+
+43 , 4614 – 4634. Li, J., Zhang, Y., Bakoyannis, G. & Gao, S. (2020), ‘On shared gamma-frailty conditional Markov model for semicompeting risks data’, Statistics in Medicine 39 (23), 3042–3058. Lin, S.-H. & VanderWeele, T. (2017), ‘Interventional approach for path-specific effects’, Journal of Causal Inference 5(1), 20150027. Lin, S.-H., Young, J. G., Logan, R. & VanderWeele, T. J. (2017), ‘Mediation analysis for a survival outcome with time-varying exposures, mediators, and confounders’, Statistics in Medicine 
+
+36 (26), 4153–4166. 31 Lok, J. J. (2015), ‘Defining and estimating causal direct and indirect effects when setting the mediator to specific values is not feasible’, Statistics in Medicine 35 (22), 4008–4020. Marso, S. P., Daniels, G. H., Brown-Frandsen, K., Kristensen, P., Mann, J. F., Nauck, M. A., Nissen, S. E., Pocock, S., Poulter, N. R., Ravn, L. S. et al. (2016), ‘Liraglutide and cardiovascular outcomes in type 2 diabetes’, New England Journal of Medicine 375 (4), 311–322. Marso, S. P., Poulter, N. R., Nissen, S. E., Nauck, M. A., Zinman, B., Daniels, G. H., Pocock, S., Steinberg, W. M., Bergenstal, R. M., Mann, J. F. et al. (2013), ‘Design of the liraglutide effect and action in diabetes: evaluation of cardiovascular outcome results (LEADER) trial’, 
+
+American Heart Journal 166 (5), 823–830. Martinussen, T. & Stensrud, M. J. (2023), ‘Estimation of separable direct and indirect effects in continuous time’, Biometrics 79 (1), 127–139. McLachlan, G. J. & Krishnan, T. (2008), The EM algorithm and extensions , John Wiley & Sons. Miles, C. H. (2023), ‘On the causal interpretation of randomised interventional indirect effects’, 
+
+Journal of the Royal Statistical Society Series B: Statistical Methodology 85 (4), 1154–1172. Miles, C. H., Shpitser, I., Kanki, P., Meloni, S. & Tchetgen Tchetgen, E. J. (2020), ‘On semipara-metric estimation of a path-specific effect in the presence of mediator-outcome confounding’, 
+
+Biometrika 107 (1), 159–172. Prentice, R. L., Kalbfleisch, J. D., Peterson Jr, A. V., Flournoy, N., Farewell, V. T. & Breslow, N. E. (1978), ‘The analysis of failure times in the presence of competing risks’, Biometrics 
+
+pp. 541–554. Putter, H., Fiocco, M. & Geskus, R. B. (2007), ‘Tutorial in biostatistics: competing risks and multi-state models’, Statistics in Medicine 26 (11), 2389–2430. 32 Ripatti, S. & Palmgren, J. (2004), ‘Estimation of multivariate frailty models using penalized partial likelihood’, Biometrics 56 (4), 1016–1022. Robins, J. M. (2004), Optimal structural nested models for optimal sequential decisions, in 
+
+‘Proceedings of the Second Seattle Symposium in Biostatistics: Analysis of correlated data’, Springer, pp. 189–326. Robins, J. M., Richardson, T. S. & Shpitser, I. (2022), An interventionist approach to mediation analysis, in ‘Probabilistic and causal inference: the works of Judea Pearl’, ACM, pp. 713–764. Rotolo, F., Rondeau, V. & Legrand, C. (2016), ‘Incorporation of nested frailties into semiparametric multi-state models’, Statistics in Medicine 35 (4), 609–621. Shpitser, I. & Tchetgen Tchetgen, E. (2016), ‘Causal inference with a graphical hierarchy of interventions’, Annals of Statistics 44 (6), 2433. Stensrud, M. J., Hernán, M. A., Tchetgen Tchetgen, E. J., Robins, J. M., Didelez, V. & Young, J. G. (2021), ‘A generalized theory of separable effects in competing event settings’, Lifetime Data Analysis 27 (4), 588–631. Stensrud, M. J., Young, J. G., Didelez, V., Robins, J. M. & Hernán, M. A. (2022), ‘Separable effects for causal inference in the presence of competing events’, Journal of the American Statistical Association 117 (537), 175–183. Stratton, I. M., Adler, A. I., Neil, H. A. W., Matthews, D. R., Manley, S. E., Cull, C. A., Hadden, D., Turner, R. C. & Holman, R. R. (2000), ‘Association of glycaemia with macrovascular and microvascular complications of type 2 diabetes (UKPDS 35): prospective observational study’, 
+
+BMJ 321 (7258), 405–412. Tai, A.-S., Lin, S.-H., Chu, Y.-C., Yu, T., Puhan, M. A. & VanderWeele, T. (2023), ‘Causal mediation analysis with multiple time-varying mediators’, Epidemiology 34 (1), 8–19. 33 Valeri, L., Proust-Lima, C., Fan, W., Chen, J. T. & Jacqmin-Gadda, H. (2023), ‘A multistate approach for the study of interventions on an intermediate time-to-event in health disparities research’, Statistical Methods in Medical Research 32 (8), 1445–1460. Van der Vaart, A. W. (2000), Asymptotic statistics , Vol. 3, Cambridge university press. van der vaart, A. & Wellner, J. (2013), Weak Convergence and Empirical Processes: With Applications to Statistics , Springer Series in Statistics, Springer New York. VanderWeele, T. J. & Tchetgen Tchetgen, E. J. (2017), ‘Mediation analysis with time varying expo-sures and mediators’, Journal of the Royal Statistical Society Series B: Statistical Methodology 
+
+79 (3), 917–938. Vansteelandt, S. & Daniel, R. M. (2017), ‘Interventional effects for mediation analysis with multiple mediators’, Epidemiology 28 (2), 258–265. Vansteelandt, S., Linder, M., Vandenberghe, S., Steen, J. & Madsen, J. (2019), ‘Mediation analysis of time-to-event endpoints accounting for repeatedly measured mediators subject to time-varying confounding’, Statistics in Medicine 38 (24), 4828 – 4840. Vo, T.-T., Williams, N., Liu, R., Rudolph, K. E. & Díaz, I. (2026), ‘Recanting twins: Addressing intermediate confounding in mediation analysis’, Statistics in Medicine 45 (3-5), e70432. Wang, Z., Laan, L. v. d., Petersen, M., Gerds, T., Kvist, K. & Laan, M. v. d. (2025), ‘Targeted maximum likelihood based estimation for longitudinal mediation analysis’, Journal of Causal Inference 13 (1), 20230013. Weir, I. R., Rider, J. R. & Trinquart, L. (2022), ‘Counterfactual mediation analysis in the multistate model framework for surrogate and clinical time-to-event outcomes in randomized controlled trials’, Pharmaceutical Statistics 21 (1), 163–175. 34 Xu, J., Kalbfleisch, J. D. & Tai, B. (2010), ‘Statistical analysis of illness–death processes and semicompeting risks data’, Biometrics 66 (3), 716–725. Zeng, D. & Lin, D. (2007), ‘Maximum likelihood estimation in semiparametric regression models with censored data’, Journal of the Royal Statistical Society Series B: Statistical Methodology 
+
+69 (4), 507–564. 35 Supplementary Material for “Estimating Pathway Treatment Effects in the Presence of Intermediate Events with Multi-State Data” 
+
+# A Regularity conditions 
+
+The EIF-based estimator is given by 
+
+˜F aj (t) = Pn
+
+[̂ 
+
+F aj (t | W ) + ̂ φaj (t; O)]
+
+= Pn
+
+̂ F aj (t | W ) + ∑
+
+> q∈Q j
+
+∫ t
+
+> 0
+
+∫ tl(q)
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+> l(q)
+
+∏
+
+> r=1
+
+d̂ Pr(tr | aq(r−1) , · , W, q [tr]) 
+
+×
+
+> l(q)
+
+∑
+
+> r=1
+
+
+
+d̂ηaq(r−1) ,q (r) 
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) d̂ Λaq(r−1) ,q (r)
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) − ∑
+
+> k∈G q(r−1)
+
+̂
+
+ηaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(tr | W, q [tr]) 
+
+.
+
+(S1) The following conditions are required to ensure that the proposed estimator converges to the target estimand at the parametric rate. 
+
+Condition S1 (Regularity conditions for asymptotic normality) Let P(h) = ∫ h(o)f (o)d o be the measure with respect to the true data-generating process f (o). (1) The fitted propensity score and cumulative hazards are L2-consistent over [0 , t ∗] for a ∈ { 0, 1} and every (k, g ) ∈ E ∪ (G × c),
+
+P {̂ 
+
+P( A = a | W ) − P( A = a | W )}2
+
+= op(1) ,
+
+sup 
+
+> t
+
+sup 
+
+> x(t)
+
+P {̂ 
+
+Λakg (t | W, x (t)) − Λakg (t | W, x (t)) }2
+
+= o(1) .
+
+(2) The fitted models satisfy a risk decay condition for a ∈ { 0, 1} and every (k, g ) ∈ E ,
+
+sup 
+
+> t
+
+sup 
+
+> x(t)
+
+P
+
+∫ t
+
+> 0
+
+ P( A = a | W ) exp {− Λak, c(s | W, x (s)) }̂
+
+P( A = a | W ) exp {− ̂Λak, c(s | W, x (s)) }
+
+
+
+> 2
+
+ds
+
+× P {̂ 
+
+Λakg (t | W, x (t)) − Λakg (t | W, x (t)) }2
+
+= op(n−1).
+
+(3) The function {̂F aj (t | W ) + ̂ φaj (t; O) : t ∈ [0 , t ∗]} belongs to a Donsker class. 
+
+Condition S1 means that the convergence rates of the fitted models should not be too slow. For instance, all fitted models can converge at a rate of op(n−1/4). The models employed in estimation 36 must not be too complex to satisfy the Donsker condition. The semiparametric Cox proportional hazards models with time-varying covariates satisfy the Donsker condition with a convergence rate Op(n−1/2), thereby offering more flexibility compared to parametric models (Zeng & Lin 2007). 
+
+# B Details of sensitivity analysis 
+
+To account for unmeasured confounding, frailty models may help (Xu et al. 2010, Ha et al. 2020, Li et al. 2020). Let ξ be the unobserved frailty (random effect), which is independent of observed covariates. Frailty reflects the inherent characteristic of an individual. Following these works, the transition hazard, given the history and frailty, is defined as 
+
+Λakg (t | w, x (t), ξ ) = ξ · Λakg (t | w, x (t)) .
+
+The frailty ξ is typically assumed to follow the gamma or log-normal distribution with parameter θ.Let p(ξ; θ) be the density function of ξ. We modify the random draw by additionally conditioning on ξ,
+
+Λakg (t | w, x (t), ξ ) = Λ akg  
+
+> kg
+
+(t | w, x (t), ξ ).
+
+Other assumptions remain unchanged. Under the condition that θ is identifiable, the counterfactual cumulative incidence F aj (t) is identified as 
+
+F aj (t) = ∑  
+
+> q∈Q j
+> ∫
+> W
+> ∫
+> R
+> ∫t
+> 0
+> ∫tl(q)
+> 0
+
+· · ·  
+
+> ∫t2
+> 0
+> l(q)
+> ∏
+> r=1
+
+dP r(tr | aq(r−1) , · , w, q [tr], ξ )p(ξ; θ)d ξdP (w),
+
+where the notation of dP r(tr | aq(r−1) , · , w, q [tr], ξ ) is analogous to that in the main text by additionally conditioning on ξ.To facilitate estimation, we assume log( ξ) ∼ N (0 , σ 2
+
+> a
+
+), where σ2 
+
+> a
+
+is unknown. We allow the vari-ance of log( ξ) to be different across treatment groups, because the frailty may have heterogeneous effects on transition hazards depending on the treatment. In fact, this is equivalent to assume 37 log( ξ) ∼ N (0 , 1) and 
+
+Λakg (t | w, x (t), ξ ) = σaξ · Λakg (t | w, x (t)) .
+
+We model the cause-specific hazards using Cox models. We consider ξ as missing data and use the EM algorithm (McLachlan & Krishnan 2008) to estimate θ by maximizing the likelihood. In the E step, we evaluate the conditional expectations of ξ and {log( ξ)}2 given the observed data. In the M step, we update the estimated parameters in the hazard models by nonparametric likelihood estimation, and update the estimated baseline hazards by Breslow estimators (Breslow 1975). The estimated variance parameter σ2 of the frailty is updated by the sample mean of {log( ξ)}2
+
+conditional on observed data. Then we can obtain the plug-in estimator for the conditional counterfactual cumulative incidence of event j as ̂ F aj (t | w, ξ ). To improve efficiency, we use the profile σ2 at the estimated value, and evaluate the modified debiasing term φaj (W, ξ ) as a function of observed data and ξ.If σ2 were known, the efficient influence function (EIF) of F aj (t) would be 
+
+EIF {F aj (t)} =
+
+> ∫
+> R
+> {
+
+F aj (t | W, ξ ) + φaj (t | W, ξ ) − F aj (t)}
+
+p(ξ; θ)d ξ. 
+
+Inspired by this EIF, an estimator for the population-level counterfactual cumulative incidence of event j is given by 
+
+> ˜
+
+F aj (t) = 
+
+> ∫
+> R
+
+Pn
+
+> {̂
+
+F aj (t | W, ξ ) + ̂ φaj (t | W, ξ )}
+
+p(ξ;̂ θ)d ξ. 
+
+The numerical integration is performed using Gaussian quadrature. We use 
+
+Pn
+
+> [∫
+> R
+> {̂
+
+F aj (t | W, ξ ) + ̂ φaj (t | W, ξ ) − ˜F aj (t)}
+
+p(ξ;̂ θ)d ξ
+
+> ]2
+
+as the estimated asymptotic variance of ˜F aj (t). A limitation of this estimator is that it does not consider the uncertainty of the estimated θ. In fact, there is no simple closed form for the efficient influence function of F aj (t) when σ2 is estimated. Theoretically, the efficient influence function can be evaluated numerically using profile likelihoods. 38 C Simulation studies 
+
+In this section, we conduct simulation studies to evaluate the performance of the EIF-based estimator for the counterfactual cumulative incidence. We consider four post-treatment events, as illustrated in Figure 1: two intermediate events, m 1 and m 2, and a terminal event d. Let 
+
+W = ( W1, W 2, W 3)T represent a vector of three covariates, each independently generated from a Bernoulli distribution, Wj ∼ Bernoulli(0 .5) , j = 1 , 2, 3. Let T a 
+
+> m1
+
+, T a 
+
+> m2
+
+, and T a 
+
+> d
+
+be the potential event times of m 1, m 2 and d, respectively, under the treatment condition a = 0 , 1. We assume proportional hazards for these three events conditional on covariates and unordered state history, 
+
+λa 
+
+> m1
+
+(t | W, T a 
+
+> m2
+
+) = ( aa
+
+> 1
+
+t + ba
+
+> 1
+
+) exp( W Tβa 
+
+> 1
+
+) · (δa
+
+> 21
+
+)1{T a 
+
+> m2<t }
+
+,λa 
+
+> m2
+
+(t | W, T a 
+
+> m1
+
+) = ( aa
+
+> 2
+
+t + ba
+
+> 1
+
+) exp( W Tβa 
+
+> 2
+
+) · (δa
+
+> 12
+
+)1{T a 
+
+> m1<t }
+
+,λa 
+
+> d
+
+(t | W, T a 
+
+> m1
+
+, T a 
+
+> m2
+
+) = ( aa
+
+> 3
+
+t + ba
+
+> 3
+
+) exp( W Tβa 
+
+> 3
+
+) · (δa
+
+> 13
+
+)1{T a 
+
+> m1<t }
+
+(δa
+
+> 23
+
+)1{T a 
+
+> m2<t }
+
+,
+
+where 
+
+a11 = 0 .01 , a 01 = 0 .03 , b 11 = 0 .04 , b 01 = 0 .05 , β 11 = (0 .2, 0.2, −0.2) T, β 01 = (0 .1, 0.1, 0.0) T,a12 = 0 .02 , a 02 = 0 .02 , b 12 = 0 .02 , b 02 = 0 .02 , β 12 = (0 .2, −0.2, −0.2) T, β 02 = (0 .2, −0.2, −0.2) T,a13 = 0 .02 , a 23 = 0 .01 , b 13 = 0 .02 , b 03 = 0 .00 , β 13 = (0 .1, 0.1, 0.1) T, β 03 = (0 .1, 0.0, 0.1) T,δ112 = 1 .5, δ 012 = 0 .5, δ 113 = 1 .0, δ 013 = 1 .0, δ 121 = 1 .2, δ 021 = 1 .2, δ 123 = 1 .5, δ 023 = 0 .5.
+
+The hazard of censoring is set to be 
+
+λa 
+
+> c
+
+(t | W ) = (0 .05 − 0.01 a){(t − 6) + + ∞(t − 20) +}2 exp( −0.1W1 − 0.2aW 2).
+
+Let the sample size n = 1000 . Each individual is assigned to the active treatment with probability 
+
+P( A = 1 | W ) = 1 /{1 + exp(0 .5 + 0 .3W1 − 0.5W2 − 0.6W3)}.We take the counterfactual cumulative incidences of m 2 and d as our target estimands. The components in the counterfactual treatment sequence a is set at 1 for the transitions o → m1 and 39 m2 → m1, and 0 for all other transitions. We consider four scenarios for the EIF-based estimator: (1) both the propensity score model and hazard models are correctly specified; (2) the propensity score is set at the true value, and the hazard models are correctly specified; (3) the propensity score model is misspecified, and the hazard models are correctly specified; (4) the propensity score model is correctly specified, and a hazard model is misspecified. We consider two scenarios for the plug-in estimator: (1) the hazard models are correctly specified; (2) a hazard model is misspecified. By default, we use logistic regression to estimate the propensity score and Cox models with unordered state history as time-varying covariates to estimate the cause-specific hazards. If the propensity score model is to be misspecified, we use probit regression. If the hazard model is to be misspecified, we set ˆδ12 = 0 in the transition hazard from m 1 to m 2.We construct confidence intervals as the point estimates ± 1.96 standard errors. We run the estimation on 1000 independently generated datasets. Figure S1 presents the boxplots showing the bias of the EIF-based and plug-in estimators. Table S1 summarizes the average bias, standard deviation (SD), average standard error (SE), and coverage rate (CR) of the nominal 95% confidence intervals of the EIF-based estimator and plug-in estimator for the counterfactual cumulative incidence F aj (t), j = m2, d. We only list the SE and CR for the EIF-based estimator since there is no explicit form for the asymptotic variance of the plug-in estimator. Both the EIF-based and plug-in estimators have a minimal bias when all models are correctly specified. Since the models are correctly specified, the plug-in estimator may show a slightly smaller standard deviation. However, if a hazard model is misspecified, the plug-in estimator shows a considerable bias. The EIF-based estimator remains asymptotically unbiased when either the propensity score or hazard model is misspecified due to its multiple robustness. The confidence intervals obtained from the EIF-based estimator have coverage rates close to 95%. Interestingly, we find that the use of an estimated propensity score leads to a lower standard deviation (which is more evident by looking at ˆFd(t)), indicating that we can estimate the propensity score to improve 40 Table S1: Average bias, standard deviation (SD), average standard error (SE), and coverage rate (CR) of 95% nominal confidence intervals of the EIF-based estimator (Eff) and plug-in estimator (Reg) for F aj (t) at selected time points (for the propensity score model (PS) and hazard models (Haz), ✓represents correctly specified, × represents misspecified, and T represents using the true model) Event m2 dTime t 3 6 9 12 3 6 9 12 Method PS Haz Bias EIF ✓ ✓ 0.000 -0.000 -0.001 -0.003 -0.000 -0.000 0.001 -0.001 EIF T ✓ 0.000 -0.000 -0.001 -0.003 -0.000 -0.000 0.001 -0.000 EIF × ✓ 0.000 -0.000 -0.001 -0.003 -0.000 -0.000 0.001 -0.001 EIF ✓ × 0.000 -0.000 -0.002 -0.004 -0.000 -0.000 0.001 -0.000 Reg – ✓ 0.000 -0.000 -0.001 -0.003 -0.000 -0.000 0.001 -0.000 Reg – × 0.006 0.030 0.060 0.074 -0.000 -0.002 -0.005 -0.013 SD EIF ✓ ✓ 0.015 0.021 0.026 0.031 0.010 0.018 0.025 0.035 EIF T ✓ 0.015 0.021 0.026 0.031 0.010 0.019 0.027 0.044 EIF × ✓ 0.015 0.021 0.026 0.031 0.010 0.018 0.025 0.036 EIF ✓ × 0.015 0.021 0.026 0.031 0.010 0.018 0.025 0.035 Reg – ✓ 0.014 0.021 0.024 0.027 0.010 0.017 0.023 0.030 Reg – × 0.015 0.024 0.033 0.037 0.010 0.017 0.023 0.031 SE EIF ✓ ✓ 0.015 0.022 0.026 0.029 0.010 0.018 0.024 0.034 EIF T ✓ 0.015 0.022 0.026 0.029 0.010 0.018 0.026 0.040 EIF × ✓ 0.015 0.023 0.027 0.031 0.010 0.018 0.026 0.036 EIF ✓ × 0.015 0.021 0.025 0.029 0.010 0.018 0.024 0.034 CR EIF ✓ ✓ 0.948 0.951 0.935 0.936 0.918 0.945 0.945 0.930 EIF T ✓ 0.948 0.946 0.934 0.935 0.920 0.943 0.949 0.945 EIF × ✓ 0.965 0.962 0.947 0.952 0.931 0.948 0.956 0.944 
+
+41 −0.2 −0.1 0.0 0.1 0.2 3 6 9 12 Time Bias Method Eff Eff (True PS) Eff + Mis haz Eff + Mis PS Reg Reg + Mis haz Bias of the cumulative incidence of event m2 −0.2 −0.1 0.0 0.1 0.2 3 6 9 12 Time Bias Method Eff Eff (True PS) Eff + Mis haz Eff + Mis PS Reg Reg + Mis haz Bias of the cumulative incidence of event d Figure S1: Boxplots of the bias of estimated counterfactual cumulative incidences for m 2 and d at time points t = 3 , 6, 9, 12 . Eff: EIF-based estimator; Reg: plug-in estimator. finite-sample efficiency in randomized trials even if the treatment mechanism is known. 
+
+# D Additional data analysis results 
+
+D.1 Total effects 
+
+Four Cox models with time-varying covariates are fitted in each treatment group, corresponding to four events: non-fatal EMACE, MVE, direct CVD, and other-cause death. Table S2 lists the estimated coefficients with standard errors. The first row of Figure S2 shows the estimated cumulative incidence functions of EMACE, MVE, and death. The second row shows the total treatment effects on these events. The total effects on EMACE and MVE are significant. The total effect on death is insignificant. 
+
+D.2 Path-specific effects 
+
+Figure S3 shows the estimated path-specific effects on death by intervening in each path from the initial state to death. The path-specific effects through O →E→D and O →E→M→D are 42 Table S2: Estimated coefficients (with standard errors) in the Cox models Non-fatal EMACE MVE Covariate A = 1 A = 0 A = 1 A = 0 
+
+Age 0.013 (0.005) 0.026 (0.005) -0.010 (0.007) -0.018 (0.007) Sex 0.356 (0.079) 0.460 (0.077) 0.168 (0.115) 0.221 (0.108) BMI 0.117 (0.074) 0.134 (0.071) -0.203 (0.110) -0.263 (0.101) HbA1c 0.057 (0.072) 0.173 (0.069) 0.412 (0.111) 0.242 (0.101) Diabetes duration 0.001 (0.005) 0.001 (0.005) 0.031 (0.006) 0.028 (0.006) Cardiovascular risk 0.704 (0.117) 1.038 (0.120) -0.014 (0.144) 0.121 (0.137) Insulin naive -0.156 (0.074) -0.113 (0.070) -0.436 (0.112) -0.593 (0.108) MVE 0.640 (0.156) 0.457 (0.148) Non-fatal EMACE 0.248 (0.166) 0.367 (0.146) Direct CVD Other-cause death Covariate A = 1 A = 0 A = 1 A = 0 
+
+Age 0.032 (0.014) 0.037 (0.012) 0.068 (0.010) 0.085 (0.011) Sex 0.079 (0.188) 0.142 (0.168) 0.139 (0.174) -0.003 (0.166) BMI -0.050 (0.182) 0.180 (0.168) 0.042 (0.163) -0.302 (0.157) HbA1c 0.353 (0.185) 0.476 (0.162) 0.458 (0.164) 0.384 (0.158) Diabetes duration 0.014 (0.011) -0.004 (0.010) -0.008 (0.010) -0.021 (0.011) Cardiovascular risk 0.308 (0.247) 0.865 (0.265) 1.041 (0.305) -0.024 (0.205) Insulin naive -0.251 (0.185) -0.147 (0.153) -0.182 (0.171) -0.243 (0.165) MVE 0.973 (0.276) 1.009 (0.246) Non-fatal EMACE 0.913 (0.198) 1.264 (0.181) 43 0 10 20 30 40 50 60 0.00  0.05  0.10  0.15  0.20  0.25  0.30 
+
+Cumulative incidence of EMACE 
+
+Months Cumulative incidence Placebo Liraglutide 0 10 20 30 40 50 60 0.00  0.05  0.10  0.15  0.20  0.25  0.30 
+
+Cumulative incidence of MVE 
+
+Months Cumulative incidence Placebo Liraglutide 0 10 20 30 40 50 60 0.00  0.05  0.10  0.15  0.20  0.25  0.30 
+
+Cumulative incidence of death 
+
+Months Cumulative incidence Placebo Liraglutide 0 10 20 30 40 50 60 −0.10  −0.05  0.00  0.05  0.10 
+
+Differential cumulative incidence of EMACE 
+
+Months Difference in CIF Total treatment effect P = 0.0013 0 10 20 30 40 50 60 −0.10  −0.05  0.00  0.05  0.10 
+
+Differential cumulative incidence of MVE 
+
+Months Difference in CIF Total treatment effect P = 0.0041 0 10 20 30 40 50 60 −0.10  −0.05  0.00  0.05  0.10 
+
+Differential cumulative incidence of death 
+
+Months Difference in CIF Total treatment effect P = 0.1253 Figure S2: The estimated cumulative incidence functions of EMACE, MVE, and death, with 95% confidence intervals. The total treatment effects on EMACE, MVE, and other-cause death, with 95% confidence intervals. 44 significant, indicating that the reduction of death is mainly due to the treatment effect on the transition O →E. 0 10 20 30 40 50 60 −0.10  −0.05  0.00  0.05  0.10                         
+
+> Differential cumulative incidence of death
+> Months Difference in CIF Pathway effect on death: O−D P = 0.5197 010 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04
+> Differential cumulative incidence of death
+> Months Difference in CIF Pathway effect on death: O−M−D P = 0.6272 010 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04
+> Differential cumulative incidence of death
+> Months Difference in CIF Pathway effect on death: O−E−D P = 0.0119 010 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04
+> Differential cumulative incidence of death
+> Months Difference in CIF Pathway effect on death: O−E−M−D P = 0.0293 010 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04
+> Differential cumulative incidence of death
+> Months Difference in CIF Pathway effect on death: O−M−E−D P = 0.3085
+
+Figure S3: Path-specific treatment effects reflected on the cumulative incidence of death by intervening in each path to death, with 95% confidence intervals. 
+
+D.3 Dynamic treatment policies under sequential ignorability 
+
+If sequential ignorability holds, i.e., there is no treatment-induced confounding, the counterfactual CIF equals the real CIF in future trials in which the treatment can be switched at the occurrence of an event. To ensure that EIF-based estimation is valid, we focus on the population-level dynamic treatment policy, which does not depend on baseline covariates. If we aim to reduce MACE, there are four possible treatment policies: whether to assign liraglutide at baseline (O1 versus O0), and whether to assign liraglutide upon MVE (M1 versus M0). Similarly, we have four possible treatment policies if the endpoint is MVE. If we aim to reduce mortality, there are eight possible 45 treatment policies: whether to assign liraglutide at baseline (O1 versus O0), whether to assign liraglutide upon EMACE (E1 versus E0), and whether to assign liraglutide upon MVE (M1 versus M0). Figure S4 presents the counterfactual CIFs of MACE, MVE, and death under all possible dynamic treatment policies. Due to the limited data near the end of the study, the estimated counterfactual CIF may not be non-decreasing. We observe that the counterfactual CIFs of each event under the policies with O1 are lower than those under the policies with O0. The difference is significant for EAMCE (e.g., the comparison between O1E0 and O0E1 yields a P -value of 0.0033). The difference is not significant for death (e.g., the comparison between O1E0M0 and O0E1M1 yields a P -value of 0.3284). 0 10 20 30 40 50 60 0.00  0.05  0.10  0.15  0.20  0.25  0.30             
+
+> Cumulative incidence of EMACE
+> Months Cumulative incidence Comparing different treatment policies O1 M1 O1 M0 O0 M1 O0 M0 010 20 30 40 50 60 0.00  0.05  0.10  0.15
+> Cumulative incidence of MVE
+> Months Cumulative incidence Comparing different treatment policies O1 E1 O1 E0 O0 E1 O0 E0 010 20 30 40 50 60 0.00  0.02  0.04  0.06  0.08  0.10  0.12
+> Cumulative incidence of death
+> Months Cumulative incidence Comparing different treatment policies O1 E1 M1 O1 E1 M0 O1 E0 M1 O1 E0 M0 O0 E1 M1 O0 E1 M0 O0 E0 M1 O0 E0 M0
+
+Figure S4: Counterfactual CIFs under all possible dynamic treatment policies. 
+
+D.4 Sensitivity analysis by frailty modeling 
+
+The Cox models with time-varying covariates are fitted using the “coxme” package in R (Ripatti & Palmgren 2004). The hazards of non-fatal EMACE, MVE, direct CVD, and other-cause death are assumed to be positively correlated. We estimate the standard deviation of frailty ̂ σ1 = 0 .009 
+
+in the liraglutide group and ̂ σ0 = 0 .009 in the placebo group. The estimated magnitudes of frailty effects are tiny, suggesting that the correlation is weak and appears irrelevant to treatment groups. Figure S5 shows the estimated direct treatment effect on EMACE, MVE, and other-cause 46 death by intervening in the cause-specific hazards of the event of interest, with 95% confidence intervals. The P -values are calculated based on the cause-specific restricted mean survival time lost (RMSTL) from treatment initiation to the 60th month. Liraglutide reduces the risks of EMACE and MVE. Since the frailty effect is very weak, the estimation results are similar with those in the main analysis. 0 10 20 30 40 50 60 −0.10  −0.05  0.00  0.05  0.10             
+
+> Differential cumulative incidence of EMACE
+> Months Difference in CIF Direct treatment effect on EMACE P = 0.0013 010 20 30 40 50 60 −0.10  −0.05  0.00  0.05  0.10
+> Differential cumulative incidence of MVE
+> Months Difference in CIF Direct treatment effect on MVE P = 0.004 010 20 30 40 50 60 −0.10  −0.05  0.00  0.05  0.10
+> Differential cumulative incidence of death
+> Months Difference in CIF Direct treatment effect on death P = 0.8638
+
+Figure S5: The estimated direct treatment effect on EMACE, MVE, and other-cause death by intervening in the cause-specific hazards of the event of interest (with frailty), with 95% confidence intervals. P -values are based on the period from 0 to 60 months. 
+
+D.5 Secondary analysis: effect of liraglutide on individual events 
+
+The primary analysis has revealed that liraglutide has significant effects on EMACE and MVE. In this section, we analyze the treatment effect on the first occurrence of nine mutually exclusive individual events. Table S3 summarizes the incidence of each event by treatment group. Cause-specific hazards for each event were separately fitted in each treatment group using Cox models, adjusting for baseline covariates. Figure S6 shows the estimated total treatment effects on nine individual events. The total effects on cardiovascular death ( P = 0 .0472 ) and nephropathy (P = 0 .0014 ) are significant. To test the direct treatment effect on a specific event, we fix all other transitions as placebo while switching the transition from the initial state to that event from placebo to liraglutide. Figure S7 47 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of non−fatal myocardial infarction 
+
+Months Difference in CIF Total treatment effect P = 0.39 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of non−fatal stroke 
+
+Months Difference in CIF Total treatment effect P = 0.4243 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of cardiovascular death 
+
+Months Difference in CIF Total treatment effect P = 0.0472 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of coronary revascularization 
+
+Months Difference in CIF Total treatment effect P = 0.4417 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of heart failure 
+
+Months Difference in CIF Total treatment effect P = 0.3626 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of unstable angina pectoris 
+
+Months Difference in CIF Total treatment effect P = 0.8742 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of nephropathy 
+
+Months Difference in CIF Total treatment effect P = 0.0014 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of retinopathy 
+
+Months Difference in CIF Total treatment effect P = 0.2228 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of non−cardiovascular death 
+
+Months Difference in CIF Total treatment effect P = 0.4942 Figure S6: The estimated total treatment effects on nine individual events, with 95% confidence intervals. 48 shows the estimated direct effects with 95% confidence intervals; negative values indicate that liraglutide reduces the counterfactual cumulative incidence. The treatment effects on non-fatal myocardial infarction, coronary revascularization, and heart failure increase over time but diminish in the later trial phase. Since treatment stopped between the 42nd and 60th months and the censoring rate was high toward the end, it is unclear whether discontinuing the drug would weaken its long-term efficacy. Table S3 reports the P -values for hypothesis tests on the direct treatment effects over the intervals [0 , 42] and [0 , 60] . Most direct effects are not statistically significant due to low event rates. However, significant direct effects for nephropathy and cardiovascular death are consistent with the results in the technical reports of the LEADER Trial (Marso et al. 2016). The treatment effects on MACE and EMACE are significant over all periods. The high censoring rate after 54 months results in a higher variability in the 60-month tests. 
+
+# E Proofs of theoretical results 
+
+E.1 Proof of Theorem 1 
+
+First, we show that the potential transition hazards are identifiable. 
+
+dΛ akg (t | w, x (t)) = P {t < T ag < t + d t | W = w, X a(t) = x(t), X a(t) = k}
+
+= P {t < T ag < t + d t | W = w, X a(t) = x(t), X a(t) = k, A = a}
+
+= P {t < T ag < t + d t | W = w, X a(t) = xa(t), X a(t) = k, T a 
+
+> c
+
+> t, A = a}
+
+= P {t < T g < t + d t, ∆g = 1 | W = w, X (t) = x(t), X (t) = k, A = a}.
+
+The second equation is by ignorability, the third equation is by random censoring, and the fourth equation is by consistency. Note that X(t) = k implies that censoring has not occurred by t.Positivity ensures that the condition part has a positive probability, so we have data to identify this conditional probability. 49 Table S3: First occurrences of individual events stratified by treatment groups, and P -values of hypothesis tests for the direct treatment effect on each event Event of first occurrence Liraglutide Placebo Total 0–42m 0–60m Expanded MACE (EMACE) 895 998 1893 0.0131 0.0206 MACE 492 551 1043 0.0110 0.0200 Non-fatal myocardial infarction 225 240 445 0.1053 0.3045 Non-fatal stroke 134 145 279 0.5610 0.3307 Cardiovascular death 134 168 302 0.0228 0.0304 Coronary revascularization 212 234 446 0.4871 0.3555 Heart failure 162 179 341 0.2375 0.2958 Unstable angina pectoris 101 94 195 0.9046 0.9704 Microvascular events 311 357 668 0.0175 0.0323 Nephropathy 214 277 491 0.0002 0.0009 Retinopathy 97 80 177 0.3413 0.2872 Non-cardiovascular death 107 97 204 0.2320 0.6995 50 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of non−fatal myocardial infarction 
+
+Months Difference in CIF Direct effect on non−fatal myocardial infarction P = 0.2975 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of non−fatal stroke 
+
+Months Difference in CIF Direct effect on non−fatal stroke P = 0.3249 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of cardiovascular death 
+
+Months Difference in CIF Direct effect on cardiovascular death P = 0.0289 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of coronary revascularization 
+
+Months Difference in CIF Direct effect on coronary revascularization P = 0.3555 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of heart failure 
+
+Months Difference in CIF Direct effect on heart failure P = 0.2958 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of unstable angina pectoris 
+
+Months Difference in CIF Direct effect on unstable angina pectoris P = 0.9704 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of nephropathy 
+
+Months Difference in CIF Direct effect on nephropathy P = 9e−04 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of retinopathy 
+
+Months Difference in CIF Direct effect on retinopathy P = 0.2872 0 10 20 30 40 50 60 −0.04  −0.02  0.00  0.02  0.04 
+
+Differential cumulative incidence of non−cardiovascular death 
+
+Months Difference in CIF Direct effect on non−cardiovascular death P = 0.6995 Figure S7: The estimated direct treatment effects on nine individual events (first occurrence), with 95% confidence intervals. 51 We identify the counterfactual cumulative incidence of event j by calculating the sub-incidence of the path q ∈ Q j . Given the path history including the first r − 1 transitions with transition times 
+
+t1, . . . , t r−1, the conditional density of encountering event r at time tr is (by competing risks) 
+
+dP r(tr | aq(r−1) ,·, w, q [tr]) = exp 
+
+> 
+
+− ∑
+
+> k∈Gq(r−1) \{ c}
+
+Λaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(tr | w, q [tr])  
+
+> 
+
+dΛ aq(r−1) ,q (r)
+
+> q(r−1) ,q (r)
+
+(tr | w, q [tr]) ,
+
+where q[tr] represents the path history prior to tr, i.e., the trajectory {(q(s), s ) : s = 1 , . . . , r − 1}
+
+with transition times {ts < t r : s = 1 , . . . , r − 1} subject to x(tr) = q(r − 1) . Then the sub-incidence of path q at time tF aj (t; q) =   
+
+> ∫
+> W
+> ∫t
+> 0
+> ∫tl(q)
+> 0
+
+· · ·  
+
+> ∫t2
+> 0
+> l(q)
+> ∏
+> r=1
+
+dP r(tr | aq(r−1) ,·, w, q [tr])d P (w),
+
+and therefore the counterfactual cumulative incidence of event j at time tF aj (t) = ∑
+
+> q∈Q j
+
+F aj (t; q).
+
+E.2 Proof of Lemma 1 
+
+The basic idea for deriving the efficient influence function (EIF) is calculated through the following steps, as outlined in Chapter 25 of van der vaart & Wellner (2013). Specifically, the construction for the submodel is the same as in the steps for derivations under the full data in Martinussen & Stensrud (2023). According to the linearity of efficient influence functions, it suffices to calculate 
+
+EIF {F aj (t; q)}. In all of the proofs that follow, we will focus on EIF {F aj (t; q)} unless otherwise specified. To derive the efficient influence function of F aj (t; q), we assume without loss of generality that W
+
+is discrete. Then, we use the chain rule based on the formula in Theorem 1 to find an influence 52 function (Hines et al. 2022, Kennedy 2024), 
+
+IF {F aj (t; q)}
+
+=
+
+∫
+
+> W
+
+∫ t
+
+> 0
+
+∫ tl(q)
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+IF 
+
+
+
+> l(q)
+
+∏
+
+> r=1
+
+dP r(tr | aq(r−1) , · , w, q [tr]) 
+
+dP (w)+
+
+∫
+
+> W
+
+∫ t
+
+> 0
+
+∫ tl(q)
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+> l(q)
+
+∏
+
+> r=1
+
+dP r(tr | aq(r−1) , · , w, q [tr]) IF {
+
+dP (w)}
+
+=
+
+> l(q)
+
+∑
+
+> r=1
+
+∫
+
+> W
+
+∫ t
+
+> 0
+
+∫ tl(q)
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+∏
+
+> ℓ̸=r
+
+dP r(tℓ | aq(ℓ−1) , · , w, q [tℓ]) IF 
+
+{
+
+dP r(tr | aq(r−1) , · , w, q [tr]) 
+
+}
+
+dP (w)+
+
+∫
+
+> W
+
+∫ t
+
+> 0
+
+∫ tl(q)
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+> l(q)
+
+∏
+
+> r=1
+
+dP r(tr | aq(r−1) , · , w, q [tr]) IF {
+
+dP (w)}
+
+.
+
+We take IF {dP (w)} as the efficient influence function, EIF {dP (w)} = 1(W = w) − dP (w),thus 
+
+∫
+
+> W
+
+∫ t
+
+> 0
+
+∫ tl(q)
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+> l(q)
+
+∏
+
+> r=1
+
+dP r(tr | aq(r−1) , · , w, q [tr]) EIF {
+
+dP (w)}
+
+= F aj (t; q | W ) − F aj (t; q).
+
+It remains to deal with IF {
+
+dP r(tr | aq(r−1) , · , w, q [tr]) }
+
+. By applying the chain rule, 
+
+IF {
+
+dP r(tr | aq(r−1) , · , w, q [tr]) }
+
+= exp 
+
+ − ∑ 
+
+> k∈G q(r−1) \ { c}
+
+Λaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(tr | w, q [tr]) 
+
+ − ∑ 
+
+> k∈G q(r−1) \ { c}
+
+IF 
+
+{
+
+Λaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(tr | w, q [tr]) 
+
+}
+
+× dΛ aq(r−1) ,q (r)
+
+> q(r−1) ,q (r)
+
+(tr | w, q [tr]) + exp 
+
+ − ∑ 
+
+> k∈G q(r−1) \ { c}
+
+Λaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(tr | w, q [tr]) 
+
+d IF {
+
+Λaq(r−1) ,q (r)
+
+> q(r−1) ,q (r)
+
+(tr | w, q [tr]) }
+
+.
+
+To calculate the efficient influence function of Λaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(t | w, q [tr]) , we let f (·) be the density function of (Tk ∧ Tc, h (X(t)) , ∆k, A, W ) and notice that 
+
+Λaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(t | w, q [tr]) =
+
+∫ t
+
+> 0
+
+f (Tk ∧ Tc = s, X (s) ∈ h(q[tr]) , ∆k = 1 , A q(r−1) ,k = aq(r−1) ,k , W = w)P(
+
+Tk ∧ Tc > s, X (s) ∈ h(q[tr]) , A q(r−1) ,k = aq(r−1) ,k , W = w) ds. 
+
+We introduce a submodel as in Martinussen & Stensrud (2023), 
+
+fϵ(Tk ∧ Tc = s, X (s) ∈ h(q[tr]) , ∆k = δ, A q(r−1) ,k = aq(r−1) ,k , W = w) = f ( · ){1 + ϵg ( · )},
+
+53 where g( · ) denotes a zero-mean function with finite second moment. From here, we will always denote this entire event by “ · " to simplify the notation in the expression of the density function or probability when there is no confusion. Let ψa(t; w, r ) := IF {Λaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(t | w, q [tr]) as the influence function under the above submodel, the above parameterization leads to 
+
+> ∫
+
+ψa( · )g( · ) d P
+
+= 
+
+> ∫t
+> 0
+
+ddϵfϵ(· = s, X (s) = ·, · = 1 , ·)Pϵ(· > s, X (s) = ·, ·)
+
+> ∣∣∣∣∣ϵ=0
+
+ds
+
+=  
+
+> ∫t
+> 0ddϵ
+
+fϵ(· = s, X (s) = ·, · = 1 , ·)Pϵ(· > s, X (s) = ·, ·)
+
+> ∣∣∣∣∣ϵ=0
+
+ds
+
+− 
+
+> ∫t
+> 0
+
+fϵ(· = s, X (s) = ·, · = 1 , ·) ddϵ Pϵ(· > s, X (s) = ·, ·)P2 
+
+> ϵ
+
+(· > s, X (s) = ·, ·)
+
+> ∣∣∣∣∣ϵ=0
+
+ds. 
+
+(S2) For the first term above,   
+
+> ∫t
+> 0ddϵ
+
+fϵ(· = s, X (s) = ·, · = 1 , ·)Pϵ(· > s, X (s) = ·, ·)
+
+> ∣∣∣∣∣ϵ=0
+
+ds
+
+= 
+
+> ∫t
+> 0
+
+f (· = s, X (s) = ·, · = 1 , ·)g(· = s, X (s) = ·, · = 1 , ·)Pϵ(· > s, X (s) = ·, ·)
+
+> ∣∣∣∣∣ϵ=0
+
+ds
+
+= 
+
+> ∫t
+> 0
+
+f (· = s, X (s) = ·, · = 1 , ·)g(· = s, X (s) = ·, · = 1 , ·)P( · > s, X (s) = ·, ·) ds
+
+=
+
+> ∫
+
+1(s ≤ t, ∆k = 1) f (· = s, X (s) = ·, ∆k = δ, ·)g(· = s, X (s) = ·, ∆k = δ, ·)P( · > s, X (s) = ·, ·) ds
+
+=
+
+> ∫
+
+1(s ≤ t, ∆k = 1) g( · )P( · > s, X (s) = ·, ·) dP. 
+
+where we use the fact that f ( · ) d s = d P . By decomposing the inverse of the probability 
+
+1P( · > s, X (s) = ·, ·)= 1(
+
+A = aq(r−1) ,k , W = w, X (s) ∈ h(q[tr]) )
+
+P(
+
+Tk ∧ Tc > s, X (s) ∈ h(q[tr]) | A = aq(r−1) ,k , w )
+
+P( A = aq(r−1) ,q (r) | w)f (w),
+
+54 we conclude that 
+
+∫ t 
+
+> 0ddϵ
+
+fϵ(· = s, X (s) = ·, · = 1 , ·)Pϵ(· > s, X (s) = ·, ·)
+
+∣∣∣∣∣ϵ=0 
+
+ds
+
+=
+
+∫ 1(A = aq(r−1) ,k , w )P( A = aq(r−1) ,k | w)f (w)
+
+1(
+
+s ≤ t, ∆k = 1 , W = w, X (s) ∈ h(q[tr]) )
+
+P(
+
+Tk ∧ Tc > s, X (s) ∈ h(q[tr]) | A = aq(r−1) ,k , w ) g( · ) d P
+
+=
+
+∫ 1(A = aq(r−1) ,k , w )P( A = aq(r−1) ,k | w)f (w)
+
+∫ 1(
+
+s ≤ t, ∆k = 1 , W = w, X (s) ∈ h(q[tr]) )
+
+P(
+
+Tk ∧ Tc > s, X (s) ∈ h(q[tr]) | A = aq(r−1) ,k , w ) g( · ) d P
+
+=
+
+∫
+
+g( · ) d P 1(A = aq(r−1) ,k , w )P( A = aq(r−1) ,k | w)f (w)
+
+∫ t
+
+> 0
+
+dNk
+
+(
+
+s; a, w, h (q[tt]) )
+
+P(
+
+Tk ∧ Tc > s, X (t) ∈ h(q[tr]) | A = aq(r−1) ,k , w ) .
+
+For the second term in (S2), we apply the similar trick f ( · ) d s = d P , and rewrite it as 
+
+∫ t
+
+> 0
+
+fϵ(· = s, X (s) = ·, · = 1 , ·) ddϵ Pϵ(· > s, X (s) = ·, ·)P2 
+
+> ϵ
+
+(· > s, X (s) = ·, ·)
+
+∣∣∣∣∣ϵ=0 
+
+ds
+
+=
+
+∫ t
+
+> 0
+
+fϵ(· = s, X (s) = ·, · = 1 , ·)P2 
+
+> ϵ
+
+(· > s, X (s) = ·, ·)
+
+> 1
+
+∑
+
+> δ=0
+
+∫ +∞
+
+> s
+
+ddϵfϵ(· = u, X (u) = ·, · = δ, ·) d u
+
+∣∣∣∣∣ϵ=0 
+
+ds
+
+=
+
+∫ t
+
+> 0
+
+f (· = s, X (s) = ·, · = 1 , ·)P2(· > s, X (s) = ·, ·) ds
+
+> 1
+
+∑
+
+> δ=0
+
+∫ +∞
+
+> s
+
+(f × g)( · = u, X (u) = ·, · = δ, ·) d u
+
+=
+
+∫ 1(s ≤ t, ∆k = 1) P2(· > s, X (s) = ·, ·) dP
+
+> 1
+
+∑
+
+> δ=0
+
+∫ +∞
+
+> s
+
+(f × g)( · = u, X (u) = ·, · = δ, ·) d u. 
+
+Let us first deal with the quadratic probability in the denominator. Rewrite 
+
+P(
+
+Tk ∧ Tc > s, X (s) ∈ h(q[tr]) , A = aq(r−1) ,k , w )
+
+=P (
+
+Tk ∧ Tc > s | X(s) ∈ h(q[tr]) , A = aq(r−1) ,k , w )
+
+P(
+
+X(s) ∈ h(q[tr]) , A = aq(r−1) ,k , w )
+
+=P (
+
+Tk > s | X(s) ∈ h(q[tr]) , A = aq(r−1) ,k , w )
+
+P( Tc > s | A = aq(r−1) ,k , w )
+
+× P(
+
+X(s) ∈ h(q[tr]) , A = aq(r−1) ,k , w )
+
+= exp 
+
+{
+
+− Λaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(t | w, q [tr]) 
+
+}
+
+P( Tc > s | A = aq(r−1) ,k , w )P (
+
+X(s) ∈ h(q[tr]) , A = aq(r−1) ,k , w }
+
+where the second equation is by the random censoring assumption. Plug this back into the second 55 term in (S2), rewrite the cumulative hazard, and then change the order of integration, we have 
+
+∫ t
+
+> 0
+
+fϵ(· = s, X (s) = ·, · = 1 , ·) ddϵ Pϵ(· > s, X (s) = ·, ·)P2 
+
+> ϵ
+
+(· > s, X (s) = ·, ·)
+
+∣∣∣∣∣ϵ=0 
+
+ds
+
+=
+
+∫ 1(s ≤ t, ∆k = 1) d P
+
+P(
+
+Tk ∧ Tc > s, X (s) ∈ h(q[tr]) , A = aq(r−1) ,k , w )
+
+× exp {
+
+Λaq(r−1) ,k  
+
+> q(r−1) ,k
+
+(t | w, q [tr]) }
+
+P( Tc > s | A = aq(r−1) ,k , w )P (
+
+X(s) ∈ h(q[tr]) , A = aq(r−1) ,k , w }
+
+×
+
+> 1
+
+∑
+
+> δ=0
+
+∫ +∞
+
+> s
+
+(f × g)( · = u, X (u) = ·, · = δ, ·) d u
+
+=
+
+∫ 1(s ≤ t, ∆k = 1) d P
+
+P{
+
+Tk ∧ Tc > s, X (s) ∈ h(q[tr]) , A = aq(r−1) ,k , w }∫ s
+
+> 0
+
+dN (
+
+u; aq(r−1) ,k , w, h (q[tr]) )
+
+P{Tk > u, X (u) ∈ h(q[tr]) | aq(r−1) ,k , w }×
+
+∑1
+
+> δ=0
+
+∫ +∞ 
+
+> s
+
+(f × g)( · = v, X (v) = ·, · = δ, ·) d v
+
+P( Tc > s | A = aq(r−1) ,k , w )P (
+
+X(s) ∈ h(q[tr]) , A = aq(r−1) ,k , w }
+
+=
+
+> 1
+
+∑
+
+> δ=0
+
+∫ +∞
+
+> 0
+
+(f × g)( · = v, X (v) = ·, · = δ, ·) d v
+
+×
+
+∫ +∞
+
+> 0
+
+1(s ≤ t ∧ v, ∆k = 1) P{
+
+Tk ∧ Tc > s, X (s) ∈ h(q[tr]) , A = aq(r−1) ,k , w }
+
+× 1P( Tc > s | A = aq(r−1) ,k , w )P (
+
+X(s) ∈ h(q[tr]) , A = aq(r−1) ,k , w }
+
+×
+
+∫ s
+
+> 0
+
+dNk
+
+(
+
+u; aq(r−1) ,k , w, h (q[tr]) )
+
+P{Tk > u, X (u) ∈ h(q[tr]) | aq(r−1) ,k , w }.
+
+(S3) Next, for any measurable function F (s, ·) (with respect to s), by changing the order of integration, 
+
+∫ +∞
+
+> 0
+
+(f × g)( · = v, · = δ, ·)d v
+
+∫ +∞
+
+> 0
+
+1(s ≤ t ∧ v, ∆k = 1) F (s, ·) d P
+
+=1(Aq(r−1) ,k = aq(r−1) ,k , W = w)
+
+∫ t
+
+> 0
+
+1(Tk ∧ Tc ≥ s)F (s, ·)g(· = s, · = δ, ·) d P
+
+56 By letting the product of the 2nd-4th terms in (S3) as F (s, ·), the above equation implies 
+
+∫ t
+
+> 0
+
+fϵ(· = s, X (s) = ·, · = 1 , ·) ddϵ Pϵ(· > s, X (s) = ·, ·)P2 
+
+> ϵ
+
+(· > s, X (s) = ·, ·)
+
+∣∣∣∣∣ϵ=0 
+
+ds
+
+=
+
+> 1
+
+∑
+
+> δ=0
+
+∫ t
+
+> 0
+
+1(Tk ∧ Tc ≥ s, A q(r−1) ,k = aq(r−1) ,k , ∆q(r−1) ,k = 1 , W = w)P{
+
+Tk ∧ Tc > s, X (s) ∈ h(q[tr]) , A = aq(r−1) ,k , w }
+
+× g( · )d P
+
+P( Tc > s | A = aq(r−1) ,k , w )P (
+
+X(s) ∈ h(q[tr]) , A = aq(r−1) ,k , w }
+
+×
+
+∫ s
+
+> 0
+
+dN (
+
+u; aq(r−1) ,k , w, h (q[tr]) )
+
+P{Tk > u, X (u) ∈ h(q[tr]) | aq(r−1) ,k , w }
+
+=
+
+> 1
+
+∑
+
+> δ=0
+
+∫ 1(s ≤ t, T k ∧ Tc ≥ s, A q(r−1) ,k = aq(r−1) ,k , ∆q(r−1) ,k = 1 , W = w)P{
+
+Tk ∧ Tc > s, X (s) ∈ h(q[tr]) , A = aq(r−1) ,k , w }
+
+× g( · )d P
+
+P( Tc > s | A = aq(r−1) ,k , w )P (
+
+X(s) ∈ h(q[tr]) , A = aq(r−1) ,k , w }
+
+× P{
+
+X(s) ∈ h(q[tr]) | A = aq(r−1) ,k , w }
+
+dΛ aq(r−1) ,k  
+
+> q(r−1) ,k
+
+(s | w, q [tr]) =
+
+∫
+
+g( · ) d P 1(A = aq(r−1) ,k , w )P( A = aq(r−1) ,k | w)f (w)
+
+∫ t
+
+> 0
+
+Yk
+
+(
+
+s; a, w, h (q[tr]) )
+
+dΛ aq(r−1) ,k  
+
+> q(r−1) ,k
+
+(s | w, q [tr]) P{
+
+Tk ∧ Tc > s, X (s) ∈ h(q[tr]) | A = aq(r−1) ,k , w } .
+
+where the second “ =" is by changing integration order and the fact that E[
+
+dΛ · (t | · ) | F (s)]
+
+=E[
+
+dN · (t | · ) | F (s)]
+
+and the last equation is by the definition of at-risk process. Plug in the expressions of the two terms in (S2), we conclude that 
+
+ψa( · )= 1(A = aq(r−1) ,k , w )P( Aq(r−1) ,k = aq(r−1) ,k | w)f (w)
+
+∫ t
+
+> 0
+
+dMq(r−1) ,k 
+
+(
+
+s; aq(r−1) ,k , w, h (q[tr]) )
+
+P{
+
+Tk ∧ Tc > s, X (s) ∈ h(q[tr]) | A = aq(r−1) ,k , w } .
+
+To see the formula in the theorem, we group and combine the terms in 
+
+> l(q)
+
+∑
+
+> r=1
+
+∫ ∏
+
+> ℓ̸=r
+
+dP r(tℓ | aq(ℓ−1) , · , w, q [tℓ]) IF 
+
+{
+
+dP r(tr | aq(r−1) , · , w, q [tr]) 
+
+}
+
+dP (w) =: −I1 + I2
+
+57 with 
+
+I1 := 
+
+l(q)
+
+∑
+
+r=1 
+
+∫ ∏
+
+ℓ̸=r
+
+dP ℓ(tℓ | aq(ℓ−1) , · , w, q [tℓ])d P (w)
+
+× exp 
+
+ − ∑
+
+k∈G q(r−1) \ { c}
+
+Λaq(r−1) ,k 
+
+q(r−1) ,k (tr | w, q [tr]) 
+
+ ∑
+
+k∈G q(r−1) \ { c}
+
+EIF 
+
+{
+
+Λaq(r−1) ,k 
+
+q(r−1) ,k (tr | w, q [tr]) 
+
+}
+
+× dΛ aq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | w, q [tr]) =
+
+l(q)
+
+∑
+
+r=1 
+
+∫ ∏
+
+ℓ̸=r
+
+dP ℓ(tℓ | aq(ℓ−1) , · , w, q [tℓ])d P (w)
+
+×
+
+ ∑
+
+k∈G q(r−1) \ { c}
+
+EIF 
+
+{
+
+Λaq(r−1) ,k 
+
+q(r−1) ,k (tr | w, q [tr]) 
+
+}dP r(tr | aq(r−1) , · , w, q [tr]) =
+
+∫ l(q)
+
+∏
+
+r=1 
+
+dP r(tr | aq(r−1) , · , W, q [tr]) 
+
+l(q)
+
+∑
+
+r=1 
+
+∑
+
+k∈G q(r−1) \ { c}
+
+EIF {
+
+Λaq(r−1) ,k 
+
+q(r−1) ,k (t | W, q [tr]) }
+
+f (W )
+
+and 
+
+I2 := 
+
+l(q)
+
+∑
+
+r=1 
+
+∫ ∏
+
+ℓ̸=r
+
+dP ℓ(tℓ | aq(ℓ−1) , · , w, q [tℓ])d P (w)
+
+× exp 
+
+ − ∑
+
+k∈G q(r−1) \ { c}
+
+Λaq(r−1) ,k 
+
+q(r−1) ,k (tr | w, q [tr]) 
+
+d EIF {
+
+Λaq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | w, q [tr]) }
+
+=
+
+l(q)
+
+∑
+
+r=1 
+
+∫ ∏
+
+ℓ̸=r
+
+dP ℓ(tℓ | aq(ℓ−1) , · , w, q [tℓ])d P (w)
+
+× dP r(tr | aq(r−1) , · , w, q [tr]) 
+
+l(q)
+
+∑
+
+r=1 
+
+d EIF {
+
+Λaq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | w, q [tr]) }
+
+dΛ aq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | w, q [tr]) =
+
+∫ l(q)
+
+∏
+
+r=1 
+
+dP r(tr | aq(r−1) , · , W, q [tr]) 
+
+l(q)
+
+∑
+
+r=1 
+
+d EIF {
+
+Λaq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | W, q [tr]) }
+
+dΛ aq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | W, q [tr]) f (W ).
+
+Finally, it remains to show that IF {F aj (t)} = F aj (t | W ) − F aj (t) + φaj (t; O) is the efficient influence function. We decompose the model of observed data into variational dependent parts 
+
+P (a, w ) and Λakg (· | w, x (·)) , (k, g ) ∈ E . Consider the submodel 
+
+Pv(a, w ) = {1 + vh 0(a, w )}f (a, w ),
+
+dΛ akg,v (s | w, x (s)) = {1 + vh kg (s; a, w, x (s)) }dΛ akg (s | w, x (s)) ,
+
+58 where h0( · ), h kg ( · ) denote zero-mean functions with finite second moments. The density of observed data (A, W, X (t∗)) is 
+
+Pv(A, W ) ∏
+
+> (k,g )∈E
+
+exp {− ΛAkg,v (Tg | W, X (Tg)) }{ dΛ Akg,v (Tg | W, X (Tg)) }∆kg ,
+
+where ∆kg is the indicator that an individual transitions from state k to state g. The score function is 
+
+h(A, W, X (t∗)) = ∂∂v log 
+
+> 
+
+Pv(A, W ) ∏
+
+> (k,g )∈E
+
+exp {− Λakg,v (Tg | W, X (Tg)) }{ dΛ akg,v (Tg | W, X (Tg)) }∆kg 
+
+> 
+
+= h0(A, W ) + ∑ 
+
+> (k,g )∈E
+> ∫t∗
+> 0
+
+I(s ≤ Tg)hkg (s; A, W, X (s))d Mkg (s; A, W, X (s)) .
+
+Therefore, the corresponding tangent space ˙P, which is the closure of the linear span of the all possible score functions of the parametric submodels, is the direct sum 
+
+˙P = ˙P0 ⊕ ⊕
+
+> (k,g )∈E
+
+˙Pkg ,
+
+where 
+
+˙P0 = {h(a, w ) : E h(A, W ) = 0 } ,
+
+˙Pkg = 
+
+> {∫t∗
+> 0
+
+h(s; A, W, X (s))d Mkg (s; A, W, X (s)) 
+
+> }
+
+with h subject to the extended Markovness condition. The direct sum is justified by two orthogo-nality arguments: (i) by the tower property and the fact that ∫ t∗ 
+
+> 0
+
+h(s) d Mkg (s) is a martingale with conditional mean zero given (A, W ); (ii) since at most one transition can occur at any given time in the multi-state model, ∆Nkg (t) · ∆Nk′g′ (t) = 0 almost surely, which implies 
+
+E 
+
+> [ ∫t∗
+> 0
+
+hkg (s) hk′g′ (s) d ⟨Mkg , M k′g′ ⟩(s)
+
+> ]
+
+= 0 .
+
+The function h in the expression of the space ˙Pkg should satisfy extended Markovness. The tangent spaces ˙P0 and ˙Pkg are orthogonal because Mkg (s; a, w, x (s)) is a martingale such that 
+
+E{Mkg (s; a, w, x (s)) } = 0 . By noticing that 
+
+F aj (t|W ) − F aj (t) ∈ ˙P0, φaj (t; O) ∈ ⊕
+
+> (k,g )∈E
+
+˙Pkg ,
+
+59 the influence function IF {F aj (t)} belongs to the tangent space ˙P. This implies that IF {F aj (t)} is the efficient influence function. 
+
+E.3 Proof of Theorem 2 
+
+To prove the multiple robustness of ˜F aj (t), it suffices to prove the multiple robustness of each sub-incidence EIF-based estimation ˜F aj (t; q) for q ∈ Q j . For notation simplicity, we omit a and denote 
+
+Hq(r−1) ,g (tr) = P( Tg ∧ Tc ≥ tr, X (tr) ∈ h(q[tr]) | A, W ).
+
+where g ∈ G q(r−1) \ { c}. Suppose that Λ( ·) is specified as Λ∗(·), and hence Hq(r−1) ,g (·) is specified as H∗
+
+> q(r−1) ,g
+
+(·). We note that 
+
+E
+
+
+
+d̂Mq(r−1) ,g (tr; aq(r−1) ,g , W, h (q[tr])) ̂
+
+Hq(r−1) ,g (tr)
+
+∣∣∣ A = aq(r−1) ,g , W 
+
+
+
+> p
+
+−→ EHq(r−1) ,g (tr)
+
+H∗
+
+> q(r−1) ,g
+
+(tr)d {
+
+Λq(r−1) ,g (tr | W, q [tr]) − Λ∗
+
+> q(r−1) ,g
+
+(tr | W, q [tr]) }
+
+.
+
+(S4) So if Λq(r−1) ,g (·) is correctly specified, the right-hand-side of Equation (S4) is zero. We consider three possible cases of misspecification. The first case is that the hazard Λq(r−1) ,q (r)(·)
+
+is misspecified as Λ∗
+
+> q(r−1) ,q (r)
+
+(·), while other hazards and propensity score are correctly specified. According to Equation (S4), all additive terms that do not involve Λq(r−1) ,q (r)(·) vanish. In addition, we notice that 
+
+Hq(r−1) ,q (r)(tr)
+
+H∗
+
+> q(r−1) ,q (r)
+
+(tr) = exp {
+
+Λ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) − Λq(r−1) ,q (r)(tr | W, q [tr]) }
+
+.
+
+Thus, in the limit of ˜Fj (t; q), two key terms persist: one arising from the regression estimator and the other from the specific debiased term associated with the misspecified hazard function 
+
+Λ∗
+
+> q(r−1) ,q (r)
+
+(·). Let Q(w) be the joint density function of (Tq(1) , . . . , T q(l(q)) ) excluding the term 
+
+exp {− Λq(r−1) ,q (r)(tr | w, q [tr]) }dΛ q(r−1) ,q (r)(tr | w, q [tr]) , so 
+
+˜Fj (t; q)
+
+60 p
+
+−→ E
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) }dΛ ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) + E 
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) }·
+
+[ Hq(r−1) ,q (r)(tr)
+
+H∗
+
+> q(r−1) ,q (r)
+
+(tr)d{Λq(r−1) ,q (r) − Λ∗
+
+> q(r−1) ,q (r)
+
+}(tr | W, q [tr]) 
+
+− dΛ ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) 
+
+∫ tr
+
+> 0
+
+Hq(r−1) ,q (r)(u)
+
+H∗
+
+> q(r−1) ,q (r)
+
+(u)d{Λq(r−1) ,q (r) − Λ∗
+
+> q(r−1) ,q (r)
+
+}(u | W, q [tr]) 
+
+]
+
+= E 
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) }dΛ ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) + E 
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λq(r−1) ,q (r)(tr | W, q [tr]) }d{Λq(r−1) ,q (r) − Λ∗
+
+> q(r−1) ,q (r)
+
+}(tr | W, q [tr]) 
+
+− E
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) }dΛ ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) 
+
+·
+
+∫ tr
+
+> 0
+
+exp {{ Λ∗ 
+
+> q(r−1) ,q (r)
+
+− Λq(r−1) ,q (r)}(u | W, q [tr]) }d{Λq(r−1) ,q (r) − Λ∗
+
+> q(r−1) ,q (r)
+
+}(u | W, q [tr]) = E 
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) }dΛ ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) 
+
+− E
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λq(r−1) ,q (r)(tr | W, q [tr]) }dΛ ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) + Fj (t; q)
+
+− E
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) }dΛ ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) 
+
+· [1 − exp {Λ∗
+
+> q(r−1) ,q (r)
+
+(tr | W, q [tr]) − Λq(r−1) ,q (r)(tr | W, q [tr]) }]= Fj (t; q).
+
+The second case is that the hazard Λq(r−1) ,g (·) is misspecified as Λ∗
+
+> q(r−1) ,g
+
+(·), where g ∈ G q(r−1) \{c, q (r)}. Then, in the limit of ˜Fj (t; q), two key terms persist: one arising from the regression estimator and the other from the specific debiased term associated with the misspecified hazard function Λ∗
+
+> q(r−1) ,g
+
+(·). Let Q(w) be the joint density function of (Tq(1) , . . . , T q(l(q)) ) excluding the term exp {− Λq(r−1) ,g (tr | w, q [tr]) }, so 
+
+˜Fj (t; q)
+
+> p
+
+−→ E
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λ∗
+
+> q(r−1) ,g
+
+(tr | W, q [tr]) }− E
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λ∗
+
+> q(r−1) ,g
+
+(tr | W, q [tr]) }
+
+61 ·
+
+∫ tr
+
+> 0
+
+Hq(r−1) ,g (u)
+
+H∗
+
+> q(r−1) ,g
+
+(u)d{Λq(r−1) ,g − Λ∗
+
+> q(r−1) ,g
+
+}(u | W, q [tr]) = E 
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λ∗
+
+> q(r−1) ,g
+
+(tr | W, q [tr]) }− E
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λ∗
+
+> q(r−1) ,g
+
+(tr | W, q [tr]) }·
+
+∫ tr
+
+> 0
+
+exp {{ Λ∗ 
+
+> q(r−1) ,g
+
+− Λq(r−1) ,g }(u | W, q [tr]) }d{Λq(r−1) ,g − Λ∗
+
+> q(r−1) ,g
+
+}(u | W, q [tr]) = E 
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λ∗
+
+> q(r−1) ,g
+
+(tr | W, q [tr]) }− E
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λ∗
+
+> q(r−1) ,g
+
+(tr | W, q [tr]) }· [1 − exp {Λ∗
+
+> q(r−1) ,g
+
+(tr | W, q [tr]) − Λq(r−1) ,g (tr | W, q [tr]) }]= E 
+
+∫ t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+Q(W ) · exp {− Λq(r−1) ,g (tr | W, q [tr]) }
+
+= Fj (t; q).
+
+The third case is that either the off-path transition hazard Λk,g (·), censoring hazard Λq(r−1) ,c(·) or propensity score P (A | W ) is(are) misspecified, where k̸ ∈ q. According to Equation (S4), the regression estimator (which does not involve the off-path transition hazard, censoring hazard, and propensity score) converges to the true value, and the debiased term converges to zero. 
+
+E.4 Proof of Theorem 3 
+
+Let P denote the measure of the true data-generating mechanism, Pn denote the empirical measure on the sample, and ̂ P denote the fitted model. Due to the additivity of efficient influence functions, we only need to consider the sub-incidence F aj (t; q) for the path q ∈ Q j . Let 
+
+ψ(P) = F aj (t | W ; q) + φaj (t | W ; q),
+
+where F aj (t | W ; q) is the sub-incidence of path q conditional on covariates W , and φaj (t | W ; q)
+
+is the debias term for path q (which is a function of observed data). It is easy to see that 62 Pφaj (t | W ; q) = 0 . We aim to find the asymptotic law of 
+
+√n{ ˜F aj (t; q) − F aj (t; q)} = √n{Pnψ(̂P) − Pψ(P)}
+
+= √n(Pn − P)ψ(P) + √n(Pn − P){ψ(̂P) − ψ(P)} + √nP{ψ(̂P) − ψ(P)}.
+
+(S5) The first term converges to a Gaussian distribution by the central limit theorem with mean zero and variance E{ψ(P) − Pψ(P)}2. The second term above is oP (1) since ψ(P) belongs to a Donsker class and ∥ψ(̂Pn) − ψ(Pn)∥L2 = op(1) (Van der Vaart 2000). Let P0 be the propensity score and censoring model, Pr be the transition hazard model for the r-th step, r = 1 , . . . , l (q). So P = ( P0, P 1, . . . , P l(q)). We define a series of measures: ̂
+
+Pr = ( ̂P0,̂ P1, . . . , ̂ Pr−1,̂ Pr, P r+1 , . . . , P l(q)), r = 0 , . . . , l (q).
+
+Therefore, the third term in the decomposition (S5) (remainder term) 
+
+√nP{ψ(̂P) − ψ(P)} = √nP{ψ(̂Pl(q)) − ψ(̂ P0)}
+
+=
+
+> l(q)
+
+∑
+
+> r=1
+
+√nP{ψ(̂Pr) − ψ(̂ Pr−1)} + √nP{ψ(̂P0) − ψ(P)}.
+
+From the expression of ψ, we can see that √nP{ψ(̂P0) − ψ(P)} = 0 . In the following, we will show that √nP{ψ(̂Pr) − ψ(̂ Pr−1)} = op(1) for r = 1 , . . . , l (q).Now, we simplify the notation when there is no confusion. Let 
+
+Gr(tr) = 
+
+∫ tr+1 ∧t
+
+> 0
+
+· · · 
+
+∫ t2
+
+> 0
+
+dP r(tr | aq(r−1) ,·, W, q [tr]) .
+
+So 
+
+P{ψ(̂Pr) − ψ(̂ Pr−1)}
+
+=
+
+∫̂ 
+
+Gr−1(tr−1)
+
+∫ ∏
+
+> ℓ>r
+
+dP ℓ(tℓ | aq(ℓ−1) ,·, W, q [tℓ]) 
+
+ exp 
+
+ − ∑
+
+> g∈G q(r−1) \{ c}
+
+̂
+
+Λaq(r−1) ,q (r) 
+
+> q(r−1) ,g
+
+(tr | W, q [tr]) 
+
+
+
+× P( A = aq(r−1) ,q (r) | W )̂
+
+P( A = aq(r−1) ,q (r) | W )
+
+ exp {− ∑ 
+
+> g∈G q(r−1)
+
+Λaq(r−1) ,q (r) 
+
+> q(r−1) ,g
+
+(tr | W, q [tr]) }
+
+exp {− ∑
+
+> g∈G q(r−1)
+
+̂ Λaq(r−1) ,q (r) 
+
+> q(r−1) ,g
+
+(tr | W, q [tr]) }
+
+63 {
+
+dΛ aq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | W, q [tr]) − d̂ Λaq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | W, q [tr]) }
+
+− ∑
+
+k∈G q(r−1) \{ c}
+
+∫ tr
+
+0
+
+exp {− ∑
+
+g∈G q(r−1) Λaq(r−1) ,q (r)
+
+q(r−1) ,g (u | W, q [tr]) }
+
+exp {− ∑
+
+g∈G q(r−1) ̂ Λaq(r−1) ,q (r)
+
+q(r−1) ,g (u | W, q [tr]) }
+
+{
+
+dΛ aq(r−1) ,q (r)
+
+q(r−1) ,g (u | W, q [tr]) − d̂ Λaq(r−1) ,q (r)
+
+q(r−1) ,g (u | W, q [tr]) }
+
+d̂ Λaq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | W, q [tr]) 
+
+
+
++ exp 
+
+ − ∑
+
+g∈G q(r−1) ̂
+
+Λaq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | W, q [tr]) 
+
+d̂ Λaq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | W, q [tr]) 
+
+− exp 
+
+ − ∑
+
+g∈G q(r−1) 
+
+Λaq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | W, q [tr]) 
+
+dΛ aq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | W, q [tr]) 
+
+.
+
+Using a similar trick, we further decompose ψ(̂Pr) − ψ(̂ Pr−1) into |G q(r−1) \ { c}| terms. In each term, only one cause-specific hazard (transition from q(r − 1) to g) is compared under the true model and under the fitted model. If g̸ = q(r), we have ̂ Λaq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | W, q [tr]) = Λaq(r−1) ,q (r)
+
+q(r−1) ,q (r)(tr | W, q [tr]) , and then that specific term in the decomposition equals 
+
+Rg =
+
+∫
+
+C(W ) ×
+
+ − exp {
+
+−Λaq(r−1) ,q (r)
+
+q(r−1) ,g (tr | W, q [tr]) } P( A = aq(r−1) ,q (r) | W )̂
+
+P( A = aq(r−1) ,q (r) | W )
+
+∫ tr
+
+0
+
+exp {− Λaq(r−1) ,q (r)
+
+q(r−1) ,{g, c}(u | W, q [tr]) }
+
+exp {− ̂Λaq(r−1) ,q (r)
+
+q(r−1) ,{g, c}(u | W, q [tr]) }d {
+
+Λaq(r−1) ,q (r)
+
+q(r−1) ,g (u | W, q [tr]) −̂ Λaq(r−1) ,q (r)
+
+q(r−1) ,g (u | W, q [tr]) }
+
++ exp {− ̂ Λaq(r−1) ,q (r)
+
+q(r−1) ,g (tr | W, q [tr]) } − exp {− Λaq(r−1) ,q (r)
+
+q(r−1) ,g (tr | W, q [tr]) }
+
+
+
+=
+
+∫
+
+C(W ) ×
+
+∫ tr
+
+0
+
+ P( A = aq(r−1) ,q (r) | W ) exp {− Λaq(r−1) ,q (r)
+
+q(r−1) ,c (u | W, q [tr]) }̂
+
+P( A = aq(r−1) ,q (r) | W ) exp {− ̂ Λaq(r−1) ,q (r)
+
+q(r−1) ,c (u | W, q [tr]) } − 1
+
+
+
+× d exp {̂ 
+
+Λaq(r−1) ,q (r)
+
+q(r−1) ,g (u | W, q [tr]) − Λaq(r−1) ,q (r)
+
+q(r−1) ,g (u | W, q [tr]) }
+
+,
+
+where C(W ) is a function of observed data. Since the hazard functions are bounded according to positivity, C(W ) is bounded. By the Cauchy–Schwarz inequality and the Lipschitz property of bounded exponential functions, 
+
+P(R2
+
+g) ≤ C × sup 
+
+a∈{ 0,1},(k,g )∈E 
+
+sup 
+
+t∈[0 ,t ∗]
+
+sup 
+
+x(t)
+
+P
+
+∫ t
+
+0
+
+ P( A = a | W ) exp {− Λak, c(s | W, x (s)) }̂
+
+P( A = a | W ) exp {− Λak, c(s | W, x (s)) }
+
+
+
+2
+
+× P {̂ 
+
+Λakg (t | W, x (t)) − Λakg (t | W, x (t)) }2
+
+64 for some constant C. If g = q(r), by similar arguments, 
+
+Rg =
+
+∫
+
+C1(W ) ×
+
+∫ tr+1 ∧t
+
+> 0
+
+ P( A = aq(r−1) ,q (r) | W ) exp {− Λaq(r−1) ,q (r) 
+
+> q(r−1) ,c
+
+(tr | W, q [tr]) }̂
+
+P( A = aq(r−1) ,q (r) | W ) exp {− ̂ Λaq(r−1) ,q (r) 
+
+> q(r−1) ,c
+
+(tr | W, q [tr]) } − 1
+
+
+
+× d exp {̂ 
+
+Λaq(r−1) ,q (r) 
+
+> q(r−1) ,g
+
+(tr | W, q [tr]) − Λaq(r−1) ,q (r) 
+
+> q(r−1) ,g
+
+(tr | W, q [tr]) }
+
++
+
+∫
+
+C2(W ) ×
+
+∫ tr
+
+> 0
+
+ P( A = aq(r−1) ,q (r) | W ) exp {− Λaq(r−1) ,q (r) 
+
+> q(r−1) ,c
+
+(u | W, q [tr]) }̂
+
+P( A = aq(r−1) ,q (r) | W ) exp {− ̂ Λaq(r−1) ,q (r) 
+
+> q(r−1) ,c
+
+(u | W, q [tr]) } − 1
+
+
+
+× d exp {̂ 
+
+Λaq(r−1) ,q (r) 
+
+> q(r−1) ,g
+
+(u | W, q [tr]) − Λaq(r−1) ,q (r) 
+
+> q(r−1) ,g
+
+(u | W, q [tr]) }
+
+,
+
+where C1(W ) and C2(W ) are functions of observed data. Since the hazard functions are bounded by positivity, C1(W ) and C2(W ) are bounded. By the Cauchy–Schwarz inequality and the Lipschitz property of bounded exponential functions, 
+
+P(R2
+
+> g
+
+) ≤ C × sup 
+
+> a∈{ 0,1},(k,g )∈E
+
+sup 
+
+> t∈[0 ,t ∗]
+
+sup 
+
+> x(t)
+
+P
+
+∫ t
+
+> 0
+
+ P( A = a | W ) exp {− Λak, c(s | W, x (s)) }̂
+
+P( A = a | W ) exp {− Λak, c(s | W, x (s)) }
+
+
+
+> 2
+
+× P {̂ 
+
+Λakg (t | W, x (t)) − Λakg (t | W, x (t)) }2
+
+for some constant C. Finally, by the assumptions in Theorem 3, we have P(R2
+
+> g
+
+) = o(n−1), which implies that 
+
+√nP{ψ(̂P) − ψ(P)} = op(1) .
+
+E.5 Efficient influence function without Assumption 5 
+
+The EIF of F aj (t) is 
+
+F aj (t | W ) + ∑
+
+> q∈Q j
+> l(q)
+
+∑
+
+> r=1
+> r−1
+
+∏
+
+> k=1
+
+dP k(Tq(k) | aq(r−1) , · , W, q [T q(k)]) dP k(Tq(k) | A, W, q [T q(k)]) 
+
+×
+
+{ 1{A = aq(r−1) ,q (r)}
+
+P( A = aq(r−1) ,q (r) | W )
+
+∫ tTq(r−1) 
+
+P( T aj ≤ t | W, q [T q(r); tr]) dMq(r−1) ,q (r)(tr; A, W, q [T q(r)]) P( Tc ≥ tr | A, W, q [T q(r)]) 
+
+− ∑
+
+> g∈G q(r−1) \{ c}
+
+1{A = aq(r−1) ,g }
+
+P( A = aq(r−1) ,g | W )
+
+×
+
+∫ tTq(r−1) 
+
+P( T aj ≤ t, T q(r) ≥ tr | W, q [T q(r)]) dMq(r−1) ,k (tr; A, W, q [T q(r)]) P( Tq(r) ∧ Tc ≥ tr | A, W, q [T q(r)]) 
+
+}
+
+− F aj (t),
+
+(S6) 65 where q[T q(r); tr] represents this history supplemented by an additional transition to q(r) at time 
+
+tr. The weight 
+
+> r−1∏
+> k=1
+
+dP k(Tq(k) | aq(r−1) , · , W, q [T q(k)]) dP k(Tq(k) | A, W, q [T q(k)]) 
+
+represents the selection bias at time t when transitioning to the r-th state in the path q.66

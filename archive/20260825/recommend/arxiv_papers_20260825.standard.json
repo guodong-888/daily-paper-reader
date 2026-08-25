@@ -1,0 +1,57 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-25T20:30:29.790761+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2608.22608v1",
+      "source": "arxiv",
+      "title": "Estimating Pathway Treatment Effects in the Presence of Intermediate Events with Multi-State Data",
+      "abstract": "During clinical trials evaluating a drug's effect on a survival endpoint, intermediate events often occur in addition to the primary event. The treatment can exert its effect on the primary endpoint along multiple pathways through intermediate events. Assumptions for identifying mediation effects, such as sequential ignorability in natural effects or the dismissible components condition in separable effects, fail because intermediate events act as treatment-induced confounding. To understand the effect along each pathway, we consider hypothetical interventions in transitions between event statuses to mimic the treatment mechanism. The hypothetical interventions adjust for effects through intermediate events and marginalize over unobserved treatment-induced confounding, if any. Based on the derived efficient influence functions for the counterfactual cumulative incidences under hypothetical interventions, we construct multiply robust and semiparametrically efficient estimators for pathway treatment effects. Our proposed framework enables the examination of treatment effects through each transition, on each event, and along each path. By analyzing data from the LEADER Trial, we find that liraglutide significantly reduces the risk of cardiovascular and microvascular events. The reduction in all-cause mortality is primarily mediated by its effects on expanded major adverse cardiovascular events.",
+      "authors": [
+        "Yuhao Deng",
+        "Haoyu Wei",
+        "Donglin Zeng",
+        "Rui Song",
+        "Xiao-Hua Zhou"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "econ.EM",
+        "math.ST"
+      ],
+      "published": "2026-08-23T21:27:18+00:00",
+      "link": "https://arxiv.org/pdf/2608.22608v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Method for pathway treatment effects on survival via intermediate events, transferable to exercise-induced metabolic mediation of flap survival.",
+      "llm_evidence_cn": "估计经由中间事件影响生存结局的通路治疗效应的方法，可用于运动引起的代谢变化对皮瓣存活的中介分析。",
+      "llm_evidence": "估计经由中间事件影响生存结局的通路治疗效应的方法，可用于运动引起的代谢变化对皮瓣存活的中介分析。",
+      "canonical_evidence": "估计经由中间事件影响生存结局的通路治疗效应的方法，可用于运动引起的代谢变化对皮瓣存活的中介分析。",
+      "llm_tldr_en": "This paper proposes a multi-state model with hypothetical interventions to estimate pathway-specific treatment effects when intermediate events act as treatment-induced confounders. It provides a way to test mediation on survival endpoints, applicable to whether exercise preconditioning improves flap survival via metabolic reprogramming.",
+      "llm_tldr_cn": "该论文针对生存结局中存在中间事件时的通路效应估计问题，提出利用多状态模型中的假设干预来模拟治疗机制，从而剥离不同作用路径。该方法可在不依赖顺序可忽略性等受限假设的情况下识别中介效应，为分析运动预适应是否通过代谢重编程提高皮瓣存活率这一机制问题提供了直接可用的统计工具。研究通过数学框架和案例分析展示了如何将中间事件视为治疗诱导的混杂因素并加以校正，强调了在临床试验和观察性研究中估计通路治疗效应的重要性。",
+      "llm_tldr": "该论文针对生存结局中存在中间事件时的通路效应估计问题，提出利用多状态模型中的假设干预来模拟治疗机制，从而剥离不同作用路径。该方法可在不依赖顺序可忽略性等受限假设的情况下识别中介效应，为分析运动预适应是否通过代谢重编程提高皮瓣存活率这一机制问题提供了直接可用的统计工具。研究通过数学框架和案例分析展示了如何将中间事件视为治疗诱导的混杂因素并加以校正，强调了在临床试验和观察性研究中估计通路治疗效应的重要性。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "Does exercise preconditioning improve flap survival through metabolic reprogramming?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

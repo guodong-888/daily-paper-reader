@@ -1,0 +1,24 @@
+{
+  "label": "2026-08-25",
+  "date": "2026-08-25",
+  "generated_at": "2026-08-25T20:33:51",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202608/25/2608.22608v1-estimating-pathway-treatment-effects-in-the-presence-of-intermediate-events-with-multi-state-data",
+      "section": "deep",
+      "title_en": "Estimating Pathway Treatment Effects in the Presence of Intermediate Events with Multi-State Data",
+      "authors": "Yuhao Deng, Haoyu Wei, Donglin Zeng, Rui Song, Xiao-Hua Zhou",
+      "date": "2026-08-23",
+      "pdf": "https://arxiv.org/pdf/2608.22608v1",
+      "score": "8.0",
+      "evidence": "估计经由中间事件影响生存结局的通路治疗效应的方法，可用于运动引起的代谢变化对皮瓣存活的中介分析。",
+      "tldr": "临床试验中，中间事件常作为处理诱导混杂，使自然效应和可分效应假设失效，难以识别生存终点的多路径治疗效应。本文提出假设干预转移状态以模拟治疗机制，并基于高效影响函数构建乘性稳健、半参数有效的估计器。应用于LEADER试验发现，利拉鲁肽显著降低心血管和微血管事件，且全因死亡减少主要由扩展主要心血管不良事件介导。该框架可解析各转换、各事件及各路径的效应，为多状态数据提供可靠推断工具。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "During clinical trials evaluating a drug's effect on a survival endpoint, intermediate events often occur in addition to the primary event. The treatment can exert its effect on the primary endpoint along multiple pathways through intermediate events. Assumptions for identifying mediation effects, such as sequential ignorability in natural effects or the dismissible components condition in separable effects, fail because intermediate events act as treatment-induced confounding. To understand the effect along each pathway, we consider hypothetical interventions in transitions between event statuses to mimic the treatment mechanism. The hypothetical interventions adjust for effects through intermediate events and marginalize over unobserved treatment-induced confounding, if any. Based on the derived efficient influence functions for the counterfactual cumulative incidences under hypothetical interventions, we construct multiply robust and semiparametrically efficient estimators for pathway treatment effects. Our proposed framework enables the examination of treatment effects through each transition, on each event, and along each path. By analyzing data from the LEADER Trial, we find that liraglutide significantly reduces the risk of cardiovascular and microvascular events. The reduction in all-cause mortality is primarily mediated by its effects on expanded major adverse cardiovascular events.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
