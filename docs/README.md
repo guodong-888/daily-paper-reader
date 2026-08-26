@@ -6,26 +6,24 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-25
-- 运行时间：2026-08-25 20:33:44 UTC
+- 最新运行日期：2026-08-26
+- 运行时间：2026-08-26 22:07:42 UTC
 - 运行状态：成功
 - 本次总论文数：1
-- 精读区：1
-- 速读区：0
+- 精读区：0
+- 速读区：1
 
 ### 今日简报（AI）
-今日精读1篇高分论文，聚焦多状态数据下带中间事件的路径处理效应估计（8.0/10）。  
-核心看点：如何在存在中间事件时区分直接与间接处理效应，是多状态模型分析的关键。  
-建议普通读者先理解“中间事件”与“处理效应”的基本概念，再深入该文方法。
-- 详情：[/202608/25/README](/202608/25/README)
+今日聚焦1篇速读论文，暂无精读深度分析；最值得关注的是基于影像信息的反应-扩散模型，用于模拟梗死生长过程。该研究为临床预测梗死演变提供了建模思路，但评分中等，可作入门了解。下一步建议先浏览摘要与图表，再按需追踪后续相关文献。
+- 详情：[/202608/26/README](/202608/26/README)
 
 ### 精读区论文标签
-1. [Estimating Pathway Treatment Effects in the Presence of Intermediate Events with Multi-State Data](/202608/25/2608.22608v1-estimating-pathway-treatment-effects-in-the-presence-of-intermediate-events-with-multi-state-data)  
-   标签：评分：8.0/10、query:flap-ex-met
-   evidence：估计经由中间事件影响生存结局的通路治疗效应的方法，可用于运动引起的代谢变化对皮瓣存活的中介分析。
+- 本次无精读推荐。
 
 ### 速读区论文标签
-- 本次无速读推荐。
+1. [An Imaging-Informed Reaction-Diffusion Model of Infarct Growth](/202608/26/2608.20935v1-an-imaging-informed-reaction-diffusion-model-of-infarct-growth)  
+   标签：评分：6.0/10、query:flap-ex-met
+   evidence：影像驱动的反应-扩散模型刻画缺血组织损伤与代谢性细胞死亡，可迁移至皮瓣坏死研究
 
 
 <div class="dpr-home-promo-card">

@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-26 <!--dpr-date:20260826-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/26/2608.20935v1-an-imaging-informed-reaction-diffusion-model-of-infarct-growth" data-sidebar-item="{&quot;title&quot;: &quot;An Imaging-Informed Reaction-Diffusion Model of Infarct Growth&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.20935v1-an-imaging-informed-reaction-diffusion-model-of-infarct-growth&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;影像驱动的反应-扩散模型刻画缺血组织损伤与代谢性细胞死亡，可迁移至皮瓣坏死研究&quot;}">An Imaging-Informed Reaction-Diffusion Model of Infarct Growth</a>
   * 2026-08-25 <!--dpr-date:20260825-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/25/2608.22608v1-estimating-pathway-treatment-effects-in-the-presence-of-intermediate-events-with-multi-state-data" data-sidebar-item="{&quot;title&quot;: &quot;Estimating Pathway Treatment Effects in the Presence of Intermediate Events with Multi-State Data&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.22608v1-estimating-pathway-treatment-effects-in-the-presence-of-intermediate-events-with-multi-state-data&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;估计经由中间事件影响生存结局的通路治疗效应的方法，可用于运动引起的代谢变化对皮瓣存活的中介分析。&quot;}">Estimating Pathway Treatment Effects in the Presence of Intermediate Events with Multi-State Data</a>
