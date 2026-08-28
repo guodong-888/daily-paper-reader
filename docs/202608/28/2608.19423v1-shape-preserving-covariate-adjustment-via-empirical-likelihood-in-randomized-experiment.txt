@@ -1,0 +1,2644 @@
+Title: Shape-Preserving Covariate Adjustment via Empirical Likelihood in Randomized Experiment
+
+URL Source: https://arxiv.org/pdf/2608.19423v1
+
+Published Time: Fri, 21 Aug 2026 00:12:00 GMT
+
+Number of Pages: 26
+
+Markdown Content:
+# Shape-Preserving Covariate Adjustment via Empirical Likelihood in Randomized Experiments 
+
+## Zhilan Lou 1, Jun Shao 2, Yuhan Qian 3, Tuo Wang 4, Yanyao Yi 4, Yu Du 4, and Ting Ye 31School of Data Sciences, Zhejiang University of Finance and Economics, Hangzhou, Zhejiang 310018, China. 
+
+2Department of Statistics, University of Wisconsin, Madison, WI 53706, U.S.A. 
+
+3Department of Biostatistics, University of Washington, Seattle, WA 98195, U.S.A. 
+
+4Global Statistical Science, Eli Lilly and Company, Indianapolis, IN 46285, U.S.A. August 21, 2026 
+
+Abstract 
+
+Covariate adjustment improves estimation efficiency in randomized experiments, but standard calibration and aug-mentation methods, when applied to distribution or survival functions, do not preserve monotonicity—a fundamental property of the estimand. We propose using empirical likelihood with covariate-balancing constraints to construct a covariate-adjusted empirical measure for each treatment arm. Estimators of a broad class of distributional functionals, including cumulative distribution functions, survival functions, quantiles, and restricted mean survival times, are then derived as plug-in functionals of this measure, automatically inheriting proper shape constraints. We establish asymp-totic normality with an explicit, guaranteed efficiency gain over unadjusted estimators. The asymptotic distributions are invariant to the randomization scheme, providing a unified inference procedure under simple randomization and all commonly used covariate-adaptive designs satisfying a mild balancing condition. This unified construction, adjusting the empirical measure once and deriving all estimators from it, offers a principled reconciliation of covariate adjustment with shape preservation. Simulations and an application to the SURPASS-4 trial confirm the theoretical gains. 
+
+Keywords: Covariate-adaptive randomization, guaranteed efficiency gain, invariant asymptotic distribution, survival function estimation. 
+
+# 1 Introduction 
+
+In randomized experiments comparing 𝐽 ≥ 2 treatments, interest often lies in the population distribution function 
+
+𝐹 𝑗 (𝑦 ) = 𝑃 (𝑌 𝑗 ≤ 𝑦 ) of an outcome or a lifetime 𝑌 𝑗 , or functionals thereof such as quantiles, interquartile ranges, rank-sum means, and restricted mean survival time. Baseline covariates, collected prior to treatment assignment, can improve estimation efficiency without relying on models—an approach increasingly advocated by regulatory agencies (ICH E9, 1998; EMA, 2015; FDA, 2021). Existing model-free covariate adjustment methods, based on calibration or augmentation, treat 𝐹 𝑗 (𝑦 ) as a pointwise mean for each 𝑦 and adjust accordingly (Rao et al., 1990; Zhang et al., 2008; Zhang, 2015; Wang et al., 2019; Liu and Yang, 2020; Cohen and Fogarty, 2023; Wang et al., 2023; Ye et al., 2023, 2024; Bannick et al., 2025). This pointwise approach does not respect the global constraint that 𝐹 𝑗 must be a distribution function: the resulting estimators can violate monotonicity or be outside the unit interval, creating difficulties for interpretation and for downstream inference on quantiles and other distribution functionals. We propose a different approach: incorporating covariate adjustment directly as constraints in an empirical likelihood framework (Owen, 1988; Qin and Lawless, 1994), a well-established tool for nonparametric inference that naturally accommodates auxiliary information. Our contributions are fourfold. 1arXiv:2608.19423v1 [stat.ME] 19 Aug 2026 1. We propose adjusting the empirical likelihood weights once, at the level of the empirical measure, rather than separately for each estimand. Specifically, under each treatment arm 𝑗 , we compute probability weights by maximizing the empirical likelihood subject to the constraint that the weighted covariate mean matches the population mean. These adjusted weights are then plugged into a broad class of distributional functionals, including the weighted empirical distribution function, the weighted Kaplan-Meier estimator, quantile estimators, and treatment effect measures, all of which automatically inherit proper shape constraints. As a result, the maximum empirical likelihood estimator (MELE) of 𝐹 𝑗 is always a valid distribution function, its survival function counterpart 𝑆 𝑗 = 1 − 𝐹 𝑗 is always a valid survival function, and the MELE of a quantile is always a proper quantile. This resolves the monotonicity violations that plague augmentation-based approaches (Rao et al., 1990; Zhang, 2015); we demonstrate empirically that augmented estimators violate monotonicity in up to 100% of simulation runs depending on the setting. 2. We establish that the asymptotic distributions of all proposed estimators are invariant to the randomization scheme: the same limiting distributions hold under simple randomization and under all covariate-adaptive designs satisfying a mild balancing condition (D), including Pocock-Simon minimization, whose asymptotic properties remain incompletely understood. To handle the dependence structure induced by covariate-adaptive treatment assignment, we develop a dedicated asymptotic theory; both this theory and the resulting invariance property are, to our knowledge, new in the empirical likelihood literature. 3. We prove a guaranteed efficiency gain: the asymptotic variance of the MELE is never larger than that of the unadjusted estimator, with an explicit expression for the gain in terms of covariate-outcome associations. The entropy balancing weights of Zhao and Percival (2017) solve a dual problem that is asymptotically equivalent to ours for mean estimation, but have not been extended to function-valued estimands or to covariate-adaptive randomization. Wang et al. (2023) establishes that the Kaplan-Meier estimator under stratified permuted block randomization is more efficient than under simple randomization, but does not incorporate covariate adjustment for further efficiency gain at the estimation stage. 4. We establish a formal equivalence: the MELE, the augmented estimator based on outcome regression, and the entropy balancing estimator all share the same influence function for any square-integrable functional of 𝐹 𝑗 ,extending the scalar-estimand result of Zhao and Percival (2017) to function-valued estimands under covariate-adaptive randomization. This equivalence clarifies that the three approaches differ not in asymptotic efficiency but in shape preservation: only the empirical likelihood and entropy balancing approaches guarantee valid distribution and survival function estimates. The empirical likelihood construction thus provides a unified framework that reconciles shape preservation, estimation-stage covariate adjustment, and design-invariant inference. Section 2 describes covariate-adaptive randomization and the choice of adjustment covariates. Section 3 introduces the empirical likelihood weighting construction and derives covariate-adjusted estimators for distribution functions, survival functions, and other functionals. Section 4 develops the asymptotic theory, and Section 5 addresses variance estimation. Sections 6 and 7 present simulation studies and a real data application, respectively. All technical proofs are provided in the Supplementary Material. 
+
+# 2 Covariate-Adaptive Randomization and Covariate Adjustment 
+
+Consider a randomized experiment comparing 𝐽 ≥ 2 treatments. Let (𝑌 1, . . . , 𝑌 𝐽 , 𝑋 ) denote the potential outcomes (Neyman, 1923; Rubin, 1974) and baseline covariate vector for a generic unit, and let (𝑌 𝑖 1, . . . , 𝑌 𝑖𝐽 , 𝑋 𝑖 ), 𝑖 = 1, . . . , 𝑛 ,be an independent and identically distributed sample from (𝑌 1, . . . , 𝑌 𝐽 , 𝑋 ), where 𝑌 𝑖 𝑗 is the potential outcome of unit 
+
+𝑖 under treatment 𝑗 and 𝑋 𝑖 is its baseline covariate vector. Each unit receives exactly one treatment, indicated by 
+
+𝐴 𝑖 ∈ { 1, . . . , 𝐽 }, and under the consistency assumption the observed outcome is 𝑌 𝑖 = 𝑌 𝑖 𝐴 𝑖 . Since the distribution of 
+
+𝑋 is unaffected by treatment assignment, covariate observations from all treatment groups, not just group 𝑗 , can be leveraged to improve efficiency in estimating the outcome distribution 𝐹 𝑗 (𝑦 ) = 𝑃 (𝑌 𝑗 ≤ 𝑦 ).2Let 𝜋 𝑗 denote the pre-specified target assignment proportion for treatment 𝑗 , 𝑗 = 1, . . . , 𝐽 , with 𝜋 1 + · · · + 𝜋 𝐽 = 1.Under simple randomization, 𝐴 1, . . . , 𝐴 𝑛 are generated independently with 𝑃 ( 𝐴 𝑖 = 𝑗 ) = 𝜋 𝑗 , independent of the potential outcomes and 𝑋 . While simple randomization ensures asymptotic validity of many statistical procedures, it does not exploit covariate information and may yield realized treatment proportions that deviate substantially from the targets 𝜋 𝑗 within levels of important prognostic factors. To address this, covariate-adaptive randomization has become standard practice, as discussed in Section 1; it adjusts for covariates at the treatment assignment stage rather than the estimation stage. The two most widely used schemes are stratified permuted block randomization (Zelen, 1974) and Pocock-Simon minimization (Taves, 1974; Pocock and Simon, 1975); reviews of these and other schemes are provided in Schulz and Grimes (2002) and Shao (2021). All commonly used covariate-adaptive randomization procedures incorporate a discrete baseline covariate 𝑍 with finitely many levels as strata, and satisfy the following mild condition (Baldi Antognini and Zagoraiou, 2015). (D) Conditioned on 𝑍 1, . . . , 𝑍 𝑛 , potential outcomes and covariates are independent of 𝐴 1, . . . , 𝐴 𝑛 ; the conditional probability 𝑃 ( 𝐴 𝑖 = 𝑗 | 𝑍 1, . . . , 𝑍 𝑛 ) = 𝜋 𝑗 for all 𝑖 ; and for every level 𝑧 of 𝑍 , the sequence 𝑛 1/2 
+
+> 𝑧
+
+{𝑛 𝑧 𝑗 /𝑛 𝑧 − 𝜋 𝑗 } is bounded in probability as 𝑛 → ∞ , where 𝑛 𝑧 is the number of units with 𝑍 𝑖 = 𝑧 and 𝑛 𝑧 𝑗 is the number of units with 𝑍 𝑖 = 𝑧 and 𝐴 𝑖 = 𝑗 .Simple randomization is a special case of condition (D), with 𝑍 taken to be a constant. Because covariate-adaptive randomization incorporates 𝑍 into the generation of 𝐴 1, . . . , 𝐴 𝑛 , it yields more efficient estimators than simple randomization. Further efficiency gains are possible at the estimation stage through adjustment for additional baseline covariates in 𝑋 ; for example, when components of 𝑍 are discretized versions of continuous covariates, the original continuous covariates can be incorporated at the estimation stage to more fully exploit the available covariate information. Let 𝑊 be a function of 𝑋 chosen for adjustment at the estimation stage. We require that 𝑊 have low dimension even if 𝑋 is high-dimensional, and that its covariance matrix Σ = Var (𝑊 ) be finite and nonsingular to avoid collinearity. Under covariate-adaptive randomization, 𝐴 1, . . . , 𝐴 𝑛 are dependent on each other and on potential outcomes and covariates through 𝑍 1, . . . , 𝑍 𝑛 . To handle this dependence in deriving the asymptotic properties of our estimators, we recommend including 𝑍 in 𝑊 ; this is also a natural choice since 𝑍 is the covariate used at the randomization stage. We say that 𝑍 is included in 𝑊 if 𝑊 contains the indicator variables of all levels of 𝑍 .If a working linear model 𝐸 (𝑌 𝑗 | 𝑈 ) = 𝛽 ⊤ 
+
+> 𝑗
+
+𝑈 is available, where 𝑈 is a function of 𝑋 and 𝛽 𝑗 is a parameter vector, then a natural choice is 𝑊 = (𝑈 ⊤, 𝑍 ⊤)⊤, combining 𝑈 with the randomization covariate 𝑍 . The working model need not be correctly specified. For outcomes where a generalized linear model is more appropriate, one may instead use the working model 𝐸 (𝑌 𝑗 | 𝑈 ) = 𝑔 −1 (𝛽 ⊤ 
+
+> 𝑗
+
+𝑈 ), where 𝑔 is a known link function. Common examples include the logistic model, 𝑔 −1 (𝑡 ) = 𝑒 𝑡 /( 1 + 𝑒 𝑡 ), for binary outcomes, and the Poisson model, 𝑔 −1 (𝑡 ) = 𝑒 𝑡 , for non-negative integer-valued outcomes. In this case, we recommend 𝑊 = (ℎ(𝑈 )⊤, 𝑍 ⊤)⊤, where ℎ(𝑈 ) is the 𝐽 -dimensional vector whose 𝑗 th component is 𝑔 −1 ( b𝛽 ⊤ 
+
+> 𝑗
+
+𝑈 ) and b𝛽 𝑗 is estimated from the generalized linear model fit within treatment group 𝑗 .Including 𝑍 in 𝑊 is important for handling the dependence induced by covariate-adaptive randomization, even when 𝑍 
+
+is already included in 𝑈 . This choice of 𝑊 is motivated by the joint calibration approach of Bannick et al. (2025) and by the potential for substantial efficiency gains when the working model is approximately correct. 
+
+# 3 Covariate Adjustment via Empirical Likelihood 
+
+## 3.1 The empirical likelihood weighting device 
+
+The core of our approach is a single set of probability weights for each treatment arm, computed by maximizing an empirical likelihood subject to covariate balance constraints. These weights are the primary object; all subsequent estimators are derived as plug-in functionals of the resulting weighted empirical measure. 3For each fixed 𝜇 𝑊 , we define the profile empirical likelihood 
+
+ℓ(𝜇 𝑊 ) = max   
+
+> {𝑝 𝑖 𝑗 }
+> 𝐽
+
+∑︁ 
+
+> 𝑗 =1
+
+∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+log ( 𝑝 𝑖 𝑗 ), subject to 𝑝 𝑖 𝑗 ≥ 0,∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+𝑝 𝑖 𝑗 = 1,∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+𝑝 𝑖 𝑗 𝑊 𝑖 = 𝜇 𝑊 , (1) where 𝑝 𝑖 𝑗 is the probability mass at (𝑌 𝑖 , 𝑊 𝑖 ) conditional on 𝐴 𝑖 = 𝑗 , 𝑌 𝑖 is the observed outcome and 𝑊 𝑖 is the covariate vector for adjustment of unit 𝑖 , and 𝜇 𝑊 = 𝐸 (𝑊 ). The last constraint encodes covariate balance: since the distribution of 𝑊 is unaffected by treatment assignment, requiring the weighted covariate mean to equal the population mean 𝜇 𝑊 
+
+across all arms simultaneously incorporates covariate information into the weights. We estimate 𝜇 𝑊 by the maximizer 
+
+b𝜇 𝑊 = arg max 𝜇 𝑊 ℓ(𝜇 𝑊 ) and define b𝑝 𝑖 𝑗 as the maximizer evaluated at b𝜇 𝑊 .By the method of Lagrange multipliers, the maximizers satisfy, for 𝑗 = 1, ..., 𝐽 and 𝑖 = 1, ..., 𝑛 ,
+
+b𝑝 𝑖 𝑗 = 𝐼 ( 𝐴 𝑖 = 𝑗 )
+
+𝑛 𝑗 + b𝜆 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − b𝜇 𝑊 ) ,
+
+> 𝐽
+
+∑︁ 
+
+> 𝑗 =1
+
+b𝜆 𝑗 = 0,
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝐼 ( 𝐴 𝑖 = 𝑗 )( 𝑊 𝑖 − b𝜇 𝑊 )
+
+𝑛 𝑗 + b𝜆 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − b𝜇 𝑊 ) = 0, (2) where 𝐼 (𝐵 ) is the indicator of event 𝐵 , 𝑛 𝑗 is the number of units in treatment group 𝑗 , and the b𝜆 𝑗 ’s are Lagrange multipliers. The empirical likelihood weights (2) exist and are unique with probability tending to 1 as 𝑛 → ∞ . This follows from the standard empirical likelihood existence result (Owen, 1988; Qin and Lawless, 1994): the solution is well-defined whenever 𝜇 𝑊 lies in the interior of the convex hull of {𝑊 𝑖 : 𝐴 𝑖 = 𝑗 }, and under condition (D) with Var (𝑊 ) nonsingular, this event occurs with probability tending to 1 by the law of large numbers. In finite samples, particularly with small treatment arms or moderately high-dimensional 𝑊 , the convex hull condition may fail; standard remedies are available in such cases (Chen et al., 2008). 
+
+## 3.2 Distribution function estimation: uncensored outcomes 
+
+Without covariate adjustment, the standard estimator of 𝐹 𝑗 (𝑦 ) = 𝑃 (𝑌 𝑗 ≤ 𝑦 ) is the empirical distribution function 
+
+e𝐹 𝑗 (𝑦 ) = 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+𝐼 (𝑌 𝑖 ≤ 𝑦 ), −∞ < 𝑦 < ∞, 𝑗 = 1, . . . , 𝐽. (3) Replacing the uniform weights 1/𝑛 𝑗 with the empirical likelihood weights b𝑝 𝑖 𝑗 from (2) yields the covariate-adjusted MELE of 𝐹 𝑗 (𝑦 ):
+
+b𝐹 𝑗 (𝑦 ) =∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+b𝑝 𝑖 𝑗 𝐼 (𝑌 𝑖 ≤ 𝑦 ), −∞ < 𝑦 < ∞, 𝑗 = 1, . . . , 𝐽. (4) Since b𝑝 𝑖 𝑗 ≥ 0 and Í𝑖 :𝐴 𝑖 = 𝑗 b𝑝 𝑖 𝑗 = 1 by the empirical likelihood constraints, b𝐹 𝑗 is guaranteed to be a valid distribution function: nondecreasing with b𝐹 𝑗 (−∞) = 0 and b𝐹 𝑗 (∞) = 1.Rao et al. (1990) proposed the augmented (calibration) estimator 
+
+b𝐹 A 
+
+> 𝑗
+
+(𝑦 ) = e𝐹 𝑗 (𝑦 ) + 1
+
+𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝐼 ( b𝛽 ⊤ 
+
+> 𝑗
+
+𝑊 𝑖 ≤ 𝑦 ) − 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+𝐼 ( b𝛽 ⊤ 
+
+> 𝑗
+
+𝑊 𝑖 ≤ 𝑦 ), (5) where b𝛽 𝑗 = bΣ−1
+
+> 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 (𝑊 𝑖 − ¯𝑊 𝑗 )𝑌 𝑖 /𝑛 𝑗 , and ¯𝑊 𝑗 and bΣ𝑗 are the sample mean and covariance matrix of {𝑊 𝑖 : 𝐴 𝑖 = 𝑗 },respectively. b𝐹 A 
+
+> 𝑗
+
+(𝑦 ) is not guaranteed to be monotone in 𝑦 : the last two terms of (5) jointly drop by 𝑛 −1 
+
+> 𝑗
+
+− 𝑛 −1 at each 
+
+𝑦 = b𝛽 ⊤ 
+
+> 𝑗
+
+𝑊 𝑖 with 𝐴 𝑖 = 𝑗 , so with a continuous covariate b𝐹 A 
+
+> 𝑗
+
+is non-monotone in every sample. In our simulations reported in the Supplementary Material, b𝐹 A 
+
+> 𝑗
+
+(𝑦 ) is non-monotone in 100% of 2,000 runs. Estimators of functionals of 𝐹 𝑗 are obtained by applying the same functional to b𝐹 𝑗 in (4). For example, the MELE of the population mean 𝐸 (𝑌 𝑗 ) = ∫ 𝑦 𝑑𝐹 𝑗 (𝑦 ) is b𝜇 𝑗 = ∫ 𝑦 𝑑 b𝐹 𝑗 (𝑦 ) = Í𝑖 :𝐴 𝑖 = 𝑗 b𝑝 𝑖 𝑗 𝑌 𝑖 , and the MELE of the quantile 𝐹 −1 
+
+> 𝑗
+
+( 𝑝 )
+
+at a fixed 𝑝 ∈ ( 0, 1) is b𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ), where 𝐺 −1 ( 𝑝 ) = inf {𝑦 : 𝐺 (𝑦 ) ≥ 𝑝 } for any nondecreasing 𝐺 (𝑦 ) ∈ [ 0, 1]. The 4corresponding unadjusted estimators are the same functionals of e𝐹 𝑗 : the sample mean ∫ 𝑦 𝑑 e𝐹 𝑗 (𝑦 ) and sample quantile 
+
+e𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ). Since b𝐹 𝑗 is a valid distribution function by construction, b𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ) is always a proper quantile. More generally, any Hadamard-differentiable functional of b𝐹 𝑗 or e𝐹 𝑗 inherits their asymptotic properties via the functional delta method. To compare two treatments 𝑗 ≠ 𝑘 , the MELE of the population mean difference 𝐸 (𝑌 𝑗 ) − 𝐸 (𝑌 𝑘 ) is b𝜇 𝑗 − b𝜇 𝑘 , and the MELE of the population quantile difference 𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ) − 𝐹 −1 
+
+> 𝑘
+
+( 𝑝 ) is b𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ) − b𝐹 −1 
+
+> 𝑘
+
+( 𝑝 ). For continuous 𝐹 𝑗 and 𝐹 𝑘 ,another treatment effect measure is 𝜃 𝑗 𝑘 = ∫ ∫ 𝐼 (𝑦 𝑗 ≤ 𝑦 𝑘 )𝑑𝐹 𝑗 (𝑦 𝑗 )𝑑𝐹 𝑘 (𝑦 𝑘 ), which is the population quantity targeted by the Wilcoxon–Mann–Whitney test. Its MELE is b𝜃 𝑗 𝑘 = ∫ ∫ 𝐼 (𝑦 𝑗 ≤ 𝑦 𝑘 )𝑑 b𝐹 𝑗 (𝑦 𝑗 )𝑑 b𝐹 𝑘 (𝑦 𝑘 ) = Í𝑖 :𝐴 𝑖 = 𝑗 
+
+Í𝑖 ′:𝐴 𝑖 ′ =𝑘 b𝑝 𝑖 𝑗 b𝑝 𝑖 ′ 𝑘 𝐼 (𝑌 𝑖 𝑗 ≤
+
+𝑌 𝑖 ′ 𝑘 ) and the corresponding unadjusted estimator is the Wilcoxon two sample statistic e𝜃 𝑗 𝑘 = 𝑛 −1 
+
+> 𝑗
+
+𝑛 −1
+
+> 𝑘
+
+Í𝑖 :𝐴 𝑖 = 𝑗 
+
+Í𝑖 ′:𝐴 𝑖 ′ =𝑘 𝐼 (𝑌 𝑖 𝑗 ≤
+
+𝑌 𝑖 ′ 𝑘 ).
+
+## 3.3 Survival function estimation: censored outcomes 
+
+We now consider the setting where the outcome 𝑌 𝑗 ≥ 0 is a failure time subject to right-censoring by 𝐶 𝑗 > 0 under treatment 𝑗 = 1, . . . , 𝐽 . We assume that 𝑌 𝑗 and 𝐶 𝑗 are independent given 𝐴 = 𝑗 , the standard assumption underlying the Kaplan-Meier estimator. For unit 𝑖 assigned to arm 𝐴 𝑖 = 𝑗 , let 𝑌 𝑖 = 𝑌 𝑖 𝑗 and 𝐶 𝑖 = 𝐶 𝑖 𝑗 denote the failure and censoring times under the assigned treatment; we observe min (𝑌 𝑖 , 𝐶 𝑖 ) and the event indicator 𝐼 (𝑌 𝑖 ≤ 𝐶 𝑖 ). The quantity of interest is the survival function 𝑆 𝑗 (𝑡 ) = 𝑃 (𝑌 𝑗 ≥ 𝑡 ) for 𝑡 ≥ 0.For unit 𝑖 , define the counting and at-risk processes 𝑁 𝑖 𝑗 (𝑡 ) = 𝐼 ( 𝐴 𝑖 = 𝑗, 𝑌 𝑖 ≤ 𝐶 𝑖 , 𝑌 𝑖 ≤ 𝑡 ) and 𝑌 𝑖 𝑗 (𝑡 ) = 𝐼 ( 𝐴 𝑖 = 𝑗, 𝑌 𝑖 ≥
+
+𝑡, 𝐶 𝑖 ≥ 𝑡 ), with population-level analogues 𝑁 𝑗 (𝑡 ) = 𝐼 ( 𝐴 = 𝑗, 𝑌 𝑗 ≤ 𝐶 𝑗 , 𝑌 𝑗 ≤ 𝑡 ) and 𝑌 𝑗 (𝑡 ) = 𝐼 ( 𝐴 = 𝑗, 𝑌 𝑗 ≥ 𝑡, 𝐶 𝑗 ≥ 𝑡 ).Without covariate adjustment, the Kaplan-Meier estimator (Kaplan and Meier, 1958) of 𝑆 𝑗 (𝑡 ) is 
+
+e𝑆 𝑗 (𝑡 ) =
+
+Ö
+
+> 𝑠 ≤𝑡
+
+n
+
+1 −
+
+Í𝑖 :𝐴 𝑖 = 𝑗 𝑑𝑁 𝑖 𝑗 (𝑠 )
+
+Í𝑖 :𝐴 𝑖 = 𝑗 𝑌 𝑖 𝑗 (𝑠 )
+
+o
+
+. (6) In the absence of censoring ( 𝐶 𝑗 ≡ ∞ ), e𝑆 𝑗 = 1 − e𝐹 𝑗 , where e𝐹 𝑗 is defined in (3). Using the same empirical likelihood weights b𝑝 𝑖 𝑗 from (2), our proposed MELE of 𝑆 𝑗 (𝑡 ) is the weighted Kaplan-Meier estimator 
+
+b𝑆 𝑗 (𝑡 ) =
+
+Ö
+
+> 𝑠 ≤𝑡
+
+n
+
+1 −
+
+Í𝑖 :𝐴 𝑖 = 𝑗 b𝑝 𝑖 𝑗 𝑑𝑁 𝑖 𝑗 (𝑠 )
+
+Í𝑖 :𝐴 𝑖 = 𝑗 b𝑝 𝑖 𝑗 𝑌 𝑖 𝑗 (𝑠 )
+
+o
+
+, (7) where 𝑑 bΛ𝑗 (𝑡 ) =            
+
+> Í𝑖 :𝐴 𝑖 =𝑗 b𝑝 𝑖 𝑗 𝑑 𝑁 𝑖 𝑗 (𝑡 )
+> Í𝑖 :𝐴 𝑖 =𝑗 b𝑝 𝑖 𝑗 𝑌 𝑖 𝑗 (𝑡 )
+
+and bΛ𝑗 (𝑡 ) = ∫ 𝑡  
+
+> 0
+
+𝑑 bΛ𝑗 (𝑠 ) is the corresponding weighted Nelson-Aalen estimator of the cumulative hazard. It is clear that b𝑆 𝑗 (𝑡 ) is nonincreasing with b𝑆 𝑗 (0) = 1. It reduces to the standard Kaplan-Meier estimator when b𝜆 𝑗 = 0 (no covariate adjustment), and to 1 − b𝐹 𝑗 in the absence of censoring. Under simple randomization, Zhang (2015) estimated the cumulative hazard increment 𝑑 Λ𝑗 (𝑡 ) by 𝑑 bΛAGEE  
+
+> 𝑗
+
+(𝑡 )
+
+obtained from the augmented generalized estimating equation (AGEE) 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+h
+
+{𝑑𝑁 𝑖 𝑗 (𝑡 ) − 𝑌 𝑖 𝑗 (𝑡 ) 𝑑 Λ𝑗 (𝑡 )} − { 𝐼 ( 𝐴 𝑖 = 𝑗 ) − 𝜋 𝑗 }( 𝑊 𝑖 − 𝜇 𝑊 )⊤ b𝛽 𝑗 (𝑡 ) 𝑑𝑡 
+
+i
+
+= 0, (8) where b𝛽 𝑗 (𝑡 ) 𝑑𝑡 = 𝑛 −1 
+
+> 𝑗
+
+bΣ−1
+
+> 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 (𝑊 𝑖 − ¯𝑊 𝑗 )
+
+n
+
+𝑑𝑁 𝑖 𝑗 (𝑡 ) − 𝑌 𝑖 𝑗 (𝑡 ) 𝑑 eΛ𝑗 (𝑡 )
+
+o
+
+, ¯𝑊 𝑗 and bΣ𝑗 are given in (5), and eΛ𝑗 (𝑡 ) is the unadjusted Nelson–Aalen estimator. The AGEE survival estimator is then the product integral Î𝑠 ≤𝑡 {1 − 𝑑 bΛAGEE  
+
+> 𝑗
+
+(𝑠 )} .However, the AGEE curve is not necessarily a monotone function, like the estimator b𝐹 A 
+
+> 𝑗
+
+in (5). In the simulation results in Section 6, the AGEE curve is not monotone in about 3% of 2,000 runs. One example under simple randomization is given in Figure 1, where the AGEE curve increases at about 10 time points. Although monotonicity could in practice be restored by post-processing the AGEE estimator via isotonic regression or the rearrangement operator of Chernozhukov et al. (2010), such modifications alter the pointwise asymptotic distribution and require a separate, more delicate inferential theory. By contrast, the empirical likelihood approach produces a proper empirical measure from the outset, so all downstream functionals inherit both shape constraints and a unified asymptotic theory. 50 1 2 3 4 50.0  0.2  0.4  0.6  0.8  1.0 Time Survival Probability Proposed MELE Kaplan−Meier Zhang (2015) True Figure 1: Three estimated survival curves under simple randomization. For a time-to-event outcome with censoring, the treatment effect comparing treatments 𝑗 and 𝑘 is sometimes assessed by the difference 
+
+Δ𝑗 𝑘 =
+
+∫ 𝜏 
+
+> 0
+
+{𝑆 𝑗 (𝑡 ) − 𝑆 𝑘 (𝑡 )} 𝑑𝑡, 
+
+where ∫ 𝜏  
+
+> 0
+
+𝑆 𝑙 (𝑡 )𝑑𝑡 is the restricted mean survival time for treatment 𝑙 (Claggett et al., 2022; Sun et al., 2025) and 𝜏 is a fixed point such that 𝑃 {min (𝑌 𝑙 , 𝐶 𝑙 ) ≥ 𝜏 | 𝐴 = 𝑙 } > 0, 𝑙 = 𝑗, 𝑘 . The covariate adjusted MELE bΔ𝑗 𝑘 and the unadjusted estimator eΔ𝑗 𝑘 are obtained by substituting 𝑆 𝑙 (𝑡 ) in Δ𝑗 𝑘 by b𝑆 𝑙 (𝑡 ) and e𝑆 𝑙 (𝑡 ), respectively, 𝑙 = 𝑗, 𝑘 .
+
+# 4 Asymptotic Theory 
+
+## 4.1 Distribution estimators 
+
+We derive the asymptotic distributions for the covariate adjusted MELE b𝐹 𝑗 in (4) and b𝑆 𝑗 in (7), under the same condition for unadjusted estimators plus the minor condition (D) satisfied by all commonly used covariate-adaptive randomization schemes. 
+
+Lemma 1. Assume (D). For b𝜇 𝑊 and b𝜆 𝑗 , 𝑗 = 1, ..., 𝐽 , defined in (2), if 𝐸 ∥𝑊 ∥3 < ∞,
+
+b𝜇 𝑊 = ¯𝑊 + 𝑛 −1/2𝑜 𝑝 (1) and 𝑛 −1b𝜆 𝑗 = 𝑛 −1
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝐼 ( 𝐴 𝑖 = 𝑗 ) − 𝜋 𝑗 Σ−1 (𝑊 𝑖 − 𝜇 𝑊 ) + 𝑛 −1/2𝑜 𝑝 (1),
+
+where 𝑜 𝑝 (1) denotes a quantity converging to 0 in probability as 𝑛 → ∞ , and ¯𝑊 is the sample mean of all 𝑊 𝑖 ’s. 
+
+Lemma 1 provides linearizations of b𝜇 𝑊 and b𝜆 𝑗 that underlie all subsequent results. Although the derivation builds on established empirical likelihood techniques, two aspects are non-standard. First, the constraints are tied to a common covariate mean that is estimated through a profile empirical likelihood and shared across treatment arms, so the convergence rates of the multipliers and of the fitted mean are obtained jointly rather than separately. Second, the analysis is conducted under covariate-adaptive randomization satisfying condition (D), under which treatment assignments are dependent. 6Theorem 1. Assume (D) with 𝑍 included in 𝑊 for adjustment in estimation and 𝐸 ∥𝑊 ∥3 < ∞.(i) Result for b𝐹 𝑗 in (4) without censoring. For any real 𝑦 and any 𝑗 , as 𝑛 → ∞ ,
+
+√𝑛 { b𝐹 𝑗 (𝑦 ) − 𝐹 𝑗 (𝑦 )} = 1
+
+√𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝜙 𝑖 𝑗 (𝑦 ) + 𝑜 𝑝 (1) 𝑑 
+
+→ 𝑁  0, 𝑉 𝐹 𝑗 (𝑦 )
+
+regardless of which randomization scheme is used, where 
+
+𝜙 𝑖 𝑗 (𝑦 ) = [𝐼 ( 𝐴 𝑖 = 𝑗 ){ 𝐼 (𝑌 𝑖 𝑗 ≤ 𝑦 ) − 𝐹 𝑗 (𝑦 )} − { 𝐼 ( 𝐴 𝑖 = 𝑗 ) − 𝜋 𝑗 }C𝑗 (𝑦 )⊤Σ−1 (𝑊 𝑖 − 𝜇 𝑊 )] 𝜋 𝑗 ,
+
+Σ = Var (𝑊 ), C𝑗 (𝑦 ) is the vector Cov {𝑊, 𝐼 (𝑌 𝑗 ≤ 𝑦 )} , 𝑑 
+
+→ is convergence in distribution, and 
+
+𝑉 𝐹 𝑗 (𝑦 ) = [𝐹 𝑗 (𝑦 ){ 1 − 𝐹 𝑗 (𝑦 )} − ( 1 − 𝜋 𝑗 )C𝑗 (𝑦 )⊤Σ−1C𝑗 (𝑦 )] 𝜋 𝑗 .
+
+(ii) Result for b𝑆 𝑗 in (7) with censoring. Under condition (C) 𝐶 𝐴 and 𝑌 𝐴 are independent conditioned on 𝐴 and, for each 𝑗 , 𝑆 𝑗 (𝑡 ) is continuous in 𝑡 and there is a 𝜏 𝑗 > 0 such that 𝑃 {min (𝑌 𝑗 , 𝐶 𝑗 ) ≥ 𝜏 𝑗 | 𝐴 = 𝑗 } > 0,for any 𝑡 ∈ [ 0, 𝜏 𝑗 ] and 𝑗 , as 𝑛 → ∞ ,
+
+√𝑛 {b𝑆 𝑗 (𝑡 ) − 𝑆 𝑗 (𝑡 )} = 1
+
+√𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝜑 𝑖 𝑗 (𝑡 ) + 𝑜 𝑝 (1) 𝑑 
+
+→ 𝑁  0, 𝑉 𝑆 𝑗 (𝑡 ),
+
+regardless of which randomization scheme is used, where 
+
+𝜑 𝑖 𝑗 (𝑡 ) = −𝑆 𝑗 (𝑡 )
+
+∫ 𝑡 
+
+> 0
+
+𝑑𝑀 𝑖 𝑗 (𝑠 )
+
+𝐸 {𝑌 𝑗 (𝑠 )} + { 𝐼 ( 𝐴 𝑖 = 𝑗 ) − 𝜋 𝑗 }Γ𝑗 (𝑡 )⊤Σ−1 (𝑊 𝑖 − 𝜇 𝑊 )𝜋 𝑗 ,𝑑𝑀 𝑖 𝑗 (𝑡 ) = 𝑑𝑁 𝑖 𝑗 (𝑡 ) − 𝑌 𝑖 𝑗 (𝑡 )𝑑 Λ𝑗 (𝑡 ), Γ𝑗 (𝑡 ) = Cov  𝑊, 𝑆 𝑗 (𝑡 ) ∫ 𝑡  
+
+> 0
+
+𝑑𝑀 𝑗 (𝑠 )/ 𝐸 {𝑌 𝑗 (𝑠 )} , 𝑑𝑀 𝑗 (𝑡 ) = 𝑑𝑁 𝑗 (𝑡 ) − 𝑌 𝑗 (𝑡 )𝑑 Λ𝑗 (𝑡 ), and 
+
+𝑉 𝑆 𝑗 (𝑡 ) = Var 
+
+
+
+𝑆 𝑗 (𝑡 )
+
+∫ 𝑡 
+
+> 0
+
+𝑑𝑀 𝑗 (𝑠 )
+
+𝐸 {𝑌 𝑗 (𝑠 )} 
+
+
+
+− ( 1 − 𝜋 𝑗 )Γ𝑗 (𝑡 )⊤Σ−1Γ𝑗 (𝑡 )𝜋 𝑗 .
+
+The proof (in the Supplementary Material) applies a special technique to handle the dependence in sequence 
+
+𝑌 𝑖 𝐴 𝑖 , 𝐴 𝑖 , 𝑊 𝑖 , 𝑖 = 1, ..., 𝑛 , due to covariate-adaptive randomization. Note that condition (C) is also required for the unadjusted Kaplan-Meier estimator (Kalbfleisch and Prentice, 2011). The following are elaborations of the results in Theorem 1. 1. Theorem 1 shows not only the asymptotic validity of covariate adjusted b𝐹 𝑗 and b𝑆 𝑗 but also the invariance of their asymptotic distributions, i.e., the same formula holds for simple randomization or any covariate-adaptive randomization satisfying (D) including Pocock-Simon’s minimization whose asymptotic property is still not well understood. The invariant asymptotic distribution provides a unified formula for variance estimation and inference under all commonly used randomization, desirable for practitioners. 2. Under simple randomization, √𝑛 { e𝐹 𝑗 (𝑦 ) − 𝐹 𝑗 (𝑦 )} 𝑑 
+
+→ 𝑁  0, 𝐹 𝑗 (𝑦 ){ 1 − 𝐹 𝑗 (𝑦 )}/ 𝜋 𝑗 
+
+. Thus, Theorem 1(i) shows that the MELE b𝐹 𝑗 (𝑦 ) has a guaranteed efficiency gain over the unadjusted e𝐹 𝑗 (𝑦 ) and the explicit gain is 𝜋 −1 
+
+> 𝑗
+
+(1 −
+
+𝜋 𝑗 )C𝑗 (𝑦 )⊤Σ−1C𝑗 (𝑦 ). Similarly, under simple randomization, √𝑛 {e𝑆 𝑗 (𝑡 )− 𝑆 𝑗 (𝑡 )} 𝑑 
+
+→ 𝑁  0, Var {𝑆 𝑗 (𝑡 )∫ 𝑡  
+
+> 0
+
+𝑑𝑀 𝑗 (𝑠 )/ 𝐸 {𝑌 𝑗 (𝑠 )}} 
+
+(Kalbfleisch and Prentice, 2011) and Theorem 1(ii) shows that the MELE b𝑆 𝑗 (𝑡 ) has a guaranteed efficiency gain over the unadjusted Kaplan-Meier estimator e𝑆 𝑗 (𝑡 ) with explicit efficiency gain 𝜋 −1 
+
+> 𝑗
+
+(1 − 𝜋 𝑗 )Γ𝑗 (𝑡 )⊤Σ−1Γ𝑗 (𝑡 ).3. Consider the special case where 𝑊 = 𝑍 . For covariate-adaptive randomization satisfying 𝑛 −1/2 
+
+> 𝑧
+
+(𝑛 𝑧 𝑗 − 𝜋 𝑗 𝑛 𝑧 ) =
+
+𝑜 𝑝 (1) for all 𝑧 with 𝑛 𝑧 𝑗 and 𝑛 𝑧 given in (D), e.g., the stratified permuted block randomization, covariate adjustment 7in the estimation stage with 𝑊 = 𝑍 does not provide any additional efficiency gain over the adjustment done in randomization, i.e., the asymptotic distributions of b𝐹 𝑗 (𝑦 ) and e𝐹 𝑗 (𝑦 ) (or b𝑆 𝑗 (𝑡 ) and e𝑆 𝑗 (𝑡 )) are the same when 
+
+𝑊 = 𝑍 . The result for Kaplan-Meier estimator e𝑆 𝑗 (𝑡 ) under stratified permuted block randomization is actually obtained in Wang et al. (2023). However, the same conclusion for e𝑆 𝑗 (𝑡 ) does not hold under Pocock-Simon’s minimization, due to the complex asymptotic behavior of 𝑛 −1/2 
+
+> 𝑧
+
+(𝑛 𝑧 𝑗 − 𝜋 𝑗 𝑛 𝑧 ) under minimization. In contrast, results in Theorem 1 hold for b𝐹 𝑗 (𝑦 ) and b𝑆 𝑗 (𝑡 ) under minimization when covariate adjustment in estimation is also applied. 4. If some levels of 𝑍 are not in 𝑊 , then results in Theorem 1 do not hold; the asymptotic distribution of b𝐹 𝑗 (𝑦 ) or 
+
+b𝑆 𝑗 (𝑡 ) varies with the particular randomization scheme and is not available under Pocock-Simon’s minimization. Thus, we recommend including indicators for all levels of 𝑍 in 𝑊 .
+
+## 4.2 Asymptotic equivalence among the empirical likelihood, augmentation, and entropy balancing 
+
+The following theorem unifies three distinct covariate adjustment approaches, the empirical likelihood, augmentation, and entropy balancing (Zhao and Percival, 2017), under one asymptotic result under covariate-adaptive randomization. 
+
+Theorem 2 (Asymptotic equivalence) . Assume (D) with 𝑍 included in 𝑊 . Let 𝑔 (𝑌 𝑗 ) be a function with 𝐸 {𝑔 (𝑌 𝑗 )2 } < ∞,
+
+𝜃 𝑗 = 𝐸 {𝑔 (𝑌 𝑗 )} , C𝑔 𝑗 = Cov {𝑊, 𝑔 (𝑌 𝑗 )} , and b𝜃 ★𝑗 be one of the following: (a) the proposed MELE b𝜃 𝑗 = ∫ 𝑔 (𝑦 )𝑑 b𝐹 𝑗 (𝑦 ) = Í𝑖 :𝐴 𝑖 = 𝑗 b𝑝 𝑖 𝑗 𝑔 (𝑌 𝑖 𝑗 );(b) the augmentation estimator b𝜃 AUG  
+
+> 𝑗
+
+= 𝑛 −1
+
+> 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 𝑔 (𝑌 𝑖 𝑗 )− b𝛾 ⊤ 
+
+> 𝑗
+
+( ¯𝑊 𝑗 − ¯𝑊 ), where ¯𝑊 𝑗 = 𝑛 −1
+
+> 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 𝑊 𝑖 , ¯𝑊 = 𝑛 −1 Í𝑛 𝑖 =1 𝑊 𝑖 ,and b𝛾 𝑗 = 𝑛 −1 
+
+> 𝑗
+
+bΣ−1
+
+> 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 (𝑊 𝑖 − ¯𝑊 𝑗 )𝑔 (𝑌 𝑖 𝑗 );(c) the entropy balancing estimator b𝜃 EB  
+
+> 𝑗
+
+= Í𝑖 :𝐴 𝑖 = 𝑗 b𝑝 EB  
+
+> 𝑖 𝑗
+
+𝑔 (𝑌 𝑖 𝑗 ), where, for each treatment arm 𝑗 , the entropy-balancing weights { b𝑝 EB  
+
+> 𝑖 𝑗
+
+: 𝐴 𝑖 = 𝑗 } solve max { 𝑝 𝑖 𝑗 :𝐴 𝑖 = 𝑗 } − Í𝑖 :𝐴 𝑖 = 𝑗 𝑝 𝑖 𝑗 log 𝑝 𝑖 𝑗 subject to 𝑝 𝑖 𝑗 ≥ 0, Í𝑖 :𝐴 𝑖 = 𝑗 𝑝 𝑖 𝑗 = 1,and Í𝑖 :𝐴 𝑖 = 𝑗 𝑝 𝑖 𝑗 𝑊 𝑖 = ¯𝑊 .Then, under the condition 𝐸 ∥𝑊 ∥3 < ∞, regardless of which covariate-adaptive randomization scheme is used, 
+
+√𝑛  b𝜃 ★𝑗 − 𝜃 𝑗 
+
+ = 1
+
+√𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝜓 𝑔 𝑖 𝑗 + 𝑜 𝑝 (1) 𝑑 
+
+→ 𝑁 
+
+
+
+0, [Var {𝑔 (𝑌 𝑗 )} − ( 1 − 𝜋 𝑗 )C𝑔 ⊤ 
+
+> 𝑗
+
+Σ−1C𝑔 𝑗 ]/ 𝜋 𝑗 
+
+
+
+,
+
+where 𝜓 𝑔 𝑖 𝑗 = [𝐼 ( 𝐴 𝑖 = 𝑗 ){ 𝑔 (𝑌 𝑖 𝑗 ) − 𝜃 𝑗 } − { 𝐼 ( 𝐴 𝑖 = 𝑗 ) − 𝜋 𝑗 }C𝑔 ⊤ 
+
+> 𝑗
+
+Σ−1 (𝑊 𝑖 − 𝜇 𝑊 )] 𝜋 𝑗 .
+
+If 𝑔 (𝑦 ) = 𝐼 (𝑦 ≤ 𝑡 ) in Theorem 2, then we recover the asymptotic result in Theorem 1 for b𝐹 𝑗 , and obtain the asymptotic equivalence among b𝐹 𝑗 , b𝐹 AUG  
+
+> 𝑗
+
+, and b𝐹 EB  
+
+> 𝑗
+
+. If 𝑔 (𝑦 ) = 𝑦 , then all three estimators in Theorem 2 are asymptotically equivalent to the ANHECOVA estimator in Ye et al. (2023) for the mean 𝐸 (𝑌 𝑗 ).Theorem 2 shows that the three distinct approaches share the same influence function and are first-order asymptoti-cally equivalent for any fixed function 𝑔 . The critical distinction is in finite-sample behavior for function-valued esti-mands. When 𝑔 (𝑦 ) = 𝐼 (𝑦 ≤ 𝑡 ) and one considers estimating 𝐹 𝑗 (𝑡 ) as a function of 𝑡 , the augmented estimator b𝐹 AUG  
+
+> 𝑗
+
+(𝑡 )
+
+applies the equivalence pointwise and does not enforce monotonicity across 𝑡 -values, because the regression coefficient 
+
+b𝛾 𝑗 varies with 𝑡 . Note that b𝐹 AUG  
+
+> 𝑗
+
+(𝑡 ) is different from b𝐹 A 
+
+> 𝑗
+
+in (5) but both have the same issue. The empirical likelihood approach, by contrast, uses the same weights b𝑝 𝑖 𝑗 for all 𝑡 , which is what ensures that b𝐹 𝑗 (𝑡 ) = Í𝑖 :𝐴 𝑖 = 𝑗 b𝑝 𝑖 𝑗 𝐼 (𝑌 𝑖 𝑗 ≤ 𝑡 ) is automatically nondecreasing. This also holds for the entropy balancing approach. Thus, among the three asymptotically equivalent methods, the empirical likelihood and entropy balancing preserve shape constraints while the augmentation does not. The same reasoning extends to the censored setting: the AGEE of Zhang (2015) is asymptotically equivalent to our MELE b𝑆 𝑗 (𝑡 ), but uses 𝑡 -varying regression coefficients b𝛽 𝑗 (𝑡 ) and does not produce a monotone survival curve estimator. 84.3 Estimators of treatment effects 
+
+We now consider the comparison of two treatments 𝑗 and 𝑘 . For the mean treatment effect 𝐸 (𝑌 𝑗 ) − 𝐸 (𝑌 𝑘 ), the asymptotic distribution of the MELE b𝜇 𝑗 − b𝜇 𝑘 is a direct corollary of Theorem 1. Thus, we consider the quantile treatment effect 
+
+𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ) − 𝐹 −1 
+
+> 𝑘
+
+( 𝑝 ) for a fixed known 𝑝 ∈ ( 0, 1), the rank-sum mean 𝜃 𝑗 𝑘 defined in the end of Section 3.2, and the difference of restricted mean survival times Δ𝑗 𝑘 defined in the end of Section 3.3. Let b𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ) − b𝐹 −1 
+
+> 𝑘
+
+( 𝑝 ), b𝜃 𝑗 𝑘 , and bΔ𝑗 𝑘 
+
+be their respective MELEs. 
+
+Theorem 3. Assume (D) with 𝑍 included in 𝑊 and the condition 𝐸 ∥𝑊 ∥3 < ∞.(i) Assume that 𝐹 𝑙 has a positive derivative 𝑓 𝑙 𝑝 at 𝐹 −1 
+
+> 𝑙
+
+( 𝑝 ), 𝑙 = 𝑗, 𝑘 . For non-censored outcome, 
+
+√𝑛 { b𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ) − b𝐹 −1 
+
+> 𝑘
+
+( 𝑝 ) − 𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ) + 𝐹 −1 
+
+> 𝑘
+
+( 𝑝 )} 𝑑 
+
+→ 𝑁 0, 𝑝 (1 − 𝑝 )
+
+𝜋 𝑗 𝑓 2
+
+> 𝑗 𝑝
+
++ 𝑝 (1 − 𝑝 )
+
+𝜋 𝑘 𝑓 2
+
+> 𝑘 𝑝
+
+− 𝜉 𝑗 𝑘 
+
+!
+
+regardless of which covariate-adaptive randomization scheme is used, where 
+
+𝜉 𝑗 𝑘 = (𝜋 𝑗 eC𝑘 + 𝜋 𝑘 eC𝑗 )⊤Σ−1 (𝜋 𝑗 eC𝑘 + 𝜋 𝑘 eC𝑗 )
+
+𝜋 𝑗 𝜋 𝑘 (𝜋 𝑗 + 𝜋 𝑘 ) + (1 − 𝜋 𝑗 − 𝜋 𝑘 )( eC𝑗 − eC𝑘 )⊤Σ−1 (eC𝑗 − eC𝑘 )(𝜋 𝑗 + 𝜋 𝑘 ) ,
+
+eC𝑙 = C𝑙 𝑓 −1 
+
+> 𝑙 𝑝
+
+, and C𝑙 = Cov {𝑊, 𝐼 (𝑌 𝑙 ≤ 𝐹 −1 
+
+> 𝑙
+
+( 𝑝 ))} , 𝑙 = 𝑗, 𝑘 .(ii) Assume that 𝐹 𝑙 is continuous, 𝑙 = 𝑗, 𝑘 . For non-censored outcome, 
+
+√𝑛 (b𝜃 𝑗 𝑘 − 𝜃 𝑗 𝑘 ) 𝑑 
+
+→ 𝑁 
+
+
+
+0, Var {𝐹 𝑘 (𝑌 𝑗 )} 
+
+𝜋 𝑗 
+
++ Var {𝐹 𝑗 (𝑌 𝑘 )} 
+
+𝜋 𝑘 
+
+− 𝜁 𝑗 𝑘 
+
+
+
+regardless of which covariate-adaptive randomization scheme is used, where 
+
+𝜁 𝑗 𝑘 = (𝜋 𝑗 C𝑘 𝑗 + 𝜋 𝑘 C𝑗 𝑘 )⊤Σ−1 (𝜋 𝑗 C𝑘 𝑗 + 𝜋 𝑘 C𝑗 𝑘 )
+
+𝜋 𝑗 𝜋 𝑘 (𝜋 𝑗 + 𝜋 𝑘 ) + (1 − 𝜋 𝑗 − 𝜋 𝑘 )( C𝑗 𝑘 − C𝑘 𝑗 )⊤Σ−1 (C𝑗 𝑘 − C𝑘 𝑗 )
+
+𝜋 𝑗 + 𝜋 𝑘 
+
+,
+
+C𝑗 𝑘 = Cov {𝐹 𝑘 (𝑌 𝑗 ), 𝑊 }, and C𝑘 𝑗 = Cov {𝐹 𝑗 (𝑌 𝑘 ), 𝑊 }.(iii) Assume (C) and 𝑆 𝑙 is continuous, 𝑙 = 𝑗, 𝑘 . For censored outcome, 
+
+√𝑛 (bΔ𝑗 𝑘 − Δ𝑗 𝑘 ) 𝑑 
+
+→ 𝑁 
+
+
+
+0, Var (𝒟 𝑗 )
+
+𝜋 𝑗 
+
++ Var (𝒟 𝑘 )
+
+𝜋 𝑘 
+
+− 𝜂 𝑗 𝑘 
+
+
+
+regardless of which covariate-adaptive randomization scheme is used, where 
+
+𝜂 𝑗 𝑘 = (𝜋 𝑗 𝒞 𝑘 + 𝜋 𝑘 𝒞 𝑗 )⊤Σ−1 (𝜋 𝑗 𝒞 𝑘 + 𝜋 𝑘 𝒞 𝑗 )
+
+𝜋 𝑗 𝜋 𝑘 (𝜋 𝑗 + 𝜋 𝑘 ) + (1 − 𝜋 𝑗 − 𝜋 𝑘 )( 𝒞 𝑗 − 𝒞 𝑘 )⊤Σ−1 (𝒞 𝑗 − 𝒞 𝑘 )(𝜋 𝑗 + 𝜋 𝑘 ) ,
+
+𝒟 𝑙 =
+
+∫ 𝜏 
+
+> 0
+
+∫ 𝜏 𝑡 𝑆 𝑙 (𝑢 ) 𝑑𝑢 𝑃 {min (𝑌 𝑙 , 𝐶 𝑙 ) ≥ 𝑡 | 𝐴 = 𝑙 } 𝑑𝑀 0 
+
+> 𝑙
+
+(𝑡 ),
+
+𝒞 𝑙 = Cov (𝑊, 𝒟 𝑙 ), 𝑑𝑀 0 
+
+> 𝑙
+
+(𝑡 ) is defined as 𝑑𝑀 𝑙 (𝑡 ) in Theorem 1(ii), with 𝑁 𝑙 (𝑡 ) replaced by 𝐼 (𝑌 𝑙 ≤ 𝐶 𝑙 , 𝑌 𝑙 ≤ 𝑡 ) and 𝑌 𝑙 (𝑡 )
+
+replaced by 𝐼 (𝑌 𝑙 ≥ 𝑡, 𝐶 𝑙 ≥ 𝑡 ).
+
+Under simple randomization, e𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ) and e𝐹 −1 
+
+> 𝑘
+
+( 𝑝 ) are independent and √𝑛 { e𝐹 −1 
+
+> 𝑗
+
+( 𝑝 )− e𝐹 −1 
+
+> 𝑘
+
+( 𝑝 )− 𝐹 −1 
+
+> 𝑗
+
+( 𝑝 )+ 𝐹 −1 
+
+> 𝑘
+
+( 𝑝 )} 𝑑 
+
+→
+
+𝑁  0, 𝑝 (1 − 𝑝 )/( 𝜋 𝑗 𝑓 2 
+
+> 𝑗 𝑝
+
+) + 𝑝 (1 − 𝑝 )/( 𝜋 𝑘 𝑓 2 
+
+> 𝑘 𝑝
+
+), so the MELE b𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ) − b𝐹 −1 
+
+> 𝑘
+
+( 𝑝 ) has a guaranteed asymptotic efficiency gain. Similarly, for the Wilcoxon two-sample statistic e𝜃 𝑗 𝑘 defined at the end of Section 3.2, √𝑛 (e𝜃 𝑗 𝑘 − 𝜃 𝑗 𝑘 ) 𝑑 
+
+→
+
+𝑁  0, Var {𝐹 𝑘 (𝑌 𝑗 )}/ 𝜋 𝑗 + Var {𝐹 𝑗 (𝑌 𝑘 )}/ 𝜋 𝑘 
+
+ (Jiang, 2010), so the MELE b𝜃 𝑗 𝑘 also has a guaranteed asymptotic efficiency gain. Finally, √𝑛 (eΔ𝑗 𝑘 − Δ𝑗 𝑘 ) 𝑑 
+
+→ 𝑁  0, Var (𝒟 𝑗 )/ 𝜋 𝑗 + Var (𝒟 𝑘 )/ 𝜋 𝑘 
+
+ (Claggett et al., 2022; Sun et al., 2025), so bΔ𝑗 𝑘 
+
+likewise has a guaranteed asymptotic efficiency gain. In each case, equality holds only in degenerate situations: for 
+
+𝐽 > 2, when both arm-specific covariance vectors vanish (e.g., eC𝑗 = eC𝑘 = 0 in the quantile treatment effect case); for 
+
+𝐽 = 2, under the weaker condition that they cancel across arms (e.g., 𝜋 𝑗 eC𝑘 + 𝜋 𝑘 eC𝑗 = 0 in the quantile treatment effect case). 95 Variance Estimation and Confidence Intervals 
+
+To assess the performance of an estimator of parameter 𝜃 or make asymptotic statistical inference about 𝜃 , we need a consistent estimator of the asymptotic variance of estimator of 𝜃 , regardless of which randomization scheme is used. Once a consistent variance estimator is obtained, the Wald confidence interval with level 1 − 𝛼 ∈ ( 0, 1) is asymptotically correct in the sense that lim 𝑛 →∞ 𝑃 (the interval covers 𝜃 ) = 1 − 𝛼 . For the survival function 𝑆 𝑗 (𝑡 ), whose values lie in 
+
+(0, 1), we use the log-transformed version of the Wald interval. For non-censored outcome, a consistent estimator of the asymptotic variance 𝑉 𝐹 𝑗 (𝑦 ) of b𝐹 𝑗 (𝑦 ) in Theorem 1(i) can be obtained by substituting 𝐹 𝑗 (𝑦 ) with b𝐹 𝑗 (𝑦 ), C𝑗 (𝑦 ) with the sample covariance of 𝑊 𝑖 and 𝐼 (𝑌 𝑖 𝐴 𝑖 ≤ 𝑦 ) over 𝑖 with 𝐴 𝑖 = 𝑗 ,and Σ with bΣ = the sample covariance matrix of 𝑊 𝑖 , 𝑖 = 1, ..., 𝑛 , regardless of which randomization scheme is used. For the quantile estimator b𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ) or b𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ) − b𝐹 −1 
+
+> 𝑘
+
+( 𝑝 ), a consistent variance estimator based on Theorems 1-3 involves consistently estimating the derivative 𝑓 𝑗 𝑝 or derivatives 𝑓 𝑗 𝑝 and 𝑓 𝑘 𝑝 , which is known to be difficult. We run into the same issue for unadjusted quantile estimator and difference. We recommend using nonparametric bootstrap variance estimation described in the Supplementary Material with some simulation results. For the MELE b𝜃 𝑗 𝑘 considered in the end of Section 3.2, its consistent variance estimator can be obtained using Theorem 3(ii) with Var {𝐹 𝑗 (𝑌 𝑘 )} estimated by the sample variance based on b𝐹 𝑗 (𝑌 𝑖 𝐴 𝑖 ), for 𝑖 ’s in the treatment group 𝑘 , and C𝑘 𝑗 estimated by the sample covariance of 
+
+b𝐹 𝑗 (𝑌 𝑖 𝐴 𝑖 ) and 𝑊 𝑖 , for 𝑖 ’s in the treatment group 𝑘 .For censored outcome, a consistent estimator of the asymptotic variance 𝑉 𝑆 𝑗 (𝑡 ) in Theorem 1(ii) for b𝑆 𝑗 (𝑡 ) is 
+
+b𝑉 𝑆 𝑗 (𝑡 ) = 1
+
+𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+b𝑆 2 
+
+> 𝑗
+
+(𝑡 )
+
+𝜋 2
+
+> 𝑗
+
+∫ 𝑡 
+
+> 0
+
+𝑑 b𝑀 𝑖 𝑗 (𝑠 )
+
+¯𝑌 𝑗 (𝑠 )
+
+2
+
+− (1 − 𝜋 𝑗 )bΓ𝑗 (𝑡 )⊤bΣ−1bΓ𝑗 (𝑡 )
+
+𝜋 𝑗 
+
+, (9) where 𝑑 b𝑀 𝑖 𝑗 (𝑡 ) = 𝑑𝑁 𝑖 𝑗 (𝑡 )− 𝑌 𝑖 𝑗 (𝑡 )𝑑 bΛ𝑗 (𝑡 ), 𝑑 bΛ𝑗 (𝑡 ) is given in (7), ¯𝑌 𝑗 (𝑡 ) = 𝑛 −1
+
+> 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 𝑌 𝑖 𝑗 (𝑡 ), and bΓ𝑗 (𝑡 ) = b𝑆 𝑗 (𝑡 ) Í𝑖 :𝐴 𝑖 = 𝑗 (𝑊 𝑖 −
+
+¯𝑊 𝑗 ) ∫ 𝑡  
+
+> 0
+
+𝑑 b𝑀 𝑖 𝑗 (𝑠 )/ Í𝑖 ′:𝐴 𝑖 ′ = 𝑗 𝑌 𝑖 ′ 𝑗 (𝑠 ). A consistent variance estimator for MELE bΔ𝑗 𝑘 defined in the end of Section 3.3 and given in Theorem 3(iii) is 
+
+b𝒱 𝑗 𝑘 = b𝒱 𝑗 
+
+𝜋 𝑗 
+
++ b𝒱 𝑘 
+
+𝜋 𝑘 
+
+− (𝜋 𝑗 b𝒞 𝑘 + 𝜋 𝑘 b𝒞 𝑗 )⊤bΣ−1 (𝜋 𝑗 b𝒞 𝑘 + 𝜋 𝑘 b𝒞 𝑗 )
+
+𝜋 𝑗 𝜋 𝑘 (𝜋 𝑗 + 𝜋 𝑘 ) − (1 − 𝜋 𝑗 − 𝜋 𝑘 )( b𝒞 𝑗 − b𝒞 𝑘 )⊤bΣ−1 ( b𝒞 𝑗 − b𝒞 𝑘 )(𝜋 𝑗 + 𝜋 𝑘 ) ,
+
+where b𝒱 𝑗 is the sample variance of 
+
+b𝒟 𝑖 𝑗 =
+
+∫ 𝜏 
+
+> 0
+
+∫ 𝜏 𝑡 b𝑆 𝑗 (𝑢 )𝑑𝑢 
+
+¯𝑌 𝑗 (𝑡 ) 𝑑 b𝑀 0 
+
+> 𝑖 𝑗
+
+(𝑡 ), for 𝐴 𝑖 = 𝑗, 𝑑 b𝑀 0 
+
+> 𝑖 𝑗
+
+(𝑡 ) is defined as 𝑑 b𝑀 𝑖 𝑗 (𝑡 ), with 𝑁 𝑖 𝑗 (𝑡 ) replaced by 𝐼 (𝑌 𝑖 𝑗 ≤ 𝐶 𝑖 𝑗 , 𝑌 𝑖 𝑗 ≤ 𝑡 ) and 𝑌 𝑖 𝑗 (𝑡 ) replaced by 𝐼 (𝑌 𝑖 𝑗 ≥ 𝑡, 𝐶 𝑖 𝑗 ≥ 𝑡 ),and b𝒞 𝑗 is the sample covariance of 𝑊 𝑖 and b𝒟 𝑖 𝑗 , 𝑖 = 1, ..., 𝑛 , 𝐴 𝑖 = 𝑗 .All the results given here are valid regardless of which randomization scheme is used. 
+
+# 6 Simulation 
+
+We focus on right-censored time-to-event data and consider a simulation to evaluate and compare the finite sample performances of our proposed MELE of 𝑆 𝑗 (𝑡 ) given in (7), the AGEE in Zhang (2015) with the same covariate adjustment, and the Kaplan-Meier estimator in (6) without covariate adjustment. Our simulation setting is the same as scenario 2 in Zhang (2015), where 𝐽 = 2 with 𝜋 1 = 𝜋 2 = 1/2, sample size 𝑛 = 200 , a single baseline covariate 
+
+𝑋 ∼ 𝑁 (0, 1), the life time outcome 𝑌 𝑗 conditioned on 𝑋 is distributed as log 𝑁  𝑋 + 0.3( 𝑗 − 1), 1, and the censoring time 𝐶 𝑗 ∼ uniform(0, 7.5) +0.7( 𝑗 − 1), independent of 𝑋 and 𝑌 𝑗 , 𝑗 = 1, 2. For assigning treatments, we employ simple randomization and covariate-adaptive randomization, the stratified permuted block of size 4, where the strata are formed by 𝑍 = 𝑋 discretized into four categories with equal probabilities based on the quartiles. The adjusted covariate 𝑊 used in (1) is (𝑋 𝑐 , 𝑋 2 
+
+> 𝑐
+
+, 𝑋 3 
+
+> 𝑐
+
+)⊤ under simple randomization and (𝑍, 𝑋 𝑐 , 𝑋 2 
+
+> 𝑐
+
+, 𝑋 3 
+
+> 𝑐
+
+)⊤ under stratified permuted block randomization, with 𝑋 𝑐 being 𝑋 truncated at −5 and 5. 10 For variance estimation, we use b𝑉 𝑆 𝑗 (𝑡 ) given by (9) for the proposed MELE. For the AGEE, we use the variance estimator in Zhang (2015). For the Kaplan-Meier estimator, we used the first term in b𝑉 𝑆 𝑗 (𝑡 ) in (9), which is a consistent estimator under simple randomization, but overestimates under covariate-adaptive randomization such as the stratified permuted block in the simulation. Under the same simulation setting, we also evaluate the finite sample performances of the MELE bΔ21 proposed in the end of Section 3.3 and the unadjusted eΔ21 (Kaplan-Meier), for estimating the difference Δ21 as the treatment effect. The unadjusted eΔ21 and its variance estimator are computed using the R package survRM2. Variance estimation for bΔ21 
+
+is done using the results given in Section 5. Based on 2,000 simulation replications, Table 1 gives the results for estimating survival function 𝑆 𝑗 (𝑡 ) for several 
+
+𝑡 ’s and 𝑗 = 1, 2, and Δ21 with 𝜏 = 3: the average of bias (AB), standard deviation (SD), average of estimated SD (SE), coverage probability (CP) of 95% Wald confidence interval, and relative efficiency (RE) defined as (SD 2 of unadjusted)/SD 2.The following is a summary of the simulation results in Table 1. 1. All estimators have negligible average bias, which supports their asymptotic validity. 2. In terms of simulation SD, the covariate adjusted estimators are comparable and both are more efficient than the unadjusted estimator under simple randomization, with RE up to 1.21 for estimating the survival function and 1.66 for estimating the restricted mean survival time difference. Under stratified permuted block randomization, the SD of Kaplan-Meier estimator is comparable with those of MELE and AGEE, confirming the discussion (point #3 in Section 4) when 𝑍 provides most information contained in 𝑊 .3. The variance estimators for the MELE proposed in Section 5 and by Zhang (2015) perform well in terms of SE and CP, demonstrating their validity and confirming that they can be applied universally across randomization schemes. 4. For the Kaplan-Meier estimator, the standard variance estimator works only under simple randomization and can overestimate under covariate-adaptive randomization. This confirms that, without covariate adjustment in estimation, variance estimation and inference using the Kaplan-Meier method are not valid under covariate-adaptive randomization. 5. The AGEE estimator of Zhang (2015) is not always a monotone function. In 2,000 simulation runs, 2.60% under simple randomization and 2.75% under stratified permuted block randomization resulted in non-monotone AGEE curves (Table 1). Our MELE is always monotone by construction. In the Supplementary Material, we also report simulation results under scenario 3 of Zhang (2015) with a multivariate 
+
+𝑋 , as well as results for non-censored outcomes under simple randomization that evaluate and compare the finite-sample performance of the distribution estimators (3)-(5) (covariate-adjusted and unadjusted) and the corresponding quantile estimators. 
+
+# 7 Application 
+
+We apply the proposed method to real data from the SURPASS-4 study, a randomized, open-label, parallel-group, phase 3 trial assessing efficacy and safety of tirzepatide versus insulin glargine in adults with type 2 diabetes and high cardiovascular risk inadequately controlled on oral glucose-lowering medications (Del Prato et al., 2021). In this example, we focus on a cardio-renal composite endpoint, defined as the time to the first occurrence of any of the following: myocardial infarction, stroke, hospitalization due to heart failure, coronary revascularization, 
+
+≥ 40% decline from baseline in estimated Glomerular Filtration Rate (eGFR), onset of macroalbuminuria, end-stage kidney disease, and all-cause death. We restrict our analysis to patients with kidney impairment (i.e. baseline eGFR 
+
+< 60 mL/min/ 1.73 m2). Among the 330 patients, 173 were randomized to tirzepatide (considered as treatment) and 157 were randomized to insulin glargine (considered as control), based on stratified permuted block randomization stratified 11 by region (inside or outside of USA), baseline hemoglobin A1c (HbA1c) ( ≤ 8.5 % or > 8.5%), and baseline use of sodium-glucose cotransporter-2 inhibitors (SGLT2i). In the treatment group, 21 of 173 patients experienced at least one event during follow-up, corresponding to a 12.1% event rate; in the control group, 41 of 157 experienced at least one event during follow-up, corresponding to 26.1% event rate. A Cox proportional hazards model including only the treatment indicator yielded a hazard ratio of 0.50 with 95% Wald confidence interval (0.30 , 0.85 ), indicating a substantial reduction in risk associated with tirzepatide. The estimates of survival curves at selected weeks using the MELE (with baseline covariate adjustment for age, eGFR, HbA1c group, log-transformed urine albumin-creatinine ratio, region, and SGLT2i use) and Kaplan-Meier are shown in Figure 2, together with 95% log-transformed confidence intervals. The values of estimates and standard errors are given in Table S1 of the Supplementary Material. The Kaplan-Meier standard errors are computed using the variance estimator described in the simulation studies, which is valid under simple randomization but may be conservative under the stratified randomization used in this trial. The reduction in SE 2 ranges from 0.8% to 3.5% for the control group and 0.7% to 4.2% for the treatment group, reflecting a consistent efficiency improvement from covariate adjustment. We also estimate the restricted mean survival time (RMST) difference at 𝜏 = 100 weeks. The MELE yielded an estimated RMST difference of 5.35 weeks (SE = 2.56 , 95% CI: 0.32 to 10 .37 ), compared to the Kaplan-Meier estimate of 5.84 weeks (SE = 2.64 , 95% CI: 0.66 to 11 .01 ). The SE 2 reduction for the RMST difference was 5.7% .Both methods yielded a statistically significant treatment benefit at the 5% level, with the MELE providing a narrower confidence interval. Control Treatment           
+
+> 025 50 75 100 025 50 75 100 0.5 0.6 0.7 0.8 0.9 1.0 Time (weeks) Survival Probability Kaplan−Meier Proposed MELE
+
+Figure 2: Estimated survival curves for the two groups using the Kaplan-Meier method and the proposed MELE, with the upper and lower curves representing the 95% confidence bounds. 12 Table 1: Simulation results based on 2,000 replications with 𝑛 = 200 : AB = average bias, SD = standard deviation, SE = average of estimated SD, CP = coverage probability of 95% Wald confidence interval, and RE = (SD 2 of Kaplan-Meier estimator) / SD 2
+
+Estimand Performance of estimation Randomization 𝑗 𝑡 𝑆 𝑗 (𝑡 ) Estimator AB SD SE CP RE Simple 1 1 0.500 Kaplan-Meier 0.000 0.052 0.052 0.949 Proposed MELE 0.001 0.048 0.047 0.940 1.17 Zhang’s AGEE 0.001 0.047 0.047 0.944 1.19 2 0.312 Kaplan-Meier 0.000 0.051 0.050 0.945 Proposed MELE 0.000 0.047 0.045 0.942 1.15 Zhang’s AGEE 0.002 0.047 0.046 0.944 1.16 3 0.219 Kaplan-Meier 0.000 0.047 0.047 0.952 Proposed MELE 0.000 0.045 0.042 0.938 1.08 Zhang’s AGEE 0.002 0.045 0.043 0.938 1.08 2 1 0.584 Kaplan-Meier 0.000 0.051 0.049 0.940 Proposed MELE -0.001 0.047 0.044 0.937 1.19 Zhang’s AGEE -0.001 0.047 0.044 0.942 1.21 2 0.391 Kaplan-Meier 0.000 0.050 0.050 0.954 Proposed MELE 0.000 0.046 0.045 0.952 1.20 Zhang’s AGEE 0.001 0.046 0.045 0.955 1.21 3 0.286 Kaplan-Meier 0.000 0.049 0.049 0.951 Proposed MELE -0.001 0.046 0.044 0.945 1.14 Zhang’s AGEE 0.001 0.046 0.044 0.945 1.14 Zhang’s AGEE has 2.60% non-monotone estimated curves 
+
+Δ21 (𝜏 = 3) Kaplan-Meier 0.000 0.158 0.161 0.955 
+
+0.216 Proposed MELE 0.000 0.123 0.121 0.952 1.66 Stratified 1 1 0.500 Kaplan-Meier 0.000 0.048 0.052 0.962 permuted Proposed MELE 0.000 0.048 0.046 0.938 block Zhang’s AGEE 0.000 0.048 0.047 0.940 2 0.312 Kaplan-Meier 0.000 0.046 0.050 0.966 Proposed MELE -0.001 0.047 0.045 0.946 Zhang’s AGEE 0.001 0.046 0.045 0.947 3 0.219 Kaplan-Meier 0.000 0.045 0.047 0.958 Proposed MELE -0.001 0.045 0.042 0.931 Zhang’s AGEE 0.001 0.045 0.042 0.932 2 1 0.584 Kaplan-Meier -0.001 0.046 0.049 0.974 Proposed MELE 0.000 0.045 0.044 0.946 Zhang’s AGEE -0.001 0.045 0.044 0.946 2 0.391 Kaplan-Meier -0.001 0.046 0.050 0.970 Proposed MELE -0.002 0.046 0.045 0.950 Zhang’s AGEE -0.001 0.045 0.045 0.954 3 0.286 Kaplan-Meier -0.001 0.046 0.048 0.966 Proposed MELE -0.001 0.046 0.043 0.939 Zhang’s AGEE 0.000 0.046 0.044 0.936 Zhang’s AGEE has 2.75% non-monotone estimated curves 
+
+Δ21 (𝜏 = 3) Kaplan-Meier -0.003 0.125 0.161 0.986 
+
+0.216 Proposed MELE -0.003 0.123 0.120 0.941 
+
+13 Supplementary Material 
+
+## Shape-Preserving Covariate Adjustment via Empirical Likelihood in Randomized Experiments 
+
+# S1 The bootstrap variance estimator for MELE of quantiles based on non-censored outcomes 
+
+We use the ordinary nonparametric bootstrap to estimate the variance of the proposed MELE quantile estimators. Specifically, draw {( 𝐴 ∗ 
+
+> 𝑖
+
+, 𝑌 ∗ 
+
+> 𝑖
+
+, 𝑊 ∗ 
+
+> 𝑖
+
+) : 𝑖 = 1, . . . , 𝑛 } as a simple random sample with replacement from {( 𝐴 𝑖 , 𝑌 𝑖 , 𝑊 𝑖 ) : 𝑖 =
+
+1, . . . , 𝑛 }, where 𝑌 𝑖 = 𝑌 𝑖 𝐴 𝑖 . Let 𝑛 ∗ 
+
+> 𝑗
+
+= Í𝑛 𝑖 =1 𝐼 ( 𝐴 ∗ 
+
+> 𝑖
+
+= 𝑗 ). Then we recompute b𝜇 ∗ 
+
+> 𝑊
+
+, (b𝜆 ∗
+
+> 1
+
+, . . . , b𝜆 ∗ 
+
+> 𝐽
+
+), b𝑝 ∗ 
+
+> 𝑖 𝑗
+
+from the same equations applied to the bootstrap data, and hence b𝐹 ∗ 
+
+> 𝑗
+
+:
+
+b𝐹 ∗ 
+
+> 𝑗
+
+(𝑦 ) =∑︁   
+
+> 𝑖 :𝐴 ∗
+> 𝑖 =𝑗
+
+b𝑝 ∗ 
+
+> 𝑖 𝑗
+
+𝐼 (𝑌 ∗ 
+
+> 𝑖
+
+≤ 𝑦 ), −∞ < 𝑦 < ∞, 𝑗 = 1, ..., 𝐽, 
+
+where 
+
+b𝑝 ∗ 
+
+> 𝑖 𝑗
+
+= 𝐼 ( 𝐴 ∗ 
+
+> 𝑖
+
+= 𝑗 )
+
+𝑛 ∗ 
+
+> 𝑗
+
++ b𝜆 ∗⊤  
+
+> 𝑗
+
+(𝑊 ∗ 
+
+> 𝑖
+
+− b𝜇 ∗ 
+
+> 𝑊
+
+) ,
+
+> 𝐽
+
+∑︁ 
+
+> 𝑗 =1
+
+b𝜆 ∗ 
+
+> 𝑗
+
+= 0,
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝐼 ( 𝐴 ∗ 
+
+> 𝑖
+
+= 𝑗 )( 𝑊 ∗ 
+
+> 𝑖
+
+− b𝜇 ∗ 
+
+> 𝑊
+
+)
+
+𝑛 ∗ 
+
+> 𝑗
+
++ b𝜆 ∗⊤  
+
+> 𝑗
+
+(𝑊 ∗ 
+
+> 𝑖
+
+− b𝜇 ∗ 
+
+> 𝑊
+
+) = 0, 𝑗 = 1, ..., 𝐽 
+
+The bootstrap variance estimator for b𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ) is Var ∗ { b𝐹 ∗− 1 
+
+> 𝑗
+
+( 𝑝 )} and for b𝐹 −1 
+
+> 𝑗
+
+( 𝑝 ) − b𝐹 −1 
+
+> 𝑘
+
+( 𝑝 ) is Var ∗ { b𝐹 ∗− 1 
+
+> 𝑗
+
+( 𝑝 ) − b𝐹 ∗− 1 
+
+> 𝑘
+
+( 𝑝 )} ,where Var ∗ is the variance with respect to bootstrap sampling conditional on {( 𝐴 𝑖 , 𝑌 𝑖 𝐴 𝑖 , 𝑊 𝑖 ) : 𝑖 = 1, . . . , 𝑛 }. In applications, we use the bootstrap Monte Carlo, i.e., compute b𝜃 ∗’s based on independent 𝐵 bootstrap datasets, where 
+
+b𝜃 ∗ = b𝐹 ∗− 1 
+
+> 𝑗
+
+( 𝑝 ) or b𝐹 ∗− 1 
+
+> 𝑗
+
+( 𝑝 ) − b𝐹 ∗− 1 
+
+> 𝑘
+
+( 𝑝 ), and then approximate Var ∗ (b𝜃 ∗) by the sample variance of b𝜃 ∗’s. The asymptotic distribution of the proposed MELE is invariant to the randomization scheme under condition (D). Therefore the same bootstrap variance estimator is valid under simple randomization and covariate-adaptive randomization satisfying (D). The bootstrap variance estimator for the augmented estimator based on b𝐹 A 
+
+> 𝑙
+
+can be obtained similarly by recomputing the augmentation coefficient in each bootstrap sample. For the unadjusted quantile estimators, the ordinary bootstrap works under simple randomization, while under covariate-adaptive randomization their limiting variance may depend on the randomization scheme. 
+
+# S2 Proof of Lemma 1 
+
+For two sequences {𝜉 𝑛 } and {𝑎 𝑛 }, write 𝜉 𝑛 = 𝑂 𝑝 (𝑎 𝑛 ) if 𝜉 𝑛 /𝑎 𝑛 is bounded in probability and 𝜉 𝑛 = 𝑜 𝑝 (𝑎 𝑛 ) if 
+
+𝜉 𝑛 /𝑎 𝑛 = 𝑜 𝑝 (1).We first prove several useful results under Condition (D). Since 𝑍 has finite support and 𝑛 𝑧 𝑗 − 𝜋 𝑗 𝑛 𝑧 = 𝑂 𝑝 (𝑛 1/2 
+
+> 𝑧
+
+),
+
+𝑛 𝑗 /𝑛 = 𝜋 𝑗 + 𝑂 𝑝 (𝑛 −1/2). Let 𝑚 𝑧 = 𝐸 (𝑊 − 𝜇 𝑊 | 𝑍 = 𝑧 ). Then ∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+(𝑊 𝑖 − 𝜇 𝑊 ) =∑︁ 
+
+> 𝑧
+
+𝑛 𝑧 𝑗 𝑚 𝑧 +∑︁ 
+
+> 𝑧
+
+∑︁ 𝑖 :𝑍 𝑖 =𝑧, 𝐴 𝑖 = 𝑗 
+
+{𝑊 𝑖 − 𝜇 𝑊 − 𝑚 𝑧 }.
+
+The first term is 𝑂 𝑝 (𝑛 1/2) by Condition (D) and 𝐸𝑚 𝑍 = 0, while the second is 𝑂 𝑝 (𝑛 1/2) by Chebyshev’s inequality. Thus, with 𝑎 𝑛 = max 𝑗 ∥ ¯𝑊 𝑗 − 𝜇 𝑊 ∥ and 𝑀 𝑛 = max 𝑖 ∥𝑊 𝑖 − 𝜇 𝑊 ∥, we have 𝑎 𝑛 = 𝑂 𝑝 (𝑛 −1/2). Similarly, 
+
+1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+(𝑊 𝑖 − 𝜇 𝑊 )( 𝑊 𝑖 − 𝜇 𝑊 )⊤ = Σ + 𝑜 𝑝 (1).
+
+Also, 𝑀 𝑛 = 𝑜 𝑝 (𝑛 1/2) by lemma 11.2 in Owen (2001). Hence 𝑎 𝑛 𝑀 𝑛 = 𝑜 𝑝 (1).We next prove the preliminary rates max 𝑗 ∥b𝜆 𝑗 ∥/ 𝑛 = 𝑂 𝑝 (𝑛 −1/2) and b𝜇 𝑊 − 𝜇 𝑊 = 𝑂 𝑝 (𝑛 −1/2). First consider an empirical likelihood problem where the 𝜇 𝑊 in (1) is the true mean, and let 𝛼 𝑗 be its multiplier satisfying 
+
+0 = 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+𝑊 𝑖 − 𝜇 𝑊 
+
+1 + 𝛼 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − 𝜇 𝑊 ) .
+
+14 Algebra gives 
+
+¯𝑊 𝑗 − 𝜇 𝑊 = 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+𝛼 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − 𝜇 𝑊 )
+
+1 + 𝛼 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − 𝜇 𝑊 ) (𝑊 𝑖 − 𝜇 𝑊 ).
+
+Let 𝑢 𝑗 = 𝛼 𝑗 /∥ 𝛼 𝑗 ∥ if 𝛼 𝑗 ≠ 0. Multiplying on the both sides by 𝑢 𝑗 yields 
+
+𝑢 ⊤ 
+
+> 𝑗
+
+( ¯𝑊 𝑗 − 𝜇 𝑊 ) = ∥𝛼 𝑗 ∥ 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+{𝑢 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − 𝜇 𝑊 )} 2
+
+1 + ∥ 𝛼 𝑗 ∥𝑢 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − 𝜇 𝑊 ) .
+
+Note that the denominators are positive and are bounded as 1 + ∥ 𝛼 𝑗 ∥𝑢 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − 𝜇 𝑊 ) ≤ 1 + ∥ 𝛼 𝑗 ∥∥ 𝑊 𝑖 − 𝜇 𝑊 ∥ ≤ 1 + ∥ 𝛼 𝑗 ∥𝑀 𝑛 .Therefore, 
+
+∥ ¯𝑊 𝑗 − 𝜇 𝑊 ∥ ≥ 𝑢 ⊤ 
+
+> 𝑗
+
+( ¯𝑊 𝑗 − 𝜇 𝑊 ) ≥ ∥𝛼 𝑗 ∥
+
+1 + ∥ 𝛼 𝑗 ∥𝑀 𝑛 
+
+𝑢 ⊤
+
+> 𝑗
+
+
+
+1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+(𝑊 𝑖 − 𝜇 𝑊 )( 𝑊 𝑖 − 𝜇 𝑊 )⊤
+
+
+
+𝑢 𝑗 .
+
+Since the sample second-moment matrix has eigenvalues bounded away from zero with probability tending to one, there exists a constant 𝑐 > 0 such that 𝑢 ⊤ 
+
+> 𝑗
+
+Σ𝑢 𝑗 ≥ 𝑐 −1 uniformly over 𝑗 . Thus ∥𝛼 𝑗 ∥ ≤ 𝑐 𝑎 𝑛 (1 + ∥ 𝛼 𝑗 ∥𝑀 𝑛 ). Because 
+
+𝑎 𝑛 𝑀 𝑛 = 𝑜 𝑝 (1), it follows that max 𝑗 ∥𝛼 𝑗 ∥ = 𝑂 𝑝 (𝑎 𝑛 ) = 𝑂 𝑝 (𝑛 −1/2).Let 𝑡 𝑖 𝑗 = 𝛼 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − 𝜇 𝑊 ). Then multiplying on the both sides of the score equation by 𝛼 𝑗 gives Í𝑖 :𝐴 𝑖 = 𝑗 𝑡 𝑖 𝑗 /( 1+𝑡 𝑖 𝑗 ) = 0,which implies ∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+log (1 + 𝑡 𝑖 𝑗 ) =∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+{log (1 + 𝑡 𝑖 𝑗 ) − 𝑡 𝑖 𝑗 
+
+1 + 𝑡 𝑖 𝑗 
+
+}.
+
+Define ℎ(𝑡 ) = log (1 + 𝑡 ) − 𝑡 /( 1 + 𝑡 ). Some calculations show ℎ(𝑡 ) ≥ 0 for 𝑡 > −1. Using Taylor expansion around 0
+
+gives ℎ(𝑡 ) = 𝑡 2/2 + 𝑂 (𝑡 3), which means there exists a constant 𝐶 > 0 such that ℎ(𝑡 ) ≤ 𝐶𝑡 2 when 𝑡 is in a neighborhood of zero. Since max 𝑖, 𝑗 |𝑡 𝑖 𝑗 | ≤ 𝑀 𝑛 max 𝑗 ∥𝛼 𝑗 ∥ = 𝑜 𝑝 (1),
+
+0 ≤∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+log (1 + 𝑡 𝑖 𝑗 )≤ 𝐶 ∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+𝑡 2
+
+> 𝑖 𝑗
+
+= 𝐶𝑛 𝑗 𝛼 ⊤ 
+
+> 𝑗
+
+{ 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+(𝑊 𝑖 − 𝜇 𝑊 )( 𝑊 𝑖 − 𝜇 𝑊 )⊤ }𝛼 𝑗 
+
+≤ 𝐶 𝑛 ∥𝛼 𝑗 ∥2 𝑂 𝑝 (1)≤ 𝐶 𝑐 2 𝑛 𝑎 2
+
+> 𝑛
+
+= 𝐶 0𝑛𝑎 2
+
+> 𝑛
+
+,
+
+where 𝐶 0 := 𝐶𝑐 2.
+
+Now return to the fitted target b𝜇 𝑊 . Since b𝜇 𝑊 maximizes the profile empirical likelihood, the fitted total loss is no larger than the fixed target loss. Therefore, with 𝑠 𝑖 𝑗 = b𝜆 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − b𝜇 𝑊 )/ 𝑛 𝑗 , for every arm 𝑗 ,
+
+0 ≤∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+
+
+log (1 + 𝑠 𝑖 𝑗 ) − 𝑠 𝑖 𝑗 
+
+1 + 𝑠 𝑖 𝑗 
+
+
+
+≤ 𝐶 0𝑛𝑎 2
+
+> 𝑛
+
+.
+
+Using log (1 + 𝑠 ) − 𝑠 /( 1 + 𝑠 ) ≥ 𝑠 2/( 8 + 8|𝑠 |2), we obtain ∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+𝑠 2
+
+> 𝑖 𝑗
+
+(1 + | 𝑠 𝑖 𝑗 |) 2 ≤ 8𝐶 0𝑛𝑎 2
+
+> 𝑛
+
+.
+
+Because b𝜇 𝑊 = Í𝑖 :𝐴 𝑖 = 𝑗 b𝑝 𝑖 𝑗 𝑊 𝑖 and Í𝑖 :𝐴 𝑖 = 𝑗 b𝑝 𝑖 𝑗 = 1, b𝑝 𝑖 𝑗 ≥ 0, we have ∥ b𝜇 𝑊 − 𝜇 𝑊 ∥ ≤ max 𝑖 :𝐴 𝑖 = 𝑗 ∥𝑊 𝑖 − 𝜇 𝑊 ∥ ≤ 𝑀 𝑛 . And hence ∥𝑊 𝑖 − b𝜇 𝑊 ∥ ≤ ∥ 𝑊 𝑖 − 𝜇 𝑊 ∥ + ∥ 𝜇 𝑊 − b𝜇 𝑊 ∥ ≤ 2𝑀 𝑛 . So ∥𝑠 𝑖 𝑗 ∥ ≤ 2𝑀 𝑛 ∥b𝜆 𝑗 ∥/ 𝑛 𝑗 . Together, we have 
+
+Í𝑖 :𝐴 𝑖 = 𝑗 𝑠 2
+
+> 𝑖 𝑗
+
+(1 + 2𝑀 𝑛 ∥b𝜆 𝑗 ∥𝑛 −1 
+
+> 𝑗
+
+)2 ≤ 8𝐶 0𝑛𝑎 2
+
+> 𝑛
+
+.
+
+15 Noticing that ∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+𝑠 2 
+
+> 𝑖 𝑗
+
+= 𝑛 𝑗 
+
+b𝜆 ⊤
+
+> 𝑗
+
+𝑛 𝑗 
+
+
+
+1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+(𝑊 𝑖 − b𝜇 𝑊 )( 𝑊 𝑖 − b𝜇 𝑊 )⊤
+
+b𝜆 𝑗 
+
+𝑛 𝑗 
+
+and following the derivations above, we obtain that there exists a constant 𝑐 −11 such that Í𝑖 :𝐴 𝑖 = 𝑗 𝑠 2 
+
+> 𝑖 𝑗
+
+≥ 𝑐 1 ∥b𝜆 𝑗 ∥2/𝑛 𝑗 ≥
+
+𝑐 1 ∥b𝜆 𝑗 ∥2/𝑛. Therefore, by taking the square root and absorbing all constants into 𝐶 ,
+
+∥b𝜆 𝑗 ∥
+
+𝑛 ≤ 𝐶𝑎 𝑛 (1 + 2𝑀 𝑛 
+
+∥b𝜆 𝑗 ∥
+
+𝑛 ),
+
+which is equivalent to 
+
+∥b𝜆 𝑗 ∥
+
+𝑛 ≤ 𝐶𝑎 𝑛 
+
+1 − 2𝐶𝑎 𝑛 𝑀 𝑛 
+
+.
+
+Using 𝑎 𝑛 𝑀 𝑛 = 𝑜 𝑝 (1), we have ∥b𝜆 𝑗 ∥/ 𝑛 𝑗 ≤ 𝐶𝑎 𝑛 with probability approaching 1. Recalling that 𝑎 𝑛 = 𝑂 𝑝 (𝑛 −1/2)
+
+completes the proof of b𝜆 𝑗 /𝑛 = 𝑂 𝑝 (𝑛 −1/2). It remains to show b𝜇 𝑊 − 𝜇 𝑊 = 𝑂 𝑝 (𝑛 −1/2). The fitted score equation gives the exact 
+
+¯𝑊 𝑗 − b𝜇 𝑊 = ( 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+(𝑊 𝑖 − b𝜇 𝑊 )( 𝑊 𝑖 − b𝜇 𝑊 )⊤
+
+1 + b𝜆 ⊤ 
+
+> 𝑗
+> 𝑛 𝑗
+
+(𝑊 𝑖 − b𝜇 𝑊 )) b𝜆 𝑗 
+
+𝑛 𝑗 
+
+.
+
+Some calculations yield ∥ ¯𝑊 𝑗 − b𝜇 𝑊 ∥ ≤ 2𝑀 𝑛 and there exists a constant 𝐶 1 > 0 such that 
+
+∥ ¯𝑊 𝑗 − b𝜇 𝑊 ∥ ≤ 𝐶 1 ( ∥b𝜆 𝑗 ∥
+
+𝑛 + ∥b𝜆 𝑗 ∥
+
+𝑛 𝑀 𝑛 ∥ ¯𝑊 𝑗 − b𝜇 𝑊 ∥) .
+
+Because 𝑀 𝑛 max 𝑗 ∥b𝜆 𝑗 ∥/ 𝑛 𝑗 = 𝑜 𝑝 (1), we have ∥ ¯𝑊 𝑗 − b𝜇 𝑊 ∥ ≤ 𝐶 ∥b𝜆 𝑗 ∥/ 𝑛 𝑗 = 𝑂 𝑝 (𝑛 −1/2) with probability approaching 1. Together with ∥ ¯𝑊 𝑗 − 𝜇 𝑊 ∥ = 𝑂 𝑝 (𝑛 −1/2), this yields ∥ b𝜇 𝑊 − 𝜇 𝑊 ∥ = 𝑂 𝑝 (𝑛 −1/2).
+
+We now complete the proof. With probability approaching one, max 𝑖, 𝑗 |b𝜆 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − b𝜇 𝑊 )| ≤ 𝑛 𝑗 /2 because ∥b𝜆 𝑗 ∥ =
+
+𝑂 𝑝 (𝑛 1/2), 𝑀 𝑛 = 𝑜 𝑝 (𝑛 1/2), and ∥ b𝜇 𝑊 − 𝜇 𝑊 ∥ = 𝑂 𝑝 (𝑛 −1/2). On this event, using 
+
+1
+
+𝑛 𝑗 + 𝑥 = 1
+
+𝑛 𝑗 
+
+− 𝑥 𝑛 2
+
+> 𝑗
+
++ 𝑥 2
+
+𝑛 2 
+
+> 𝑗
+
+(𝑛 𝑗 + 𝑥 )
+
+with 𝑥 = b𝜆 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − b𝜇 𝑊 ) in the 𝑗 -th score equation gives 
+
+0 = 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+(𝑊 𝑖 − b𝜇 𝑊 ) − 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+(𝑊 𝑖 − b𝜇 𝑊 )( 𝑊 𝑖 − b𝜇 𝑊 )⊤ b𝜆 𝑗 
+
+𝑛 𝑗 
+
++ 𝑅 𝑛 𝑗 , (S1) where the remainder is 
+
+𝑅 𝑛 𝑗 = 1
+
+𝑛 2
+
+> 𝑗
+
+∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+[b𝜆 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − b𝜇 𝑊 )] 2 (𝑊 𝑖 − b𝜇 𝑊 )
+
+𝑛 𝑗 + b𝜆 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − b𝜇 𝑊 ) .
+
+With probability approaching 1, as 𝑛 𝑗 + b𝜆 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − b𝜇 𝑊 ) ≥ 𝑛 𝑗 /2, we bound the remainder as 
+
+∥𝑅 𝑛 𝑗 ∥ ≤ 2
+
+𝑛 3
+
+> 𝑗
+
+∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+[b𝜆 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − b𝜇 𝑊 )] 2 ∥𝑊 𝑖 − b𝜇 𝑊 ∥ ≤ 2∥b𝜆 𝑗 ∥2
+
+𝑛 3
+
+> 𝑗
+
+∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+∥𝑊 𝑖 − b𝜇 𝑊 ∥3.
+
+Given 𝐸 ∥𝑊 ∥3 < ∞, it yields ∥𝑅 𝑛 𝑗 ∥ ≤ 𝑂 𝑝 (𝑛 −1). Using b𝜇 𝑊 − 𝜇 𝑊 = 𝑂 𝑝 (𝑛 −1/2) and the covariance convergence gives 
+
+0 = 1
+
+𝑛 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+(𝑊 𝑖 − b𝜇 𝑊 ) − Σ b𝜆 𝑗 
+
+𝑛 + 𝑜 𝑝 (𝑛 −1/2).
+
+16 The first term is 
+
+𝑛 −1∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+(𝑊 𝑖 − b𝜇 𝑊 ) = ¯𝑈 𝑗 + 𝜋 𝑗 ( ¯𝑊 − 𝜇 𝑊 ) − 𝑛 𝑗 (b𝜇 𝑊 − 𝜇 𝑊 )/ 𝑛 = ¯𝑈 𝑗 + 𝜋 𝑗 ( ¯𝑊 − 𝜇 𝑊 ) − 𝜋 𝑗 (b𝜇 𝑊 − 𝜇 𝑊 ) + 𝑜 𝑝 (𝑛 −1/2).
+
+Therefore for each 𝑗 ,
+
+0 = ¯𝑈 𝑗 + 𝜋 𝑗 ( ¯𝑊 − 𝜇 𝑊 ) − 𝜋 𝑗 (b𝜇 𝑊 − 𝜇 𝑊 ) − Σ b𝜆 𝑗 
+
+𝑛 + 𝑜 𝑝 (𝑛 −1/2)
+
+Summing over 𝑗 gives b𝜇 𝑊 = ¯𝑊 + 𝑜 𝑝 (𝑛 −1/2). Substituting this back into the above equation yields 𝑛 −1b𝜆 𝑗 = Σ −1 ¯𝑈 𝑗 +
+
+𝑜 𝑝 (𝑛 −1/2).
+
+# S3 Proof of Theorem 1(i) 
+
+By (2), Taylor’s expansion, the law of large numbers, and Lemma 1, ∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+𝐼 (𝑌 𝑖 𝑗 ≤ 𝑦 )
+
+b𝑝 𝑖 𝑗 − 1
+
+𝑛 𝑗 
+
+
+
+= −∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+𝐼 (𝑌 𝑖 𝐴 𝑖 ≤ 𝑦 ) (𝑊 𝑖 − 𝜇 𝑊 )⊤ b𝜆 𝑗 
+
+𝑛 2
+
+> 𝑗
+
++ 𝑜 𝑝 (1)√𝑛 𝑗 
+
+= − C𝑗 (𝑦 )⊤Σ−1 ¯𝑢 𝑗 
+
+𝜋 𝑗 
+
++ 𝑜 𝑝 (1)√𝑛 ,
+
+where ¯𝑢 𝑗 = 𝑛 −1 Í𝑛 𝑖 =1 {𝐼 ( 𝐴 𝑖 = 𝑗 ) − 𝜋 𝑗 }( 𝑊 𝑖 − 𝜇 𝑊 ). Hence, 
+
+b𝐹 𝑗 (𝑦 ) − 𝐹 𝑗 (𝑦 ) = e𝐹 𝑗 (𝑦 ) − 𝐹 𝑗 (𝑦 ) + ∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+𝐼 (𝑌 𝑖 𝐴 𝑖 ≤ 𝑦 )
+
+b𝑝 𝑖 𝑗 − 1
+
+𝑛 𝑗 
+
+
+
+= 1
+
+𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝐼 ( 𝐴 𝑖 = 𝑗 ){ 𝐼 (𝑌 𝑖 𝑗 ≤ 𝑦 ) − 𝐹 𝑗 (𝑦 )} 
+
+𝜋 𝑗 
+
+− C𝑗 (𝑦 )⊤Σ−1 ¯𝑢 𝑗 
+
+𝜋 𝑗 
+
++ 𝑜 𝑝 (1)√𝑛 
+
+= 1
+
+𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝜙 𝑖 𝑗 (𝑦 ) + 𝑜 𝑝 (1)√𝑛 .
+
+This proves the first result in Theorem 1(i). Let C𝑗 and V𝑗 be covariance and variance conditioned on 𝑛 𝑗 . Then 
+
+V𝑗 
+
+ b𝐹 𝑗 (𝑦 ) − 𝐹 𝑗 (𝑦 ) − 𝜋 −1 
+
+> 𝑗
+
+C𝑗 (𝑦 )⊤Σ−1 ¯𝑢 𝑗 
+
+= V𝑗 { b𝐹 𝑗 (𝑦 )} − 2 C𝑗 
+
+𝜋 −1 
+
+> 𝑗
+
+C𝑗 (𝑦 )⊤Σ−1 ¯𝑢 𝑗 , b𝐹 𝑗 (𝑦 ) + V𝑗 
+
+𝜋 −1 
+
+> 𝑗
+
+C𝑗 (𝑦 )⊤Σ−1 ¯𝑢 𝑗 
+
+= 𝐹 𝑗 (𝑦 ){ 1 − 𝐹 𝑗 (𝑦 )} 
+
+𝑛 𝑗 
+
+− 2𝜋 −1 
+
+> 𝑗
+
+C𝑗 (𝑦 )⊤Σ−1 C𝑗 { ¯𝑢 𝑗 , b𝐹 𝑗 (𝑦 )} + 𝜋 −2 
+
+> 𝑗
+
+C𝑗 (𝑦 )⊤Σ−1V𝑗 ( ¯𝑢 𝑗 )Σ−1C𝑗 (𝑦 )
+
+= 𝐹 𝑗 (𝑦 ){ 1 − 𝐹 𝑗 (𝑦 )} 
+
+𝜋 𝑗 𝑛 − 2(1 − 𝜋 𝑗 )
+
+𝜋 𝑗 𝑛 C𝑗 (𝑦 )⊤Σ−1C𝑗 (𝑦 ) + 1 − 𝜋 𝑗 
+
+𝜋 𝑗 𝑛 C𝑗 (𝑦 )⊤Σ−1C𝑗 (𝑦 ) + 𝑜 𝑝 (1)
+
+𝑛 
+
+= 𝐹 𝑗 (𝑦 ){ 1 − 𝐹 𝑗 (𝑦 )} 
+
+𝜋 𝑗 𝑛 − 1 − 𝜋 𝑗 
+
+𝜋 𝑗 𝑛 C𝑗 (𝑦 )⊤Σ−1C𝑗 (𝑦 ) + 𝑜 𝑝 (1)
+
+𝑛 
+
+= 𝑉 𝐹 𝑗 (𝑦 )
+
+𝑛 + 𝑜 𝑝 (1)
+
+𝑛 .
+
+Hence, the convergence in distribution result in Theorem 1(i) follows from the central limit theorem (Ye et al., 2023) applied to the sample mean 𝑛 −1 Í𝑛 𝑖 =1 𝜙 𝑖 𝑗 , under covariate-adaptive randomization satisfying (D). 17 S4 Proof of Theorem 1(ii) 
+
+By (2), Taylor’s expansion for b𝜆 𝑗 /𝑛 at 0, Lemma 1, the law of large numbers, for 𝑠 ≤ 𝜏 𝑗 ,
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+b𝑝 𝑖 𝑗 𝑌 𝑖 𝑗 (𝑠 ) = 1
+
+𝜋 𝑗 𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝑌 𝑖 𝑗 (𝑠 ) + 𝑜 𝑝 (1) = 𝐸 {𝑌 𝑗 (𝑠 )} 
+
+𝜋 𝑗 
+
++ 𝑜 𝑝 (1),
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+b𝑝 𝑖 𝑗 𝑑𝑀 𝑖 𝑗 (𝑠 ) = 1
+
+𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝜋 𝑗 − ( 𝑊 𝑖 − b𝜇 𝑊 )⊤b𝜆 𝑗 /𝑛 𝜋 2
+
+> 𝑗
+
+𝑑𝑀 𝑖 𝑗 (𝑠 ) + 𝑜 𝑝 (1)√𝑛 .
+
+(S2) Under (C) and 𝑡 ≤ 𝜏 𝑗 , 𝑆 𝑗 (𝑡 ) > 0 and 𝐸 {𝑌 𝑗 (𝑡 )} > 0. Hence, by the first result in (S2), for 𝑡 ≤ 𝜏 , with probability tending to 1 as 𝑛 → ∞ , the estimator b𝑆 𝑗 (𝑡 ) is well defined for 𝑡 ≤ 𝜏 . From the argument in Chapter 3 in Flemming and Harrington (1991) for simple randomization and in Wang et al. (2023) for covariate-adaptive randomization, b𝑆 𝑗 (𝑡 ) is consistent for 𝑡 ≤ 𝜏 . Similar to the proof of Theorem 3.2.3 in Flemming and Harrington (1991), by the formulas for integration by parts and the differential of a reciprocal, we have 
+
+b𝑆 𝑗 (𝑡 ) − 𝑆 𝑗 (𝑡 ) = −𝑆 𝑗 (𝑡 )
+
+∫ 𝑡 
+
+> 0
+
+b𝑆 𝑗 (𝑠 −) 
+
+𝑆 𝑗 (𝑠 )
+
+ Í 𝑛 𝑖 =1 b𝑝 𝑖 𝑗 𝑑𝑁 𝑖 𝑗 (𝑠 )
+
+Í𝑛 𝑖 =1 b𝑝 𝑖 𝑗 𝑌 𝑖 𝑗 (𝑠 ) + 𝑑 log 𝑆 𝑗 (𝑠 )
+
+
+
+= −𝜋 𝑗 𝑆 𝑗 (𝑡 )
+
+∫ 𝑡 
+
+> 0
+
+1
+
+𝐸 {𝑌 𝑗 (𝑠 )} 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+b𝑝 𝑖 𝑗 𝑑𝑀 𝑖 𝑗 (𝑠 ) + 𝑜 𝑝 (1)√𝑛 
+
+= 𝑆 𝑗 (𝑡 )
+
+𝑛 
+
+(
+
+−
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+∫ 𝑡 
+
+> 0
+
+𝑑𝑀 𝑖 𝑗 (𝑠 )
+
+𝐸 {𝑌 𝑗 (𝑠 )} +
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+∫ 𝑡 
+
+> 0
+
+(𝑊 𝑖 − b𝜇 𝑊 )⊤ 𝑑𝑀 𝑖 𝑗 (𝑠 )
+
+𝜋 𝑗 𝐸 {𝑌 𝑗 (𝑠 )} 
+
+b𝜆 𝑗 
+
+𝑛 
+
+)
+
++ 𝑜 𝑝 (1)√𝑛 
+
+= − 𝑆 𝑗 (𝑡 )
+
+𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+∫ 𝑡 
+
+> 0
+
+𝑑𝑀 𝑖 𝑗 (𝑠 )
+
+𝐸 {𝑌 𝑗 (𝑠 )} + 𝑆 𝑗 (𝑡 )𝐸 
+
+ 𝑊 ⊤
+
+𝜋 𝑗 
+
+∫ 𝑡 
+
+> 0
+
+𝑑𝑀 𝑗 (𝑠 )
+
+𝐸 {𝑌 𝑗 (𝑠 )} 
+
+ b𝜆 𝑗 
+
+𝑛 + 𝑜 𝑝 (1)√𝑛 
+
+= 1
+
+𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+"
+
+−𝑆 𝑗 (𝑡 )
+
+∫ 𝑡 
+
+> 0
+
+𝑑𝑀 𝑖 𝑗 (𝑠 )
+
+𝐸 {𝑌 𝑗 (𝑠 )} +
+
+𝐼 ( 𝐴 𝑖 = 𝑗 ) − 𝜋 𝑗 Γ𝑗 (𝑡 )⊤Σ−1 (𝑊 𝑖 − 𝜇 𝑊 )
+
+𝜋 𝑗 
+
+#
+
++ 𝑜 𝑝 (1)√𝑛 
+
+= 1
+
+𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝜑 𝑖 𝑗 (𝑡 ) + 𝑜 𝑝 (1)√𝑛 ,
+
+where the second equality follows from the consistency of b𝑆 𝑗 (𝑡 ), the first result in (S2), the definition of 𝑀 𝑖 𝑗 (𝑡 ), and the fact that the first term at the right side multiplying by √𝑛 is asymptotically normal, the third equality follows from the second result in (S2), the fourth equality follows from the law of large numbers, and the fifth equality follows from Lemma 1. This proves the first result in Theorem 1(ii). By the central limit theory for average of random variables under covariate-adaptive randomization (Ye et al., 2022), 18 we can obtain that √𝑛 {b𝑆 𝑗 (𝑡 ) − 𝑆 𝑗 (𝑡 )} 𝑑 
+
+→ 𝑁 (0, 𝑉 𝑆 𝑗 (𝑡 )) , 𝑗 = 1, ..., 𝐽 , where 
+
+𝑉 𝑆 𝑗 (𝑡 ) = Var 
+
+"
+
+𝑆 𝑗 (𝑡 )
+
+∫ 𝑡 
+
+> 0
+
+𝑑𝑀 𝑗 (𝑠 )
+
+𝐸 {𝑌 𝑗 (𝑠 )} −
+
+𝐼 ( 𝐴 = 𝑗 ) − 𝜋 𝑗 Γ𝑗 (𝑡 )⊤Σ−1 (𝑊 − 𝜇 𝑊 )
+
+𝜋 𝑗 
+
+#
+
+= Var 
+
+
+
+𝑆 𝑗 (𝑡 )
+
+∫ 𝑡 
+
+> 0
+
+𝑑𝑀 𝑗 (𝑠 )
+
+𝐸 {𝑌 𝑗 (𝑠 )} 
+
+
+
++ Var 
+
+  𝐼 ( 𝐴 = 𝑗 ) − 𝜋 𝑗 Γ𝑗 (𝑡 )⊤Σ−1 (𝑊 − 𝜇 𝑊 )
+
+𝜋 𝑗 
+
+
+
+− 2Cov 
+
+
+
+𝑆 𝑗 (𝑡 )
+
+∫ 𝑡 
+
+> 0
+
+𝑑𝑀 𝑗 (𝑠 )
+
+𝐸 {𝑌 𝑗 (𝑠 )} ,
+
+𝐼 ( 𝐴 = 𝑗 ) − 𝜋 𝑗 Γ𝑗 (𝑡 )⊤Σ−1 (𝑊 − 𝜇 𝑊 )
+
+𝜋 𝑗 
+
+
+
+= Var 
+
+
+
+𝑆 𝑗 (𝑡 )
+
+∫ 𝑡 
+
+> 0
+
+𝑑𝑀 𝑗 (𝑠 )
+
+𝐸 {𝑌 𝑗 (𝑠 )} 
+
+
+
++ (1 − 𝜋 𝑗 )Γ𝑗 (𝑡 )⊤Σ−1Γ𝑗 (𝑡 )
+
+𝜋 𝑗 
+
+− 2Γ𝑗 (𝑡 )⊤Σ−1
+
+𝜋 𝑗 
+
+𝑆 𝑗 (𝑡 )𝐸 
+
+
+
+𝑊 
+
+∫ 𝑡 
+
+> 0
+
+𝑑𝑀 𝑗 (𝑠 )
+
+𝐸 {𝑌 𝑗 (𝑠 )} 
+
+
+
++ 2Γ𝑗 (𝑡 )⊤Σ−1𝑆 𝑗 (𝑡 )𝐸 
+
+
+
+𝑊 
+
+∫ 𝑡 
+
+> 0
+
+𝑑𝑀 𝑗 (𝑠 )
+
+𝐸 {𝑌 𝑗 (𝑠 )} 
+
+
+
+= Var 
+
+
+
+𝑆 𝑗 (𝑡 )
+
+∫ 𝑡 
+
+> 0
+
+𝑑𝑀 𝑗 (𝑠 )
+
+𝐸 {𝑌 𝑗 (𝑠 )} 
+
+
+
+− (1 − 𝜋 𝑗 )Γ𝑗 (𝑡 )⊤Σ−1Γ𝑗 (𝑡 )
+
+𝜋 𝑗 
+
+.
+
+# S5 Proof of Theorem 2 
+
+Equivalence between (a) and (b). Let 𝛾 𝑗 = Σ −1C𝑔 𝑗 . Define a bridge estimator 
+
+e𝜃 𝑗 = 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+𝑔 (𝑌 𝑖 𝑗 ) − 𝛾 ⊤ 
+
+> 𝑗
+
+( ¯𝑊 𝑗 − ¯𝑊 ).
+
+It is sufficient to show e𝜃 𝑗 − 𝜃 𝑗 = 𝑛 −1 Í 𝜓 𝑔 𝑖 𝑗 + 𝑜 𝑝 (𝑛 −1/2), b𝜃 AUG  
+
+> 𝑗
+
+− e𝜃 𝑗 = 𝑜 𝑝 (𝑛 −1/2), and b𝜃 𝑗 − e𝜃 𝑗 = 𝑜 𝑝 (𝑛 −1/2). It is straightforward that 
+
+e𝜃 𝑗 − 𝜃 𝑗 = 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+{𝑔 (𝑌 𝑖 𝑗 ) − 𝜃 𝑗 } − 𝛾 ⊤ 
+
+> 𝑗
+
+( ¯𝑊 𝑗 − ¯𝑊 )
+
+= 1
+
+𝜋 𝑗 𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝐼 ( 𝐴 𝑖 = 𝑗 ){ 𝑔 (𝑌 𝑖 𝑗 ) − 𝜃 𝑗 } − 1
+
+𝜋 𝑗 
+
+𝛾 ⊤ 
+
+> 𝑗
+
+¯𝑈 𝑗 + 𝑜 𝑝 (𝑛 −1/2)
+
+= 1
+
+𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝐼 ( 𝐴 𝑖 = 𝑗 ){ 𝑔 (𝑌 𝑖 𝑗 ) − 𝜃 𝑗 } − { 𝐼 ( 𝐴 𝑖 = 𝑗 ) − 𝜋 𝑗 }𝛾 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − 𝜇 𝑊 )
+
+𝜋 𝑗 
+
++ 𝑜 𝑝 (𝑛 −1/2)
+
+= 1
+
+𝑛 
+
+> 𝑛
+
+∑︁ 
+
+> 𝑖 =1
+
+𝜓 𝑔 𝑖 𝑗 + 𝑜 𝑝 (𝑛 −1/2),
+
+where the second equation follows from ¯𝑊 𝑗 − ¯𝑊 = 𝜋 −1 
+
+> 𝑗
+
+¯𝑈 𝑗 + 𝑜 𝑝 (𝑛 −1/2).By the law of large numbers under (D), we have bΣ𝑗 = Σ + 𝑜 𝑝 (1) and 𝑛 −1
+
+> 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 (𝑊 𝑖 − ¯𝑊 𝑗 )𝑔 (𝑌 𝑖 𝑗 ) = C𝑔 𝑗 + 𝑜 𝑝 (1).Therefore, b𝛾 𝑗 = 𝛾 𝑗 + 𝑜 𝑝 (1), which implies b𝜃 AUG  
+
+> 𝑗
+
+− e𝜃 𝑗 = −( b𝛾 𝑗 − 𝛾 𝑗 )⊤ ( ¯𝑊 𝑗 − ¯𝑊 ) = 𝑜 𝑝 (𝑛 −1/2) using ¯𝑊 𝑗 − ¯𝑊 = 𝑂 𝑝 (𝑛 −1/2).It remains to show b𝜃 𝑗 − e𝜃 𝑗 = 𝑜 𝑝 (𝑛 −1/2). By lemma 1, we have 𝑛 −1b𝜆 𝑗 = Σ −1 ¯𝑈 𝑗 + 𝑜 𝑝 (𝑛 −1/2). Using ¯𝑊 𝑗 − ¯𝑊 =
+
+𝜋 −1 
+
+> 𝑗
+
+¯𝑈 𝑗 + 𝑜 𝑝 (𝑛 −1/2) again gives 𝑛 −1 
+
+> 𝑗
+
+b𝜆 𝑗 = Σ −1 ( ¯𝑊 𝑗 − ¯𝑊 ) + 𝑜 𝑝 (𝑛 −1/2). Recall our notation 𝑠 𝑖 𝑗 = b𝜆 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − b𝜇 𝑊 )/ 𝑛 𝑗 in the proof of lemma 1 and the result max 𝑖 :𝐴 𝑖 = 𝑗 |𝑠 𝑖 𝑗 | = 𝑜 𝑝 (1). Then we expand the b𝜃 𝑗 as follows, with probability 19 approaching 1, 
+
+b𝜃 𝑗 =∑︁   
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+b𝑝 𝑖 𝑗 𝑔 (𝑌 𝑖 𝑗 )
+
+= 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+𝑔 (𝑌 𝑖 𝑗 )
+
+1 + 𝑠 𝑖 𝑗 
+
+= 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+𝑔 (𝑌 𝑖 𝑗 )
+
+n
+
+1 − 𝑠 𝑖 𝑗 + 𝑂 (𝑠 2 
+
+> 𝑖 𝑗
+
+)
+
+o
+
+= 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+𝑔 (𝑌 𝑖 𝑗 ) − 
+
+b𝜆 ⊤
+
+> 𝑗
+
+𝑛 𝑗 
+
+!  
+
+1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+(𝑊 𝑖 − b𝜇 𝑊 )𝑔 (𝑌 𝑖 𝑗 )
+
+
+
++ 𝑅 𝑛 𝑗 ,
+
+where 𝑅 𝑛 𝑗 = 𝑛 −1
+
+> 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 𝑔 (𝑌 𝑖 𝑗 )𝑂 (𝑠 2 
+
+> 𝑖 𝑗
+
+) and the third equation comes from (1 + 𝑠 )−1 = 1 − 𝑠 + 𝑂 (𝑠 2) when 𝑠 is in a small neighborhood around zero. For 𝑅 𝑛 𝑗 , we can see that 
+
+|𝑅 𝑛 𝑗 | ≤ max    
+
+> 𝑖 :𝐴 𝑖 =𝑗
+
+|𝑠 𝑖 𝑗 | 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+|𝑔 (𝑌 𝑖 𝑗 )| ∥b𝜆 𝑗 ∥
+
+𝑛 𝑗 
+
+∥𝑊 𝑖 − b𝜇 𝑊 ∥𝑂 (1) = 𝑜 𝑝 (1)𝑂 𝑝 (𝑛 −1/2)𝑂 𝑝 (1) = 𝑜 𝑝 (𝑛 −1/2),
+
+where we used b𝜆 𝑗 /𝑛 𝑗 = 𝑂 𝑝 (𝑛 −1/2) and 1
+
+> 𝑛 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 |𝑔 (𝑌 𝑖 𝑗 )|∥ 𝑊 𝑖 − b𝜇 𝑊 ∥ = 𝑂 𝑝 (1) by Cauchy-Schwarz inequality. By the law of large number and Lemma 1, we have 1
+
+> 𝑛 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 (𝑊 𝑖 − b𝜇 𝑊 )𝑔 (𝑌 𝑖 𝑗 ) = C𝑔 𝑗 + 𝑜 𝑝 (1). Recall that 𝑛 −1 
+
+> 𝑗
+
+b𝜆 𝑗 =Σ−1 ( ¯𝑊 𝑗 − ¯𝑊 ) + 𝑜 𝑝 (𝑛 −1/2). Together gives 
+
+b𝜃 𝑗 = 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+𝑔 (𝑌 𝑖 𝑗 ) − C𝑔 ⊤ 
+
+> 𝑗
+
+Σ−1 ( ¯𝑊 𝑗 − ¯𝑊 ) + 𝑜 𝑝 (𝑛 −1/2) = e𝜃 𝑗 + 𝑜 𝑝 (𝑛 −1/2),
+
+which completes the proof of equivalence between (a) and (b). 
+
+Equivalence between (a) and (c). It remains only to prove b𝜃 EB  
+
+> 𝑗
+
+= e𝜃 𝑗 + 𝑜 𝑝 (𝑛 −1/2). Entropy balancing has a strictly convex finite-dimensional dual, and the corresponding primal weights have a normalized exponential form by the KKT conditions (Zhao and Percival, 2017). Applying the same KKT calculation gives 
+
+b𝑝 EB  
+
+> 𝑖 𝑗
+
+= exp {b𝜈 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑖 − ¯𝑊 )} 
+
+Í𝑘 :𝐴 𝑘 = 𝑗 exp {b𝜈 ⊤ 
+
+> 𝑗
+
+(𝑊 𝑘 − ¯𝑊 )} ,
+
+where b𝜈 𝑗 is chosen so that Í𝑖 :𝐴 𝑖 = 𝑗 b𝑝 EB  
+
+> 𝑖 𝑗
+
+(𝑊 𝑖 − ¯𝑊 ) = 0. Equivalently, define 
+
+ℎ𝑗 (𝜈 ) = 𝑛 −1
+
+> 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 exp {𝜈 ⊤ (𝑊 𝑖 − ¯𝑊 )}( 𝑊 𝑖 − ¯𝑊 )
+
+𝑛 −1
+
+> 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 exp {𝜈 ⊤ (𝑊 𝑖 − ¯𝑊 )} 
+
+with ℎ𝑗 (b𝜈 𝑗 ) = 0. We expand ℎ𝑗 (𝜈 ) near 𝜈 = 0 under ∥𝜈 ∥ = 𝑂 (𝑛 −1/2). Recall that max 𝑖 ∥𝑊 𝑖 − ¯𝑊 ∥ = 𝑜 𝑝 (𝑛 1/2) and 
+
+¯𝑊 𝑗 − ¯𝑊 = 𝑂 𝑝 (𝑛 −1/2). We have max 𝑖 :𝐴 𝑖 = 𝑗 |𝜈 ⊤ (𝑊 𝑖 − ¯𝑊 )| = 𝑜 𝑝 (1). By using exp (𝑥 ) = 1 + 𝑥 + 𝑂 (𝑥 2) around 𝑥 = 0, the numerator of ℎ𝑗 becomes 
+
+1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+(𝑊 𝑖 − ¯𝑊 ) + 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+(𝑊 𝑖 − ¯𝑊 )( 𝑊 𝑖 − ¯𝑊 )⊤𝜈 + 𝑜 𝑝 (𝑛 −1/2),
+
+where the remainder is from 𝑂 𝑝 (∥ 𝜈 ∥2𝑛 −1
+
+> 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 ∥𝑊 𝑖 − ¯𝑊 ∥3) = 𝑂 𝑝 (𝑛 −1) = 𝑜 𝑝 (𝑛 −1/2). The first term is ¯𝑊 𝑗 − ¯𝑊 and the second is bΣ𝑗 𝜈 + ( ¯𝑊 𝑗 − ¯𝑊 )( ¯𝑊 𝑗 − ¯𝑊 )⊤𝜈 = bΣ𝑗 𝜈 + 𝑜 𝑝 (𝑛 −1/2), where bΣ𝑗 = 𝑛 −1
+
+> 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 (𝑊 𝑖 − ¯𝑊 𝑗 )( 𝑊 𝑖 − ¯𝑊 𝑗 )⊤. So the numerator is ¯𝑊 𝑗 − ¯𝑊 + bΣ𝑗 𝜈 + 𝑜 𝑝 (𝑛 −1/2). Similarly we can show the denominator of ℎ𝑗 is 1 + 𝑂 𝑝 (𝑛 −1). Therefore, 
+
+ℎ𝑗 (𝜈 ) = ¯𝑊 𝑗 − ¯𝑊 + bΣ𝑗 𝜈 + 𝑜 𝑝 (𝑛 −1/2).
+
+20 To justify that the solution lies in this local region, let 𝑄 𝑗 (𝜈 ) = log {𝑛 −1
+
+> 𝑗
+
+Í𝑖 :𝐴 𝑖 = 𝑗 exp [𝜈 ⊤ (𝑊 𝑖 − ¯𝑊 )]} , so that ∇𝑄 𝑗 (𝜈 ) =
+
+ℎ𝑗 (𝜈 ). Since bΣ𝑗 →𝑝 Σ and Σ is positive definite, with probability tending to one there is a constant 𝑐 > 0 such that the smallest eigenvalue of bΣ𝑗 is larger than 𝑐 . Also ∥ ¯𝑊 𝑗 − ¯𝑊 ∥ = 𝑂 𝑝 (𝑛 −1/2). Hence, for ∥𝜈 ∥ = 𝑀𝑛 −1/2,
+
+𝜈 ⊤ ℎ𝑗 (𝜈 ) = 𝜈 ⊤ ( ¯𝑊 𝑗 − ¯𝑊 ) + 𝜈 ⊤bΣ𝑗 𝜈 + 𝜈 ⊤𝑜 𝑝 (𝑛 −1/2)≥ −∥ 𝜈 ∥ ∥ ¯𝑊 𝑗 − ¯𝑊 ∥ + 𝑐 ∥𝜈 ∥2 + ∥ 𝜈 ∥𝑜 𝑝 (𝑛 −1/2)≥ 𝑛 −1 {𝑐𝑀 2 − 𝑂 𝑝 (𝑀 ) + 𝑜 𝑝 (𝑀 )} .
+
+Choosing 𝑀 large enough gives 𝜈 ⊤ ℎ𝑗 (𝜈 ) > 0 on the boundary with probability tending to one. Since 𝑄 𝑗 is convex and the EB solution is unique, the minimizer lies inside this ball. Hence ∥b𝜈 𝑗 ∥ = 𝑂 𝑝 (𝑛 −1/2). Plugging into the expansion gives 
+
+0 = ℎ𝑗 (b𝜈 𝑗 ) = ¯𝑊 𝑗 − ¯𝑊 + bΣ𝑗 b𝜈 𝑗 + 𝑜 𝑝 (𝑛 −1/2) and therefore b𝜈 𝑗 = −bΣ−1 
+
+> 𝑗
+
+( ¯𝑊 𝑗 − ¯𝑊 ) + 𝑜 𝑝 (𝑛 −1/2) = −Σ−1 ( ¯𝑊 𝑗 − ¯𝑊 ) + 𝑜 𝑝 (𝑛 −1/2).
+
+Following how we expand ℎ𝑗 and b𝜃 𝑗 , we have 
+
+b𝜃 EB  
+
+> 𝑗
+
+= 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+𝑔 (𝑌 𝑖 𝑗 ) + b𝜈 ⊤
+
+> 𝑗
+
+
+
+1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+(𝑊 𝑖 − ¯𝑊 𝑗 )𝑔 (𝑌 𝑖 𝑗 )
+
+
+
++ 𝑜 𝑝 (𝑛 −1/2)
+
+= 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+𝑔 (𝑌 𝑖 𝑗 ) − C𝑔 ⊤ 
+
+> 𝑗
+
+Σ−1 ( ¯𝑊 𝑗 − ¯𝑊 ) + 𝑜 𝑝 (𝑛 −1/2)
+
+= e𝜃 𝑗 + 𝑜 𝑝 (𝑛 −1/2),
+
+which completes the proof. 
+
+# S6 Proof of Theorem 3 
+
+The proof of Theorem 3(i) follows from Theorem 1(i) and Bahadur’s representation, e.g., Theorem 5.11 in Shao (2003). Let 𝑞 𝑙 = 𝐹 −1 
+
+> 𝑙
+
+( 𝑝 ) and b𝑞 𝑙 = b𝐹 −1 
+
+> 𝑙
+
+( 𝑝 ). Then 𝑛 1/2 {b𝑞 𝑗 − b𝑞 𝑘 − 𝑞 𝑗 + 𝑞 𝑘 } = 𝑛 −1/2 Í𝑛 𝑖 =1 {− 𝑓 −1 
+
+> 𝑗 𝑝
+
+𝜙 𝑖 𝑗 (𝑞 𝑗 ) + 𝑓 −1 
+
+> 𝑘 𝑝
+
+𝜙 𝑖𝑘 (𝑞 𝑘 )} + 𝑜 𝑝 (1)
+
+and the variance is 
+
+𝑉 𝐹 𝑗 (𝑞 𝑗 )
+
+𝑓 2
+
+> 𝑗 𝑝
+
++ 𝑉 𝐹 𝑘 (𝑞 𝑘 )
+
+𝑓 2
+
+> 𝑘 𝑝
+
+− 2
+
+𝑓 𝑗 𝑝 𝑓 𝑘 𝑝 
+
+Cov (𝜙 𝑖 𝑗 (𝑞 𝑗 ), 𝜙 𝑖𝑘 (𝑞 𝑘 )) 
+
+= 𝑝 (1 − 𝑝 ) − ( 1 − 𝜋 𝑗 )C⊤ 
+
+> 𝑗
+
+Σ−1C𝑗 
+
+𝜋 𝑗 𝑓 2
+
+> 𝑗 𝑝
+
++ 𝑝 (1 − 𝑝 ) − ( 1 − 𝜋 𝑘 )C⊤ 
+
+> 𝑘
+
+Σ−1C𝑘 
+
+𝜋 𝑘 𝑓 2
+
+> 𝑘 𝑝
+
+− 2C⊤ 
+
+> 𝑗
+
+Σ−1C𝑘 
+
+𝑓 𝑗 𝑝 𝑓 𝑘 𝑝 
+
+= 𝑝 (1 − 𝑝 )
+
+𝜋 𝑗 𝑓 2
+
+> 𝑗 𝑝
+
++ 𝑝 (1 − 𝑝 )
+
+𝜋 𝑘 𝑓 2
+
+> 𝑘 𝑝
+
+− 𝜉 𝑗 𝑘 ,
+
+where, with eC𝑙 = C𝑙 / 𝑓 𝑙 𝑝 ,
+
+𝜉 𝑗 𝑘 = 1 − 𝜋 𝑗 
+
+𝜋 𝑗 
+
+eC⊤ 
+
+> 𝑗
+
+Σ−1eC𝑗 + 1 − 𝜋 𝑘 
+
+𝜋 𝑘 
+
+eC⊤ 
+
+> 𝑘
+
+Σ−1eC𝑘 + 2eC⊤ 
+
+> 𝑗
+
+Σ−1eC𝑘 
+
+=
+
+ 𝜋 𝑘 
+
+𝜋 𝑗 (𝜋 𝑗 + 𝜋 𝑘 ) + 1 − 𝜋 𝑗 − 𝜋 𝑘 
+
+(𝜋 𝑗 + 𝜋 𝑘 )
+
+eC⊤ 
+
+> 𝑗
+
+Σ−1eC𝑗 +
+
+ 𝜋 𝑗 
+
+𝜋 𝑘 (𝜋 𝑗 + 𝜋 𝑘 ) + 1 − 𝜋 𝑗 − 𝜋 𝑘 
+
+(𝜋 𝑗 + 𝜋 𝑘 )
+
+eC⊤ 
+
+> 𝑘
+
+Σ−1eC𝑘 
+
++ ( 2
+
+𝜋 𝑗 + 𝜋 𝑘 
+
+− 2 1 − 𝜋 𝑗 − 𝜋 𝑘 
+
+𝜋 𝑗 + 𝜋 𝑘 
+
+)eC⊤ 
+
+> 𝑗
+
+Σ−1eC𝑘 
+
+= (𝜋 𝑘 eC𝑗 + 𝜋 𝑗 eC𝑘 )⊤Σ−1 (𝜋 𝑘 eC𝑗 + 𝜋 𝑗 eC𝑘 )
+
+𝜋 𝑗 𝜋 𝑘 (𝜋 𝑗 + 𝜋 𝑘 ) + 1 − 𝜋 𝑗 − 𝜋 𝑘 
+
+𝜋 𝑗 + 𝜋 𝑘 
+
+(eC𝑗 − eC𝑘 )⊤Σ−1 (eC𝑗 − eC𝑘 ).
+
+The proof of Theorem 3(iii) follows from Theorem 1(ii) and the argument in Sun et al. (2025). For Theorem 3(ii), by Lemma 1, 
+
+√𝑛 (b𝜃 𝑗 𝑘 − 𝜃 𝑗 𝑘 ) = √𝑛 { ¯𝐷 𝑗 𝑘 + ¯𝐷 𝑘 𝑗 + ( ¯𝑊 𝑗 − ¯𝑊 )⊤ 𝛽 𝑗 − ( ¯𝑊 𝑘 − ¯𝑊 )⊤ 𝛽 𝑘 } + 𝑜 𝑝 (1),
+
+21 where 
+
+¯𝐷 𝑗 𝑘 = 1
+
+𝑛 𝑗 ∑︁ 𝑖 :𝐴 𝑖 = 𝑗 
+
+{1 − 𝐹 𝑘 (𝑌 𝑖 𝑗 ) − 𝜃 𝑗 𝑘 }, ¯𝐷 𝑘 𝑗 = 1
+
+𝑛 𝑘 ∑︁ 𝑖 :𝐴 𝑖 =𝑘 
+
+{𝐹 𝑗 (𝑌 𝑖𝑘 ) − 𝜃 𝑗 𝑘 },
+
+and 𝛽 𝑗 = Σ −1C𝑗 𝑘 , 𝛽 𝑘 = Σ −1C𝑘 𝑗 . The rest of proof follows the same argument in the proofs of Corollary 1 and Theorem 3 in Ye et al. (2023), since ¯𝐷 𝑗 𝑘 and ¯𝐷 𝑘 𝑗 are types of sample means with outcomes in treatment groups 𝑗 and 𝑘 ,respectively, and 
+
+𝜁 𝑗 𝑘 = lim  
+
+> 𝑛 →∞
+
+𝑛 
+
+ 𝑛 (𝑛 𝑗 𝛽 𝑘 + 𝑛 𝑘 𝛽 𝑗 )⊤Σ(𝑛 𝑗 𝛽 𝑘 + 𝑛 𝑘 𝛽 𝑗 )
+
+𝑛 𝑗 𝑛 𝑘 (𝑛 𝑗 + 𝑛 𝑘 ) + (𝑛 − 𝑛 𝑗 − 𝑛 𝑘 )( 𝛽 𝑗 − 𝛽 𝑘 )⊤Σ(𝛽 𝑗 − 𝛽 𝑘 )(𝑛 𝑗 + 𝑛 𝑘 )𝑛 
+
+
+
+.
+
+# S7 Simulation results for censored outcome under scenario 3 in Zhang (2015) 
+
+We provide simulation results under Section 6 with simulation setting changed to that in scenario 3 in Zhang (2015), where covariate 𝑋 = (𝐵, 𝑋 1, 𝑋 2, 𝑋 3)⊤, 𝐵 is binary with 𝑃 (𝐵 = 1) = 0.5, 𝑋 1, 𝑋 2, and 𝑋 3 standard normal variables that are independent except that 𝑋 3 is correlated with 𝑋 2 with a correlation coefficient 0.3, the life time 𝑇 𝑗 ∼ log 𝑁 (0.5𝐵 +
+
+0.5𝑋 2 +0.6𝑋 3 +0.3( 𝑗 −1), 1) (conditioned on 𝑋 ), and the censoring time 𝐶 𝑗 ∼ uniform(0, 10) +0.75 ( 𝑗 −1), independent of 𝑋 and 𝑇 𝑗 , 𝑗 = 1, 2. For assigning treatments, we employ simple randomization and the stratified permuted block of size 4, where the strata are formed by 𝑍 with two components, 𝐵 and 𝑋 3 discretized into four categories with equal probabilities based on the quartiles. The adjusted covariate used in estimation is 𝑊 = (𝐵, 𝑋 1𝑐 , 𝑋 2𝑐 , 𝑋 3𝑐 )⊤ under simple randomization and 𝑊 = (𝑍, 𝑋 1𝑐 , 𝑋 2𝑐 , 𝑋 3𝑐 )⊤ under stratified permuted block randomization with 𝑋 𝑙𝑐 being 𝑋 𝑙 truncated at −5 and 5. The simulation results similar to those in Table1 of Section 6 are given in the following table, based on 2,000 replications. 
+
+# S8 Simulation results for non-censored outcome 
+
+We consider a simulation with 𝐽 = 2 to evaluate and compare the finite sample performances of covariate adjusted MELE b𝐹 1 in (4) with 𝑗 = 1 and a univariate 𝑋 , the unadjusted e𝐹 1 in (3), and the covariate adjustment by regression 
+
+b𝐹 A1 in (5) (Rao et al., 1990). The simulation setting is simple randomization with 𝑛 1 = 𝑛 2 = 100 , 𝑋 distributed as the chi-square distribution with one degree of freedom, and 𝑌 1 distributed as 𝑁 (𝛽𝑋, 1) with 𝛽 = 3 conditioned on 𝑋 .We examine the estimation of 𝐹 1 (𝑦 ) at 𝑦 = the 25%, 50%, and 75% quantiles of 𝐹 1, the estimation of quantiles 
+
+𝐹 −11 (0.25 ), 𝐹 −11 (0.5), and 𝐹 −11 (0.75 ), and the estimation of mean of 𝐹 1. Based on 2,000 simulation replications, the following table gives the average of bias (AB), standard deviation (SD), average of estimated SD (SE), coverage probability of 95% Wald confidence interval (CP), and relative efficiency (RE) defined as (SD 2 of unadjusted)/SD 2. For each estimator, the SE is squared root of the variance estimator discussed in Section 5. For quantile estimators, the bootstrap described in §1 is applied with 𝐵 = 500 .The simulation findings are similar to those in Section 6. For quantile estimators, the bootstrap variance estimator work well. In every of 2,000 simulation runs, the adjusted estimator b𝐹 A1 defined by (5) is not monotone somewhere in the outcome range. 22 Performance of estimation Randomization 𝑗 𝑡 𝑆 𝑗 (𝑡 ) Estimator AB SD SE CP RE Simple 1 1 0.573 Kaplan-Meier 0.001 0.050 0.051 0.949 Proposed MELE 0.001 0.047 0.046 0.936 1.13 Zhang’s AGEE 0.001 0.047 0.046 0.940 1.14 2 0.372 Kaplan-Meier 0.001 0.052 0.051 0.947 Proposed MELE 0.001 0.049 0.046 0.933 1.13 Zhang’s AGEE 0.001 0.049 0.046 0.935 1.13 3 0.267 Kaplan-Meier 0.000 0.049 0.048 0.953 Proposed MELE 0.000 0.046 0.044 0.944 1.10 Zhang’s AGEE 0.000 0.046 0.044 0.945 1.10 2 1 0.657 Kaplan-Meier 0.000 0.047 0.047 0.944 Proposed MELE 0.001 0.043 0.043 0.940 1.15 Zhang’s AGEE 0.001 0.044 0.043 0.938 1.15 2 0.458 Kaplan-Meier 0.001 0.051 0.051 0.946 Proposed MELE 0.002 0.048 0.046 0.936 1.14 Zhang’s AGEE 0.002 0.048 0.046 0.937 1.15 3 0.343 Kaplan-Meier 0.002 0.051 0.050 0.942 Proposed MELE 0.002 0.049 0.045 0.929 1.10 Zhang’s AGEE 0.003 0.048 0.045 0.934 1.10 Zhang’s AGEE 0.05% non-monotone estimated curves Stratified 1 1 0.573 Kaplan-Meier 0.001 0.047 0.050 0.965 permuted Proposed MELE 0.001 0.046 0.045 0.946 block Zhang’s AGEE 0.001 0.046 0.045 0.945 2 0.372 Kaplan-Meier 0.001 0.050 0.051 0.955 Proposed MELE 0.001 0.049 0.045 0.931 Zhang’s AGEE 0.001 0.049 0.045 0.930 3 0.267 Kaplan-Meier 0.000 0.046 0.048 0.960 Proposed MELE 0.001 0.046 0.043 0.933 Zhang’s AGEE 0.000 0.046 0.043 0.935 2 1 0.657 Kaplan-Meier 0.000 0.046 0.048 0.962 Proposed MELE 0.000 0.045 0.043 0.930 Zhang’s AGEE 0.001 0.045 0.043 0.931 2 0.458 Kaplan-Meier 0.000 0.049 0.051 0.955 Proposed MELE 0.000 0.048 0.046 0.933 Zhang’s AGEE 0.000 0.048 0.046 0.936 3 0.343 Kaplan-Meier 0.001 0.049 0.050 0.956 Proposed MELE 0.001 0.047 0.045 0.932 Zhang’s AGEE 0.001 0.047 0.045 0.933 Zhang’s AGEE 0.35% non-monotone estimated curves 
+
+23 Performance of estimation Estimand type True parameter Estimator AB SD SE CP RE Distribution 𝐹 1 (𝑦 1) = 0.250 Unadjusted 0.002 0.045 0.043 0.942 Proposed MELE 0.001 0.044 0.042 0.930 1.08 Adjustment (5) 0.001 0.044 0.042 0.932 1.04 
+
+𝐹 1 (𝑦 2) = 0.500 Unadjusted 0.000 0.051 0.050 0.941 Proposed MELE 0.000 0.046 0.045 0.945 1.19 Adjustment (5) 0.001 0.044 0.045 0.954 1.30 
+
+𝐹 1 (𝑦 3) = 0.750 Unadjusted 0.000 0.042 0.043 0.945 Proposed MELE 0.000 0.036 0.036 0.944 1.39 Adjustment (5) 0.000 0.035 0.036 0.955 1.49 Quantile 𝐹 −11 (0.25 ) = 0.363 Unadjusted -0.023 0.216 0.219 0.933 Proposed MELE -0.001 0.208 0.212 0.938 1.08 Adjustment (5) -0.048 0.214 0.215 0.913 1.02 
+
+𝐹 −11 (0.5) = 1.639 Unadjusted -0.012 0.315 0.324 0.939 Proposed MELE 0.010 0.288 0.296 0.940 1.20 Adjustment (5) -0.024 0.271 0.275 0.931 1.36 
+
+𝐹 −11 (0.75 ) = 4.120 Unadjusted -0.065 0.689 0.737 0.932 Proposed MELE 0.016 0.603 0.628 0.933 1.31 Adjustment (5) -0.076 0.560 0.567 0.922 1.52 Mean ∫ 𝑦 𝑑𝐹 1 (𝑦 ) = 3.000 Unadjusted -0.009 0.433 0.427 0.933 Proposed MELE -0.009 0.330 0.305 0.920 1.73 Adjustment (5) -0.004 0.325 0.305 0.928 1.78 
+
+# S9 Values of estimates in the example of Section 7 
+
+Table S1: Survival estimates and RMST difference at selected weeks 
+
+Proposed MELE Kaplan-Meier Week estimate SE estimate SE SE 2 reduction Control 12 0.987 0.009 0.987 0.009 0.8% 24 0.973 0.013 0.974 0.013 1.9% 36 0.948 0.018 0.948 0.018 0.9% 48 0.874 0.027 0.875 0.027 1.3% 60 0.823 0.031 0.821 0.031 2.0% 72 0.812 0.032 0.808 0.032 1.9% 84 0.744 0.038 0.738 0.038 3.5% 96 0.672 0.048 0.667 0.048 2.4% Treatment 12 0.970 0.013 0.969 0.014 0.7% 24 0.948 0.017 0.950 0.017 1.3% 36 0.948 0.017 0.950 0.017 1.3% 48 0.933 0.019 0.937 0.019 2.0% 60 0.914 0.022 0.917 0.022 2.3% 72 0.898 0.023 0.903 0.024 2.4% 84 0.849 0.031 0.851 0.032 2.6% 96 0.800 0.042 0.818 0.043 4.2% RMST diff 100 5.348 2.563 5.837 2.640 5.7% SE 2 reduction = (SE 2 of Kaplan-Meier − SE 2)/(SE 2 of Kaplan-Meier) 
+
+24 References 
+
+Baldi Antognini, A. and Zagoraiou, M. (2015). On the almost sure convergence of adaptive allocation procedures. 
+
+Bernoulli Journal , 21(2):881–908. Bannick, M., Shao, J., Liu, J., Du, Y., Yi, Y., and Ye, T. (2025). A general form of covariate adjustment in clinical trials under covariate-adaptive randomization. Biometrika , 112:in press. Chen, J., Variyath, A. M., and Abraham, B. (2008). Adjusted empirical likelihood and its properties. Journal of Computational and Graphical Statistics , 17(2):426–443. Chernozhukov, V., Fern´ andez-Val, I., and Galichon, A. (2010). Quantile and probability curves without crossing. 
+
+Econometrica , 78(3):1093–1125. Claggett, B., McCaw, Z., Tian, L., McMurray, J.J.and Jhund, P., Uno, H., Pfeffer, M., Solomon, S., and Wei, L.-J. (2022). Quantifying treatment effects in trials with multiple event-time outcomes. NEJM Evidence , 1:EVIDoa2200047. Cohen, P. L. and Fogarty, C. B. (2023). No-harm calibration for generalized Oaxaca–Blinder estimators. Biometrika ,111(1):331–338. Del Prato, S., Kahn, S. E., Pavo, I., Weerakkody, G. J., Yang, Z., Doupis, J., Aizenberg, D., Wynne, A. G., Riesmeyer, J. S., Heine, R. J., et al. (2021). Tirzepatide versus insulin glargine in type 2 diabetes and increased cardiovascular risk (surpass-4): a randomised, open-label, parallel-group, multicentre, phase 3 trial. The Lancet , 398(10313):1811–1824. EMA (2015). Guideline on adjustment for baseline covariates in clinical trials. Committee for Medicinal Products for Human Use, European Medicines Agency (EMA). FDA (2021). Adjusting for covariates in randomized clinical trials for drugs and biological products. Draft Guidance for Industry. Center for Drug Evaluation and Research and Center for Biologics Evaluation and Research, Food and Drug Administration (FDA), U.S. Department of Health and Human Services. May 2021. Flemming, T. R. and Harrington, D. P. (1991). Counting Processes and Survival Analysis . Wiley, New York. ICH E9 (1998). Statistical principles for clinical trials E9. International Council for Harmonisation (ICH). Jiang, J. (2010). Large Sample Techniques for Statistics . Springer. Kalbfleisch, J. D. and Prentice, R. L. (2011). The Statistical Analysis of Failure Time Data . Wiley, New York. Kaplan, E. L. and Meier, P. (1958). Nonparametric estimation from incomplete observations. Journal of the American statistical association , 53(282):457–481. Liu, H. and Yang, Y. (2020). Regression-adjusted average treatment effect estimates in stratified randomized experiments. 
+
+Biometrika , 107(4):935–948. Neyman, J. (1923). On the application of probability theory to agricultural experiments. Statistical Science , 5(4):465– 472. Translation by D.M. Dabrowska and T.P. Speed (1990). Owen, A. B. (1988). Empirical likelihood ratio confidence intervals for a single functional. Biometrika , 75:237–249. Owen, A. B. (2001). Empirical Likelihood . Chapman and Hall/CRC, New York. Pocock, S. J. and Simon, R. (1975). Sequential treatment assignment with balancing for prognostic factors in the controlled clinical trial. Biometrics , 31(1):103–115. Qin, J. and Lawless, J. (1994). Empirical likelihood and general estimating equations. The Annals of Statistics ,22(1):300–325. 25 Rao, J., Kovar, J., and Mantel, H. (1990). On estimating distribution functions and quantiles from survey data using auxiliary information. Biometrika , 77:365–375. Rubin, D. B. (1974). Estimating causal effects of treatments in randomized and nonrandomized studies. Journal of Educational Psychology , 6(5):688–701. Schulz, K. F. and Grimes, D. A. (2002). Generation of allocation sequences in randomised trials: chance, not choice. 
+
+The Lancet , 359(9305):515–519. Shao, J. (2003). Mathematical Statistics . Second Edition. Springer. Shao, J. (2021). Inference for covariate-adaptive randomization: Aspects of methodology and theory (with discussions). 
+
+Statistical Theory and Related Fields , 5:172–186. Sun, J., Wang, T., Yi, Y., Ye, T., Shao, J., and Du, Y. (2025). Improve the precision of area under the curve estimation for recurrent events through covariate adjustment. Statistics in Medicine , 38:in press. Taves, D. R. (1974). Minimization: A new method of assigning patients to treatment and control groups. Clinical Pharmacology and Therapeutics , 15(5):443–453. Wang, B., Ogburn, E. L., and Rosenblum, M. (2019). Analysis of covariance in randomized trials: More precision and valid confidence intervals, without model assumptions. Biometrics , 75(4):1391–1400. Wang, B., Susukida, R., Mojtabai, R., Amin-Esmaeili, M., and Rosenblum, M. (2023). Model-robust inference for clinical trials that improve precision by stratified randomization and covariate adjustment. Journal of the American Statistical Association , 118:1152–1163. Ye, T., Shao, J., and Yi, Y. (2024). Covariate-adjusted log-rank test: guaranteed efficiency gain and universal applicability. 
+
+Biometrika , 111:691–705. Ye, T., Shao, J., Yi, Y., and Zhao, Q. (2023). Toward better practice of covariate adjustment in analyzing randomized clinical trials. Journal of the American Statistical Association , 118:2370–2382. Ye, T., Yi, Y., and Shao, J. (2022). Inference on average treatment effect under minimization and other covariate-adaptive randomization methods. Biometrika , 109:33–47. Zelen, M. (1974). The randomization and stratification of patients to clinical trials. Journal of Chronic Diseases ,27(7):365–375. Zhang, M. (2015). Robust methods to improve efficiency and reduce bias in estimating survival curves in randomized clinical trials. Lifetime Data Analysis , 21(1):119–137. Zhang, M., Tsiatis, A. A., and Davidian, M. (2008). Improving efficiency of inferences in randomized clinical trials using auxiliary covariates. Biometrics , 64(3):707–715. Zhao, Q. and Percival, D. (2017). Entropy balancing is doubly robust. Journal of Causal Inference , 5(1):20160010. 26

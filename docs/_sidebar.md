@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-28 <!--dpr-date:20260828-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/28/2608.19423v1-shape-preserving-covariate-adjustment-via-empirical-likelihood-in-randomized-experiment" data-sidebar-item="{&quot;title&quot;: &quot;Shape-Preserving Covariate Adjustment via Empirical Likelihood in Randomized Experiment&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.19423v1-shape-preserving-covariate-adjustment-via-empirical-likelihood-in-randomized-experiment&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;随机实验中保留形状的协变量调整方法，可应用于运动对皮瓣存活效果的估计&quot;}">Shape-Preserving Covariate Adjustment via Empirical Likelihood in Randomized Experiment</a>
   * 2026-08-26 <!--dpr-date:20260826-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/26/2608.20935v1-an-imaging-informed-reaction-diffusion-model-of-infarct-growth" data-sidebar-item="{&quot;title&quot;: &quot;An Imaging-Informed Reaction-Diffusion Model of Infarct Growth&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.20935v1-an-imaging-informed-reaction-diffusion-model-of-infarct-growth&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;flap-ex-met&quot;}], &quot;evidence&quot;: &quot;影像驱动的反应-扩散模型刻画缺血组织损伤与代谢性细胞死亡，可迁移至皮瓣坏死研究&quot;}">An Imaging-Informed Reaction-Diffusion Model of Infarct Growth</a>
