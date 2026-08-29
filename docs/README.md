@@ -7,26 +7,21 @@
 
 ## 每次日报
 - 最新运行日期：2026-08-29
-- 运行时间：2026-08-29 02:22:42 UTC
+- 运行时间：2026-08-29 22:03:44 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：0
 - 精读区：0
-- 速读区：2
+- 速读区：0
 
 ### 今日简报（AI）
-今日速读2篇因果推断论文，聚焦异质性效应与生存分析。最值得关注的是《Causal Survival Forests with Negative Controls》（7.0分），用负控制处理未观测混杂。建议下一步优先精读该文，并复习连续处理效应估计基础。
+> 今日无新推荐，系统未产出可展示论文。
 - 详情：[/202608/29/README](/202608/29/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Causal Survival Forests with Negative Controls](/202608/29/2608.19749v2-causal-survival-forests-with-negative-controls)  
-   标签：评分：7.0/10、query:flap-ex-met
-   evidence：阴性对照因果生存森林可在识别影响生存结局的因素时校正未测量混杂
-2. [Heterogeneous Effects of Continuous Treatments via Conditional Modified Treatment Policies](/202608/29/2608.20744v1-heterogeneous-effects-of-continuous-treatments-via-conditional-modified-treatment-policies)  
-   标签：评分：6.0/10、query:flap-ex-met
-   evidence：连续干预因果推断方法，可应用于运动剂量与皮瓣存活分析
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
