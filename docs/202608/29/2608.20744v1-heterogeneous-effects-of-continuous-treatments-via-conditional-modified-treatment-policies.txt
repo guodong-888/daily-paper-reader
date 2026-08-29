@@ -1,0 +1,4813 @@
+Title: Heterogeneous Effects of Continuous Treatments via Conditional Modified Treatment Policies
+
+URL Source: https://arxiv.org/pdf/2608.20744v1
+
+Published Time: Mon, 24 Aug 2026 00:25:22 GMT
+
+Number of Pages: 94
+
+Markdown Content:
+# Heterogeneous Effects of Continuous Treatments via Conditional Modified Treatment Policies 
+
+## Samhita Pal Department of Biostatistics, Vanderbilt University Medical Center and Jared D. Huling ∗
+
+## Division of Biostatistics and Health Data Science, University of Minnesota 
+
+Abstract 
+
+For continuous treatments such as drug dose or ventilator intensity, a key clinically actionable question is whether a modest, patient-specific adjustment to the current dose would help or harm, rather than whether to treat at all. Standard estimands such as average or conditional dose-response functions require positivity across a wide range of doses, an assumption that routinely fails in observational clinical data where protocols tie dosing to patient characteristics. We develop a framework for character-izing heterogeneity in the effects of small shifts (“nudges”) of a continuous treatment. We study two estimands: the conditional nudge effect, the expected outcome change if an individual at dose a with covariates x had their dose shifted by δ, and the con-ditional modified treatment policy (CMTP) effect, which averages the nudge over the observed dose distribution given covariates. Both are identified under weak, shift-specific local positivity and exchangeability conditions. Recasting the δ-shift as a two-arm comparison through a duplicated-data construction, we develop weighting and A-learning estimators based on squared-error and negative log-likelihood losses, introduce augmented versions that reduce variance without changing the target, and establish asymptotic normality of proposed estimators. Simulations support the the-ory, and an analysis of mechanical ventilation data from MIMIC-III identifies patient profiles predicted to benefit from a modest reduction in mechanical power. 
+
+Keywords: Causal inference; effect modification; stochastic interventions; positivity; treat-ment effect heterogeneity; observational data 
+
+> ∗
+
+Corresponding Author: huling@umn.edu 
+
+1arXiv:2608.20744v1 [stat.ME] 21 Aug 2026 1 Introduction 
+
+In many clinical and policy settings, the key questions are how much a specific amount of a continuous treatment, such as a drug dose or a ventilator setting, affects patient outcomes and whether the same amount benefits all patients equally, not just whether the treatment works at all. In patients with Acute Respiratory Distress Syndrome (ARDS), for example, the mechanical power (MP) of a ventilator has effects on mortality that vary along a continuum as it is changed. Further, the effect of MP on mortality is unlikely to be constant across patients. For example, a patient with severely reduced lung compliance or high vasopressor requirements may respond differently to the same ventilator settings compared with a patient with milder illness. Thus, the population-average dose-response function (ADRF) does not characterize key variation that clinicians need to make individualized decisions. Understanding which patients benefit from what degree of change to MP is thus helpful for making personalized treatment recommendations that improve outcomes without exposing low-risk patients to unnecessary ventilator changes. Such continuous treatments introduce challenges for heterogeneous treatment effect esti-mation that go beyond those encountered with binary exposures. With a binary treatment, the positivity assumption requires only that every patient has a positive probability of re-ceiving either treatment; with a continuous treatment, positivity requires that every patient has positive density at every dose level in the support, a condition that is often implau-sible when clinical protocols constrain treatment values based on patient characteristics. In ARDS patients, ventilation guidelines explicitly restrict MP settings based on measures of the patient’s condition. For example, the PaO 2/FiO 2 ratio, a pre-treatment covariate characterizing the degree of acute hypoxemia, induces strong confounding by determining both the severity of disease and the range of MP values clinicians will administer (Huling et al., 2024; Papazian et al., 2019). As a result, some combinations of disease severity and 2ventilator power are rarely or never observed in practice, and global positivity over the full treatment range fails. Heterogeneity exacerbates this problem, e.g., the same MP may be relatively safe in a compliant lung but concentrates tidal energy in a reduced volume of recruitable lung units in poorly compliant lungs, increasing the risk of ventilator-induced injury (Siegel et al., 2019). Beyond average dose-response curves, individualized care benefits from an understand-ing of how dose-response relationships and marginal improvements from small shifts vary with patient characteristics X and current dose A. To date, little work has been done at the intersection of heterogeneous treatment effect estimation and continuous treatments. Zhu et al. (2024) study heterogeneous effects of multivariate continuous treatments with high-dimensional covariates through a representation-learning approach. Recently, Shin et al. (2025) define estimands such as the contrast surface τa1,a 0 (x) = E{Y (a1) − Y (a0) | X = x}
+
+and a multivariate treatment-effect variable-importance measure (MTE-VIM), where Y (a)is the potential outcome under treatment A = a. However, these procedures require strong positivity over high-dimensional covariates and a wide treatment range, which is often im-plausible in realistic settings. Due to failure of positivity in continuous treatments, these contrast surfaces are simply not identified over the full treatment range. In this article, we focus on a novel local-shift estimand designed to mitigate the positivity limitations discussed above. Specifically, we ask: for patients with covariates X = x, what is the expected change in outcome if treatment is shifted by a clinically modest increment 
+
+δ from the value actually received? Because this policy changes treatment only around its values realized in practice, it requires substantially weaker positivity than the full ADRF or global contrast surfaces in that identification needs positive density only near the observed treatment level. The analysis therefore remains anchored to routinely used, clinically feasi-ble doses. Consequently, recommendations based on our local-shift estimands involve only modest departures from standard practice, potentially making uptake of recommendations 3more palatable for practitioners. Related work on incremental propensity-score interven-tions and other stochastic treatment distributions tied to the observed treatment process has developed causal effects that avoid global positivity, including recent nonparametric work on heterogeneous, positivity-robust contrasts (Wen et al., 2023; McClean et al., 2024); our methods instead focus on continuous-treatments and shift the observed dose by a fixed amount δ. Our approach is also motivated by modified treatment policies for continuous exposures (Jiang and Huling, 2025; D´ ıaz et al., 2023), which interpret treatment shifts as targeting a hypothetical post-modification population. This work focuses on two novel estimands: the conditional nudge effect, which charac-terizes how an individual at dose a with covariates x would change if nudged by δ, and the conditional modified treatment policy (CMTP) effect, which averages the nudge effect over the observed treatment distribution given covariates. The resulting estimands sup-port individualized recommendations of the form “for patients with profile X = x, a small decrease in MP is expected to improve outcome.” The CMTP is identified under a weak, local positivity condition, enabling its valid estimation in data where treatment values are driven by clinical protocols. To estimate the conditional nudge effect and CMTP, we use the connection between MTPs and binary treatments shown in Jiang et al. (2026) that uses a duplicated-data construction comparing A with A + δ. With this reparameterization we develop loss function based estimators in both a weighting and A-learning setup, with both squared-error and negative-log-likelihood losses (Chen et al., 2017) for different outcome types. We introduce augmented versions that leave the target unchanged but reduce vari-ance. We provide large-sample theory for the nudge estimators and obtain CMTP inference either by direct estimation or by plug-in from the estimated nudge surface. A further practical advantage of our approach is that it does not require estimating the generalized propensity score (GPS), a conditional density that is notoriously difficult to model reliably with high-dimensional covariates and whose inverse can produce extreme, 4unstable weights (Naimi et al., 2014; Colangelo and Lee, 2026; Huling et al., 2024). In-stead, the duplicated-data construction requires only a propensity model for the binary arm indicator Λ, a standard binary regression problem that avoids the conditional density estimation the GPS requires. In contrast, most existing work on continuous treatments is built around the GPS r(a, x) = fA|X (a | x), which plays the balancing role of the binary propensity score in identifying and estimating the average dose-response function 
+
+μ(a) = E{Y (a)} under unconfoundedness and positivity (Robins et al., 2000; van der Laan and Robins, 2003; D´ ıaz and van der Laan, 2013; Hirano and Imbens, 2004; Imai and van Dyk, 2004; Austin, 2018; Zhao et al., 2020), with subsequent contributions developing dou-bly robust nonparametric and weighting estimators (Kennedy et al., 2017; Ai et al., 2021). Remedies for GPS instability include direct inverse-GPS estimation (Colangelo and Lee, 2026), covariate balancing weights (Yiu and Su, 2018; Vegetabile et al., 2021; Fong et al., 2018), and kernel-based independence weights (Kallus and Santacatterina, 2019; Martinet, 2020; Huling et al., 2024), though none circumvent the more fundamental requirement that global positivity over the full treatment support must hold for the ADRF to be identified. The remainder of this article is organized as follows. Section 2 introduces the esti-mands and identification assumptions, formulates the nudge and CMTP effects through optimization problems, develops both averaged and direct CMTP estimators, extends the framework to exponential-family outcomes, and Section 3 defines the empirical estimators. Section 4 presents asymptotic normality results, Section 5 reports simulations, and Sec-tion 6 applies the method to MIMIC-III mechanical ventilation data. Finally, we present our concluding remarks in Section 7. 52 Methodology 
+
+Let ( X, A, Y ) ∼ FX,A,Y , where X ∈ X ⊆ Rp denotes pre-treatment covariates, A ∈ A ⊆ R
+
+a continuous treatment or dose, and Y ∈ Y ⊆ R the outcome. We write fA and fX for the marginal densities of A and X, fA|X (a | x) for the conditional density of A given 
+
+X, and fX,A (x, a ) for their joint density. The corresponding distribution functions are 
+
+FA(a) = P(A ≤ a), FX (x) = P(X ≤ x), FA|X (a | x) = P(A ≤ a | X = x), and 
+
+FX,A (x, a ) = P(X ≤ x, A ≤ a). The observed data are n i.i.d. copies {(Xi, A i, Y i)}ni=1 .We suppress subscripts on densities and distribution functions when no ambiguity arises. 
+
+## 2.1 Estimands 
+
+We work in the potential-outcomes framework where for each dose level a ∈ A , Y (a) denotes the outcome that would be observed were the treatment set to a. The causal conditional average dose-response function (CADRF), μ(a, x) ≡ E[ Y (a) | X = x ] for a ∈ A , has been the main approach to characterizing heterogeneity of effect for continuous-valued treatments in the literature. The CADRF describes how the conditional mean potential outcome varies with a given X = x. Estimating μ(a, x) nonparametrically is challenging in practice because X may be high-dimensional and because identification requires (i) no unmeasured confounding Y (a) ⊥ A | X and (ii) local overlap/positivity, informally, that all doses a of interest occur with nonzero probability at covariate value x. Motivated by these challenges and by policy questions about the effects of small changes to practice, instead of targeting the entire CADRF, we focus on two local shift estimands that are identified under assumptions of differing strength and offer distinct, but related, interpretations. We define the conditional nudge effect at dose a and covariates x, which captures the expected change in outcome from nudging the dose a at x by a small increment δ (with a, a +δ ∈ A ), as τδ(a, x) ≡ E[ Y (a + δ) − Y (a) | X = x ] . Compared to the CADRF μ(a, x), the local 6nudge surface τδ(a, x) is often a more tractable estimand. First, it typically has lower effective complexity because it is a local contrast, in which terms depending on x alone cancel in the outcome model. Second, identification only requires overlap locally between a
+
+and a+δ rather than across the entire range of a, a condition that is far more plausible when 
+
+δ is small. Third, we show that the contrast can be estimated directly, without specifying and fitting a full outcome regression model for μ(a, x). Finally, our nudge estimators can admit doubly robust strategies so that consistency still holds if either of the two nuisance components (the arm propensity model or the outcome regression) is correctly specified. The policy analog of the conditional nudge effect, the CMTP effect, averages that nudge over the natural (observed) distribution of treatment at x:                        
+
+> τδ(x)≡E[Y(A+δ)−Y(A)|X=x] = E[τδ(A, x)|X=x].(1)
+
+Thus, CMTP is the conditional expectation of the nudge surface with respect to the conditional law of A | X = x, providing a covariate-specific measure of the consequence of uniformly shifting everyone’s dose by δ in that stratum. The first expression in (1) is the definition; the second equality, which represents the CMTP as the average of the nudge surface, holds under the mean nudge exchangeability condition (Assumption 3(A) below) but is not needed for identification of τδ(x) itself. The CMTP effect τδ(x) enjoys several advantages over the conditional nudge surface. First, it is causally identifiable under weaker, shift-specific assumptions, making it more robust to confounding and positivity violations. Second, it can be obtained by marginalizing the estimated nudge over A | X, even though its identification requires strictly weaker conditions than the nudge itself. Finally, because 
+
+τδ(x) is a function of x alone, its modeling burden is lower: estimation involves either a direct one-step CMTP loss in x or a plug-in average over A | X = x. While marginal modified treatment policies allow for shifts that depend on A and X, they still require 7the user to specify the form of the shift a priori ; the CMTP more directly assesses effect heterogeneity in response to a shift and thus yields a clearer sense of which covariates may drive differential response. 
+
+## 2.2 Causal assumptions and identification 
+
+Having defined the conditional nudge and CMTP effects, we now state the causal assump-tions under which they can be identified from the observed data. 
+
+Assumption 1 (Consistency) . For all (a, x) with fA|X (a | x) > 0, if A = a then Y = Y (a).
+
+Assumption 2 (Positivity) . The shifted dose is feasible: for all (a, x), if fA|X (a | x) > 0
+
+then fA|X
+
+ q(a, x) | x > 0.
+
+Assumption 3 (Exchangeability) . For all (a, x) with fA|X (a | x) > 0 and q(a, x) as the shift/policy map (e.g., q(a, x) = a + δ), the following hold: 
+
+(A) Mean nudge effect exchangeability: 
+
+E Y q(a, x) − Y (a) X = x, A = a = E Y q(a, x) − Y (a) X = x .
+
+(A ′) Conditional mean policy exchangeability: 
+
+E Y q(a, x) X = x, A = a = E Y q(a, x) X = x, A = q(a, x) .
+
+Assumption 2 is substantially weaker than the positivity assumption required for es-timating the causal average dose response function and can be made to hold by design, since q(a, x) is a user-specified function. For the fixed shift q(a, x) = a + δ the assumption cannot hold exactly at the boundary of a bounded dose support; throughout, we therefore restrict attention to the region {a : fA|X (a | x) > 0 and fA|X (a + δ | x) > 0}, although a boundary-respecting shift in the spirit of Haneuse and Rotnitzky (2013) could be used instead. We note that Assumption 3 is substantially weaker than the mean exchangeability assumption required for estimating the causal average dose response function. The typical 8mean exchangeability assumption immediately implies Assumption 3 holds; further, if the conditional mean potential outcome function is smooth in a, then this assumption becomes more plausible as q(a, x) becomes closer to a.
+
+Proposition 1. Under Assumptions 1, 2, and 3(A) and (A ′), for every (a, x) with fA|X (a |
+
+x) > 0, the conditional nudge effect is identified in terms of the observed data as E[Y |X =             
+
+> x, A =a+δ]−E[Y|X=x, A =a] = τδ(a, x)
+
+.
+
+Proposition 2. Let m0(a, x) := E[Y | X = x, A = a] denote the observed outcome regression. Under Assumptions 1, 2 and 3(A ′), for fX -almost every x, the CMTP effect is identified in terms of the observed data as E[m0(A + δ, x)|X = x] − E [Y |X = x] = τδ(x).
+
+We emphasize that the identification formula in Proposition 2 involves the observed outcome regression m0(a, x) rather than the counterfactual CADRF, which is not identi-fied under our assumptions. Notably, the CMTP effect requires only condition (A ′) while the nudge surface requires both (A) and (A ′), making precise the sense in which the CMTP is identified under strictly weaker conditions. These propositions provide the identification results that justify our estimation procedures, which we develop in the remainder of this section. The first shows that the conditional nudge effect can be recovered from observed conditional mean differences, whereas the second establishes that the CMTP effect is iden-tified by contrasting the average of the outcome regression evaluated at the shifted dose with the average observed outcome. 
+
+## 2.3 Approach 1: Estimating the CMTP via the conditional nudge 
+
+In this section, we introduce a data duplication technique (D´ ıaz et al., 2023) that allows us to directly estimate both the conditional nudge effect and the CMTP without the need to model the entire outcome regression surface. We create a duplicated treatment AΛ that is, with marginal probability 1 /2, either the observed dose A or an inverse-shifted dose 9A − δ (the inverse of the policy shift we ultimately care about). This requires the shift map 
+
+a 7 → q(a, x) to be invertible (e.g., q(a, x) = a + δ). We then define the arm label                 
+
+> Λ = 12if AΛ=A−δ(shifted arm) ,Λ = −12if AΛ=A(original arm) ,
+
+so that, conditional on ( X = x, A Λ = a), the event Λ = 1 /2 corresponds to units whose original dose was a + δ, while Λ = −1/2 corresponds to units with original dose 
+
+a. Let πΛ(x, a ) := P Λ = 12 | X = x, A Λ = a denote the conditional probability that an observation in the duplicated data belongs to the shifted arm, given covariates and the duplicated treatment value. Then, a direct calculation using P(Λ = 1 /2) = P(Λ = −1/2) = 1/2 gives πΛ(x, a ) = gA|X (a + δ | x)/gA|X (a + δ | x) + gA|X (a | x) , where gA|X is the conditional density (or mass) of A given X.
+
+2.3.1 Weighting estimator for the nudge effect 
+
+We target τδ(a, x) by minimizing a balanced squared-loss on the duplicated sample. For any candidate contrast f (a, x) define the conditional population risk                     
+
+> ℓW(f;a, x) = E
+> h
+> w(a, x,Λ) Y−Λf(a, x)2X=x, A Λ=a
+> i
+> ,(2)
+
+where expectations are with respect to the joint law of ( Y, A Λ, X, Λ). Identification requires only that the weights satisfy the arm-balancing condition                             
+
+> w(a, x,12)P Λ = 12|X=x, A Λ=a=w(a, x,−12)P Λ = −12|X=x, A Λ=a,(3)
+
+in which case, for strictly positive weights, the unique minimizer is f ∗(a, x) = τδ(a, x)as shown later in Proposition 3. Several convenient choices satisfy (3). First, IPW: 
+
+w(a, x, 1/2) = πΛ(x, a )−1, and w(a, x, −1/2) = {1 − πΛ(x, a )}−1. Second, Density-ratio: either w(a, x, 1/2) = {1 − πΛ(x, a )}/π Λ(x, a ), w(a, x, −1/2) = 1, or the sym-10 metric alternative with the roles reversed. These can be computed directly from gA|X
+
+using (1 − πΛ(x, a )) /π Λ(x, a ) = gA|X (a | x)/g A|X (a + δ | x). Third, Overlap: w(a, x, 12 ) = 1 − πΛ(x, a ), w(a, x, −12 ) = πΛ(x, a ). A advantage of the IPW and overlap weights is that they require modeling only a conditional probability rather than a conditional density, which is often substantially more challenging to estimate reliably (Huling et al., 2024). To reduce variance without changing the target, we use an augmented version that subtracts any function m(a, x) of ( AΛ, X):                       
+
+> ℓW, aug (f;a, x) = E
+> h
+> w(a, x,Λ) Y−m(a, x)−Λf(a, x)2X=x, A Λ=a
+> i
+> .(4)
+
+The conditional losses above characterize the pointwise population target at a fixed value of ( AΛ, X) = ( a, x); the empirical estimator minimizes the corresponding marginal risk 
+
+ℓW, aug (f ) := E[ℓW, aug (f ; AΛ, X)] (and analogously ℓW (f )) over a working class f (a, x) = 
+
+θ⊤b(a, x), made precise in Section 3, and thus estimates the projection of the pointwise nudge contrast onto the basis class. This direct weighted-learning formulation is moti-vated by the contrast-learning/subgroup-identification framework of Chen et al. (2017). The following proposition formalizes the key identification step behind our weighting ap-proach. Under the duplicated-arm construction ( AΛ, Λ) and any choice of weights w(a, x, Λ) that satisfy the arm-balancing condition (3), minimizing the conditional squared loss (2) (equivalently, its marginal average ℓW (f )) recovers the unique contrast that equates the two arm-specific conditional means at ( x, a ). Consequently, the population minimizer is the conditional nudge effect τδ(a, x). 
+
+Proposition 3. Suppose the weights are strictly positive and satisfy (3) , and that fA|X (a |
+
+x) > 0, so that 0 < π Λ(x, a ) < 1 by Assumption 2. Then the minimizers f ∗ 
+
+> W
+
+of ℓW (f )
+
+and f ∗ 
+
+> W, aug
+
+of ℓW, aug (f ) over measurable functions are almost everywhere unique and satisfy                       
+
+> f∗
+> W(a, x) = f∗
+> W, aug (a, x) = E[Y|X=x, A =a+δ]−E[Y|X=x, A =a],
+
+which equals τδ(a, x)
+
+under the conditions of Proposition 1. 
+
+11 Proposition 3 demonstrates that the conditional loss identifies the pointwise nudge ef-fect. When the loss is averaged over the marginal distribution of ( AΛ, X) and minimized over a finite-dimensional working model, the resulting estimator targets the correspond-ing projection of this pointwise effect. Moreover, the augmentation function m(a, x) is included for precision rather than identification. As m depends only on ( AΛ, X), it is subtracted equally from the two duplicated arms at a fixed value of ( AΛ, X); since the balancing condition (3) implies E[w(a, x, Λ)Λ | X = x, A Λ = a] = 0, the subtraction does not alter the population contrast identified by the loss. A natural choice is a working out-come regression, m(a, x) ≈ E[Y | A = a, X = x], or equivalently in the duplicated-arm notation, m(a, x) ≈ E[Y | AΛ = a, X = x]. This removes outcome variation explained by the treatment level and covariates before estimating the nudge/CMTP contrast, and can therefore improve efficiency. In applications, m may be estimated using a parametric regression, splines, or flexible machine-learning methods. Correct specification of m is not needed for identification of the nudge/CMTP effects; rather, the quality of m affects the variance of the resulting estimator. The additional first-order variability due to estimating 
+
+m is incorporated in the augmented A-learning asymptotic result in Section 4. 
+
+2.3.2 A-learning estimator for the nudge effect 
+
+An alternative to the weighting construction, in the spirit of A-learning, removes main-effect variation by centering the arm indicator rather than by reweighting the loss. To this end, we define the recoded arm indicator eΛ := Λ + 12 ∈ { 0, 1} and let                   
+
+> ℓA(f;a, x) = E
+> hY−(eΛ−πΛ(x, a )) f(a, x)2X=x, A Λ=a
+> i
+> .(5)
+
+Minimizing ℓA over f yields the same target f ∗(a, x) = τδ(a, x) (the centering removes main-effect contamination). This is formalized in Proposition 4. As with weighting, we 12 introduce an augmented A-learning loss                      
+
+> ℓA, aug (f;a, x) = E
+> hY−m(a, x)−(eΛ−πΛ(x, a )) f(a, x)2X=x, A Λ=a
+> i
+> ,(6)
+
+which preserves the target but improves efficiency by removing prognostic variation through 
+
+m(a, x). The corresponding marginal losses are ℓA(f ) := E[ℓA(f ; AΛ, X)] and ℓA, aug (f ) := 
+
+E[ℓA, aug (f ; AΛ, X)]. As in Proposition 3, the A-learning objective regresses the outcome on the centered treatment indicator eΛ − πΛ(x, a ), interacted with a basis in ( a, x), and identifies the same contrast. Centering removes main-effect variation, so the population first-order condition isolates the difference between the two treatment levels at ( a, x) so that the minimizer of ℓA(f ) is τδ(a, x). Subtracting any outcome regression m(a, x) in the augmented loss ℓA, aug (f ) has no effect on bias, as augmentation only partials out outcome variation as a function of covariates and thus reduces variance without affecting identifica-tion. 
+
+Proposition 4. Suppose fA|X (a | x) > 0, so that 0 < π Λ(x, a ) < 1 by Assumption 2. Then the minimizers f ∗ 
+
+> A
+
+of ℓA(f ) and f ∗ 
+
+> A, aug
+
+of ℓA, aug (f ) over measurable functions are almost everywhere unique and satisfy f ∗                   
+
+> A(a, x) = f∗
+> A, aug (a, x) = E[Y|X=x, A =a+δ]−E[Y|X=
+> x, A =a],
+
+which equals τδ(a, x) under the conditions of Proposition 1. 
+
+Overall, this duplicated-arm formulation is simple to implement, accommodates a wide choice of balancing weights, and supports variance-reducing augmentation, while directly targeting the localized causal contrast τδ(a, x) that underpins the CMTP via τδ(x). 
+
+2.3.3 CMTP estimation by averaging over the conditional nudge 
+
+Both the weighting and A-learning estimators target the local contrast, that is, the condi-tional nudge effect τδ(a, x) at dose a and covariates x under a shift of size δ. The CMTP at covariate level x averages this effect over the conditional distribution of the observed dose 13 given X = x. If gA|X (a | x) denotes the corresponding conditional density or mass func-tion, then τδ(x) = E[Y (A + δ) − Y (A) | X = x] = R τδ(a, x) gA|X (a | x) d a, with the integral replaced by a sum for discrete A. Thus, once τδ(a, x) is identified and estimated, the CMTP follows by averaging the conditional nudge over the exposure distribution at x. In practice, we represent the conditional nudge parametrically, for example f (a, x) = θ⊤b(a, x), and obtain a plug-in CMTP by projecting the fitted values ˆf (Ai, Xi) onto a lower-dimensional basis c(x), writing τδ(x) ≈ β⊤c(x); the details are given in Section 3. While this plug-in approach is straightforward, it requires an initial fit of the entire nudge surface; in the next subsection we develop estimators that target the CMTP directly. 
+
+## 2.4 Approach 2: Direct estimation of the CMTP 
+
+Here, we propose a direct estimation method for the CMTP that does not require first estimating the local nudge effect τδ(a, x) and then averaging over the conditional distribu-tion of A | X = x. Instead, the method uses the duplicated-arm construction to form an A-learning loss whose contrast depends only on x, so that the resulting estimator targets 
+
+τδ(x) directly. A disadvantage of obtaining the CMTP from an initial nudge fit is the need to model the conditional nudge effect itself, a statistical task of higher complexity than modeling the CMTP alone. The construction exploits only Assumption 3(A ′), mirroring the weaker identification requirements of the CMTP established in Proposition 2. We work with a squared-error A-learning loss for directly estimating the CMTP in the main text and defer a weighting counterpart to Supplement A.1. The direct A-learning loss is similar to (5), except that we no longer model a local contrast at a fixed dose a, and in-stead let the contrast depend only on the covariates x, integrating over the mixture distribu-tion of AΛ given X = x. Concretely, recall that (5) targets the local nudge τδ(a, x). For the CMTP, we instead consider functions f : X → R and define the direct A-learning CMTP loss ℓCMTP  
+
+> A
+
+(f ; X) = E
+
+hY − g(X, A Λ) f (X) 2 X
+
+i
+
+, where g(X, A Λ) := eΛ − πΛ(X, A Λ)14 has conditional mean zero given ( X, A Λ). The corresponding marginal loss is simply 
+
+ℓCMTP  
+
+> A
+
+(f ) = E[ℓCMTP  
+
+> A
+
+(f ; X)] . This construction preserves the same centering idea as in (5), but now targets the aggregate effect τδ(x) = E{Y (A + δ) − Y (A) | X = x} rather than the local contrast at a fixed a. We define h(x, a ) := πΛ(x, a )1 − πΛ(x, a ) , so that 
+
+g(x, A Λ) has conditional mean zero and conditional variance h(x, A Λ) given ( X, A Λ). Un-der this unstabilized direct CMTP loss for measurable f : X → R, the first-order condition (FOC) is E
+
+h
+
+g(X, A Λ) Y −g(X, A Λ)f (X) X
+
+i
+
+= 0 , which yields the pointwise minimizer 
+
+f ∗(x) = Eg(x, A Λ)Y | X = x/Eg2(x, A Λ) | X = x ≡ N (x)/D (x). 
+
+Lemma 1. Let m0(a, x) be the outcome regression in Proposition 2. For every x, N (x) = 
+
+Eh(x, A Λ) {m0(AΛ + δ, x) − m0(AΛ, x)} | X = x, and D(x) = Eh(x, A Λ) | X = x.
+
+Proof. See the first part of the proof of Proposition 5 in the Supplementary Material From Lemma 1, we see that the basic direct A-learning loss recovers a weighted CMTP, with weights h(x, A Λ), rather than the unweighted CMTP τδ(x). It is important to recognize that the expectations in Lemma 1 are taken with respect to the duplicated-arm mixture law of AΛ given X = x, whose conditional density is fAΛ|X (a | x) = 12 {gA|X (a | x)+ gA|X (a+δ |
+
+x)}, whereas the CMTP averages over the natural law of A given X = x. Expressed against the natural law (the measure defining the CMTP), the implicit weight is πΛ(x, a ). To eliminate the weighting entirely and directly target τδ(x), we therefore stabilize the conditional loss by dividing by πΛ(X, A Λ): 
+
+ℓCMTP  
+
+> A
+
+(f ; X) = E
+
+"  Y − g(X, A Λ) f (X) 2
+
+πΛ(X, A Λ) X
+
+#
+
+, (7) 
+
+and, analogously, define the augmented version 
+
+ℓCMTP  
+
+> A, aug
+
+(f ; X) = E
+
+"  Y − m(AΛ, X) − g(X, A Λ) f (X) 2
+
+πΛ(X, A Λ) X
+
+#
+
+, (8) 
+
+for an arbitrary outcome regression m(AΛ, X). The following result shows that both stabi-15 lized losses identify the CMTP τδ(x), and that augmentation by m(AΛ, X) does not change the target. In particular, the unique pointwise minimizers of both stabilized A-learning CMTP losses recover the CMTP τδ(x). Because the marginal risk is the expectation of the conditional risk over X, namely ℓ(f ) = E{ℓ(f ; X)}, any measurable function that minimizes the conditional loss pointwise also minimizes the marginal loss; conversely, any marginal minimizer agrees with the pointwise minimizer almost surely. 
+
+Proposition 5. Suppose Assumptions 1, 2, and 3(A ′) hold. Under the stabilized direct A-learning CMTP loss (7) and its augmented counterpart (8) for an arbitrary function 
+
+m(AΛ, X), let f ∗ 
+
+> A
+
+and f ∗ 
+
+> A, aug
+
+denote any minimizers of ℓCMTP  
+
+> A
+
+(f ) and ℓCMTP  
+
+> A, aug
+
+(f ), respec-tively. Then f ∗
+
+> A
+
+(x) = f ∗
+
+> A, aug
+
+(x) = Em0(A + δ, x) − m0(A, x) | X = x = τδ(x), where the expectation is over the natural conditional law of A given X = x and the final equality follows from Proposition 2. 
+
+Proposition 5 shows that stabilizing the direct A-learning loss by πΛ removes the im-plicit mixture-law weighting from Lemma 1, so that the resulting population minimizer targets the unweighted CMTP itself, with or without outcome-regression augmentation. At the population level, if f ∗(x) = β⊤c(x), the stabilized direct A-learning coefficient targets the unweighted L2(PX ) projection of the CMTP onto the span of c: βdir ,0 
+
+> A
+
+=arg min β E {τδ(X) − β⊤c(X)}2 , since the stabilized score has constant conditional sec-ond moment, E[g2(X, A Λ)/π Λ(X, A Λ) | X] = 1 /2. If the working model is correctly specified, so that τδ(x) = β⊤ 
+
+> 0
+
+c(x), then βdir ,0 
+
+> A
+
+= β0. Our development thus far has relied on squared-error losses. The duplicated-arm construction extends naturally to canonical exponential-family losses for binary and other non-continuous outcomes. We next develop the link-scale A-learning nudge loss and its identification result, and use the resulting logistic-loss estimators in Sections 5 and 6. 16 2.5 Exponential family setup and logistic example 
+
+We extend the duplicated-arm construction and the weighting/A-learning losses to canon-ical exponential-family models, focusing on logistic loss for binary outcomes. Throughout this subsection we employ the working model in which, conditional on ( A, X), the outcome 
+
+Y follows a one-parameter exponential family with natural parameter η and negative log-likelihood (NLL) M (y, η ) = −y η + b(η), so that μ(a, x) := E[Y | A = a, X = x], η =
+
+k{μ(a, x)}, b ′(η) = μ(η), where k is the canonical link and μ(η) denotes the mean as a function of the natural parameter. Note that in this subsection μ(a, x) denotes the observed outcome regression, written m0(a, x) elsewhere in the paper, rather than the counterfac-tual CADRF of Section 2.1; the two coincide under the conditions of Proposition 1. In the logistic example with Y ∈ { 0, 1}, we have η = log ( μ/ (1 − μ)) , b (η) = log {1 + exp( η)},μ(η) = eη/(1 + eη). Here k is the logit link and μ(·) is the expit function. In what fol-lows we work directly with the NLL M instead of squared loss, and interpret the re-sulting targets on the link scale , mapping back to the mean scale via μ(·) when needed. In this setting the mean-scale nudge effect at a given dose-covariate pair ( a, x) remains 
+
+τδ(a, x) = μ(a + δ, x) − μ(a, x) under the conditions of Proposition 1, so that, under a canonical link, the nudge is fully determined by the change in the natural parameter η in-duced by shifting the dose from a to a+δ. For example, in the logistic case this evaluates to 
+
+τδ(a, x) = μ η(a+δ, x)−μ η(a, x) = expit  η(a+δ, x)−expit  η(a, x), where expit( u) ≡
+
+eu/1 + eu, a nonlinear function of both a and x, even when the working model for η(a, x) is linear in ( a, x). In parallel, the mean-scale CMTP at covariate level x satisfies, by Proposi-tion 2, τδ(x) = Eμ(A + δ, x) − μ(A, x) | X = x, so that τδ(x) aggregates the local nudge effects τδ(a, x) over the conditional distribution of A | X = x. In the logistic example this yields τδ(x) = E[expit  η(A + δ, x) − expit  η(A, x) | X = x]. Here, we construct an A-learning analog based on the NLL, and defer the weighting version to the Supplementary Section A.2. Recall the recoded arm indicator eΛ := Λ + 12 ∈ { 0, 1} and the arm propensity 
+
+πΛ(x, a ) := P eΛ = 1 | X = x, A Λ = a. For a candidate link-scale contrast f (a, x), we 17 define the A-learning NLL loss                         
+
+> ℓNLL
+> A(f;a, x) = E
+> h
+> −Y eΛ−πΛ(x, a )f(a, x) + b (eΛ−πΛ(x, a )) f(a, x)X=x, A Λ=a
+> i
+> ,(9)
+
+where b is the log-partition function. This loss regresses Y on the centered arm indicator 
+
+eΛ−πΛ(x, a ) scaled by f (a, x), mimicking the usual A-learning construction in a generalized-linear setting. The FOC with respect to f leads to a contrast equation analogous to Sup-plementary equation (S3). Now, defining ℓNLL  
+
+> A
+
+(f ) as the marginal loss E[ℓNLL  
+
+> A
+
+(f ; AΛ, X)], we state the following proposition. 
+
+Proposition 6. Suppose the conditions of Proposition 1 hold and fA|X (a | x) > 0,so that πΛ(x, a ) ∈ (0 , 1) . Assume ℓNLL  
+
+> A
+
+(f ), the marginal loss corresponding to (9) , ad-mits a unique minimizer f ∗
+
+> A
+
+(a, x). Then f ∗
+
+> A
+
+(a, x) satisfies μ (1 − πΛ(x, a )) f ∗
+
+> A
+
+(a, x) −
+
+μ −πΛ(x, a ) f ∗
+
+> A
+
+(a, x) = τδ(a, x).
+
+In particular, in the logistic case this identity again links the minimizer f ∗
+
+> A
+
+(a, x) to the arm-specific difference in success probabilities at ( x, a ), now expressed through the centered arm indicator eΛ − πΛ(x, a ). As in the squared-loss A-learning construction, the centering removes main-effect variation and isolates the arm contrast at ( a, x) on the link scale. As before, one may subtract an offset m(a, x) from Y inside the linear term in (9) to reduce variance without affecting the population target. In the simulations presented in the Supplement, we focus on the non-augmented form for simplicity. Moreover, a discussion of a direct NLL loss for CMTP estimation can be found in Supplementary Section A.3. 
+
+# 3 Empirical estimators 
+
+The preceding population losses define weighting and A-learning through conditional risks under the duplicated-arm construction. In finite samples, we restrict τδ(a, x) to a semi-parametric class and estimate it by minimizing empirical analogs of these losses. We 18 next give the corresponding objectives, show that linear-basis representations yield (pos-sibly weighted) least-squares estimators, and characterize their population limits. These empirical losses are optimized in our implementation and form the basis for the large-sample results and simulation studies in Sections 4 and 5. For compactness, we write 
+
+Zλi := ( Ai − λδ, Xi), bλi := b(Zλi ) and Y λi := Yi for λ ∈ { 0, 1}. Thus Z0 
+
+> i
+
+= ( Ai, Xi) denotes the observed arm and Z1 
+
+> i
+
+= ( Ai − δ, Xi) denotes the shifted arm. Define the duplicated empirical average PΛ 
+
+> n
+
+f λi := n−1 Pni=1 
+
+P1 
+
+> λ=0
+
+f λi . For A-learning, define the transformed basis 
+
+ebλi := 
+
+neΛλi − bπΛ(Zλi )
+
+o
+
+bλi , where eΛλi = λ is the arm indicator of the duplicated row and 
+
+bπΛ(Zλi ) = bπΛ(Ai − λδ, Xi) is the estimated arm propensity evaluated at the row’s dose value. Then the A-learning empirical loss is 
+
+bθA = arg min 
+
+> θ
+
+PΛ
+
+> n
+
+n
+
+Yi − θ⊤ebλi
+
+o2
+
+=
+
+n
+
+PΛ 
+
+> n
+
+ebλi ebλ⊤
+
+> i
+
+o−1 n
+
+PΛ 
+
+> n
+
+ebλi Yi
+
+o
+
+.
+
+Lemma 2 (Population limits of linear-basis nudge estimators) . Let τδ(a, x) denote the con-ditional nudge effect and suppose we approximate it in a linear basis, τδ(a, x) ≈ θ⊤b(a, x),
+
+where b(a, x) ∈ Rp is a fixed vector of basis functions and θ ∈ Rp is unknown. Sup-pose bπΛ is uniformly consistent for πΛ, the matrix EΛ[hA(AΛ, X)b(AΛ, X)b(AΛ, X)⊤] is nonsingular, and the relevant second moments are finite. Then bθA → θ∗ 
+
+> A
+
+in probability, where θ∗ 
+
+> A
+
+= arg min θ∈Rp EΛ
+
+h
+
+hA(AΛ, X) τδ(AΛ, X) − θ⊤b(AΛ, X) 2i
+
+, with hA(a, x) := 
+
+πΛ(a, x){1 − πΛ(a, x)}, where EΛ denotes expectation under the duplicated-arm law of 
+
+(AΛ, X), whose conditional density given X = x is the mixture 12 {gA|X (a | x)+ gA|X (a+δ |
+
+x)}; each observation contributes to the projection through both of its duplicated rows. 
+
+In other words, under correct specification the A-learning estimator recovers the con-ditional nudge effect, while under misspecification it converges to the best hA-weighted approximation of τδ(a, x) in the span of the basis. Because hA = πΛ(1 − πΛ), the projection emphasizes regions where the two duplicated arms overlap most, precisely where the nudge contrast is best identified. A similar result for the weighting loss is presented in Section A.4 19 of the Supplementary Material. For the direct CMTP estimators, we model the policy ef-fect directly as τδ(x) ≈ fβ(x) = β⊤c(x), where c(x) is a lower-dimensional basis in x. Let 
+
+ci = c(Xi), ˆ gλi = λ − ˆπΛ(Xi, A i − λδ ), and ˆ πλi = ˆ πΛ(Xi, A i − λδ ), with λ ∈ { 0, 1} denoting the duplicated arms. The stabilized direct A-learning CMTP estimator is 
+
+ˆβdir  
+
+> A
+
+= arg min  
+
+> β
+
+PΛ
+
+> n
+
+{Yi − ˆgλi β⊤ci}2
+
+ˆπλi
+
+=
+
+
+
+PΛ
+
+> n
+
+(ˆ gλi )2
+
+ˆπλi
+
+cic⊤
+
+> i
+
+−1 
+
+PΛ
+
+> n
+
+ˆgλi
+
+ˆπλi
+
+ciYi
+
+
+
+.
+
+With augmentation by an outcome regression ˆ m(Ai − λδ, Xi), 
+
+ˆβdir  
+
+> A, aug
+
+=
+
+
+
+PΛ
+
+> n
+
+(ˆ gλi )2
+
+ˆπλi
+
+cic⊤
+
+> i
+
+−1 
+
+PΛ
+
+> n
+
+ˆgλi
+
+ˆπλi
+
+ci{Yi − ˆm(Ai − λδ, Xi)}
+
+
+
+.
+
+The estimators developed in this section provide the practical implementation of the weighting and A-learning procedures introduced in Section 2. By restricting the condi-tional nudge effect and the direct CMTP effect to finite-dimensional working models, the corresponding empirical objectives can be formulated as standard (weighted) least-squares problems, making estimation computationally straightforward. Lemma 2 further demon-strates that, under model misspecification, these estimators will converge to weighted L2
+
+projections of the underlying causal effects onto the chosen basis rather than the true ef-fects themselves, a standard property for semiparametric working models. These empirical estimating equations form the foundation for our inferential results. In the next section, we establish the large-sample behavior of our proposed estimators and derive asymptotic nor-mality while accounting for the estimation of nuisance functions such as the duplicated-arm propensity model and, for the augmented estimators, the outcome regression model. 20 4 Asymptotic Theory 
+
+In this section we study the large-sample properties of our estimators of Section 3, pro-viding asymptotic normality that can be used to derive inferential procedures. We be-gin by fixing notation and stating regularity conditions. Let Oi := ( Yi, A i, Xi), Z0 
+
+> i
+
+:= (Ai, Xi), Z1 
+
+> i
+
+:= ( Ai − δ, Xi), and write b0 
+
+> i
+
+:= b(Z0 
+
+> i
+
+), b1 
+
+> i
+
+:= b(Z1 
+
+> i
+
+). For a generic parameter value η, define π0 
+
+> i
+
+(η) := πΛ(Z0 
+
+> i
+
+; η), π 1 
+
+> i
+
+(η) := πΛ(Z1 
+
+> i
+
+; η). When no ambiguity arises, we suppress the dependence on η∗ and write π0 
+
+> i
+
+:= π0 
+
+> i
+
+(η∗), π 1 
+
+> i
+
+:= π1 
+
+> i
+
+(η∗). Let πΛ(a, x; η) be a correctly specified model for πΛ(a, x), with true value η∗. In this and subsequent sections we write the dose argument first, πΛ(a, x) = πΛ(x, a ), matching the duplicated-row tuples 
+
+Zλi = ( Ai − λδ, Xi); the two orderings denote the same function. Throughout this section we assume that the matrix D defined below and the matrices Jη and Jν of conditions (C1) and (C4) are nonsingular, and that E(1 + Y 2){∥ b(A, X)∥2 + ∥b(A − δ, X)∥2} < ∞ and 
+
+E∥b(A, X)∥4 + ∥b(A − δ, X)∥4 < ∞. Let Uη(Oi; η) denote the estimating function for the propensity-model parameter η, so that bηn is defined by PnUη(O; bηn) = 0 . We assume the following conditions. (C1) The estimator admits the asymptotic linear expansion √n( bηn−η∗) = −J−1
+
+> η
+
+√n PnUη(Oi; η∗)+ 
+
+op(1) , where Jη := E{ ˙Uη(Oi; η∗)}, ˙Uη(Oi; η∗) := ∂∂η Uη(Oi; η)|η=η∗ . The asymptotic variance matrix of bηn is denoted by Vη and has finite entries. (C2) The classes {πΛ(·; η) : η ∈ H ∗
+
+> η
+
+} and { ˙πΛ(·; η) : η ∈ H ∗
+
+> η
+
+} are P -Donsker with square-integrable envelopes, where H∗ 
+
+> η
+
+is the neighborhood of η∗ in (C3). (C3) The map πΛ(a, x; η) is twice differentiable with respect to η in H∗ 
+
+> η
+
+× A × X , where 
+
+H∗ 
+
+> η
+
+is a neighborhood of η∗, and has bounded, continuous derivatives. Let m(a, x; ν) be a working model for some function of a and x only, with limiting value m(a, x; ν∗), not necessarily equal to E[Y | A = a, X = x]. For compactness, define 21 m0 
+
+> i
+
+(ν) := m(Z0 
+
+> i
+
+; ν), and m1 
+
+> i
+
+(ν) := m(Z1 
+
+> i
+
+; ν). Assume the following additional conditions. (C4) The estimator bνn satisfies PnUν (Oi; bνn) = 0 and admits the asymptotic linear expan-sion √n(bνn − ν∗) = −J−1
+
+> ν
+
+√n PnUν (Oi; ν∗) + op(1) , where Jν := E{ ˙Uν (Oi; ν∗)}, and ˙Uν (Oi; ν∗) := ∂∂ν Uν (Oi; ν) ν=ν∗ . The asymptotic variance matrix of bνn is denoted by Vν and has finite entries. (C5) The classes {m(·; ν) : ν ∈ H ∗ 
+
+> ν
+
+} and { ˙m(·; ν) : ν ∈ H ∗ 
+
+> ν
+
+} are P -Donsker with square-integrable envelopes, where H∗ 
+
+> ν
+
+is the neighborhood of ν∗ in (C6). (C6) The map m(a, x; ν) is twice differentiable with respect to ν in H∗ 
+
+> ν
+
+× A × X , where 
+
+H∗ 
+
+> ν
+
+is a neighborhood of ν∗, and has bounded, continuous derivatives. Conditions (C1)-(C3) are standard regularity assumptions that account for the estimation of the propensity component πΛ(a, x): (C1) requires bηn to be asymptotically linear, so that the first-order effect of estimating η∗ is captured by the influence function −J−1 
+
+> η
+
+Uη(Oi; η∗), while (C2) and (C3) provide the empirical process (Donsker) control and smoothness needed for uniform Taylor expansion arguments in a neighborhood of η∗. Conditions (C4)-(C6) play the analogous role for the augmentation model m(a, x; ν), which is an arbitrary work-ing outcome regression and need not be correctly specified as E[Y | A = a, X = x]. Together, these assumptions yield an asymptotically linear representation consisting of the main A-learning estimating function plus correction terms for nuisance estimation. For a generic function m, define Y 0,m i := Yi − m0 
+
+> i
+
+, and Y 1,m i := Yi − m1 
+
+> i
+
+, where mji = m(Zji ), 
+
+j = 0 , 1. The corresponding A-learning estimating function is 
+
+ψ(m) 
+
+> A
+
+(Oi; θ, η) := {1 − π1 
+
+> i
+
+(η)}b1
+
+> i
+
+h
+
+Y 1,m i − { 1 − π1 
+
+> i
+
+(η)}b1⊤ 
+
+> i
+
+θ
+
+i
+
+− π0 
+
+> i
+
+(η)b0
+
+> i
+
+h
+
+Y 0,m i + π0 
+
+> i
+
+(η)b0⊤ 
+
+> i
+
+θ
+
+i
+
+.
+
+The unaugmented estimator corresponds to m ≡ 0, whereas the augmented estimator uses 
+
+m(·) = m(·; ν). Accordingly, write ψA(Oi; θ, η) = ψ(0)  
+
+> A
+
+(Oi; θ, η), and ψA, aug (Oi; θ, η, ν) = 
+
+ψ(m(·;ν))  
+
+> A
+
+(Oi; θ, η). Let D := − ∂∂θ⊤ E{ψA(Oi; θ, η∗)} | θ=θ∗ 
+
+> A
+
+, and let Bη denote the derivative 22 of E{ψA(Oi; θ∗
+
+> A
+
+, η)} with respect to η⊤, evaluated at η = η∗. Similarly, let Bη,aug and Bν,aug 
+
+denote the derivatives of E{ψA, aug (Oi; θ∗
+
+> A
+
+, η, ν)} with respect to η⊤ and ν⊤, respectively, evaluated at ( η∗, ν∗). 
+
+Theorem 1 (Asymptotic normality and variance reduction of augmented A-learning) . Let 
+
+bθA and bθA, aug solve the empirical estimating equations based on ψA and ψA, aug , respectively, and define ϕA(O) = ψA(O; θ∗
+
+> A
+
+, η∗)−BηJ−1 
+
+> η
+
+Uη(O; η∗) and ϕA, aug (O) = ψA, aug (O; θ∗
+
+> A
+
+, η∗, ν∗)−
+
+Bη,aug J−1 
+
+> η
+
+Uη(O; η∗)−Bν,aug J−1 
+
+> ν
+
+Uν (O; ν∗). Under conditions (C1)-(C3) for the unaugmented estimator and (C1)-(C6) for the augmented estimator, 
+
+√n( bθA − θ∗
+
+> A
+
+) ⇝ N (0, D−1ΣAD−1), √n( bθA, aug − θ∗
+
+> A
+
+) ⇝ N (0, D−1ΣA, aug D−1),
+
+where ΣA = E{ϕA(O)⊗2} and ΣA, aug = E{ϕA, aug (O)⊗2}. If, in addition, m(a, x; ν∗) = 
+
+E(Y | A = a, X = x), the nuisance-score coefficients are their population L2-projection coefficients, and E[ϕA, aug (O) D(A, X)⊤] = 0, where D(A, X) := {1 − πΛ(A − δ, X)}b(A −
+
+δ, X)m(A − δ, X; ν∗) − πΛ(A, X)b(A, X)m(A, X; ν∗) is the difference between the two scores, then ΣA, aug ⪯ ΣA, and hence D−1ΣA, aug D−1 ⪯ D−1ΣAD−1. Equality holds if and only if ϕA, aug (O) = ϕA(O) almost surely. 
+
+Theorem 1 establishes that both A-learning nudge estimators are root-n consistent and asymptotically normal, so that Wald-type inference can proceed from plug-in estimates of D and ΣA or ΣA, aug . Its second part indicates that, when the augmentation function is correctly specified and the stated orthogonality condition holds, augmentation can only reduce the asymptotic variance, supporting its routine use. A remark in the Supplementary Material records the usual projection simplification of the sandwich variance when bηn
+
+is an efficient estimator of η∗ (Pierce, 1982), for both the unaugmented and augmented estimators. The nudge asymptotics also yield inference for the plug-in CMTP estimator obtained by averaging the fitted nudge over the conditional dose distribution; the formal 23 statement, whose guarantees depend on how well that distribution can be estimated, is given as Corollary S1 in the Supplementary Material together with a remark on the same-sample projection implementation used in our numerical work. We therefore focus here on the direct CMTP estimator, which requires no such auxiliary estimate. Unlike the plug-in approach above, the direct CMTP estimator of Section 3 targets the projection of τδ(X) directly through a stabilized A-learning score, avoiding the inter-mediate estimation of the full conditional nudge surface τδ(a, X). For the direct CMTP working model, let bi := b(Xi) denote the vector of basis functions in Xi, and, as in Section 3, let gλi (η) := λ − πλi (η) denote the centered arm score of the duplicated row 
+
+λ ∈ { 0, 1}, where πλi (η) := πΛ(Zλi ; η). The πΛ-stabilized direct CMTP estimating func-tion, ψC, aug (Oi; θ, η, ν) = P
+
+> λ∈{ 0,1}
+
+(gλi (η)/π λi (η)) bi
+
+Yi − mλi (ν) − gλi (η) b⊤ 
+
+> i
+
+θ, evaluates to 
+
+1 − π1 
+
+> i
+
+(η)
+
+π1 
+
+> i
+
+(η) bi
+
+h
+
+Yi − m1 
+
+> i
+
+(ν) − { 1 − π1 
+
+> i
+
+(η)}b⊤ 
+
+> i
+
+θ
+
+i
+
+− bi
+
+h
+
+Yi − m0 
+
+> i
+
+(ν) + π0 
+
+> i
+
+(η) b⊤ 
+
+> i
+
+θ
+
+i
+
+,
+
+where the observed-arm row enters with the constant stabilized weight g0 
+
+> i
+
+(η)/π 0 
+
+> i
+
+(η) = −1. Let bθC, aug solve PnψC, aug (Oi; θ, bηn, bνn) = 0 (equivalently, bθC, aug = ˆβdir  
+
+> A, aug
+
+of Section 3 with 
+
+c = b), and let θ∗ 
+
+> C
+
+solve E{ψC, aug (Oi; θ∗ 
+
+> C
+
+, η∗, ν∗)} = 0. Because the πΛ-stabilization equal-izes the conditional second moment of the centered arm scores, the population Jacobian and moment vector take the forms 
+
+DC := − ∂∂θ E{ψC, aug (Oi; θ, η∗, ν∗)} θ=θ∗
+
+> C
+
+= E
+
+ X
+
+> λ∈{ 0,1}
+
+{gλi (η∗)}2
+
+πλi (η∗) bib⊤
+
+> i
+
+
+
+= E{b(X)b(X)⊤},
+
+E
+
+ X
+
+> λ∈{ 0,1}
+
+gλi (η∗)
+
+πλi (η∗) bi{Yi − mλi (ν)}
+
+
+
+= E{b(X)τδ(X)} for every ν,
+
+so that, under the identification assumptions for the CMTP, θ∗ 
+
+> C
+
+is the unweighted L2(PX )projection coefficient θ∗ 
+
+> C
+
+= arg min θ E {τδ(X) − b(X)⊤θ}2 , regardless of the working outcome model m (Lemma S3 of the Supplementary Material). Let BC, η and BC, ν denote 24 the population derivatives of E{ψC, aug (Oi; θ∗ 
+
+> C
+
+, η, ν)} with respect to η⊤ and ν⊤, evaluated at ( η∗, ν∗). Since E{ψC, aug (Oi; θ, η∗, ν)} is constant in ν, we have BC, ν = 0: the direct CMTP estimating function is orthogonal to the outcome-regression nuisance whenever the propensity model is correctly specified. 
+
+Theorem 2 (Asymptotic normality of augmented direct CMTP A-learning) . Assume con-ditions (C1)-(C6) , that E{b(X)b(X)⊤} is nonsingular, that E∥b(X)∥2 < ∞ and E(Y 2) <
+
+∞, and that πΛ(a, x; η) ≥ c0 > 0 for all (a, x) and all η in a neighborhood of η∗. Then, as 
+
+n → ∞ , √n( bθC, aug −θ∗ 
+
+> C
+
+) d
+
+−→ N  0, D −1 
+
+> C
+
+ΣC, aug (θ∗ 
+
+> C
+
+; η∗, ν∗)D−1
+
+> C
+
+ , where DC = E{b(X)b(X)⊤}
+
+and ΣC, aug (θ∗ 
+
+> C
+
+; η∗, ν∗) = E
+
+hψC, aug (Oi; θ∗ 
+
+> C
+
+, η∗, ν∗) − BC, ηJ−1 
+
+> η
+
+Uη(Oi; η∗) ⊗2i
+
+; no correction for the estimation of ν appears because BC, ν = 0. If, in addition, bηn is an efficient estima-tor of η∗, then ΣC, aug = eΣC, aug − BC, ηVηB⊤
+
+> C, η
+
+, where eΣC, aug = E{ψC, aug (Oi; θ∗ 
+
+> C
+
+, η∗, ν∗)⊗2}.
+
+Theorem 2 demonstrates that the direct CMTP estimator is root-n consistent and asymptotically normal for the L2(PX ) projection of the CMTP effect, with a sandwich variance accounting for the estimated propensity model. Because BC, ν = 0, the outcome-regression augmentation contributes no first-order correction, so valid inference requires only a well-behaved propensity model while the working outcome model can be chosen freely to improve precision. Finally, the same M-estimation strategy yields an asymptotic normality result for the logis-tic direct CMTP estimator, which uses the πΛ-stabilized A-learning score with the logistic mean function and targets the direct CMTP projection on the link scale. The estimating function, the regularity conditions, and the formal statement are presented in Supplemen-tary Theorem S2 in the Supplementary Material, together with its proof. Together, these results establish asymptotically valid inference for the nudge and CMTP estimators under squared and logistic losses, while also showing that appropriate outcome-regression augmentation can improve efficiency without altering the target estimand. In 25 Section 5 we examine how well these large-sample guarantees describe finite-sample be-havior across a range of designs. A parallel asymptotic normality result for the logistic A-learning nudge estimator, which underpins the logistic nudge and average-CMTP anal-yses of Supplementary Section B.1 and Section 6, is stated and proved as Theorem S1 in the Supplementary Material. 
+
+# 5 Simulation Experiments 
+
+We evaluate finite-sample performance under a linear data-generating mechanism, where ef-fects are defined on the mean scale; the experiment assesses bias under correct specification, compares the weighting schemes, and quantifies the precision gains from augmentation. We consider a continuous treatment A and a low-dimensional covariate vector X = ( X1, X 2)⊤.We generate the covariates i.i.d. with X1 ∼ Unif( −1, 1) and X2 ∼ Bernoulli(0 .7). Con-ditional on X, the continuous dose A follows an exponential distribution with mean exp {2 + 0 .5X1 + X2} (equivalently, rate 1 / exp {2 + 0 .5X1 + X2}). Outcomes are drawn as 
+
+Y | (A, X) ∼ N { μ(A, X), 1} with μ(A, X) = 1+ X1 +X2 +βAA+αA 2 +X1{βAX A+βA 2},
+
+where we fix ( α, β, β AX , β A) = ( −0.15 , 0.2, 0.25 , −0.5) and take a shift size δ = 0 .5. This specification induces a nonlinear and covariate-modulated relationship between the treat-ment and the outcome, while retaining a simple closed-form expression for the true causal effects under a shift intervention. Under the outcome model, our first causal target is the nudge effect, which is given by: τδ(a, x) = μ(a + δ, x) − μ(a, x) = βAδ + 2 αaδ + αδ 2 +
+
+x1
+
+ βAX δ + 2 βaδ + βδ 2. This is a quadratic function of a with coefficients depending on x1.Also, using E[A | X = x] = exp(2 + 0 .5x1 + x2), we obtain an explicit expression for our second causal target, the CMTP effect τδ(x) = E{μ(A+δ, x)−μ(A, x) | X = x}, which av-erages the conditional nudge effect over the distribution of the observed treatment given co-variates and in becomes βAδ+αδ 2 +2 αδ E[A | X = x]+ x1
+
+ βAX δ+βδ 2 +2 βδ E[A | X = x].
+
+26 This serves as the ground truth when evaluating CMTP estimators. To evaluate estimators we project each target onto low-dimensional working bases. For the nudge effect we use the linear span of {1, A, X 1, X 2, A : X1, A : X2}; the corresponding population coefficients have closed forms (Intercept , A, X 1, X 2, A : X1, A : X2) = ( βAδ+αδ 2, 2αδ, β AX δ+βδ 2, 0, 2βδ, 0) .
+
+Similarly, for the CMTP effect we project onto {1, X 1, X 2}. Here, the true function τδ(x)is nonlinear in x through E[A | X = x] = exp(2 + 0 .5x1 + x2). Therefore, when we fit a linear working model in the basis c(x) = (1 , x 1, x 2)⊤, the target coefficient is the population least-squares projection β∗ 
+
+> CMTP
+
+= arg min β∈R3 E
+
+hτδ(X) − β⊤c(X) 2i
+
+=
+
+E[c(X)c(X)⊤] −1 E[c(X)τδ(X)] . This projected coefficient vector serves as the ground truth for evaluating the CMTP coefficient estimators. We compare three base methods (Density, Overlap, A-learning) and their augmented versions under squared-error loss, all with a common linear working model; for the CMTP we consider both the average and direct constructions, giving twelve CMTP estimators. For each n ∈ { 500 , 1000 , 5000 } we generate independent datasets, fit all estimators, and record empirical root mean squared error (RMSE) for each coefficient, measuring how well they recover the true linear projec-tions of τδ(a, x) and τδ(x). A:X2 X1 X2 ‘(Intercept)‘ A A:X1 500 1000 5000 500 1000 5000 500 1000 5000 0.000 0.001 0.010 0.100 1.000 0.010 0.100 1.000 10.000 0.001 0.010 0.100 0.010 0.100 1.000 10.000 0.010 0.100 1.000 0.001 0.010 0.100 1.000 Sample size n RMSE (log scale)  Estimator Density Ratio Overlap A−learning Augmented Base Nudge RMSE 
+
+Figure 1: Coefficient-wise RMSE (log scale) of nudge coefficients for Setup 1. Figure 1 reports coefficient-wise log-RMSE for n ∈ { 500 , 1000 , 5000 }, for the nudge coefficients. RMSE decreases with n throughout; Density Ratio performs best at n = 500, 27 Table 1: Linear outcome, CMTP coefficients: empirical bias, RMSE, and 95% Wald cov-erage. Bold = minimum |bias | or minimum RMSE within each coefficient and n.
+
+n = 500 n = 1 ,000 n = 5 ,000 Coef. Truth Constr. Weighting Aug. Bias RMSE Cov. Bias RMSE Cov. Bias RMSE Cov. 
+
+X1 0.9594 Average A-learning No -0.0013 0.1348 0.9700 -0.0026 0.1004 0.9800 0.0003 0.0285 0.9850 Yes 0.0069 0.0851 0.9550 -0.0024 0.1004 0.9500 -0.0013 0.0285 0.9500 Density Ratio No -0.0014 0.1349 0.9500 -0.0027 0.1006 0.9250 0.0002 0.0285 0.9400 Yes 0.0069 0.0851 0.9550 -0.0024 0.1006 0.9400 -0.0013 0.0285 0.9500 Overlap No -0.0013 0.1348 0.9500 -0.0026 0.1004 0.9300 0.0003 0.0285 0.9400 Yes 0.0069 0.0851 0.9500 -0.0024 0.1004 0.9400 -0.0013 0.0285 0.9500 Direct A-learning No -0.0016 0.1361 0.9700 -0.0028 0.0624 0.9850 0.0002 0.0285 0.9850 Yes 0.0067 0.0857 0.9500 -0.0025 0.0624 0.9450 -0.0014 0.0285 0.9500 Density Ratio No -0.0016 0.1360 0.9700 -0.0028 0.0624 0.9850 0.0002 0.0285 0.9850 Yes 0.0067 0.0857 0.9500 -0.0025 0.0624 0.9450 -0.0014 0.0285 0.9500 Overlap No 0.0002 0.1362 0.9700 -0.0010 0.0624 0.9850 0.0020 0.0285 0.9850 Yes 0.0085 0.0860 0.9450 -0.0008 0.0624 0.9500 0.0005 0.0285 0.9500 
+
+X2 -0.6207 Average A-learning No -0.0089 0.1236 1.0000 -0.0018 0.0588 0.9900 0.0000 0.0269 1.0000 Yes -0.0070 0.0821 0.9400 0.0037 0.0588 0.9500 0.0016 0.0269 0.9300 Density Ratio No -0.0090 0.1236 0.9950 -0.0019 0.0588 0.9650 0.0000 0.0269 0.9600 Yes -0.0070 0.0821 0.9350 0.0038 0.0588 0.9500 0.0016 0.0269 0.9300 Overlap No -0.0089 0.1236 0.9950 -0.0018 0.0588 0.9650 0.0000 0.0269 0.9600 Yes -0.0070 0.0821 0.9350 0.0037 0.0588 0.9500 0.0016 0.0269 0.9300 Direct A-learning No -0.0090 0.1238 1.0000 -0.0016 0.0589 0.9900 0.0001 0.0267 1.0000 Yes -0.0071 0.0821 0.9400 0.0041 0.0589 0.9400 0.0017 0.0267 0.9300 Density Ratio No -0.0090 0.1238 1.0000 -0.0016 0.0589 0.9900 0.0001 0.0267 1.0000 Yes -0.0071 0.0821 0.9400 0.0041 0.0589 0.9400 0.0017 0.0267 0.9300 Overlap No -0.0077 0.1235 1.0000 -0.0003 0.0589 0.9900 0.0014 0.0267 1.0000 Yes -0.0058 0.0818 0.9200 0.0053 0.0589 0.9350 0.0030 0.0267 0.9250 Int. -0.4667 Average A-learning No 0.0049 0.0645 0.9800 0.0025 0.0308 0.9750 0.0010 0.0144 0.9850 Yes 0.0001 0.0459 0.9600 -0.0006 0.0308 0.9600 0.0001 0.0144 0.9200 Density Ratio No 0.0049 0.0647 0.9500 0.0025 0.0309 0.9500 0.0011 0.0144 0.9700 Yes 0.0001 0.0460 0.9600 -0.0006 0.0309 0.9600 0.0001 0.0144 0.9200 Overlap No 0.0049 0.0645 0.9500 0.0025 0.0308 0.9500 0.0010 0.0144 0.9700 Yes 0.0001 0.0459 0.9600 -0.0006 0.0308 0.9600 0.0001 0.0144 0.9200 Direct A-learning No 0.0050 0.0646 0.9850 0.0022 0.0309 0.9750 0.0010 0.0144 0.9850 Yes 0.0001 0.0459 0.9600 -0.0009 0.0309 0.9600 0.0001 0.0144 0.9200 Density Ratio No 0.0050 0.0647 0.9850 0.0022 0.0309 0.9750 0.0010 0.0144 0.9850 Yes 0.0001 0.0459 0.9600 -0.0008 0.0309 0.9600 0.0001 0.0144 0.9200 Overlap No 0.0039 0.0644 0.9850 0.0011 0.0309 0.9750 -0.0002 0.0144 0.9900 Yes -0.0010 0.0459 0.9700 -0.0020 0.0309 0.9650 -0.0012 0.0144 0.9200 
+
+28 whereas Overlap and A-learning decline more steeply and outperform it by n = 5000. The nearly identical Overlap and A-learning curves agree with the theoretical expectation that, under correct nuisance specification, both target the same population projection. Augmen-tation lowers RMSE across the board. In the CMTP results shown in Table 1, we display coefficient-level bias, RMSE, and 95% Wald coverage for the A-learning, Density Ratio, and Overlap estimators under the squared error loss with and without augmentation. The three weighting approaches are nearly very similar in performance, with Overlap and A-learning typically matching or slightly outperforming Density Ratio; augmentation improves preci-sion consistently, and direct CMTP estimation is competitive with, and at larger sample sizes occasionally more accurate than, averaging the estimated nudge, particularly with Overlap weighting. Coverage is close to nominal throughout, though the augmented inter-cept dips to roughly 0.92 at n = 5 , 000. Corresponding results for a logistic-outcome design are reported in Section B of the Supplement. 
+
+# 6 Analysis of Mechanical Power Data 
+
+We analyze data from a cohort of ICU patients who received invasive mechanical ventila-tion for at least 48 hours, originally assembled and studied by Serpa Neto et al. (2018). The dataset was extracted from the mimic-iii clinical database. For each patient, we define the continuous treatment A as the mean of the minimum and maximum MP of ventilation (in Joules per minute) during the second 24-hour period in the ICU, and restrict attention to patients with mechanically plausible, moderate MP levels. The primary outcome Y is an indicator of in-hospital mortality. We include a rich set of baseline and early clinical variables as potential effect modifiers and confounders capturing patient severity and ven-tilator management, such as demographics, SAPS II score, smoking status, ARDS severity, vasopressor use, oxygenation and gas-exchange measures (e.g., PaO 2, PaCO 2, PaO 2/FiO 2), 29 blood pressure, and ventilator settings from the first ICU day. After complete-case selec-tion the analytical sample comprised n = 5 ,011 patients. In this analysis, our goal is to characterize how a 1 J/min decrease or increase in MP would change the risk of in-hospital mortality as a function of X, via the nudge effect τδ(a, x) and the corresponding CMTP effect τδ(x). This identifies clinically-relevant effect modifiers that drive heterogeneous ben-efits or harms of modest changes in MP. We present results for shifts δ ∈ {− 1, +1 } J/min; the negative shift corresponds to a modest reduction and the positive shift to a modest 
+
+increase in MP. ARDS severity missing Asthma Insurance: Medicaid First service: NMED Male sex First service: VSURG First service: PSURG Insurance: Private First service: TSURG First service: MED Smoking: Insurance: Medicare First service: CSURG First service: other Insurance: Self Pay First service: GU Intercept pH (min, day 1) First service: OMED pH (max, day 1) −0.10 −0.05 0.00 0.05 0.10 
+
+CMTP coefficient (delta = −1 J/min) Squared loss, with augmentation     
+
+> −0.2 −0.1 0.0 0.1 0.2
+
+CMTP coefficient (delta = −1 J/min) Logistic loss 
+
+CMTP type Average Direct 
+
+A−learning CMTP coefficients with asymptotic SDs, delta = −1 First service: TRAUM First service: VSURG Asthma Male sex First service: ORTHO First service: TSURG First service: MED Smoking: Insurance: Private Insurance: Self Pay First service: GU Insurance: Medicaid First service: CSURG Insurance: Medicare First service: other pH (min, day 1) First service: PSURG Intercept First service: OMED pH (max, day 1) −0.10 −0.05 0.00 0.05 0.10 
+
+CMTP coefficient (delta = 1 J/min) Squared loss, with augmentation     
+
+> −0.2 −0.1 0.0 0.1 0.2
+
+CMTP coefficient (delta = 1 J/min) Logistic loss 
+
+CMTP type Average Direct 
+
+A−learning CMTP coefficients with asymptotic SDs, delta = +1 
+
+Figure 2: A-learning CMTP coefficient estimates with ±1.96 asymptotic standard devia-tion intervals, under δ = −1 (top) and δ = +1 J/min (bottom); squared-error loss with augmentation (left) and logistic loss (right). Colors distinguish the average and direct CMTP estimators. Across all estimators and loss specifications, Figure 2 shows that the intercept, which is interpretable as the predicted effect of the shift at the population-mean covariate profile, 30 is small in absolute magnitude and negative under δ = −1, with the sign reversing under 
+
+δ = +1, indicating that a modest 1 J/min reduction in MP is associated with a slight decrease in the probability of in-hospital mortality at the population level. The figure dis-plays the top 20 covariates ranked by their mean absolute CMTP coefficient across all six estimator combinations (three loss specifications × two CMTP constructions). The ranking and direction of the leading effect modifiers are broadly consistent across methods, suggest-ing that the substantive conclusions are robust to the choice of estimator. Full coefficient estimates and standard errors for the A-learning CMTP estimators under all three loss specifications are reported in Supplementary Tables S4 and S5. bA-learning and overlap weighting (Supplentary Figure S2) yield closely aligned estimates in direction and mag-nitude, consistent with targeting the same population projection under correct nuisance specification, whereas the density-ratio estimator (Supplementary Figure S3) shows sub-stantially wider spread, reflecting its greater sensitivity to density-model misspecification and the stabilization correction. The maximum arterial pH on ICU day 1 ( ph max day1 ) emerges as the single strongest and most consistent effect modifier across all estimation strategies and both shift direc-tions. Under δ = −1 J/min, its CMTP coefficient is negative across all methods: a higher maximum pH is associated with a greater predicted reduction in mortality probability from lowering MP. Under the symmetric positive shift δ = +1 J/min, the coefficient reverses sign. Clinically, a high blood pH on day 1 often indicates respiratory alkalosis from the ventilator giving more support than needed, so slightly reducing the ventilator’s power lowers unnecessary strain without harming breathing. In contrast, patients with low pH usually need the extra ventilator support (for example, due to acid buildup or poor carbon dioxide removal), and reducing the power does not help and may even be harmful. Overall, reducing ventilator intensity may work best for patients who do not rely on it to correct serious breathing or metabolic problems. 31 Supplementary Figure S4 displays the mean nudge effect ˆ τδ(Ai, Xi) = δ · ( ˆβA + X⊤ 
+
+> i
+
+ˆβAX )averaged within deciles of the observed MP distribution, for the A-learning squared-loss model with augmentation. For δ = −1 J/min, all deciles save the highest show negative mean nudge effects, indicating a predicted benefit from power reduction, and for δ = +1 J/min the mirror image obtains. Because the nudge model is linear in A, variation across power deciles reflects systematic differences in the covariate profiles Xi of patients who receive different power levels, rather than a dose-response gradient in the nudge itself: the lowest deciles are enriched for higher pH and elective service types (most negative nudge), while the highest decile is enriched for severely ill patients with low pH and vasopressor dependence (near-zero nudge). 
+
+# 7 Discussion 
+
+Continuous treatments arise in many clinical and policy settings, where the scientific ques-tion is often not simply whether treatment works, but how much treatment should be de-livered, and for whom. Most existing methods for continuous treatments focus on ADRFs or CADRFs, which require positivity over the entire treatment range. In clinical obser-vational studies, treatment values are often chosen based on patient severity, contraindi-cations, protocols, and physician judgment, so many doses are rarely observed for certain patient profiles, and estimating the ADRF or CADRF surfaces will require extrapolation to covariate regions with little or no support. Our framework targets local incremental effects through the conditional nudge effect and CMTP rather than global dose-response curves. Although related ideas appear in work on stochastic interventions and modified treatment policies, they have not been developed systematically for heterogeneous effects of continuous treatments. Because the estimands are anchored to observed treatment values, they require only local, shift-specific overlap 32 rather than positivity across the full dose range. We use a duplicated-arm construction that translates the continuous shift problem to a two-arm contrast between the observed and shifted doses, enabling weighting and A-learning losses for both estimands. Under unrestricted function classes for the effects, we show that the population losses identify the causal effects. Under finite-dimensional bases for the effects, they identify corresponding projections of the nudge or CMTP onto the working model. Notably, the direct CMTP estimator requires only the shift-specific exchangeability condition (Assumption 3(A ′)), which is strictly weaker than the exchangeability condition needed to identify the full nudge surface, so the direct approach is valid even when the conditional nudge effect itself is not identified. We show augmentation can improve precision by subtracting an outcome regression without changing the population target. Our simulations demonstrate that the proposed estimators recover the relevant pro-jected targets as sample size increases, and that augmentation generally improves precision. The mechanical ventilation analysis illustrates the practical value of the framework. Rather than focusing on the entire CADRF, our approach can assess which patient characteris-tics yield benefit or harm from a modest change in MP. This type of local treatment effect question is relevant for individualized clinical decision-making. Our asymptotic theory uses Donsker and smoothness conditions for nuisance estimators. Extensions using cross-fitting and double machine learning are straightforward and would allow more general machine-learning nuisance fits. Use of finite-dimensional bases yields projection parameters unless the working model of the effect is correctly specified, so growing spline or sieve bases are a natural approach for reducing approximation error. Finally, the shift magnitude δ should be chosen to balance clinical relevance with empirical overlap. Future work could develop diagnostics for feasible shift selection as in Jiang and Huling (2025), extend our frame-work to longitudinal continuous treatments, and provide simultaneous inference for richer effect-modification summaries. 33 Supplementary Material 
+
+This Supplementary Material contains additional methodological details, additional sim-ulation and data-analysis results, and proofs of all theoretical results in the main paper. Sections, results, equations, tables, and figures in this document are numbered with the prefix “S” (results) or by letter (sections) to distinguish them from those of the main paper. 
+
+# A Additional Methodological Concepts 
+
+## A.1 Direct CMTP Estimation via Weighting 
+
+Here, we work with the weighting loss for directly estimating the CMTP. This loss is analogous to the weighting loss in (2) in Section 2.3.1, integrated over the distribution of 
+
+AΛ given X = x. For a measurable function f : X → R, we define the direct weighting CMTP loss 
+
+ℓCMTP  
+
+> W
+
+(f ) = E
+
+h
+
+w(X, A Λ, Λ) Y − Λf (X) 2 X
+
+i
+
+,
+
+where w(X, A Λ, Λ) is any nonnegative arm weight as described earlier. For fixed x, differ-entiating ℓCMTP  
+
+> W
+
+(f ) with respect to f (x) yields the first-order condition Ew(X, A Λ, Λ) Λ {Y −
+
+Λf (X)} X = x = 0 , so that the pointwise minimizer takes the ratio form 
+
+f ∗(x) = Ew(X, A Λ, Λ) Λ Y | X = x
+
+Ew(X, A Λ, Λ) Λ 2 | X = x = NW (x)
+
+DW (x) ,
+
+where we write NW (x) := Ew(X, A Λ, Λ) Λ Y | X = x, and DW (x) := Ew(X, A Λ, Λ) Λ 2 |
+
+X = x. Subsequent calculations below make these terms explicit for the overlap and density-ratio weighting schemes. 
+
+Lemma 3. We define the arm contrast μ∆(a, x) := μ(a + δ, x) − μ(a, x). Then: 1. (Overlap weighting). Setting hovl (x, a ) := πΛ(x, a ){1 − πΛ(x, a )}, we get NW (x) = 34 12 Ehovl (x, A Λ) μ∆(AΛ, x) | X = x, D W (x) = 12 Ehovl (x, A Λ) | X = x.
+
+2. (Density-ratio weighting). Setting hDR (x, a ) := 1 − πΛ(x, a ), we obtain NW (x) =  
+
+> 12
+
+EhDR (x, A Λ) μ∆(AΛ, x) | X = x, D W (x) = 12 EhDR (x, A Λ) | X = x.
+
+In particular, in both cases the direct weighting CMTP estimator f ∗(x) = NW (x)/D W (x)
+
+can be written as a weighted CMTP, 
+
+f ∗(x) = EhM (x, A Λ) μ∆(AΛ, x) | X = x
+
+EhM (x, A Λ) | X = x ,
+
+with hM = hovl for overlap and hM = hDR for density-ratio weighting. Proof. Write μ∆(a, x) = m0(a + δ, x) − m0(a, x) with m0 the observed outcome regression. Conditioning on ( AΛ, X) = ( a, x) and decomposing over the two arms as in the proof of Proposition 3, NW (x) = E[12 {w+πΛ m0(AΛ + δ, X) − w−(1 − πΛ) m0(AΛ, X)} | X = x]and DW (x) = E[14 {w+πΛ + w−(1 − πΛ)} | X = x]. Substituting the overlap weights (w+ = 1 − πΛ, w− = πΛ) or the density-ratio weights ( w+ = (1 − πΛ)/π Λ, w− = 1) and simplifying yields the displayed expressions. For the direct weighting estimator with method-specific implicit weight hM , the popula-tion coefficient is the projection of the weighted CMTP τ Wδ,h (x) := E[hM (x, A Λ)μ∆(AΛ, x) |
+
+X = x]/E[hM (x, A Λ) | X = x], rather than necessarily the projection of τδ(x): βdir ,0 
+
+> W
+
+=arg min β E {τ Wδ,h (X) − β⊤c(X)}2 . Thus, unless hM (X, A Λ) is constant in AΛ conditional on X, or unless the loss is stabilized to remove the implicit weighting, the direct weighting coefficient should be interpreted as a projection of a weighted CMTP. 
+
+## A.2 Weighted NLL loss for Nudge Effect 
+
+We are given that Y | (A, X) follow a canonical exponential family with NLL M and mean function μ(η) = b′(η), and consider the duplicated-arm construction ( AΛ, Λ) with 35 Λ ∈ { 12 , −12 } as in Section 2.3. Consider a candidate link-scale contrast f (a, x) evaluated on the duplicated-arm sample ( AΛ, Λ). For any nonnegative weight function w(a, x, Λ), we define the weighted NLL loss at ( a, x) by 
+
+ℓNLL  
+
+> W
+
+(f ; a, x) = E
+
+h
+
+w(a, x, Λ) M  Y, Λf (a, x) X = x, A Λ = a
+
+i
+
+. (10) 
+
+The population FOC for f can be written as 
+
+E
+
+h
+
+ω(a, x, Λ) Λ μ Λf (a, x) − Y X = x, A Λ = a
+
+i
+
+= 0 , (11) 
+
+where, for the canonical NLL, ω(a, x, Λ) = w(a, x, Λ) exactly, since ∂M (y, η )/∂η = μ(η) −
+
+y. The next result shows that, under the duplicated-arm construction, the solution to (11) again corresponds to an arm contrast at ( a, x), now on the link scale. 
+
+Proposition 7. Suppose πΛ(x, a ) ∈ (0 , 1) , the weights w > 0 satisfy the arm-balancing condition (3), and ℓNLL  
+
+> W
+
+(f ; a, x) admits a minimizer f ∗ 
+
+> W
+
+(a, x). Then, under the conditions of Proposition 1, for each (a, x), we have τδ(a, x) = EY | X = x, A Λ = a, Λ = 12
+
+−EY |
+
+X = x, A Λ = a, Λ = −12
+
+ and the minimizer f ∗ 
+
+> W
+
+(a, x) solves 
+
+μ
+
+ f ∗ 
+
+> W
+
+(a, x)2
+
+
+
+− μ
+
+
+
+− f ∗ 
+
+> W
+
+(a, x)2
+
+
+
+= τδ(a, x). (12) 
+
+In particular, in the logistic case μ(η) = exp( η)/(1 + exp( η)) , the left-hand side reduces to μ(f / 2) − μ(−f / 2) = ( ef / 2 − 1) /(ef / 2 + 1) , and hence f ∗ 
+
+> W
+
+(a, x) uniquely encodes the arm-specific difference in success probabilities at (a, x) via 
+
+ef ∗  
+
+> W(a, x)/2
+
+− 1
+
+ef ∗  
+
+> W(a, x)/2
+
++ 1 = τδ(a, x), equivalently f ∗ 
+
+> W
+
+(a, x) = 2 log 1 + τδ(a, x)1 − τδ(a, x).
+
+We therefore interpret f ∗ 
+
+> W
+
+(a, x) as a link-scale nudge effect whose induced change in the mean outcome is given by the right-hand side of (12) .
+
+36 As in the squared-loss case, one can subtract any function m(a, x) of treatment and covari-ates only (e.g., an outcome regression) inside M  Y, Λf (a, x) to reduce variance without changing the target of estimation, provided m is treated as fixed when differentiating with respect to f . This merely recenters the first order conditions (11) and does not impact the minimizer f ∗ 
+
+> W
+
+at the population level. The proof of Proposition 7 is as follows. 
+
+Proof of Proposition 7. Fix ( a, x), write π = πΛ(x, a ), w± = w(a, x, ±12 ), and let μ±(a, x)be the arm-specific means as in the proof of Proposition 3, so that μ+(a, x) − μ−(a, x) = 
+
+τδ(a, x) by Proposition 1; this establishes the first claim. Since ∂M (y, η )/∂η = μ(η) − y
+
+and the natural parameter is Λ f with Λ ∈ {± 12 },
+
+∂∂f ℓNLL  
+
+> W
+
+(f ; a, x) = 12 w+πμ(f / 2) − μ+(a, x) − 12 w−(1 − π)μ(−f / 2) − μ−(a, x) .
+
+Under the balancing condition (3), w+π = w−(1 − π) =: c(a, x) > 0, so the first-order condition reduces to μ(f / 2) − μ(−f / 2) = μ+(a, x) − μ−(a, x) = τδ(a, x), which is (12). Moreover, ∂2  
+
+> ∂f 2
+
+ℓNLL  
+
+> W
+
+(f ; a, x) = c(a, x)4
+
+b′′ (f / 2)+ b′′ (−f / 2) > 0 by strict convexity of b, so the conditional loss is strictly convex and the minimizer f ∗ 
+
+> W
+
+(a, x), when it exists, is unique. 
+
+## A.3 Direct CMTP Estimation via NLL Loss 
+
+In the exponential-family framework of Section 2.5, the direct CMTP estimators from Section 2.4 can be extended by replacing the squared-error criteria with the corresponding canonical NLL. Rather than modeling a local nudge effect at a fixed dose a, we now posit a link-scale CMTP contrast f : X → R that depends only on the covariates X and is evaluated under the duplicated-arm mixture for AΛ given X. In both the weighting and A-learning formulations, a natural first step is to take the corresponding nudge NLL loss (from (10) and (9)), simply replacing the local contrast f (a, x) by a function f (x) and 37 conditioning only on X. However, exactly as in the squared-error case in Lemma 1 and Lemma 3, the resulting first-order conditions show that the population minimizer f ∗(x)does not recover the CMTP τδ(x) directly. Instead, the numerator of f ∗(x) involves an average of the arm-specific mean shift μ(a + δ, x) − μ(a, x) weighted by a method-specific factor hM (x, a ) that depends on the arm propensity πΛ(x, a ) and the curvature of the NLL, while the denominator averages the same hM (x, a ) alone. Thus, the unstabilized NLL losses identify a weighted CMTP of the form                   
+
+> f∗(x) = EhM(X, A Λ){μ(AΛ+δ, X)−μ(AΛ,X)} | X=x
+> EhM(X, A Λ)|X=x,
+
+with hM taking different but explicit forms for overlap, density-ratio, and A-learning variants, rather than the unweighted CMTP τδ(x) = E[μ(A + δ, x) − μ(A, x ) | X =
+
+x]. To target τδ(x) itself, we therefore stabilize the direct NLL losses by dividing each duplicated observation’s contribution by hM (X, A Λ)/{1 − πΛ(X, A Λ)}. The additional factor 1 −πΛ is essential: as in the squared-error case (see Proposition 5 of the main paper), the expectations above are taken under the duplicated-arm mixture law of AΛ given X,and the identity {1 − πΛ(x, a )}fAΛ|X (a | x) = 12 gA|X (a | x) converts the mixture average into an average over the natural law of A given X. With this stabilization, the implicit weighting cancels in both the numerator and denominator of f ∗(x), so that the unique minimizer of the stabilized NLL loss coincides with the CMTP τδ(x) on the appropriate scale (mean scale for squared error, link scale for NLL). For the A-learning estimator, 
+
+hM = πΛ(1 − πΛ) and the stabilizer reduces to πΛ(X, A Λ). As in the squared-loss setting, one can also subtract an arbitrary function m(A, X) inside the NLL to form augmented versions of these stabilized losses. At the population level this only recenters the first order conditions and does not change the fact that τδ(x) is the target of estimation, while yielding variance-reduction benefits in finite and large samples. Detailed derivations of the direct CMTP losses for the logistic case may be found in the proof of Theorem 4 in Section D. 38 A.4 Additional Empirical Loss Functions 
+
+Let bwλi := bw(Ai − λδ, Xi, λ ), where the third argument λ ∈ { 0, 1} indicates the duplicated arm (corresponding to Λ = λ − 12 in the population weight of (2)). The estimated weighting functions bwλi may be obtained from the original sample {Ai, Xi}ni=1 when density-ratio weights are used, or from the duplicated sample when overlap or IPW weights are used. The conditional nudge effect function is obtained by minimizing 
+
+btδ,W = arg min  
+
+> tδ∈T
+
+PΛ 
+
+> n
+
+bwλi
+
+Yi −  λ − 12
+
+ tδ(Zλi ) 2 .
+
+The factor λ − 12 is the arm coding Λ of the population loss (2); omitting it would yield an unweighted regression of Y on the basis, which targets the average of the two arm means rather than their contrast. If tδ is represented in a linear basis, tδ(a, x) = θ⊤b(a, x), then 
+
+btδ,W (a, x) = bθ⊤ 
+
+> W
+
+b(a, x), where 
+
+bθW = arg min 
+
+> θ
+
+PΛ 
+
+> n
+
+bwλi
+
+Yi −  λ − 12
+
+θ⊤bλi 
+
+> 2
+
+= 14 PΛ 
+
+> n
+
+bwλi bλi bλ⊤ 
+
+> i
+> −1
+
+12 PΛ 
+
+> n
+
+(2 λ − 1) bwλi bλi Yi .
+
+Thus the weighting estimator can be implemented by standard weighted least squares on the duplicated sample. 
+
+Lemma 4 (Population limits of linear-basis nudge estimators for weighting) . Let τδ(a, x)
+
+denote the conditional nudge effect and suppose we approximate it in a linear basis, τδ(a, x) ≈
+
+θ⊤b(a, x), where b(a, x) ∈ Rp is a fixed vector of basis functions and θ ∈ Rp is unknown. Suppose the weights are strictly positive, satisfy the balancing condition (3), and bw is uni-formly consistent for w; suppose also the limiting Gram matrix below is nonsingular. Then 
+
+bθW → θ∗ 
+
+> W
+
+in probability, where, with hW (a, x) := πΛ(x, a ) w(a, x, 12 ),
+
+θ∗ 
+
+> W
+
+= arg min 
+
+> θ∈Rp
+
+EΛ
+
+h
+
+hW (AΛ, X) τδ(AΛ, X) − θ⊤b(AΛ, X) 2i
+
+,
+
+39 where EΛ denotes expectation under the duplicated-arm law of (AΛ, X), as in Lemma 2 of the main paper. Proof. The argument parallels the proof of Lemma 2 in the main paper: with the arm coding included, E[w (eΛ − 12 )2 | AΛ, X] = 14 {w+πΛ + w−(1 − πΛ)} = 12 πΛw+ and E[w (eΛ − 
+
+> 12
+
+)Y | AΛ, X] = 12 πΛw+ τδ(AΛ, X) under the balancing condition and the conditions of Proposition 1; the limit then follows from the law of large numbers, uniform consistency of 
+
+bw, and the continuous mapping theorem. In particular, for overlap weights w, one has hW (a, x) = πΛ(x, a ){1 − πΛ(x, a )}, so the A-learning and overlap-weighting estimators project τδ onto the same basis with the same weight function; for IPW weights hW ≡ 1, and for density-ratio weights hW = 1 − πΛ.
+
+# B Additional Simulation Results 
+
+First, we report the inference results of nudge estimation below in Table 2. Next, in Section B.1 we introduce a new simulation experiment that studies the performance of the proposed methods under the logistic loss. 
+
+## B.1 Logistic Loss 
+
+In a second simulation, we consider a binary outcome under a correctly specified logistic model, so effects are defined on the log-odds scale. We evaluate whether the proposed weighting and A-learning estimators of the conditional nudge and CMTP effects remain approximately unbiased under a nonlinear link, and compare direct CMTP estimation with averaging the estimated nudge under logistic loss. Unlike in the linear setting, we omit outcome-regression augmentation so that differences reflect only the loss and CMTP construction. To facilitate comparison with Setup 1, we retain the same covariate and treat-ment distributions. We generate i.i.d. covariates X = ( X1, X 2)⊤, where X1 ∼ Unif( −1, 1) 40 Table 2: Linear outcome, Nudge coefficients: empirical bias, RMSE, and 95% Wald cover-age. 
+
+n = 500 n = 1 ,000 n = 5 ,000 Coef. Truth Weighting Aug. Bias RMSE Cov. Bias RMSE Cov. Bias RMSE Cov. 
+
+A -0.0600 A-learning No 0.0049 0.0173 0.8450 0.0022 0.0135 0.8850 0.0004 0.0065 0.9100 Yes -0.0001 0.0016 0.9950 -0.0000 0.0011 0.9750 -0.0000 0.0005 0.9700 Density Ratio No 0.0049 0.0173 0.8450 0.0022 0.0136 0.8850 0.0004 0.0065 0.9100 Yes -0.0001 0.0016 0.9900 -0.0000 0.0012 0.9750 -0.0000 0.0005 0.9700 Overlap No 0.0049 0.0173 0.8450 0.0022 0.0135 0.8850 0.0004 0.0065 0.9100 Yes -0.0001 0.0016 0.9900 -0.0000 0.0011 0.9750 -0.0000 0.0005 0.9700 
+
+A:X1 0.0800 A-learning No -0.0048 0.0288 0.7750 -0.0022 0.0183 0.8350 -0.0004 0.0093 0.9100 Yes -0.0001 0.0005 0.9700 0.0000 0.0004 0.9200 0.0000 0.0001 0.9650 Density Ratio No -0.0048 0.0288 0.7750 -0.0022 0.0183 0.8350 -0.0004 0.0093 0.9100 Yes -0.0001 0.0005 0.9700 0.0000 0.0004 0.9250 0.0000 0.0001 0.9650 Overlap No -0.0048 0.0288 0.7750 -0.0022 0.0183 0.8350 -0.0004 0.0093 0.9100 Yes -0.0001 0.0005 0.9700 0.0000 0.0004 0.9200 0.0000 0.0001 0.9650 
+
+A:X2 0.0000 A-learning No -0.0015 0.0211 0.9400 -0.0010 0.0153 0.9600 -0.0001 0.0083 0.9250 Yes 0.0002 0.0016 0.9850 0.0001 0.0011 0.9700 0.0000 0.0005 0.9650 Density Ratio No -0.0015 0.0212 0.9450 -0.0010 0.0154 0.9600 -0.0001 0.0083 0.9250 Yes 0.0002 0.0016 0.9850 0.0001 0.0012 0.9700 0.0000 0.0005 0.9650 Overlap No -0.0015 0.0211 0.9400 -0.0010 0.0153 0.9600 -0.0001 0.0083 0.9250 Yes 0.0002 0.0016 0.9850 0.0001 0.0011 0.9700 0.0000 0.0005 0.9650 
+
+X1 0.0580 A-learning No 0.0487 0.3016 0.8000 0.0252 0.1874 0.8400 0.0045 0.0958 0.8950 Yes 0.0018 0.0165 0.9700 -0.0017 0.0136 0.9300 -0.0005 0.0055 0.9350 Density Ratio No 0.0486 0.3012 0.8000 0.0251 0.1872 0.8400 0.0044 0.0957 0.8950 Yes 0.0018 0.0167 0.9650 -0.0017 0.0136 0.9350 -0.0005 0.0056 0.9350 Overlap No 0.0486 0.3016 0.8000 0.0252 0.1874 0.8400 0.0045 0.0958 0.8950 Yes 0.0018 0.0165 0.9700 -0.0017 0.0136 0.9300 -0.0005 0.0055 0.9350 
+
+X2 0.0000 A-learning No -0.0267 0.2856 0.8350 -0.0062 0.1858 0.9250 -0.0052 0.1026 0.9100 Yes -0.0034 0.0279 0.9800 -0.0018 0.0201 0.9600 -0.0002 0.0079 0.9650 Density Ratio No -0.0268 0.2865 0.8350 -0.0062 0.1860 0.9250 -0.0052 0.1028 0.9050 Yes -0.0034 0.0277 0.9850 -0.0017 0.0203 0.9600 -0.0002 0.0079 0.9650 Overlap No -0.0267 0.2857 0.8350 -0.0062 0.1858 0.9250 -0.0052 0.1026 0.9100 Yes -0.0034 0.0279 0.9800 -0.0018 0.0201 0.9600 -0.0002 0.0079 0.9650 Int. -0.1060 A-learning No -0.0253 0.1042 0.8950 -0.0116 0.0813 0.9250 -0.0018 0.0397 0.8900 Yes 0.0019 0.0257 0.9900 0.0007 0.0182 0.9750 0.0005 0.0076 0.9700 Density Ratio No -0.0253 0.1043 0.8950 -0.0117 0.0815 0.9250 -0.0018 0.0398 0.8850 Yes 0.0019 0.0256 0.9900 0.0007 0.0184 0.9700 0.0005 0.0076 0.9700 Overlap No -0.0253 0.1043 0.8950 -0.0116 0.0813 0.9250 -0.0018 0.0397 0.8900 Yes 0.0019 0.0257 0.9900 0.0007 0.0182 0.9750 0.0005 0.0076 0.9700 
+
+41 and X2 ∼ Bernoulli(0 .7), independently. Conditional on X, A | X ∼ Exp {λ(X)}, where 
+
+λ(X) = exp {− (2 + 0 .5X1 + X2)}, so that E[A | X = x] = exp(2 + 0 .5x1 + x2). Given (A, X), we generate Y | (A, X) ∼ Bernoulli {μ(A, X)}, with μ(A, X) = expit {η(A, X)},where η(A, X) has the form as in Section 5, with δ = 0 .5, α = −1.5, β = 2 .0, βA = −0.50, and βAX = 0 .25. This model specification induces a nonlinear, covariate-modified treat-ment effect on the log-odds scale while a parametric structure that allows for closed-form nudge and CMTP effects. The conditional nudge effect is defined on the log-odds scale as τδ(a, x) = η(a + δ, x) −
+
+η(a, x), corresponding to an odds ratio exp {τδ(a, x)} under the shift a 7 → a + δ. Under a polynomial working model, this contrast has the same form as that in Section 5 and with coefficients interpreted on the log-odds scale. The CMTP effect averages this contrast over the observed conditional treatment distribution, namely τδ(x) = E{τδ(A, X) | X = x},where E[A | X = x] = exp(2 + 0 .5x1 + x2). As in the linear setting, we summarize τδ(x)by its least-squares projection onto the span of {1, X 1, X 2}. The resulting coefficients then define the CMTP parameter on the log-odds scale. The estimators here parallel those in Setup 1 but use logistic rather than squared error loss and for simplicity regression augmentation. Density, Overlap, and A-learning ap-proaches are each fit under a linear working model for the log-odds contrast, and for the CMTP we again compare the “average” and “direct” constructions, yielding six distinct CMTP estimators. As in Setup 1, for n ∈ { 500 , 1000 , 5000 } we generate R = 200 inde-pendent datasets and compute empirical bias and root mean squared error relative to the known polynomial nudge coefficients and projected CMTP coefficients. Figure 3 displays the root integrated mean squared error of the estimated nudge (left) and CMTP (right) functions: error decreases with n for all methods, and the direct CMTP estimators attain uniformly lower error than their averaging counterparts in this design. Supplementary Tables 3 and 4 report coefficient-level bias, RMSE and 95% Wald coverage 42 0.020 0.030 0.040 500 1000 5000 Sample size n Root Integrated MSE of nudge curve (log scale)  Nudge Function Estimation Error for Logistic Outcome   
+
+> 0.030 0.050 0.100 500 1000 5000 Sample size n Root Integrated MSE of CMTP curve (log scale)  CMTP Function Estimation Error for Logistic Outcome
+
+Type Average CMTP Direct CMTP Method Density Ratio Overlap A−learning Figure 3: Root integrated MSE (log scale) of the estimated nudge (left) and CMTP (right) functions for Setup 2. Colors distinguish the three methods; line type separates the average and direct CMTP estimators. for the logistic estimators under the nudge and CMTP models. Table 3: Logistic outcome, Nudge coefficients: empirical bias, RMSE, and 95% Wald coverage. 
+
+n = 500 n = 1 ,000 n = 5 ,000 Coef. Truth Weighting Bias RMSE Cov. Bias RMSE Cov. Bias RMSE Cov. 
+
+A -0.0060 A-learning 0.0004 0.0119 0.9550 0.0002 0.0079 0.9500 0.0001 0.0035 0.9750 Density Ratio 0.0005 0.0121 0.9650 0.0003 0.0080 0.9550 0.0001 0.0036 0.9750 Overlap 0.0005 0.0121 0.9650 0.0003 0.0080 0.9550 0.0001 0.0036 0.9750 
+
+A:X1 0.0080 A-learning 0.0007 0.0124 0.9650 0.0001 0.0083 0.9650 0.0001 0.0039 0.9800 Density Ratio 0.0006 0.0128 0.9650 0.0000 0.0084 0.9800 0.0001 0.0039 0.9800 Overlap 0.0006 0.0127 0.9700 0.0000 0.0084 0.9800 0.0001 0.0039 0.9800 
+
+A:X2 0.0000 A-learning -0.0009 0.0081 0.9650 -0.0003 0.0053 0.9500 -0.0001 0.0022 0.9500 Density Ratio -0.0010 0.0082 0.9650 -0.0003 0.0054 0.9500 -0.0001 0.0022 0.9500 Overlap -0.0010 0.0082 0.9650 -0.0003 0.0053 0.9500 -0.0001 0.0022 0.9500 
+
+X1 0.0058 A-learning -0.0019 0.0828 0.9250 -0.0002 0.0548 0.9550 -0.0010 0.0253 0.9550 Density Ratio -0.0004 0.0848 0.9300 0.0006 0.0558 0.9550 -0.0009 0.0255 0.9650 Overlap -0.0004 0.0847 0.9300 0.0006 0.0557 0.9550 -0.0009 0.0254 0.9650 
+
+X2 0.0000 A-learning 0.0099 0.0904 0.9450 0.0019 0.0657 0.9250 0.0015 0.0269 0.9500 Density Ratio 0.0112 0.0923 0.9500 0.0024 0.0664 0.9300 0.0016 0.0270 0.9500 Overlap 0.0112 0.0923 0.9500 0.0024 0.0664 0.9300 0.0016 0.0270 0.9500 Int. -0.0106 A-learning -0.0074 0.0885 0.9500 -0.0020 0.0609 0.9250 -0.0011 0.0262 0.9550 Density Ratio -0.0085 0.0900 0.9500 -0.0025 0.0616 0.9250 -0.0012 0.0264 0.9550 Overlap -0.0085 0.0899 0.9500 -0.0025 0.0615 0.9250 -0.0012 0.0263 0.9550 
+
+43 Table 4: Logistic outcome, CMTP coefficients: empirical bias, RMSE, and 95% Wald coverage. 
+
+n = 500 n = 1 ,000 n = 5 ,000 Coef. Truth Constr. Weighting Bias RMSE Cov. Bias RMSE Cov. Bias RMSE Cov. 
+
+X1 0.0959 Average A-learning 0.0061 0.0745 0.9800 0.0016 0.0506 0.9650 0.0000 0.0234 0.9800 Density Ratio 0.0062 0.0769 0.9800 0.0016 0.0517 0.9700 0.0001 0.0238 0.9850 Overlap 0.0062 0.0767 0.9800 0.0016 0.0516 0.9700 0.0001 0.0238 0.9850 Direct A-learning 0.0061 0.0745 0.9800 0.0016 0.0506 0.9650 0.0000 0.0234 0.9800 Density Ratio 0.0062 0.0769 0.9800 0.0016 0.0517 0.9700 0.0001 0.0238 0.9850 Overlap 0.0062 0.0767 0.9800 0.0016 0.0516 0.9700 0.0001 0.0238 0.9850 
+
+X2 -0.0621 Average A-learning -0.0036 0.0932 0.9700 -0.0005 0.0598 0.9800 0.0000 0.0278 0.9700 Density Ratio -0.0030 0.0954 0.9700 -0.0001 0.0609 0.9800 0.0000 0.0282 0.9700 Overlap -0.0031 0.0952 0.9700 -0.0001 0.0608 0.9800 0.0000 0.0281 0.9700 Direct A-learning -0.0036 0.0932 0.9700 -0.0005 0.0598 0.9800 0.0000 0.0278 0.9700 Density Ratio -0.0030 0.0954 0.9700 -0.0001 0.0609 0.9800 0.0000 0.0282 0.9700 Overlap -0.0031 0.0952 0.9700 -0.0001 0.0608 0.9800 0.0000 0.0281 0.9700 Int. -0.0466 Average A-learning -0.0037 0.0228 0.9750 -0.0007 0.0176 0.9600 -0.0006 0.0073 0.9650 Density Ratio -0.0042 0.0234 0.9800 -0.0009 0.0178 0.9600 -0.0007 0.0074 0.9650 Overlap -0.0042 0.0235 0.9800 -0.0009 0.0179 0.9600 -0.0007 0.0075 0.9650 Direct A-learning -0.0037 0.0228 0.9750 -0.0007 0.0176 0.9600 -0.0006 0.0073 0.9650 Density Ratio -0.0042 0.0234 0.9800 -0.0009 0.0178 0.9600 -0.0007 0.0074 0.9650 Overlap -0.0042 0.0235 0.9800 -0.0009 0.0179 0.9600 -0.0007 0.0075 0.9650 
+
+# C Additional Details and Results for the Mechanical Power Data Analysis 
+
+This section provides the full list of candidate effect modifiers used in Section 6 of the main paper, coefficient estimates under the overlap and density-ratio weighting schemes (Figures 4 and 5), and full coefficient tables with standard errors for the A-learning CMTP estimators (Tables 5 and 6). 
+
+Effect modifiers. We consider a rich set of p = 24 pre-treatment covariates Xi ∈ X ⊂ Rp
+
+measured on ICU day 1, comprising: 
+
+• Demographics and severity: sex, Simplified Acute Physiology Score II (SAPS II), smoking history. 
+
+• Respiratory mechanics: minimum and maximum respiratory rate, minimum and max-imum peak inspiratory pressure, plateau pressure, fraction of inspired oxygen (FiO 2). 44 • Gas exchange: minimum and maximum partial pressure of arterial oxygen (PaO 2), PaO 2/FiO 2 ratio, minimum and maximum partial pressure of arterial carbon dioxide (PaCO 2), minimum and maximum arterial pH. 
+
+• Haemodynamics and organ support: minimum mean arterial blood pressure, vaso-pressor use on day 1. 
+
+• Admission characteristics: primary ICU service (cardiac surgery, cardiac medical, general medical, neurological medical, neurological surgical, oncological medical, or-thopaedic, plastic surgery, thoracic surgery, trauma, vascular surgery, and other), insurance category (Medicaid, Medicare, private, self-pay), ARDS severity classifica-tion and its missingness indicator. 
+
+• Comorbidities: asthma. Categorical variables were expanded into K − 1 dummy variable columns and constant columns were removed. Continuous covariates were mean-centered prior to analysis so that all CMTP coefficients represent deviations from the population-mean covariate profile and the model intercept is interpretable as the predicted nudge effect at the population-mean. 
+
+# D Proofs 
+
+## D.1 Proofs of Propositions 
+
+Proof of Proposition 1. Fix x ∈ X and a ∈ A with fA|X (a | x) > 0; Assumption 2 then guarantees fA|X (a + δ | x) > 0, so both conditional means below are well defined. By 45 Figure 4: CMTP coefficient estimates for the mechanical power analysis under overlap weighting, for δ = −1 J/min (top) and δ = +1 J/min (bottom). Panels correspond to the squared-error loss without and with augmentation and the logistic loss; colors distinguish the average (plug-in) and direct CMTP estimators. 46 Figure 5: CMTP coefficient estimates for the mechanical power analysis under density-ratio weighting, for δ = −1 J/min (top) and δ = +1 J/min (bottom). Panels correspond to the squared-error loss without and with augmentation and the logistic loss; colors distinguish the average (plug-in) and direct CMTP estimators. 47 Table 5:  A-learning CMTP coefficients,  δ = −1 J/min.  Format:  estimate (SE). SEs are plug-in cluster-sandwich asymptotic standard deviations from the estimating-equation implementation used for the coefficient plots. 
+
+> Squared Loss (no aug)  Squared Loss (with aug)  Logistic Loss Covariate  Average  Direct  Average  Direct  Average  Direct pH (max, day 1)  -0.0372 (0.0299)  -0.0455 (0.0282)  -0.0464 (0.0241)  -0.0491 (0.0229)  -0.1614 (0.1121)  -0.1485 (0.1030) First service: OMED  -0.0157 (0.0181)  -0.0173 (0.0170)  -0.0158 (0.0114)  -0.0170 (0.0117)  -0.0684 (0.0587)  -0.0764 (0.0560) First service: PSURG  0.0205 (0.0209)  0.0175 (0.0173)  0.0051 (0.0146)  0.0017 (0.0151)  0.0883 (0.0929)  0.0737 (0.0934) First service: CSURG  -0.0086 (0.0051)  -0.0082 (0.0050)  -0.0066 (0.0044)  -0.0053 (0.0044)  -0.0542 (0.0245)  -0.0414 (0.0235) First service: GU  -0.0087 (0.0082)  -0.0072 (0.0084)  -0.0065 (0.0084)  -0.0067 (0.0094)  -0.0278 (0.0791)  -0.0388 (0.1079) Intercept  -0.0085 (0.0080)  -0.0075 (0.0080)  -0.0085 (0.0063)  -0.0063 (0.0061)  -0.0392 (0.0340)  -0.0249 (0.0325) Insurance: Medicaid  0.0068 (0.0072)  0.0049 (0.0069)  0.0031 (0.0060)  0.0026 (0.0056)  0.0254 (0.0333)  0.0235 (0.0316) First service: other  0.0005 (0.0092)  0.0034 (0.0069)  0.0067 (0.0066)  0.0055 (0.0058)  0.0342 (0.0927)  0.0154 (0.0735) First service: VSURG  -0.0060 (0.0066)  -0.0059 (0.0063)  -0.0031 (0.0050)  -0.0035 (0.0050)  -0.0235 (0.0276)  -0.0224 (0.0277) pH (min, day 1)  -0.0021 (0.0244)  -0.0002 (0.0246)  0.0091 (0.0188)  0.0140 (0.0187)  -0.0247 (0.0922)  -0.0119 (0.0892) Smoking:  -0.0049 (0.0023)  -0.0042 (0.0020)  -0.0048 (0.0019)  -0.0038 (0.0015)  -0.0219 (0.0086)  -0.0182 (0.0074) Insurance: Medicare  0.0064 (0.0065)  0.0048 (0.0066)  0.0049 (0.0052)  0.0044 (0.0050)  0.0185 (0.0303)  0.0173 (0.0290) Insurance: Self Pay  -0.0032 (0.0115)  -0.0056 (0.0117)  -0.0061 (0.0092)  -0.0071 (0.0088)  -0.0149 (0.0474)  -0.0187 (0.0454) Insurance: Private  0.0058 (0.0063)  0.0051 (0.0064)  0.0037 (0.0051)  0.0034 (0.0049)  0.0184 (0.0301)  0.0189 (0.0289) First service: MED  -0.0040 (0.0049)  -0.0038 (0.0049)  -0.0044 (0.0039)  -0.0040 (0.0039)  -0.0207 (0.0173)  -0.0166 (0.0165) First service: NMED  0.0059 (0.0112)  -0.0031 (0.0088)  -0.0022 (0.0095)  -0.0037 (0.0068)  -0.0181 (0.0373)  -0.0204 (0.0286) First service: SURG  -0.0039 (0.0054)  -0.0028 (0.0055)  -0.0014 (0.0044)  -0.0009 (0.0044)  -0.0195 (0.0210)  -0.0152 (0.0205) ARDS severity missing  0.0020 (0.0088)  0.0028 (0.0064)  -0.0009 (0.0082)  0.0021 (0.0055)  -0.0195 (0.0363)  0.0146 (0.0271) Male sex  0.0022 (0.0029)  0.0033 (0.0027)  0.0037 (0.0024)  0.0027 (0.0021)  0.0197 (0.0116)  0.0093 (0.0104) First service: ORTHO  0.0012 (0.0081)  0.0022 (0.0076)  0.0014 (0.0068)  0.0001 (0.0070)  0.0198 (0.0579)  0.0090 (0.0561)
+
+48 Table 6: A-learning CMTP coefficients,  δ = 1 J/min. Format: estimate (SE). SEs are plug-in cluster-sandwich asymptotic standard deviations from the estimating-equation implementation used for the coefficient plots. 
+
+> Squared Loss (no aug)  Squared Loss (with aug)  Logistic Loss Covariate  Average  Direct  Average  Direct  Average  Direct pH (max, day 1)  0.0346 (0.0292)  0.0337 (0.0310)  0.0413 (0.0228)  0.0416 (0.0223)  0.1605 (0.1080)  0.1696 (0.1065) First service: PSURG  -0.0207 (0.0208)  -0.0230 (0.0187)  -0.0070 (0.0143)  -0.0094 (0.0155)  -0.0917 (0.0935)  -0.0988 (0.1066) First service: OMED  0.0154 (0.0176)  0.0150 (0.0172)  0.0136 (0.0114)  0.0122 (0.0130)  0.0590 (0.0584)  0.0518 (0.0595) Intercept  0.0091 (0.0081)  0.0101 (0.0095)  0.0085 (0.0064)  0.0098 (0.0069)  0.0405 (0.0334)  0.0473 (0.0333) First service: CSURG  0.0088 (0.0051)  0.0091 (0.0053)  0.0053 (0.0043)  0.0051 (0.0044)  0.0424 (0.0233)  0.0390 (0.0241) Insurance: Medicaid  -0.0076 (0.0073)  -0.0093 (0.0088)  -0.0051 (0.0062)  -0.0049 (0.0065)  -0.0322 (0.0329)  -0.0336 (0.0327) Insurance: Medicare  -0.0066 (0.0067)  -0.0079 (0.0084)  -0.0053 (0.0054)  -0.0062 (0.0060)  -0.0209 (0.0298)  -0.0270 (0.0298) First service: other  -0.0043 (0.0100)  -0.0045 (0.0077)  -0.0070 (0.0067)  -0.0083 (0.0062)  -0.0180 (0.0861)  -0.0292 (0.0777) Insurance: Private  -0.0059 (0.0066)  -0.0069 (0.0082)  -0.0041 (0.0053)  -0.0049 (0.0059)  -0.0195 (0.0297)  -0.0246 (0.0296) First service: ORTHO  -0.0022 (0.0083)  -0.0034 (0.0088)  -0.0032 (0.0067)  -0.0037 (0.0071)  -0.0235 (0.0567)  -0.0239 (0.0555) First service: GU  0.0078 (0.0077)  0.0072 (0.0075)  0.0050 (0.0077)  0.0048 (0.0093)  0.0170 (0.0734)  0.0176 (0.0908) First service: VSURG  0.0048 (0.0065)  0.0052 (0.0065)  0.0020 (0.0049)  0.0020 (0.0050)  0.0181 (0.0266)  0.0214 (0.0275) Smoking:  0.0042 (0.0021)  0.0040 (0.0022)  0.0044 (0.0017)  0.0037 (0.0017)  0.0197 (0.0081)  0.0167 (0.0079) First service: MED  0.0038 (0.0048)  0.0042 (0.0050)  0.0038 (0.0037)  0.0042 (0.0037)  0.0167 (0.0167)  0.0180 (0.0165) pH (min, day 1)  0.0044 (0.0243)  0.0049 (0.0261)  -0.0080 (0.0180)  -0.0075 (0.0179)  0.0129 (0.0888)  0.0110 (0.0883) Male sex  -0.0019 (0.0028)  -0.0012 (0.0029)  -0.0030 (0.0023)  -0.0029 (0.0023)  -0.0164 (0.0110)  -0.0161 (0.0110) First service: SURG  0.0034 (0.0054)  0.0042 (0.0055)  0.0005 (0.0043)  0.0009 (0.0043)  0.0111 (0.0203)  0.0137 (0.0205) ARDS severity:  0.0027 (0.0016)  0.0028 (0.0016)  0.0014 (0.0013)  0.0013 (0.0013)  0.0127 (0.0057)  0.0120 (0.0059) First service: TRAUM  -0.0019 (0.0058)  -0.0022 (0.0059)  -0.0020 (0.0046)  -0.0019 (0.0046)  -0.0126 (0.0217)  -0.0115 (0.0214) Insurance: Self Pay  0.0035 (0.0118)  -0.0000 (0.0139)  0.0056 (0.0092)  0.0035 (0.0100)  0.0135 (0.0463)  0.0034 (0.0473)
+
+49 −0.02 −0.01 0.00 6.7 J/min 11.1 J/min 13.4 J/min 15.4 J/min 17.4 J/min 19.7 J/min 22.2 J/min 25.3 J/min 30 J/min 42.4 J/min Mean mechanical power in decile Mean nudge effect 
+
+delta = −1 J/min 
+
+> 6.7 J/min 11.1 J/min 13.4 J/min 15.4 J/min 17.4 J/min 19.7 J/min 22.2 J/min 25.3 J/min 30 J/min 42.4 J/min
+
+Mean mechanical power in decile 
+
+delta = +1 J/min  
+
+> Benefit Harm Estimated nudge averaged within deciles of observed mechanical power; bars are bootstrap 95% intervals
+
+Mean nudge effect from A−learning squared loss with augmentation Figure 6: Mean estimated nudge effect within deciles of observed mechanical power (A-learning, squared loss with augmentation), under δ = −1 (left) and δ = +1 J/min (right); negative values indicate predicted mortality reduction. consistency (Assumption 1), 
+
+E[Y | X = x, A = a + δ] = E{Y (a + δ) | X = x, A = a + δ},
+
+E[Y | X = x, A = a] = E{Y (a) | X = x, A = a}.
+
+By Assumption 3(A ′) with q(a, x) = a + δ,
+
+E{Y (a + δ) | X = x, A = a + δ} = E{Y (a + δ) | X = x, A = a}.
+
+50 Subtracting the two consistency identities and applying the display above, 
+
+E[Y | X = x, A = a + δ] − E[Y | X = x, A = a] = E{Y (a + δ) − Y (a) | X = x, A = a}
+
+= E{Y (a + δ) − Y (a) | X = x}
+
+= τδ(a, x),
+
+where the second equality is Assumption 3(A). Note that the proof makes it clear where each condition is used: (A ′) moves the shifted-arm potential outcome across conditioning arms, while (A) removes the dose from the conditioning set in the contrast. 
+
+Proof of Proposition 2. Fix x with fX (x) > 0 and write m0(a, x) = E[Y | X = x, A = a]for the observed outcome regression. By consistency (Assumption 1), Y = Y (A) almost surely, so 
+
+E{Y (A) | X = x} = E[Y | X = x].
+
+Next, by the tower property, 
+
+E{Y (A + δ) | X = x} = E E{Y (A + δ) | X = x, A } X = x.
+
+For a in the conditional support of A | X = x, Assumption 2 gives fA|X (a + δ | x) > 0, so Assumption 3(A ′) (with q(a, x) = a + δ) followed by consistency yields 
+
+E{Y (a + δ) | X = x, A = a} = E{Y (a + δ) | X = x, A = a + δ}
+
+= E[Y | X = x, A = a + δ] = m0(a + δ, x).
+
+Hence E{Y (A + δ) | X = x} = E[m0(A + δ, x) | X = x], and subtracting the two identities 51 gives 
+
+τδ(x) = E{Y (A + δ) − Y (A) | X = x} = E[m0(A + δ, x) | X = x] − E[Y | X = x].
+
+Note that only Assumption 3(A ′) is used: the CMTP is identified without the mean nudge exchangeability condition (A), and the identification formula involves only the observed outcome regression m0, never the counterfactual CADRF. 
+
+Proof of Proposition 3. Fix ( a, x) with fA|X (a | x) > 0, so that fA|X (a + δ | x) > 0 by Assumption 2 and hence πΛ(x, a ) ∈ (0 , 1). Throughout this proof we work with the recoded arm indicator eΛ = Λ + 12 ∈ { 0, 1} of the main text, and for notational simplicity write 
+
+π(a, x) = Pr( eΛ = 1 | AΛ = a, X = x)= πΛ(x, a ),
+
+and let w+(a, x) and w−(a, x) denote the weights assigned to the eΛ = 1 and eΛ = 0 duplicated arms, respectively. Also define 
+
+μ+(a, x) = E[Y | AΛ = a, X = x, eΛ = 1] , μ−(a, x) = E[Y | AΛ = a, X = x, eΛ = 0] .
+
+By construction of the duplicated data distribution, any row with eΛ = 1 with AΛ = a
+
+corresponds to the observed treatment value A = a + δ, whereas any row with eΛ = 0 corresponds to the observed treatment value A = a. Because the data-duplication label is assigned independently of Y given ( A, X), conditioning on ( X = x, A Λ = a, eΛ = 1) is equivalent to conditioning on ( X = x, A = a + δ). Hence 
+
+μ+(a, x) = E[Y | X = x, A = a + δ], μ−(a, x) = E[Y | X = x, A = a].
+
+Now condition on AΛ = a and X = x. Writing Γ = eΛ − 1/2 (which coincides with the 52 main text’s Λ), the population weighted squared loss is 
+
+ℓW (f | a, x) = E w(AΛ, X, Λ) {Y − Γf (a, x)}2 | AΛ = a, X = x .
+
+Since f (a, x) is scalar at the fixed point ( a, x), the first-order condition is 0 = ∂∂f ℓW (f | a, x) = −2E [wΓ{Y − Γf (a, x)} | AΛ = a, X = x] .
+
+Since w+, w − > 0 and 0 < π (a, x) < 1, we have E[wΓ2 | AΛ = a, X = x] > 0, so 
+
+f 7 → ℓW (f | a, x) is a strictly convex quadratic and the first-order condition characterizes its unique minimizer. Therefore the minimizer satisfies 
+
+f ∗ 
+
+> W
+
+(a, x) = E [wΓY | AΛ = a, X = x]
+
+E [wΓ2 | AΛ = a, X = x] .
+
+Because Γ = 1 /2 when Λ = 1 and Γ = −1/2 when Λ = 0, the numerator is 
+
+E [wΓY | AΛ = a, X = x] = 12w+(a, x)π(a, x)μ+(a, x) − 12w−(a, x){1 − π(a, x)}μ−(a, x),
+
+and the denominator is 
+
+E wΓ2 | AΛ = a, X = x = 14w+(a, x)π(a, x) + 14w−(a, x){1 − π(a, x)}.
+
+By the balancing condition (3), 
+
+w+(a, x)π(a, x) = w−(a, x){1 − π(a, x)}.
+
+53 Let the common value be c(a, x). Then 
+
+E [wΓY | AΛ = a, X = x] = 12c(a, x){μ+(a, x) − μ−(a, x)},
+
+whereas 
+
+E wΓ2 | AΛ = a, X = x = 12c(a, x).
+
+Thus 
+
+f ∗ 
+
+> W
+
+(a, x) = μ+(a, x) − μ−(a, x).
+
+Using the duplicated-data identities above, 
+
+f ∗ 
+
+> W
+
+(a, x) = E[Y | X = x, A = a + δ] − E[Y | X = x, A = a].
+
+By Proposition 1, this observed data contrast is equal to τδ(a, x). Therefore 
+
+f ∗ 
+
+> W
+
+(a, x) = τδ(a, x).
+
+It remains to show that augmentation does not change the population minimizer. For the augmented loss, again conditioning on AΛ = a and X = x, the first-order condition gives 
+
+f ∗
+
+> W, aug
+
+(a, x) = E [wΓ{Y − m(AΛ, X)} | AΛ = a, X = x]
+
+E [wΓ2 | AΛ = a, X = x] .
+
+At the fixed point ( AΛ, X) = ( a, x), the augmentation term m(AΛ, X) = m(a, x) is com-54 mon to both duplicated arms. Hence, using the same balancing condition as above, 
+
+E [wΓ{Y − m(AΛ, X)} | AΛ = a, X = x]= 12c(a, x){μ+(a, x) − m(a, x)} − 12c(a, x){μ−(a, x) − m(a, x)}
+
+= 12c(a, x){μ+(a, x) − μ−(a, x)}.
+
+The denominator remains 12 c(a, x). Therefore 
+
+f ∗
+
+> W, aug
+
+(a, x) = μ+(a, x) − μ−(a, x) = E[Y | X = x, A = a + δ] − E[Y | X = x, A = a].
+
+Applying Proposition 1 once more gives 
+
+f ∗
+
+> W, aug
+
+(a, x) = τδ(a, x).
+
+Combining the two parts, 
+
+f ∗ 
+
+> W
+
+(a, x) = f ∗
+
+> W, aug
+
+(a, x) = τδ(a, x),
+
+as claimed. Finally, since the marginal risk satisfies ℓW (f ) = E{ℓW (f | AΛ, X)} and the pointwise minimizer ( a, x) 7 → μ+(a, x) − μ−(a, x) is measurable, minimizing the marginal risk over all measurable f is achieved by minimizing the conditional risk at each ( a, x); hence f ∗ 
+
+> W
+
+and f ∗ 
+
+> W, aug
+
+are the P(AΛ,X)-almost-everywhere unique minimizers of the marginal losses. 
+
+Proof of Proposition 4. Fix ( a, x) with fA|X (a | x) > 0, so that πΛ(x, a ) ∈ (0 , 1) by As-sumption 2. As in the previous proof we work with the recoded arm indicator eΛ = Λ + 12 ∈
+
+55 {0, 1}, and write 
+
+π(a, x) = Pr( eΛ = 1 | AΛ = a, X = x)= πΛ(x, a ), g(a, x, eΛ) = eΛ − π(a, x).
+
+Also define the two conditional outcome means in the duplicated sample by 
+
+μ+(a, x) = E[Y | AΛ = a, X = x, eΛ = 1] , μ−(a, x) = E[Y | AΛ = a, X = x, eΛ = 0] .
+
+By construction of the duplicated data, the eΛ = 1 row at AΛ = a corresponds to the observed treatment value A = a + δ, whereas the eΛ = 0 row corresponds to the observed treatment value A = a. Therefore, 
+
+μ+(a, x) = E[Y | X = x, A = a + δ], μ−(a, x) = E[Y | X = x, A = a].
+
+Conditioning on AΛ = a and X = x, the population A-learning loss is 
+
+ℓA(f | a, x) = E
+
+h
+
+{Y − g(a, x, eΛ) f (a, x)}2 | AΛ = a, X = x
+
+i
+
+.
+
+Since f (a, x) is scalar at the fixed point ( a, x), the first-order condition is 0 = ∂∂f ℓA(f | a, x) = −2E
+
+h
+
+g(a, x, eΛ) {Y − g(a, x, eΛ) f (a, x)} | AΛ = a, X = x
+
+i
+
+.
+
+Since 0 < π (a, x) < 1, we have E[g2 | AΛ = a, X = x] = π(a, x){1 − π(a, x)} > 0, so the conditional loss is strictly convex in f (a, x) and the first-order condition characterizes its unique minimizer. Thus the minimizer satisfies 
+
+f ∗
+
+> A
+
+(a, x) = 
+
+E
+
+h
+
+g(a, x, eΛ) Y | AΛ = a, X = x
+
+i
+
+E
+
+h
+
+g(a, x, eΛ) 2 | AΛ = a, X = x
+
+i .
+
+56 Now, conditional on ( AΛ, X) = ( a, x), we have g = 1 − π(a, x) when eΛ = 1, and g =
+
+−π(a, x) when eΛ = 0. Hence 
+
+E
+
+h
+
+g(a, x, eΛ) Y | AΛ = a, X = x
+
+i
+
+= π(a, x){1 − π(a, x)}μ+(a, x) − { 1 − π(a, x)}π(a, x)μ−(a, x)= π(a, x){1 − π(a, x)}{ μ+(a, x) − μ−(a, x)}.
+
+Similarly, 
+
+E
+
+h
+
+g(a, x, eΛ) 2 | AΛ = a, X = x
+
+i
+
+= π(a, x){1 − π(a, x)}2 + {1 − π(a, x)}π(a, x)2
+
+= π(a, x){1 − π(a, x)}.
+
+Therefore, 
+
+f ∗
+
+> A
+
+(a, x) = μ+(a, x) − μ−(a, x).
+
+Using the duplicated-data identities above, 
+
+f ∗
+
+> A
+
+(a, x) = E[Y | X = x, A = a + δ] − E[Y | X = x, A = a].
+
+By Proposition 1, this contrast equals τδ(a, x). Hence 
+
+f ∗
+
+> A
+
+(a, x) = τδ(a, x).
+
+It remains to verify that augmentation does not alter the target. Conditioning again on AΛ = a and X = x, the augmented A-learning loss gives the first-order condition 
+
+f ∗
+
+> A, aug
+
+(a, x) = 
+
+E
+
+h
+
+g(a, x, eΛ) {Y − m(AΛ, X)} | AΛ = a, X = x
+
+i
+
+E
+
+h
+
+g(a, x, eΛ) 2 | AΛ = a, X = x
+
+i .
+
+57 At the fixed point ( AΛ, X) = ( a, x), the augmentation term m(AΛ, X) = m(a, x) is com-mon to both duplicated arms. Therefore, 
+
+E
+
+h
+
+g(a, x, eΛ) {Y − m(AΛ, X)} | AΛ = a, X = x
+
+i
+
+= π(a, x){1 − π(a, x)}{ μ+(a, x) − m(a, x)} − { 1 − π(a, x)}π(a, x){μ−(a, x) − m(a, x)}
+
+= π(a, x){1 − π(a, x)}{ μ+(a, x) − μ−(a, x)}.
+
+The denominator is again 
+
+E
+
+h
+
+g(a, x, eΛ) 2 | AΛ = a, X = x
+
+i
+
+= π(a, x){1 − π(a, x)}.
+
+Thus 
+
+f ∗
+
+> A, aug
+
+(a, x) = μ+(a, x) − μ−(a, x) = E[Y | X = x, A = a + δ] − E[Y | X = x, A = a].
+
+Applying Proposition 1 once more gives 
+
+f ∗
+
+> A, aug
+
+(a, x) = τδ(a, x).
+
+Combining the two parts, 
+
+f ∗
+
+> A
+
+(a, x) = f ∗
+
+> A, aug
+
+(a, x) = τδ(a, x),
+
+as claimed. As in the proof of Proposition 3, minimizing the marginal risks ℓA(f ) and 
+
+ℓA, aug (f ) over measurable f is equivalent to this pointwise minimization for P(AΛ,X)-almost every ( a, x). 
+
+Proof of Proposition 5. Fix x with fX (x) > 0. As in the preceding proofs, write eΛ = 58 Λ + 12 ∈ { 0, 1},
+
+π(a, x) = Pr( eΛ = 1 | AΛ = a, X = x) = πΛ(x, a ),g(a, x, eΛ) = eΛ − π(a, x),h(a, x) = π(a, x){1 − π(a, x)},
+
+and let m0(a, x) = E[Y | X = x, A = a] denote the observed outcome regression. Define the arm-specific means μ+(a, x) = E[Y | AΛ = a, X = x, eΛ = 1] and μ−(a, x) = E[Y |
+
+AΛ = a, X = x, eΛ = 0]; by construction of the duplicated data, μ+(a, x) = m0(a + δ, x)and μ−(a, x) = m0(a, x). 
+
+Step 1 (evaluation of the unstabilized loss; proof of Lemma 1 in the main paper). Con-ditioning on ( AΛ, X) = ( a, x), the computations in the proof of Proposition 3 give 
+
+E[g(AΛ, x, eΛ) Y | AΛ = a, X = x] = h(a, x){μ+(a, x) − μ−(a, x)},
+
+E[g(AΛ, x, eΛ) 2 | AΛ = a, X = x] = h(a, x).
+
+Averaging over AΛ | X = x yields N (x) = E[h(AΛ, x){m0(AΛ + δ, x) − m0(AΛ, x)} | X =
+
+x] and D(x) = E[h(AΛ, x) | X = x], which is the claim of Lemma 1. 
+
+Step 2 (the πΛ-stabilized loss). The stabilized loss (7), conditional on X = x, is 
+
+ℓCMTP  
+
+> A
+
+(f | x) = E
+
+"
+
+{Y − g(AΛ, x, eΛ) f (x)}2
+
+π(AΛ, x) X = x
+
+#
+
+.
+
+Since f (x) is scalar after conditioning on X = x, the first-order condition gives 
+
+f ∗
+
+> A
+
+(x) = 
+
+E
+
+h
+
+π(AΛ, x)−1g(AΛ, x, eΛ) Y | X = x
+
+i
+
+E
+
+h
+
+π(AΛ, x)−1g(AΛ, x, eΛ) 2 | X = x
+
+i ,
+
+59 and by Step 1, after division by π(a, x), 
+
+f ∗
+
+> A
+
+(x) = E{1 − π(AΛ, x)}{ μ+(AΛ, x) − μ−(AΛ, x)} | X = x
+
+E1 − π(AΛ, x) | X = x .
+
+The uniqueness of the pointwise minimizer follows from the fact that the denominator is strictly positive, as we show next. 
+
+Step 3 (removing the mixture tilt). The conditional density of AΛ given X = x can be expressed as the mixture fAΛ|X (a | x) = 12 {gA|X (a | x) + gA|X (a + δ | x)}. The definition of π(a, x) yields 
+
+{1 − π(a, x)} fAΛ|X (a | x) = 12 gA|X (a | x).
+
+Consequently, the denominator is R {1 − π(a, x)}fAΛ|X (a | x) d a = 12
+
+R gA|X (a | x) d a = 12 ,and the numerator equals 
+
+Z
+
+{1 − π(a, x)}{ m0(a + δ, x) − m0(a, x)}fAΛ|X (a | x) d a
+
+= 12
+
+Z
+
+{m0(a + δ, x) − m0(a, x)} gA|X (a | x) d a. 
+
+Therefore 
+
+f ∗
+
+> A
+
+(x) = Em0(A + δ, x) − m0(A, x) | X = x,
+
+where the expectation is now taken over the natural conditional distribution of A given 
+
+X = x. Since by the tower property, E[m0(A, x) | X = x] = E[Y | X = x], Proposition 2 results in f ∗
+
+> A
+
+(x) = τδ(x) under Assumptions 1, 2, and 3(A ′). 
+
+Step 4 (augmentation invariance). For the augmented stabilized loss (8), the first-order condition involves Y − m(AΛ, X) instead of Y in the numerator. Then by conditioning on (AΛ, X) = ( a, x), the augmentation term m(a, x) can be seen as the same in each of the 60 duplicated arms, so 
+
+Eg(AΛ, x, eΛ) {Y − m(AΛ, X)} | AΛ = a, X = x = h(a, x){μ+(a, x) − μ−(a, x)},
+
+as in Step 1; the denominator is unchanged. Thus f ∗
+
+> A, aug
+
+(x) = f ∗
+
+> A
+
+(x) = τδ(x) for any measurable m.Finally, since the marginal risks can be constructed by averaging the conditional risks over the distribution of X, the marginal minimizers thus agree with the pointwise mini-mizers, which completes the proof. 
+
+Proof of Proposition 6. Fix ( a, x) with π := πΛ(x, a ) ∈ (0 , 1), and let μ+(a, x) and μ−(a, x)denote the two arm-specific means, as in the proof of Proposition 3. Conditional on (AΛ, X) = ( a, x), eΛ − π equals 1 − π with probability π and −π with probability 1 − π, so 
+
+ℓNLL  
+
+> A
+
+(f ; a, x) = π−μ+(a, x)(1 − π)f + b (1 − π)f  + (1 − π)μ−(a, x)πf + b(−πf ) .
+
+Differentiating in the scalar f and using b′ = μ,
+
+∂∂f ℓNLL  
+
+> A
+
+(f ; a, x) = π(1 − π)
+
+h
+
+μ (1 − π)f  − μ(−πf ) − { μ+(a, x) − μ−(a, x)}
+
+i
+
+,
+
+and ∂2  
+
+> ∂f 2
+
+ℓNLL  
+
+> A
+
+(f ; a, x) = π(1 − π)2b′′  (1 − π)f  + (1 − π)π2b′′ (−πf ) > 0, since b is strictly convex. Hence the conditional loss is strictly convex in f , and any minimizer satisfies 
+
+μ (1 −π)f −μ(−πf ) = μ+(a, x)−μ−(a, x); because the left-hand side is strictly increasing in f , this solution is unique when it exists. By Proposition 1, μ+(a, x)−μ−(a, x) = τδ(a, x). Finally, since ℓNLL  
+
+> A
+
+(f ) = E{ℓNLL  
+
+> A
+
+(f ; AΛ, X)}, the assumed unique marginal minimizer f ∗
+
+> A
+
+coincides with the pointwise minimizer and therefore satisfies the displayed identity for almost every ( a, x). 61 Proof of Lemma 2. Write gλi = eΛλi − πΛ(Zλi ) for the centered arm score with the true propensity, and ebλi = gλi bλi . By the law of large numbers on the duplicated sample and uniform consistency of bπΛ,
+
+PΛ 
+
+> n
+
+ebλi ebλ⊤
+
+> ip
+
+→ EΛ(eΛ − πΛ)2 bb ⊤ = EΛhA(AΛ, X) b(AΛ, X)b(AΛ, X)⊤,
+
+using E[( eΛ − πΛ)2 | AΛ, X] = hA(AΛ, X). Similarly, since 
+
+E[( eΛ − πΛ)Y | AΛ, X] = hA(AΛ, X){μ+(AΛ, X) − μ−(AΛ, X)} = hA(AΛ, X) τδ(AΛ, X)under the conditions of Proposition 1, 
+
+PΛ 
+
+> n
+
+ebλi Yip
+
+→ EΛhA(AΛ, X) b(AΛ, X) τδ(AΛ, X).
+
+By nonsingularity of the limiting Gram matrix and the continuous mapping theorem, bθAp
+
+→
+
+θ∗ 
+
+> A
+
+with 
+
+θ∗ 
+
+> A
+
+= EΛhA bb ⊤−1EΛhA b τδ
+
+,
+
+which is exactly the normal-equation characterization of arg min θ EΛ[hA(AΛ, X){τδ(AΛ, X)−
+
+θ⊤b(AΛ, X)}2]. 
+
+## D.2 Proofs of Theorems 
+
+Recall the notations Zλi := ( Ai − λδ, Xi), b λi := b(Zλi ) and Y λi := Yi for λ ∈ { 0, 1}. Thus 
+
+Z0 
+
+> i
+
+= ( Ai, Xi) denotes the observed arm and Z1 
+
+> i
+
+= ( Ai − δ, Xi) denotes the shifted arm. The duplicated empirical average 
+
+PΛ 
+
+> n
+
+f λi := 1
+
+n
+
+> n
+
+X
+
+> i=1 1
+
+X
+
+> λ=0
+
+f λi .
+
+62 For A-learning, define the transformed basis ebλi := 
+
+neΛλi − bπΛ(Zλi )
+
+o
+
+bλi , where eΛλi denotes the treatment-arm coding used in the duplicated-arm construction and bπΛ(Zλi ) = bπ(Ai, Xi, Λi). Then the A-learning empirical loss is 
+
+bθA = arg min 
+
+> θ
+
+PΛ
+
+> n
+
+n
+
+Yi − θ⊤ebλi
+
+o2
+
+=
+
+n
+
+PΛ
+
+> n
+
+ebλi ebλ⊤
+
+> i
+
+o−1 n
+
+PΛ
+
+> n
+
+ebλi Yi
+
+o
+
+.
+
+We now prove the theorems. 
+
+Proof of Theorem 1. Part (i): asymptotic normality of bθA. We first note that bθA =
+
+bD−1 
+
+> n
+
+bdn, where 12 bdn = 12Pn [{(1 − bπΛ(A − δ, X)) b(A − δ, X) − bπΛ(A, X)b(A, X)} Y ]and 12 bDn = 12Pn
+
+(1 − bπΛ(A − δ, X)) 2b(A − δ, X)b(A − δ, X)T + bπΛ(A, X)2b(A, X)b(A, X)T ,
+
+with the (1 − π)-factor attached to the shifted row ( A − δ, X) (arm indicator eΛ = 1) and the π-factor to the observed row ( A, X), consistent with the construction in Section 3 of the main paper. Similarly, θ∗ 
+
+> A
+
+= D−1d by Lemma 2, where 12d = EΛ
+
+h
+
+(eΛ − πΛ(AΛ, X)) b(AΛ, X)Y
+
+i
+
+= 12EX,A,Y [((1 − πΛ(A − δ, X)) b(A − δ, X) − πΛ(A, X)b(A, X)) Y ]
+
+≡ 12P [((1 − πΛ(A − δ, X)) b(A − δ, X) − πΛ(A, X)b(A, X)) Y ]and 12D = EΛ
+
+h
+
+{eΛ − πΛ(AΛ, X)}2b(AΛ, X)b(AΛ, X)T
+
+i
+
+= 12EX,A 
+
+(1 − πΛ(A − δ, X)) 2b(A − δ, X)b(A − δ, X)T + πΛ(A, X)2b(A, X)b(A, X)T
+
+≡ 12P (1 − πΛ(A − δ, X)) 2b(A − δ, X)b(A − δ, X)T + πΛ(A, X)2b(A, X)b(A, X)T .
+
+63 We further define the intermediate quantities 12 bd ≡ 12P [{(1 − bπΛ(A − δ, X)) b(A − δ, X) − bπΛ(A, X)b(A, X)} Y ] ,
+
+12 bD ≡ 12P (1 − bπΛ(A − δ, X)) 2b(A − δ, X)b(A − δ, X)T + bπΛ(A, X)2b(A, X)b(A, X)T ,
+
+12dn ≡ 12Pn [{(1 − πΛ(A − δ, X)) b(A − δ, X) − πΛ(A, X)b(A, X)} Y ] ,
+
+and 12Dn ≡ 12Pn
+
+(1 − πΛ(A − δ, X)) 2b(A − δ, X)b(A − δ, X)T + πΛ(A, X)2b(A, X)b(A, X)T .
+
+We decompose 
+
+√n( bθA − θ∗
+
+> A
+
+) = √n bD−1
+
+> n
+
+ bdn − bDnD−1d
+
+
+
+= √n bD−1
+
+> n
+
+ bdn − bDnθ∗
+
+
+
+= bD−1
+
+> n
+
+√n
+
+
+
+dn − DnD−1d
+
+| {z }
+
+> 1○
+
+
+
++ bD−1
+
+> n
+
+√n
+
+ n bdn − bDnθ∗
+
+o
+
+− { dn − Dnθ∗}
+
+| {z }
+
+> 2○
+
+
+
+.
+
+(13) We first focus on 1○. We note that E[dn − DnD−1d] = d − Dθ ∗ = 0, so 
+
+√n 1○ = √n(dn − DnD−1d)= Gn [(1 − πΛ(A − δ, X)) b(A − δ, X) {Y − (1 − πΛ(A − δ, X)) b(A − δ, X)Tθ∗}−πΛ(A, X)b(A, X) {Y + πΛ(A, X)b(A, X)Tθ∗}]= Op(1) by the central limit theorem, using the moment conditions assumed in Section 4 of the main paper. 64 We now focus on 2○. Let Ψ n(η, θ) be 
+
+Pn
+
+ {(1 − πΛ(A − δ, X; η)) b(A − δ, X) − πΛ(A, X; η)b(A, X)} Y
+
+− (1 − πΛ(A − δ, X; η)) 2b(A − δ, X)b(A − δ, X)T + πΛ(A, X; η)2b(A, X)b(A, X)T θ,
+
+so that Ψ n(η, θ) = PnψA(O; θ, η). Then by a Taylor expansion we have 
+
+√n 2○ = √n
+
+n bdn − bDnθ∗
+
+o
+
+− { dn − Dnθ∗}
+
+
+
+= √n (Ψ n( bη, θ∗) − Ψn(η∗, θ∗)) = ˙Ψn(η∗, θ∗)√n( bη − η∗) + op(1) , (14) where ˙Ψn(η∗, θ∗)= Pn
+
+−
+
+b(A − δ, X)∂π Λ(A − δ, X; η)
+
+∂ηT η=η∗
+
++ b(A, X)∂π Λ(A, X; η)
+
+∂ηT η=η∗
+
+ Y
+
++ 2(1 − πΛ(A − δ, X; η∗)) b(A − δ, X)b(A − δ, X)Tθ∗ ∂π Λ(A − δ, X; η)
+
+∂ηT η=η∗
+
+−2πΛ(A, X; η∗)b(A, X)b(A, X)Tθ∗ ∂π Λ(A, X; η)
+
+∂ηT η=η∗
+
+ .
+
+Because of the assumptions on the continuity and differentiability of πΛ(a, x; ·), {πΛ(A, X; η) : 
+
+η ∈ H ∗} is Lipschitz and hence Donsker (see example 3.2.12 in van der Vaart and Wellner (1996)) and its derivative is also Donsker. Thus, {Ψn} and { ˙Ψn} are both Donsker. Thus, 65 as n → ∞ ,˙Ψn(η∗, θ∗) → − E [{b(A − δ, X) ˙ πΛ(A − δ, X; η∗)T + b(A, X) ˙ πΛ(A, X; η∗)T} Y ]+ E [2(1 − πΛ(A − δ, X; η∗)) b(A − δ, X)b(A − δ, X)Tθ∗ ˙πΛ(A − δ, X; η∗)T]
+
+− E [2 πΛ(A, X; η∗)b(A, X)b(A, X)Tθ∗ ˙πΛ(A, X; η∗)T]
+
+≡ Bη
+
+with probability 1, where ˙ πΛ(A, X; η∗) = ∂π Λ(A, X;η) 
+
+> ∂ηη=η∗
+
+; note Bη is the population deriva-tive of E{ψA(O; θ∗
+
+> A
+
+, η)} with respect to ηT at η∗, as in the main paper. Thus, by condition (C1) and Slutsky’s theorem, we have 
+
+√n 2○ = − BηJ−1 
+
+> η
+
+GnUη(O; η∗) + op(1) = Op(1) .
+
+Thus, by Slutsky’s theorem since as n → ∞ , bDn → D with probability 1, we have 
+
+√n( bθA − θ∗
+
+> A
+
+)= D−1Gn {[(1 − πΛ(A − δ, X)) b(A − δ, X) {Y − (1 − πΛ(A − δ, X)) b(A − δ, X)Tθ∗}−πΛ(A, X)b(A, X) {Y + πΛ(A, X)b(A, X)Tθ∗}]
+
+−BηJ−1 
+
+> η
+
+Uη(O; η∗) + op(1) .
+
+Thus, as n → ∞ ,
+
+√n( bθA − θ∗
+
+> A
+
+) d
+
+−→ N (0, D−1ΣA(θ∗; η∗)D−1),
+
+66 where 
+
+ΣA(θ∗; η∗) = E
+
+"n
+
+[(1 − πΛ(A − δ, X)) b(A − δ, X) {Y − (1 − πΛ(A − δ, X)) b(A − δ, X)Tθ∗}−πΛ(A, X)b(A, X) {Y + πΛ(A, X)b(A, X)Tθ∗}]
+
+− BηJ−1 
+
+> η
+
+Uη(O; η∗)
+
+oN 2
+
+#
+
+,
+
+where for a vector or matrix V , V N 2 = V V T. This establishes the first display of the theorem. 
+
+Part (ii): asymptotic normality of bθA, aug . We note that bθA,aug = bD−1 
+
+> n
+
+bdn, daug , where 12 bdn, daug = 12Pn [(1 − πΛ(A − δ, X; bη)) b(A − δ, X)( Y − m(A − δ, X; bν)) 
+
+−πΛ(A, X; bη)b(A, X)( Y − m(A, X; bν))] .
+
+Further, define 12dn,aug = 12Pn [(1 − πΛ(A − δ, X; η∗)) b(A − δ, X)( Y − m(A − δ, X; ν∗)) 
+
+−πΛ(A, X; η∗)b(A, X)( Y − m(A, X; ν∗))] ,
+
+and 12daug = 12P [(1 − πΛ(A − δ, X; η∗)) b(A − δ, X)( Y − m(A − δ, X; ν∗)) 
+
+−πΛ(A, X; η∗)b(A, X)( Y − m(A, X; ν∗))] ,
+
+and 12 bdn,aug = 12Pn [(1 − πΛ(A − δ, X; bη)) b(A − δ, X)( Y − m(A − δ, X; ν∗)) 
+
+−πΛ(A, X; bη)b(A, X)( Y − m(A, X; ν∗))] .
+
+67 We decompose 
+
+√n( bθA,aug − θ∗
+
+> A
+
+) = bD−1
+
+> n
+
+√n
+
+
+
+dn,aug − DnD−1d
+
+| {z }
+
+> 1b ○
+
+
+
++ bD−1
+
+> n
+
+√n
+
+ n bdn,aug − bDnθ∗
+
+> A
+
+o
+
+− { dn,aug − Dnθ∗
+
+> A
+
+}
+
+| {z }
+
+> 2b ○
+
+
+
++ bD−1
+
+> n
+
+√n
+
+ bdn, daug − bdn,aug 
+
+| {z }
+
+> 3b ○
+
+
+
+. (15) We first focus on 1b ○. We note that θ∗ 
+
+> A
+
+= D−1d = D−1daug , since P [(1 −πΛ(A−δ, X)) b(A−
+
+δ, X)m(A − δ, X; ν∗) − πΛ(A, X)b(A, X)m(A, X; ν∗)] = 0 by the change of variables 
+
+a 7 → a − δ and the identity {1 − πΛ(a, x)}gA|X (a + δ | x) = πΛ(a, x)gA|X (a | x). Hence 
+
+E[dn,aug − DnD−1d] = daug − Dθ ∗ 
+
+> A
+
+= 0, so √n 1b ○ becomes 
+
+Gn
+
+(1 − πΛ(A − δ, X)) b(A − δ, X)Y − m(A − δ, X; ν∗)
+
+− (1 − πΛ(A − δ, X)) b(A − δ, X)Tθ∗
+
+> A
+
+−πΛ(A, X)b(A, X) {Y − m(A, X; ν∗) + πΛ(A, X)b(A, X)Tθ∗
+
+> A
+
+}] = Op(1) by the central limit theorem. Next, we focus on 2b ○. Let Ψ n(η, ν, θ) be 
+
+Pn
+
+ (1 − πΛ(A − δ, X; η)) b(A − δ, X)( Y − m(A − δ, X; ν)) 
+
+− πΛ(A, X; η)b(A, X)( Y − m(A, X; ν)) 
+
+− (1 − πΛ(A − δ, X; η)) 2b(A − δ, X)b(A − δ, X)T + πΛ(A, X; η)2b(A, X)b(A, X)T θ.
+
+Then, since 2b ○ varies only the propensity parameter (the outcome-model parameter is fixed 68 at ν∗), a Taylor expansion gives 
+
+√n 2b ○ = √n
+
+n bdn,aug − bDnθ∗
+
+> A
+
+o
+
+− { dn,aug − Dnθ∗
+
+> A
+
+}
+
+
+
+= √n (Ψ n( bη, ν∗, θ∗
+
+> A
+
+) − Ψn(η∗, ν∗, θ∗
+
+> A
+
+)) = ˙Ψn, η(η∗, ν∗, θ∗
+
+> A
+
+)√n( bη − η∗) + op(1) , (16) where ˙Ψn, η(η∗, ν∗, θ∗
+
+> A
+
+) is 
+
+Pn
+
+"
+
+−
+
+
+
+b(A − δ, X)( Y − m(A − δ, X; ν∗)) ∂π Λ(A − δ, X; η)
+
+∂ηT η=η∗
+
++ b(A, X)( Y − m(A, X; ν∗)) ∂π Λ(A, X; η)
+
+∂ηT η=η∗
+
+
+
++ 2(1 − πΛ(A − δ, X; η∗)) b(A − δ, X)b(A − δ, X)Tθ∗
+
+> A
+
+∂π Λ(A − δ, X; η)
+
+∂ηT η=η∗
+
+−2πΛ(A, X; η∗)b(A, X)b(A, X)Tθ∗
+
+> A
+
+∂π Λ(A, X; η)
+
+∂ηT η=η∗
+
+#
+
+.
+
+Because of the assumptions on the continuity and differentiability of πΛ(a, x; ·), {πΛ(A, X; η) : 
+
+η ∈ H ∗} is Lipschitz and hence Donsker (see example 3.2.12 in van der Vaart and Wellner (1996)) and its derivative is also Donsker. Thus, as n → ∞ , ˙Ψn, η(η∗, ν∗, θ∗
+
+> A
+
+) → Bη,aug 
+
+with probability 1, the population derivative of E{ψA, aug (O; θ∗
+
+> A
+
+, η, ν∗)} with respect to ηT
+
+at η∗. Thus, by condition (C1) and Slutsky’s theorem, 
+
+√n 2b ○ = − Bη,aug J−1 
+
+> η
+
+GnUη(O; η∗) + op(1) = Op(1) .
+
+Finally, we focus on the term 3b ○. Let Ψn,m (ν, η) = Pn [πΛ(A, X; η)b(A, X)m(A, X; ν)
+
+− (1 − πΛ(A − δ, X; η)) b(A − δ, X)m(A − δ, X; ν)] .
+
+69 Then by a Taylor expansion and an application of Slutsky’s Theorem, we have 
+
+√n 3b ○ = √n
+
+ bdn, daug − bdn,aug 
+
+
+
+= √nPn [πΛ(A, X; bη)b(A, X) {m(A, X; bν) − m(A, X; ν∗)}− (1 − πΛ(A − δ, X; bη)) b(A − δ, X) {m(A − δ, X; bν) − m(A − δ, X; ν∗)}]= √n (Ψ n,m (bν, bη) − Ψn,m (ν∗, bη)) = ˙Ψn, ν (ν∗, η∗)√n(bν − ν∗) + op(1) ,
+
+where ˙Ψn, ν (ν∗, η∗)= Pn
+
+
+
+πΛ(A, X; η∗)b(A, X)∂m (A, X; ν)
+
+∂νT ν=ν∗
+
+− (1 − πΛ(A − δ, X; η∗)) b(A − δ, X)∂m (A − δ, X; ν)
+
+∂νT ν=ν∗
+
+
+
+. (17) Because of the assumptions on the continuity and differentiability of m(a, x; ·), {m(A, X; ν) : 
+
+ν ∈ H ∗
+
+> m
+
+} is Lipschitz and hence Donsker, and its derivative is also Donsker. Thus, as n →∞, ˙Ψn, ν (ν∗, η∗) → Bν,aug with probability 1, the population derivative of E{ψA, aug (O; θ∗
+
+> A
+
+, η∗, ν)}
+
+with respect to νT at ν∗. Thus, by condition (C4) and Slutsky’s theorem, we have 
+
+√n 3b ○ = − Bν,aug J−1 
+
+> ν
+
+GnUν (O; ν∗) + op(1) = Op(1) .
+
+Thus, since as n → ∞ , bDn → D with probability 1, we have 
+
+√n( bθA,aug − θ∗
+
+> A
+
+)= D−1Gn
+
+h
+
+ψA, aug (O; θ∗
+
+> A
+
+, η∗, ν∗) − Bη,aug J−1 
+
+> η
+
+Uη(O; η∗) − Bν,aug J−1 
+
+> ν
+
+Uν (O; ν∗)
+
+i
+
++ op(1) .
+
+70 Thus, as n → ∞ ,
+
+√n( bθA,aug − θ∗
+
+> A
+
+) d
+
+−→ N (0, D−1ΣA, aug (θ∗
+
+> A
+
+; η∗, ν∗)D−1),
+
+where ΣA, aug (θ∗
+
+> A
+
+; η∗, ν∗) is 
+
+E
+
+"n
+
+[(1 − πΛ(A − δ, X)) b(A − δ, X) {Y − m(A − δ, X; ν∗) − (1 − πΛ(A − δ, X)) b(A − δ, X)Tθ∗
+
+> A
+
+}−πΛ(A, X)b(A, X) {Y − m(A, X; ν∗) + πΛ(A, X)b(A, X)Tθ∗
+
+> A
+
+}]
+
+− Bη,aug J−1 
+
+> η
+
+Uη(O; η∗) − Bν,aug J−1 
+
+> ν
+
+Uν (O; ν∗)
+
+oN 2
+
+#
+
+,
+
+matching the second display of the theorem. 
+
+Part (iii): variance ordering. Write ϕA(O) and ϕA, aug (O) for the influence functions displayed in the theorem, so that ΣA = E[ϕ⊗2 
+
+> A
+
+] and ΣA, aug = E[ϕ⊗2
+
+> A, aug
+
+], with the kernels 
+
+ψA(O) = (1 − πΛ(A − δ, X)) b(A − δ, X)
+
+n
+
+Y − (1 − πΛ(A − δ, X)) b(A − δ, X)⊤θ∗
+
+o
+
+− πΛ(A, X) b(A, X)
+
+n
+
+Y + πΛ(A, X) b(A, X)⊤θ∗
+
+o
+
+,ψA,aug (O) = (1 − πΛ(A − δ, X)) b(A − δ, X)
+
+n
+
+Y − m(A − δ, X; ν∗)
+
+− (1 − πΛ(A − δ, X)) b(A − δ, X)⊤θ∗
+
+> A
+
+o
+
+− πΛ(A, X) b(A, X)
+
+n
+
+Y − m(A, X; ν∗) + πΛ(A, X) b(A, X)⊤θ∗
+
+> A
+
+o
+
+.
+
+First, observe the exact identity (obtained by replacing Y with Y − m in ψA)
+
+ψA(O) = ψA,aug (O)+ (1 − πΛ(A − δ, X)) b(A − δ, X) m(A − δ, X; ν∗) − πΛ(A, X) b(A, X) m(A, X; ν∗)| {z }
+
+> =: D(A, X)
+
+.
+
+71 Consequently, 
+
+ϕA = ϕA,aug +
+
+n
+
+D(A, X) + Bν,aug J−1 
+
+> ν
+
+Uν (O; ν∗)
+
+o
+
+=: ϕA,aug + R. 
+
+Using Σ = E[ϕ ϕ ⊤], we therefore obtain 
+
+ΣA(θ∗; η∗) − ΣA,aug (θ∗
+
+> A
+
+; η∗, ν∗) = E
+
+h
+
+ϕA,aug R⊤ + R ϕ ⊤ 
+
+> A,aug
+
++ R R ⊤
+
+i
+
+.
+
+We now show that the two cross terms vanish. First, when the nuisance-score coefficients are their population L2-projection coefficients, 
+
+E
+
+h
+
+ϕA,aug Uν (O; ν∗)⊤
+
+i
+
+= 0 and E
+
+h
+
+ϕA,aug Uη(O; η∗)⊤
+
+i
+
+= 0.
+
+Second, by the additional orthogonality condition assumed in the theorem, 
+
+E
+
+h
+
+ϕA,aug D(A, X)⊤
+
+i
+
+= 0.
+
+Combining these two orthogonality relations yields E[ϕA,aug R⊤] = 0; by symmetry also 
+
+E[R ϕ ⊤
+
+> A,aug
+
+] = 0. Therefore, 
+
+ΣA(θ∗; η∗) − ΣA,aug (θ∗
+
+> A
+
+; η∗, ν∗) = E
+
+h
+
+R R ⊤
+
+i
+
+,
+
+which is positive semidefinite. This proves ΣA,aug ⪯ ΣA. Equality holds if and only if 
+
+R ≡ 0 almost surely, that is, (1 − πΛ(A − δ, X)) b(A − δ, X) m(A − δ, X; ν∗) − πΛ(A, X) b(A, X) m(A, X; ν∗)+ Bν,aug J−1 
+
+> ν
+
+Uν (O; ν∗) ≡ 0,
+
+72 which is equivalent to ϕA, aug = ϕA almost surely, the equality condition in the theorem. 
+
+Remark 1. The following remark is restated from the main paper’s Section 4 (where it now appears in abbreviated form). If bηn is an efficient estimator of η∗, the general sand-wich variance admits the usual projection simplification ΣA = eΣA − BηVηB⊤ 
+
+> η
+
+, and eΣA =
+
+E[ψA(O; θ∗
+
+> A
+
+, η∗)⊗2] . An analogous expression holds for the augmented estimator. Proof of the Remark following Theorem 2. We first treat the unaugmented estimator. De-fine eθA = D−1 
+
+> n
+
+dn to be the estimator using the true weights. We decompose 
+
+√n( bθA − θ∗
+
+> A
+
+) = bD−1
+
+> n
+
+√n
+
+
+
+dn − DnD−1d
+
+
+
++ bD−1
+
+> n
+
+√n
+
+ n bdn − bDnθ∗
+
+o
+
+− { dn − Dnθ∗}
+
+
+
+= √n( eθA − θ∗
+
+> A
+
+) − D−1Bη
+
+√n( bη − η∗) + op(1) .
+
+Thus, if bη is efficient and since √n( eθA − θ∗
+
+> A
+
+) and √n( bη − η∗) are jointly asymptotically normal, by the results of Pierce (1982), as n → ∞ √n( bθA − θ∗
+
+> A
+
+) d
+
+−→ N (0, D−1
+
+ eΣA(θ∗; η∗) − BηVηBηT
+
+
+
+D−1),
+
+where 
+
+eΣA(θ∗; η∗) = E
+
+h(1 − πΛ(A − δ, X)) b(A − δ, X) {Y − (1 − πΛ(A − δ, X)) b(A − δ, X)Tθ∗}− πΛ(A, X)b(A, X) {Y + πΛ(A, X)b(A, X)Tθ∗} 
+
+> N2
+
+i
+
+.
+
+Now we treat the augmented estimator. Define eθA,aug = D−1 
+
+> n
+
+dn,aug , the estimator using the true propensity πΛ(·; η∗) but the estimated bν. By the arguments in Part (ii) of the proof of the theorem, 
+
+√n( bθA,aug − θ∗
+
+> A
+
+) = √n( eθA,aug − θ∗
+
+> A
+
+) − D−1Bη,aug 
+
+√n( bη − η∗) + op(1) ,
+
+73 and the two terms are jointly asymptotically normal. Thus, if bη is efficient, by the results of Pierce (1982), as n → ∞ ,
+
+√n( bθA,aug − θ∗
+
+> A
+
+) d
+
+−→ N  0, D−1  eΣA,aug (θ∗
+
+> A
+
+; η∗, ν∗) − Bη,aug VηBη,aug TD−1,
+
+where 
+
+eΣA,aug (θ∗
+
+> A
+
+; η∗, ν∗) = E
+
+hψA,aug (O; θ∗
+
+> A
+
+, η∗, ν∗) − Bν,aug J−1 
+
+> ν
+
+Uν (O; ν∗) 
+
+> N2
+
+i
+
+.
+
+We next translate the asymptotic normality of the conditional nudge estimator into in-ference for the plug-in CMTP estimator obtained by averaging the fitted nudge over the conditional distribution of A | X = x.
+
+Corollary 1 (Asymptotic normality of plug-in CMTP from A-learning nudge estimator) .
+
+Suppose the conditions of Proposition 1 and conditions (C1)-(C3) hold, and that the nudge working model is correctly specified, i.e., τδ(a, x) = b(a, x)⊤θ∗ 
+
+> A
+
+for all (a, x) in the support of the duplicated-arm law, so that Theorem 1 yields √n( bθA − θ∗
+
+> A
+
+) ⇝ N (0, D−1ΣAD−1).Fix x, assume E{∥ b(A, x)∥ | X = x} < ∞, and let ¯b(x) := E{b(A, x) | X = x}.Define the plug-in CMTP estimator bτ plug  
+
+> δ
+
+(x) := b¯b(x)⊤ bθA, where b¯b(x) is any estimator satisfying ∥b¯b(x) − ¯b(x)∥ = op(n−1/2); this rate condition holds, e.g., when the conditional dose distribution gA|X is known by design, or when ¯b is estimated from an independent auxiliary sample whose size grows faster than n. Then 
+
+√n bτ plug  
+
+> δ
+
+(x) − τδ(x) ⇝ N  0, ¯b(x)⊤D−1ΣAD−1¯b(x).
+
+If instead only ∥b¯b(x) − ¯b(x)∥ = op(1) , then bτ plug  
+
+> δ
+
+(x) − τδ(x) = Op(n−1/2) + Op
+
+ ∥b¯b(x) −
+
+74 ¯b(x)∥, so the plug-in estimator inherits the (possibly slower) rate of b¯b(x); in particular, generic nonparametric or cross-fitted estimators of ¯b(x) converge more slowly than √n,and the display above then no longer describes the limiting distribution. 
+
+Thus, Corollary 1 shows that when ¯b(x) can be estimated faster than root-n in rate, e.g. when the treatment’s distribution is known by design, the plug-in CMTP estimator inherits the root-n asymptotic normality of the estimator of the nudge effect coefficients. When ¯b(x) is instead estimated nonparametrically, the plug-in estimator converges at the slower rate of b¯b(x) and the stated limiting normal distribution no longer applies. Remark 2 describes the same-sample projection implementation we use in practice, which explicitly accounts for the additional averaging step. 
+
+Proof of Corollary 1 (Asymptotic normality of plug-in CMTP from A-learning nudge estimator). 
+
+Under the conditions of Proposition 1, the nudge surface τδ(a, x) is identified and, by As-sumption 3(A), τδ(x) = E{τδ(A, x) | X = x}. Correct specification of the working model then gives 
+
+τδ(x) = E{b(A, x)⊤θ∗ 
+
+> A
+
+| X = x} = ¯b(x)⊤θ∗
+
+> A
+
+,
+
+the interchange being justified by E{∥ b(A, x)∥ | X = x} < ∞. Decompose 
+
+bτ plug  
+
+> δ
+
+(x) − τδ(x) = ¯b(x)⊤( bθA − θ∗
+
+> A
+
+) + {b¯b(x) − ¯b(x)}⊤θ∗ 
+
+> A
+
++ {b¯b(x) − ¯b(x)}⊤( bθA − θ∗
+
+> A
+
+).
+
+By Theorem 1, bθA−θ∗ 
+
+> A
+
+= Op(n−1/2) and, by the continuous mapping theorem, √n ¯b(x)⊤( bθA−
+
+θ∗
+
+> A
+
+) ⇝ N  0, ¯b(x)⊤D−1ΣAD−1¯b(x). Under the rate condition ∥b¯b(x) − ¯b(x)∥ = op(n−1/2), the second term is op(n−1/2) ∥θ∗
+
+> A
+
+∥ = op(n−1/2) and the third is op(n−1/2) Op(n−1/2) = 
+
+op(n−1/2); Slutsky’s theorem gives the first display of the corollary. If only ∥b¯b(x) − ¯b(x)∥ =
+
+op(1), the same decomposition yields bτ plug  
+
+> δ
+
+(x)−τδ(x) = Op(n−1/2)+ Op(∥b¯b(x)−¯b(x)∥). 
+
+Remark 2 (Same-sample projection implementation) . In practice (Section 2 of the main 
+
+75 paper) we project the fitted nudge onto a basis c(x) using the same sample, i.e., bβplug =
+
+{Pncic⊤ 
+
+> i
+
+}−1Pnci b(Ai, Xi)⊤ bθA, which targets β∗ = M θ ∗ 
+
+> A
+
+with M := {E(cc ⊤)}−1E{c b (A, X)⊤};under the conditions of Corollary 1, β∗ is the L2(PX ) projection coefficient of τδ(X) onto 
+
+c(X). Averaging the fitted nudge over the same sample contributes an additional empirical-process term to the influence function: under (C1)-(C3) , finite fourth moments of (b, c),and nonsingular E(cc ⊤), √n( bβplug − β∗) ⇝ N  0, E{h(O)⊗2}, where 
+
+h(O) = M D −1ϕA(O) + {E(cc ⊤)}−1c(X)b(A, X)⊤θ∗ 
+
+> A
+
+− c(X)⊤β∗ .
+
+The second term is not asymptotically negligible in general and is correlated with the first; ignoring it (as a naive application of Corollary 1 would) misstates the asymptotic variance. 
+
+Lemma 5 (Population characterization of the πΛ-stabilized direct CMTP A-learning min-imizer) . Suppose Assumptions 1, 2, and 3(A ′) of the main paper hold, πΛ(x, a ) ∈ (0 , 1) ,and the propensity model is correctly specified, πΛ(·) = πΛ(·; η∗). Write πλi = πΛ(Zλi ; η∗),
+
+gλi = λ − πλi , mλi (ν) = m(Zλi ; ν), and bi = b(Xi), where Zλi = ( Ai − λδ, Xi), λ ∈ { 0, 1}.Then, for any measurable working outcome model m and any ν, almost surely, 
+
+E
+
+h X 
+
+> λ∈{ 0,1}
+
+(gλi )2
+
+πλi
+
+Xi
+
+i
+
+= 1 , E
+
+h X 
+
+> λ∈{ 0,1}
+
+gλi
+
+πλi
+
+Yi − mλi (ν) Xi
+
+i
+
+= τδ(Xi). (18) 
+
+Consequently, with ψC, aug (Oi; θ, η, ν) = P
+
+> λ∈{ 0,1}
+
+{gλi (η)/π λi (η)} bi{Yi −mλi (ν)−gλi (η)b⊤ 
+
+> i
+
+θ}
+
+as in the main paper, 
+
+EψC, aug (Oi; θ, η∗, ν) = Eb(X)τδ(X) − b(X)⊤θ  for every θ and every ν,
+
+so that, provided DC := E{b(X)b(X)⊤} is nonsingular, the population estimating equation 
+
+76 has the unique solution 
+
+θ∗ 
+
+> C
+
+= E{b(X)b(X)⊤}−1E{b(X)τδ(X)} = arg min 
+
+> θ
+
+E{τδ(X) − b(X)⊤θ}2,
+
+which does not depend on (m, ν); in particular BC, ν = ∂ E{ψC, aug (Oi; θ∗ 
+
+> C
+
+, η∗, ν)}/∂ ν⊤|ν=ν∗ =
+
+0.Proof. The definition of πΛ gives, for all ( u, x), the natural-law identity 
+
+πΛ(x, u ) gA|X (u | x) = {1 − πΛ(x, u )} gA|X (u + δ | x), (19) which is the natural-law counterpart of the mixture identity {1 − πΛ(x, a )}fAΛ|X (a | x) =  
+
+> 12
+
+gA|X (a | x) used in the proof of Proposition 5. For the λ = 0 row, g0 
+
+> i
+
+/π 0 
+
+> i
+
+= −1 and (g0 
+
+> i
+
+)2/π 0 
+
+> i
+
+= π0 
+
+> i
+
+identically. For the λ = 1 row, substituting u = a − δ and applying (19), for any integrable ω,
+
+E
+
+h1 − π1
+
+> i
+
+π1
+
+> i
+
+ω(Ai − δ, Xi) Xi = x
+
+i
+
+=
+
+Z 1 − πΛ(x, u )
+
+πΛ(x, u ) ω(u, x) gA|X (u + δ | x) d u = Eω(Ai, Xi) | Xi = x. (20) Taking ω(u, x) = 1 − πΛ(x, u ) in (20) yields E[( g1 
+
+> i
+
+)2/π 1 
+
+> i
+
+| Xi] = E[1 − π0 
+
+> i
+
+| Xi]; adding 
+
+E[( g0 
+
+> i
+
+)2/π 0 
+
+> i
+
+| Xi] = E[π0 
+
+> i
+
+| Xi] gives the first identity in (18). Next, conditioning on ( Ai, Xi)so that E(Yi | Ai, Xi) = m0(Ai, Xi), and taking ω(u, x) = m0(u + δ, x) − m(u, x; ν) in (20), 
+
+E
+
+h g1
+
+> i
+
+π1
+
+> i
+
+{Yi − m1 
+
+> i
+
+(ν)} Xi
+
+i
+
+= Em0(Ai + δ, Xi) − m(Ai, Xi; ν) | Xi
+
+,
+
+while the λ = 0 row contributes −E[m0(Ai, Xi)−m(Ai, Xi; ν) | Xi]. Summing, the terms in 
+
+m cancel for every ν, and E[P
+
+> λ
+
+(gλi /π λi ){Yi −mλi (ν)} | Xi] = E[m0(Ai +δ, Xi)−m0(Ai, Xi) |
+
+Xi] = τδ(Xi) by Proposition 2 of the main paper. The remaining claims follow because 77 b(Xi) is Xi-measurable and E{ψC, aug (Oi; θ, η∗, ν)} is constant in ν (differentiation under the integral is justified by (C6)). 
+
+Proof of Theorem 2 (Asymptotic normality of augmented direct CMTP A-learning). Recall 
+
+Zλi = ( Ai − λδ, Xi), πλi (η) = πΛ(Zλi ; η), gλi (η) = λ − πλi (η), mλi (ν) = m(Zλi ; ν), and 
+
+bi = b(Xi); write πλi = πλi (η∗), gλi = gλi (η∗), and mλi = mλi (ν∗). Since ψC, aug (Oi; θ, η, ν) is linear in θ, bθC, aug = bD−1 
+
+> C,n
+
+bdC,n, aug , where 
+
+bdC,n, aug := Pn
+
+h X 
+
+> λ∈{ 0,1}
+
+gλi ( bηn)
+
+πλi ( bηn) bi
+
+Yi − mλi (bνn)
+
+i
+
+, bDC,n := Pn
+
+h X 
+
+> λ∈{ 0,1}
+
+gλi ( bηn)2
+
+πλi ( bηn) bib⊤
+
+> i
+
+i
+
+,
+
+with true-nuisance analogues 
+
+dC,n, aug := Pn
+
+hX 
+
+> λ
+
+gλi
+
+πλi
+
+bi{Yi − mλi }
+
+i
+
+, DC,n := Pn
+
+hX 
+
+> λ
+
+(gλi )2
+
+πλi
+
+bib⊤
+
+> i
+
+i
+
+,
+
+and population versions dC, aug and DC obtained by replacing Pn with P . By Lemma 5, 
+
+DC = E{b(X)b(X)⊤}, dC, aug = E{b(X)τδ(X)}, θ∗ 
+
+> C
+
+= D−1 
+
+> C
+
+dC, aug ,
+
+where dC, aug does not depend on ν∗. We decompose 
+
+√n( bθC, aug − θ∗ 
+
+> C
+
+) = bD−1
+
+> C,n
+
+√n
+
+
+
+dC,n, aug − DC,n θ∗
+
+> C
+
+| {z }
+
+> 1○
+
+
+
++ bD−1
+
+> C,n
+
+√n
+
+ bdC,n, aug − bDC,n θ∗ 
+
+> C
+
+− dC,n, aug − DC,n θ∗
+
+> C
+
+| {z }
+
+> 2○
+
+
+
+. (21) 
+
+Step 1: limit of √n 1○. By Lemma 5, E[dC,n, aug − DC,n θ∗ 
+
+> C
+
+] = dC, aug − DC θ∗ 
+
+> C
+
+= 0, and 
+
+dC,n, aug − DC,n θ∗ 
+
+> C
+
+= PnψC, aug (Oi; θ∗ 
+
+> C
+
+, η∗, ν∗). Hence 
+
+√n 1○ = Gn ψC, aug (Oi; θ∗ 
+
+> C
+
+, η∗, ν∗) = Op(1) 78 by the central limit theorem: since πΛ ≥ c0, the stabilized weights are bounded by 1 /c 0,and E∥b(X)∥2 < ∞, E(Y 2) < ∞, and the boundedness of m(·; ν∗) implied by (C6) give 
+
+E∥ψC, aug ∥2 < ∞.
+
+Step 2: limit of √n 2○ (effect of nuisance estimation). Define ΨC,n (η, ν, θ) := Pn
+
+h X 
+
+> λ∈{ 0,1}
+
+gλi (η)
+
+πλi (η) bi
+
+Yi − mλi (ν) − gλi (η) b⊤ 
+
+> i
+
+θ
+
+i
+
+,
+
+so that 2○ = Ψ C,n ( bηn, bνn, θ∗ 
+
+> C
+
+) − ΨC,n (η∗, ν∗, θ∗ 
+
+> C
+
+). By the smoothness conditions (C3) and (C6), the lower bound πΛ(·; η) ≥ c0 in a neighborhood of η∗, and the Donsker conditions (C2) and (C5) (the maps η 7 → gλi (η)/π λi (η) and their η-derivatives are Lipschitz trans-formations of πΛ(·; η), hence Donsker; see Example 3.2.12 of van der Vaart and Wellner (1996)), a first-order Taylor expansion in ( η, ν) around ( η∗, ν∗) gives 
+
+√n 2○ = ˙ΨC,n, η
+
+√n( bηn − η∗) + ˙ΨC,n, ν
+
+√n(bνn − ν∗) + op(1) ,
+
+where the empirical derivatives converge almost surely to the corresponding population derivatives: ˙ΨC,n, η → BC, η and ˙ΨC,n, ν → BC, ν . Because g0 
+
+> i
+
+(η)/π 0 
+
+> i
+
+(η) ≡ − 1, only the shifted-arm row contributes derivative terms in η beyond the θ-part, and direct differenti-ation gives 
+
+BC, η = −E
+
+h 1
+
+{π1 
+
+> i
+
+}2 bi
+
+Yi−m1 
+
+> i
+
+−(1 −π1 
+
+> i
+
+) b⊤ 
+
+> i
+
+θ∗ 
+
+> C
+
+˙π1⊤
+
+> i
+
+i
+
++E
+
+h1 − π1
+
+> i
+
+π1
+
+> i
+
+bib⊤ 
+
+> i
+
+θ∗ 
+
+> C
+
+˙π1⊤
+
+> i
+
+i
+
+−Ebib⊤ 
+
+> i
+
+θ∗ 
+
+> C
+
+˙π0⊤
+
+> i
+
+,
+
+where ˙ πλi = ∂π Λ(Zλi ; η)/∂ η|η=η∗ , while 
+
+BC, ν = −E
+
+h X 
+
+> λ∈{ 0,1}
+
+gλi
+
+πλi
+
+bi ˙mλ⊤
+
+> i
+
+i
+
+= −Ebi
+
+ ˙m(Ai, Xi; ν∗) − ˙m(Ai, Xi; ν∗) ⊤ = 0,
+
+by identity (20) of Lemma 5 applied to ω = ˙ m(·; ν∗), where ˙ mλi = ∂m (Zλi ; ν)/∂ ν|ν=ν∗ : the 79 augmented direct CMTP score is orthogonal to the outcome-regression nuisance when the propensity model is correctly specified. Using the asymptotic linearity in (C1) and (C4) and Slutsky’s theorem, √n 2○ becomes 
+
+−BC, η J−1 
+
+> η
+
+GnUη(Oi; η∗)−BC, ν J−1 
+
+> ν
+
+GnUν (Oi; ν∗)+ op(1) = −BC, η J−1 
+
+> η
+
+GnUη(Oi; η∗)+ op(1) .
+
+Step 3: assembling the pieces. By the law of large numbers, uniform consistency of 
+
+πΛ(·; bηn), and πΛ ≥ c0, bDC,n → DC = E{b(X)b(X)⊤} almost surely, so (21) yields 
+
+√n( bθC, aug − θ∗ 
+
+> C
+
+) = D−1 
+
+> C
+
+Gn
+
+n
+
+ψC, aug (Oi; θ∗ 
+
+> C
+
+, η∗, ν∗) − BC, η J−1 
+
+> η
+
+Uη(Oi; η∗)
+
+o
+
++ op(1) ,
+
+and the multivariate central limit theorem gives √n( bθC, aug −θ∗ 
+
+> C
+
+) d
+
+−→ N (0, D−1 
+
+> C
+
+ΣC, aug (θ∗ 
+
+> C
+
+; η∗, ν∗)D−1 
+
+> C
+
+)with ΣC, aug = E[{ψC, aug (Oi; θ∗ 
+
+> C
+
+, η∗, ν∗) − BC, ηJ−1 
+
+> η
+
+Uη(Oi; η∗)}⊗2], as stated. 
+
+Step 4: efficient propensity estimator. Let eθC = D−1
+
+> C,n
+
+dC,n, aug denote the estimator using the true nuisance values. The decomposition above shows √n( bθC, aug −θ∗ 
+
+> C
+
+) = √n( eθC −
+
+θ∗ 
+
+> C
+
+) − D−1 
+
+> C
+
+BC, η
+
+√n( bηn − η∗) + op(1). If bηn is efficient and jointly asymptotically normal with √n( eθC − θ∗ 
+
+> C
+
+), then by the variance-reduction results of Pierce (1982), 
+
+ΣC, aug = eΣC, aug − BC, ηVηB⊤
+
+> C, η
+
+, eΣC, aug = EψC, aug (Oi; θ∗ 
+
+> C
+
+, η∗, ν∗)⊗2.
+
+Theorem 3 (Asymptotic normality of logistic A-learning nudge) . Suppose that the outcome 
+
+Y ∈ { 0, 1} follows a canonical logistic model conditional on (A, X),
+
+P(Y = 1 | A = a, X = x) = μ{η(a, x)}, μ(u) = eu
+
+1 + eu ,
+
+and let M (y, η ) = −yη +log(1+ eη) denote the logistic negative log-likelihood. Let tδ(a, x) be 
+
+80 represented in the linear basis tδ(a, x) = θ⊤b(a, x), and let θ∗ 
+
+> A
+
+denote the population mini-mizer of the logistic A-learning risk (for the nudge) under the duplicated-arm construction, i.e. the unique solution of 
+
+ΨA(θ, η∗) := EψA(Z; θ, η∗) = 0,
+
+where Z = ( Y, A, X, eΛ) with eΛ = Λ + 12 ∈ { 0, 1} the recoded arm indicator of the main text, and 
+
+ψA(Z; θ, η) = {eΛ − πΛ(A, X; η)} Y − μ {eΛ − πΛ(A, X; η)} θ⊤b(A, X) b(A, X).
+
+Assume that conditions (C1)–(C3) hold for the propensity model πΛ(a, x; η), that the parameter θ∗ 
+
+> A
+
+lies in the interior of a compact parameter space, that E∥b(A, X)∥2 < ∞,and that the matrix 
+
+Dlog := − ∂∂θ⊤ ΨA(θ, η∗) θ=θ∗
+
+> A
+
+= E
+
+h
+
+{Λ − πΛ(A, X)}2 μ′ {Λ − πΛ(A, X)}θ∗⊤  
+
+> A
+
+b(A, X) b(A, X)b(A, X)⊤
+
+i
+
+is nonsingular, where μ′(u) = μ(u){1−μ(u)}. Let bηn be an estimator of η∗ satisfying (C1) ,and let bθA, log solve the empirical A-learning estimating equation 
+
+ΨA,n (θ, bηn) := Pn
+
+ψA(Z; θ, bηn) = 0,
+
+where Pn denotes the empirical measure. Then, as n → ∞ ,
+
+√n  bθA, log − θ∗
+
+> A
+
+ d
+
+−→ N  0, D−1log ΣA, log (θ∗
+
+> A
+
+; η∗) D−1log 
+
+,
+
+81 where 
+
+ΣA, log (θ∗
+
+> A
+
+; η∗) := E
+
+hψA(Z; θ∗
+
+> A
+
+, η∗) − Blog J−1 
+
+> η
+
+Uη(O; η∗) ⊗2i
+
+,
+
+and 
+
+Blog := ∂∂η⊤ ΨA(θ∗
+
+> A
+
+, η) η=η∗
+
+is the Jacobian of the population estimating equation with respect to η. Here Uη(O; η) and 
+
+Jη are as in condition (C1) , and for a vector or matrix V we write V ⊗2 = V V ⊤.If, in addition, bηn is an efficient estimator of η∗ with asymptotic variance Vη, then 
+
+ΣA, log (θ∗
+
+> A
+
+; η∗) = eΣA, log (θ∗
+
+> A
+
+; η∗) − Blog Vη B⊤
+
+> log
+
+,
+
+where 
+
+eΣA, log (θ∗
+
+> A
+
+; η∗) := EψA(Z; θ∗
+
+> A
+
+, η∗)⊗2
+
+is the covariance of the logistic A-learning influence function when the true πΛ(A, X) is known. Proof of Theorem 3. Recall that the logistic A–learning estimator bθA, log is defined as the solution to the empirical estimating equation ΨA,n (θ, bηn) := Pn
+
+ψA(Z; θ, bηn) = 0,
+
+where Z = ( Y, A, X, eΛ), Pn is the empirical measure, and 
+
+ψA(Z; θ, η) = {eΛ − πΛ(A, X; η)} Y − μ {eΛ − πΛ(A, X; η)} θ⊤b(A, X) b(A, X),
+
+82 with μ(u) = eu/(1 + eu) the logistic mean function. The population counterpart is ΨA(θ, η) := EψA(Z; θ, η),
+
+and, by definition, θ∗ 
+
+> A
+
+satisfies Ψ A(θ∗
+
+> A
+
+, η∗) = 0.We first establish the asymptotic linear representation. Consider the map (θ, η) 7 −→ ΨA,n (θ, η) = Pn
+
+ψA(Z; θ, η).
+
+By the conditions (C1)–(C3), the class {ψA(·; θ, η) : ( θ, η) ∈ T × H ∗} is Donsker, where T
+
+is a compact neighborhood of θ∗ 
+
+> A
+
+and H∗ is a neighborhood of η∗. Moreover, ψA is twice continuously differentiable in ( θ, η) on T × H ∗ with bounded derivatives, because μ(·) is smooth and πΛ(a, x; η) is twice continuously differentiable with respect to η by assumption. Thus, we can apply a first–order Taylor expansion of Ψ A,n around ( θ∗
+
+> A
+
+, η∗). Since bθA, log solves Ψ A,n ( bθA, log , bηn) = 0, we have 
+
+0 = Ψ A,n ( bθA, log , bηn)= Ψ A,n (θ∗
+
+> A
+
+, η∗) + ˙ΨA,n, θ(θ∗
+
+> A
+
+, η∗) ( bθA, log − θ∗
+
+> A
+
+) + ˙ΨA,n, η(θ∗
+
+> A
+
+, η∗) ( bηn − η∗) + rn,
+
+where ˙ΨA,n, θ(θ∗
+
+> A
+
+, η∗) = ∂∂θ⊤ ΨA,n (θ, η) (θ,η)=( θ∗
+
+> A,η∗)
+
+, ˙ΨA,n, η(θ∗
+
+> A
+
+, η∗) = ∂∂η⊤ ΨA,n (θ, η) (θ,η)=( θ∗
+
+> A,η∗)
+
+,
+
+and the remainder rn satisfies ∥rn∥ = op(n−1/2) by the differentiability and Donsker condi-tions (see, e.g., Theorem 5.23 of van der Vaart (1998)). Rearranging terms and multiplying 83 by √n yields 
+
+√n( bθA, log − θ∗
+
+> A
+
+) = − ˙ΨA,n, θ(θ∗
+
+> A
+
+, η∗)−1√n ΨA,n (θ∗
+
+> A
+
+, η∗) + ˙ΨA,n, η(θ∗
+
+> A
+
+, η∗) √n( bηn − η∗) + op(1) .
+
+(22) We now identify the limits of each ingredient. First, note that ΨA,n (θ∗
+
+> A
+
+, η∗) = Pn
+
+ψA(Z; θ∗
+
+> A
+
+, η∗) = P ψA(Z; θ∗
+
+> A
+
+, η∗) + Gn
+
+ψA(Z; θ∗
+
+> A
+
+, η∗),
+
+where P denotes the true distribution and Gn the empirical process. Since P [ψA(Z; θ∗
+
+> A
+
+, η∗)] = 
+
+0 by the definition of θ∗
+
+> A
+
+, we obtain 
+
+√n ΨA,n (θ∗
+
+> A
+
+, η∗) = Gn
+
+ψA(Z; θ∗
+
+> A
+
+, η∗) = Op(1) and, by the central limit theorem for Donsker classes, 
+
+Gn
+
+ψA(Z; θ∗
+
+> A
+
+, η∗) d
+
+−→ N  0, eΣA, log (θ∗
+
+> A
+
+; η∗),
+
+where 
+
+eΣA, log (θ∗
+
+> A
+
+; η∗) := EψA(Z; θ∗
+
+> A
+
+, η∗)⊗2.
+
+Next, by (C1), 
+
+√n( bηn − η∗) = − J−1 
+
+> η
+
+Gn
+
+Uη(O; η∗) + op(1) ,
+
+with asymptotic variance Vη and influence function −J−1 
+
+> η
+
+Uη(O; η∗). For the derivatives, observe that ˙ΨA,n, θ(θ∗
+
+> A
+
+, η∗) is 
+
+Pn
+
+h
+
+−{ eΛ − πΛ(A, X; η∗)}2μ′ {eΛ − πΛ(A, X; η∗)}θ∗⊤  
+
+> A
+
+b(A, X) b(A, X)b(A, X)⊤
+
+i
+
++ op(1) ,
+
+84 where μ′(u) = μ(u){1 − μ(u)}. By the law of large numbers, ˙ΨA,n, θ(θ∗
+
+> A
+
+, η∗) p
+
+−→ − Dlog ,
+
+with 
+
+Dlog = E
+
+h
+
+{eΛ − πΛ(A, X; η∗)}2μ′ {eΛ − πΛ(A, X; η∗)}θ∗⊤  
+
+> A
+
+b(A, X) b(A, X)b(A, X)⊤
+
+i
+
+,
+
+which is nonsingular by assumption. Similarly, ˙ΨA,n, η(θ∗
+
+> A
+
+, η∗) p
+
+−→ Blog ,
+
+where 
+
+Blog := ∂∂η⊤ ΨA(θ∗
+
+> A
+
+, η) η=η∗
+
+= E
+
+ ∂∂η⊤ ψA(Z; θ∗
+
+> A
+
+, η) η=η∗
+
+
+
+.
+
+Substituting these limits and the expansion for √n( bηn − η∗) into (22), and applying Slut-sky’s theorem, we obtain 
+
+√n( bθA, log − θ∗
+
+> A
+
+) = D−1log Gn
+
+h
+
+ψA(Z; θ∗
+
+> A
+
+, η∗) − Blog J−1 
+
+> η
+
+Uη(O; η∗)
+
+i
+
++ op(1) .
+
+Therefore, 
+
+√n( bθA, log − θ∗
+
+> A
+
+) d
+
+−→ N  0, D−1log ΣA, log (θ∗
+
+> A
+
+; η∗) D−1log 
+
+,
+
+with 
+
+ΣA, log (θ∗
+
+> A
+
+; η∗) = E
+
+hψA(Z; θ∗
+
+> A
+
+, η∗) − Blog J−1 
+
+> η
+
+Uη(O; η∗) ⊗2i
+
+.
+
+Finally, when bηn is efficient for η∗ with asymptotic variance Vη, the usual variance 85 reduction argument for two-step estimators (see, e.g., Pierce (1982)) implies that 
+
+ΣA, log (θ∗
+
+> A
+
+; η∗) = eΣA, log (θ∗
+
+> A
+
+; η∗) − Blog Vη B⊤
+
+> log
+
+,
+
+where eΣA, log (θ∗
+
+> A
+
+; η∗) := E[ψA(Z; θ∗
+
+> A
+
+, η∗)⊗2] is the covariance when πΛ(A, X) is known. This completes the proof. The following theorem, relocated from the main paper to conserve space, gives the asymptotic normality result for the logistic direct CMTP A-learning estimator; it is refer-enced from Section 4 of the main paper. 
+
+Theorem 4 (Asymptotic normality of logistic direct CMTP A-learning) . Let Y ∈ { 0, 1}
+
+and write μ(v) = expit( v) and μ′(v) = μ(v){1 − μ(v)}. Under the duplicated-arm con-struction, subject Oi contributes the two rows Zλi = ( Ai − λδ, Xi) with arm indicator 
+
+eΛλi = λ ∈ { 0, 1}; write πλi (η) := πΛ(Zλi ; η) and gλi (η) := λ − πλi (η). Let bi := b(Xi) denote the column vector of basis functions in X only, used for the direct CMTP working model 
+
+f (x) = θ⊤b(x).Let θ∗ 
+
+> C, log
+
+denote the unique population minimizer of the πΛ-stabilized logistic direct CMTP A-learning loss 
+
+ℓNLL 
+
+> A, CMTP
+
+(θ) := E
+
+ X
+
+> λ∈{ 0,1}
+
+1
+
+πλi (η∗)
+
+−Yi gλi (η∗) b⊤ 
+
+> i
+
+θ + b gλi (η∗) b⊤ 
+
+> i
+
+θ , b(v) = log(1+ ev),
+
+i.e. the solution to the population estimating equation 
+
+ΨC, log (θ, η∗) := E
+
+ X
+
+> λ∈{ 0,1}
+
+gλi (η∗)
+
+πλi (η∗) bi
+
+Yi − μ gλi (η∗) b⊤ 
+
+> i
+
+θ = 0. (23) 86 Define the bread matrix 
+
+DC, log := E
+
+ X
+
+> λ∈{ 0,1}
+
+{gλi (η∗)}2
+
+πλi (η∗) μ′ gλi (η∗) b⊤ 
+
+> i
+
+θ∗
+
+> C, log
+
+ bib⊤
+
+> i
+
+ ,
+
+and the influence function 
+
+φC, log (Oi; θ∗
+
+> C, log
+
+, η∗) := X
+
+> λ∈{ 0,1}
+
+gλi (η∗)
+
+πλi (η∗) bi
+
+Yi − μ gλi (η∗) b⊤ 
+
+> i
+
+θ∗
+
+> C, log
+
+ .
+
+Assume conditions (C1)–(C3) for the propensity model πΛ(a, x; η), that θ∗ 
+
+> C, log
+
+lies in the interior of a compact parameter space, that E∥b(X)∥2 < ∞, that min {π0 
+
+> i
+
+(η∗), π 1 
+
+> i
+
+(η∗)} ≥ 
+
+c0 > 0 almost surely for some constant c0, and that DC, log is nonsingular. Let bθC, log solve the empirical estimating equation 
+
+ΨC, log ,n (θ, bηn) := Pn
+
+ψC, log (Oi; θ, bηn) = 0.
+
+Then, as n → ∞ ,
+
+√n   bθC, log − θ∗
+
+> C, log
+
+ d
+
+−→ N
+
+
+
+0, D−1 
+
+> C, log
+
+ΣC, log (θ∗
+
+> C, log
+
+; η∗) D−1
+
+> C, log
+
+
+
+,
+
+where 
+
+ΣC, log (θ∗
+
+> C, log
+
+; η∗) := E
+
+n
+
+φC, log (Oi; θ∗
+
+> C, log
+
+, η∗) − BC, log J−1 
+
+> η
+
+Uη(Oi; η∗)
+
+o⊗2
+
+,
+
+BC, log := ∂∂η⊤ ΨC, log (θ∗
+
+> C, log
+
+, η)
+
+> η=η∗
+
+,
+
+with Jη and Uη(Oi; η) as in condition (C1) , and V ⊗2 = V V ⊤. If, in addition, bηn is an effi-cient estimator of η∗ with asymptotic variance Vη, then ΣC, log (θ∗
+
+> C, log
+
+; η∗) = eΣC, log (θ∗
+
+> C, log
+
+; η∗)−
+
+BC, log Vη B⊤
+
+> C, log
+
+, where eΣC, log (θ∗
+
+> C, log
+
+; η∗) := EφC, log (Oi; θ∗
+
+> C, log
+
+, η∗)⊗2 is the variance when 
+
+87 πΛ is known. Proof of Theorem 4. The proof follows the M-estimation strategy used in Theorem 3, with two structural differences: (i) the basis functions are b(X) rather than b(A, X), so the score does not depend on A beyond what enters through the centered arm scores gλi ; and (ii) the π−1Λ stabilization factor introduces an additional layer in the propensity-derivative calculation. 
+
+Step 1: Identification and regularity. Write πλ := πλi (η∗), gλ := gλi (η∗), and ηλC (θ) := 
+
+gλ b⊤ 
+
+> i
+
+θ. Consider a generic duplicated row with ( AΛ, X) = ( a, x) and write π∗ := πΛ(x, a ; η∗). Conditional on ( AΛ, X) = ( a, x), the arm indicator satisfies eΛ = 1 with probability π∗,and, by consistency and Assumption 3(A ′) as in Proposition 2, E[Y | eΛ = 1 , A Λ = a, X =
+
+x] = m0(a + δ, x) and E[Y | eΛ = 0 , A Λ = a, X = x] = m0(a, x). Hence the row-level score 
+
+s(θ) := {(eΛ − π∗)/π ∗} b(x){Y − μ(( eΛ − π∗) b(x)⊤θ)} satisfies 
+
+Es(θ) | AΛ = a, X = x
+
+= {1 − π∗} b(x)
+
+hm0(a + δ, x) − m0(a, x) − μ (1 − π∗) b(x)⊤θ − μ −π∗ b(x)⊤θ i
+
+.
+
+Averaging over the duplicated-arm mixture law of AΛ given X = x, with conditional density fAΛ|X (a | x) = 12 {gA|X (a | x) + gA|X (a + δ | x)}, and using the identity {1 −
+
+πΛ(x, a )} fAΛ|X (a | x) = 12 gA|X (a | x), the per-subject score (which sums the two rows and thus equals twice the per-row mixture average in expectation) satisfies ΨC, log (θ, η∗) = E
+
+h
+
+b(X) τδ(X) − χ(X; θ)
+
+i
+
+,χ(x; θ) := E
+
+h
+
+μ {1 − πΛ(x, A )} b(x)⊤θ − μ −πΛ(x, A ) b(x)⊤θ X = x
+
+i
+
+,
+
+where the inner expectation is over the natural conditional law of A given X = x and 
+
+τδ(x) = E[m0(A + δ, x) − m0(A, x) | X = x] by Proposition 2. Thus (23) defines a link-88 scale projection of the CMTP: if χ(x; θ0) = τδ(x) for some θ0 and PX -almost every x, then 
+
+θ∗ 
+
+> C, log
+
+= θ0; this is the NLL analogue of Proposition 5 and parallels Proposition 6. This also establishes the derivations of the direct CMTP losses for the logistic case promised in Section A.3. Uniqueness follows from strict convexity of the stabilized loss, whose Hessian at any θ is E[P
+
+> λ
+
+{gλi }2{πλi }−1μ′(ηλC (θ)) bib⊤ 
+
+> i
+
+] ≻ 0. In particular, the bread of the M-estimator at θ∗ 
+
+> C, log
+
+is 
+
+DC, log = − ∂∂θ⊤ ΨC, log (θ, η∗) θ=θ∗
+
+> C, log
+
+= E
+
+ X
+
+> λ∈{ 0,1}
+
+{gλi }2
+
+πλi
+
+μ′ ηλC (θ∗
+
+> C, log
+
+) bib⊤
+
+> i
+
+ ,
+
+which is nonsingular by assumption. 
+
+Step 2: Asymptotic linear representation. Since bθC, log solves Ψ C, log ,n ( bθC, log , bηn) = 0, a first-order Taylor expansion around ( θ∗
+
+> C, log
+
+, η∗) gives 
+
+0 = Ψ C, log ,n (θ∗
+
+> C, log
+
+, η∗) + ˙ΨC, log ,n, θ(θ∗
+
+> C, log
+
+, η∗)  bθC, log − θ∗
+
+> C, log
+
+
+
++ ˙ΨC, log ,n, η(θ∗
+
+> C, log
+
+, η∗)  bηn − η∗ + rn, (24) where ∥rn∥ = op(n−1/2) by the twice-continuous differentiability of μ, the compactness of the parameter space, and the Donsker property of the relevant function classes (see below). Rearranging and multiplying by √n,
+
+√n   bθC, log − θ∗
+
+> C, log
+
+
+
+= − ˙ΨC, log ,n, θ(θ∗
+
+> C, log
+
+, η∗)−1
+
+n√n ΨC, log ,n (θ∗
+
+> C, log
+
+, η∗) + ˙ΨC, log ,n, η(θ∗
+
+> C, log
+
+, η∗)√n( bηn − η∗)
+
+o
+
++ op(1) .
+
+(25) 89 Step 3: Limits of the derivative terms. For the θ-derivative, ˙ΨC, log ,n, θ(θ∗
+
+> C, log
+
+, η∗) = −Pn
+
+ X
+
+> λ∈{ 0,1}
+
+{gλi }2
+
+πλi
+
+μ′ ηλC (θ∗
+
+> C, log
+
+)bib⊤
+
+> i
+
+ p
+
+−→ − DC, log .
+
+This convergence follows from the law of large numbers, using E[P 
+
+> λ
+
+bib⊤ 
+
+> i
+
+{gλi }2/π λi μ′(ηλC )] <
+
+∞ (implied by πλi ≥ c0 > 0, compactness of the parameter space, and μ′ ≤ 1/4). Since 
+
+DC, log is nonsingular, ˙Ψ−1 
+
+> C, log ,n, θ
+
+is well-defined with probability approaching 1. For the η-derivative, let ˙ πλi := ∂π Λ(Zλi ; η)/∂ η η=η∗ . Using ∂g λi /∂ η = − ˙πλi and ∂{gλi /π λi }/∂ η =
+
+−λ ˙πλi /(πλi )2 (note gλi /π λi = λ/π λi − 1), the chain rule gives, for each component ℓ of η,
+
+∂∂ηℓ
+
+ gλi
+
+πλi
+
+bi
+
+ Yi − μ(ηλC (θ∗
+
+> C, log
+
+)) 
+
+= − λ ˙πλi,ℓ 
+
+(πλi )2 bi
+
+ Yi − μ(ηλC (θ∗
+
+> C, log
+
+))  + gλi
+
+πλi
+
+μ′ ηλC (θ∗
+
+> C, log
+
+) ˙πλi,ℓ bi b⊤ 
+
+> i
+
+θ∗
+
+> C, log
+
+,
+
+and the first term vanishes for λ = 0 since g0 
+
+> i
+
+/π 0 
+
+> i
+
+≡ − 1. By the Donsker property of 
+
+{πΛ(·; η) : η ∈ H ∗} and its derivative (Lipschitz in η by (C3), hence Donsker by Example 19.7 of van der Vaart (1998)), together with the smoothness of μ and the moment conditions, the empirical derivative converges in probability to its population counterpart: ˙ΨC, log ,n, η(θ∗
+
+> C, log
+
+, η∗) p
+
+−→ BC, log := ∂∂η⊤ ΨC, log (θ∗
+
+> C, log
+
+, η) η=η∗
+
+.
+
+Step 4: Empirical process term. Since P [φC, log (Oi; θ∗
+
+> C, log
+
+, η∗)] = 0 by definition of θ∗
+
+> C, log
+
+,we have 
+
+√n ΨC, log ,n (θ∗
+
+> C, log
+
+, η∗) = Gn
+
+φC, log (Oi; θ∗
+
+> C, log
+
+, η∗) = Op(1) .
+
+The class {φC, log (·; θ, η) : θ ∈ T , η ∈ H ∗} is Donsker: it is a product of π−1-bounded, Lipschitz functions of η (by (C3) and πλi ≥ c0), the bounded function Y −μ(g b⊤θ) (bounded because μ ∈ (0 , 1)), and the fixed b(X); note that Gn acts on the per-subject summed 90 score φC, log (Oi; ·), which is i.i.d. across subjects and correctly accounts for the fact that a subject’s two duplicated rows share Yi. By the central limit theorem for Donsker classes, 
+
+Gn
+
+φC, log (Oi; θ∗
+
+> C, log
+
+, η∗) d
+
+−→ N 0, eΣC, log (θ∗
+
+> C, log
+
+; η∗),
+
+where eΣC, log := E[φ⊗2
+
+> C, log
+
+]. 
+
+Step 5: Propensity estimation term. By condition (C1), the propensity estimator satisfies 
+
+√n( bηn − η∗) = − J−1 
+
+> η
+
+Gn
+
+Uη(Oi; η∗) + op(1) .
+
+Step 6: Assembling the influence function. Substituting Steps 3–5 into (25) and applying Slutsky’s theorem, 
+
+√n   bθC, log − θ∗
+
+> C, log
+
+ = D−1
+
+> C, log
+
+Gn
+
+φC, log (Oi; θ∗
+
+> C, log
+
+, η∗) − BC, log J−1 
+
+> η
+
+Uη(Oi; η∗) + op(1) .
+
+By the multivariate central limit theorem applied to the joint empirical process ( GnφC, log , GnU ), 
+
+√n   bθC, log − θ∗
+
+> C, log
+
+ d
+
+−→ N
+
+
+
+0, D−1 
+
+> C, log
+
+ΣC, log (θ∗
+
+> C, log
+
+; η∗) D−1
+
+> C, log
+
+
+
+,
+
+with 
+
+ΣC, log = E
+
+n
+
+φC, log (Oi; θ∗
+
+> C, log
+
+, η∗) − BC, log J−1 
+
+> η
+
+Uη(Oi; η∗)
+
+o⊗2
+
+.
+
+Step 7: Efficient propensity estimator. If bηn is efficient for η∗ with asymptotic variance 
+
+Vη, and is jointly asymptotically normal with GnφC, log , then by the variance-reduction argument of Pierce (1982), the covariance matrix reduces to 
+
+ΣC, log (θ∗
+
+> C, log
+
+; η∗) = eΣC, log (θ∗
+
+> C, log
+
+; η∗) − BC, log Vη B⊤
+
+> C, log
+
+,
+
+91 where eΣC, log := E[φ⊗2
+
+> C, log
+
+] is the variance when πΛ(A, X) is known. This completes the proof. 
+
+# References 
+
+Ai, C., Linton, O., Motegi, K., and Zhang, Z. (2021). A unified framework for efficient estimation of general treatment models. Quantitative Economics , 12(3):779–816. Austin, P. C. (2018). Assessing the performance of the generalized propensity score for estimating the effect of quantitative or continuous exposures on binary outcomes. Statistics in Medicine ,37(11):1874–1894. Chen, S., Tian, L., Cai, T., and Yu, M. (2017). A general statistical framework for subgroup identification and comparative treatment scoring. Biometrics , 73(4):1199–1209. Colangelo, K. and Lee, Y.-Y. (2026). Double debiased machine learning nonparametric inference with continuous treatments. Journal of Business & Economic Statistics , 44(1):67–79. D´ ıaz, I. and van der Laan, M. J. (2013). Targeted data adaptive estimation of the causal dose– response curve. Journal of Causal Inference , 1(2):171–192. D´ ıaz, I., Williams, N., Hoffman, K. L., and Schenck, E. J. (2023). Nonparametric causal ef-fects based on longitudinal modified treatment policies. Journal of the American Statistical Association , 118(542):846–857. Fong, C., Hazlett, C., and Imai, K. (2018). Covariate balancing propensity score for a continuous treatment: Application to the efficacy of political advertisements. The Annals of Applied Statistics , 12(1):156–177. Haneuse, S. and Rotnitzky, A. (2013). Estimation of the effect of interventions that modify the received treatment. Statistics in Medicine , 32(30):5260–5277. Hirano, K. and Imbens, G. W. (2004). The Propensity Score with Continuous Treatments , chap-ter 7, pages 73–84. John Wiley & Sons, Ltd. Huling, J. D., Greifer, N., and Chen, G. (2024). Independence weights for causal inference with continuous treatments. Journal of the American Statistical Association , 119(546):1657–1670. Imai, K. and van Dyk, D. A. (2004). Causal inference with general treatment regimes: General-izing the propensity score. Journal of the American Statistical Association , 99(467):854–866. Jiang, Z., Crooke, P. S., Marini, J. J., and Huling, J. D. (2026). Exploring the effects of mechan-ical ventilator settings with modified vector-valued treatment policies. Journal of the Royal Statistical Society, Series A .Jiang, Z. and Huling, J. D. (2025). Modified treatment policy effect estimation with weighted energy distance. The Annals of Applied Statistics , 19(4):2555–2577. Kallus, N. and Santacatterina, M. (2019). Kernel optimal orthogonality weighting: A balancing approach to estimating effects of continuous treatments. arXiv preprint arXiv:1910.11972 .
+
+92 Kennedy, E. H., Ma, Z., McHugh, M. D., and Small, D. S. (2017). Non-parametric methods for doubly robust estimation of continuous treatment effects. Journal of the Royal Statistical Society: Series B (Statistical Methodology) , 79(4):1229–1245. Martinet, G. (2020). A balancing weight framework for estimating the causal effect of general treatments. arXiv preprint arXiv:2002.11276 .McClean, A., Branson, Z., and Kennedy, E. H. (2024). Nonparametric estimation of conditional incremental effects. Journal of Causal Inference , 12(1):20230024. Naimi, A. I., Moodie, E. E., Auger, N., and Kaufman, J. S. (2014). Constructing inverse probabil-ity weights for continuous exposures: a comparison of methods. Epidemiology , 25(2):292–299. Papazian, L., Aubron, C., Brochard, L., Chiche, J.-D., Combes, A., Dreyfuss, D., Forel, J.-M., Gu´ erin, C., Jaber, S., Mekontso-Dessap, A., et al. (2019). Formal guidelines: management of acute respiratory distress syndrome. Annals of intensive care , 9(1):69. Pierce, D. A. (1982). The asymptotic effect of substituting estimators for parameters in certain types of statistics. The Annals of Statistics , 10(2):475–478. Robins, J. M., Hern´ an, M. ´A., and Brumback, B. (2000). Marginal structural models and causal inference in epidemiology. Epidemiology , 11(5):550–560. Serpa Neto, A., Deliberato, R. O., Johnson, A. E., Bos, L. D., Amorim, P., Pereira, S. M., Cazati, D. C., Cordioli, R. L., Correa, T. D., Pollard, T. J., et al. (2018). Mechanical power of ventilation is associated with mortality in critically ill patients: an analysis of patients in two observational cohorts. Intensive care medicine , 44(11):1914–1922. Shin, H., Linero, A., Audirac, M., Irene, K., Braun, D., and Antonelli, J. (2025). Treatment effect heterogeneity and importance measures for multivariate continuous treatments. The Annals of Applied Statistics , 19(3):2555–2577. Siegel, M. D., Hyzy, R. C., et al. (2019). Ventilator management strategies for adults with acute respiratory distress syndrome. van der Laan, M. J. and Robins, J. M. (2003). Unified Methods for Censored Longitudinal Data and Causality . Springer, New York. van der Vaart, A. W. (1998). Asymptotic Statistics . Cambridge Series in Statistical and Proba-bilistic Mathematics. Cambridge University Press, Cambridge. van der Vaart, A. W. and Wellner, J. A. (1996). Weak Convergence and Empirical Processes: With Applications to Statistics . Springer, New York. Vegetabile, B. G., Griffin, B. A., Coffman, D. L., Cefalu, M., Robbins, M. W., and McCaffrey, D. F. (2021). Nonparametric estimation of population average dose-response curves using entropy balancing weights for continuous exposures. Health Services and Outcomes Research Methodology , 21(1):69–110. Wen, L., Marcus, J. L., and Young, J. G. (2023). Intervention treatment distributions that depend on the observed treatment process and model double robustness in causal survival analysis. Statistical methods in medical research , 32(3):509–523. Yiu, S. and Su, L. (2018). Covariate association eliminating weights: a unified weighting frame-work for causal effect estimation. Biometrika , 105(3):709–722. 
+
+93 Zhao, S., van Dyk, D. A., and Imai, K. (2020). Propensity score-based methods for causal inference in observational studies with non-binary treatments. Statistical Methods in Medical Research ,29(3):709–727. Zhu, M., Wu, A., Li, H., Xiong, R., Li, B., Yang, X., Qin, X., Zhen, P., Guo, J., Wu, F., et al. (2024). Contrastive balancing representation learning for heterogeneous dose-response curves estimation. In Proceedings of the AAAI Conference on Artificial Intelligence , volume 38, pages 17175–17183. 
+
+94

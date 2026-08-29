@@ -1,0 +1,93 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-29T02:18:09.568450+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.19749v2",
+      "source": "arxiv",
+      "title": "Causal Survival Forests with Negative Controls",
+      "abstract": "We study heterogeneous treatment-effect (HTE) estimation in observational survival studies commonly associated with both censored outcomes and unmeasured confounding. We integrate causal survival forests (CSF) with negative controls (NC) from proximal causal inference and introduce Negative Control Causal Survival Forests (NC-CSF), a flexible nonparametric HTE learner for survival analysis. Our approach uses a loss that incorporates proxy variables and Neyman orthogonalization to train the random forest, thereby mitigating bias from unobserved confounding and gaining robustness to nuisance estimation. Through extensive simulations spanning varying levels of confounding, proxy relevance, and censoring mechanisms, we demonstrate that NC-CSF substantially reduces bias and estimation error relative to existing baselines. We further demonstrate the practical utility of our method on various clinical datasets, where it confirms several existing findings and also reveals new interpretable patterns of treatment-effect heterogeneity. To facilitate practical use, we provide an end-to-end Python implementation of NC-CSF that carefully handles implementation details such as nuisance estimation and clipping.",
+      "authors": [
+        "Zijun Gao",
+        "Kyoungeui Hong",
+        "Leyi Ma",
+        "Qianli Wu",
+        "Zachary Izzo",
+        "Ruishan Liu"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-08-20T07:52:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.19749v2",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "negative control causal survival forests adjust for unmeasured confounding when identifying factors influencing survival outcomes",
+      "llm_evidence_cn": "阴性对照因果生存森林可在识别影响生存结局的因素时校正未测量混杂",
+      "llm_evidence": "阴性对照因果生存森林可在识别影响生存结局的因素时校正未测量混杂",
+      "canonical_evidence": "阴性对照因果生存森林可在识别影响生存结局的因素时校正未测量混杂",
+      "llm_tldr_en": "Negative Control Causal Survival Forests (NC-CSF) combine causal survival forests with negative controls into a flexible nonparametric HTE learner, using proxy variables and Neyman orthogonalization to reduce bias from unobserved confounding in survival analysis.",
+      "llm_tldr_cn": "该研究针对观测性生存研究常见的结果删失与未测量混杂问题，将因果生存森林与来自近端因果推断的阴性对照相结合，提出阴性对照因果生存森林（NC-CSF）。该方法通过纳入代理变量与Neyman正交化的损失函数训练随机森林，从而减轻未观测混杂带来的偏差。多项模拟在不同混杂强度、代理相关性和删失机制下均显示偏差与估计误差显著降低，为生存结局的因素与效应分析提供了稳健工具。",
+      "llm_tldr": "该研究针对观测性生存研究常见的结果删失与未测量混杂问题，将因果生存森林与来自近端因果推断的阴性对照相结合，提出阴性对照因果生存森林（NC-CSF）。该方法通过纳入代理变量与Neyman正交化的损失函数训练随机森林，从而减轻未观测混杂带来的偏差。多项模拟在不同混杂强度、代理相关性和删失机制下均显示偏差与估计误差显著降低，为生存结局的因素与效应分析提供了稳健工具。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "factors influencing flap survival",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.20744v1",
+      "source": "arxiv",
+      "title": "Heterogeneous Effects of Continuous Treatments via Conditional Modified Treatment Policies",
+      "abstract": "For continuous treatments such as drug dose or ventilator intensity, a key clinically actionable question is whether a modest, patient-specific adjustment to the current dose would help or harm, rather than whether to treat at all. Standard estimands such as average or conditional dose-response functions require positivity across a wide range of doses, an assumption that routinely fails in observational clinical data where protocols tie dosing to patient characteristics. We develop a framework for characterizing heterogeneity in the effects of small shifts (``nudges'') of a continuous treatment. We study two estimands: the conditional nudge effect, the expected outcome change if an individual at dose $a$ with covariates $\\bx$ had their dose shifted by $δ$, and the conditional modified treatment policy (CMTP) effect, which averages the nudge over the observed dose distribution given covariates. Both are identified under weak, shift-specific local positivity and exchangeability conditions. Recasting the $δ$-shift as a two-arm comparison through a duplicated-data construction, we develop weighting and A-learning estimators based on squared-error and negative log-likelihood losses, introduce augmented versions that reduce variance without changing the target, and establish asymptotic normality of proposed estimators. Simulations support the theory, and an analysis of mechanical ventilation data from MIMIC-III identifies patient profiles predicted to benefit from a modest reduction in mechanical power.",
+      "authors": [
+        "Samhita Pal",
+        "Jared D Huling"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-08-21T05:04:45+00:00",
+      "link": "https://arxiv.org/pdf/2608.20744v1",
+      "tags": [
+        "keyword:flap-ex-met",
+        "query:flap-ex-met"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Causal inference method for continuous treatments transferable to exercise dose and flap survival analysis",
+      "llm_evidence_cn": "连续干预因果推断方法，可应用于运动剂量与皮瓣存活分析",
+      "llm_evidence": "连续干预因果推断方法，可应用于运动剂量与皮瓣存活分析",
+      "canonical_evidence": "连续干预因果推断方法，可应用于运动剂量与皮瓣存活分析",
+      "llm_tldr_en": "Addresses positivity failures in continuous treatment effect estimation; proposes conditional modified treatment policies for heterogeneous nudge effects; applicable to exercise dose and flap survival studies.",
+      "llm_tldr_cn": "针对药物剂量、呼吸机强度等连续治疗中标准剂量-反应方法在观察性数据中因正性假设不成立而失效的问题，本文提出条件修正治疗策略框架，估计对当前剂量做小幅调整的条件性‘微推’效应及其异质性。该方法可推广到运动训练剂量或强度对皮瓣存活率影响的分析中，为基于个体特征制定个性化运动处方提供因果推断工具。相比传统剂量反应模型，该框架无需在整个剂量区间满足正性假设，更贴合临床实际。",
+      "llm_tldr": "针对药物剂量、呼吸机强度等连续治疗中标准剂量-反应方法在观察性数据中因正性假设不成立而失效的问题，本文提出条件修正治疗策略框架，估计对当前剂量做小幅调整的条件性‘微推’效应及其异质性。该方法可推广到运动训练剂量或强度对皮瓣存活率影响的分析中，为基于个体特征制定个性化运动处方提供因果推断工具。相比传统剂量反应模型，该框架无需在整个剂量区间满足正性假设，更贴合临床实际。",
+      "llm_tags": [
+        "query:flap-ex-met"
+      ],
+      "matched_query_tag": "query:flap-ex-met",
+      "matched_query_text": "exercise training effect on flap survival",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -6,28 +6,27 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-28
-- 运行时间：2026-08-28 03:57:56 UTC
+- 最新运行日期：2026-08-29
+- 运行时间：2026-08-29 02:22:42 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：2
 - 精读区：0
-- 速读区：1
+- 速读区：2
 
 ### 今日简报（AI）
-今日仅速读1篇论文，主题聚焦随机实验中的保形协变量调整方法。
-
-最值得关注的是经验似然在协变量调整中的应用，可在保持形状的同时提升估计精度。
-
-若对因果推断或实验设计感兴趣，可进一步精读该文以掌握技术细节。
-- 详情：[/202608/28/README](/202608/28/README)
+今日速读2篇因果推断论文，聚焦异质性效应与生存分析。最值得关注的是《Causal Survival Forests with Negative Controls》（7.0分），用负控制处理未观测混杂。建议下一步优先精读该文，并复习连续处理效应估计基础。
+- 详情：[/202608/29/README](/202608/29/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Shape-Preserving Covariate Adjustment via Empirical Likelihood in Randomized Experiment](/202608/28/2608.19423v1-shape-preserving-covariate-adjustment-via-empirical-likelihood-in-randomized-experiment)  
+1. [Causal Survival Forests with Negative Controls](/202608/29/2608.19749v2-causal-survival-forests-with-negative-controls)  
+   标签：评分：7.0/10、query:flap-ex-met
+   evidence：阴性对照因果生存森林可在识别影响生存结局的因素时校正未测量混杂
+2. [Heterogeneous Effects of Continuous Treatments via Conditional Modified Treatment Policies](/202608/29/2608.20744v1-heterogeneous-effects-of-continuous-treatments-via-conditional-modified-treatment-policies)  
    标签：评分：6.0/10、query:flap-ex-met
-   evidence：随机实验中保留形状的协变量调整方法，可应用于运动对皮瓣存活效果的估计
+   evidence：连续干预因果推断方法，可应用于运动剂量与皮瓣存活分析
 
 
 <div class="dpr-home-promo-card">

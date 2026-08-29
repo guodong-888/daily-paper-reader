@@ -1,0 +1,39 @@
+{
+  "label": "2026-08-29",
+  "date": "2026-08-29",
+  "generated_at": "2026-08-29T02:22:47",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202608/29/2608.19749v2-causal-survival-forests-with-negative-controls",
+      "section": "quick",
+      "title_en": "Causal Survival Forests with Negative Controls",
+      "authors": "Zijun Gao, Kyoungeui Hong, Leyi Ma, Qianli Wu, Zachary Izzo, Ruishan Liu",
+      "date": "2026-08-20",
+      "pdf": "https://arxiv.org/pdf/2608.19749v2",
+      "score": "7.0",
+      "evidence": "阴性对照因果生存森林可在识别影响生存结局的因素时校正未测量混杂",
+      "tldr": "在观察性生存研究中，异质处理效应估计常同时面临删失和未测混杂的双重挑战。本文将因果生存森林与负控制变量相结合，提出NC-CSF方法，通过包含代理变量的Neyman正交化损失训练随机森林，有效缓解未观测混杂带来的偏差。大量模拟实验表明其偏差和估计误差显著低于现有基线；在多个临床数据集上不仅验证了已有发现，还揭示了新的处理效应异质性模式。提供端到端Python实现，便于实际使用。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "We study heterogeneous treatment-effect (HTE) estimation in observational survival studies commonly associated with both censored outcomes and unmeasured confounding. We integrate causal survival forests (CSF) with negative controls (NC) from proximal causal inference and introduce Negative Control Causal Survival Forests (NC-CSF), a flexible nonparametric HTE learner for survival analysis. Our approach uses a loss that incorporates proxy variables and Neyman orthogonalization to train the random forest, thereby mitigating bias from unobserved confounding and gaining robustness to nuisance estimation. Through extensive simulations spanning varying levels of confounding, proxy relevance, and censoring mechanisms, we demonstrate that NC-CSF substantially reduces bias and estimation error relative to existing baselines. We further demonstrate the practical utility of our method on various clinical datasets, where it confirms several existing findings and also reveals new interpretable patterns of treatment-effect heterogeneity. To facilitate practical use, we provide an end-to-end Python implementation of NC-CSF that carefully handles implementation details such as nuisance estimation and clipping.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/29/2608.20744v1-heterogeneous-effects-of-continuous-treatments-via-conditional-modified-treatment-policies",
+      "section": "quick",
+      "title_en": "Heterogeneous Effects of Continuous Treatments via Conditional Modified Treatment Policies",
+      "authors": "Samhita Pal, Jared D Huling",
+      "date": "2026-08-21",
+      "pdf": "https://arxiv.org/pdf/2608.20744v1",
+      "score": "6.0",
+      "evidence": "连续干预因果推断方法，可应用于运动剂量与皮瓣存活分析",
+      "tldr": "针对连续治疗（如药物剂量、呼吸机强度）的效应估计，常用剂量反应函数依赖严格正性假设，但在观察性临床数据中该假设常因治疗与患者特征耦合而失效。本文提出基于条件修正治疗策略的框架，通过复制数据将小幅度剂量调整（nudge）转化为两臂比较，在仅需弱局部正性条件下识别条件nudge效应与CMTP效应，并发展加权、A-learning及方差缩减增强估计量，建立渐近正态性。模拟实验支持理论，MIMIC-III机械通气分析识别出可能受益于适度降低机械功率的患者特征。该框架为连续治疗效应评估提供了更现实且临床可操作的异质性估计工具。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "For continuous treatments such as drug dose or ventilator intensity, a key clinically actionable question is whether a modest, patient-specific adjustment to the current dose would help or harm, rather than whether to treat at all. Standard estimands such as average or conditional dose-response functions require positivity across a wide range of doses, an assumption that routinely fails in observational clinical data where protocols tie dosing to patient characteristics. We develop a framework for characterizing heterogeneity in the effects of small shifts (``nudges'') of a continuous treatment. We study two estimands: the conditional nudge effect, the expected outcome change if an individual at dose $a$ with covariates $\\bx$ had their dose shifted by $δ$, and the conditional modified treatment policy (CMTP) effect, which averages the nudge over the observed dose distribution given covariates. Both are identified under weak, shift-specific local positivity and exchangeability conditions. Recasting the $δ$-shift as a two-arm comparison through a duplicated-data construction, we develop weighting and A-learning estimators based on squared-error and negative log-likelihood losses, introduce augmented versions that reduce variance without changing the target, and establish asymptotic normality of proposed estimators. Simulations support the theory, and an analysis of mechanical ventilation data from MIMIC-III identifies patient profiles predicted to benefit from a modest reduction in mechanical power.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
