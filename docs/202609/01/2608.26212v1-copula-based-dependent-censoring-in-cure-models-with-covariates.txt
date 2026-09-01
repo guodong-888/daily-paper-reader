@@ -1,0 +1,1010 @@
+Title: Copula based dependent censoring in cure models with covariates
+
+URL Source: https://arxiv.org/pdf/2608.26212v1
+
+Published Time: Fri, 28 Aug 2026 00:04:20 GMT
+
+Number of Pages: 26
+
+Markdown Content:
+# Copula based dependent censoring in cure models with covariates 
+
+## Morine Delhelle a , Anouar El Ghouch a and Ingrid Van Keilegom a,b 1 
+
+> a
+
+## Institute of Statistics, Biostatistics and Actuarial Sciences (ISBA), UCLouvain, Belgium  
+
+> b
+
+## Research Centre for Operations Research and Statistics (ORSTAT), KU Leuven, Belgium 
+
+> 1morine.delhelle@uclouvain.be, anouar.elghouch@uclouvain.be, ingrid.vankeilegom@kuleuven.be. arXiv:2608.26212v1 [stat.ME] 26 Aug 2026
+
+Abstract 
+
+In survival analysis, the time-to-event variable T is frequently subject to right censoring. Individuals may withdraw from the study for various reasons, or may not experience the event of interest before the end of follow-up. In this paper, we distinguish between two types of censoring: a potentially dependent censoring time C, which may be stochastically related to T , and an independent administrative censoring time A. In addition, the data may exhibit a cure fraction, meaning that some individuals will never experience the event. We build upon a recent work about a fully parametric mixture cure model, which accounts for dependent censoring through copulas. The proposed extension incorporates administrative censoring and allows covariates to affect all model parameters. This framework enables a more accurate modelling of the dependence between survival and censoring times while providing greater flexibility through covariate effects, leading to more individualised estimation of the cure fraction, the dependence structure, and other clinically relevant quantities. Moreover, the presence of covariates allows for weaker identification conditions. 
+
+Keywords: Cure models; Dependent censoring; Administrative censoring; Covariates; Identifiability; Inference; Survival analysis. 1 Introduction 
+
+Survival analysis is a cornerstone of biomedical research, where the objective is to model the time until the occurrence of an event of interest such as death, disease recurrence, or treatment failure. Beyond medicine, survival analysis also plays an important role in many other fields including demography (e.g., time to first childbirth) and engineering (e.g., time until machine failure). In practice, the time-to-event variable T is frequently only partially observed because of right censoring . This occurs when individuals withdraw from a study or remain event-free at the end of follow-up. Traditional approaches, such as the Cox proportional hazards model Cox (1972), generally rely on the assumption of independent censoring, meaning that the censoring time carries no inform-ation about the unobserved event time. However, this assumption is often unrealistic in practice. For example, in oncology trials, patients may withdraw from a study following a substantial improvement in their health status, which is directly related to the event of interest (e.g., cancer progression). Ignoring such dependent censoring may result in biased estimates of survival probabilities, hazard ratios, and other clinically relevant quantities (Li et al. (2007), Rondeau et al. (2011), Emura and Chen (2018)). Consequently, a variety of methods have been proposed to model the stochastic de-pendence between survival and censoring times. These approaches may be broadly divided into two main categories. The first comprises fully specified copula-based models, such as Rivest and Wells (2001) and Emoto and Matthews (1990). The second includes approaches in which the dependence structure is estimated from the data, such as the parametric copula model with an unknown depend-ence parameter proposed by Czado and Van Keilegom (2023), and the semiparametric framework of Deresa and Van Keilegom (2024), which combines an unknown parametric copula with a Cox model. An overview of recent advances in methods using copulas is provided by Crommen et al. (2025). As explained above, right censoring time is often stochastically dependent on the survival time we are interested in; however, this is not always the case. The most common example is that of 
+
+administrative censoring , which arises from study termination and is considered as a non-informative censoring mechanism. Therefore, it is useful to be able to take these two types of censoring into account separately when modelling. An additional layer of complexity arises when the data exhibit a cure fraction , meaning that a proportion of individuals will never experience the event of interest (e.g., patients who never relapse following treatment). Cure models describe the population survival function through the incidence ,defined as the probability of being uncured, and the latency , defined as the survival function of uncured individuals. Comprehensive discussions of cure models can be found in Maller and Zhou (1996), Peng and Yu (2022), and Chapter 4 of the monograph by Legrand (2021). The seminal mixture cure model 
+
+(Berkson and Gage (1952)) is a formalisation of this framework that has been extensively studied (e.g., Peng and Taylor (2014) and Amico and Van Keilegom (2018)) and consists in distinguishing between a subpopulation of susceptible individuals (who will experience the event) and a subpopulation of non-susceptibles (who are event free). Despite their practical relevance, the joint treatment of dependent censoring and cure fractions remains relatively underdeveloped and existing approaches often rely on restrictive assumptions. For example, the parametric model of Deresa et al. (2022) accommodates dependent censoring and covari-ate effects but does not account for a cure fraction, Li et al. (2007) assumes the copula to be known, Bernhardt (2016) considers a known cure threshold, Schneider et al. (2022) is limited to clustered data, Othus et al. (2009) requires the presence of covariates and for some of them the model iden-tifiability is not established (e.g., Bernhardt (2016), Liu et al. (2017)). More recently, Delhelle and Van Keilegom (2025) proposed a copula-based framework for modelling dependent censoring in cure models. However, their approach neither incorporated covariates, which are essential in many prac-tical applications, nor accounted for administrative censoring. Furthermore, their framework relied 1on the assumption that the latency distribution has bounded support. In this paper, we extend the model proposed by Delhelle and Van Keilegom (2025). The proposed framework explicitly distinguishes administrative censoring from potentially dependent censoring. In addition, it allows covariates to affect all model parameters. This extension provides a more flexible and realistic framework for analysing survival data, enabling more accurate modelling of the dependence between survival and censoring times while allowing individualised estimation of the cure fraction, the dependence structure, and other clinically relevant quantities. The remainder of the paper is organised as follows. Section 2 presents the proposed model. Section 3 establishes its identifiability and describes the parameter estimation procedure. The finite-sample performance and robustness of the method are evaluated through simulation studies in Section 4. Section 5 illustrates the practical usefulness of the proposed approach through the analysis of a real dataset. Finally, Section 6 concludes the paper. 
+
+# 2 The model 
+
+Let T , C and A be three non-negative continuous random variables, representing the survival time, the dependent censoring time, and the administrative censoring times, respectively. In the context of right censored data, we observe (Y, ∆T , ∆C ), with Y = min ( T, C, A ) and the indicators ∆T = I (Y = T )
+
+and ∆C = I (Y = C). To each individual a m−dimensional vector of covariates X is associated. In the framework considered, a cure fraction is assumed, meaning that some individuals will never experience the event of interest, and their survival time is therefore considered infinite. The positive probability that the event does not occur, called the cure rate, is denoted by 1 − π(x) where π(x) = 
+
+P (T < ∞| X = x) is the incidence of the model. The random variable corresponding to the survival time of uncured individuals is denoted by U .Let ST |X (t|x) = P (T > t |X = x) denote the improper conditional survival function of T |X. Ac-cording to the mixture cure model, we have 
+
+ST |X (t|x) = 1 − π(x) + π(x)SU |X (t|x), (1) where SU |X (t|x) = P (T > t |T < ∞, X = x) is the proper survival function for uncured individu-als, referred to as the latency component of the model. With the cumulative distribution functions 
+
+FT |X = 1 − ST |X and FU |X = 1 − SU |X , the model can also be written as FT |X (t|x) = π(x)FU |X (t|x).An important component of the model, which distinguishes it from standard approaches in the liter-ature, is the stochastic dependence between T and C. As in Delhelle and Van Keilegom (2025), this dependency is modelled by writing the bivariate distribution of (T, C )|X as a copula of the marginal distributions: 
+
+FT,C |X (t, c |x) = P (T ≤ t, C ≤ c|X = x) = C  FT |X (t|x), F C|X (c|x) x . (2) The copula C  ·, · x is a bivariate distribution defined on [0 , 1] 2 with uniform margins. Further details on copulas can be found in the monograph by Nelsen (2006). Finally, the administrative censoring time A, whose support is [0 , ∞), is assumed to be independent of both ( T , C) and the covariates X,reflecting its non-informative nature. Its density and distribution functions are denoted by fA and 
+
+FA, respectively. The proposed model is fully parametric. The conditional distribution FU |X (·| x), which depends on the covariates, is specified parametrically using a GLM-type formulation for each of its parameters: 
+
+F βU  
+
+> U|X
+
+(u|x) = HU (u; θU (x)) ,
+
+2where HU denotes a known distribution function (e.g., Weibull or log-normal) and θU (x) = g  β⊤ 
+
+> U
+
+x.The function g is a known link function, required to be one-to-one (see Subsection 3.1) and chosen to satisfy the constraint implied by the parameter space of θU . Note that, depending on the family of the distribution function, there may, of course, be more than one parameter indexing H. Note that, for notational convenience, the vector X includes the constant term 1 in addition to the covariates. As an illustration, consider X = (1 , X 1, X 2)⊤ and assume that U follows a Weibull distribution. Since both the shape and scale parameters are strictly positive, exponential link functions can be used. In this case, the shape parameter is given by θU 1(x) = exp( βU0 + βU1 x1 + βU2 x2) and the scale parameter by θU 2(x) = exp( βU3 + βU4 x1 + βU5 x2).The same modelling framework applies to the other components of the model, namely FC|X (·| x), the copula C  ·, · x which depends on x via Kendall’s tau τ K (x), and π(x), with corresponding parameter vectors βC , τ , and p. For π(x), one may use a logistic link function, but other choices are also allowed: 
+
+πp(x) = exp  p⊤x
+
+1 + exp ( p⊤x).
+
+As for the copula, the link function depends on the admissible range of dependence. For example, when using a Frank copula, a suitable choice could be τ Kτ (x) = (exp( τ ⊤x) − 1) /(exp( τ ⊤x) + 1) .For copulas that allow only positive or only negative dependence, alternative link functions with appropriate ranges must be employed. The parameter vector β = ( τ, p, β U , β C )⊤ gathers all model coefficients, and its dimension depends on the number of covariates and the chosen parametrisation. It includes at least the intercept terms. All coefficients are estimated from the data, whereas the link functions are assumed fixed in advance. For notational simplicity and generality, the same covariate vector X is used for all model para-meters. In practice, however, some covariates may not influence certain components of the model. Although this requires minor modifications, the model can be equivalently formulated using distinct covariate vectors for the copula, the marginal distributions of U and C, and the incidence component. Henceforth, to simplify the notation, we use the following abbreviations whenever this does not impair clarity: FβU (t|x) for F βU  
+
+> U|X
+
+(t|x), FβC (c|x) for F βC 
+
+> C|X
+
+(c|x), and analogous abbreviations for the corresponding densities. For what follows, we also need to define the partial derivatives of the copula: 
+
+h1 
+
+> τ
+
+(v|u, x ) = ∂∂u Cτ (u, v |x) and h2 
+
+> τ
+
+(u|v, x ) = ∂∂v Cτ (u, v |x).
+
+The conditional distributions can then be expressed as P (T ≤ t|C = c, X = x) = h2
+
+> τ
+
+ πp(x)FβU (t|x) FβC (c|x), x  ,
+
+and P (C ≤ c|T = t, X = x) = h1
+
+> τ
+
+ FβC (c|x) πp(x)FβU (t|x), x  .
+
+These expressions will be used in the next section to derive the individual likelihood contributions. 
+
+# 3 Identifiability and parameter estimation 
+
+This section addresses the identifiability of the model, a fundamental property that is examined in detail. Parameter estimation is also carried out using the maximum likelihood approach. 33.1 Identifiability of the model 
+
+There are three types of contributions to the likelihood, their developments can be found in Appendix B. For an uncensored individual, we have 
+
+∂∂y P(Y ≤ y, ∆T = 1 , ∆C = 0 |X = x) = πp(x)fβU (y|x) 1 − h1
+
+> τ
+
+FβC (y|x) πp(x)FβU (y|x), x  {1−FA(y)},
+
+for a dependently censored individual, the contribution is 
+
+∂∂y P(Y ≤ y, ∆T = 0 , ∆C = 1 |X = x) = fβC (y|x) 1 − h2
+
+> τ
+
+πp(x)FβU (y|x) FβC (y|x), x  {1 − FA(y)},
+
+and for an administratively censored individual, we have 
+
+∂∂y P(Y ≤ y, ∆T = 0 , ∆C = 0 |X = x) = Cτ
+
+1 − πp(x)FβU (y|x), 1 − FβC (y|x) x fA(y),
+
+where Cτ (u, v |x) = u + v − 1 + Cτ (1 − u, 1 − v|x) denotes the survival copula. By combining these three components, we obtain the individual likelihood contribution for an observation (y, δ T , δ C , x ), which depends on the parameter vector β (hereafter, quantities related to the distribution of A are omitted, since administrative censoring is assumed to be non-informative): 
+
+l(β; y, δ T , δ C , x ) =  πp(x)fβU (y|x) 1 − h1 
+
+> τ
+
+{FβC (y|x)|πp(x)FβU (y|x), x } δT
+
+×  fβC (y|x) 1 − h2 
+
+> τ
+
+{πp(x)FβU (y|x)|FβC (y|x), x } δC
+
+× Cτ {1 − πp(x)FβU (y|x), 1 − FβC (y|x)|x}1−δT −δC .
+
+Establishing identifiability of the model amounts to showing that, if l(β; y, δ T , δ C , x ) = l( ˜β; y, δ T , δ C , x )
+
+for all (y, δ T , δ C , x ) in the support of (Y, ∆T , ∆C , X ), then necessarily β = ˜β. The proof of identifiab-ility proceeds along two main lines. The first is an adaptation of Theorem 1 in Delhelle and Van Keilegom (2025). For technical reasons, this result assumes that the support of U |X is bounded to allow certain steps in the identifiability proof, whereas the support of C|X is [0 , ∞).The second line of argument, which constitutes a main contribution of this work, relaxes the trun-cation assumption in several ways depending on the distributions under consideration. Although the presence of covariates introduces additional complexity and requires careful handling, the information they provide can be leveraged to remove the bounded support assumption in specific settings. A key contribution of this work is thus the derivation of identifiability conditions when the support of U |X
+
+is unbounded, thereby broadening the applicability of the model by allowing greater flexibility in the choice of marginal distributions. The identifiability proof relies on a set of high-level assumptions, combined differently depending on the approach considered. The assumptions are listed below and require the introduction of the cure threshold ˇτ (x) = inf {y : FβU (y|x) = 1 }.
+
+Assumptions. 
+
+A1. lim 
+
+> y→0
+
+fβC (y|x)
+
+f˜βC (y|x) = 1 ∀x ⇐⇒ βC = ˜βC and lim 
+
+> y→∞
+
+fβC (y|x)
+
+f˜βC (y|x) = 1 ∀x ⇐⇒ βC = ˜βC
+
+A2. lim  
+
+> y→0
+
+h2 
+
+> τ
+
+{πp(x)FβU (y|x)|FβC (y|x), x } = 0 ∀x, β or lim  
+
+> y→∞
+
+h2 
+
+> τ
+
+{πp(x)FβU (y|x)|FβC (y|x), x } = 0 ∀x, β 
+
+4A3. lim  
+
+> y→0
+
+h1 
+
+> τ
+
+{FβC (y|x)|πp(x)FβU (y|x), x } = 0 ∀x, β 
+
+A4. lim 
+
+> y→0
+
+fβU (y|x)
+
+f˜βU (y|x) = 1 ∀x ⇐⇒ βU = ˜βU
+
+A5. h2 
+
+> τ
+
+{πp(x)|FβC (y|x), x } = h2˜τ {π˜p(x)|FβC (y|x), x } ∀ x and ∀y > ˇτ (x) ⇐⇒ p = ˜ p and τ = ˜ τ
+
+A6. lim 
+
+> y→0
+
+πp(x)fβU (y|x)
+
+π˜p(x)f˜βU (y|x) = 1 ∀x ⇐⇒ βU = ˜βU and p = ˜ p
+
+A7. h2 
+
+> τ
+
+{πp(x)FβU (y|x)|FβC (y|x), x } = h2˜τ {πp(x)FβU (y|x)|FβC (y|x), x } ∀x and ∀y ⇐⇒ τ = ˜ τ
+
+Assumptions A1–A5 correspond to covariate-adjusted versions of those in Theorem 1 of Delhelle and Van Keilegom (2025), while A6 is equivalent to an assumption in Theorem 1 of Czado and Van Keilegom (2023), rewritten in terms of incidence and covariates. These assumptions are not all required simultaneously. For example, A5 applies only to truncated distributions and is stronger than A7. Conversely, A6 (which is stronger than A4) and A7 are used for certain non-truncated distributions. Appropriate combinations of these assumptions therefore yield identifiability results for both truncated and some non-truncated distributions of U , as stated in the following theorem. 
+
+Theorem 3.1 (Identification) . Assume that the link functions are one-to-one and the components of 
+
+X are linearly independent. If assumptions A1 to A3 are verified and, either A4 and A5, or A6 and A7 are also verified, then the model defined by (1)-(2) is identified. 
+
+The proof of this theorem is provided in Appendix B. In the remainder of this paper, we focus on some Archimedean copulas as well as on the Gaussian copula, which belongs to the class of elliptical copulas. It should be emphasized, however, that the results presented are not restricted to these specific families, others may also be employed provided that the above assumptions are satisfied. Moreover, the developments presented in this document may serve as a basis for establishing analogous results in other settings. We recall the definition of Archimedean copulas: 
+
+Cτ (u, v |x) = φ[−1] 
+
+> τ
+
+ φτ (u|x) + φτ (v|x) x ∀u, v ∈ [0 , 1] ,
+
+where φτ is a generator , i.e., a continuous, convex, and strictly decreasing function from [0 , 1] to [0 , ∞]
+
+such that φτ (1) = 0 , and φ[−1]  
+
+> τ
+
+denotes its pseudo-inverse. The Gaussian copula is defined, for u, v ∈ [0 , 1] , by 
+
+Cτ (u, v |x) = Φ τ
+
+ Φ−1(u), Φ−1(v) x ,
+
+where Φ denotes the cumulative distribution function of the standard normal distribution and Φτ (·, ·| x)
+
+is the joint cumulative distribution function of a bivariate standard normal random vector with a correlation matrix determined by τ Kτ (x).Combining Theorem 2 of Delhelle and Van Keilegom (2025) with Lemma 6.1 in Appendix B shows that assumption A1 holds for a broad class of marginal distributions (e.g., log-normal, log-logistic, Weibull), as does assumption A4 in the case of truncated distributions. In addition, several copula families (e.g., Frank, Joe, Clayton(90) 1) satisfy assumptions A2, A3, and A5, typically independently of the marginal distributions, with only mild additional conditions required for the Gumbel and   
+
+> 1Clayton( α) denotes the Clayton copula rotated by αdegrees.
+
+5Gaussian copulas. Assumptions A6 and A7 enable alternative identifiability arguments in settings where the distribution of U is non-truncated, which constitute a central contribution of this work. This extension broadens the applicability of the model and provides increased flexibility for data analysis. The following theorem specifies the conditions under which these two assumptions are satisfied. 
+
+Theorem 3.2 (Assumptions A6 and A7) . Assume that the link functions are one-to-one and the components of X are linearly independent. a. Assumption A6 is satisfied for the families of log-normal and log-student-t densities. b. Assumption A6 is satisfied for the families of Weibull and Gamma densities provided that the following condition is met: 
+
+πp(x)˜λ(x)k(x)
+
+π˜p(x)λ(x)k(x) = 1 ∀x ⇐⇒ βU = ˜βU and p = ˜ p, 
+
+where λ(x) > 0 and k(x) > 0 are the scale and shape parameters of the distribution depending on βU .c. Assumption A7 is satisfied for the Frank, Gumbel, Joe, Gaussian and Clayton(90) copulas, independently of the marginal distributions. For the Clayton(180) and Clayton(270) copulas we need, respectively, the following additional conditions: 
+
+fβU (0 |x)̸ = 0 ∀βU , ∀x
+
+and 
+
+fβC (0 |x) < ∞ ∀βC , ∀x and fβU (0 |x)̸ = 0 ∀βU , ∀x. 
+
+Remark 3.1. The condition stated in Theorem 3.2.b is verified if there is at least one continuous covariate and the shape parameter is such that 
+
+k(x)̸ =log 
+
+π˜p(x)
+
+> πp(x)
+
+
+
+log 
+
+ ˜λ(x)
+
+> λ(x)
+
+ ∀x. 
+
+This requirement is purely theoretical and does not entail practical restrictions, as this form is not a natural or commonly used specification for modelling a shape parameter. 
+
+The proof of Theorem 3.2 and Remark 3.1 are provided in the Appendix B. Taken together, these results establish the identifiability of the model for a wide range of com-binations of copulas and marginal distributions, thereby ensuring substantial flexibility and practical applicability. 63.2 Parameter estimation 
+
+Given an i.i.d. sample D = ( Yi, ∆T i , ∆Ci , X i)i=1 ,··· ,n , the individual likelihood contributions derived at the beginning of Subsection 3.1 yield the following log-likelihood function: 
+
+ℓ(β; D) = 
+
+> n
+
+X
+
+> i=1
+
+log ( l(β; Yi, ∆T i , ∆Ci , X i)) =
+
+> n
+
+X
+
+> i=1
+
+∆T i log  πp(Xi)fβU (Yi|Xi) 1 − h1 
+
+> τ
+
+{FβC (Yi|Xi)|πp(Xi)FβU (Yi|Xi), X i} 
+
++
+
+> n
+
+X
+
+> i=1
+
+∆Ci log  fβC (Yi|Xi) 1 − h2 
+
+> τ
+
+{πp(Xi)FβU (Yi|Xi)|FβC (Yi|Xi), X i} 
+
++
+
+> n
+
+X
+
+> i=1
+
+(1 − ∆T i − ∆Ci ) log  Cτ
+
+1 − πp(Xi)FβU (Yi|Xi), 1 − FβC (Yi|Xi) Xi
+
+ .
+
+Maximising this function with respect to β yields the maximum likelihood estimator ˆβ, whose asymptotic properties follow from standard maximum likelihood theory. Details on the required regularity conditions, including those related to limits and first- and second-order derivatives of the log-likelihood, can be found in Chapter 8 of Mittelhammer (2013). 
+
+# 4 Simulation study 
+
+This section examines the finite-sample performance of the proposed estimation procedure. In the first subsection, we assess its behaviour across a range of settings, varying the copula family, marginal distributions, sample size, and strength of dependence, in order to evaluate their impact on the results. The second subsection is devoted to an analysis of the robustness of the method. 
+
+## 4.1 Performance of the method 
+
+The aim of this subsection is to assess the ability of the model to accurately estimate its parameters through simulation. To this end, we perform simulations by generating datasets and maximising the likelihood using the optim (·) function in R (R Core Team (2024)). The BFGS algorithm is employed, with a maximum of 100 iterations. To evaluate the influence of various factors on the estimation results, we define a reference scenario and then modify its characteristics one at a time. In the reference setting, both U and C follow non-truncated log-normal distributions. The dependence between T and C does not depend on the covariate, is strong and positive ( τ K = 0 .75 ) and is modelled using a Frank copula. No administrative censoring is introduced. The sample size is 1000 , and a single continuous covariate positively affects the model parameters, with slopes equal to 0.7 in the linear relations, except for the dependence parameter since it is assumed to not depend on the covariate. All scenarios considered in this subsection are summarised in Table 1, where deviations from the reference scenario (1) are highlighted in bold. The first two columns specify the marginal distributions of U and C. For instance, in scenario (6), both marginals are Weibull distributions with the upper 
+
+1% of the support of U truncated. This truncation point can be chosen arbitrarily within the support of U |X and may therefore be set sufficiently large so that the proportion of truncated observations is negligible. The next two columns describe the dependence between T and C. In scenario (10), a range of values is provided for τ Kτ (x) because the covariate also affects this parameter, so it is no 7longer constant. The fifth column indicates whether administrative censoring is present. In scenario (8), A is generated from a W eibull (shape = 20 , scale = 2 .5) distribution. The sixth column reports the sample size, which is 1000 in all cases except scenario (4), where it is 500 . The final two columns relate to the covariate. It is continuous in all scenarios except (9), where it is binary. Its effect on the model parameters is generally substantial, except in scenario (7), where the slopes in the linear relations are reduced to 0.4.Each scenario considered satisfies the identifiability conditions of the model. Specifically, assump-tions A1–A3 are verified by Theorem 2 of Delhelle and Van Keilegom (2025). The non-truncated log-normal distribution satisfies assumption A6 by Theorem 3.2(a), while the truncated Weibull dis-tribution satisfies assumption A4, as established in Theorem 2 of Delhelle and Van Keilegom (2025). Regarding the copulas, the Frank and Joe families satisfy, independently of the marginal distribu-tions, either assumption A5 by Theorem 2 of Delhelle and Van Keilegom (2025) or assumption A7 by Theorem 3.2(c). Scenario Densities Trunc. U Dep. strength Copula A Sample size X Slopes 1 Log-normal No 0.75 Frank No 1000 Cont. 0.7 2 Log-normal No 0.25 Frank No 1000 Cont. 0.7 3 Log-normal No -0.75 Frank No 1000 Cont. 0.7 4 Log-normal No 0.75 Frank No 500 Cont. 0.7 5 Log-normal No 0.75 Joe No 1000 Cont. 0.7 6 Weibull Yes 0.75 Frank No 1000 Cont. 0.7 7 Log-normal No 0.75 Frank No 1000 Cont. 0.4 
+
+8 Log-normal No 0.75 Frank Yes 1000 Cont. 0.7 9 Log-normal No 0.75 Frank No 1000 Bin. 0.7 10 Log-normal No [0.55, 0.87] Frank No 1000 Cont. 0.7 Table 1: Settings of the cases considered in this subsection. Dep. strength is the Kendall’s tau (depending on the covariate for scenario (10)). The column X indicates if the covariate is continuous (Cont. ) or binary ( Bin. ). Table 2 below reports the cure rates and the dependent and administrative censoring rates in the data for each scenario listed in Table 1. 1 2 3 5 6 7 8 9 10 Dependent censoring rate ( C) 51.1 52.3 50.9 52.5 57.9 50.3 33.7 49 70.7 Administrative censoring rate ( A) 0 0 0 0 0 0 18.8 0 0Cure rate 40.4 40.4 40.4 40.4 40.4 40.1 40.4 32.5 40.5 Table 2: Censoring and cure rates for the settings considered in this subsection. Regarding data generation, each coefficient of the model defined in (1)–(2) is fixed to values depending on the scenario under consideration; these values are provided in Table 8 in Appendix A. The covariate is generated from a U nif (−1, 1) distribution when continuous, and from a Ber (0 .5) 
+
+distribution when binary. The choice of link functions is guided by the parameter domains. For Kendall’s τ , we use the link {exp( ·) − 1}/{exp( ·) + 1 } when the dependence may be positive or negative (Frank copula), and the logistic function {exp ( ·)}/{1 + exp ( ·)} when the dependence is constrained to be positive (Joe copula). For strictly positive parameters (e.g., Weibull parameters and the standard deviation of the logarithm in the log-normal distribution), the exponential link is 8used, whereas the identity link is used for the remaining log-normal parameter, whose domain is R.And, as throughout this document, a logistic model is used for the incidence. Starting values for the optimisation are selected from a grid of 20 parameter vectors, combining different dependence values with random perturbations of baseline coefficient estimates. Specifically, for the dependence parameter, we generate a sequence of 20 values between −1 and 1 (or between 0
+
+and 1 for the Joe copula), to which the inverse link function is applied. For the remaining parameters, initial values are obtained as follows. The incidence is first estimated using the survfit (·) function in 
+
+R; the logit transform of this estimate is then used as an initial value for the corresponding intercept. For the distribution parameters, maximum likelihood estimates are computed without taking into account neither the cure fraction nor the dependent censoring and are then transformed via the inverse link functions to obtain initial intercepts. All slope coefficients are initially set to 1. The intercepts are then perturbed by multiplying them by 20 random draws from a U nif (0 .5, 1.5) distribution, while the slopes are perturbed using 20 random draws from a U nif (−1, 1) distribution. These components are combined to construct a grid of 20 starting values. The simulation study is based on 1000 replications. Owing to the complexity of the optimisation problem and the number of parameters involved, the algorithm fails to converge for a small proportion of samples. This results in a limited number of outlying estimates, primarily affecting the intercept associated with the incidence component. These outliers are removed entirely or partially, with a maximum exclusion rate of 2% of the iterations. Selected results are reported in Tables 3–4. To keep the document concise, only a subset of the scenarios listed in Table 1 is included in Table 4. For clarity, we restrict attention to the coefficients associated with the dependence, the incidence, and the parameters of the distribution of U . For each scenario, the true coefficient values, the corresponding bias, the standard deviation of the estimators, and the root mean squared error are reported. Table 3 presents the results for the coefficient estimates. Table 4 reports the estimated dependence parameter ( τ Kτ ), the model incidence ( πp), and the quartiles of the distribution of U (denoted by Q1 U , Q2 U , and Q3 U ), evaluated for the continuous covariate set to 0.5.Overall, the results in Table 3 are satisfactory, even excellent. Biases are generally small, with the exception of the dependence parameter in scenario (2). Only scenario (10), in which the dependence parameter is also affected by the covariate, yields less favourable results. In this case, biases increase for several coefficients, particularly those associated with the incidence and τ Kτ . One possible explanation is that, as shown in Table 2, scenario (10) involves a substantially higher proportion of censored observations. The reduced number of uncensored observations limits the available information for estimating the dependence structure. The results in Table 4 are also satisfactory and consistent with those observed for the coefficient estimates. Again, scenario (10) stands out as more challenging. Although biases appear slightly reduced when considering the model parameters, and standard deviations are somewhat smaller, the estimation of τ Kτ and the incidence remain difficult when the dependence parameter varies with the covariate. Taken together, these findings indicate that the proposed estimation procedure exhibits good finite-sample performance overall. 9Scenario βU0 βU1 βU2 βU3 p0 p1 τ0 τ1
+
+1 True values 0.00 0.70 -0.69 0.70 0.41 0.70 1.95 Bias -0.00 -0.00 -0.01 -0.00 -0.00 -0.00 0.00 SD 0.04 0.06 0.05 0.08 0.12 0.20 0.24 RMSE 0.04 0.06 0.05 0.08 0.12 0.20 0.24 2 True values 0.00 0.70 -0.69 0.70 0.41 0.70 0.51 Bias -0.01 -0.01 -0.01 -0.00 -0.01 -0.01 -0.12 SD 0.06 0.07 0.06 0.08 0.18 0.25 0.47 RMSE 0.06 0.07 0.06 0.08 0.18 0.25 0.48 3 True values 0.00 0.70 -0.69 0.70 0.41 0.70 -1.95 Bias 0.01 -0.01 -0.00 -0.01 0.12 -0.02 -0.08 SD 0.08 0.07 0.07 0.09 0.92 0.53 0.63 RMSE 0.08 0.07 0.07 0.09 0.93 0.53 0.63 4 True values 0.00 0.70 -0.69 0.70 0.41 0.70 1.95 Bias 0.00 -0.00 -0.01 -0.01 0.01 0.01 0.01 SD 0.06 0.09 0.07 0.11 0.18 0.30 0.26 RMSE 0.06 0.09 0.07 0.11 0.18 0.30 0.26 5 True values 0.00 0.70 -0.69 0.70 0.41 0.70 1.10 Bias -0.00 -0.00 -0.01 0.00 0.00 0.00 -0.00 SD 0.04 0.07 0.05 0.08 0.13 0.22 0.14 RMSE 0.04 0.07 0.05 0.08 0.13 0.22 0.14 6 True values 0.50 0.70 0.20 0.70 0.41 0.70 1.95 Bias 0.01 0.01 -0.00 -0.01 0.02 -0.00 -0.00 SD 0.04 0.07 0.07 0.09 0.13 0.20 0.17 RMSE 0.04 0.07 0.07 0.09 0.13 0.20 0.17 7 True values 0.00 0.40 -0.69 0.40 0.41 0.40 1.95 Bias -0.00 -0.01 -0.01 -0.00 0.00 -0.00 -0.00 SD 0.04 0.07 0.05 0.09 0.11 0.19 0.15 RMSE 0.04 0.07 0.05 0.09 0.11 0.19 0.15 8 True values 0.00 0.70 -0.69 0.70 0.41 0.70 1.95 Bias -0.00 -0.00 -0.01 -0.00 -0.00 -0.00 -0.02 SD 0.05 0.07 0.05 0.08 0.14 0.22 0.37 RMSE 0.05 0.07 0.05 0.08 0.14 0.22 0.37 9 True values 0.00 0.70 -0.69 0.70 0.41 0.70 1.95 Bias -0.00 -0.01 -0.01 -0.00 -0.00 0.05 -0.03 SD 0.06 0.15 0.08 0.11 0.16 0.63 0.44 RMSE 0.06 0.15 0.08 0.11 0.16 0.63 0.44 10 True values 0.00 0.70 -0.69 0.70 0.41 0.70 1.95 0.70 Bias 0.06 0.04 0.01 -0.02 -0.78 0.36 -1.00 -0.18 SD 0.07 0.11 0.07 0.11 0.16 0.25 0.25 0.34 RMSE 0.09 0.12 0.07 0.12 0.80 0.44 1.03 0.39 Table 3: True values, bias, standard deviation (SD) and root mean squared error (RMSE) of the estimators for the settings described above. The final column, corresponding to slope for the depend-ence, concerns only the scenario (10), as this is the only one in which the covariate affects τ Kτ .10 Scenario τ Kτ (0 .5) πp(0 .5) θU 1(0 .5) θU 2(0 .5) Q1 U (0 .5) Q2 U (0 .5) Q3 U (0 .5) 
+
+1 True values 0.75 0.68 0.35 0.71 0.88 1.42 2.29 Bias -0.00 -0.00 -0.00 -0.01 0.00 -0.00 -0.01 SD 0.04 0.04 0.07 0.05 0.05 0.10 0.22 RMSE 0.04 0.04 0.07 0.05 0.05 0.10 0.22 3 True values -0.75 0.68 0.35 0.71 0.88 1.42 2.29 Bias -0.00 0.00 0.00 -0.00 0.01 0.01 0.02 SD 0.07 0.07 0.09 0.05 0.06 0.15 0.32 RMSE 0.07 0.07 0.09 0.05 0.06 0.15 0.32 5 True values 0.75 0.68 0.35 0.71 0.88 1.42 2.29 Bias -0.00 -0.00 -0.00 -0.00 0.00 -0.00 0.00 SD 0.03 0.05 0.07 0.05 0.05 0.10 0.23 RMSE 0.03 0.05 0.07 0.05 0.05 0.10 0.23 6 True values 0.75 0.68 2.34 1.73 1.02 1.48 1.99 Bias -0.00 0.00 0.04 -0.01 0.00 -0.00 -0.01 SD 0.04 0.02 0.11 0.06 0.04 0.05 0.07 RMSE 0.04 0.02 0.12 0.06 0.04 0.05 0.07 10 True values 0.82 0.68 0.35 0.71 0.88 1.42 2.29 Bias -0.28 -0.14 0.08 0.00 0.07 0.13 0.22 SD 0.08 0.06 0.11 0.06 0.08 0.18 0.37 RMSE 0.29 0.16 0.14 0.06 0.11 0.22 0.43 Table 4: True values, bias, standard deviation (SD) and root mean squared error (RMSE) of the parameters when the continuous covariate is equal to 0.5, for several settings described above. Scenario (10), is the only one in which the covariate affects τ Kτ as well. 
+
+## 4.2 Robustness 
+
+This subsection is devoted to assessing the robustness of the proposed method to the misspecification of the marginals or the copula. To this end, we consider several scenarios. In some cases, the marginal distributions of U and C are fixed while the copula is selected from the data; in others, the copula is fixed and the marginal distributions are chosen using a model selection criterion. Copula selection is performed among the independence copula, Frank, Gumbel, Joe, Clayton(90), Clayton(180), Clayton(270), and Gaussian families, while marginal distributions are selected from the Weibull, Gamma, and log-normal families. In each case, the optimisation is carried out and, among all candidate models, the best one is chosen using the Akaike Information Criterion (AIC). These approaches are intended to reflect more realistic applications, where the underlying depend-ence structure and marginal distributions are unknown, as in the analysis of real data described in Section 5. They also allow us to evaluate the ability of the model selection procedure to recover the true copula and marginal distributions, as well as to assess the sensitivity of relevant quantities to model misspecification. For these analyses, 500 replications are used, with a sample size of 1000 . Two settings are con-sidered. In the first, data are generated from a truncated Weibull marginal distribution for U and a non-truncated Weibull for C, with dependence between T and C modelled by a Joe copula with 
+
+τ K = 0 .75 . In the second, data are generated from non-truncated log-normal marginal distributions, similarly to scenario (5) in Subsection 4.1. In both settings, no administrative censoring is intro-duced, and a uniform covariate affects all model parameters except the dependence parameter. The corresponding coefficient values are provided in Table 9 in Appendix A. 11 The results are reported in Table 5. For each setting, we compute the proportion of correct selections based on the AIC, as well as the relative bias and root mean squared error for the estimated quartiles of the survival function of U , evaluated for the covariate equal to 0.5.% correct Q1 U (0 .5) Q2 U (0 .5) Q3 U (0 .5) 
+
+Correctly specified model Relative bias 0.004 -0.003 -0.009 (Joe copula and truncated Weibull) RMSE 0.032 0.037 0.053 Data-driven densities 99.0 Relative bias 0.004 -0.003 -0.008 RMSE 0.032 0.037 0.053 Data-driven copula 54.4 Relative bias 0.004 -0.003 -0.009 RMSE 0.032 0.037 0.053 Correctly specified model Relative bias 0.001 0.001 0.002 (Joe copula and non-truncated log-normal) RMSE 0.052 0.113 0.246 Data-driven densities 83.8 Relative bias -0.004 -0.010 -0.019 RMSE 0.052 0.116 0.272 Data-driven copula 57.6 Relative bias -0.001 -0.002 -0.003 RMSE 0.053 0.115 0.251 Table 5: Relative bias and root mean squared error (RMSE) for the estimated quartiles when X = 0 .5.The truncated Weibull case shows that the model selection procedure performs well in identifying the marginal distributions. In contrast, the copula is incorrectly selected in approximately 46% of the cases. A more detailed analysis indicates that the AIC predominantly selects the Clayton(180) copula in these instances, which is not unexpected given its similarity to the Joe copula. Despite these misclassifications, the relative biases and root mean squared errors are nearly identical to those ob-tained under the correctly specified model. Similar patterns are observed for the case of non-truncated log-normal distributions. Again, confusion arises primarily between the Joe and Clayton(180) copu-las. Regarding the marginal distributions, an error rate of approximately 16% is observed, with most misclassifications occurring between the log-normal and Gamma families. These results indicate that, although the combination of a Joe copula with non-truncated log-normal marginals constitutes a deliberately challenging setting for model selection, the estimated survival curves remain accurate. This suggests that the proposed method possesses a satisfactory degree of robustness with respect to the misspecification of the copula family and the marginal dis-tributions. 
+
+# 5 Illustration on real data 
+
+This section illustrates the practical relevance of the proposed approach through its application to a real dataset. The data are obtained from the Surveillance, Epidemiology, and End Results (SEER) Program (n.d.) (www.seer.cancer.gov), and focus on patients diagnosed with ovarian cancer. From this heterogeneous dataset, a consistent subset is selected. We restrict our attention to patients diagnosed with malignant cancer in 2000 or 2001, with an age at diagnosis between 45 and 84 years. Among the many available variables, the following are retained: (1) Survival months , corresponding to the observed variable Y . Individuals with missing values or with a recorded survival time equal to zero are excluded. 12 (2) Cause of death (COD) to site recode , which records the cause of death. As this is not the primary focus of the analysis, the variable is recoded into three categories: alive (treated as administratively censored), death due to ovarian cancer (event of interest), and death due to other causes (potentially dependent censoring). (3) Age at diagnosis, taking values between 45 and 84 years. (Scaled between -1 and 1 for practical use in code.) (4) Stage , a categorical variable with three levels indicating disease progression: Localized (cancer confined to the organ of origin, 13 .83% ), Regional (spread to nearby structures or lymph nodes, 
+
+17 .45% ), and Distant (metastasis to distant organs, 68 .72% ). The dataset retained for the subsequent analyses comprises 7518 patients. Among them, 4636 (61 .66% )died from ovarian cancer, 1258 (16 .73% ) were administratively censored (i.e., still alive at the end of follow-up), and the remaining 1624 (21 .60% ) died from causes other than ovarian cancer and are therefore subject to potentially dependent censoring. For example, after ovarian cancer itself, the most frequent cause of death recorded in the database is Diseases of Heart , which may plausibly be indirectly associated with ovarian cancer through the pro-thrombotic state induced by the disease (see, for example, Tateo et al. (2005)). This interpretation is further supported by evidence showing that venous thromboembolism is associated with reduced median overall survival among patients with ovarian cancer (Heath et al. (2016)). Although the Kaplan–Meier estimator is not appropriate in the presence of dependent censoring, plotting it without distinguishing between censoring types reveals a plateau around 0.3 in Figure 1. This feature is commonly interpreted as evidence of a cure fraction (Amico and Van Keilegom (2018)). 0 50 100 150 200 250 0.0  0.2  0.4  0.6  0.8  1.0 Time to event (in months) Survival probability 
+
+Figure 1: Kaplan-Meier curve for the data, with the two types of censoring being lumped together. The coexistence of a cure fraction and potentially dependent censoring suggests that the proposed model is well suited for the analysis of these data. The analysis was carried out using the proposed model under various combinations of copulas and marginal distributions. The copula families considered include the independence copula, as well as the Frank, Gumbel, Joe, Clayton(90-180-270), and Gaussian copulas. For the marginal distributions of 
+
+U and C, for simplicity, the same family is used for both variables in each specification, although this 13 is not required in practice. The distributions considered are non-truncated and include the Weibull, Gamma, and log-normal families. The link functions used for parameter modelling are identical to those employed in the simulation study; a complete specification is provided in Appendix A. For each candidate model, the likelihood and the AIC are computed. The model with the lowest AIC ( 70665 .52 ) corresponds to a Frank copula with Weibull marginals. This selected model is shown to be significantly preferable to the model assuming independence between T and C, based on a likelihood ratio test. The test statistic is 
+
+λLR = −2( logLik Ind − logLik F rank ) = −2( −35377 .14 + 35311 .76) = 130 .76 ,
+
+which substantially exceeds the critical value χ21,0.95 = 3 .84 . The associated p-value is 
+
+P (χ21 > λ LR ) = P (χ21 > 130 .76) = 2 .8e−30 ,
+
+providing strong evidence in favour of the model with the Frank copula. This result supports the presence of dependence between the survival time and the non-administrative censoring time. According to the AIC criterion, the next two best models are the Gumbel copula with Weibull marginal (AIC= 70677 .94 ) and the Frank copula with Gamma marginals (AIC= 70699 .44 ). Figure 2, which displays the survival functions for uncured individuals across distant, regional, and localized cancer stages, shows that these models produce results very close to those of the selected model. This similarity is expected, as they share either the copula family or the marginal distributions. Such consistency further supports the robustness of the proposed approach. 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 0 50 100 150 200 250 300 350 400 Time (in months) Survival probability Stage Localized Regional Distant Model Frank−Weibull Gumbel−Weibull Frank−Gamma 
+
+Figure 2: Comparison of the survival functions for uncured individuals across the three best models according to the AIC criterion. 14 The contribution of each covariate to the different model parameters was assessed by fitting a series of reduced models in which the effect of a given covariate on a specific parameter was removed (e.g., excluding the effect of Stage on the incidence, then excluding that of Age , and so on). The AIC values of these reduced models were compared with that of the full model. The only reduced model yielding a lower AIC was the one in which Age had no effect on the shape parameter of the distribution of C.Table 6 reports the estimated parameters for the selected model, evaluated at the median value of the Age variable (63 years) and for each of the three cancer stages included in the dataset. The quartiles of the distribution of U are also provided.                                        
+
+> Stage τKpθU1θU2θC1θC2Q1 UQ2 UQ3 U
+> Localized 0.45 0.27 1.24 125.70 1.55 304.27 46.19 93.63 163.44 Regional 0.45 0.54 0.97 72.20 1.30 260.11 20.08 49.55 100.98 Distant 0.45 0.89 1.03 38.74 1.00 161.38 11.60 27.17 53.14
+
+Table 6: Estimators of the parameters of the selected model (Frank - Weibull) in case of individuals aged 63 (median of Age ) and the three levels of Stage .The results indicate a positive dependence between T and C (τ K = 0 .45 ), which is consistent with expectations. In addition, a cure fraction is observed in all three stages, with a marked decrease as the disease progresses to more advanced stages, in line with clinical knowledge. Similarly, the quartiles of the distribution of U decrease from localized to regional and further to distant stages. This pattern is illustrated in the left panel of Figure 3, which displays the survival curves for uncured individuals aged 63. The survival probability declines substantially for patients with distant-stage cancer, whereas individuals with localized-stage cancer exhibit more favourable outcomes. A more detailed assessment of the covariate effects can also be conducted. For example, the right panel of Figure 3 presents the age-specific incidence rates across the different cancer stages. Finally, a bootstrap analysis was conducted to illustrate an advantage of the proposed model, namely its ability to provide more accurate estimates of clinically relevant quantities than a model assuming independence. Specifically, 1000 bootstrap samples were generated by sampling with re-placement from the original dataset. For each sample, the quartiles of the distribution of U were estimated for patients aged 63 , across all three cancer stages, using both a model with an independ-ence copula and Weibull marginals, and the model selected by the algorithm (Frank copula with Weibull marginals). Based on these estimates, 95% confidence intervals for each difference between quartiles were constructed using the percentile bootstrap method. For patients with distant-stage can-cer, these intervals, which can be found in Table 7, do not include zero, indicating that the quartile estimates obtained under the Frank copula model differ significantly (at the 5% significance level) from those obtained under the independence model. For instance, the median survival time is estimated at 27 .17 months with the proposed model, which is 1.25 months shorter than the estimate obtained under the independence assumption.       
+
+> Stage Q1 UQ2 UQ3 U
+> Distant [0.40, 1.13] [0.96, 2.33] [1.94, 4.06]
+
+Table 7: 95% CI for the differences between quartiles of the survival time for patient with a distant-stage cancer. 15 Localized Regional Distant 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 Survival probability 0 50 100 150 200 250 300 350 400 Time (in months) Localized Regional Distant 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 Incidence 45 50 55 60 65 70 75 80 Age Figure 3: Left : Survival curves for uncured individuals of 63 years old (median age). Right : Age-specific incidence rates for the different stages of cancer. 
+
+# 6 Discussion and future research 
+
+In conclusion, the model proposed in this paper constitutes a substantial advancement in the literature on cure models in presence of dependent censoring. By explicitly modelling the dependence between survival and censoring times more accurately and incorporating covariate information, the proposed approach enables more precise and individualised estimation of the cure fraction, the dependence structure, and other clinically relevant quantities. Several avenues for future research may be considered. In particular, the incorporation of variable-selection procedures, via, e.g., a penalised likelihood, could facilitate the identification of the most relevant covariates and further improve the practical applicability of the model. 
+
+# Declarations 
+
+## Funding 
+
+Morine Delhelle, Anouar El Ghouch and Ingrid Van Keilegom acknowledge the support of the ARC project (Projet d’Actions de Recherche Concertées) ‘Imperfect data : From mathematical foundations to applications in life sciences’ of the ‘Communauté française de Belgique’, granted by the ‘Académie universitaire Louvain’ (2020-2025). 
+
+## Conflict of interest 
+
+The authors declare that they have no conflict of interest. 16 Acknowledgment 
+
+Computational resources have been provided by the supercomputing facilities of the Université cath-olique de Louvain (CISM/UCL) and the Consortium des Équipements de Calcul Intensif en Fédération Wallonie Bruxelles (CÉCI) funded by the Fond de la Recherche Scientifique de Belgique (F.R.S.-FNRS) under convention 2.5020.11 and by the Walloon Region. ChatGPT has been used for language im-provements. 
+
+# References 
+
+Amico, M. and Van Keilegom, I. (2018). Cure models in survival analysis, Annual Review of Statistics and its Application 5: 311–342. Berkson, J. and Gage, R. P. (1952). Survival Curve for Cancer Patients Following Treatment, Journal of the American Statistical Association 47 (259): 501–515. Bernhardt, P. W. (2016). A flexible cure rate model with dependent censoring and a known cure threshold, Statistics in Medicine 35 : 4607–4623. Cox, D. R. (1972). Regression Models and Life-Tables, Journal of the Royal Statistical Society. Series B (Methodological) 34 (2): 187–220. Crommen, G., Deresa, N. W., D’Haen, M., Ding, J., Willems, I. and Van Keilegom, I. (2025). Re-cent advances in copula-based methods for dependent censoring, SORT-Statistics and Operations Research Transactions pp. 3–42. 
+
+URL: https://doi.org/10.57645/20.8080.02.21 
+
+Czado, C. and Van Keilegom, I. (2023). Dependent censoring based on parametric copulas, Biometrika 
+
+110 : 721–738. Delhelle, M. and Van Keilegom, I. (2025). Copula based dependent censoring in cure models, TEST 
+
+34 : 361–382. Deresa, N. W. and Van Keilegom, I. (2024). Copula based Cox proportional hazards models for dependent censoring, Journal of the American Statistical Association 119(546) : 1044–1054. Deresa, N. W., Van Keilegom, I. and Antonio, K. (2022). Copula-based inference for bivariate survival data with left truncation and dependent censoring, Insurance: Mathematics and Economics 107 : 1– 21. Emoto, S. E. and Matthews, P. C. (1990). A Weibull model for dependent censoring, The Annals of Statistics 18(4) : 1556–1577. Emura, T. and Chen, Y.-H. (2018). Analysis of Survival Data with Dependent Censoring :Copula-Based Approaches, Springer, New York, NY. Heath, O. M., van Beekhuizen, H. J., Nama, V., Kolomainen, D., Nobbenhuis, M. A., Ind, T. E., Sohaib, S. A., Lofts, F. J., Heenan, S., Gore, M., Banerjee, S., Kaye, S. B. and Barton, D. P. (2016). Venous thromboembolism at time of diagnosis of ovarian cancer: Survival differs in symptomatic and asymptomatic cases, Thrombosis Research 137 : 30–35. 17 Legrand, C. (2021). Advanced Survival Models, Chapman & Hall, New York, NY. Li, Y., Tiwari, R. C. and Guha, S. (2007). Mixture cure survival models with dependent censoring, Journal of the Royal Statistical Society, Series B 69 : 285–306. Liu, Y., Hu, T. and Sun, J. (2017). Regression analysis of current status data in the presence of a cured subgroup and dependent censoring, Lifetime Data Analysis 23 : 626–650. Maller, R. and Zhou, X. (1996). Survival Analysis with Long-term Survivors, Wiley, Chichester. Mittelhammer, R. C. (2013). Mathematical Statistics for Economics and Business, Second Edition, Springer, New York, NY. Nelsen, R. B. (2006). An Introduction to Copulas, Second Edition, Springer, New York, NY. Othus, M., Li, Y. and Tiwari, R. C. (2009). A class of semiparametric mixture cure survival models with dependent densoring, Journal of the American Statistical Association 104 : 1241–1250. Peng, Y. and Taylor, J. M. G. (2014). Cure models, in J. Klein, H. van Houwelingen, J. Ibrahim and T. Scheike (eds), Handbook of Survival Analysis, Handbooks of Modern Statistical Methods, Chapman & Hall, New York, NY, chapter 6, pp. 113–134. Peng, Y. and Yu, B. (2022). Cure Models - Methods, Applications, and Implementation, Chapman & Hall, New York, NY. R Core Team (2024). R: A Language and Environment for Statistical Computing, R Foundation for Statistical Computing, Vienna, Austria. 
+
+URL: https://www.R-project.org/ 
+
+Rivest, L.-P. and Wells, M. T. (2001). A martingale approach to the copula-graphic estimator for the survival function under dependent censoring, Journal of Multivariate Analysis 79 : 138–155. Rondeau, V., Schaffner, E., Corbiere, F., Gonzalez, J. and Pelissier, S. (2011). Cure frailty models for survival data: application to recurrences for breast cancer and to hospital readmissions for colorectal cancer, Statistical Methods in Medical Research 22 : 1–18. Schneider, S., Demarqui, F. and de Freitas Costa, E. (2022). Free-ranging dogs’ lifetime estimated by an approach for long-term survival data with dependent censoring., Environmental and Ecological Statistics 29(4) : 869–911. Surveillance, Epidemiology, and End Results (SEER) Program (n.d.). SEER*Stat Database: Incidence - SEER Research Data, 17 Registries, Nov 2024 Sub (2000–2022) - Linked To County Attributes - Time Dependent (1990–2023) Income/Rurality, 1969–2023 Counties. Released April 2025, based on the November 2024 submission. 
+
+URL: https://www.seer.cancer.gov 
+
+Tateo, S., Mereu, L., Salamano, S., Klersy, C., Barone, M., Spyropoulos, A. and Piovella, F. (2005). Ovarian cancer and venous thromboembolic risk, Gynecologic Oncology 99 (1): 119–125. 18 Appendix A : Further details 
+
+This appendix contains all the coefficients and link functions used for the simulations and data analysis sections. 
+
+## Coefficients for Subsection 4.1 
+
+Here are the values of all the coefficients used to generate the data in each scenario in Subsection 4.1. 
+
+τ0 τ1 p0 p1 βU0 βU1 βU2 βU3 βC0 βC1 βC2 βC3
+
+1 - 4 - 8 - 9 1.95 0.41 0.7 0 0.7 -0.69 0.7 0.5 0.7 -1.39 0.7 2 0.51 0.41 0.7 0 0.7 -0.69 0.7 0.5 0.7 -1.39 0.7 3 -1.95 0.41 0.7 0 0.7 -0.69 0.7 0.5 0.7 -1.39 0.7 5 1.10 0.41 0.7 0 0.7 -0.69 0.7 0.5 0.7 -1.39 0.7 6 1.95 0.41 0.7 0.5 0.7 0.2 0.7 0.7 0.7 0.7 0.7 7 1.95 0.41 0.4 0 0.4 -0.69 0.4 0.5 0.4 -1.39 0.4 10 1.95 0.7 0.41 0.7 0 0.7 -0.69 0.7 0.5 0.7 -1.39 0.7 
+
+Table 8: Coefficients fixed for the simulation study. 
+
+## Coefficients for Subsection 4.2 
+
+Table 9 shows the values of the coefficients used to generate the data for the robustness assessment of the method. 
+
+τ0 p0 p1 βU0 βU1 βU2 βU3 βC0 βC1 βC2 βC3
+
+Joe - Truncated Weibull 1.1 0.41 0.7 0.5 0.7 0.2 0.4 0.7 0.5 0.7 0.5 Joe - Non-truncated log-normal 1.1 0.41 0.7 0 0.7 -0.69 0.7 0.5 0.7 -1.39 0.7 
+
+Table 9: Coefficients fixed for the study of the robustness. 
+
+## Link functions for sections 4 and 5 
+
+The list below shows the link functions defined for each model parameter used in sections 4 and 5. • Kendall’s tau for Frank and Gaussian copulas : g(y) = exp( y)−1exp( y)+1 
+
+• Incidence and Kendall’s tau for Gumbel, Joe and Clayton(180) copulas : g(y) = exp ( y)1+exp ( y)
+
+• Kendall’s tau for Clayton(90) and Clayton(270) copulas : g(y) = − exp ( y)1+exp ( y)
+
+• Parameters for Weibull and Gamma distributions, and standard deviation of the logarithm in the log-normal distribution: g(y) = exp( y)
+
+• Mean of the logarithm in the log-normal distribution: g(y) = y
+
+19 Appendix B : Proofs 
+
+This appendix contains the proofs for the results presented in this document. We will start with the developments that led to the individual likelihood contributions in Subsection 3.1. 
+
+Proof of individual likelihood contributions. First, let’s compute the cumulative distribution functions: P(Y ≤ y, ∆T = 1 , ∆C = 0 |X = x) = P(T ≤ y, T ≤ C, T ≤ A|X = x)=
+
+Z y
+
+> 0
+
+P(C ≥ t, A ≥ t|X = x, T = t)fT (t|x)dt 
+
+=
+
+Z y
+
+> 0
+
+P(C ≥ t|X = x, T = t) P(A ≥ t)fT (t|x)dt 
+
+=
+
+Z y
+
+> 0
+
+{1 − FC|T,X (t|t, x )}{ 1 − FA(t)}fT (t|x)dt 
+
+=
+
+Z y
+
+> 0
+
+[1 − h1{FC (t|x)|FT (t|x), x }]{1 − FA(t)}fT (t|x)dt. 
+
+Similarly, P(Y ≤ y, ∆T = 0 , ∆C = 1 |X = x) = P(C ≤ y, C ≤ T, C ≤ A|X = x)=
+
+Z y
+
+> 0
+
+[1 − h2{FT (c|x)|FC (c|x), x }]{1 − FA(c)}fC (c|x)dc, 
+
+and P(Y ≤ y, ∆T = 0 , ∆C = 0 |X = x) = P(A ≤ y, A ≤ T, A ≤ C|X = x)=
+
+Z y
+
+> 0
+
+P(T ≥ a, C ≥ a|X = x, A = a)fA(a)da 
+
+=
+
+Z y
+
+> 0
+
+P(T ≥ a, C ≥ a|X = x)fA(a)da 
+
+=
+
+Z y
+
+> 0
+
+C  1 − FT (a|x), 1 − FC (a|x) x fA(a)da. 
+
+Then we take the derivatives of these expressions to obtain 
+
+∂∂y P(Y ≤ y, ∆T = 1 , ∆C = 0 |X = x) = π(x)fU (y|x) 1 − h1 FC (y|x) π(x)FU (y|x), x  {1 − FA(y)},∂∂y P(Y ≤ y, ∆T = 0 , ∆C = 1 |X = x) = fC (y|x) 1 − h2 π(x)FU (y|x) FC (y|x), x  {1 − FA(y)},
+
+and 
+
+∂∂y P(Y ≤ y, ∆T = 0 , ∆C = 0 |X = x) = C  1 − π(x)FU (y|x), 1 − FC (y|x) x fA(y).
+
+We then introduce a lemma that will be used below to derive the equality of coefficients from the equality of model parameters. The proof is not provided as it is straightforward. 20 Lemma 6.1. Let g be a one-to-one function and X a vector such that the components of X are linearly independent. Then g  α⊤X = g  ˜α⊤X almost surely implies α = ˜ α.
+
+Next, here are the proofs of Theorem 3.1 and Theorem 3.2, which concern the identifiability of the model. 
+
+Proof of Theorem 3.1. For the combination of assumptions A1 to A5, the proof follows from Theorem 1 in Delhelle and Van Keilegom (2025), which states that if these assumptions are verified, then the parameters of the model are identified for each fixed x. Since the link functions are one-to-one and the components of X are linearly independent, all coefficients in β are directly identified by applying Lemma 6.1 Regarding the combination of assumptions A1 to A3 with A6 and A7, let’s assume that, for all 
+
+(y, δ T , δ C , x ), the equality l(β; y, δ T , δ C , x ) = l( ˜β; y, δ T , δ C , x ) holds. If δC = 1 we have, for all (y, x ),
+
+fβC (y|x) 1 − h2 
+
+> τ
+
+{πp(x)FβU (y|x)|FβC (y|x), x } = f˜βC (y|x) 1 − h2˜τ
+
+π˜p(x)F˜βU (y|x)|F˜βC (y|x), x  , (3) and hence it follows from A2 that 
+
+lim 
+
+> y→0
+
+fβC (y|x)
+
+f˜βC (y|x) = 1 ∀x or lim 
+
+> y→∞
+
+fβC (y|x)
+
+f˜βC (y|x) = 1 ∀x. 
+
+Thanks to assumption A1 we obtain βC = ˜βC and equation (3) becomes 
+
+h2 
+
+> τ
+
+{πp(x)FβU (y|x)|FβC (y|x), x } = h2˜τ
+
+π˜p(x)F˜βU (y|x)|FβC (y|x), x . (4) If δT = 1 we have, for all (y, x ),
+
+πp(x)fβU (y|x) 1 − h1 
+
+> τ
+
+{FβC (y|x)|πp(x)FβU (y|x), x }
+
+= π˜p(x)f˜βU (y|x) 1 − h1˜τ
+
+FβC (y|x)|π˜p(x)F˜βU (y|x), x  ,
+
+it then follows from A3 that 
+
+lim 
+
+> y→0
+
+πp(x)fβU (y|x)
+
+π˜p(x)f˜βU (y|x) = 1 ∀x. 
+
+Thanks to assumption A6 we obtain βU = ˜βU and p = ˜ p. Hence, equation (4) becomes, for all (y, x ),
+
+h2 
+
+> τ
+
+{πp(x)FβU (y|x)|FβC (y|x), x } = h2˜τ {πp(x)FβU (y|x)|FβC (y|x), x }
+
+which, thanks to assumption A7, directly yields τ = ˜ τ and concludes the proof. 
+
+Proof of Theorem 3.2(a). We show that assumption A6 holds for the log-normal distribution, whose density, for σ > 0 and −∞ < μ < ∞, is given by 
+
+fσ,μ (y) = 1
+
+yσ √2π · exp 
+
+(
+
+−12
+
+log ( y) − μσ
+
+2)
+
+.
+
+Since the distribution parameters depend on the covariates, we write them as σ(x) and μ(x).21 The limit of interest is 
+
+lim 
+
+> y→0
+
+πp(x)fβU (y|x)
+
+π˜p(x)f˜βU (y|x) = lim 
+
+> y→0
+
+πp(x)˜ σ(x)
+
+π˜p(x)σ(x) · exp 
+
+(
+
+−12
+
+log ( y) − μ(x)
+
+σ(x)
+
+2
+
++ 12
+
+log ( y) − ˜μ(x)˜σ(x)
+
+2)
+
+= lim 
+
+> y→0
+
+πp(x)˜ σ(x)
+
+π˜p(x)σ(x) · exp 
+
+(
+
+log ( y)2
+
+ 12˜ σ(x)2 − 12σ(x)2
+
+
+
+− log ( y)
+
+ ˜μ(x)˜σ(x)2 − μ(x)
+
+σ(x)2
+
+
+
++ 12
+
+ ˜μ(x)2
+
+˜σ(x)2 − μ(x)2
+
+σ(x)2
+
+ )
+
+.
+
+Since lim  
+
+> y→0
+
+log ( y) = −∞ and the dominant term in the exponent is log ( y)2 ((1 /2˜ σ(x)2) − (1 /2σ(x)2)) ,the exponential term converges either to 0 or ∞, depending on the sign of ((1 /2˜ σ(x)2) − (1 /2σ(x)2)) .Therefore, the above limit can equal 1 only if 1/2˜ σ(x)2 = 1 /2σ(x)2 and ˜μ(x)/˜σ(x)2 = μ(x)/σ (x)2.The first equality implies that σ(x) = ˜ σ(x). Substituting this relation into the second equality yields 
+
+μ(x) = ˜ μ(x). The exponential term is then equal to 1, which directly implies that πp(x) = π˜p(x), as required. By Lemma 6.1, this is equivalent to the identifiability of the coefficients, namely βU = ˜βU
+
+and p = ˜ p since the link functions are one-to-one and the components of X are linearly independent. Similar arguments establish assumption A6 for the log-student-t distribution. 
+
+Proof of Theorem 3.2(b). We establish assumption A6 for the non-truncated Weibull distribution. The proof for the non-truncated Gamma distribution is very similar, has been verified and can be provided, on request, by the contact author. The Weibull density, with scale and shape parameters depending on the covariates, λ(x) > 0 and 
+
+k(x) > 0, is given by 
+
+fβU (y|x) = k(x)
+
+λ(x) ·
+
+ yλ(x)
+
+k(x)−1
+
+· exp 
+
+(
+
+−
+
+ yλ(x)
+
+k(x))
+
+.
+
+The limit of interest is 
+
+lim 
+
+> y→0
+
+πp(x)fβU (y|x)
+
+π˜p(x)f˜βU (y|x) = lim  
+
+> y→0
+> πp(x)k(x)
+> λ(x)
+
+·
+
+ yλ(x)
+
+k(x)−1
+
+· exp 
+
+
+
+−
+
+ yλ(x)
+
+k(x) 
+
+> π˜p(x)˜k(x)˜λ(x)
+
+·
+
+ y
+
+> ˜λ(x)
+
+˜k(x)−1
+
+· exp 
+
+
+
+−
+
+ y
+
+> ˜λ(x)
+
+˜k(x)
+
+= lim 
+
+> y→0
+
+πp(x)k(x)˜λ(x)˜k(x)
+
+π˜p(x)˜k(x)λ(x)k(x) · yk(x)−˜k(x) · exp 
+
+(
+
+−
+
+ yλ(x)
+
+k(x)
+
++
+
+ y
+
+˜λ(x)
+
+˜k(x))
+
+.
+
+This limit can equal 1 only if k(x) = ˜k(x). Moreover, since lim  
+
+> z→0
+
+exp ( z) = 1 , it is further required that  πp(x)˜λ(x)k(x)/ π˜p(x)λ(x)k(x) = 1 . By hypothesis, this equality holding for all x is equivalent to βU = ˜βU and p = ˜ p. Therefore, assumption A6 is satisfied. 
+
+Proof of Theorem 3.2(c). First of all, it should be noted that we will hereafter use the usual copula dependence parameter θ which is related to Kendall’s tau by the following formula: 
+
+τ K (x) = 4 
+
+Z 10
+
+Z 10
+
+Cθ(u, v |x)cθ(u, v |x)dudv − 1,
+
+22 where cθ(u, v |x) is the copula density. Furthermore, all well-known copula families admit relationships between τ K and θ, allowing estimation of one from the other; see Nelsen (2006) for some examples. Let us prove assumption A7 for the Frank copula. Proofs for each of the other copulas mentioned in the theorem have been checked by the contact author and can be provided on request to any interested reader. Since the dependency parameter θ is in bijection with τ K , it is also impacted by the covariates and is denoted θ(x). For θ(x) ∈ (−∞ , ∞)\{ 0},
+
+Cτ (u, v |x) = − 1
+
+θ(x) log 1 + 
+
+ e−θ(x)u − 1   e−θ(x)v − 1
+
+e−θ(x) − 1
+
+!
+
+,
+
+and 
+
+h2 
+
+> τ
+
+(u|v, x ) = ∂∂v Cτ (u, v |x) = e−θ(x)v  e−θ(x)u − 1
+
+(e−θ(x) − 1) + ( e−θ(x)u − 1) ( e−θ(x)v − 1) .
+
+The equality h2 
+
+> τ
+
+{πp(x)FβU (y|x)|FβC (y|x), x } = h2˜τ {πp(x)FβU (y|x)|FβC (y|x), x } is then 
+
+e−θ(x)FβC (y|x)  e−θ(x)πp(x)FβU (y|x) − 1
+
+(e−θ(x) − 1) +  e−θ(x)πp(x)FβU (y|x) − 1   e−θ(x)FβC (y|x) − 1
+
+=
+
+e−˜θ(x)FβC (y|x)
+
+
+
+e−˜θ(x)πp(x)FβU (y|x) − 1
+
+ e−˜θ(x) − 1 +
+
+
+
+e−˜θ(x)πp(x)FβU (y|x) − 1
+
+  
+
+e−˜θ(x)FβC (y|x) − 1
+
+.
+
+Taking the limit when y tends to ∞ leads to 
+
+e−θ(x)  e−θ(x)πp(x) − 1
+
+(e−θ(x) − 1) + ( e−θ(x)πp(x) − 1) ( e−θ(x) − 1) =
+
+e−˜θ(x)
+
+
+
+e−˜θ(x)πp(x) − 1
+
+ e−˜θ(x) − 1 +  e−˜θ(x)πp(x) − 1   e−˜θ(x) − 1
+
+which is equivalent to 
+
+e−θ(x)  e−θ(x)πp(x) − 1
+
+e−θ(x)πp(x) (e−θ(x) − 1) =
+
+e−˜θ(x)
+
+
+
+e−˜θ(x)πp(x) − 1
+
+
+
+e−˜θ(x)πp(x)  e−˜θ(x) − 1 ⇔ 1 − eθ(x)πp(x)
+
+1 − eθ(x) = 1 − e˜θ(x)πp(x)
+
+1 − e˜θ(x) .
+
+Since this equality need to be verified for all x, and that for every fixed x the function g(z) = (1 − ezπ p(x))/(1 − ez ) is strictly decreasing, we deduce that θ(x) must be equal to ˜θ(x) for all x. The bijection between θ(x) and τ K (x) implies that τ Kτ (x) = τ K 
+
+> ˜τ
+
+(x) for all x. Applying Lemma 6.1 yields 
+
+τ = ˜ τ as requested. Finally, here is the proof of Remark 3.1, which allows to verify the condition stated in Theorem 3.2(b). 
+
+Proof of Remark 3.1. The following evidence pertains to the case of a continuous covariate. When the covariate is binary, the model is not identifiable in this scenario. We have the following equivalences 
+
+πp(x)˜λ(x)k(x)
+
+π˜p(x)λ(x)k(x) = 1 ∀x ⇐⇒ ˜λ(x)
+
+λ(x)
+
+!k(x)
+
+= π˜p(x)
+
+πp(x) ∀x
+
+⇐⇒ k(x) log ˜λ(x)
+
+λ(x)
+
+!
+
+= log 
+
+π˜p(x)
+
+πp(x)
+
+
+
+∀x. 
+
+23 Depending on the values taken by the covariates, there are only two possibilities. Either 
+
+log ˜λ(x)
+
+λ(x)
+
+!
+
+= 0 ⇐⇒ ˜λ(x) = λ(x),
+
+or 
+
+log ˜λ(x)
+
+λ(x)
+
+!̸
+
+= 0 ⇐⇒ k(x) = log 
+
+π˜p(x)
+
+> πp(x)
+
+
+
+log 
+
+ ˜λ(x)
+
+> λ(x)
+
+ .
+
+Assuming that k(x)̸ = log     
+
+> π˜p(x)
+> πp (x)
+> 
+> log
+> ˜λ(x)
+> λ(x)
+> 
+
+∀x is then equivalent to say that ˜λ(x) = λ(x) for all x. The initial equality becomes 
+
+πp(x)λ(x)k(x)
+
+π˜p(x)λ(x)k(x) = 1 ∀x ⇐⇒ πp(x) = π˜p(x) ∀x. 
+
+Applying lemma 6.1 directly leads to the identification of each coefficients, βU = ˜βU and p = ˜ p, since the link functions are one-to-one and the components of X are linearly independent. 24

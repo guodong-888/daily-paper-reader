@@ -1,0 +1,39 @@
+{
+  "label": "2026-09-01",
+  "date": "2026-09-01",
+  "generated_at": "2026-09-01T22:58:16",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202609/01/2608.22901v1-data-shared-neighbourhood-selection-for-multi-condition-network-inference",
+      "section": "quick",
+      "title_en": "Data Shared Neighbourhood Selection for multi-condition network inference",
+      "authors": "Blanche Francheterre, Ruben Colindres Zuehlke, Vivian Viallon, Marc Chadeau-Hyam, Julien Chiquet",
+      "date": "2026-08-24",
+      "pdf": "https://arxiv.org/pdf/2608.22901v1",
+      "score": "6.0",
+      "evidence": "面向多条件分子变化的网络推断方法，可用于运动中的代谢变化研究",
+      "tldr": "多条件下网络推断需同时估计共享与特异关联，但现有方法在条件增多时性能下降。本文提出DSNS，结合邻域选择与Data Shared Lasso，将系数分解为共享和条件特异部分，并扩展StARS参数选择。模拟表明DSNS在多条件下优于现有方法且速度更快；应用于肺癌炎症蛋白组数据发现了新的差异关联。DSNS为多条件网络推断提供了高效可解释的工具。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "External stresses may affect both the circulating levels of specific biomarkers and disturb the correlation structures across molecular entities. The contribution of both types of dysregulations to the subsequent risk of disease are yet to be evaluated. We propose Data Shared Neighbourhood Selection (DSNS), a joint network inference method for estimating preserved and altered conditional association structures across related conditions. DSNS combines neighbourhood selection with the Data Shared Lasso decomposition, representing each nodewise regression coefficient as the sum of a shared component and a sparse condition-specific deviation. This provides an interpretable decomposition of molecular associations while retaining the computational advantages of neighbourhood selection. We also adapt the Stability Approach to Regularisation Selection (StARS) to this two-parameter joint estimation setting. In simulations involving sparse, hub-based and rewiring perturbation mechanisms, DSNS matched the best joint estimation methods for two conditions and outperformed them as the number of conditions increased, while remaining substantially faster than graphical lasso frameworks. Applied to prediagnostic inflammatory proteomic data from future lung cancer cases and matched controls in the EPIC-Italy and NOWAC cohorts, DSNS highlighted altered associations involving CDCP1 and IL10, two established lung cancer risk markers, as well as differential associations involving proteins not selected by risk models.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/01/2608.26212v1-copula-based-dependent-censoring-in-cure-models-with-covariates",
+      "section": "quick",
+      "title_en": "Copula based dependent censoring in cure models with covariates",
+      "authors": "Morine Delhelle, Anouar El Ghouch, Ingrid Van Keilegom",
+      "date": "2026-08-26",
+      "pdf": "https://arxiv.org/pdf/2608.26212v1",
+      "score": "6.0",
+      "evidence": "基于Copula的治愈模型处理相依删失，可用于分析影响皮瓣存活的因素",
+      "tldr": "生存数据常受右删失影响，其中删失时间可能与生存时间相依。本文区分相依删失和管理性独立删失，并考虑存在治愈比例的情况。基于参数混合治愈模型，通过copula刻画相依性，并引入协变量影响所有模型参数。该方法能更准确建模删失与生存的依赖，提供个体化治愈率与依赖结构估计，且协变量可放宽识别条件。",
+      "tags": "query:flap-ex-met",
+      "abstract_en": "In survival analysis, the time-to-event variable T is frequently subject to right censoring. Individuals may withdraw from the study for various reasons, or may not experience the event of interest before the end of follow-up. In this paper, we distinguish between two types of censoring: a potentially dependent censoring time C, which may be stochastically related to T, and an independent administrative censoring time A. In addition, the data may exhibit a cure fraction, meaning that some individuals will never experience the event. We build upon a recent work about a fully parametric mixture cure model, which accounts for dependent censoring through copulas. The proposed extension incorporates administrative censoring and allows covariates to affect all model parameters. This framework enables a more accurate modelling of the dependence between survival and censoring times while providing greater flexibility through covariate effects, leading to more individualised estimation of the cure fraction, the dependence structure, and other clinically relevant quantities. Moreover, the presence of covariates allows for weaker identification conditions.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
