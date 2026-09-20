@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-19T21:04:10.324399+00:00",
-  "updated_date": "20260919",
+  "generated_at": "2026-09-20T21:36:38.651060+00:00",
+  "updated_date": "20260920",
   "carryover_days": 9,
   "tag_states": {
     "flap-ex-met": {
-      "updated_date": "20260919",
+      "updated_date": "20260920",
       "carryover_days": 9,
       "items": []
     }
